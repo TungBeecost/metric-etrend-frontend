@@ -2,12 +2,12 @@
 export default defineNuxtConfig({
   $production: {
     routeRules: {
-      "/**": { isr: true }
-    }
+      "/**": { isr: true },
+    },
   },
 
   $development: {
-    devtools: { enabled: true }
+    devtools: { enabled: true },
   },
 
   runtimeConfig: {
@@ -15,12 +15,12 @@ export default defineNuxtConfig({
 
     // Keys exposed client-side too
     public: {
-      apiBase: ""
-    }
+      apiBase: "",
+    },
   },
 
   typescript: {
-    typeCheck: true
+    typeCheck: true,
   },
 
   css: ["./assets/scss/main.scss"],
@@ -29,11 +29,11 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "~/assets/scss/_colors.scss" as *;'
-        }
-      }
-    }
+          additionalData: '@use "~/assets/scss/_colors.scss" as *;',
+        },
+      },
+    },
   },
 
-  modules: ["@nuxt/eslint", "@nuxt/test-utils/module"]
+  modules: ["@nuxt/eslint", "@nuxt/test-utils/module"],
 });
