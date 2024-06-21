@@ -1,0 +1,88 @@
+.footerContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 16px;
+
+    .title {
+      color: #241E46;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 24px;
+      word-wrap: break-word;
+      margin-bottom: 8px;
+    }
+
+    .contactItem {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 16px;
+    }
+  }
+
+  .introduce, .contact {
+    max-width: 30%;
+  }
+
+  .term {
+    max-width: 20%;
+
+    .termLink {
+      color: $default_text_color;
+      text-decoration: none;
+    }
+    .termLink:hover {
+      color: $primary;
+    }
+  }
+
+  .term, .contact {
+    padding-top: 12px;
+  }
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #EEEBFF;
+  margin: 40px 0px;
+}
+
+.footerSignature {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .copyright {
+    color: $lighter_text_color;
+  }
+
+  .socialIconList {
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap;
+
+    div {
+      padding: 8px;
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    div:hover {
+      background-color: $hovering;
+      cursor: pointer;
+    }
+  }
+}
+
