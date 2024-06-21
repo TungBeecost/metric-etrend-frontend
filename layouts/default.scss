@@ -1,0 +1,23 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  padding: 24px 48px;
+  min-height: max-content;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  min-height: max-content;
+  padding: 80px 60px 40px;
+}
