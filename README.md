@@ -86,6 +86,7 @@ Besides, we included more 2 folders
 
 - `tests/` contains test case
 - `validator` for common validation
+- `helpers` for helpful functions
 
 > Last one, every main folder can re-created inside specific module (page) for more specific. For example, you can re-create `validator/` folder inside `my-page` for validate functions just only supply for `my-page`
 
