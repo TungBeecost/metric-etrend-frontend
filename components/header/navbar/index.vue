@@ -1,9 +1,9 @@
 <template>
   <div class="headerNavbar">
     <div class="headerNavbarMenu">
-      <AButton type="text">Trang chủ</AButton>
-      <AButton type="text">Báo cáo</AButton>
-      <AButton type="text">Bảng giá dịch vụ</AButton>
+      <AButton type="text" class="headerText">Trang chủ</AButton>
+      <AButton type="text" class="headerText">Báo cáo</AButton>
+      <AButton type="text" class="headerText">Bảng giá dịch vụ</AButton>
     </div>
     <div class="headerNavbarCallButton">
       <AButton>Đăng nhập</AButton>

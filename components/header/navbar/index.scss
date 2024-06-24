@@ -3,12 +3,20 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  .headerText {
+    color: white;
+  }
+  .headerText:hover {
+    color: $primary;
+  }
 }
 
 .headerNavbarMenu {
   display: flex;
   flex-direction: row;
   gap: 40px;
+  color: white;
 }
 
 .headerNavbarCallButton {

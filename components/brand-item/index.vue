@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <NuxtImg :src="src" class="branch" />
+    <img :src="src" class="branch" :width="width" :height="height">
   </div>
 </template>
 

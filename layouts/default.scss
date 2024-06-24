@@ -11,11 +11,16 @@ header {
   width: 100vw;
   padding: 24px 48px;
   min-height: max-content;
+  background-color: #241E46;
+
+  img {
+    margin-right: 64px;
+  }
 }
 
 main {
   flex: 1;
-  padding: 0px 60px;
+  // padding: 0px 60px;
 }
 
 footer {
