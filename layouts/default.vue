@@ -1,59 +1,40 @@
-<script setup>
-</script>
-
 <template>
-  <div class="">
-    <slot/>
-  </div>
+  <a-config-provider :theme="{
+    token: {
+      colorPrimary: '#E85912',
+    },
+  }">
+    <div class="container">
+      <!-- header section -->
+      <header>
+        <img src="/public/images//Logo.svg">
+
+        <HeaderNavbar v-if="device.isDesktop" />
+        <HeaderNavbar v-else />
+      </header>
+
+      <!-- content section -->
+      <main>
+        <slot />
+      </main>
+
+      <!-- footer section -->
+      <footer>
+        <Footer />
+      </footer>
+    </div>
+  </a-config-provider>
 </template>
 
-<style>
-@media (min-width: 1920px) {
-  .default_section {
-    flex-direction: row;
-    width: 1440px;
-    margin: 0 auto;
-  }
-}
+<script setup lang="ts">
 
-@media (min-width: 1440px) and (max-width: 1919px) {
-  .default_section {
-    flex-direction: row;
-    width: 1280px;
-    margin: 0 auto;
-  }
-}
+// side bar handler
+const device = useDevice();
 
-@media (min-width: 1024px) and (max-width: 1439px) {
-  .default_section {
-    flex-direction: row;
-    width: 960px;
-    margin: 0 auto;
-  }
-}
 
-@media (min-width: 768px) and (max-width: 1023px) {
-  .default_section {
-    flex-direction: row;
-    width: 720px;
-    margin: 0 auto;
-  }
-}
 
-@media (min-width: 425px) and (max-width: 767px) {
-  .default_section {
-    flex-direction: row;
-    width: 375px;
-    margin: 0 auto;
-  }
-}
+</script>
 
-@media (max-width: 424px) {
-  .default_section {
-    flex-direction: row;
-    width: 325px;
-    margin: 0 auto;
-  }
-}
-
+<style lang="scss" scoped>
+@import url("./default.scss");
 </style>
