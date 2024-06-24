@@ -101,9 +101,7 @@ const scrollReports = (direction: string) => {
           </div>
           <div class="content">
             <div class="block_category">
-              <div class="category">{{ report.category }}</div>
-              <div class="space">|</div>
-              <div class="date">{{ report.date }}</div>
+              <div class="category">{{ report.category.join(', ') }} | {{ report.date }}</div>
             </div>
             <div class="title">{{ report.title }}</div>
             <div class="description">{{ report.description }}</div>
@@ -120,72 +118,7 @@ const scrollReports = (direction: string) => {
 </template>
 
 <style scoped lang="scss">
-.item_new_report {
-  display: flex;
-  gap: 16px;
 
-  width: 700px;
-
-  padding: 16px;
-
-  border: 1px solid #EEEBFF;
-  border-radius: 8px;
-  background: #FFF;
-
-  .image {
-    width: 168px;
-
-    img {
-      width: 100%;
-      border-radius: 8px;
-    }
-  }
-
-  .content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
-    .block_category {
-      display: flex;
-      gap: 8px;
-
-      .category {
-        font-size: 14px;
-        color: #9e9e9e;
-      }
-
-      .space {
-        font-size: 14px;
-        color: #9e9e9e;
-      }
-
-      .date {
-        font-size: 14px;
-        color: #9e9e9e;
-      }
-    }
-
-    .title {
-      margin: 8px 0;
-
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .description {
-      font-size: 16px;
-      line-height: 24px;
-      color: #9e9e9e;
-
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-  }
-}
 .slice{
   display: flex;
   justify-content: center;
@@ -199,6 +132,72 @@ const scrollReports = (direction: string) => {
     padding: 16px;
     scrollbar-width: thin;
     scrollbar-color: #888 #f5f5f5;
+
+    .item_new_report {
+      display: flex;
+      gap: 16px;
+
+      width: 700px;
+
+      padding: 16px;
+
+      border: 1px solid #EEEBFF;
+      border-radius: 8px;
+      background: #FFF;
+
+      .image {
+        width: 168px;
+
+        img {
+          width: 100%;
+          border-radius: 8px;
+        }
+      }
+
+      .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .block_category {
+          display: flex;
+          gap: 8px;
+
+          .category {
+            font-size: 14px;
+            color: #9e9e9e;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+        }
+
+        .title {
+          margin: 8px 0;
+
+          font-size: 20px;
+          font-weight: bold;
+
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .description {
+          font-size: 16px;
+          line-height: 24px;
+          color: #9e9e9e;
+
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      }
+    }
   }
 
   .button_slice {
@@ -222,6 +221,63 @@ const scrollReports = (direction: string) => {
   .button_slice_right {
     right: -20px;
     top: 100px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .slice{
+    .slice_info {
+      gap: 16px;
+      padding: 8px;
+
+      .item_new_report {
+        width: 300px;
+
+        .image {
+          width: 120px;
+        }
+
+        .content {
+          gap: 8px;
+          .block_category {
+            .category {
+              font-size: 10px;
+            }
+
+            .space {
+              font-size: 10px;
+            }
+
+            .date {
+              font-size: 10px;
+            }
+          }
+
+          .title {
+            font-size: 14px;
+          }
+
+          .description {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+    .button_slice {
+      width: 40px;
+      height: 40px;
+    }
+
+    .button_slice_left {
+      left: 90px;
+      top: 180px;
+    }
+
+    .button_slice_right {
+      right: 90px;
+      top: 180px;
+    }
   }
 }
 </style>

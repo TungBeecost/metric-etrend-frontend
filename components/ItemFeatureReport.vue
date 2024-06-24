@@ -121,9 +121,10 @@ const scrollReports = (direction: string) => {
 
 <style scoped lang="scss">
 .slice{
+  background: #FBFAFC;
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: calc(100% - 200px);
   position: relative;
 
   .button_slice {
@@ -153,11 +154,11 @@ const scrollReports = (direction: string) => {
     display: flex;
     gap: 40px;
     overflow-x: auto;
+    cursor: pointer;
 
     .item_feature_report {
       width: 400px;
       border-radius: 16px;
-      box-shadow: 10px 10px 40px 0px rgba(0, 0, 0, 0.05);
       background: #FFF;
 
       .image {
@@ -202,6 +203,44 @@ const scrollReports = (direction: string) => {
         }
       }
     }
+  }
+}
+
+@media (max-width: 1023px) {
+  .slice{
+    width: calc(100% - 100px);;
+    .slice_info {
+      gap: 16px;
+      padding: 8px;
+
+      .item_feature_report {
+        width: 300px;
+
+        .content {
+          padding: 16px;
+
+          .category_date {
+            font-size: 12px;
+            line-height: 18px;
+          }
+
+          .title {
+            font-size: 16px;
+            line-height: 24px;
+          }
+
+          .description {
+            font-size: 14px;
+            line-height: 20px;
+          }
+        }
+      }
+    }
+
+    .button_slice {
+      display: none;
+    }
+
   }
 }
 </style>

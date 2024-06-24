@@ -145,7 +145,7 @@ const toggleSeeMore = () => {
 </script>
 
 <template>
-  <div class="discover default_section">
+  <div class="discover">
     <div class="title">Khám phá theo ngành hàng</div>
     <div class="lst_item">
       <item-discover v-for="report in displayedReports" :image="report.image" :title="report.title" class="item"/>
@@ -162,6 +162,7 @@ const toggleSeeMore = () => {
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: minmax(100px, auto);
   gap: 16px;
+  width: calc(100% - 200px);
 }
 
 .title{
@@ -173,10 +174,12 @@ const toggleSeeMore = () => {
 }
 
 .discover{
+  background-color: #FAF9FF;
   padding-top: 100px;
   padding-bottom: 60px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 40px;
 }
 
@@ -194,6 +197,16 @@ const toggleSeeMore = () => {
     font-size: 14px;
     cursor: pointer;
     border: 1px solid #E85912;
+  }
+}
+
+@media (max-width: 430px) {
+  .lst_item {
+    width: calc(100% - 50px);
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .title{
+    font-size: 24px;
   }
 }
 </style>

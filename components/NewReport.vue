@@ -26,8 +26,5 @@ import ItemNewReport from './ItemNewReport.vue';
     font-weight: bold;
   }
 }
-
-
-
 </style>
 
