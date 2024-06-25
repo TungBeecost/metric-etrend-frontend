@@ -6,7 +6,7 @@
       <img src="/images/background-search.png" class="background">
 
       <div class="sectionHeader searchHeader">
-        <p class="sectionTitle">Kho Báo Cáo Ecommerce Toàn Diện</p>
+        <p class="sectionTitle">Kho Báo Cáo <br> Ecommerce Toàn Diện</p>
         <p class="sectionDescription">Tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu chính xác nhất</p>
       </div>
 
@@ -37,24 +37,41 @@
     <div class="section">
       <div class="sectionHeader">
         <p class="sectionTitle">Báo cáo nổi bật</p>
-        <p class="sectionDescription">Cập nhật ngay những báo cáo xu hướng mới nhất giúp bạn nắm bắt kịp thời biến động thị trường và đưa ra quyết định đầu tư chính xác.</p>
+        <p class="sectionDescription">Cập nhật ngay những báo cáo xu hướng mới nhất giúp bạn nắm bắt kịp thời biến động thị trường <br> và đưa ra quyết định đầu tư chính xác.</p>
       </div>
 
       <div class="sectionContent">
+        <div class="tmp">This is highlight block</div>
         <!-- Wait component from Bao Cao page -->
       </div>
 
     </div>
 
     <!-- testimonials section-->
-    <div class="sectionContactUs">
-      <!-- Wait component from Contact us page -->
+    <div class="section">
+      <div class="sectionHeader">
+        <p class="sectionTitle">Nguồn số liệu đáng tin cậy <br> được các đơn vị truyền thông, báo chí sử dụng</p>
+      </div>
+      <Vue3Marquee gradient="true">
+        <BrandItem v-for="(branch, index) in testimonialBrands" :key="index" :src="branch" width="139" height="80" />
+      </Vue3Marquee>
     </div>
 
 
+
     <!-- pricing section -->
+    <div class="section">
+      <!-- Wait component from Contact us page -->
+      <div class="tmp">This is pricing block</div>
+
+    </div>
 
     <!-- contact us section -->
+    <div class="section">
+      <!-- Wait component from Contact us page -->
+      <div class="tmp">This is contact us block</div>
+
+    </div>
   </div>
 </template>
 
@@ -71,6 +88,14 @@ const brands = [
   "/images/branch/tiki.png",
   "/images/branch/unilever.png"
 ];
+const testimonialBrands = [
+  "/images/branch/vietnamnet.png",
+  "/images/branch/tuoitre.png",
+  "/images/branch/vtv.png",
+  "/images/branch/vnexpress.png",
+  "/images/branch/dantri.png",
+  "/images/branch/thanhnien.png",
+]
 
 
 const recommendSearch = ["Ngành hàng Mẹ & Bé", "Ngành hàng Điện tử", "Thời trang Nam", "Điện Máy"]

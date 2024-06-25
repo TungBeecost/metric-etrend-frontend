@@ -2,6 +2,7 @@
   <a-config-provider :theme="{
     token: {
       colorPrimary: '#E85912',
+      colorText: '#241E46'
     },
   }">
     <div class="container">
