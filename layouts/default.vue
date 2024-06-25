@@ -8,11 +8,18 @@
   }">
     <div class="container">
       <!-- header section -->
-      <header>
-        <img src="/public/images//Logo.svg">
+      <header :class="{ showMenu: isShowMenu }">
+        <NuxtImg :src="isShowMenu ? '/images/Logo-black.svg' : '/images/Logo.svg'" class="logo" :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" />
 
-        <HeaderNavbar v-if="device.isDesktop" />
-        <HeaderNavbar v-else />
+        <nuxtimg @click="isShowMenu = !isShowMenu">
+          <NuxtImg v-if="device.isMobile && !isShowMenu" src="/icons/Menu.svg" width="24" height="24" />
+          <NuxtImg v-if="isShowMenu" src="/icons/Close.svg" width="24" height="24" />
+        </nuxtimg>
+
+
+        <HeaderNavbar v-if="!device.isMobile" />
+
+        <HeaderMobileMenu v-if="device.isMobile" :active="isShowMenu" />
       </header>
 
       <!-- content section -->
@@ -33,7 +40,7 @@
 // side bar handler
 const device = useDevice();
 
-
+const isShowMenu = useState(() => true);
 
 </script>
 

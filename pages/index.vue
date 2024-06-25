@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <!-- search section -->
     <div class="section sectionSearch">
       <img src="/images/background-search.png" class="background">
