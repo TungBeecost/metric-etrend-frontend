@@ -14,7 +14,7 @@
         <SearchReport class="searchBox" />
 
         <div class="recommendSearch">
-          <AButton v-for="(item, index) in recommendSearch" :key="index" class="recommendItem">
+          <AButton v-for="(item, index) in recommendSearch" :key="index" class="recommendItem" @click="onClickSuggestion(item)">
             {{ item }}
           </AButton>
         </div>
@@ -60,6 +60,7 @@
 
 <script setup lang="ts">
 import type SearchReport from '../components/search/search-report.vue';
+import { NAVIGATIONS } from '../helpers/constains';
 
 const brands = [
   "/images/branch/branch1.png",
@@ -74,7 +75,9 @@ const brands = [
 
 const recommendSearch = ["Ngành hàng Mẹ & Bé", "Ngành hàng Điện tử", "Thời trang Nam", "Điện Máy"]
 
-
+const onClickSuggestion = (suggestion: string) => {
+  navigateTo(`${NAVIGATIONS.search}?search=${suggestion}`);
+}
 
 </script>
 
