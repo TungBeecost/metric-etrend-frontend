@@ -7,8 +7,8 @@
   width: 100%;
   padding: 0px 60px;
 
-  @include desktop {
-    background-color: red;
+  @include mobile {
+    padding: 0px 16px;
   }
 
   .sectionHeader {
@@ -75,10 +75,19 @@
     width: 60%;
     align-self: center;
 
+    @include mobile {
+      width: 100%;
+    }
+
     .recommendSearch {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
+      justify-content: center;
+
+      .recommendItem {
+        background-color: #EEEBFF;
+      }
     }
 
     .searchBox {

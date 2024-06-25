@@ -1,8 +1,8 @@
 <template>
   <div v-on-click-outside="setShowSuggestions" class="wrapper">
     <!-- input -->
-    <AInputSearch v-model:value="searchValue" :placeholder="placeholder || 'Tìm kiếm báo cáo'" :size="device.isDesktop ? 'large' as any : 'default' as any" allow-clear @change="onChange"
-      @search="handleSearch(searchValue)" @press-enter="handleSearch(searchValue)" @focus="isShowSuggestions = true">
+    <AInputSearch v-model:value="searchValue" :placeholder="placeholder || 'Tìm kiếm báo cáo'" size="large" allow-clear @change="onChange" @search="handleSearch(searchValue)"
+      @press-enter="handleSearch(searchValue)" @focus="isShowSuggestions = true">
       <template #enterButton>
         <SearchSearchIcon />
       </template>
@@ -28,7 +28,6 @@ const props = defineProps<{
   placeholder?: string
 }>()
 
-const device = useDevice();
 const route = useRoute();
 
 
