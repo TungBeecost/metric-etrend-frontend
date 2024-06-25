@@ -32,10 +32,10 @@ const device = useDevice();
 const route = useRoute();
 
 
-const searchValue = useState(() => route.query.search as string || "");
-const isShowSuggestions = useState(() => false);
+const searchValue = useState<string>(() => route.query.search as string || "");
+const isShowSuggestions = useState<boolean>(() => false);
 
-const suggestions = useState(() => ["asd", "asddfg", "asddfg"]);
+const suggestions = useState<Array<string>>(() => []);
 const setShowSuggestions = () => {
   isShowSuggestions.value = false;
 }
