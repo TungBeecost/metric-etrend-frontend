@@ -26,4 +26,8 @@ main {
 footer {
   min-height: max-content;
   padding: 80px 60px 40px;
+
+  @include mobile {
+    padding: 40px 16px;
+  }
 }

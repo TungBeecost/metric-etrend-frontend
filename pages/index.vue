@@ -29,7 +29,7 @@
         <p class="sectionTitle">Hơn 500+ đối tác tin cậy của Metric</p>
       </div>
       <Vue3Marquee gradient="true">
-        <BrandItem v-for="(branch, index) in brands" :key="index" :src="branch" width="139" height="80" />
+        <BrandItem v-for="(branch, index) in brands" :key="index" :src="branch" :width="device.isDesktop ? '139' : '116'" :height="device.isDesktop ? '80' : '62'" />
       </Vue3Marquee>
     </div>
 
@@ -37,7 +37,9 @@
     <div class="section">
       <div class="sectionHeader">
         <p class="sectionTitle">Báo cáo nổi bật</p>
-        <p class="sectionDescription">Cập nhật ngay những báo cáo xu hướng mới nhất giúp bạn nắm bắt kịp thời biến động thị trường <br> và đưa ra quyết định đầu tư chính xác.</p>
+        <p class="sectionDescription">Cập nhật ngay những báo cáo xu hướng mới nhất giúp bạn nắm bắt kịp thời biến động thị trường <br> <span :class="{ active: !device.isMobile }"> và đưa ra quyết
+            định đầu
+            tư chính xác.</span></p>
       </div>
 
       <div class="sectionContent">
@@ -52,9 +54,9 @@
       <div class="sectionHeader">
         <p class="sectionTitle">Nguồn số liệu đáng tin cậy <br> được các đơn vị truyền thông, báo chí sử dụng</p>
       </div>
-      <Vue3Marquee gradient="true">
-        <BrandItem v-for="(branch, index) in testimonialBrands" :key="index" :src="branch" width="139" height="80" />
-      </Vue3Marquee>
+      <div class="testimonialsList">
+        <BrandItem v-for="(branch, index) in testimonialBrands" :key="index" :src="branch" :width="device.isDesktop ? '139' : '86'" :height="device.isDesktop ? '80' : '32'" />
+      </div>
     </div>
 
 
@@ -78,6 +80,8 @@
 <script setup lang="ts">
 import type SearchReport from '../components/search/search-report.vue';
 import { NAVIGATIONS } from '../helpers/constains';
+
+const device = useDevice();
 
 const brands = [
   "/images/branch/branch1.png",

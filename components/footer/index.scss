@@ -3,6 +3,11 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
+  
+  @include mobile {
+    flex-direction: column;
+    gap: 24px;
+  }
 
   .info {
     display: flex;
@@ -29,10 +34,18 @@
 
   .introduce, .contact {
     max-width: 30%;
+
+    @include mobile {
+      max-width: 100%;
+    }
   }
 
   .term {
     max-width: 20%;
+
+    @include mobile {
+      max-width: 100%;
+    }
 
     .termLink {
       color: $default_text_color;
@@ -60,6 +73,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+  }
 
   .copyright {
     color: $lighter_text_color;
