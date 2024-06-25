@@ -27,13 +27,13 @@ export default defineNuxtConfig({
     typeCheck: true
   },
 
-  css: ["./assets/scss/reset.scss", "./assets/scss/main.scss", "normalize.css"],
+  css: ["normalize.css"],
 
   vite: {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "~/assets/scss/_colors.scss" as *;'
+          additionalData: '@use "~/assets/scss/main.scss" as *;'
         }
       }
     }
