@@ -11,7 +11,7 @@
       </div>
 
       <div class="sectionContent searchContent">
-        <Search class="searchBox" />
+        <SearchReport class="searchBox" />
 
         <div class="recommendSearch">
           <AButton v-for="(item, index) in recommendSearch" :key="index" class="recommendItem">
@@ -59,6 +59,7 @@
 </template>
 
 <script setup lang="ts">
+import type SearchReport from '../components/search/search-report.vue';
 
 const brands = [
   "/images/branch/branch1.png",

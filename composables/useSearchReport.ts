@@ -1,13 +1,13 @@
 export default function useSearchReport() {
-  const handleSearch = async (value: string) => {
+  const fetchSearch = async (value: string) => {
     console.log(`Searching ${value}...`);
   };
 
-  const handleSuggest = async (value: string) => {
+  const fetchSuggest = async (value: string) => {
     console.log(`Suggesting ${value}...`);
 
     return [];
   };
 
-  return { handleSearch, handleSuggest };
+  return { fetchSearch, fetchSuggest };
 }
