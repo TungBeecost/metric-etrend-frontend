@@ -15,7 +15,7 @@ RUN yarn build
 #CMD pm2-runtime start pm2.config.js --env production --only nuxtjs --name nuxtjs
 
 FROM node:22.2.0-alpine3.20 as ssr-release
-ENV NUXT_VERSION=3.9.0
+ENV NUXT_VERSION=2.17.4
 WORKDIR /app
 RUN yarn add "nuxt-start@${NUXT_VERSION}"
 COPY --from=ssr /app/.nuxt /app/.nuxt
@@ -31,7 +31,7 @@ COPY .env /app/.env
 RUN yarn build
 
 FROM node:22.2.0-alpine3.20 as spa-release
-ENV NUXT_VERSION=3.9.0
+ENV NUXT_VERSION=2.17.4
 WORKDIR /app
 RUN yarn add "nuxt-start@${NUXT_VERSION}"
 COPY --from=spa /app/.nuxt /app/.nuxt
