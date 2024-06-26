@@ -7,7 +7,9 @@ RUN yarn install
 
 FROM build-stage as ssr 
 ENV SSR=true
+COPY . /app
 COPY .env /app/.env
+
 RUN yarn build
 #ENV URL_CDN="https://ssr.metric.vn/_nuxt"
 #CMD pm2-runtime start pm2.config.js --env production --only nuxtjs --name nuxtjs
@@ -24,6 +26,7 @@ EXPOSE 3000
 
 FROM build-stage as spa
 ENV SSR=false
+COPY . /app
 COPY .env /app/.env
 RUN yarn build
 
