@@ -1,14 +1,13 @@
 <script setup lang="ts">
 
-import NewReport from "~/components/NewReport.vue";
-import Discover from "~/components/Discover.vue";
-import FeaturedReport from "~/components/FeaturedReport.vue";
+import NewReport from "~/components/report/NewReport.vue";
+import Discover from "~/components/report/Discover.vue";
+import FeaturedReport from "~/components/report/FeaturedReport.vue";
 </script>
 
 <template>
   <div class="title_report">
     <div class="image">
-      <img src="/Hero_banner.png" alt="">
       <div class="title">
         <div class="content default_section">
           <div class="report_title">Báo cáo</div>
@@ -29,21 +28,19 @@ import FeaturedReport from "~/components/FeaturedReport.vue";
   width: 100%;
   height: 100%;
   .image {
-    width: 100%;
-    padding-bottom: 100px;
-    position: relative;
-    img {
-      width: 100%;
-      height: auto;
-    }
+    display: flex;
+    padding-top: 60px;
+    flex-direction: column;
+    gap: 40px;
+    background: url('/images/Hero_banner.png') no-repeat;
+    background-size: cover;
+    height: 434px;
+
     .title {
       display: flex;
       flex-direction: column;
-      padding-top: 60px;
       width: 100%;
       gap: 80px;
-      position: absolute;
-      top: 50px;
 
       .content {
         display: flex;
@@ -64,8 +61,29 @@ import FeaturedReport from "~/components/FeaturedReport.vue";
       }
     }
   }
+}
 
-
+@media (min-width: 1919px) {
+  .default_section {
+    flex-direction: row;
+    width: calc(100% - 200px);
+    margin: 0 auto;
+  }
+  .title_report{
+    .image {
+      .title {
+        .content {
+          .report_title{
+            font-size: 48px;
+          }
+          .description {
+            font-size: 16px;
+            width: 600px;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 1919px) {
@@ -73,6 +91,21 @@ import FeaturedReport from "~/components/FeaturedReport.vue";
     flex-direction: row;
     width: calc(100% - 200px);
     margin: 0 auto;
+  }
+  .title_report{
+    .image {
+      .title {
+        .content {
+          .report_title{
+            font-size: 36px;
+          }
+          .description {
+            font-size: 14px;
+            width: 400px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -82,28 +115,73 @@ import FeaturedReport from "~/components/FeaturedReport.vue";
     width: calc(100% - 200px);
     margin: 0 auto;
   }
+  .title_report{
+    .image {
+      .title {
+        .content {
+          .report_title{
+            font-size: 32px;
+          }
+          .description {
+            font-size: 14px;
+            width: 350px;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 1023px) {
   .default_section {
-    flex-direction: row;
-    width: calc(100% - 200px);
+    flex-direction: column;
+    width: calc(100% - 100px);
     margin: 0 auto;
+  }
+  .title_report{
+    .image {
+      .title {
+        .content {
+          .report_title{
+            font-size: 28px;
+          }
+          .description {
+            font-size: 12px;
+            width: 300px;
+          }
+        }
+      }
+    }
   }
 }
 
 @media (max-width: 767px) {
   .default_section {
-    flex-direction: row;
-    width: calc(100% - 200px);
+    flex-direction: column;
+    width: calc(100% - 50px);
     margin: 0 auto;
+  }
+  .title_report{
+    .image {
+      .title {
+        .content {
+          .report_title{
+            font-size: 36px;
+          }
+          .description {
+            font-size: 14px;
+            width: 100%;
+          }
+        }
+      }
+    }
   }
 }
 
 @media (max-width: 424px) {
   .default_section {
-    flex-direction: row;
-    width: calc(100% - 100px);
+    flex-direction: column;
+    width: calc(100% - 20px);
     margin: 0 auto;
   }
   .title_report{
@@ -117,12 +195,10 @@ import FeaturedReport from "~/components/FeaturedReport.vue";
           }
           .description {
             font-size: 14px;
-            width: 300px;
           }
         }
       }
     }
   }
 }
-
 </style>

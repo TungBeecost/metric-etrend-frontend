@@ -4,132 +4,196 @@ import ItemDiscover from './ItemDiscover.vue';
 
 const reports = [
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Điện thoại & Máy tính ...'
+    title: 'Điện thoại & Máy tính ...',
+    url: '/dien-thoai-may-tinh-bang'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Máy tính, Laptop & Thiết...'
+    title: 'Máy tính, Laptop & Thiết...',
+    url: '/may-tinh-laptop-thiet-bi-van-phong'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Nhà cửa & Đời sống'
+    title: 'Nhà cửa & Đời sống',
+    url: '/nha-cua-doi-song'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Bách hoá thực phẩm'
+    title: 'Bách hoá thực phẩm',
+    url: '/bach-hoa-thuc-pham'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Làm đẹp'
+    title: 'Làm đẹp',
+    url: '/lam-dep'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Sức khoẻ'
+    title: 'Sức khoẻ',
+    url: '/suc-khoe'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thời trang nam'
+    title: 'Thời trang nam',
+    url: '/thoi-trang-nam'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thời trang nữ'
+    title: 'Thời trang nữ',
+    url: '/thoi-trang-nu'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thể thao'
+    title: 'Thể thao',
+    url: '/the-thao'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Phụ kiện thời trang'
+    title: 'Phụ kiện thời trang',
+    url: '/phu-kien-thoi-trang'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Đồ chơi, mẹ & bé'
+    title: 'Đồ chơi, mẹ & bé',
+    url: '/do-choi-me-be'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thú cưng'
+    title: 'Thú cưng',
+    url: '/thu-cung'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Xe máy, ô tô & xe đạp'
+    title: 'Xe máy, ô tô & xe đạp',
+    url: '/xe-may-o-to-xe-dap'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thiết bị điện gia dụng'
+    title: 'Thiết bị điện gia dụng',
+    url: '/thiet-bi-dien-gia-dung'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thiết bị âm thanh'
+    title: 'Thiết bị âm thanh',
+    url: '/thiet-bi-am-thanh'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Đồng hồ'
+    title: 'Đồng hồ',
+    url: '/dong-ho'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Máy ảnh & máy quay phim'
+    title: 'Máy ảnh & máy quay phim',
+    url: '/may-anh-may-quay-phim'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Điện tử - Điện lạnh'
+    title: 'Điện tử - Điện lạnh',
+    url: '/dien-tu-dien-lanh'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Điện thoại & Phụ kiện'
+    title: 'Điện thoại & Phụ kiện',
+    url: '/dien-thoai-phu-kien'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Đồng hồ thông minh'
+    title: 'Đồng hồ thông minh',
+    url: '/dong-ho-thong-minh'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Phụ kiện'
+    title: 'Phụ kiện',
+    url: '/phu-kien'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thiết bị số - Phụ kiện số'
+    title: 'Thiết bị số - Phụ kiện số',
+    url: '/thiet-bi-so-phu-kien-so'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thiết bị văn phòng phầm mềm'
+    title: 'Thiết bị văn phòng phầm mềm',
+    url: '/thiet-bi-van-phong-pham-mem'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thiết bị văn phòng phần cứng'
+    title: 'Thiết bị văn phòng phần cứng',
+    url: '/thiet-bi-van-phong-phan-cung'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thiết bị văn phòng khác'
+    title: 'Thiết bị văn phòng khác',
+    url: '/thiet-bi-van-phong-khac'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thiết bị văn phòng khác'
+    title: 'Thiết bị văn phòng khác',
+    url: '/thiet-bi-van-phong-khac'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thiết bị văn phòng khác'
+    title: 'Thiết bị văn phòng khác',
+    url: '/thiet-bi-van-phong-khac'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thiết bị văn phòng khác'
+    title: 'Thiết bị văn phòng khác',
+    url: '/thiet-bi-van-phong-khac'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thiết bị văn phòng khác'
+    title: 'Thiết bị văn phòng khác',
+    url: '/thiet-bi-van-phong-khac'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thiết bị văn phòng khác'
+    title: 'Thiết bị văn phòng khác',
+    url: '/thiet-bi-van-phong-khac'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thiết bị văn phòng khác'
+    title: 'Thiết bị văn phòng khác',
+    url: '/thiet-bi-van-phong-khac'
   },
   {
+    category_report_id: 'c1513215936',
     image: 'https://thumbs.dreamstime.com/b/old-phone-icon-vector-outline-telephone-line-vintage-phone-sym-old-phone-icon-vector-outline-telephone-line-vintage-phone-symbol-114416521.jpg',
-    title: 'Thiết bị văn phòng khác'
+    title: 'Thiết bị văn phòng khác',
+    url: '/thiet-bi-van-phong-khac'
   },
 ];
 
@@ -175,7 +239,7 @@ const toggleSeeMore = () => {
 
 .discover{
   background-color: #FAF9FF;
-  padding-top: 100px;
+  padding-top: 200px;
   padding-bottom: 60px;
   display: flex;
   flex-direction: column;
