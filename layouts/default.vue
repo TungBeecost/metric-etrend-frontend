@@ -8,14 +8,13 @@
   }">
     <div class="container">
       <!-- header section -->
-      <header :class="{ showMenu: isShowMenu }">
-        <NuxtImg :src="isShowMenu ? '/images/Logo-black.svg' : '/images/Logo.svg'" class="logo" :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" />
+      <header :class="{ darkBlueHeader: isDarkBlueHeader }">
+        <NuxtImg :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'" class="logo" :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" />
 
-        <div @click="isShowMenu = !isShowMenu">
-          <CustomIcon v-if="device.isMobile && !isShowMenu" type="Menu" />
+        <div @click="setShowMenu(!isShowMenu)">
+          <CustomIcon v-if="device.isMobile && !isShowMenu" :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'" />
           <CustomIcon v-else-if="isShowMenu" type="Close" />
         </div>
-
 
         <HeaderNavbar v-if="!device.isMobile" />
         <HeaderMobileMenu v-else :active="isShowMenu" />
@@ -35,11 +34,30 @@
 </template>
 
 <script setup lang="ts">
+import { NAVIGATIONS } from '../helpers/constains';
+
+const route = useRoute();
 
 // side bar handler
 const device = useDevice();
 
-const isShowMenu = useState(() => false);
+const { isShowMenu, setShowMenu } = useShowMainMenu();
+
+// mobile menu always using white header
+watch(isShowMenu, () => {
+  if (isShowMenu.value === true) isDarkBlueHeader.value = false;
+  else recheckHeader();
+})
+
+const menuDarkBlue = [NAVIGATIONS.home];
+const isDarkBlueHeader = useState(() => false);
+const recheckHeader = () => {
+  if (isDarkBlueHeader.value !== !!menuDarkBlue.includes(route.path)) isDarkBlueHeader.value = !isDarkBlueHeader.value;
+}
+// recheck header color when change route
+watch(() => route.path, () => {
+  recheckHeader()
+}, { immediate: true })
 
 </script>
 

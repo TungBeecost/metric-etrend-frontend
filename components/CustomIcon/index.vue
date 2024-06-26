@@ -1,13 +1,23 @@
 <template>
-  <Icon class="icon">
-    <template #component>
-      <NuxtImg :src="iconMappings[type]" :width="width || 24" :height="height || 24" />
-    </template>
-  </Icon>
+  <component :is="iconMappings[type]" :class="{ 'size-24': !isCustomSize }" :filled="true" />
 </template>
 
 <script setup lang="ts">
-import Icon from '@ant-design/icons-vue/lib/components/Icon';
+import Building from "~/public/icons/Buildings.svg";
+import Close from "~/public/icons/Close.svg";
+import Envelope from "~/public/icons/Envelope.svg";
+import MapPin from "~/public/icons/MapPin.svg";
+import Menu from "~/public/icons/Menu.svg";
+import MenuBlack from "~/public/icons/Menu-Black.svg";
+import Phone from "~/public/icons/Phone.svg";
+import Search from "~/public/icons/Search.svg";
+import SocialFB from "~/public/icons/Social-FB.svg";
+import SocialLinkedIn from "~/public/icons/Social-Linkedin.svg";
+import SocialYoutube from "~/public/icons/Social-Ytb.svg";
+import Homepage from "~/public/icons/Homepage.svg";
+import Report from "~/public/icons/Report.svg";
+import Store from "~/public/icons/Store.svg";
+import ContactUs from "~/public/icons/Contact-Us.svg";
 
 type TypeIcon =
   | "Building"
@@ -15,6 +25,7 @@ type TypeIcon =
   | "Envelope"
   | "MapPin"
   | "Menu"
+  | "MenuBlack"
   | "Phone"
   | "Search"
   | "SocialFB"
@@ -28,32 +39,41 @@ type TypeIcon =
 
 defineProps<{
   type: TypeIcon,
-  width?: number,
-  height?: number,
+  isCustomSize?: boolean
 }>()
 
 const iconMappings = {
-  "Building": "/icons/Buildings.svg",
-  "Close": "/icons/Close.svg",
-  "Envelope": "/icons/Envelope.svg",
-  "MapPin": "/icons/MapPin.svg",
-  "Menu": "/icons/Menu.svg",
-  "Phone": "/icons/Phone.svg",
-  "Search": "/icons/Search.svg",
-  "SocialFB": "/icons/Social-FB.svg",
-  "SocialLinkedIn": "/icons/Social-Linkedin.svg",
-  "SocialYoutube": "/icons/Social-Ytb.svg",
-  "Homepage": "/icons/Homepage.svg",
-  "Report": "/icons/Report.svg",
-  "Store": "/icons/Store.svg",
-  "ContactUs": "/icons/Contact-Us.svg",
+  "Building": Building,
+  "Close": Close,
+  "Envelope": Envelope,
+  "MapPin": MapPin,
+  "Menu": Menu,
+  "MenuBlack": MenuBlack,
+  "Phone": Phone,
+  "Search": Search,
+  "SocialFB": SocialFB,
+  "SocialLinkedIn": SocialLinkedIn,
+  "SocialYoutube": SocialYoutube,
+  "Homepage": Homepage,
+  "Report": Report,
+  "Store": Store,
+  "ContactUs": ContactUs,
 }
+
+// Something wrong with lazy import in Nuxt, this below code made page unable to re-load when redirect
+// const test = defineAsyncComponent(() => import(iconMappings[props.type]))
+
 </script>
 
 <style lang="scss" scoped>
-.icon {
+/* .icon {
   display: flex;
   justify-content: center;
   align-items: start;
+} */
+
+.size-24 {
+  width: 24px;
+  height: 24px;
 }
 </style>
