@@ -11,10 +11,10 @@
       <header :class="{ showMenu: isShowMenu }">
         <NuxtImg :src="isShowMenu ? '/images/Logo-black.svg' : '/images/Logo.svg'" class="logo" :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" />
 
-        <nuxtimg @click="isShowMenu = !isShowMenu">
-          <NuxtImg v-if="device.isMobile && !isShowMenu" src="/icons/Menu.svg" width="24" height="24" />
-          <NuxtImg v-else-if="isShowMenu" src="/icons/Close.svg" width="24" height="24" />
-        </nuxtimg>
+        <div @click="isShowMenu = !isShowMenu">
+          <CustomIcon v-if="device.isMobile && !isShowMenu" type="Menu" />
+          <CustomIcon v-else-if="isShowMenu" type="Close" />
+        </div>
 
 
         <HeaderNavbar v-if="!device.isMobile" />

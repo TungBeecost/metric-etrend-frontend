@@ -1,7 +1,7 @@
 <template>
   <Icon class="icon">
     <template #component>
-      <img :src="iconMappings[type]">
+      <NuxtImg :src="iconMappings[type]" :width="width || 24" :height="height || 24" />
     </template>
   </Icon>
 </template>
@@ -27,7 +27,9 @@ type TypeIcon =
 
 
 defineProps<{
-  type: TypeIcon
+  type: TypeIcon,
+  width?: number,
+  height?: number,
 }>()
 
 const iconMappings = {

@@ -11,17 +11,16 @@
     <NuxtLink v-for="item in MENUS" :key="item.label" :to="item.to" class="menu">
       <AButton size="large" type="text" class="menuItem">
 
-        <CustomIcon :type="item.icon as any" />
+        <CustomIcon :type="item.icon as any" :width="20" :height="20" />
         {{ item.label }}
       </AButton>
     </NuxtLink>
-
 
     <div class="divider" />
 
     <NuxtLink :to="NAVIGATIONS.contactUs" class="menu">
       <AButton size="large" type="text" class="menuItem">
-        <CustomIcon type="ContactUs" />
+        <CustomIcon type="ContactUs" :width="20" :height="20" />
         Liên hệ tư vấn
       </AButton>
     </NuxtLink>
