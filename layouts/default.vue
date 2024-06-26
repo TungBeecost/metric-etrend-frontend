@@ -13,13 +13,12 @@
 
         <nuxtimg @click="isShowMenu = !isShowMenu">
           <NuxtImg v-if="device.isMobile && !isShowMenu" src="/icons/Menu.svg" width="24" height="24" />
-          <NuxtImg v-if="isShowMenu" src="/icons/Close.svg" width="24" height="24" />
+          <NuxtImg v-else-if="isShowMenu" src="/icons/Close.svg" width="24" height="24" />
         </nuxtimg>
 
 
         <HeaderNavbar v-if="!device.isMobile" />
-
-        <HeaderMobileMenu v-if="device.isMobile" :active="isShowMenu" />
+        <HeaderMobileMenu v-else :active="isShowMenu" />
       </header>
 
       <!-- content section -->
@@ -40,7 +39,7 @@
 // side bar handler
 const device = useDevice();
 
-const isShowMenu = useState(() => true);
+const isShowMenu = useState(() => false);
 
 </script>
 

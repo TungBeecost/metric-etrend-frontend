@@ -4,7 +4,7 @@
     <AInputSearch v-model:value="searchValue" :placeholder="placeholder || 'Tìm kiếm báo cáo'" size="large" allow-clear @change="onChange" @search="handleSearch(searchValue)"
       @press-enter="handleSearch(searchValue)" @focus="isShowSuggestions = true">
       <template #enterButton>
-        <SearchSearchIcon />
+        <CustomIcon type="Search" />
       </template>
     </AInputSearch>
 

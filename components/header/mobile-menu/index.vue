@@ -1,26 +1,38 @@
 <template>
   <div :class="{ headerNavbar: 1, active: active }">
-    <!-- <div class="headerNavbarMenu">
-      <AButton type="text" class="headerText">Trang chủ</AButton>
-      <AButton type="text" class="headerText">Báo cáo</AButton>
-      <AButton type="text" class="headerText">Bảng giá dịch vụ</AButton>
-    </div>
-    <div class="headerNavbarCallButton">
-      <AButton>Đăng nhập</AButton>
-      <AButton type="primary">Liên hệ tư vấn</AButton>
-    </div> -->
-
     <div class="login">
-
       <p>Đăng nhập ngay để không bỏ lỡ hàng trăm báo cáo và xu hướng mới nhất!</p>
-      <AButton type="primary" size="large">Đăng nhập</AButton>
+      <AButton type="primary" size="large" @click="navigateTo(NAVIGATIONS.signIn)">Đăng nhập</AButton>
     </div>
+
+    <div class="divider" />
+
+
+    <NuxtLink v-for="item in MENUS" :key="item.label" :to="item.to" class="menu">
+      <AButton size="large" type="text" class="menuItem">
+
+        <CustomIcon :type="item.icon as any" />
+        {{ item.label }}
+      </AButton>
+    </NuxtLink>
+
+
+    <div class="divider" />
+
+    <NuxtLink :to="NAVIGATIONS.contactUs" class="menu">
+      <AButton size="large" type="text" class="menuItem">
+        <CustomIcon type="ContactUs" />
+        Liên hệ tư vấn
+      </AButton>
+    </NuxtLink>
 
 
   </div>
 </template>
 
 <script setup lang="ts">
+
+import { MENUS, NAVIGATIONS } from '../../../helpers/constains';
 
 defineProps<{
   active: boolean;
