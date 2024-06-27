@@ -1,4 +1,4 @@
-name: Caller workflow 01
+name: Call a templated workflow 
 
 permissions: read-all
 
@@ -11,7 +11,7 @@ on:
     branches: [ "staging" ]
 jobs:
 
-  precheck2:
+  include-builds:
 
-    uses: beecost/workflow-template/.github/workflows/template-workflows-steps.yml@master
+    uses: beecost/workflow-template/.github/workflows/template-workflows-build-fe.yml@master
     secrets: inherit
