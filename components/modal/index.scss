@@ -1,0 +1,44 @@
+.modalWrapper {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background:  rgba(36, 30, 70, 0.6);
+  z-index: 100;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal {
+    width: fit-content;
+    min-width: 40%;
+    height: fit-content;
+    background-color: white;
+    border-radius: 16px;
+    padding: 10px 0px;
+    margin: 16px;
+
+    @include mobile {
+      padding: 5px 0px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 0px 10px 10px 10px;
+      align-items: center;
+      flex-wrap: nowrap;
+
+      @include mobile {
+        padding: 10px;
+      }
+
+      .closeBtn {
+        cursor: pointer;
+        justify-self: end;
+      }
+    }
+  }
+}

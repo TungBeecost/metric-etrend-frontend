@@ -34,12 +34,12 @@
     </div>
 
     <ReportBanner />
+
   </div>
 </template>
 
 <script setup lang="ts">
 import { CONTACTS } from "../helpers/constains";
-
 </script>
 
 <style lang="scss" scoped>

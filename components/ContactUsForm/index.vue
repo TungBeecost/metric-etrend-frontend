@@ -12,19 +12,22 @@
     <CustomSelect v-model:select="formValues.socialMediaType" label="Bạn biết tới Metric từ kênh nào?" :error-message="errors.socialMediaType"
       :select-props="{ placeholder: 'Chọn kênh', showSearch: true, options: SOCIAL_MEDIA_TYPES, filterOption: filterSelectOption as any }" class="infoBlock" />
   </div>
-  <AButton type="primary" :class="submitClass" @click="validateForm">{{ submitLabel || 'Gửi' }}</AButton>
+  <AButton type="primary" :class="submitClass" @click="validateForm">{{ submitLabel || "Gửi" }}</AButton>
+
+  <ModalStatus :is-open="isOpenModal" :on-close="toggleModal" :type="typeModal.type" :header="typeModal.header" :description="typeModal.description" class-name-modal="statusModal" />
 </template>
 
 <script setup lang="ts">
-import { CATEGORIES, COMPANY_TYPES, SOCIAL_MEDIA_TYPES } from '../../helpers/constains';
-import { filterSelectOption } from '../../helpers/supporter';
+import { CATEGORIES, COMPANY_TYPES, SOCIAL_MEDIA_TYPES } from "../../helpers/constains";
+import { filterSelectOption } from "../../helpers/supporter";
 import { ERRORS } from "~/helpers/errors";
 import { EMAIL_REGEX, PHONE_REGEX } from "~/helpers/regexs";
+import type { TypeModal } from "../modal/status/index.vue";
 
 defineProps<{
   submitLabel?: string;
   submitClass?: string;
-}>()
+}>();
 
 interface IFormValue {
   name: string;
@@ -36,10 +39,14 @@ interface IFormValue {
 }
 
 const formValues = useState<IFormValue>(() => ({ name: "", phone: "", category: "" }));
-const errors = useState<Partial<IFormValue>>(() => ({}))
+const errors = useState<Partial<IFormValue>>(() => ({}));
+
+const isOpenModal = useState<boolean>(() => false);
+const typeModal = useState<{ type: TypeModal; header: string; description: string }>(() => ({ type: "success" as TypeModal, header: "Đã gửi thành công", description: "Chúng tôi đã nhận được thông tin và sẽ phản hồi sớm nhất tới quý khách!" }));
+const toggleModal = () => (isOpenModal.value = !isOpenModal.value);
 
 const validateForm = () => {
-  // reset errors 
+  // reset errors
   errors.value = {};
 
   const information = formValues.value;
@@ -66,9 +73,16 @@ const validateForm = () => {
   if (Object.keys(errorValues).length > 0) return;
 
   // push info here
+  const result = true;
 
-}
-
+  // show modal
+  if (!result) {
+    // typeModal.value = "failure";
+    typeModal.value.header = "...";
+    typeModal.value.description = "...";
+  }
+  toggleModal();
+};
 </script>
 
 <style lang="scss" scoped>
