@@ -27,33 +27,18 @@
       <div class="block contactForm">
         <p class="title">Liên hệ với chúng tôi</p>
         <p class="description">Liên hệ với chúng tôi để thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến ngay bây giờ!</p>
-        <div class="information">
-          <CustomInput label="Họ và tên" :error-message="'This is error'" :is-required="true" :input-props="{ status: 'error', placeholder: 'Nhập họ và tên' }" class="infoBlock" />
-          <div class="infoBlock contactInfo">
-            <CustomInput class="contactItem" label="Email" :input-props="{ placeholder: 'example@gmail.com' }" />
-            <CustomInput class="contactItem" label="Số điện thoại" :is-required="true" :input-props="{ placeholder: 'Nhập SĐT' }" />
-          </div>
-          <CustomSelect label="Ngành hàng quan tâm" :is-required="true" :error-message="'this is error message'"
-            :select-props="{ placeholder: 'Chọn ngành hàng', showSearch: true, options: CATEGORIES, filterOption: filterSelectOption as any }" class="infoBlock" />
-          <CustomSelect label="Mô hình doanh nghiệp" :select-props="{ placeholder: 'Chọn mô hình doanh nghiệp', showSearch: true, options: COMPANY_TYPES, filterOption: filterSelectOption as any }"
-            class="infoBlock" />
-          <CustomSelect label="Bạn biết tới Metric từ kênh nào?" :select-props="{ placeholder: 'Chọn kênh', showSearch: true, options: SOCIAL_MEDIA_TYPES, filterOption: filterSelectOption as any }"
-            class="infoBlock" />
-        </div>
-        <AButton type="primary">Gửi</AButton>
+
+        <ContactUsForm />
 
       </div>
     </div>
 
-    <div class="section callActionBanner">
-      <NuxtImg src="/images/orange-banner-wave.png" class="background" />
-    </div>
+    <ReportBanner />
   </div>
 </template>
 
 <script setup lang="ts">
-import { CONTACTS, CATEGORIES, COMPANY_TYPES, SOCIAL_MEDIA_TYPES } from "../helpers/constains";
-import { filterSelectOption } from "~/helpers/supporter"
+import { CONTACTS } from "../helpers/constains";
 
 </script>
 

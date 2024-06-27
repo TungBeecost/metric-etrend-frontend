@@ -1,7 +1,7 @@
 <template>
   <div class="selectWrapper">
     <label v-if="label" for="" class="label">{{ label }} <span v-if="isRequired" class="requiredDot"> * </span> </label>
-    <ASelect v-bind="selectProps" class="select" />
+    <ASelect v-model:value="selectModel" :status="errorMessage ? 'error' : ''" v-bind="selectProps" class="select" />
     <p v-if="errorMessage" class="errorMessage">{{ errorMessage }}</p>
   </div>
 </template>
@@ -16,6 +16,7 @@ defineProps<{
   errorMessage?: string
 }>()
 
+const selectModel = defineModel<string>("select");
 
 </script>
 

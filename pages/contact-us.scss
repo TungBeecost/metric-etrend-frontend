@@ -82,21 +82,7 @@
       border-radius: 16px;
     }
 
-    .infoBlock {
-      align-self: stretch;
-    }
-
-    .contactInfo {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 16px;
-      flex-wrap: wrap;
-
-      .contactItem {
-        flex: 1 0 0;
-      }
-    }
+    
   }
 
   .title {
@@ -128,19 +114,5 @@
 
       font-weight: 400;
     }
-  }
-}
-
-.callActionBanner {
-  display: flex;
-  height: 335px;
-  padding: 40px 120px;
-  align-items: center;
-  gap: 64px;
-  background: linear-gradient(90deg, #ff6931 1.09%, #ff9839 49.34%);
-  position: relative;
-
-  .background {
-    z-index: 1;
   }
 }

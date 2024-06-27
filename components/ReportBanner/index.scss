@@ -1,0 +1,69 @@
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  object-fit: cover;
+  object-position: 0px 25%;
+  backdrop-filter: blur(100px);
+}
+
+.callActionBanner {
+  display: flex;
+  padding: 40px 0px 0px 120px;
+  align-items: stretch;
+  gap: 64px;
+  background: linear-gradient(90deg, #ff6931 1.09%, #ff9839 49.34%);
+  position: relative;
+
+
+  .background {
+    z-index: 1;
+  }
+
+  .callActionBlock,.illustrationBlock {
+    z-index: 2;
+    flex: 1 0 0;
+  }
+
+  .callActionBlock {
+    margin-bottom: 40px;
+
+    .title {
+      color: white;
+
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 56px; 
+      margin-bottom: 24px;
+    }
+
+    button {
+      background-color: #241E46;
+    }
+  }
+
+  .illustrationBlock {
+    position: relative;
+    width: 100%;
+
+    .mainIllust {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .sideIllust {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 60%;
+      height: 60%;
+      transform: translateX(-30%) translateY(-50%);
+    }
+  }
+}
