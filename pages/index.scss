@@ -81,6 +81,16 @@
     justify-content: center;
     align-items: center;
   }
+
+  .parterItem {
+    width: 139px;
+    height: 80px;
+
+    @include mobile {
+      width: 116px;
+      height: 62px;
+    }
+  }
 }
 
 .sectionSearch {
@@ -117,7 +127,7 @@
       justify-content: center;
 
       .recommendItem {
-        background-color: #EEEBFF;
+        background-color: $divider;
       }
     }
 
