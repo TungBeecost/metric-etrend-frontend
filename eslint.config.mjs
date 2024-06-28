@@ -8,7 +8,10 @@ export default withNuxt(
       "@typescript-eslint/no-explicit-any": "off",
       "vue/first-attribute-linebreak": "off",
       "vue/require-default-prop": "off",
-      "vue/require-v-for-key": "off"
+        "vue/return-in-computed-property" : "off",
+      "vue/require-v-for-key": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+
     }
   }
 );

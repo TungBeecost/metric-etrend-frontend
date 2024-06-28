@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 const selectedOption = ref('newest');
-const handleChange = (value: string) => {
+const handleChange = (value: any, _option: any) => {
   console.log(value);
 };
 </script>

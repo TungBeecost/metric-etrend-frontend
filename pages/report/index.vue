@@ -8,5 +8,4 @@ import TitleReport from "~/components/report/TitleReport.vue";
 </template>
 
 <style scoped lang="scss">
-
 </style>

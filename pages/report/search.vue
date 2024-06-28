@@ -8,7 +8,24 @@ import FilterReport from "~/components/report/FilterReport.vue";
 import PopularRelateKeywords from "~/components/report/PopularRelateKeywords.vue";
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
 
-const data = ref(null);
+interface Report {
+  id: string;
+  name: string;
+  slug: string;
+  url_thumbnail: string;
+  revenue_monthly: number;
+  gr_quarter: number;
+  shop: string;
+  lst_category: { name: string }[];
+  lst_brand: string[];
+}
+
+interface Data {
+  total: number;
+  lst_report: Report[];
+}
+
+const data = ref<Data | null>(null);
 const current = ref(1);
 const displaySortReport = ref(false);
 const isModalVisible = ref(false);
@@ -79,7 +96,7 @@ onMounted(() => {
           <div class="count_result">
             {{ data?.total.toLocaleString() }} kết quả
           </div>
-          <sort-report class="sort_report" v-if="displaySortReport"/>
+          <sort-report v-if="displaySortReport" class="sort_report"/>
           <a-button v-else @click="clickButtonFilter">
             <div style="display: flex; gap: 8px; justify-content: center; align-items: center">
               <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -103,7 +120,7 @@ onMounted(() => {
               Bộ lọc
             </div>
           </a-button>
-          <a-modal title="Filter and Sort" v-model:visible="isModalVisible" @ok="handleOk" @cancel="handleCancel">
+          <a-modal v-model:visible="isModalVisible" title="Filter and Sort" @ok="handleOk" @cancel="handleCancel">
             <sort-report class="sort_report"/>
             <filter-report class="filter_report"/>
           </a-modal>

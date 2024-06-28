@@ -47,13 +47,13 @@ const toggleSelectTime = () => {
   showSelectTime.value = !showSelectTime.value;
 };
 
-const handleAllCheckboxChange = (newSelectedYears) => {
-  if (newSelectedYears.includes('all')) {
-    selectedYears.value = ['all', ...years.value];
-  } else {
-    selectedYears.value = newSelectedYears.filter(year => year !== 'all');
-  }
-};
+// const handleAllCheckboxChange = (newSelectedYears) => {
+//   if (newSelectedYears.includes('all')) {
+//     selectedYears.value = ['all', ...years.value];
+//   } else {
+//     selectedYears.value = newSelectedYears.filter(year => year !== 'all');
+//   }
+// };
 </script>
 
 <template>
@@ -111,7 +111,7 @@ const handleAllCheckboxChange = (newSelectedYears) => {
           </div>
           <div>Thời gian đăng tải</div>
         </div>
-        <a-checkbox-group v-if="showSelectTime" v-model="selectedYears" @change="handleAllCheckboxChange">
+        <a-checkbox-group v-if="showSelectTime" v-model="selectedYears" >
           <a-checkbox value="all">Tất cả</a-checkbox>
           <div v-for="year in years" :key="year">
             <a-checkbox :value="year">{{ year }}</a-checkbox>

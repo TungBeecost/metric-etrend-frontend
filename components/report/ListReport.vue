@@ -1,8 +1,21 @@
 <script setup lang="ts">
+import { defineProps } from 'vue'
+
+interface DataItem {
+  id: string; // Add this line
+  name: string;
+  slug: string;
+  url_thumbnail: string;
+  revenue_monthly: number;
+  gr_quarter: number;
+  shop: string;
+  lst_category: { name: string }[]; // Add this line
+  lst_brand: string[]; // Add this line
+}
 
 const props = defineProps({
   data: {
-    type: Array,
+    type: Array as () => DataItem[],
     default: () => [],
   },
 });
