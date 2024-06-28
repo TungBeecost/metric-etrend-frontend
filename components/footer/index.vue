@@ -20,8 +20,8 @@
       <!-- contact -->
       <div class="info contact">
         <div class="title">Liên hệ</div>
-        <div v-for="(item, index) in contacts" :key="index" class="contactItem">
-          <NuxtImg :src="item.icon" width="24" height="24" />
+        <div v-for="(item, index) in CONTACTS" :key="index" class="contactItem">
+          <CustomIcon :type="item.icon as any" />
           <p>{{ item.label }}</p>
         </div>
       </div>
@@ -48,6 +48,8 @@
 </template>
 
 <script setup lang="ts">
+import { CONTACTS } from '../../helpers/constains';
+
 
 const termAndPolicies = [{
   label: "Chính sách bảo mật thông tin",
@@ -66,19 +68,7 @@ const termAndPolicies = [{
   link: "/",
 }]
 
-const contacts = [{
-  label: "CÔNG TY CỔ PHẦN KHOA HỌC DỮ LIỆU",
-  icon: "/icons/Buildings.svg",
-}, {
-  label: "Tầng 6 Tòa nhà AZ Lâm Viên, 107A Nguyễn Phong Sắc, phường Dịch Vọng Hậu, quận Cầu Giấy, thành phố Hà Nội, Việt Nam",
-  icon: "/icons/MapPin.svg",
-}, {
-  label: "033.806.2221",
-  icon: "/icons/Phone.svg",
-}, {
-  label: "info@metric.vn",
-  icon: "/icons/Envelope.svg",
-}]
+
 </script>
 
 <style lang="scss" scoped>
