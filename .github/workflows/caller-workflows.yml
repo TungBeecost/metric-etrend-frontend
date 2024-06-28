@@ -19,3 +19,4 @@ jobs:
 
     uses: beecost/workflow-template/.github/workflows/template-workflows-deploy-fe.yml@master
     secrets: inherit  
+    needs: [include-builds]
