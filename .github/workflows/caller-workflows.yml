@@ -7,11 +7,15 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "staging" ]
-  pull_request:
-    branches: [ "staging" ]
+
 jobs:
 
   include-builds:
 
     uses: beecost/workflow-template/.github/workflows/template-workflows-build-fe.yml@master
     secrets: inherit
+  
+  include-deploy:
+
+    uses: beecost/workflow-template/.github/workflows/template-workflows-deploy-fe.yml@master
+    secrets: inherit  
