@@ -1,3 +1,4 @@
+
 .section {
   display: flex;
   flex-direction: column;
@@ -19,7 +20,6 @@
     align-items: center;
     gap: 16px;
     text-align: center;
-
     .sectionTitle {
       font-size: 40px;
       font-weight: 700;
@@ -42,20 +42,20 @@
       span {
         display: none;
 
-        
+
       }
       .active {
         display: inline-block;
       }
 
-      
+
 
       @include mobile {
         font-size: 16px;
         line-height: 24px;
       }
     }
-    
+
   }
 
   .sectionContent {

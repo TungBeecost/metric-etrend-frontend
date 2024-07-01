@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     typeCheck: true
   },
 
-  css: ["./assets/scss/reset.scss", "normalize.css"],
+    css: ["./assets/scss/reset.scss", "normalize.css"],
 
   vite: {
     css: {
@@ -44,6 +44,7 @@ export default defineNuxtConfig({
     "@nuxt/test-utils/module",
     "@nuxtjs/device",
     "@nuxt/image",
+      ["nuxt-highcharts", {}],
     async function () {
       for (const key in AntD) {
         if (["version", "install"].includes(key)) continue;
