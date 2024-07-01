@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { NAVIGATIONS } from '../helpers/constains';
+import { NAVIGATIONS } from '../constant/constains';
 
 const route = useRoute();
 

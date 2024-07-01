@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { TESTIMONIAL_BRANDS } from "~/helpers/constains"
+import { TESTIMONIAL_BRANDS } from "~/constant/constains"
 
 </script>
 

@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { vOnClickOutside } from '@vueuse/components';
-import { debounce } from "~/helpers/common"
+import { debounce } from "~/helpers/common";
 
 const props = defineProps<{
   handleSearch: (value: string) => Promise<any>,
@@ -52,14 +52,9 @@ const onChange = debounce(async () => {
 
   const result = await props.handleChange(searchValue.value);
 
-  console.log("click onChange", result);
-
   if (result) {
     suggestions.value = result;
   }
-
-  console.log("suggestions", suggestions.value);
-
 });
 
 </script>

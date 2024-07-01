@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PLANS } from '../../helpers/constains';
+import { PLANS } from '../../constant/constains';
 
 defineProps<{
   isDarkTitle?: boolean,

@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 
-import { MENUS, NAVIGATIONS } from '../../../helpers/constains';
+import { MENUS, NAVIGATIONS } from '../../../constant/constains';
 
 defineProps<{
   active: boolean;

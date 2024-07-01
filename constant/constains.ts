@@ -1,4 +1,4 @@
-import type { CommonOptionItem } from "./types";
+import type { CommonOptionItem } from "~/helpers/types";
 
 export const NAVIGATIONS = {
   search: "/search",

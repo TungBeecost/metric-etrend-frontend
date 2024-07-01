@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { PARTERS } from "~/helpers/constains"
+import { PARTERS } from "~/constant/constains"
 
 </script>
 

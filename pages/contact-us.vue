@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { CONTACTS } from "../helpers/constains";
+import { CONTACTS } from "../constant/constains";
 </script>
 
 <style lang="scss" scoped>
