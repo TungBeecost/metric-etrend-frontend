@@ -1,6 +1,6 @@
 <template>
   <div v-if="isOpen" class="modalWrapper">
-    <div class="modal">
+    <div class="modal" :class="modalClass">
       <div class="header">
         <div>
           <slot name="header" />
@@ -20,6 +20,7 @@ import { CloseOutlined } from "@ant-design/icons-vue";
 defineProps<{
   isOpen: boolean,
   onClose: () => void,
+  modalClass?: string
 }>()
 
 </script>
