@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { fetchUnlockReport } from "../services/reports";
 
 interface CurrentUser {}
 
@@ -21,8 +22,10 @@ export const useCurrentUser = defineStore("currentUserStore", {
       // fetch data from API and update state
       //...
     },
-    async change() {
-      this.unlockInfo.remainingUnlock = 1;
+    async unlockReport(reportId: string) {
+      // call BE to verify & update state
+      await fetchUnlockReport(reportId);
+      this.unlockInfo.remainingUnlock--;
     }
   }
 });

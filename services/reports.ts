@@ -11,6 +11,12 @@ export const searchReport = async (body: SearchReportPayload) => {
   return result;
 };
 
+export const fetchUnlockReport = async (reportId: string) => {
+  console.log(reportId);
+
+  return true;
+};
+
 export interface SearchReportPayload {
   limit?: number;
   lst_category_report_id?: Array<string>;

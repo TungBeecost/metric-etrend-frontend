@@ -6,7 +6,8 @@
 
         <div class="content">
           <p class="header">Xác nhận xem báo cáo</p>
-          <p class="description">Bạn có chắc chắn muốn sử dụng <span class="highlight">01 lượt xem</span> trong vòng 24 giờ cho <span class="textBold">{{ reportTitle }}</span> không?
+          <p class="description">Bạn có chắc chắn muốn sử dụng <span class="highlight">01 lượt xem</span> trong vòng <span class="highlight">24 giờ</span> cho <span class="textBold">{{ reportTitle
+              }}</span> không?
           </p>
         </div>
       </div>
@@ -24,7 +25,7 @@
       <div class="footerModal">
         <AButton size="large" class="optionBtn" @click="onClose">Huỷ</AButton>
 
-        <AButton v-if="currentUser.remainingUnlock" size="large" type="primary" class="optionBtn">Xem báo cáo</AButton>
+        <AButton v-if="currentUser.remainingUnlock" size="large" type="primary" class="optionBtn" @click="unlockReport">Xem báo cáo</AButton>
         <AButton v-else size="large" type="primary" class="optionBtn" @click="navigateTo(NAVIGATIONS.pricing)">Mua ngay</AButton>
       </div>
     </template>
@@ -45,6 +46,13 @@ defineProps<{
 }>()
 
 const currentUser = useCurrentUser();
+
+const unlockReport = async () => {
+  await currentUser.unlockReport('123');
+
+  // if nothing wrong
+  reloadNuxtApp();
+}
 </script>
 
 <style lang="scss">
