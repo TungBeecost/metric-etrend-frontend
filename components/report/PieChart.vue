@@ -31,13 +31,6 @@ const colors = [
   "#FFC53D"
 ];
 
-const platformColors = {
-  Shopee: "#EE672D",
-  Lazada: "#122689",
-  Tiki: "#0060FF",
-  Sendo: "#E12A00",
-  Tiktok: "#000",
-};
 
 const isMobile = ref(window?.innerWidth < 768);
 const chartWidth = ref(!isMobile.value ? 600 : 250);

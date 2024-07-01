@@ -6,6 +6,8 @@ import Overview from "~/components/report/Overview.vue";
 import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
 import BrandStatistic from "~/components/report/BrandStatistic.vue";
+import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
+import ReportContent from "~/components/report/ReportContent.vue";
 
 interface Category {
   name: string;
@@ -15,6 +17,7 @@ interface Category {
 interface Data {
   name: string;
   lst_category: Category[];
+  filter_custom: any;
 }
 const isFreeUser = false;
 const isHideContent = true;
@@ -22,7 +25,7 @@ const data = ref<Data | null>(null);
 
 const fetchTableData = async () => {
   try {
-    const response = await axios.get('https://api-web.metric.vn/api/report_category/detail?report_id=c1513215936', {
+    const response = await axios.get('https://api-web.metric.vn/api/report/detail?slug=giay-nam', {
       headers: {
         'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImN1b25nbGRAbWV0cmljLnZuIiwiZXhwIjoxNzE5NDU5MTk4LCJpYXQiOjE3MTg4NTQzOTgsImlzcyI6IkF1dGhlbnRpY2F0aW9uIFNlcnZpY2UiLCJzdWIiOiJEdXkgQ8awxqFuZyBMw6oifQ.s5ilAouYDUAYKz70E5uet3fQhPjovTBhuvpC-qIA8xY',
       }
@@ -34,6 +37,8 @@ const fetchTableData = async () => {
     console.error(error);
   }
 };
+
+
 
 const breadcrumbs = computed(() => {
   if (data.value) {
@@ -87,9 +92,16 @@ onMounted(() => {
             :is-free-user="isFreeUser"
             :is-hide-content="isHideContent"
         />
+        <top-shop-statistic
+            :data="data"
+            :is-free-user="isFreeUser"
+            :is-hide-content="isHideContent"
+        />
       </div>
       <div v-if="data" class="different_info">
         <overview :data="data as Record<string, any>"/>
+        <report-content />
+        <report-filter-detail :data="data" :filter="data.filter_custom" class="report-filter-detail"/>
       </div>
     </div>
   </div>
@@ -130,6 +142,9 @@ onMounted(() => {
 
     .different_info {
       flex: 0.2;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
   }
 }

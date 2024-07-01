@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     typeCheck: true
   },
 
-    css: ["./assets/scss/reset.scss", "./assets/scss/main.scss", "normalize.css"],
+    css: ["./assets/scss/reset.scss", "normalize.css"],
 
   vite: {
     css: {

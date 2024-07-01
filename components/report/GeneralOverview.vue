@@ -232,9 +232,11 @@ const charts = computed(() => {
                     .slice()
                     .map(
                         (monthly: { by_platform: { platform_id: number, revenue: number }[] }) =>
-                            monthly.by_platform.find(
+                            monthly.by_platform
+                                ? monthly.by_platform.find(
                                 (p: { platform_id: number }) => Number(p.platform_id) === platformId
                             )?.revenue || 0
+                                : 0
                     ),
               }
             }),
