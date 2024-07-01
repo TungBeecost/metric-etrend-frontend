@@ -28,18 +28,7 @@
 
     <!-- highligh section-->
     <div class="section">
-      <div class="sectionHeader">
-        <p class="sectionTitle">Báo cáo nổi bật</p>
-        <p class="sectionDescription">Cập nhật ngay những báo cáo xu hướng mới nhất giúp bạn nắm bắt kịp thời biến động thị trường <br> <span :class="{ active: !device.isMobile }"> và đưa ra quyết
-            định đầu
-            tư chính xác.</span></p>
-      </div>
-
-      <div class="sectionContent">
-        <div class="tmp">This is highlight block</div>
-        <!-- Wait component from Bao Cao page -->
-      </div>
-
+      <ReportFeaturedReport />
     </div>
 
     <!-- testimonials section-->
@@ -50,16 +39,13 @@
 
 
     <!-- pricing section -->
-    <div class="section">
-      <!-- Wait component from Contact us page -->
-      <div class="tmp">This is pricing block</div>
-
+    <div class="section planSection">
+      <Plans :is-dark-title="true" />
     </div>
 
     <!-- contact us section -->
-    <div class="section">
-      <!-- Wait component from Contact us page -->
-      <div class="tmp">This is contact us block</div>
+    <div class="">
+      <ContactUs />
 
     </div>
   </div>
@@ -68,9 +54,6 @@
 <script setup lang="ts">
 import type SearchReport from '../components/search/search-report.vue';
 import { NAVIGATIONS } from '../helpers/constains';
-
-const device = useDevice();
-
 
 const recommendSearch = ["Ngành hàng Mẹ & Bé", "Ngành hàng Điện tử", "Thời trang Nam", "Điện Máy"]
 
