@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PLANS } from '../../constant/constains';
+import { NAVIGATIONS, PLANS } from '../../constant/constains';
 
 defineProps<{
   isDarkTitle?: boolean,
@@ -39,7 +39,8 @@ defineProps<{
             </div>
           </div>
 
-          <AButton type="primary">Mua gói {{ plan.type }}</AButton>
+          <!-- <AButton type="primary">Mua gói {{ plan.type }}</AButton> -->
+          <AButton type="primary" @click="navigateTo(NAVIGATIONS.contactUs)">Liên hệ tư vấn</AButton>
         </div>
       </div>
     </div>
