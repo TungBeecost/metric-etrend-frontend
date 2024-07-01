@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { PLANS } from '../../helpers/constains';
+
+defineProps<{
+  isDarkTitle?: boolean,
+}>()
 </script>
 
 <template>
   <div class="wrapper">
-    <p class="header">Mở khoá và truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</p>
+    <p :class="{ header: true, dark: isDarkTitle }">Mở khoá và truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</p>
 
     <div class="pricings">
       <div v-for="plan in PLANS" :class="{ planItem: true, highlight: plan.isHighlight }">

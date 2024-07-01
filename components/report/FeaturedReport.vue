@@ -11,7 +11,7 @@ import ItemFeatureReport from './ItemFeatureReport.vue';
         <div>nắm bắt kịp thời biến động thị trường và đưa ra quyết định đầu tư chính xác.</div>
       </div>
     </div>
-    <item-feature-report/>
+    <item-feature-report />
   </div>
 </template>
 
@@ -22,6 +22,8 @@ import ItemFeatureReport from './ItemFeatureReport.vue';
   align-items: center;
   gap: 64px;
   padding-top: 60px;
+  width: 100%;
+  height: 100%;
 }
 
 .title_content {
@@ -43,6 +45,4 @@ import ItemFeatureReport from './ItemFeatureReport.vue';
   color: #716B95;
   line-height: 32px;
 }
-
-
 </style>
