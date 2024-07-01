@@ -59,6 +59,7 @@ export default defineNuxtConfig({
       }
     },
     "nuxt-svgo",
-    "@ant-design-vue/nuxt"
+    "@ant-design-vue/nuxt",
+    "@pinia/nuxt"
   ]
 });

@@ -1,0 +1,88 @@
+.wrapperSpec {
+  width: 60% !important;
+
+  @include mobile {
+    width: 90% !important;
+  }
+}
+
+.contentModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 0px 24px;
+  margin-bottom: 40px;
+
+  @include mobile {
+    padding: 0px 16px;
+    margin-bottom: 24px;
+    gap: 31px;
+  }
+
+  .statusIcon {
+    width: 150px;
+    height: 150px;
+
+    @include mobile {
+      width: 125px;
+      height: 125px;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    text-align: center;
+
+    .header {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 48px;
+
+      @include mobile {
+        font-size: 24px;
+      line-height: 38px;
+      }
+    }
+
+    .description {
+      color: $lighter_text_color;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 32px;
+
+      @include mobile {
+        font-size: 14px;
+      line-height: 22px;
+      }
+
+      .highlight {
+        color: $primary;
+      }
+
+      .textBold {
+        font-weight: 500;
+        color: $default_text_color;
+      }
+    }
+  }
+}
+
+.footerModal {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  @include mobile {
+    margin-bottom: 20px;
+  }
+
+  .optionBtn {
+    width: 100%;
+  }
+}
