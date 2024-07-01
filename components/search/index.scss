@@ -1,0 +1,33 @@
+.suggestions {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 9px);
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  padding: 8px 0;
+  display: none;
+  max-height: 200px;
+  overflow-y: auto;
+
+  &.active {
+    display: block;
+  }
+
+  .suggestion-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+}
+
+.wrapper {
+  position: relative;
+}

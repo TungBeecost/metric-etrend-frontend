@@ -1,0 +1,35 @@
+.wrapperLeadForm {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+
+  .information {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+
+    .map {
+      width: 100%;
+      border-radius: 16px;
+    }
+
+    .infoBlock {
+      align-self: stretch;
+    }
+
+    .contactInfo {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+
+      .contactItem {
+        flex: 1 0 0;
+      }
+    }
+  }
+}

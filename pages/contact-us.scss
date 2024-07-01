@@ -1,0 +1,149 @@
+.section {
+  padding: 0px 100px;
+
+  @include mobile {
+    padding: 0px 16px;
+  }
+}
+
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  object-fit: cover;
+  object-position: 0px 25%;
+  backdrop-filter: blur(100px);
+
+  .left {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(12, 3, 62, 1) 13%, rgba(42, 37, 69, 1) 39%, rgba(211, 211, 211, 0) 69%);
+    opacity: 0.8;
+
+    @include mobile {
+      background: linear-gradient(90deg, rgba(12, 3, 62, 1) 13%, rgba(42, 37, 69, 1) 59%, rgba(211, 211, 211, 0) 89%);
+    }
+  }
+}
+
+.bannerSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+  position: relative;
+  padding-top: 100px;
+  padding-bottom: 100px;
+
+  font-style: normal;
+  color: white;
+
+  .title {
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 56px;
+
+    @include mobile {
+      font-size: 36px;
+    line-height: 48px;
+    }
+  }
+
+  .description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+  }
+}
+
+.infoSection {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  width: 100%;
+  padding: 100px;
+  gap: 48px;
+
+  @include mobile {
+    flex-direction: column;
+    padding: 40px 16px;
+  }
+
+  .information {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+
+    .contactItem {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      align-self: stretch;
+
+      .inforDetail {
+        font-weight: 400;
+        line-height: 24px;
+      }
+    }
+
+    .map {
+      width: 100%;
+      border-radius: 16px;
+    }
+
+    
+  }
+
+  .title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 48px;
+
+    @include mobile {
+      font-size: 24px;
+    line-height: 38px;
+    }
+  }
+
+  .block {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px;
+    flex: 1 0 0;
+    align-self: stretch;
+
+    @include mobile {
+      padding: 0px;
+      gap: 16px;
+    }
+  }
+
+  .contactInfo {
+    align-items: flex-start;
+    flex: 1 0 0;
+
+    @include mobile {
+      order: 2,
+    }
+  }
+
+  .contactForm {
+    flex: 1 0 0;
+    align-items: stretch;
+
+    .description {
+      color: $lighter_text_color;
+
+      font-weight: 400;
+    }
+  }
+}
