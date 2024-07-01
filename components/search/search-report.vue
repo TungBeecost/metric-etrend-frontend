@@ -18,7 +18,6 @@ const onSearch = async (searchValue: string) => {
   const result = await fetchSearch(searchValue);
   console.log(result);
 
-
   // action show result here
 };
 
