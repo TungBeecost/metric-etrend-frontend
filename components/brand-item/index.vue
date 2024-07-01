@@ -1,14 +1,12 @@
 <template>
   <div class="wrapper">
-    <img :src="src" class="branch" :width="width" :height="height">
+    <img :src="src" class="branch">
   </div>
 </template>
 
 <script setup lang="ts">
 defineProps<{
-  src: string,
-  width?: string,
-  height?: string
+  src: string
 }>()
 </script>
 
@@ -28,5 +26,8 @@ defineProps<{
 .branch {
   border-radius: 8px;
   background: #FFF;
+
+  width: 100%;
+  height: 100%;
 }
 </style>

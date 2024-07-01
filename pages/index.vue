@@ -21,15 +21,9 @@
 
     </div>
 
-
     <!-- parter section -->
     <div class="section">
-      <div class="sectionHeader">
-        <p class="sectionTitle">Hơn 500+ đối tác tin cậy của Metric</p>
-      </div>
-      <Vue3Marquee gradient="true">
-        <BrandItem v-for="(branch, index) in brands" :key="index" :src="branch" :width="device.isDesktop ? '139' : '116'" :height="device.isDesktop ? '80' : '62'" />
-      </Vue3Marquee>
+      <Parters />
     </div>
 
     <!-- highligh section-->
@@ -50,12 +44,7 @@
 
     <!-- testimonials section-->
     <div class="section">
-      <div class="sectionHeader">
-        <p class="sectionTitle">Nguồn số liệu đáng tin cậy <br> được các đơn vị truyền thông, báo chí sử dụng</p>
-      </div>
-      <div class="testimonialsList">
-        <BrandItem v-for="(branch, index) in testimonialBrands" :key="index" :src="branch" :width="device.isDesktop ? '139' : '86'" :height="device.isDesktop ? '80' : '32'" />
-      </div>
+      <Testimonials />
     </div>
 
 
@@ -81,24 +70,6 @@ import type SearchReport from '../components/search/search-report.vue';
 import { NAVIGATIONS } from '../helpers/constains';
 
 const device = useDevice();
-
-const brands = [
-  "/images/branch/branch1.png",
-  "/images/branch/guardian.png",
-  "/images/branch/lazada.png",
-  "/images/branch/shopee.png",
-  "/images/branch/themobileworld.png",
-  "/images/branch/tiki.png",
-  "/images/branch/unilever.png"
-];
-const testimonialBrands = [
-  "/images/branch/vietnamnet.png",
-  "/images/branch/tuoitre.png",
-  "/images/branch/vtv.png",
-  "/images/branch/vnexpress.png",
-  "/images/branch/dantri.png",
-  "/images/branch/thanhnien.png",
-]
 
 
 const recommendSearch = ["Ngành hàng Mẹ & Bé", "Ngành hàng Điện tử", "Thời trang Nam", "Điện Máy"]
