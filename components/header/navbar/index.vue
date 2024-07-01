@@ -1,7 +1,8 @@
 <template>
   <div class="headerNavbar">
     <div class="headerNavbarMenu">
-      <AButton v-for="(item, index) in MENUS" :key="index" type="text" :class="isDarkBlueHeader ? 'headerText' : 'headerTextDarkBlue'" @click="navigateTo(item.to)">{{ item.label }}</AButton>
+      <AButton v-for="(item, index) in MENUS" :key="index" type="text" :class="{ headerText: isDarkBlueHeader, headerTextDarkBlue: !isDarkBlueHeader }" @click="navigateTo(item.to)">{{ item.label }}
+      </AButton>
     </div>
     <div class="headerNavbarCallButton">
       <AButton @click="navigateTo(NAVIGATIONS.signIn)">Đăng nhập</AButton>
