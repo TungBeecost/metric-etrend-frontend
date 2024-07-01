@@ -216,7 +216,7 @@ const chartOptions = computed(() => {
     </div>
     <div class="my-4 w-full text-center relative">
       <highchart :options="chartOptions" />
-      <ChartMask v-if="isHideContent" @click-on-hidden="$emit('clickOnHidden')" />
+      <!-- <ChartMask v-if="isHideContent" @click-on-hidden="$emit('clickOnHidden')" /> -->
     </div>
     <InsightBlock v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length">
       <li>
