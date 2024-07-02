@@ -33,7 +33,7 @@ const colors = [
 
 
 const isMobile = ref(window?.innerWidth < 768);
-const chartWidth = ref(!isMobile.value ? 600 : 250);
+const chartWidth = ref(null);
 
 const tooltip = ref({});
 const dataLabels = ref({});
@@ -82,7 +82,7 @@ watchEffect(() => {
       type: "pie",
       width: chartWidth.value,
       style: {
-        fontFamily: "Montserrat",
+        fontFamily: "Inter",
       },
     },
     tooltip: tooltip.value,
@@ -105,7 +105,7 @@ watchEffect(() => {
     title: {
       text: props.title,
       style: {
-        fontFamily: "Montserrat",
+        fontFamily: "Inter",
         fontWeight: '700',
         fontSize: '16px',
         colr: '#241E46'

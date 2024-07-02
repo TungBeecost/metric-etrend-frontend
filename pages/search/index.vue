@@ -20,15 +20,21 @@ interface Report {
   lst_brand: string[];
 }
 
+interface Breadcrumb {
+  name: string;
+}
+
 interface Data {
   total: number;
   lst_report: Report[];
+  breadcrumb: Breadcrumb[]; // Add this line
 }
 
 const data = ref<Data | null>(null);
 const current = ref(1);
 const displaySortReport = ref(false);
 const isModalVisible = ref(false);
+const route = useRoute();
 
 if (typeof window !== 'undefined') {
   displaySortReport.value = window.matchMedia('(min-width: 768px)').matches; // change the value directly
@@ -47,6 +53,7 @@ if (typeof window !== 'undefined') {
 
 const fetchTableData = async () => {
   try {
+    const categoryReportId = route.query.category_report_id;
     const response = await axios({
       method: 'post',
       url: 'https://api-web.metric.vn/api/report/search',
@@ -54,7 +61,7 @@ const fetchTableData = async () => {
         'content-type': 'application/json',
       },
       data: {
-        'lst_category_report_id': ['c1513215936'],
+        'lst_category_report_id': [categoryReportId],
         'lst_query': [],
         'lst_field': ['name', 'slug', 'url_thumbnail', 'revenue_monthly', 'gr_quarter', 'shop'],
         'offset': 0,
@@ -68,6 +75,7 @@ const fetchTableData = async () => {
     console.log(error);
   }
 };
+
 
 const clickButtonFilter = () => {
   isModalVisible.value = true;
@@ -87,8 +95,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <banner-report title="Giày dép nam"/>
-  <div class="search_report ">
+  <banner-report v-if="data" :title="data.breadcrumb[0].name"/>
+  <div id="search_report">
     <div class="search" style="display: flex; justify-content: center">THANH SEARCH</div>
     <div class="container default_section">
       <div class="list_report_industry">
@@ -155,8 +163,9 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-.search_report{
+#search_report{
   background-color: #FBFAFC;
+  overflow: auto;
   .container{
     display: flex;
     gap: 32px;
@@ -304,6 +313,7 @@ onMounted(() => {
     width: calc(100% - 20px);
     margin: 0 auto;
   }
+
 }
 
 @media (max-width: 767px) {
@@ -324,51 +334,69 @@ onMounted(() => {
 
 </style>
 <style lang="scss">
-.ant-pagination{
-  .ant-pagination-item{
-    background-color: #F5F5F5;
-    border-radius: 8px;
-    a{
+#search_report{
+  .ant-modal {
+    @media (max-width: 767px) {
+      width: 90% !important;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      width: 70% !important;
+    }
+    @media (min-width: 1024px) {
+      width: 50% !important;
+    }
+    @media (min-width: 1200px) {
+      width: 30% !important;
+    }
+  }
+  .ant-pagination{
+    .ant-pagination-item{
       background-color: #F5F5F5;
       border-radius: 8px;
+      a{
+        background-color: #F5F5F5;
+        border-radius: 8px;
+      }
     }
-  }
-  .ant-pagination-item-active{
-    background-color: #E85912;
-    color: #FFFFFF;
-    a{
+    .ant-pagination-item-active{
       background-color: #E85912;
       color: #FFFFFF;
+      a{
+        background-color: #E85912;
+        color: #FFFFFF;
+      }
+    }
+    .ant-pagination-options{
+      display: none;
     }
   }
-  .ant-pagination-options{
-    display: none;
-  }
-}
-.ant-btn.ant-btn-default{
-  display: flex;
-  padding: 9px 16px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border-radius: 8px;
-  color: #FFFFFF;
-  font-weight: 500;
-  font-size: 14px;
-  background: #241E46;
-  border: 1px solid #241E46;
-}
-.ant-modal-footer{
-  display:flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-@media (max-width: 767px) {
   .ant-btn.ant-btn-default{
-    background: #FFF;
-    border: 1px solid #FFF;
-    color: #241E46;
+    display: flex;
+    padding: 9px 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-weight: 500;
+    font-size: 14px;
+    background: #241E46;
+    border: 1px solid #241E46;
+  }
+  .ant-modal-footer{
+    display:flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  @media (max-width: 767px) {
+    .ant-btn.ant-btn-default{
+      background: #FFF;
+      border: 1px solid #FFF;
+      color: #241E46;
+    }
   }
 }
+
 </style>

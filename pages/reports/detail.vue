@@ -8,6 +8,9 @@ import {EVENT_TYPE} from "~/constant/general/EventConstant";
 import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ReportContent from "~/components/report/ReportContent.vue";
+import ListProducts from "~/components/report/ListProducts.vue";
+import {ref} from "vue";
+import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 
 interface Category {
   name: string;
@@ -38,8 +41,6 @@ const fetchTableData = async () => {
   }
 };
 
-
-
 const breadcrumbs = computed(() => {
   if (data.value) {
     console.log(data.value.lst_category);
@@ -69,8 +70,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container_content default_section">
-    <div class="title">
+  <div class="container_content">
+    <div class="title default_section">
       <div v-if="data" class="breadcrumbs">
         <Breadcrumb :breadcrumbs="breadcrumbs"/>
       </div>
@@ -78,14 +79,13 @@ onMounted(() => {
         Báo cáo ngành hàng {{ data.name }} trên sàn TMĐT
       </h1>
     </div>
-    <div class="container">
-      <div v-if="data" class="general_overview">
+    <div class="container default_section">
+      <div v-if="data" class="general_overview_container">
         <general-overview :data="data as Record<string, any>" :is-hide-content="false" :is-free-user="false"/>
         <price-range-statistic
             :data="data"
             :is-free-user="isFreeUser"
             :is-hide-content="isHideContent"
-            @click-on-hidden="$emit('clickOnHidden', EVENT_TYPE.CLICK_OPEN_FORM_SUBSCRIPTION)"
         />
         <brand-statistic
             :data="data"
@@ -97,6 +97,11 @@ onMounted(() => {
             :is-free-user="isFreeUser"
             :is-hide-content="isHideContent"
         />
+        <list-products
+            :data="data"
+            :is-free-user="isFreeUser"
+            :is-hide-content="isHideContent"
+        />
       </div>
       <div v-if="data" class="different_info">
         <overview :data="data as Record<string, any>"/>
@@ -104,6 +109,7 @@ onMounted(() => {
         <report-filter-detail :data="data" :filter="data.filter_custom" class="report-filter-detail"/>
       </div>
     </div>
+      <poster-detail-report/>
   </div>
 </template>
 
@@ -133,7 +139,7 @@ onMounted(() => {
     display: flex;
     gap: 20px;
 
-    .general_overview {
+    .general_overview_container {
       flex: 0.8;
       display: flex;
       flex-direction: column;

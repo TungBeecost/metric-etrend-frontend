@@ -31,4 +31,14 @@ const props = defineProps({
       height: 217px;
     }
 }
+
+@media (max-width: 1023px) {
+  .banner{
+    .title{
+      font-size: 36px;
+      padding: 40px 16px;
+      height: 108px;
+    }
+  }
+}
 </style>
