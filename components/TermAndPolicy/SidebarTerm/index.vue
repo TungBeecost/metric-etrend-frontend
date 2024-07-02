@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { TERM_AND_POLICIES } from '../../constant/constains';
+import { TERM_AND_POLICIES } from '~/constant/constains';
 
 const { path } = useRoute();
 </script>

@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TypeIcon } from '../CustomIcon/index.vue';
+import type { TypeIcon } from '~/components/CustomIcon/index.vue';
 
 defineProps<{
   title: string,
