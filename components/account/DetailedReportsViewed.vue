@@ -93,6 +93,12 @@ onMounted(() => {
       font-weight: 700;
       line-height: 28px;
     }
+
+  }
+  .detailed_reports_viewed_content{
+    border-radius: 0 0 16px 16px;
+    border: 1px solid #EEEBFF;
+    background-color: #FFF;
   }
 }
 
@@ -122,7 +128,6 @@ onMounted(() => {
 
 @media (max-width: 1023px) {
   .default_section {
-    flex-direction: column;
     width: calc(100% - 200px);
     margin: 0 auto;
   }
@@ -130,15 +135,19 @@ onMounted(() => {
 
 @media (max-width: 767px) {
   .default_section {
-    flex-direction: column;
     width: calc(100% - 100px);
     margin: 0 auto;
+  }
+
+  #detailed_reports_viewed{
+    .detailed_reports_viewed_content{
+      padding-top: 40px;
+    }
   }
 }
 
 @media (max-width: 424px) {
   .default_section {
-    flex-direction: column;
     width: calc(100% - 50px);
     margin: 0 auto;
   }

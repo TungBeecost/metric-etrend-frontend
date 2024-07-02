@@ -72,7 +72,6 @@ const user_info={
   .account_info_header{
     display: flex;
     padding: 24px;
-    align-items: center;
     gap: 16px;
     border-radius: 12px 12px 0  0;
     border: 1px solid #EEEBFF;
@@ -263,7 +262,6 @@ const user_info={
 
 @media (max-width: 1023px) {
   .default_section {
-    flex-direction: column;
     width: calc(100% - 200px);
     margin: 0 auto;
   }
@@ -271,15 +269,30 @@ const user_info={
 
 @media (max-width: 767px) {
   .default_section {
-    flex-direction: column;
     width: calc(100% - 100px);
     margin: 0 auto;
+  }
+
+  #account_info{
+
+    .account_info_content{
+      .user_info{
+        flex-direction: column;
+
+        .line{
+          display: none;
+        }
+
+        .service_info{
+          padding: 16px;
+        }
+      }
+    }
   }
 }
 
 @media (max-width: 424px) {
   .default_section {
-    flex-direction: column;
     width: calc(100% - 50px);
     margin: 0 auto;
   }

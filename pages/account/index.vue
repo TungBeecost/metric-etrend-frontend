@@ -23,4 +23,13 @@ import DetailedReportsViewed from "~/components/account/DetailedReportsViewed.vu
   padding-top: 24px;
   padding-bottom: 40px;
 }
+
+@media (max-width: 767px) {
+  .info{
+    background-color: #FFF;
+  }
+  .detail-report{
+    background-color: #FFF;
+  }
+}
 </style>

@@ -47,7 +47,7 @@ const current = ref(1);
 #lst_report_id{
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
   .lst_item{
     display: flex;
     .item{
@@ -107,6 +107,7 @@ const current = ref(1);
   .page{
     display: flex;
     justify-content: center;
+    padding-bottom: 40px;
   }
 
   @media (max-width: 767px) {
