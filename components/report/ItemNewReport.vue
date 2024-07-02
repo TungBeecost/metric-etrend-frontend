@@ -75,7 +75,12 @@ const reports = [
 const sliceInfoRef: Ref<HTMLElement | null> = ref(null);
 
 const scrollReports = (direction: string) => {
-  const scrollAmount = 750;
+  let scrollAmount;
+  if (window.innerWidth <= 1023) {
+    scrollAmount = 300;
+  } else {
+    scrollAmount = 750;
+  }
   const scrollOptions: ScrollToOptions = {
     behavior: 'smooth',
     left: direction === 'left' ? -scrollAmount : scrollAmount
@@ -231,14 +236,15 @@ const scrollReports = (direction: string) => {
       padding: 8px;
 
       .item_new_report {
-        width: 300px;
+        width: 350px;
 
         .image {
-          width: 120px;
+          flex: 1;
         }
 
         .content {
-          gap: 8px;
+          flex: 1;
+          gap: 0;
           .block_category {
             .category {
               font-size: 10px;

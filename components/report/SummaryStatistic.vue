@@ -217,8 +217,15 @@ const $t = (text) => {
       font-weight: 700;
       font-size: 24px;
       line-height: 32px;
-
       color: #241E46;
+
+      span{
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 32px;
+        color: #241E46;
+      }
     }
   }
 }

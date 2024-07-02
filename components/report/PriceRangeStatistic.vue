@@ -248,7 +248,8 @@ const chartOptions = computed(() => {
 }
 
 .highcharts-container {
-  margin: 0 auto;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .ant-collapse > .ant-collapse-item {

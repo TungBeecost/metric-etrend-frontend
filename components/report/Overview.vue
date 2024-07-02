@@ -1,17 +1,67 @@
 <script setup lang="ts">
+import {formatSortTextCurrency} from "~/helpers/utils";
+import {computed} from "vue";
+import dayjs from "dayjs";
+import {formatCurrency} from "~/helpers/FormatHelper";
+
 const props = defineProps({
   data: {
     type: Object,
     default: () => {
     },
   },
+  isFreeUser: {
+    type: Boolean,
+    default: false
+  },
 });
+
+const diffMonths = computed(() => {
+  const { start_date, end_date } = props.data.filter_custom;
+  const startDate = dayjs(start_date);
+  const endDate = dayjs(end_date);
+  return endDate.diff(startDate, "months") + 1 + " tháng";
+});
+
+interface PriceRange {
+  revenue: number;
+  [key: string]: number;
+}
+
+const priceRangesSortBy = (field: keyof PriceRange = 'revenue') => {
+  const { lst_price_range } = props.data.data_analytic.by_price_range;
+  return lst_price_range.slice().sort((a: PriceRange, b: PriceRange) => b[field] - a[field]) || [];
+};
 
 interface Platform {
   name: string;
 }
 
-console.log(props.data);
+interface Shop {
+  name: string;
+}
+
+const diffRevenueLatestQuarterPercent = () => {
+  const {lst_revenue_sale_monthly} = props.data.data_analytic.by_overview;
+  const latestQuarter = lst_revenue_sale_monthly.slice(-3);
+  const previousQuarter = lst_revenue_sale_monthly.slice(-6, -3);
+  const revenueLatestQuarter = latestQuarter.reduce(
+      (acc: number, item: { revenue: number }) => acc + item.revenue,
+      0
+  );
+  const revenuePreviousQuarter = previousQuarter.reduce(
+      (acc: number, item: { revenue: number }) => acc + item.revenue,
+      0
+  );
+  const diff = revenueLatestQuarter - revenuePreviousQuarter;
+  return (diff / revenuePreviousQuarter) * 100;
+};
+
+
+const top5Shops = (): string[] => {
+  const shops: Shop[] = props.data.data_analytic.by_shop.lst_top_shop;
+  return shops.slice(0, 5).map(shop => shop.name);
+};
 </script>
 
 <template>
@@ -36,10 +86,18 @@ console.log(props.data);
       </div>
       <br/>
       <div>
-        Báo cáo doanh thu {{ props.data.name }} trên sàn TMĐT FILL THEM VAO trong 12 tháng và so với quý gần nhất giảm.
-        FILL THEM VAO %. Đánh giá thị trường {{ props.data.name }}, các Shop kinh doanh có thể bán với mức giá phổ biến
-        từ FILL THEM VAO đến FILL THEM VAO. Thương hiệu {{ props.data.name }} được phân phối và bán chạy nhất là
-        FILL THEM VAO v.v...
+        Báo cáo doanh thu {{ props.data.name }} trên sàn TMĐT đạt
+        <BlurContent :is-hide-content="isFreeUser">
+    <span>
+      {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
+    </span>
+        </BlurContent>
+        trong {{ diffMonths }} tháng và so với quý gần nhất {{ diffRevenueLatestQuarterPercent() > 0 ? "tăng trưởng hơn" : "giảm" }}
+        {{ Math.abs(diffRevenueLatestQuarterPercent()).toFixed(1) }}%. Đánh giá thị trường {{ props.data.name }}, các Shop
+        kinh doanh có thể bán với mức giá phổ biến từ {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
+        {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}. Thương hiệu {{ props.data.name }} được phân phối và bán
+        chạy nhất là {{ top5Shops().join(', ') }}
+        v.v...
       </div>
     </div>
   </div>

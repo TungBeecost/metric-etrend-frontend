@@ -62,7 +62,6 @@ chartOptions.value = {
     style: {
       fontFamily: "Inter",
     },
-    width: 300
   },
   title: {
     text: "",
@@ -165,8 +164,8 @@ watch(() => props.analyticType, () => {
 </script>
 
 <template>
-  <div class="PlatformChart">
-    <div style="flex: 1">
+  <div id="platform_chart" class="PlatformChart">
+    <div style="">
       <div style="position: relative">
         <highchart :options="chartOptions"/>
         <div class="platform-chart-inner-box">
@@ -177,7 +176,7 @@ watch(() => props.analyticType, () => {
         </div>
       </div>
     </div>
-    <div style="flex: 1;  max-width: 500px;">
+    <div>
       <a-table
           :columns="columns"
           :data-source="dataSource"
@@ -186,31 +185,17 @@ watch(() => props.analyticType, () => {
           class="platform-table"
           size="large"
       >
-        <div style="flex: 1;  max-width: 500px;">
-          <a-table
-              :columns="columns"
-              :data-source="dataSource"
-              :pagination="false"
-              :row-key="record => record.platform"
-              class="platform-table"
-              size="large"
-          >
-            <template #platform="{ record }">
-              <div style="display: flex;">
-                <img :src="record.platformIcon" class="platform-icon"
-                     style="width: 32px;height: 32px;border-radius: 8px;margin-right: 10px;"/>
-                <span style="font-weight: 400;">{{ record.platform }}</span>
-              </div>
-            </template>
-            <template #revenue="{ record }">
-          <span style="font-weight: 400;">
-            <BlurContent :is-hide-content="isHideContent">
-              {{ record.revenue }}
-            </BlurContent>
-          </span>
-            </template>
-          </a-table>
-        </div>
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'platform'">
+            <div class="platform-column">
+              <img :src="record.platformIcon" class="platform-icon"/>
+              <span>{{ record.platform }}</span>
+            </div>
+          </template>
+          <template v-else>
+            {{ record[column.key] }}
+          </template>
+        </template>
       </a-table>
     </div>
   </div>
@@ -218,8 +203,7 @@ watch(() => props.analyticType, () => {
 
 
 <style lang="scss">
-.PlatformChart {
-  width: 100%;
+.platform_chart {
 
   .platform-table {
     .ant-table-thead > tr > th {
@@ -242,16 +226,19 @@ watch(() => props.analyticType, () => {
 </style>
 
 <style scoped lang="scss">
-.PlatformChart {
+#platform_chart {
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-around;
+
 
   .platform-chart-inner-box {
     width: 100%;
     height: 100%;
 
     position: absolute;
-    top: -5px;
+    top: 10px;
     left: 0px;
 
     display: flex;
@@ -300,6 +287,8 @@ watch(() => props.analyticType, () => {
 
 
     .platform-column {
+      display: flex;
+      align-items: center;
       font-weight: 400;
       font-size: 14px;
       line-height: 22px;
