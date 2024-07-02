@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import {computed} from 'vue';
 import InsightBlock from "@/components/InsightBlock";
 import {formatSortTextCurrencyWithMinValue} from "~/helpers/utils.js";
 import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
@@ -40,7 +40,7 @@ const formatPriceRange = (priceRange, prefix = ['trên', 'dưới']) => {
 };
 
 const priceRangesSortBy = (field = 'revenue') => {
-  const { lst_price_range } = props.data.data_analytic.by_price_range;
+  const {lst_price_range} = props.data.data_analytic.by_price_range;
   return lst_price_range.slice().sort((a, b) => b[field] - a[field]) || [];
 };
 
@@ -178,7 +178,7 @@ const chartOptions = computed(() => {
         zIndex: 10,
         data: props.data.data_analytic.by_price_range.lst_price_range
             .slice()
-            .map((item) => item.sale),
+            .map((item) => item.sale || item.ratio_revenue),
       },
       ...lstPlatform.map((platformId) => {
             const platform = getPlatformById(platformId)
@@ -190,7 +190,9 @@ const chartOptions = computed(() => {
               data: BY__PRICE_RANGE.map(
                   ({lst_platform}) => lst_platform.find(
                       ({platform_id}) => platform_id === platformId
-                  )?.revenue || 0
+                  )?.revenue || lst_platform.find(
+                      ({platform_id}) => platform_id === platformId
+                  )?.ratio_revenue || 0
               ),
               tooltip: {
                 valueSuffix: " đ"
@@ -217,7 +219,7 @@ const chartOptions = computed(() => {
     </div>
     <div class="my-4 w-full text-center relative">
       <highchart :options="chartOptions"/>
-<!--      <ChartMask v-if="isHideContent" @clickOnHidden="$emit('clickOnHidden')"/>-->
+      <!--      <ChartMask v-if="isHideContent" @clickOnHidden="$emit('clickOnHidden')"/>-->
     </div>
     <InsightBlock
         v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length"
@@ -648,7 +650,7 @@ const chartOptions = computed(() => {
   }
 }
 
-.statistic-item__title{
+.statistic-item__title {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -659,7 +661,7 @@ const chartOptions = computed(() => {
 
 }
 
-#thong-ke-phan-khuc-gia{
+#thong-ke-phan-khuc-gia {
   padding: 24px;
   border-radius: 8px;
   border: 1px solid #EEEBFF;

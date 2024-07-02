@@ -60,10 +60,10 @@ const reportType = computed(() => props.data?.report_type);
             {
               name: 'Doanh thu',
               data: props.data.data_analytic.by_shop.lst_top_shop.map(
-                ({ name, revenue, platform_id } = {}) => {
+                ({ name, revenue, ratio_revenue, platform_id } = {}) => {
                   return {
                     name: name + ' - ' + platformNames[platform_id],
-                    y: revenue,
+                    y: revenue || ratio_revenue,
                     categoryName: 'Shop',
                   };
                 }
@@ -74,8 +74,10 @@ const reportType = computed(() => props.data?.report_type);
       </div>
       <div
         v-if="
-          props.data.data_analytic.by_shop.ratio.mall?.revenue > 0 &&
-          props.data.data_analytic.by_shop.ratio.normal?.revenue
+          (props.data.data_analytic.by_shop.ratio.mall?.revenue > 0 &&
+          props.data.data_analytic.by_shop.ratio.normal?.revenue) ||
+          (props.data.data_analytic.by_shop.ratio.mall?.ratio_revenue > 0 &&
+          props.data.data_analytic.by_shop.ratio.normal?.ratio_revenue)
         "
         class="pie_chart_item"
       >
@@ -89,12 +91,12 @@ const reportType = computed(() => props.data?.report_type);
               data: [
                 {
                   name: 'Shop chính hãng',
-                  y: props.data.data_analytic.by_shop.ratio.mall?.revenue,
+                  y: props.data.data_analytic.by_shop.ratio.mall?.revenue || props.data.data_analytic.by_shop.ratio.mall?.ratio_revenue,
                   color: '#D82618',
                 },
                 {
                   name: 'Shop thường',
-                  y: props.data.data_analytic.by_shop.ratio.normal?.revenue,
+                  y: props.data.data_analytic.by_shop.ratio.normal?.revenue || props.data.data_analytic.by_shop.ratio.normal?.ratio_revenue,
                   color: '#838EA5',
                 },
               ],

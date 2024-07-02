@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import axios from "axios";
 import {toSeoName} from "~/helpers/StringHelper";
 import GeneralOverview from "~/components/report/GeneralOverview.vue";
 import Overview from "~/components/report/Overview.vue";
@@ -10,6 +9,7 @@ import ReportContent from "~/components/report/ReportContent.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
 import {ref} from "vue";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
+import axios from "axios";
 
 interface Category {
   name: string;
@@ -25,17 +25,21 @@ interface Data {
 const isFreeUser = false;
 const isHideContent = true;
 const data = ref<Data | null>(null);
+const loading = ref(true);
 
 const fetchTableData = async () => {
   try {
-    const response = await axios.get('https://api-web.metric.vn/api/report/detail?slug=tui-xach', {
+    loading.value = true;
+    const response = await axios.get('http://localhost:8000/api/report/detail?slug=tui-xach', {
       headers: {
         'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImN1b25nbGRAbWV0cmljLnZuIiwiZXhwIjoxNzE5NDU5MTk4LCJpYXQiOjE3MTg4NTQzOTgsImlzcyI6IkF1dGhlbnRpY2F0aW9uIFNlcnZpY2UiLCJzdWIiOiJEdXkgQ8awxqFuZyBMw6oifQ.s5ilAouYDUAYKz70E5uet3fQhPjovTBhuvpC-qIA8xY',
       }
     });
     data.value = response.data;
     console.log(response.data);
+    loading.value = false;
   } catch (error) {
+    loading.value = false;
     // handle the error here
     console.error(error);
   }
@@ -70,7 +74,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container_content">
+  <div v-if="!loading" class="container_content">
     <div class="title default_section">
       <div v-if="data" class="breadcrumbs">
         <Breadcrumb :breadcrumbs="breadcrumbs"/>
