@@ -154,6 +154,8 @@ const scrollReports = (direction: string) => {
     display: flex;
     gap: 40px;
     overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     cursor: pointer;
 
     .item_feature_report {
@@ -204,11 +206,15 @@ const scrollReports = (direction: string) => {
       }
     }
   }
+
+  .slice_info::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @media (max-width: 1023px) {
   .slice{
-    width: calc(100% - 100px);;
+    width: 100%;;
     .slice_info {
       gap: 16px;
       padding: 8px;

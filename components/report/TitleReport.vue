@@ -164,6 +164,7 @@ import FeaturedReport from "~/components/report/FeaturedReport.vue";
   .title_report{
     .image {
       .title {
+        gap: 40px;
         .content {
           .report_title{
             font-size: 36px;

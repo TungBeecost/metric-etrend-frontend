@@ -5,7 +5,7 @@ import ItemNewReport from './ItemNewReport.vue';
 <template>
   <div class="new_report">
     <div class="title_new_report">
-      <div>Báo cáo mới nhất</div>
+      Báo cáo mới nhất
     </div>
     <item-new-report />
   </div>
@@ -24,6 +24,16 @@ import ItemNewReport from './ItemNewReport.vue';
     color: #FFF;
     font-size: 24px;
     font-weight: bold;
+  }
+}
+
+@media (max-width: 1023px) {
+  .new_report {
+    gap: 16px;
+
+    .title_new_report {
+      font-size: 20px;
+    }
   }
 }
 </style>

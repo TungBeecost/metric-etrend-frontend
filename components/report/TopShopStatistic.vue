@@ -317,15 +317,19 @@ const reportType = computed(() => props.data?.report_type);
   line-height: 28px;
   color: #241E46;
   gap: 16px;
-
 }
 
 .pie_chart {
   display: flex;
   gap: 16px;
   justify-content: center;
+  align-items: stretch;
   margin-top: 16px;
   margin-bottom: 16px;
+
+  .pie_chart_item {
+    height: 100%;
+  }
 }
 
 #top-shop{

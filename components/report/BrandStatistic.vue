@@ -26,7 +26,7 @@ const formatNumber = (value: number = 0) => {
       props.data.data_analytic.by_brand.lst_top_brand_revenue &&
       props.data.data_analytic.by_brand.lst_top_brand_revenue.length > 1
     "
-    class="border statistic-block mb-6"
+    class="border statistic-block"
     id="thong-ke-thuong-hieu"
   >
     <div class="statistic-item__title">
@@ -588,6 +588,11 @@ const formatNumber = (value: number = 0) => {
   display: flex;
   gap: 16px;
   justify-content: center;
+  width: 100%;
+
+  .pie_chart_item{
+    width: 100%;
+  }
 }
 
 .statistic-item__title{

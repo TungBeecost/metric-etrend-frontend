@@ -23,7 +23,7 @@ console.log(props.breadcrumbs);
         >
           {{ breadcrumb.name }}
         </nuxt-link>
-        <span v-else>{{ breadcrumb.name }}</span>
+        <span v-else style="color: #E85912">{{ breadcrumb.name }}</span>
       </a-breadcrumb-item>
     </a-breadcrumb>
   </div>
