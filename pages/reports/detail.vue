@@ -4,7 +4,6 @@ import {toSeoName} from "~/helpers/StringHelper";
 import GeneralOverview from "~/components/report/GeneralOverview.vue";
 import Overview from "~/components/report/Overview.vue";
 import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
-import {EVENT_TYPE} from "~/constant/general/EventConstant";
 import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ReportContent from "~/components/report/ReportContent.vue";
@@ -22,13 +21,14 @@ interface Data {
   lst_category: Category[];
   filter_custom: any;
 }
+
 const isFreeUser = false;
 const isHideContent = true;
 const data = ref<Data | null>(null);
 
 const fetchTableData = async () => {
   try {
-    const response = await axios.get('https://api-web.metric.vn/api/report/detail?slug=giay-nam', {
+    const response = await axios.get('https://api-web.metric.vn/api/report/detail?slug=tui-xach', {
       headers: {
         'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImN1b25nbGRAbWV0cmljLnZuIiwiZXhwIjoxNzE5NDU5MTk4LCJpYXQiOjE3MTg4NTQzOTgsImlzcyI6IkF1dGhlbnRpY2F0aW9uIFNlcnZpY2UiLCJzdWIiOiJEdXkgQ8awxqFuZyBMw6oifQ.s5ilAouYDUAYKz70E5uet3fQhPjovTBhuvpC-qIA8xY',
       }
@@ -105,29 +105,29 @@ onMounted(() => {
       </div>
       <div v-if="data" class="different_info">
         <overview :data="data as Record<string, any>"/>
-        <report-content />
+        <report-content/>
         <report-filter-detail :data="data" :filter="data.filter_custom" class="report-filter-detail"/>
       </div>
     </div>
-      <poster-detail-report/>
+    <poster-detail-report/>
   </div>
 </template>
 
 <style scoped lang="scss">
-.container_content{
+.container_content {
   padding-top: 40px;
   padding-bottom: 40px;
 
-  .title{
+  .title {
     display: flex;
     flex-direction: column;
 
-    .breadcrumbs{
+    .breadcrumbs {
       display: flex;
       gap: 10px;
     }
 
-    .report-title{
+    .report-title {
       font-size: 36px;
       font-weight: 700;
       line-height: 48px;
@@ -135,7 +135,7 @@ onMounted(() => {
     }
   }
 
-  .container{
+  .container {
     display: flex;
     gap: 20px;
 
@@ -158,7 +158,7 @@ onMounted(() => {
 @media (min-width: 1919px) {
   .default_section {
     flex-direction: row;
-    width: calc(100% - 200px);
+    width: 1440px;
     margin: 0 auto;
   }
 }
@@ -166,7 +166,7 @@ onMounted(() => {
 @media (max-width: 1919px) {
   .default_section {
     flex-direction: row;
-    width: calc(100% - 200px);
+    width: 1440px;
     margin: 0 auto;
   }
 }
@@ -174,7 +174,15 @@ onMounted(() => {
 @media (max-width: 1439px) {
   .default_section {
     flex-direction: row;
-    width: calc(100% - 200px);
+    width: 1280px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 1279px) {
+  .default_section {
+    flex-direction: row;
+    width: 1024px;
     margin: 0 auto;
   }
 }
@@ -182,7 +190,7 @@ onMounted(() => {
 @media (max-width: 1023px) {
   .default_section {
     flex-direction: column;
-    width: calc(100% - 100px);
+    width: 800px;
     margin: 0 auto;
   }
 }
@@ -190,7 +198,7 @@ onMounted(() => {
 @media (max-width: 767px) {
   .default_section {
     flex-direction: column;
-    width: calc(100% - 50px);
+    width: 700px;
     margin: 0 auto;
   }
 }
