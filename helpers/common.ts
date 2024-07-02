@@ -22,3 +22,5 @@ export const debounce = (func: any, timeout = 800) => {
     }, timeout);
   };
 };
+
+
