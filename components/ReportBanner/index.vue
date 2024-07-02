@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import { NAVIGATIONS } from '../../helpers/constains';
+import { NAVIGATIONS } from '../../constant/constains';
 
 
 </script>

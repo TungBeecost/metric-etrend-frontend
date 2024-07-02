@@ -1,9 +1,9 @@
-import type { CommonOptionItem } from "./types";
+import type { CommonOptionItem } from "~/helpers/types";
 
 export const NAVIGATIONS = {
   search: "/search",
   home: "/",
-  report: "/reports",
+  report: "/report",
   pricing: "/pricing",
   contactUs: "/contact-us",
   signIn: "/sign-in"
@@ -117,4 +117,95 @@ export const SOCIAL_MEDIA_TYPES: Array<CommonOptionItem> = [
     label: "Khác",
     value: "Khác"
   }
+];
+
+export const LABEL_PERMISSION_PLAN = {
+  searchReport: {
+    label: "Tìm kiếm báo cáo không giới hạn",
+    icon: "SearchFilled"
+  },
+  viewReport: {
+    label: "Xem báo cáo chi tiết",
+    icon: "Docs",
+    sub: {
+      summary: "Số liệu tổng quan",
+      priceSegment: "Số liệu về phân khúc giá",
+      category: "Số liệu về ngành hàng/ nhóm hàng",
+      brand: "Số liệu về thương hiệu",
+      topTierSell: "Danh sách gian hàng bán chạy",
+      topTierProduct: "Danh sách sản phẩm bán chạy"
+    }
+  },
+  numberOfUnlockReport: {
+    label: (number: number) => `${number} lượt mở khoá báo cáo`,
+    icon: "Unlock"
+  },
+  customFilterAnalysis: {
+    label: "Phân tích với bộ lọc tùy chỉnh",
+    icon: "Chart"
+  }
+};
+
+interface IPLAN {
+  type: string;
+  description: string;
+  price: string;
+  unit?: string;
+  isHighlight?: boolean;
+  permissions: Array<{
+    label: string;
+    icon: string;
+    sub?: Array<string>;
+  }>;
+}
+export const PLANS: Array<IPLAN> = [
+  {
+    type: "Free",
+    description: "Truy cập kho báo cáo và cập nhật xu hướng",
+    price: "Miễn phí",
+    unit: undefined,
+    permissions: [
+      {
+        ...LABEL_PERMISSION_PLAN.searchReport
+      }
+    ]
+  },
+  {
+    type: "Pro",
+    description: "Phù hợp nhu cầu phân tích chuyên sâu",
+    price: "7,9 Triệu",
+    unit: "năm",
+    isHighlight: true,
+    permissions: [
+      LABEL_PERMISSION_PLAN.searchReport,
+      {
+        ...LABEL_PERMISSION_PLAN.viewReport,
+        sub: Object.values(LABEL_PERMISSION_PLAN.viewReport.sub)
+      },
+      {
+        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(100),
+        icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
+      },
+      LABEL_PERMISSION_PLAN.customFilterAnalysis
+    ]
+  }
+];
+
+export const TESTIMONIAL_BRANDS = [
+  "/images/branch/vietnamnet.png",
+  "/images/branch/tuoitre.png",
+  "/images/branch/vtv.png",
+  "/images/branch/vnexpress.png",
+  "/images/branch/dantri.png",
+  "/images/branch/thanhnien.png"
+];
+
+export const PARTERS = [
+  "/images/branch/branch1.png",
+  "/images/branch/guardian.png",
+  "/images/branch/lazada.png",
+  "/images/branch/shopee.png",
+  "/images/branch/themobileworld.png",
+  "/images/branch/tiki.png",
+  "/images/branch/unilever.png"
 ];

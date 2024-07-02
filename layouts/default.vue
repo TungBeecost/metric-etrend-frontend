@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { NAVIGATIONS } from '../helpers/constains';
+import { NAVIGATIONS } from '../constant/constains';
 
 const route = useRoute();
 
@@ -49,7 +49,7 @@ watch(isShowMenu, () => {
   else recheckHeader();
 })
 
-const menuDarkBlue = [NAVIGATIONS.home];
+const menuDarkBlue = [NAVIGATIONS.home, NAVIGATIONS.pricing];
 const isDarkBlueHeader = useState(() => false);
 const recheckHeader = () => {
   if (isDarkBlueHeader.value !== !!menuDarkBlue.includes(route.path)) isDarkBlueHeader.value = !isDarkBlueHeader.value;

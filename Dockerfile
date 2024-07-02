@@ -1,0 +1,38 @@
+FROM node:22.2.0-alpine3.20 as build-stage
+WORKDIR /app
+COPY package*.json package-lock.json /app/
+RUN npm install
+
+FROM node:22.2.0-alpine3.20 as runner
+WORKDIR /app
+RUN npm install pm2 -g
+CMD ["npm", "run", "start"]
+EXPOSE 3000
+
+FROM build-stage as ssr 
+ENV SSR=true
+COPY . /app
+COPY .env /app/.env
+RUN npm run build
+#ENV URL_CDN="https://ssr.metric.vn/_nuxt"
+#CMD pm2-runtime start pm2.config.js --env production --only nuxtjs --name nuxtjs
+
+FROM runner as ssr-release
+COPY --from=ssr /app/.nuxt /app/.nuxt
+COPY --from=ssr /app/nuxt.config.ts /app/
+COPY --from=ssr /app/.output /app/.output
+COPY --from=ssr /app/ecosystem.config.cjs /app/
+COPY --from=ssr /app/package.json /app/
+
+FROM build-stage as spa
+ENV SSR=false
+COPY . /app
+COPY .env /app/.env
+RUN npm run build
+
+FROM runner as spa-release
+COPY --from=spa /app/.nuxt /app/.nuxt
+COPY --from=spa /app/nuxt.config.ts /app/
+COPY --from=spa /app/ecosystem.config.cjs /app/
+COPY --from=spa /app/package.json /app/
+COPY --from=spa /app/.output /app/.output

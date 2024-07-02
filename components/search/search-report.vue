@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Search } from '../../.nuxt/components';
-import { NAVIGATIONS } from '../../helpers/constains';
+import { NAVIGATIONS } from '../../constant/constains';
 
 const route = useRoute();
 
@@ -17,7 +17,6 @@ const onSearch = async (searchValue: string) => {
 
   const result = await fetchSearch(searchValue);
   console.log(result);
-
 
   // action show result here
 };

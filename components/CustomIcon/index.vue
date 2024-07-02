@@ -11,6 +11,7 @@ import Menu from "~/public/icons/Menu.svg";
 import MenuBlack from "~/public/icons/Menu-Black.svg";
 import Phone from "~/public/icons/Phone.svg";
 import Search from "~/public/icons/Search.svg";
+import SearchFilled from "~/public/icons/Search-Filled.svg";
 import SocialFB from "~/public/icons/Social-FB.svg";
 import SocialLinkedIn from "~/public/icons/Social-Linkedin.svg";
 import SocialYoutube from "~/public/icons/Social-Ytb.svg";
@@ -19,6 +20,10 @@ import Report from "~/public/icons/Report.svg";
 import Store from "~/public/icons/Store.svg";
 import ContactUs from "~/public/icons/Contact-Us.svg";
 import SuccessTick from "~/public/icons/Success-Tick.svg";
+import Chart from "~/public/icons/Chart.svg";
+import Docs from "~/public/icons/Docs.svg";
+import Tick from "~/public/icons/Tick.svg";
+import Unlock from "~/public/icons/Unlock.svg";
 
 type TypeIcon =
   | "Building"
@@ -29,6 +34,7 @@ type TypeIcon =
   | "MenuBlack"
   | "Phone"
   | "Search"
+  | "SearchFilled"
   | "SocialFB"
   | "SocialLinkedIn"
   | "SocialYoutube"
@@ -37,6 +43,10 @@ type TypeIcon =
   | "Store"
   | "ContactUs"
   | "SuccessTick"
+  | "Chart"
+  | "Docs"
+  | "Tick"
+  | "Unlock"
 
 
 defineProps<{
@@ -53,6 +63,7 @@ const iconMappings = {
   "MenuBlack": MenuBlack,
   "Phone": Phone,
   "Search": Search,
+  "SearchFilled": SearchFilled,
   "SocialFB": SocialFB,
   "SocialLinkedIn": SocialLinkedIn,
   "SocialYoutube": SocialYoutube,
@@ -61,6 +72,10 @@ const iconMappings = {
   "Store": Store,
   "ContactUs": ContactUs,
   "SuccessTick": SuccessTick,
+  "Chart": Chart,
+  "Docs": Docs,
+  "Tick": Tick,
+  "Unlock": Unlock,
 }
 
 // Something wrong with lazy import in Nuxt, this below code made page unable to re-load when redirect

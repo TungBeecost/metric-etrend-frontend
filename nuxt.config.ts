@@ -37,6 +37,9 @@ export default defineNuxtConfig({
         }
       }
     }
+    // ssr: {
+    //   noExternal: ["moment", "ant-design-vue"]
+    // }
   },
 
   modules: [
@@ -44,7 +47,7 @@ export default defineNuxtConfig({
     "@nuxt/test-utils/module",
     "@nuxtjs/device",
     "@nuxt/image",
-      ["nuxt-highcharts", {}],
+    ["nuxt-highcharts", {}],
     async function () {
       for (const key in AntD) {
         if (["version", "install"].includes(key)) continue;
@@ -55,6 +58,7 @@ export default defineNuxtConfig({
         });
       }
     },
-    "nuxt-svgo"
+    "nuxt-svgo",
+    "@ant-design-vue/nuxt"
   ]
 });

@@ -7,19 +7,23 @@
   .headerText,.headerTextDarkBlue {
     font-weight: 500;
     font-size: 16px;
+  }
+
+  .headerText {
+    color: white;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  .headerTextDarkBlue {
+    color: $default_text_color;
 
     &:hover {
       color: $primary;
       background-color: $hovering;
     }
-  }
-
-  .headerText {
-    color: white;
-  }
-
-  .headerTextDarkBlue {
-    color: $default_text_color;
   }
 }
 

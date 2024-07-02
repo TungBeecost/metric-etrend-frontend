@@ -10,7 +10,7 @@ import ItemFeatureReport from './ItemFeatureReport.vue';
         <div>Cập nhật ngay những báo cáo xu hướng mới nhất giúp bạn<br class="desktop-break"> nắm bắt kịp thời biến động thị trường.</div>
       </div>
     </div>
-    <item-feature-report/>
+    <item-feature-report />
   </div>
 </template>
 
@@ -21,6 +21,8 @@ import ItemFeatureReport from './ItemFeatureReport.vue';
   align-items: center;
   gap: 64px;
   padding-top: 60px;
+  width: 100%;
+  height: 100%;
   background-color: #FBFAFC;
   padding-bottom: 100px;
 }
