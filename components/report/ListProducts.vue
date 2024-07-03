@@ -276,7 +276,7 @@ const value = ref('');
     </template>
     <div class="line"></div>
     <div class="page">
-      <div class="currency_unit" style="flex: 1; display: flex; align-items: center">Đơn vị tiền tệ: Đồng</div>
+      <div class="currency_unit" style="flex: 1; display: flex; align-items: center"></div>
       <a-pagination v-model:current="current" :total="1000" show-less-items class="a_page" style="flex: 1" />
       <a-input
           v-model:value="value"
@@ -719,7 +719,7 @@ const value = ref('');
 }
 
 #list-products{
-  padding: 24px;
+  padding: 24px 24px 0 24px;
   border-radius: 8px;
   border: 1px solid #EEEBFF;
   display: flex;

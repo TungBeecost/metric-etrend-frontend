@@ -64,8 +64,6 @@ const $t = (text) => {
           </div>
         </div>
       </div>
-    </div>
-    <div class="summary-statistic">
       <div class="summary-statistic-item">
         <div class="summary-statistic-item__icon">
           <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -129,9 +127,8 @@ const $t = (text) => {
   margin-bottom: 16px;
 }
 .summary-statistic {
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 
   border-radius: 12px;
 

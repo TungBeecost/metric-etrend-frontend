@@ -1,9 +1,9 @@
 <script setup>
-import { computed } from 'vue';
+import {computed} from 'vue';
 import InsightBlock from "@/components/InsightBlock";
-import { formatSortTextCurrencyWithMinValue } from "~/helpers/utils.js";
-import { getPlatformById } from "~/helpers/PermissionPlatformHelper.js";
-import { formatCurrency } from "~/helpers/FormatHelper.js";
+import {formatSortTextCurrencyWithMinValue} from "~/helpers/utils.js";
+import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
+import {formatCurrency} from "~/helpers/FormatHelper.js";
 import moment from 'moment';
 
 const props = defineProps({
@@ -22,11 +22,11 @@ const props = defineProps({
 });
 console.log(props.data);
 const platformColors = {
-  Shopee: "#FF9264",
-  Lazada: "#47538F",
-  Tiki: "#5BAFFE",
-  Sendo: "#FF6060",
-  Tiktok: "#000",
+  Shopee: ['#FCA14E', '#FF733F'],
+  Lazada: ['#4745A5', '#241E46'],
+  Tiki: ['#5BAFFE', '#366998'],
+  Sendo: ['#FF6060', '#993A3A'],
+  Tiktok: ['#000', '#000'],
 };
 
 const formatPriceRange = (priceRange, prefix = ['trên', 'dưới']) => {
@@ -40,12 +40,12 @@ const formatPriceRange = (priceRange, prefix = ['trên', 'dưới']) => {
 };
 
 const priceRangesSortBy = (field = 'revenue') => {
-  const { lst_price_range } = props.data.data_analytic.by_price_range;
+  const {lst_price_range} = props.data.data_analytic.by_price_range;
   return lst_price_range.slice().sort((a, b) => b[field] - a[field]) || [];
 };
 
 const diffMonths = computed(() => {
-  const { start_date, end_date } = props.data.filter_custom;
+  const {start_date, end_date} = props.data.filter_custom;
   const startDate = moment(start_date);
   const endDate = moment(end_date);
   return endDate.diff(startDate, "months") + 1 + " tháng";
@@ -107,8 +107,8 @@ const chartOptions = computed(() => {
       },
     },
     xAxis: {
-      categories: BY__PRICE_RANGE.map(({ begin, end } = {}) => {
-        return formatPriceRange({ begin, end }, ['<', '>']);
+      categories: BY__PRICE_RANGE.map(({begin, end} = {}) => {
+        return formatPriceRange({begin, end}, ['<', '>']);
       }),
       title: {
         text: 'Mức giá (Đồng)',
@@ -116,7 +116,7 @@ const chartOptions = computed(() => {
         style: {
           fontSize: '12px',
           color: '#241E46',
-          fontWeight: 700,
+          fontWeight: 400,
           fontFamily: 'Inter'
         }
       },
@@ -124,7 +124,7 @@ const chartOptions = computed(() => {
         style: {
           fontSize: '12px',
           color: '#241E46',
-          fontWeight: 700,
+          fontWeight: 400,
           fontFamily: 'Inter'
         }
       }
@@ -132,73 +132,58 @@ const chartOptions = computed(() => {
     yAxis: [
       {
         title: {
-          text: 'Doanh số (Đồng)',
-          style: {
-            fontSize: '12px',
-            color: '#241E46',
-            fontWeight: 700,
-            fontFamily: 'Inter'
-          }
+          text: '',
         },
         labels: {
-          style: {
-            fontSize: '12px',
-            color: '#241E46',
-            fontWeight: 700,
-            fontFamily: 'Inter'
-          }
+          enabled: false,
         }
       },
       {
         title: {
-          text: 'Số sản phẩm đã bán (Sản phẩm)',
-          style: {
-            fontSize: '12px',
-            color: '#241E46',
-            fontWeight: 700,
-            fontFamily: 'Inter'
-          }
+          text: 'Sản lượng (Sản phẩm)',
+          enabled: false,
         },
         opposite: true,
         labels: {
-          style: {
-            fontSize: '12px',
-            color: '#241E46',
-            fontWeight: 700,
-            fontFamily: 'Inter'
-          }
+          enabled: false,
         }
       },
     ],
     series: [
       {
-        name: 'Số sản phẩm đã bán cả 3 sàn',
+        name: 'Sản lượng cả 3 sàn',
         color: '#1A1A46',
         type: 'spline',
         zIndex: 10,
         data: props.data.data_analytic.by_price_range.lst_price_range
-          .slice()
-          .map((item) => item.sale || item.ratio_revenue),
+            .slice()
+            .map((item) => item.sale || item.ratio_revenue),
       },
       ...lstPlatform.map((platformId) => {
-        const platform = getPlatformById(platformId)
-        return {
-          name: platform.name,
-          color: platformColors[getPlatformById(platformId).name],
-          borderRadius: 4,
-          yAxis: 1,
-          data: BY__PRICE_RANGE.map(
-            ({ lst_platform }) => lst_platform.find(
-              ({ platform_id }) => platform_id === platformId
-            )?.revenue || lst_platform.find(
-              ({ platform_id }) => platform_id === platformId
-            )?.ratio_revenue || 0
-          ),
-          tooltip: {
-            valueSuffix: " đ"
-          },
-        }
-      }
+            const platform = getPlatformById(platformId)
+            return {
+              name: platform.name,
+              color: {
+                linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
+                stops: [
+                  [0, platformColors[getPlatformById(platformId).name][0]],
+                  [1, platformColors[getPlatformById(platformId).name][1]]
+                ]
+              },
+              borderRadius: 4,
+              yAxis: 1,
+              data: BY__PRICE_RANGE.map(
+                  ({lst_platform}) => lst_platform.find(
+                      ({platform_id}) => platform_id === platformId
+                  )?.revenue || lst_platform.find(
+                      ({platform_id}) => platform_id === platformId
+                  )?.ratio_revenue || 0
+              ),
+              tooltip: {
+                valueSuffix: " đ"
+              },
+            }
+          }
       )
     ]
   }
@@ -209,18 +194,21 @@ const chartOptions = computed(() => {
 <template>
   <div id="thong-ke-phan-khuc-gia" class="border statistic-block mb-6">
     <div class="statistic-item__title">
-      <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="16" height="32" rx="4" fill="#F9D7C6" />
+      <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
+           xmlns="http://www.w3.org/2000/svg">
+        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
         <div class="statistic-item__title">Phân khúc giá</div>
       </div>
     </div>
     <div class="my-4 w-full text-center relative">
-      <highchart :options="chartOptions" />
+      <highchart :options="chartOptions"/>
       <!--      <ChartMask v-if="isHideContent" @clickOnHidden="$emit('clickOnHidden')"/>-->
     </div>
-    <InsightBlock v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length">
+    <InsightBlock
+        v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length"
+    >
       <li>
         Trong {{ diffMonths }} qua, phân khúc khách hàng thị trường
         {{ props.data.name }}
@@ -228,7 +216,9 @@ const chartOptions = computed(() => {
         {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
         {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}
       </li>
-      <li v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length > 1">
+      <li
+          v-if="priceRangesSortBy('revenue') &&priceRangesSortBy('revenue').length > 1"
+      >
         Phân khúc giá phổ biến của {{ props.data.name }} là
         {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
         {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }} và
@@ -249,7 +239,7 @@ const chartOptions = computed(() => {
 //  height: 100% !important;
 //}
 
-.ant-collapse>.ant-collapse-item {
+.ant-collapse > .ant-collapse-item {
   border: none;
 
   .ant-collapse-header {

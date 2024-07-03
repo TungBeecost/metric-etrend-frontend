@@ -144,7 +144,7 @@ const ALL_CHART_TAB = {
         generalStatisticName: 'orderCount',
         storeName: 'orderCount',
         apiKey: 'ORDER_COUNT',
-        label: 'Số sản phẩm đã bán',
+        label: 'Sản lượng',
         iconType: 'unordered-list'
     },
     commission: {
