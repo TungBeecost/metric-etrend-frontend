@@ -14,6 +14,10 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  isHideContent: {
+    type: Boolean,
+    default: () => true
+  }
 });
 
 // const emits = defineEmits(['showProductHistory']);
@@ -25,7 +29,7 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
 </script>
 
 <template>
-  <div class="product-item">
+  <div class="product-item" :class="{'hide-content': isHideContent}">
     <div class="product-thumbnail">
       <img
           v-if="props.product.url_thumbnail"
@@ -261,6 +265,10 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
   border-radius: 16px;
 
   position: relative;
+
+  &.hide-content {
+    filter: blur(6px);
+  }
 
   .product-mall-flag {
     position: absolute;

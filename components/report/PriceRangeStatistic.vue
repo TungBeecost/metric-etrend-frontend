@@ -11,10 +11,6 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
-  isFreeUser: {
-    type: Boolean,
-    default: () => true,
-  },
   isHideContent: {
     type: Boolean,
     default: () => true,
@@ -149,6 +145,9 @@ const chartOptions = computed(() => {
         }
       },
     ],
+    tooltip: {
+      enabled: false
+    },
     series: [
       {
         name: 'Sản lượng cả 3 sàn',
@@ -204,7 +203,7 @@ const chartOptions = computed(() => {
     </div>
     <div class="my-4 w-full text-center relative">
       <highchart :options="chartOptions"/>
-      <!--      <ChartMask v-if="isHideContent" @clickOnHidden="$emit('clickOnHidden')"/>-->
+<!--      <ChartMask v-if="isHideContent" @clickOnHidden="$emit('clickOnHidden')"/>-->
     </div>
     <InsightBlock
         v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length"

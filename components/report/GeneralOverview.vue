@@ -15,11 +15,7 @@ const props = defineProps({
   },
   isHideContent: {
     type: Boolean,
-    default: false
-  },
-  isFreeUser: {
-    type: Boolean,
-    default: true,
+    default: true
   },
 });
 
@@ -230,14 +226,14 @@ const charts = computed(() => {
       <platform-chart
           v-if="props.data"
           :classified-analytic-response="{REVENUE_TOTAL: {platforms: data.data_analytic.by_marketplace.lst_marketplace}}"
-          :is-hide-content="props.isFreeUser"
+          :is-hide-content="props.isHideContent"
       />
     </div>
     <InsightBlock>
       <li>
     <span class="text-bold">
       Doanh số bán {{ data.name }} trong {{ diffMonths }}: đạt
-      <BlurContent :is-hide-content="isFreeUser">
+      <BlurContent :is-hide-content="isHideContent">
         <span>
           {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
         </span>
