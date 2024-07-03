@@ -109,10 +109,16 @@ const charts = computed(() => {
       title: {
         text: ''
       },
+      tooltip: {
+        enabled: false,
+      },
       yAxis: [
         {
           title: {
-            text: 'Số sản phẩm đã bán',
+            text: null,
+          },
+          labels: {
+            enabled: false, // hide labels
           },
           opposite: true,
         },
@@ -177,7 +183,7 @@ const charts = computed(() => {
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Tổng quan chung</div>
+        <div class="statistic-item__title">Tổng quan</div>
       </div>
     </div>
     <summary-statistic :data="props.data" :is-hide-content="isHideContent"/>

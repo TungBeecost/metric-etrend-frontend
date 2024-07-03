@@ -76,7 +76,7 @@ onMounted(() => {
         <Breadcrumb :breadcrumbs="breadcrumbs"/>
       </div>
       <h1 v-if="data" class="report-title">
-        Báo cáo ngành hàng {{ data.name }} trên sàn TMĐT
+        {{ data.name }} - Báo cáo xu hướng thị trường sàn TMĐT
       </h1>
     </div>
     <div class="container default_section">

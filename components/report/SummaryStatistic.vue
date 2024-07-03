@@ -1,6 +1,7 @@
 <script setup>
 import { formatNumberHuman } from "~/helpers/FormatHelper";
 import BlurContent from "~/components/BlurContent.vue";
+import {formatSortTextCurrency} from "~/helpers/utils.js";
 
 const {data, isHideContent} = defineProps({
   data: {
@@ -37,7 +38,7 @@ const $t = (text) => {
           <div class="summary-statistic-item__title">{{ $t('Doanh số') }} (VNĐ)</div>
           <div class="summary-statistic-item__value" style="margin-bottom: 16px;">
             <BlurContent :is-hide-content="isHideContent">
-              {{ formatNumberHuman(data.data_analytic.by_overview.revenue) }}
+              {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
             </BlurContent>
           </div>
         </div>
@@ -58,7 +59,7 @@ const $t = (text) => {
           <div class="summary-statistic-item__title">{{ $t('Sản phẩm đã bán') }}</div>
           <div class="summary-statistic-item__value" style="margin-bottom: 16px;">
             <BlurContent :is-hide-content="isHideContent">
-              {{ formatNumberHuman(data.data_analytic.by_overview.sale) }}
+              {{ formatSortTextCurrency(data.data_analytic.by_overview.sale) }}
             </BlurContent>
           </div>
         </div>
@@ -67,19 +68,17 @@ const $t = (text) => {
     <div class="summary-statistic">
       <div class="summary-statistic-item">
         <div class="summary-statistic-item__icon">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
-               xmlns="http://www.w3.org/2000/svg">
-            <path opacity="0.2" d="M22 18L26 22L22 26V18Z" fill="#1890FF"/>
-            <path opacity="0.2" d="M6 10L10 6V14L6 10Z" fill="#1890FF"/>
-            <path d="M22 18L26 22L22 26V18Z" fill="#2EB553" stroke="#1890FF" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6 22H22" stroke="#1890FF" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round"/>
-            <path d="M10 14L6 10L10 6V14Z" fill="#2EB553" stroke="#1890FF" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M26 10H10" stroke="#1890FF" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round"/>
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" y="0.5" width="55" height="55" rx="27.5" fill="#E8F4FF"/>
+            <rect x="0.5" y="0.5" width="55" height="55" rx="27.5" stroke="#9CCFFF"/>
+            <path opacity="0.2" d="M34 30L38 34L34 38V30Z" fill="#1890FF"/>
+            <path opacity="0.2" d="M18 22L22 18V26L18 22Z" fill="#1890FF"/>
+            <path d="M34 30L38 34L34 38V30Z" stroke="#1890FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M18 34H34" stroke="#1890FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 26L18 22L22 18V26Z" stroke="#1890FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M38 22H22" stroke="#1890FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+
         </div>
         <div>
           <div class="summary-statistic-item__title">
