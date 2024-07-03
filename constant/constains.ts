@@ -6,7 +6,12 @@ export const NAVIGATIONS = {
   report: "/report",
   pricing: "/pricing",
   contactUs: "/contact-us",
-  signIn: "/sign-in"
+  signIn: "/sign-in",
+  informationPolicy: "/chinh-sach-bao-mat-thong-tin",
+  paymentMethod: "/hinh-thuc-thanh-toan",
+  refundPolicy: "/chinh-sach-doi-tra-san-pham",
+  placeOrderPolicy: "/chinh-sach-dat-hang",
+  commonTerm: "/dieu-kien-giao-dich-chung"
 };
 
 export const MENUS = [
@@ -24,25 +29,6 @@ export const MENUS = [
     label: "Bảng giá dịch vụ",
     icon: "Store",
     to: NAVIGATIONS.pricing
-  }
-];
-
-export const CONTACTS = [
-  {
-    label: "CÔNG TY CỔ PHẦN KHOA HỌC DỮ LIỆU",
-    icon: "Building"
-  },
-  {
-    label: "033.806.2221",
-    icon: "Phone"
-  },
-  {
-    label: "info@metric.vn",
-    icon: "Envelope"
-  },
-  {
-    label: "Tầng 6 Tòa nhà AZ Lâm Viên, 107A Nguyễn Phong Sắc, phường Dịch Vọng Hậu, quận Cầu Giấy, thành phố Hà Nội, Việt Nam",
-    icon: "MapPin"
   }
 ];
 
@@ -208,4 +194,53 @@ export const PARTERS = [
   "/images/branch/themobileworld.png",
   "/images/branch/tiki.png",
   "/images/branch/unilever.png"
+];
+
+export const TERM_AND_POLICIES = [
+  {
+    label: "Chính sách bảo mật thông tin",
+    link: NAVIGATIONS.informationPolicy
+  },
+  // {
+  //   label: "Hình thức thanh toán",
+  //   link: NAVIGATIONS.paymentMethod
+  // },
+  {
+    label: "Chính sách đổi trả sản phẩm",
+    link: NAVIGATIONS.refundPolicy
+  },
+  {
+    label: "Chính sách đặt hàng",
+    link: NAVIGATIONS.placeOrderPolicy
+  },
+  {
+    label: "Điều kiện giao dịch chung",
+    link: NAVIGATIONS.commonTerm
+  }
+];
+
+export const COMPANY_INFOS = {
+  name: "CÔNG TY CỔ PHẦN KHOA HỌC DỮ LIỆU",
+  address: "Tầng 6 Tòa nhà AZ Lâm Viên, 107A Nguyễn Phong Sắc, phường Dịch Vọng Hậu, quận Cầu Giấy, thành phố Hà Nội, Việt Nam",
+  phoneNumber: "033.806.2221",
+  email: "info@metric.vn"
+};
+
+export const CONTACTS = [
+  {
+    label: COMPANY_INFOS.name,
+    icon: "Building"
+  },
+  {
+    label: COMPANY_INFOS.phoneNumber,
+    icon: "Phone"
+  },
+  {
+    label: COMPANY_INFOS.email,
+    icon: "Envelope"
+  },
+  {
+    label: COMPANY_INFOS.address,
+    icon: "MapPin"
+  }
 ];
