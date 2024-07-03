@@ -3,7 +3,7 @@ import type { CommonOptionItem } from "~/helpers/types";
 export const NAVIGATIONS = {
   search: "/search",
   home: "/",
-  report: "/report",
+  report: "/reports",
   pricing: "/pricing",
   contactUs: "/contact-us",
   signIn: "/sign-in",

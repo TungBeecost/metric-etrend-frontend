@@ -2,6 +2,8 @@
 import { ref, computed, watch } from 'vue';
 import { getPlatformById } from "~/helpers/PermissionPlatformHelper";
 import {formatCurrency, formatNumberHuman} from "~/helpers/FormatHelper.js";
+import {formatSortTextCurrency} from "~/helpers/utils.js";
+import BlurContent from "~/components/BlurContent.vue";
 
 const chartOptions = ref(null);
 const platformColors = {
@@ -62,7 +64,6 @@ chartOptions.value = {
     style: {
       fontFamily: "Inter",
     },
-    width: 300
   },
   title: {
     text: "",
@@ -79,7 +80,7 @@ chartOptions.value = {
     }
   },
   tooltip: {
-    enabled: true,
+    enabled: false,
     formatter: function () {
       if (props.isHideContent) {
         const name = ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0 ? `${this.point.categoryName} ${this.point.index + 1}` : this.point.name;
@@ -96,11 +97,13 @@ chartOptions.value = {
     pie: {
       cursor: "pointer",
       showInLegend: true,
-      innerSize: '70%',
+      innerSize: '60%',
       borderWidth: 1,
       borderColor: null,
       dataLabels: {
         enabled: true,
+        connectorShape: 'crookedLine',
+        format: '{point.name}: {point.percentage:.1f} %',
         style: {
           fontSize: '12px',
           color: '#241E46',
@@ -121,7 +124,7 @@ chartOptions.value = {
         }
       },
       events: {
-        mouseOut: (_event) => { // Prefix the event parameter with an underscore
+        mouseOut: (_event) => {
           const PLATFORM_TOTAL = props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL;
           const total = PLATFORM_TOTAL.platforms.reduce((acc, item) => acc + item.revenue, 0);
           innerName.value = PLATFORM_TOTAL.platforms[0] ? getPlatformById(PLATFORM_TOTAL.platforms[0].platform_id).name : '';
@@ -165,19 +168,19 @@ watch(() => props.analyticType, () => {
 </script>
 
 <template>
-  <div class="PlatformChart">
-    <div style="flex: 1">
+  <div id="platform_chart" class="PlatformChart">
+    <div style="">
       <div style="position: relative">
         <highchart :options="chartOptions"/>
-        <div class="platform-chart-inner-box">
-          <div class="platform-chart-inner-value">
-            <div class="percent" style="color: #241E46; font-size: 24px;font-weight: bold; line-height: 32px; ">{{ innerPercent }}</div>
-            <div class="name" style="color: #241E46; font-size: 12px;line-height: 20px;">{{ innerName }}</div>
-          </div>
-        </div>
+<!--        <div class="platform-chart-inner-box">-->
+<!--          <div class="platform-chart-inner-value">-->
+<!--            <div class="percent" style="color: #241E46; font-size: 24px;font-weight: bold; line-height: 32px; ">{{ innerPercent }}</div>-->
+<!--            <div class="name" style="color: #241E46; font-size: 12px;line-height: 20px;">{{ innerName }}</div>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
     </div>
-    <div style="flex: 1;  max-width: 500px;">
+    <div>
       <a-table
           :columns="columns"
           :data-source="dataSource"
@@ -186,31 +189,19 @@ watch(() => props.analyticType, () => {
           class="platform-table"
           size="large"
       >
-        <div style="flex: 1;  max-width: 500px;">
-          <a-table
-              :columns="columns"
-              :data-source="dataSource"
-              :pagination="false"
-              :row-key="record => record.platform"
-              class="platform-table"
-              size="large"
-          >
-            <template #platform="{ record }">
-              <div style="display: flex;">
-                <img :src="record.platformIcon" class="platform-icon"
-                     style="width: 32px;height: 32px;border-radius: 8px;margin-right: 10px;"/>
-                <span style="font-weight: 400;">{{ record.platform }}</span>
-              </div>
-            </template>
-            <template #revenue="{ record }">
-          <span style="font-weight: 400;">
-            <BlurContent :is-hide-content="isHideContent">
-              {{ record.revenue }}
-            </BlurContent>
-          </span>
-            </template>
-          </a-table>
-        </div>
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'platform'">
+            <div class="platform-column">
+              <img :src="record.platformIcon" class="platform-icon"/>
+              <span>{{ record.platform }}</span>
+            </div>
+          </template>
+          <template v-if="column.key === 'revenue'">
+            <div>
+              {{ formatSortTextCurrency(record.revenue) }}
+            </div>
+          </template>
+        </template>
       </a-table>
     </div>
   </div>
@@ -218,8 +209,7 @@ watch(() => props.analyticType, () => {
 
 
 <style lang="scss">
-.PlatformChart {
-  width: 100%;
+.platform_chart {
 
   .platform-table {
     .ant-table-thead > tr > th {
@@ -242,16 +232,19 @@ watch(() => props.analyticType, () => {
 </style>
 
 <style scoped lang="scss">
-.PlatformChart {
+#platform_chart {
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-around;
+
 
   .platform-chart-inner-box {
     width: 100%;
     height: 100%;
 
     position: absolute;
-    top: -5px;
+    top: 10px;
     left: 0px;
 
     display: flex;
@@ -300,6 +293,8 @@ watch(() => props.analyticType, () => {
 
 
     .platform-column {
+      display: flex;
+      align-items: center;
       font-weight: 400;
       font-size: 14px;
       line-height: 22px;

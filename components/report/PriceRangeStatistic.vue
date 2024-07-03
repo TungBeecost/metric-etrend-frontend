@@ -178,7 +178,7 @@ const chartOptions = computed(() => {
         zIndex: 10,
         data: props.data.data_analytic.by_price_range.lst_price_range
           .slice()
-          .map((item) => item.sale),
+          .map((item) => item.sale || item.ratio_revenue),
       },
       ...lstPlatform.map((platformId) => {
         const platform = getPlatformById(platformId)
@@ -190,7 +190,9 @@ const chartOptions = computed(() => {
           data: BY__PRICE_RANGE.map(
             ({ lst_platform }) => lst_platform.find(
               ({ platform_id }) => platform_id === platformId
-            )?.revenue || 0
+            )?.revenue || lst_platform.find(
+              ({ platform_id }) => platform_id === platformId
+            )?.ratio_revenue || 0
           ),
           tooltip: {
             valueSuffix: " đ"
@@ -216,7 +218,7 @@ const chartOptions = computed(() => {
     </div>
     <div class="my-4 w-full text-center relative">
       <highchart :options="chartOptions" />
-      <!-- <ChartMask v-if="isHideContent" @click-on-hidden="$emit('clickOnHidden')" /> -->
+      <!--      <ChartMask v-if="isHideContent" @clickOnHidden="$emit('clickOnHidden')"/>-->
     </div>
     <InsightBlock v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length">
       <li>
@@ -242,9 +244,10 @@ const chartOptions = computed(() => {
   display: none !important;
 }
 
-.highcharts-container {
-  margin: 0 auto;
-}
+//.highcharts-container {
+//  width: 100% !important;
+//  height: 100% !important;
+//}
 
 .ant-collapse>.ant-collapse-item {
   border: none;
