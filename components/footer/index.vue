@@ -12,7 +12,7 @@
       <!-- term & policy -->
       <div class="info term">
         <div class="title">Chính sách & quy định</div>
-        <NuxtLink v-for="(item, index) in termAndPolicies" :key="index" :to="item.link" class="termLink">
+        <NuxtLink v-for="(item, index) in TERM_AND_POLICIES" :key="index" :to="item.link" class="termLink">
           {{ item.label }}
         </NuxtLink>
       </div>
@@ -48,25 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { CONTACTS } from '../../constant/constains';
-
-
-const termAndPolicies = [{
-  label: "Chính sách bảo mật thông tin",
-  link: "/",
-}, {
-  label: "Hình thức thanh toán",
-  link: "/",
-}, {
-  label: "Chính sách đổi trả sản phẩm",
-  link: "/",
-}, {
-  label: "Chính sách đặt hàng",
-  link: "/",
-}, {
-  label: "Điều kiện giao dịch chung",
-  link: "/",
-}]
+import { CONTACTS, TERM_AND_POLICIES } from '../../constant/constains';
 
 
 </script>

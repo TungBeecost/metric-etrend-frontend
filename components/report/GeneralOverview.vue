@@ -103,143 +103,72 @@ const diffMonths = computed(() => {
 
 const charts = computed(() => {
   if (!props.data) return [];
+  const platformId = props.data.filter_custom.lst_platform_id[0];
   return [
     {
       title: {
         text: ''
       },
+      tooltip: {
+        enabled: false,
+      },
       yAxis: [
         {
           title: {
-            text: 'Doanh số (Đồng)',
-            style: {
-              fontSize: '12px',
-              color: '#241E46',
-              fontWeight: 700,
-              fontFamily: 'Inter'
-            }
+            text: null,
           },
           labels: {
-            style: {
-              fontSize: '12px',
-              color: '#241E46',
-              fontWeight: 700,
-              fontFamily: 'Inter'
-            }
+            enabled: false, // hide labels
           },
           opposite: true,
         },
         {
           title: {
-            text: 'Số sản phẩm đã bán (Sản phẩm)',
-            style: {
-              fontSize: '12px',
-              color: '#241E46',
-              fontWeight: 700,
-              fontFamily: 'Inter'
-            }
-          },
-          labels: {
-            style: {
-              fontSize: '12px',
-              color: '#241E46',
-              fontWeight: 700,
-              fontFamily: 'Inter'
-            }
+            text: 'Doanh số (VNĐ)',
           },
         },
       ],
       plotOptions: {
-        bar: {
-          borderRadius: '4px',
-          dataLabels: {
-            enabled: true
-          },
-          groupPadding: 0.1
-        },
         series: {
-          stacking: 'normal',
-        },
-        column: {
-          dataLabels: {
-            style: {
-              fontSize: '12px',
-              color: '#241E46',
-              fontWeight: 700,
-              fontFamily: 'Inter'
-            },
-            formatter: function (this: any): string | number {
-              const y = Number(parseFloat(this.y).toFixed(1))
-              if (y * 10 % 10 === 0) {
-                return formatSortTextCurrencyWithMinValue(parseInt(`${y}`, 10));
-              }
-              return y.toLocaleString("vi-VN");
-            },
-          }
+          stacking: 'normal'
         }
       },
       legend: {
         enabled: true,
-        symbolHeight: 10,
-        symbolWidth: 10,
         reversed: true,
-        itemStyle: {
-          fontSize: '12px',
-          color: '#241E46',
-          fontWeight: 700,
-          fontFamily: 'Inter'
-        }
+        symbolRadius: 1,
       },
       xAxis: {
-        categories: props.data?.data_analytic.by_overview.lst_revenue_sale_monthly
-            ? props.data.data_analytic.by_overview.lst_revenue_sale_monthly.map(
-                ({begin}: { begin: string }) => `${formatDateFunc(begin, 'MM/YYYY')}`
-            )
-            : [],
-        labels: {
-          style: {
-            fontSize: '12px',
-            color: '#241E46',
-            fontWeight: 700,
-            fontFamily: 'Inter'
-          },
-        }
+        categories: props.data.data_analytic.by_overview.lst_revenue_sale_monthly.map(
+            ({begin}: { begin: string }) => `${formatDateFunc(begin, 'MM/YYYY')}`
+        ),
       },
       series: [
         {
-          name: 'Số sản phẩm đã bán cả 3 sàn',
+          name: 'Số sản phẩm đã bán',
           color: '#1A1A46',
           type: 'spline',
           zIndex: 1,
           data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
               .slice()
-              .map((item: { sale: number }) => item.sale),
+              .map((item: { sale: number, score?: number }) => item.sale || item.score),
         },
-        ...props.data.filter_custom.lst_platform_id
-            .slice()
-            .reverse()
-            .map((platformId: number) => {
-              const platformName = platformNames[platformId];
-              const platformColor = platformColors[platformName];
-              return {
-                name: platformName,
-                color: platformColor,
-                stack: 'platform_revenue_price_range',
-                type: 'column',
-                yAxis: 1,
-                borderRadius: 3,
-                data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
-                    .slice()
-                    .map(
-                        (monthly: { by_platform: { platform_id: number, revenue: number }[] }) =>
-                            monthly.by_platform
-                                ? monthly.by_platform.find(
-                                (p: { platform_id: number }) => Number(p.platform_id) === platformId
-                            )?.revenue || 0
-                                : 0
-                    ),
-              }
-            }),
+        {
+          name: 'Doanh số',
+          color: platformColors[platformNames[platformId]],
+          stack: 'platform_revenue_price_range',
+          type: 'column',
+          yAxis: 1,
+          borderRadius: 3,
+          data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
+              .slice()
+              .map(
+                  (monthly: { revenue: number, score?: number, by_platform?: { platform_id: number, revenue: number }[] }) =>
+                      monthly.revenue || (monthly.by_platform?.find(
+                          (p: { platform_id: number }) => Number(p.platform_id) === platformId
+                      )?.revenue || monthly.score)
+              ),
+        },
       ]
     }
   ]
@@ -254,7 +183,7 @@ const charts = computed(() => {
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Tổng quan chung</div>
+        <div class="statistic-item__title">Tổng quan</div>
       </div>
     </div>
     <summary-statistic :data="props.data" :is-hide-content="isHideContent"/>
@@ -387,11 +316,4 @@ const charts = computed(() => {
   }
 
 }
-</style>
-<style lang="scss">
-  .highcharts-point{
-    cursor: pointer;
-    rx: 10px;
-    ry: 10px;
-  }
 </style>

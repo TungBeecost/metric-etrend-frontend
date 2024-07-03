@@ -2,9 +2,13 @@
 import type { Search } from '../../.nuxt/components';
 import { NAVIGATIONS } from '../../constant/constains';
 
+const props = defineProps<{
+  handleSearch?: (searchValue: string) => Promise<void>
+}>()
+
 const route = useRoute();
 
-const { fetchSearch, fetchSuggest } = useSearchReport();
+const { fetchSuggest } = useSearchReport();
 
 const onSearch = async (searchValue: string) => {
   // for case delete search value
@@ -15,10 +19,8 @@ const onSearch = async (searchValue: string) => {
     return;
   }
 
-  const result = await fetchSearch(searchValue);
-  console.log(result);
-
-  // action show result here
+  // handle search action here
+  if (props.handleSearch) await props.handleSearch(searchValue);
 };
 
 </script>

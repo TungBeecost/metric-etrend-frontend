@@ -1,4 +1,5 @@
 import {formatNumber} from "~/helpers/FormatHelper.js";
+import {ALL_PLATFORM_BASE_OBJECT} from "~/constant/general/GeneralConstant.js";
 
 export const extractDomain = (url) => {
     if (url == null) {
@@ -87,6 +88,28 @@ export const getUrlImageOption = (urlImage, type = "thumbnail") => {
 
     return urlImage;
 };
+
+export const getPlatformByUrl = (url) => {
+    if (!url) {
+        return null
+    }
+    try {
+        url = new URL(url)
+    } catch (e) {
+        return null
+    }
+    for (const platformKey in ALL_PLATFORM_BASE_OBJECT) {
+        const platform = ALL_PLATFORM_BASE_OBJECT[platformKey]
+        if (url.hostname.indexOf(platform.name.toLowerCase()) > -1) {
+            return platform
+        }
+        const shopBaseId = url.pathname.split('/')[url.pathname.split('/').length - 1].split('__')[0]
+        if (parseInt(shopBaseId, 10) === platform.platform_id) {
+            return platform
+        }
+    }
+}
+
 
 export const goToUrl = (url, mode = "_self") => {
     if (url?.length > 0) {

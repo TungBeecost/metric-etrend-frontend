@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import {defineProps} from 'vue';
 import PieChart from "~/components/report/PieChart.vue";
 
 const props = defineProps({
@@ -21,13 +21,13 @@ const formatNumber = (value: number = 0) => {
 
 <template>
   <div
-    v-if="
+      v-if="
       props.data.data_analytic.by_brand &&
       props.data.data_analytic.by_brand.lst_top_brand_revenue &&
       props.data.data_analytic.by_brand.lst_top_brand_revenue.length > 1
     "
-    class="border statistic-block mb-6"
-    id="thong-ke-thuong-hieu"
+      class="border statistic-block"
+      id="thong-ke-thuong-hieu"
   >
     <div class="statistic-item__title">
       <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
@@ -47,9 +47,9 @@ const formatNumber = (value: number = 0) => {
             {
               name: 'Doanh thu',
               data: props.data.data_analytic.by_brand.lst_top_brand_revenue.map(
-                ({ name = '', revenue = 0 } = {}) => ({
+                ({ name = '', revenue = 0, ratio_revenue = 0 } = {}) => ({
                   name,
-                  y: revenue,
+                  y: revenue || ratio_revenue,
                   categoryName: 'Thương hiệu',
                 })
               ),
@@ -65,9 +65,9 @@ const formatNumber = (value: number = 0) => {
             {
               name: 'Sản phẩm đã bán',
               data: props.data.data_analytic.by_brand.lst_top_brand_sale.map(
-                ({ name = '', sale = 0 } = {}) => ({
+                ({ name = '', sale = 0, ratio_sale = 0 } = {}) => ({
                   name,
-                  y: sale,
+                  y: sale || ratio_sale,
                   categoryName: 'Thương hiệu',
                 })
               ),
@@ -77,7 +77,7 @@ const formatNumber = (value: number = 0) => {
       </div>
     </div>
     <InsightBlock
-      v-if="
+        v-if="
         props.data.data_analytic.by_brand &&
         props.data.data_analytic.by_brand.lst_top_brand_revenue &&
         props.data.data_analytic.by_brand.lst_top_brand_revenue.length > 1
@@ -107,22 +107,22 @@ const formatNumber = (value: number = 0) => {
             {{
               Number(
                   props.data.data_analytic.by_brand.lst_top_brand_revenue[0]
-                  .ratio_revenue * 100
+                      .ratio_revenue * 100
               ).toFixed(2)
             }}
           </span>
         </BlurContent>
         % thị phần về doanh thu{{
           props.data.data_analytic.by_brand.lst_top_brand_revenue[0].ratio_sale
-            ? " và " +
-            Number(
-                props.data.data_analytic.by_brand.lst_top_brand_revenue[0].ratio_sale
-            ).toFixed(2) +
-            "% thị phần về sản lượng"
-            : ""
+              ? " và " +
+              Number(
+                  props.data.data_analytic.by_brand.lst_top_brand_revenue[0].ratio_sale
+              ).toFixed(2) +
+              "% thị phần về sản lượng"
+              : ""
         }}.
         <template
-          v-if="
+            v-if="
             props.data.data_analytic.by_brand &&
             props.data.data_analytic.by_brand.lst_top_brand_revenue &&
             props.data.data_analytic.by_brand.lst_top_brand_revenue.length > 2
@@ -141,7 +141,7 @@ const formatNumber = (value: number = 0) => {
               {{
                 Number(
                     props.data.data_analytic.by_brand.lst_top_brand_revenue[1]
-                    .ratio_revenue * 100
+                        .ratio_revenue * 100
                 ).toFixed(2)
               }}
             </span>
@@ -152,7 +152,7 @@ const formatNumber = (value: number = 0) => {
               {{
                 Number(
                     props.data.data_analytic.by_brand.lst_top_brand_revenue[2]
-                    .ratio_revenue * 100
+                        .ratio_revenue * 100
                 ).toFixed(2)
               }}
             </span>
@@ -584,13 +584,18 @@ const formatNumber = (value: number = 0) => {
   }
 }
 
-.pie_chart{
+.pie_chart {
   display: flex;
   gap: 16px;
   justify-content: center;
+  width: 100%;
+
+  .pie_chart_item {
+    width: 100%;
+  }
 }
 
-.statistic-item__title{
+.statistic-item__title {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -600,7 +605,7 @@ const formatNumber = (value: number = 0) => {
   color: #241E46;
 }
 
-#thong-ke-thuong-hieu{
+#thong-ke-thuong-hieu {
   padding: 24px;
   border-radius: 8px;
   border: 1px solid #EEEBFF;

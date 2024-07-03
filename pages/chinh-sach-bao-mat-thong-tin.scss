@@ -1,0 +1,58 @@
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  .clause {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .header {
+      display: flex;
+      align-items: stretch;
+      gap: 16px;
+      align-self: stretch;
+      margin-top: 24px;
+
+      p {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 32px;
+      }
+
+      .mark {
+        background-color: #f9d7c6;
+        width: 16px;
+        border-radius: 4px;
+      }
+    }
+
+    .statement {
+      list-style-type: disc;
+
+      li {
+        margin: 8px 0px;
+        margin-left: 15px;
+      }
+    }
+
+    .addressBlock {
+      display: flex;
+      padding: 24px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      align-self: stretch;
+      border-radius: 16px;
+      background: #fbfafc;
+
+      .contactItem {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        align-self: stretch;
+      }
+    }
+  }
+}

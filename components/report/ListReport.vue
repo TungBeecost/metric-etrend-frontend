@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
+import {defineProps, ref} from 'vue'
 
 interface DataItem {
   id: string; // Add this line
@@ -19,10 +19,12 @@ const props = defineProps({
     default: () => [],
   },
 });
+
+const current = ref(1);
 </script>
 
 <template>
-  <div class="lst_report">
+  <div id="lst_report_id">
     <div v-for="item in props.data" :key="item.id" class="lst_item">
       <div class="item">
         <div class="image">
@@ -35,14 +37,17 @@ const props = defineProps({
         </div>
       </div>
     </div>
+    <div class="page">
+      <a-pagination v-model:current="current" :total="1000" show-less-items />
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.lst_report{
+#lst_report_id{
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
   .lst_item{
     display: flex;
     .item{
@@ -99,6 +104,12 @@ const props = defineProps({
     }
   }
 
+  .page{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 40px;
+  }
+
   @media (max-width: 767px) {
     .lst_item {
       .item {
@@ -127,4 +138,30 @@ const props = defineProps({
     }
   }
 }
+</style>
+<style lang="scss">
+#lst_report_id{
+  .ant-pagination{
+    .ant-pagination-item{
+      background-color: #F5F5F5;
+      border-radius: 8px;
+      a{
+        background-color: #F5F5F5;
+        border-radius: 8px;
+      }
+    }
+    .ant-pagination-item-active{
+      background-color: #E85912;
+      color: #FFFFFF;
+      a{
+        background-color: #E85912;
+        color: #FFFFFF;
+      }
+    }
+    .ant-pagination-options{
+      display: none;
+    }
+  }
+}
+
 </style>
