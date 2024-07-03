@@ -201,10 +201,10 @@ export const TERM_AND_POLICIES = [
     label: "Chính sách bảo mật thông tin",
     link: NAVIGATIONS.informationPolicy
   },
-  {
-    label: "Hình thức thanh toán",
-    link: NAVIGATIONS.paymentMethod
-  },
+  // {
+  //   label: "Hình thức thanh toán",
+  //   link: NAVIGATIONS.paymentMethod
+  // },
   {
     label: "Chính sách đổi trả sản phẩm",
     link: NAVIGATIONS.refundPolicy
