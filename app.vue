@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <a-extract-style>
     <NuxtLayout>
-      <NuxtPage />
+      <NuxtPage/>
     </NuxtLayout>
-  </div>
+  </a-extract-style>
 </template>
