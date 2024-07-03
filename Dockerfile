@@ -7,7 +7,7 @@ FROM node:22.2.0-alpine3.20 as runner
 WORKDIR /app
 COPY export.sh /app 
 RUN npm install pm2 -g
-CMD ["/bin/bash","-c","export.sh", " && " "npm", "run", "start"]
+CMD ["/app/export.sh"]
 EXPOSE 3000
 
 FROM build-stage as ssr 
