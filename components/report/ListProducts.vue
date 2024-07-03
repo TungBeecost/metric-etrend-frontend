@@ -274,8 +274,8 @@ const value = ref('');
 <!--        />-->
 <!--      </div>-->
     </template>
-    <div class="line"></div>
-    <div class="page">
+<!--    <div class="line"></div>-->
+    <div class="page" v-if="false">
       <div class="currency_unit" style="flex: 1; display: flex; align-items: center"></div>
       <a-pagination v-model:current="current" :total="1000" show-less-items class="a_page" style="flex: 1" />
       <a-input

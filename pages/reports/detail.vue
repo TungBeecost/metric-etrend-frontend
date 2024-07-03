@@ -144,14 +144,14 @@ onMounted(() => {
     gap: 20px;
 
     .general_overview_container {
-      flex: 0.8;
+      flex: 0.7;
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
 
     .different_info {
-      flex: 0.2;
+      flex: 0.3;
       display: flex;
       flex-direction: column;
       gap: 16px;
