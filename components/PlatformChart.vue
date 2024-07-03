@@ -2,6 +2,8 @@
 import { ref, computed, watch } from 'vue';
 import { getPlatformById } from "~/helpers/PermissionPlatformHelper";
 import {formatCurrency, formatNumberHuman} from "~/helpers/FormatHelper.js";
+import {formatSortTextCurrency} from "~/helpers/utils.js";
+import BlurContent from "~/components/BlurContent.vue";
 
 const chartOptions = ref(null);
 const platformColors = {
@@ -78,7 +80,7 @@ chartOptions.value = {
     }
   },
   tooltip: {
-    enabled: true,
+    enabled: false,
     formatter: function () {
       if (props.isHideContent) {
         const name = ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0 ? `${this.point.categoryName} ${this.point.index + 1}` : this.point.name;
@@ -95,11 +97,13 @@ chartOptions.value = {
     pie: {
       cursor: "pointer",
       showInLegend: true,
-      innerSize: '70%',
+      innerSize: '60%',
       borderWidth: 1,
       borderColor: null,
       dataLabels: {
         enabled: true,
+        connectorShape: 'crookedLine',
+        format: '{point.name}: {point.percentage:.1f} %',
         style: {
           fontSize: '12px',
           color: '#241E46',
@@ -120,7 +124,7 @@ chartOptions.value = {
         }
       },
       events: {
-        mouseOut: (_event) => { // Prefix the event parameter with an underscore
+        mouseOut: (_event) => {
           const PLATFORM_TOTAL = props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL;
           const total = PLATFORM_TOTAL.platforms.reduce((acc, item) => acc + item.revenue, 0);
           innerName.value = PLATFORM_TOTAL.platforms[0] ? getPlatformById(PLATFORM_TOTAL.platforms[0].platform_id).name : '';
@@ -168,12 +172,12 @@ watch(() => props.analyticType, () => {
     <div style="">
       <div style="position: relative">
         <highchart :options="chartOptions"/>
-        <div class="platform-chart-inner-box">
-          <div class="platform-chart-inner-value">
-            <div class="percent" style="color: #241E46; font-size: 24px;font-weight: bold; line-height: 32px; ">{{ innerPercent }}</div>
-            <div class="name" style="color: #241E46; font-size: 12px;line-height: 20px;">{{ innerName }}</div>
-          </div>
-        </div>
+<!--        <div class="platform-chart-inner-box">-->
+<!--          <div class="platform-chart-inner-value">-->
+<!--            <div class="percent" style="color: #241E46; font-size: 24px;font-weight: bold; line-height: 32px; ">{{ innerPercent }}</div>-->
+<!--            <div class="name" style="color: #241E46; font-size: 12px;line-height: 20px;">{{ innerName }}</div>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
     </div>
     <div>
@@ -192,8 +196,10 @@ watch(() => props.analyticType, () => {
               <span>{{ record.platform }}</span>
             </div>
           </template>
-          <template v-else>
-            {{ record[column.key] }}
+          <template v-if="column.key === 'revenue'">
+            <div>
+              {{ formatSortTextCurrency(record.revenue) }}
+            </div>
           </template>
         </template>
       </a-table>
