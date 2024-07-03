@@ -31,7 +31,6 @@ interface Data {
 }
 
 const data = ref<Data | null>(null);
-const current = ref(1);
 const displaySortReport = ref(false);
 const isModalVisible = ref(false);
 const route = useRoute();
@@ -134,9 +133,7 @@ onMounted(() => {
           </a-modal>
         </div>
         <list-report :data="data?.lst_report"/>
-        <div class="page">
-          <a-pagination v-model:current="current" :total="1000" show-less-items />
-        </div>
+
       </div>
       <div class="relate_functions">
         <filter-report v-if="displaySortReport" class="filter_report"/>

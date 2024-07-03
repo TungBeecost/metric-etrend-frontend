@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 import { formatCurrency, formatNumberHuman } from "~/helpers/FormatHelper";
-import { getPlatformByUrl } from "~/constant/general/GeneralConstant";
 import moment from "moment/moment";
 import {openProductUrl, openShopProductUrl} from "~/helpers/DataNormalize";
+import {getPlatformByUrl} from "~/helpers/utils";
 
 const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
   return moment(value, inputFormat).format(format);

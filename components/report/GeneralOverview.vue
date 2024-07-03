@@ -109,10 +109,16 @@ const charts = computed(() => {
       title: {
         text: ''
       },
+      tooltip: {
+        enabled: false,
+      },
       yAxis: [
         {
           title: {
-            text: 'Số sản phẩm đã bán',
+            text: null,
+          },
+          labels: {
+            enabled: false, // hide labels
           },
           opposite: true,
         },
@@ -145,7 +151,7 @@ const charts = computed(() => {
           zIndex: 1,
           data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
               .slice()
-              .map((item: { sale: number }) => item.sale),
+              .map((item: { sale: number, score?: number }) => item.sale || item.score),
         },
         {
           name: 'Doanh số',
@@ -157,10 +163,10 @@ const charts = computed(() => {
           data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
               .slice()
               .map(
-                  (monthly: { revenue: number, by_platform?: { platform_id: number, revenue: number }[] }) =>
+                  (monthly: { revenue: number, score?: number, by_platform?: { platform_id: number, revenue: number }[] }) =>
                       monthly.revenue || (monthly.by_platform?.find(
                           (p: { platform_id: number }) => Number(p.platform_id) === platformId
-                      )?.revenue || 0)
+                      )?.revenue || monthly.score)
               ),
         },
       ]
@@ -177,7 +183,7 @@ const charts = computed(() => {
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Tổng quan chung</div>
+        <div class="statistic-item__title">Tổng quan</div>
       </div>
     </div>
     <summary-statistic :data="props.data" :is-hide-content="isHideContent"/>
