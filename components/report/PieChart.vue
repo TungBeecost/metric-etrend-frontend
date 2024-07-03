@@ -86,7 +86,10 @@ watchEffect(() => {
         fontFamily: "Montserrat, Inter, sans-serif",
       },
     },
-    tooltip: tooltip.value,
+    // tooltip: tooltip.value,
+    tooltip: {
+      enabled: false
+    },
     plotOptions: {
       pie: {
         colors: colors,

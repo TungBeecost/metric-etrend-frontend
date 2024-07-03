@@ -6,9 +6,9 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
-  isFreeUser: {
+  isHideContent: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 });
 
@@ -59,7 +59,7 @@ const formatNumber = (value: number = 0) => {
               },
             ]"
             :data-source="props.data.data_analytic.by_brand.lst_top_brand_revenue.map(
-              ({ name = '' } = {}, idx) => ({
+              ({ name = '' } = {}, idx=0) => ({
                 stt: idx + 1,
                 name,
               })
@@ -88,7 +88,7 @@ const formatNumber = (value: number = 0) => {
               },
             ]"
             :data-source="props.data.data_analytic.by_brand.lst_top_brand_sale.map(
-              ({ name = '' } = {}, idx) => ({
+              ({ name = '' } = {}, idx=0) => ({
                 stt: idx + 1,
                 name,
               })
@@ -106,7 +106,7 @@ const formatNumber = (value: number = 0) => {
     >
       <li>
         Phân tích thị trường {{ props.data.name }} có hơn
-        <BlurContent :is-hide-content="props.isFreeUser">
+        <BlurContent :is-hide-content="props.isHideContent">
           <span>
             {{
               formatNumber(props.data.data_analytic.by_brand.ratio?.brand.brand || 0)
@@ -123,7 +123,7 @@ const formatNumber = (value: number = 0) => {
             props.data.data_analytic.by_brand.lst_top_brand_revenue[0].name
           }}</span>
         đang chiếm
-        <BlurContent :is-hide-content="props.isFreeUser">
+        <BlurContent :is-hide-content="props.isHideContent">
           <span>
             {{
               Number(
@@ -157,7 +157,7 @@ const formatNumber = (value: number = 0) => {
               props.data.data_analytic.by_brand.lst_top_brand_revenue[2].name
             }}</span>
           tương ứng thị phần {{ props.data.name }} với doanh thu là
-          <BlurContent :is-hide-content="props.isFreeUser">
+          <BlurContent :is-hide-content="props.isHideContent">
             <span>
               {{
                 Number(
@@ -168,7 +168,7 @@ const formatNumber = (value: number = 0) => {
             </span>
           </BlurContent>
           % và
-          <BlurContent :is-hide-content="props.isFreeUser">
+          <BlurContent :is-hide-content="props.isHideContent">
             <span>
               {{
                 Number(

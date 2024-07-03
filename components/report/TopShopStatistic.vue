@@ -16,7 +16,7 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
-  isFreeUser: {
+  isHideContent: {
     type: Boolean,
     default: false,
   },
@@ -24,7 +24,6 @@ const props = defineProps({
 
 const formatNumber = (value = "") => value.toLocaleString("vi-VN");
 
-const isHideContent = computed(() => props.isFreeUser);
 const isClient = computed(() => !import.meta.env.SSR);
 const reportType = computed(() => props.data?.report_type);
 </script>
@@ -95,7 +94,7 @@ const reportType = computed(() => props.data?.report_type);
         <PieChart
             title="Tỉ trọng doanh số"
             subtitle="Shop Mall và Shop thường"
-            :is-hide-content="isHideContent"
+            :is-hide-content="props.isHideContent"
             :series="[
             {
               name: 'Sản phẩm đã bán',
@@ -175,7 +174,7 @@ const reportType = computed(() => props.data?.report_type);
     >
       <li>
         Doanh thu của {{ props.data.name }} đến từ
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent :is-hide-content="props.isHideContent">
           <span>
             {{ formatNumber(props.data.data_analytic.by_shop.ratio.mall.shop) }}
           </span>
@@ -186,7 +185,7 @@ const reportType = computed(() => props.data?.report_type);
               props.data.data_analytic.by_shop.ratio.mall.ratio_revenue * 100
           ).toFixed(1)
         }}% và hơn
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent :is-hide-content="props.isHideContent">
           <span>
             {{ formatNumber(props.data.data_analytic.by_shop.ratio.normal.shop) }}
           </span>
@@ -203,7 +202,7 @@ const reportType = computed(() => props.data?.report_type);
           }}</span>
         có tỉ trọng doanh thu cao nhất chiếm
 
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent :is-hide-content="props.isHideContent">
           <span>
             {{
               Number(
@@ -236,7 +235,7 @@ const reportType = computed(() => props.data?.report_type);
               props.data.data_analytic.by_shop.lst_top_shop[2].name
             }}</span>
           tương ứng thị phần doanh thu là
-          <BlurContent :is-hide-content="isHideContent">
+          <BlurContent :is-hide-content="props.isHideContent">
             <span>
               {{
                 Number(
@@ -255,7 +254,7 @@ const reportType = computed(() => props.data?.report_type);
             props.data.data_analytic.by_shop.lst_top_shop.length >= 3
           "
         >
-          <BlurContent :is-hide-content="isHideContent">
+          <BlurContent :is-hide-content="props.isHideContent">
             <span>
               {{
                 Number(

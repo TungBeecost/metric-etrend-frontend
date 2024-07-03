@@ -22,7 +22,6 @@ interface Data {
   filter_custom: any;
 }
 
-const isFreeUser = false;
 const isHideContent = true;
 const data = ref<Data | null>(null);
 const loading = ref(true);
@@ -36,7 +35,6 @@ const fetchTableData = async () => {
       }
     });
     data.value = response.data;
-    console.log(response.data);
     loading.value = false;
   } catch (error) {
     loading.value = false;
@@ -85,25 +83,21 @@ onMounted(() => {
     </div>
     <div class="container default_section">
       <div v-if="data" class="general_overview_container">
-        <general-overview :data="data as Record<string, any>" :is-hide-content="false" :is-free-user="false"/>
+        <general-overview :data="data as Record<string, any>" :is-hide-content="isHideContent"/>
         <price-range-statistic
             :data="data"
-            :is-free-user="isFreeUser"
             :is-hide-content="isHideContent"
         />
         <brand-statistic
             :data="data"
-            :is-free-user="isFreeUser"
             :is-hide-content="isHideContent"
         />
         <top-shop-statistic
             :data="data"
-            :is-free-user="isFreeUser"
             :is-hide-content="isHideContent"
         />
         <list-products
             :data="data"
-            :is-free-user="isFreeUser"
             :is-hide-content="isHideContent"
         />
       </div>
