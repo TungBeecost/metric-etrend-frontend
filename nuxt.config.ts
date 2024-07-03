@@ -60,6 +60,7 @@ export default defineNuxtConfig({
     },
     "nuxt-svgo",
     "@ant-design-vue/nuxt",
-    "@pinia/nuxt"
+    "@pinia/nuxt",
+    "nuxt-gtag"
   ]
 });

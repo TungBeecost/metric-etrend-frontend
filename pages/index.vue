@@ -55,6 +55,8 @@
 import type SearchReport from '../components/search/search-report.vue';
 import { NAVIGATIONS } from '../constant/constains';
 
+console.log(`This is gg tag:`, process.env.NUXT_PUBLIC_GTAG_ID);
+
 const recommendSearch = ["Ngành hàng Mẹ & Bé", "Ngành hàng Điện tử", "Thời trang Nam", "Điện Máy"]
 
 const onClickSuggestion = (suggestion: string) => {
