@@ -2,7 +2,7 @@
 import {computed} from 'vue';
 import SummaryStatistic from "~/components/report/SummaryStatistic.vue";
 
-import {formatSortTextCurrency, formatSortTextCurrencyWithMinValue} from "~/helpers/utils";
+import {formatSortTextCurrency} from "~/helpers/utils";
 import dayjs from "dayjs";
 import {formatNumber} from "~/helpers/FormatHelper";
 
@@ -95,7 +95,7 @@ const formatDateFunc = (value: string, format: string) => {
 };
 
 const diffMonths = computed(() => {
-  const { start_date, end_date } = props.data.filter_custom;
+  const {start_date, end_date} = props.data.filter_custom;
   const startDate = dayjs(start_date);
   const endDate = dayjs(end_date);
   return endDate.diff(startDate, "months") + 1 + " tháng";
@@ -107,7 +107,13 @@ const charts = computed(() => {
   return [
     {
       title: {
-        text: ''
+        text: 'Doanh số và sản phẩm đã bán theo tháng',
+        style: {
+          fontSize: '14px',
+          color: '#241E46',
+          fontWeight: 700,
+          fontFamily: 'Inter'
+        }
       },
       tooltip: {
         enabled: false,
@@ -115,17 +121,29 @@ const charts = computed(() => {
       yAxis: [
         {
           title: {
-            text: null,
-          },
-          labels: {
-            enabled: false, // hide labels
+            text: 'Sản lượng',
+            style: {
+              fontSize: '12px',
+              color: '#241E46',
+              fontWeight: 400,
+              fontFamily: 'Inter'
+            }
           },
           opposite: true,
+          labels: {
+            style: {
+              fontSize: '12px',
+              color: '#241E46',
+              fontWeight: 400,
+              fontFamily: 'Inter'
+            }
+          }
         },
         {
-          title: {
-            text: 'Doanh số (VNĐ)',
-          },
+          title: false,
+          labels: {
+            enabled: false,
+          }
         },
       ],
       plotOptions: {
@@ -142,10 +160,18 @@ const charts = computed(() => {
         categories: props.data.data_analytic.by_overview.lst_revenue_sale_monthly.map(
             ({begin}: { begin: string }) => `${formatDateFunc(begin, 'MM/YYYY')}`
         ),
+        labels: {
+          style: {
+            fontSize: '12px',
+            color: '#241E46',
+            fontWeight: 400,
+            fontFamily: 'Inter'
+          }
+        }
       },
       series: [
         {
-          name: 'Số sản phẩm đã bán',
+          name: 'Sản lượng',
           color: '#1A1A46',
           type: 'spline',
           zIndex: 1,
@@ -155,7 +181,6 @@ const charts = computed(() => {
         },
         {
           name: 'Doanh số',
-          color: platformColors[platformNames[platformId]],
           stack: 'platform_revenue_price_range',
           type: 'column',
           yAxis: 1,
@@ -168,6 +193,13 @@ const charts = computed(() => {
                           (p: { platform_id: number }) => Number(p.platform_id) === platformId
                       )?.revenue || monthly.score)
               ),
+          color: {
+            linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
+            stops: [
+              [0, '#FCA14E'],
+              [1, '#FF733F']
+            ]
+          }
         },
       ]
     }
@@ -190,7 +222,7 @@ const charts = computed(() => {
     <div
         id="monthly-growth-chart"
         ref="monthlyGrowthChart"
-        class="mb-10 w-full relative"
+        style="margin-bottom: 24px;"
     >
       <highchart :options="charts[0]"/>
     </div>

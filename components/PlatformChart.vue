@@ -2,16 +2,15 @@
 import { ref, computed, watch } from 'vue';
 import { getPlatformById } from "~/helpers/PermissionPlatformHelper";
 import {formatCurrency, formatNumberHuman} from "~/helpers/FormatHelper.js";
-import {formatSortTextCurrency} from "~/helpers/utils.js";
-import BlurContent from "~/components/BlurContent.vue";
+import {formatSortTextCurrency, formatSortTextCurrencyWithMinValue} from "~/helpers/utils.js";
 
 const chartOptions = ref(null);
 const platformColors = {
-  Shopee: "#FF9264",
-  Lazada: "#47538F",
-  Tiki: "#5BAFFE",
-  Sendo: "#FF6060",
-  Tiktok: "#000",
+  Shopee: ['#FCA14E', '#FF733F'],
+  Lazada: ['#4745A5', '#241E46'],
+  Tiki: ['#5BAFFE', '#366998'],
+  Sendo: ['#FF6060', '#993A3A'],
+  Tiktok: ['#000', '#000'],
 };
 
 const props = defineProps({
@@ -66,7 +65,13 @@ chartOptions.value = {
     },
   },
   title: {
-    text: "",
+    text: "Tỷ trọng doanh số theo sàn",
+    style: {
+      fontSize: '14px',
+      color: '#241E46',
+      fontWeight: 700,
+      fontFamily: 'Inter'
+    }
   },
   legend: {
     enabled: true,
@@ -90,7 +95,7 @@ chartOptions.value = {
           </svg> ${this.series.name}: <strong>Đã bị ẩn</strong>`;
       }
 
-      return `${this.point.name}: <strong>${formatCurrency(this.point.y)}</strong> (${this.point.percentage.toFixed(1)}%)`;
+      return `${this.point.name}: <strong>${formatSortTextCurrency(this.point.y)}</strong> (${this.point.percentage.toFixed(1)}%)`;
     },
   },
   plotOptions: {
@@ -137,11 +142,18 @@ chartOptions.value = {
   },
   series: [
     {
-      name: props.analyticType === 'revenue' ? $t('Doanh số (Đồng)') : $t('Số sản phẩm đã bán (Sản phẩm)'),
+      name: props.analyticType === 'revenue' ? $t('Doanh số (Đồng)') : $t('Sản lượng (Sản phẩm)'),
       data: PLATFORM_TOTAL.value.platforms.map(({platform_id, revenue}) => ({
         name: getPlatformById(platform_id).name,
         y: revenue,
-        color: platformColors[getPlatformById(platform_id).name]
+        // color: platformColors[getPlatformById(platform_id).name],
+        color: {
+          linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
+          stops: [
+            [0, platformColors[getPlatformById(platform_id).name][0]],
+            [1, platformColors[getPlatformById(platform_id).name][1]]
+          ]
+        }
       })).sort((a, b) => b.y - a.y),
     }
   ]
@@ -180,7 +192,7 @@ watch(() => props.analyticType, () => {
 <!--        </div>-->
       </div>
     </div>
-    <div>
+    <div style="flex: 1;">
       <a-table
           :columns="columns"
           :data-source="dataSource"

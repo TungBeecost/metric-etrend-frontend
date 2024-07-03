@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
-import { formatCurrency, formatNumberHuman } from "~/helpers/FormatHelper";
+import {defineProps} from 'vue';
+import {formatCurrency, formatNumberHuman} from "~/helpers/FormatHelper";
 import moment from "moment/moment";
 import {openProductUrl, openShopProductUrl} from "~/helpers/DataNormalize";
 import {getPlatformByUrl} from "~/helpers/utils";
@@ -16,8 +16,6 @@ const props = defineProps({
   },
 });
 
-console.log('props', props.product);
-
 // const emits = defineEmits(['showProductHistory']);
 
 const $t = (text: string) => text;
@@ -30,10 +28,10 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
   <div class="product-item">
     <div class="product-thumbnail">
       <img
-        v-if="props.product.url_thumbnail"
-        :src="props.product.url_thumbnail"
-        :alt="props.product.product_name"
-        @click="openProductUrl(props.product)"
+          v-if="props.product.url_thumbnail"
+          :src="props.product.url_thumbnail"
+          :alt="props.product.product_name"
+          @click="openProductUrl(props.product)"
       />
       <div v-else class="product-thumbnail__no-image"/>
     </div>
@@ -57,8 +55,8 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
           <div style="position: absolute; top: 16px; right: 0;">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
-                d="M7 0.5C5.71442 0.5 4.45772 0.881218 3.3888 1.59545C2.31988 2.30968 1.48676 3.32484 0.994786 4.51256C0.502816 5.70028 0.374095 7.00721 0.624899 8.26809C0.875703 9.52896 1.49477 10.6872 2.40381 11.5962C3.31285 12.5052 4.47104 13.1243 5.73192 13.3751C6.99279 13.6259 8.29973 13.4972 9.48744 13.0052C10.6752 12.5132 11.6903 11.6801 12.4046 10.6112C13.1188 9.54229 13.5 8.28558 13.5 7C13.4982 5.27665 12.8128 3.62441 11.5942 2.40582C10.3756 1.18722 8.72335 0.50182 7 0.5ZM6.75 3.5C6.89834 3.5 7.04334 3.54399 7.16668 3.6264C7.29002 3.70881 7.38615 3.82594 7.44291 3.96299C7.49968 4.10003 7.51453 4.25083 7.48559 4.39632C7.45665 4.5418 7.38522 4.67544 7.28033 4.78033C7.17544 4.88522 7.04181 4.95665 6.89632 4.98559C6.75083 5.01453 6.60003 4.99968 6.46299 4.94291C6.32595 4.88614 6.20881 4.79001 6.1264 4.66668C6.04399 4.54334 6 4.39834 6 4.25C6 4.05109 6.07902 3.86032 6.21967 3.71967C6.36032 3.57902 6.55109 3.5 6.75 3.5ZM7.5 10.5C7.23479 10.5 6.98043 10.3946 6.7929 10.2071C6.60536 10.0196 6.5 9.76522 6.5 9.5V7C6.36739 7 6.24022 6.94732 6.14645 6.85355C6.05268 6.75979 6 6.63261 6 6.5C6 6.36739 6.05268 6.24021 6.14645 6.14645C6.24022 6.05268 6.36739 6 6.5 6C6.76522 6 7.01957 6.10536 7.20711 6.29289C7.39465 6.48043 7.5 6.73478 7.5 7V9.5C7.63261 9.5 7.75979 9.55268 7.85356 9.64645C7.94732 9.74021 8 9.86739 8 10C8 10.1326 7.94732 10.2598 7.85356 10.3536C7.75979 10.4473 7.63261 10.5 7.5 10.5Z"
-                fill="#9D97BF"/>
+                  d="M7 0.5C5.71442 0.5 4.45772 0.881218 3.3888 1.59545C2.31988 2.30968 1.48676 3.32484 0.994786 4.51256C0.502816 5.70028 0.374095 7.00721 0.624899 8.26809C0.875703 9.52896 1.49477 10.6872 2.40381 11.5962C3.31285 12.5052 4.47104 13.1243 5.73192 13.3751C6.99279 13.6259 8.29973 13.4972 9.48744 13.0052C10.6752 12.5132 11.6903 11.6801 12.4046 10.6112C13.1188 9.54229 13.5 8.28558 13.5 7C13.4982 5.27665 12.8128 3.62441 11.5942 2.40582C10.3756 1.18722 8.72335 0.50182 7 0.5ZM6.75 3.5C6.89834 3.5 7.04334 3.54399 7.16668 3.6264C7.29002 3.70881 7.38615 3.82594 7.44291 3.96299C7.49968 4.10003 7.51453 4.25083 7.48559 4.39632C7.45665 4.5418 7.38522 4.67544 7.28033 4.78033C7.17544 4.88522 7.04181 4.95665 6.89632 4.98559C6.75083 5.01453 6.60003 4.99968 6.46299 4.94291C6.32595 4.88614 6.20881 4.79001 6.1264 4.66668C6.04399 4.54334 6 4.39834 6 4.25C6 4.05109 6.07902 3.86032 6.21967 3.71967C6.36032 3.57902 6.55109 3.5 6.75 3.5ZM7.5 10.5C7.23479 10.5 6.98043 10.3946 6.7929 10.2071C6.60536 10.0196 6.5 9.76522 6.5 9.5V7C6.36739 7 6.24022 6.94732 6.14645 6.85355C6.05268 6.75979 6 6.63261 6 6.5C6 6.36739 6.05268 6.24021 6.14645 6.14645C6.24022 6.05268 6.36739 6 6.5 6C6.76522 6 7.01957 6.10536 7.20711 6.29289C7.39465 6.48043 7.5 6.73478 7.5 7V9.5C7.63261 9.5 7.75979 9.55268 7.85356 9.64645C7.94732 9.74021 8 9.86739 8 10C8 10.1326 7.94732 10.2598 7.85356 10.3536C7.75979 10.4473 7.63261 10.5 7.5 10.5Z"
+                  fill="#9D97BF"/>
             </svg>
           </div>
         </a-tooltip>
@@ -81,7 +79,8 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
         </div>
         <div class="product-info-item shop-info">
           <div class="shop-icon">
-            <img v-if="props.product.shop_url" :src="getPlatformByUrl(props.product.shop_url)?.urlLogo" class="img-platform"
+            <img v-if="props.product.shop_url" :src="getPlatformByUrl(props.product.shop_url)?.urlLogo"
+                 class="img-platform"
                  alt=""/>
           </div>
           <span class="shop-name" @click="openShopProductUrl(props.product)">
@@ -98,11 +97,11 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
             <svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_1223_35821)">
                 <path
-                  d="M2.64625 11.6462C2.55266 11.5526 2.50006 11.4256 2.5 11.2931V5.5H8.29313C8.42556 5.50006 8.55255 5.55266 8.64625 5.64625L14.8538 11.8538C14.9474 11.9475 15.0001 12.0746 15.0001 12.2072C15.0001 12.3397 14.9474 12.4669 14.8538 12.5606L9.5625 17.8538C9.46874 17.9474 9.34161 18.0001 9.20906 18.0001C9.07651 18.0001 8.94938 17.9474 8.85563 17.8538L2.64625 11.6462Z"
-                  stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    d="M2.64625 11.6462C2.55266 11.5526 2.50006 11.4256 2.5 11.2931V5.5H8.29313C8.42556 5.50006 8.55255 5.55266 8.64625 5.64625L14.8538 11.8538C14.9474 11.9475 15.0001 12.0746 15.0001 12.2072C15.0001 12.3397 14.9474 12.4669 14.8538 12.5606L9.5625 17.8538C9.46874 17.9474 9.34161 18.0001 9.20906 18.0001C9.07651 18.0001 8.94938 17.9474 8.85563 17.8538L2.64625 11.6462Z"
+                    stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
                 <path
-                  d="M5.25 8.875C5.59518 8.875 5.875 8.59518 5.875 8.25C5.875 7.90482 5.59518 7.625 5.25 7.625C4.90482 7.625 4.625 7.90482 4.625 8.25C4.625 8.59518 4.90482 8.875 5.25 8.875Z"
-                  fill="#716B95"/>
+                    d="M5.25 8.875C5.59518 8.875 5.875 8.59518 5.875 8.25C5.875 7.90482 5.59518 7.625 5.25 7.625C4.90482 7.625 4.625 7.90482 4.625 8.25C4.625 8.59518 4.90482 8.875 5.25 8.875Z"
+                    fill="#716B95"/>
               </g>
               <defs>
                 <clipPath id="clip0_1223_35821">
@@ -122,137 +121,133 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
             </span>
           </div>
         </div>
-<!--        <div class="product-statistic-info-item">-->
-<!--          <div class="product-statistic-info-item-icon">-->
-<!--            <svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--              <g clip-path="url(#clip0_1223_35828)">-->
-<!--                <path d="M8 7.5V8.5" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"-->
-<!--                      stroke-linejoin="round"/>-->
-<!--                <path d="M8 13.5V14.5" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"-->
-<!--                      stroke-linejoin="round"/>-->
-<!--                <path-->
-<!--                  d="M8 17C11.3137 17 14 14.3137 14 11C14 7.68629 11.3137 5 8 5C4.68629 5 2 7.68629 2 11C2 14.3137 4.68629 17 8 17Z"-->
-<!--                  stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>-->
-<!--                <path-->
-<!--                  d="M6.5 13.5H8.75C9.08152 13.5 9.39946 13.3683 9.63388 13.1339C9.8683 12.8995 10 12.5815 10 12.25C10 11.9185 9.8683 11.6005 9.63388 11.3661C9.39946 11.1317 9.08152 11 8.75 11H7.25C6.91848 11 6.60054 10.8683 6.36612 10.6339C6.1317 10.3995 6 10.0815 6 9.75C6 9.41848 6.1317 9.10054 6.36612 8.86612C6.60054 8.6317 6.91848 8.5 7.25 8.5H9.5"-->
-<!--                  stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>-->
-<!--              </g>-->
-<!--              <defs>-->
-<!--                <clipPath id="clip0_1223_35828">-->
-<!--                  <rect width="16" height="16" fill="white" transform="translate(0 3)"/>-->
-<!--                </clipPath>-->
-<!--              </defs>-->
-<!--            </svg>-->
-<!--          </div>-->
+        <!--        <div class="product-statistic-info-item">-->
+        <!--          <div class="product-statistic-info-item-icon">-->
+        <!--            <svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+        <!--              <g clip-path="url(#clip0_1223_35828)">-->
+        <!--                <path d="M8 7.5V8.5" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"-->
+        <!--                      stroke-linejoin="round"/>-->
+        <!--                <path d="M8 13.5V14.5" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"-->
+        <!--                      stroke-linejoin="round"/>-->
+        <!--                <path-->
+        <!--                  d="M8 17C11.3137 17 14 14.3137 14 11C14 7.68629 11.3137 5 8 5C4.68629 5 2 7.68629 2 11C2 14.3137 4.68629 17 8 17Z"-->
+        <!--                  stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>-->
+        <!--                <path-->
+        <!--                  d="M6.5 13.5H8.75C9.08152 13.5 9.39946 13.3683 9.63388 13.1339C9.8683 12.8995 10 12.5815 10 12.25C10 11.9185 9.8683 11.6005 9.63388 11.3661C9.39946 11.1317 9.08152 11 8.75 11H7.25C6.91848 11 6.60054 10.8683 6.36612 10.6339C6.1317 10.3995 6 10.0815 6 9.75C6 9.41848 6.1317 9.10054 6.36612 8.86612C6.60054 8.6317 6.91848 8.5 7.25 8.5H9.5"-->
+        <!--                  stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>-->
+        <!--              </g>-->
+        <!--              <defs>-->
+        <!--                <clipPath id="clip0_1223_35828">-->
+        <!--                  <rect width="16" height="16" fill="white" transform="translate(0 3)"/>-->
+        <!--                </clipPath>-->
+        <!--              </defs>-->
+        <!--            </svg>-->
+        <!--          </div>-->
 
-<!--          <div>-->
-<!--            <span class="statistic-name">{{ $t('Doanh số trong khoảng ngày đã chọn') }}:</span> <span-->
-<!--            class="value">{{ formatCurrency(props.product.order_revenue_date_range) }}</span>-->
-<!--            <compare-value-->
-<!--              v-if="props.product.order_revenue_previous"-->
-<!--              :value="props.product.order_revenue_date_range"-->
-<!--              :value-comparison="props.product.order_revenue_previous"-->
-<!--            />-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="product-statistic-info-item">-->
-<!--          <div class="product-statistic-info-item-icon">-->
-<!--            <svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--              <g clip-path="url(#clip0_1223_35837)">-->
-<!--                <path d="M2.04395 7.80762L8.0002 11.0676L13.9564 7.80762" stroke="#716B95" stroke-width="1.3"-->
-<!--                      stroke-linecap="round"-->
-<!--                      stroke-linejoin="round"/>-->
-<!--                <path d="M8 11.0681V17.4981" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"-->
-<!--                      stroke-linejoin="round"/>-->
-<!--                <path-->
-<!--                  d="M13.74 14.4276L8.24 17.4388C8.16641 17.4791 8.08388 17.5002 8 17.5002C7.91612 17.5002 7.83359 17.4791 7.76 17.4388L2.26 14.4276C2.18147 14.3846 2.11591 14.3213 2.07017 14.2444C2.02444 14.1674 2.0002 14.0796 2 13.9901V8.01134C2.0002 7.92181 2.02444 7.83399 2.07017 7.75703C2.11591 7.68007 2.18147 7.61681 2.26 7.57384L7.76 4.56259C7.83359 4.52232 7.91612 4.50122 8 4.50122C8.08388 4.50122 8.16641 4.52232 8.24 4.56259L13.74 7.57384C13.8185 7.61681 13.8841 7.68007 13.9298 7.75703C13.9756 7.83399 13.9998 7.92181 14 8.01134V13.9888C14 14.0786 13.9759 14.1667 13.9301 14.2439C13.8844 14.3211 13.8187 14.3845 13.74 14.4276Z"-->
-<!--                  stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>-->
-<!--                <path d="M5.09766 6.01929L11.0002 9.24991V12.4999" stroke="#716B95" stroke-width="1.3"-->
-<!--                      stroke-linecap="round"-->
-<!--                      stroke-linejoin="round"/>-->
-<!--              </g>-->
-<!--              <defs>-->
-<!--                <clipPath id="clip0_1223_35837">-->
-<!--                  <rect width="16" height="16" fill="white" transform="translate(0 3)"/>-->
-<!--                </clipPath>-->
-<!--              </defs>-->
-<!--            </svg>-->
-<!--          </div>-->
+        <!--          <div>-->
+        <!--            <span class="statistic-name">{{ $t('Doanh số trong khoảng ngày đã chọn') }}:</span> <span-->
+        <!--            class="value">{{ formatCurrency(props.product.order_revenue_date_range) }}</span>-->
+        <!--            <compare-value-->
+        <!--              v-if="props.product.order_revenue_previous"-->
+        <!--              :value="props.product.order_revenue_date_range"-->
+        <!--              :value-comparison="props.product.order_revenue_previous"-->
+        <!--            />-->
+        <!--          </div>-->
+        <!--        </div>-->
+        <!--        <div class="product-statistic-info-item">-->
+        <!--          <div class="product-statistic-info-item-icon">-->
+        <!--            <svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+        <!--              <g clip-path="url(#clip0_1223_35837)">-->
+        <!--                <path d="M2.04395 7.80762L8.0002 11.0676L13.9564 7.80762" stroke="#716B95" stroke-width="1.3"-->
+        <!--                      stroke-linecap="round"-->
+        <!--                      stroke-linejoin="round"/>-->
+        <!--                <path d="M8 11.0681V17.4981" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"-->
+        <!--                      stroke-linejoin="round"/>-->
+        <!--                <path-->
+        <!--                  d="M13.74 14.4276L8.24 17.4388C8.16641 17.4791 8.08388 17.5002 8 17.5002C7.91612 17.5002 7.83359 17.4791 7.76 17.4388L2.26 14.4276C2.18147 14.3846 2.11591 14.3213 2.07017 14.2444C2.02444 14.1674 2.0002 14.0796 2 13.9901V8.01134C2.0002 7.92181 2.02444 7.83399 2.07017 7.75703C2.11591 7.68007 2.18147 7.61681 2.26 7.57384L7.76 4.56259C7.83359 4.52232 7.91612 4.50122 8 4.50122C8.08388 4.50122 8.16641 4.52232 8.24 4.56259L13.74 7.57384C13.8185 7.61681 13.8841 7.68007 13.9298 7.75703C13.9756 7.83399 13.9998 7.92181 14 8.01134V13.9888C14 14.0786 13.9759 14.1667 13.9301 14.2439C13.8844 14.3211 13.8187 14.3845 13.74 14.4276Z"-->
+        <!--                  stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>-->
+        <!--                <path d="M5.09766 6.01929L11.0002 9.24991V12.4999" stroke="#716B95" stroke-width="1.3"-->
+        <!--                      stroke-linecap="round"-->
+        <!--                      stroke-linejoin="round"/>-->
+        <!--              </g>-->
+        <!--              <defs>-->
+        <!--                <clipPath id="clip0_1223_35837">-->
+        <!--                  <rect width="16" height="16" fill="white" transform="translate(0 3)"/>-->
+        <!--                </clipPath>-->
+        <!--              </defs>-->
+        <!--            </svg>-->
+        <!--          </div>-->
 
-<!--          <div>-->
-<!--            <span class="statistic-name">{{ $t('Đã bán trong khoảng ngày đã chọn') }}:</span> <span-->
-<!--            class="value">{{ formatNumberHuman(props.product.order_count_date_range) }}</span>-->
-<!--            <compare-value-->
-<!--              v-if="props.product.order_count_previous"-->
-<!--              :value="props.product.order_count_date_range"-->
-<!--              :value-comparison="props.product.order_count_previous"-->
-<!--            />-->
-<!--          </div>-->
-<!--        </div>-->
+        <!--          <div>-->
+        <!--            <span class="statistic-name">{{ $t('Đã bán trong khoảng ngày đã chọn') }}:</span> <span-->
+        <!--            class="value">{{ formatNumberHuman(props.product.order_count_date_range) }}</span>-->
+        <!--            <compare-value-->
+        <!--              v-if="props.product.order_count_previous"-->
+        <!--              :value="props.product.order_count_date_range"-->
+        <!--              :value-comparison="props.product.order_count_previous"-->
+        <!--            />-->
+        <!--          </div>-->
+        <!--        </div>-->
+        <!--        <div class="product-statistic-info-item">-->
+        <!--          <div class="product-statistic-info-item-icon">-->
+        <!--            <svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+        <!--              <g clip-path="url(#clip0_1223_35846)">-->
+        <!--                <path-->
+        <!--                  d="M8 13C9.10457 13 10 12.1046 10 11C10 9.89543 9.10457 9 8 9C6.89543 9 6 9.89543 6 11C6 12.1046 6.89543 13 8 13Z"-->
+        <!--                  stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>-->
+        <!--                <path d="M15 7H1V15H15V7Z" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"-->
+        <!--                      stroke-linejoin="round"/>-->
+        <!--                <path d="M15 9.5C14.3754 9.39414 13.7992 9.09663 13.3513 8.64869C12.9034 8.20075 12.6059 7.62457 12.5 7"-->
+        <!--                      stroke="#716B95"-->
+        <!--                      stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>-->
+        <!--                <path-->
+        <!--                  d="M12.5 15C12.6059 14.3754 12.9034 13.7992 13.3513 13.3513C13.7992 12.9034 14.3754 12.6059 15 12.5"-->
+        <!--                  stroke="#716B95"-->
+        <!--                  stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>-->
+        <!--                <path d="M1 12.5C1.62457 12.6059 2.20075 12.9034 2.64869 13.3513C3.09663 13.7992 3.39414 14.3754 3.5 15"-->
+        <!--                      stroke="#716B95"-->
+        <!--                      stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>-->
+        <!--                <path d="M3.5 7C3.39414 7.62457 3.09663 8.20075 2.64869 8.64869C2.20075 9.09663 1.62457 9.39414 1 9.5"-->
+        <!--                      stroke="#716B95"-->
+        <!--                      stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>-->
+        <!--              </g>-->
+        <!--              <defs>-->
+        <!--                <clipPath id="clip0_1223_35846">-->
+        <!--                  <rect width="16" height="16" fill="white" transform="translate(0 3)"/>-->
+        <!--                </clipPath>-->
+        <!--              </defs>-->
+        <!--            </svg>-->
+        <!--          </div>-->
+
+        <!--          <div>-->
+        <!--            <span class="statistic-name">{{ $t('Doanh số 1 năm') }}:</span> <span-->
+        <!--            class="value">{{ formatCurrency(props.product.revenue) }}</span>-->
+        <!--          </div>-->
+        <!--        </div>-->
         <div class="product-statistic-info-item">
           <div class="product-statistic-info-item-icon">
-            <svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_1223_35846)">
-                <path
-                  d="M8 13C9.10457 13 10 12.1046 10 11C10 9.89543 9.10457 9 8 9C6.89543 9 6 9.89543 6 11C6 12.1046 6.89543 13 8 13Z"
-                  stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M15 7H1V15H15V7Z" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                 style="transform: translateY(3px)">
+              <g clip-path="url(#clip0_4446_35033)">
+                <path d="M2.0437 4.80762L7.99995 8.06762L13.9562 4.80762" stroke="#716B95" stroke-linecap="round"
                       stroke-linejoin="round"/>
-                <path d="M15 9.5C14.3754 9.39414 13.7992 9.09663 13.3513 8.64869C12.9034 8.20075 12.6059 7.62457 12.5 7"
-                      stroke="#716B95"
-                      stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 8.06836V14.4984" stroke="#716B95" stroke-linecap="round" stroke-linejoin="round"/>
                 <path
-                  d="M12.5 15C12.6059 14.3754 12.9034 13.7992 13.3513 13.3513C13.7992 12.9034 14.3754 12.6059 15 12.5"
-                  stroke="#716B95"
-                  stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M1 12.5C1.62457 12.6059 2.20075 12.9034 2.64869 13.3513C3.09663 13.7992 3.39414 14.3754 3.5 15"
-                      stroke="#716B95"
-                      stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M3.5 7C3.39414 7.62457 3.09663 8.20075 2.64869 8.64869C2.20075 9.09663 1.62457 9.39414 1 9.5"
-                      stroke="#716B95"
-                      stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    d="M13.74 11.4273L8.24 14.4386C8.16641 14.4789 8.08388 14.5 8 14.5C7.91612 14.5 7.83359 14.4789 7.76 14.4386L2.26 11.4273C2.18147 11.3844 2.11591 11.3211 2.07017 11.2441C2.02444 11.1672 2.0002 11.0794 2 10.9898V5.01109C2.0002 4.92157 2.02444 4.83375 2.07017 4.75679C2.11591 4.67983 2.18147 4.61656 2.26 4.57359L7.76 1.56234C7.83359 1.52208 7.91612 1.50098 8 1.50098C8.08388 1.50098 8.16641 1.52208 8.24 1.56234L13.74 4.57359C13.8185 4.61656 13.8841 4.67983 13.9298 4.75679C13.9756 4.83375 13.9998 4.92157 14 5.01109V10.9886C14 11.0783 13.9759 11.1664 13.9301 11.2436C13.8844 11.3208 13.8187 11.3843 13.74 11.4273Z"
+                    stroke="#716B95" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5.09741 3.01953L10.9999 6.25016V9.50016" stroke="#716B95" stroke-linecap="round"
+                      stroke-linejoin="round"/>
               </g>
               <defs>
-                <clipPath id="clip0_1223_35846">
-                  <rect width="16" height="16" fill="white" transform="translate(0 3)"/>
+                <clipPath id="clip0_4446_35033">
+                  <rect width="16" height="16" fill="white"/>
                 </clipPath>
               </defs>
             </svg>
           </div>
-
           <div>
-            <span class="statistic-name">{{ $t('Doanh số 1 năm') }}:</span> <span
-            class="value">{{ formatCurrency(props.product.revenue) }}</span>
-          </div>
-        </div>
-        <div class="product-statistic-info-item">
-          <div class="product-statistic-info-item-icon">
-            <svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_1223_35857)">
-                <path
-                  d="M12.75 10C13.7165 10 14.5 9.2165 14.5 8.25C14.5 7.2835 13.7165 6.5 12.75 6.5C11.7835 6.5 11 7.2835 11 8.25C11 9.2165 11.7835 10 12.75 10Z"
-                  stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                <path
-                  d="M3 16H1C0.867392 16 0.740215 15.9473 0.646447 15.8536C0.552678 15.7598 0.5 15.6326 0.5 15.5V13C0.5 12.8674 0.552678 12.7402 0.646447 12.6464C0.740215 12.5527 0.867392 12.5 1 12.5H3"
-                  stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                <path
-                  d="M7 13H9L13.1875 12.0369C13.3415 11.9947 13.5031 11.9886 13.6598 12.019C13.8165 12.0494 13.964 12.1156 14.091 12.2123C14.218 12.3091 14.321 12.4338 14.3919 12.5768C14.4628 12.7198 14.4998 12.8772 14.5 13.0369C14.5001 13.2296 14.4464 13.4186 14.3451 13.5825C14.2437 13.7465 14.0987 13.8789 13.9263 13.965L11.5 15L7.5 16H3V12.5L4.5625 10.9375C4.70216 10.7983 4.86788 10.6881 5.0502 10.613C5.23251 10.5379 5.42784 10.4995 5.625 10.5H8.75C9.08152 10.5 9.39946 10.6317 9.63388 10.8661C9.8683 11.1005 10 11.4185 10 11.75C10 12.0815 9.8683 12.3995 9.63388 12.6339C9.39946 12.8683 9.08152 13 8.75 13H7Z"
-                  stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                <path
-                  d="M11.0002 8.33053C10.6605 8.49116 10.2782 8.53822 9.90972 8.46475C9.54126 8.39127 9.20622 8.20116 8.95417 7.92253C8.70212 7.6439 8.54643 7.29155 8.51014 6.91759C8.47384 6.54362 8.55887 6.16791 8.75264 5.84601C8.94641 5.52411 9.23863 5.27313 9.58609 5.13017C9.93355 4.98721 10.3178 4.95987 10.682 5.05219C11.0462 5.14452 11.371 5.35161 11.6084 5.64283C11.8458 5.93405 11.9831 6.29394 12.0002 6.66928"
-                  stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-              </g>
-              <defs>
-                <clipPath id="clip0_1223_35857">
-                  <rect width="16" height="16" fill="white" transform="translate(0 3)"/>
-                </clipPath>
-              </defs>
-            </svg>
-          </div>
-
-          <div>
-            <span class="statistic-name">{{ $t('Đã bán 1 năm') }}:</span> <span
-            class="value">{{ formatNumberHuman(props.product.order_count) }}</span>
+            <span class="statistic-name">{{ $t('Sản lượng') }}:</span> <span
+              class="value">{{ formatNumberHuman(props.product.order_count) }}</span>
           </div>
         </div>
       </div>
@@ -384,11 +379,17 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
       padding: 16px 0 8px;
 
       .product-name {
-        font-size: 14px !important;
-        line-height: 24px !important;
-        color: #241E46;
+        //overflow: hidden;
+        color: var(--Dark-blue-dark-blue-8, #241E46);
+        //text-overflow: ellipsis;
+        //white-space: nowrap;
+        font-family: Inter, sans-serif;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 22px; /* 157.143% */
+
         margin-bottom: 8px;
-        font-weight: bold;
 
         cursor: pointer;
 
@@ -406,11 +407,11 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
         margin-bottom: 8px;
 
         .product-price {
+          color: var(--Dark-blue-dark-blue-8, #241E46);
+          font-family: Inter, sans-serif;
           font-size: 14px;
-          line-height: 22px;
-          font-weight: bold;
-
-          color: #241E46;
+          font-weight: 500;
+          line-height: 22px; /* 157.143% */
         }
 
         .product-rating {
@@ -426,13 +427,12 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
       }
 
       .product-info-item {
-        font-size: 10px;
-
-        color: var(--dark-blue-dark-blue-5, #716B95);
-
+        color: var(--Dark-blue-dark-blue-5, #716B95);
         font-family: 'Inter', sans-serif;
+        font-size: 10px;
+        font-style: normal;
         font-weight: 400;
-        line-height: 14px;
+        line-height: 14px; /* 140% */
       }
 
       .shop-info {

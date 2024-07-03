@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {defineProps} from 'vue';
-import PieChart from "~/components/report/PieChart.vue";
 
 const props = defineProps({
   data: {
@@ -40,39 +39,61 @@ const formatNumber = (value: number = 0) => {
     </div>
     <div class="pie_chart">
       <div class="pie_chart_item">
-        <PieChart
-            title="Top thương hiệu theo Doanh số"
-            :is-hide-content="isFreeUser"
-            :series="[
-            {
-              name: 'Doanh thu',
-              data: props.data.data_analytic.by_brand.lst_top_brand_revenue.map(
-                ({ name = '', revenue = 0, ratio_revenue = 0 } = {}) => ({
-                  name,
-                  y: revenue || ratio_revenue,
-                  categoryName: 'Thương hiệu',
-                })
-              ),
-            },
-          ]"
+        <div class="chart-title">
+          Top thương hiệu theo Doanh số
+        </div>
+        <a-table
+            :columns="[
+              {
+                title: 'STT',
+                dataIndex: 'stt',
+                key: 'stt',
+                width: 100,
+                align: 'center'
+              },
+              {
+                title: 'Thương hiệu',
+                dataIndex: 'name',
+                key: 'name',
+                align: 'center'
+              },
+            ]"
+            :data-source="props.data.data_analytic.by_brand.lst_top_brand_revenue.map(
+              ({ name = '' } = {}, idx) => ({
+                stt: idx + 1,
+                name,
+              })
+            )"
+            :pagination="false"
         />
       </div>
       <div class="pie_chart_item">
-        <PieChart
-            title="Top thương hiệu theo Sản lượng"
-            :is-hide-content="props.isFreeUser"
-            :series="[
-            {
-              name: 'Sản phẩm đã bán',
-              data: props.data.data_analytic.by_brand.lst_top_brand_sale.map(
-                ({ name = '', sale = 0, ratio_sale = 0 } = {}) => ({
-                  name,
-                  y: sale || ratio_sale,
-                  categoryName: 'Thương hiệu',
-                })
-              ),
-            },
-          ]"
+        <div class="chart-title">
+          Top thương hiệu theo Sản lượng
+        </div>
+        <a-table
+            :columns="[
+              {
+                title: 'STT',
+                dataIndex: 'stt',
+                key: 'stt',
+                width: 100,
+                align: 'center'
+              },
+              {
+                title: 'Thương hiệu',
+                dataIndex: 'name',
+                key: 'name',
+                align: 'center'
+              },
+            ]"
+            :data-source="props.data.data_analytic.by_brand.lst_top_brand_sale.map(
+              ({ name = '' } = {}, idx) => ({
+                stt: idx + 1,
+                name,
+              })
+            )"
+            :pagination="false"
         />
       </div>
     </div>
@@ -163,6 +184,32 @@ const formatNumber = (value: number = 0) => {
     </InsightBlock>
   </div>
 </template>
+
+<style lang="scss">
+#thong-ke-thuong-hieu {
+  .ant-table {
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+
+    .ant-table-thead > tr > th {
+      background: #EEEBFF !important;
+
+      font-size: 14px;
+      line-height: 22px;
+
+      color: #241E46;
+    }
+
+    .ant-table-tbody > tr > td {
+      font-size: 14px;
+      line-height: 22px;
+
+      color: #241E46;
+    }
+  }
+}
+</style>
 
 <style scoped lang="scss">
 .main {
@@ -586,12 +633,26 @@ const formatNumber = (value: number = 0) => {
 
 .pie_chart {
   display: flex;
-  gap: 16px;
+  gap: 24px;
   justify-content: center;
   width: 100%;
 
   .pie_chart_item {
     width: 100%;
+    max-width: 400px;
+    margin: auto;
+
+    .chart-title {
+      color: var(--Dark-blue-dark-blue-8, #241E46);
+      text-align: center;
+
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 22px; /* 157.143% */
+
+      margin-bottom: 16px;
+    }
   }
 }
 
