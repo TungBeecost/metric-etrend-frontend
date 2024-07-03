@@ -1,0 +1,38 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 4px;
+
+  border-right: 1px solid $divider;
+
+  @include mobile {
+    display: none;
+  }
+
+  .menuItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 16px;
+    flex-wrap: nowrap;
+    cursor: pointer;
+    border-radius: 8px;
+
+    &:hover {
+      background: $hovering;
+    }
+  }
+
+  .active {
+    border: 1px solid $background_btn;
+    background: $hovering;
+
+    .menuLabel {
+      color: $primary;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 22px;
+    }
+  }
+}
