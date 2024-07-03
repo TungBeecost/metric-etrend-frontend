@@ -30,9 +30,9 @@ const loading = ref(true);
 const fetchTableData = async () => {
   try {
     loading.value = true;
-    const response = await axios.get('http://localhost:8000/api/report/detail?slug=tui-xach', {
+    const response = await axios.get('https://api-web.metric.vn/api/report/detail?slug=tui-xach-nu', {
       headers: {
-        'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImN1b25nbGRAbWV0cmljLnZuIiwiZXhwIjoxNzE5NDU5MTk4LCJpYXQiOjE3MTg4NTQzOTgsImlzcyI6IkF1dGhlbnRpY2F0aW9uIFNlcnZpY2UiLCJzdWIiOiJEdXkgQ8awxqFuZyBMw6oifQ.s5ilAouYDUAYKz70E5uet3fQhPjovTBhuvpC-qIA8xY',
+        'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImN1b25nbGRAbWV0cmljLnZuIiwiZXhwIjoxNzIwMTY4NzYzLCJpYXQiOjE3MTk1NjM5NjMsImlzcyI6IkF1dGhlbnRpY2F0aW9uIFNlcnZpY2UiLCJzdWIiOiJEdXkgQ8awxqFuZyBMw6oifQ.MPj9EZnFmAvKlH47jQenfaPeeQ_ZFmyBzfSaCRxmma4',
       }
     });
     data.value = response.data;

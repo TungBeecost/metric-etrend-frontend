@@ -151,7 +151,7 @@ const charts = computed(() => {
           zIndex: 1,
           data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
               .slice()
-              .map((item: { sale: number }) => item.sale || item.score),
+              .map((item: { sale: number, score?: number }) => item.sale || item.score),
         },
         {
           name: 'Doanh số',
@@ -163,7 +163,7 @@ const charts = computed(() => {
           data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
               .slice()
               .map(
-                  (monthly: { revenue: number, by_platform?: { platform_id: number, revenue: number }[] }) =>
+                  (monthly: { revenue: number, score?: number, by_platform?: { platform_id: number, revenue: number }[] }) =>
                       monthly.revenue || (monthly.by_platform?.find(
                           (p: { platform_id: number }) => Number(p.platform_id) === platformId
                       )?.revenue || monthly.score)
