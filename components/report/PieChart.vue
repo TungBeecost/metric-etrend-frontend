@@ -1,6 +1,6 @@
 <script setup>
 import Highcharts from 'highcharts';
-import { ref, defineProps, watchEffect } from 'vue';
+import {defineProps, ref, watchEffect} from 'vue';
 
 const props = defineProps({
   series: {
@@ -58,7 +58,7 @@ watchEffect(() => {
       ? {
         enabled: !isMobile.value,
         formatter: function () {
-          return ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0 ? `<span style="color: #8c8c8c">Đã ẩn</span>` : '<span>' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          return '<span>' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
         },
       }
       : {

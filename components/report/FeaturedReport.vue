@@ -5,12 +5,15 @@ import ItemFeatureReport from './ItemFeatureReport.vue';
 <template>
   <div class="featured_report">
     <div class="title_content">
-      <div class="tilte">Báo cáo nổi bật nhất</div>
+      <div class="tittle">Báo cáo nổi bật nhất</div>
       <div class="content">
-        <div>Cập nhật ngay những báo cáo xu hướng mới nhất giúp bạn<br class="desktop-break"> nắm bắt kịp thời biến động thị trường.</div>
+        <div>
+          Cập nhật ngay những báo cáo xu hướng mới nhất giúp bạn nắm bắt kịp thời biến động thị trường và đưa ra quyết
+          định đầu tư chính xác.
+        </div>
       </div>
     </div>
-    <item-feature-report />
+    <item-feature-report/>
   </div>
 </template>
 
@@ -34,11 +37,13 @@ import ItemFeatureReport from './ItemFeatureReport.vue';
   width: calc(100% - 80px)
 }
 
-.tilte {
+.tittle {
   text-align: center;
   font-size: 36px;
   font-weight: bold;
   color: #241E46;
+
+  margin-bottom: 16px;
 }
 
 .content {
@@ -58,7 +63,7 @@ import ItemFeatureReport from './ItemFeatureReport.vue';
     gap: 8px;
   }
 
-  .tilte {
+  .tittle {
     font-size: 24px;
   }
 

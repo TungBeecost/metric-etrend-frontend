@@ -47,7 +47,7 @@ const toggleUnlock = () => showUnlock.value = !showUnlock.value;
     </div>
   </div>
 
-  <ModalUnlock :is-open="showUnlock" :on-close="toggleUnlock" report-title="Dép nam - Báo cáo xu hướng thị trường sàn TMĐT" />
+<!--  <ModalUnlock :is-open="showUnlock" :on-close="toggleUnlock" report-title="Dép nam - Báo cáo xu hướng thị trường sàn TMĐT" />-->
 </template>
 
 <style lang="scss" scoped>

@@ -88,27 +88,8 @@ export default defineNuxtConfig({
         "~/assets/reset.css",
         "~/assets/antd.css",
         "~/assets/variables.less",
-        "ant-design-vue/dist/reset.css",
         "normalize.css"
     ],
-    // loaders: [
-    //     {
-    //         loader: "less-loader",
-    //         options: {
-    //             lessOptions: {
-    //                 modifyVars: {
-    //                     "token": {
-    //                         "colorPrimary": "#e85912",
-    //                         "colorTextBase": "#241e46",
-    //                         "colorError": "#ee3324",
-    //                         "borderRadius": 8,
-    //                         "wireframe": false
-    //                     }
-    //                 },
-    //             },
-    //         },
-    //     },
-    // ],
     vite: {
         css: {
             preprocessorOptions: {
@@ -117,6 +98,10 @@ export default defineNuxtConfig({
                 }
             }
         },
+    },
+    components: {
+        global: true,
+        dirs: ['~/components']
     },
     modules: [
         "@nuxt/eslint",

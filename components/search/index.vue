@@ -1,16 +1,22 @@
 <template>
   <div v-on-click-outside="setShowSuggestions" class="wrapper">
     <!-- input -->
-    <AInputSearch v-model:value="searchValue" :placeholder="placeholder || 'Tìm kiếm báo cáo'" size="large" allow-clear @change="onChange" @search="handleSearch(searchValue)"
-      @press-enter="handleSearch(searchValue)" @focus="isShowSuggestions = true">
+    <AInputSearch
+        v-model:value="searchValue" :placeholder="placeholder || 'Tìm kiếm báo cáo'"
+        size="large"
+        allow-clear
+        @change="onChange" @search="handleSearch(searchValue)"
+        @press-enter="handleSearch(searchValue)" @focus="isShowSuggestions = true"
+    >
       <template #enterButton>
-        <CustomIcon type="Search" />
+        <CustomIcon type="Search"/>
       </template>
     </AInputSearch>
 
     <!-- suggestion -->
     <div v-if="suggestions" class="suggestions" :class="{ active: isShowSuggestions }">
-      <div v-for="suggestion in suggestions" :key="suggestion" class="suggestion-item" @click="handleSuggestionClick(suggestion)">
+      <div v-for="suggestion in suggestions" :key="suggestion" class="suggestion-item"
+           @click="handleSuggestionClick(suggestion)">
         {{ suggestion }}
       </div>
     </div>
@@ -19,8 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import { vOnClickOutside } from '@vueuse/components';
-import { debounce } from "~/helpers/common";
+import {vOnClickOutside} from '@vueuse/components';
+import {debounce} from "~/helpers/common";
 
 const props = defineProps<{
   handleSearch: (value: string) => Promise<any>,

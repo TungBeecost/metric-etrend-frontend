@@ -33,7 +33,7 @@
       </div>
       <ul>
         <li>Top thương hiệu theo doanh số</li>
-        <li>Top thương hiệu theo sản lượng</li>
+        <li>Top thương hiệu theo số sản phẩm đã bán</li>
       </ul>
       <div class="title">
         IV. Gian hàng hàng đầu
