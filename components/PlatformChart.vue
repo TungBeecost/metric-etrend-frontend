@@ -1,17 +1,10 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
-import { getPlatformById } from "~/helpers/PermissionPlatformHelper";
-import {formatCurrency, formatNumberHuman} from "~/helpers/FormatHelper.js";
-import {formatSortTextCurrency, formatSortTextCurrencyWithMinValue} from "~/helpers/utils.js";
+import {computed, ref, watch} from 'vue';
+import {getPlatformById} from "~/helpers/PermissionPlatformHelper";
+import {formatNumberHuman} from "~/helpers/FormatHelper.js";
+import {formatSortTextCurrency} from "~/helpers/utils.js";
+import Highcharts from "highcharts";
 
-const chartOptions = ref(null);
-const platformColors = {
-  Shopee: ['#FCA14E', '#FF733F'],
-  Lazada: ['#4745A5', '#241E46'],
-  Tiki: ['#5BAFFE', '#366998'],
-  Sendo: ['#FF6060', '#993A3A'],
-  Tiktok: ['#000', '#000'],
-};
 
 const props = defineProps({
   classifiedAnalyticResponse: {
@@ -27,6 +20,16 @@ const props = defineProps({
     default: () => true
   }
 });
+
+const chartOptions = ref(null);
+
+const platformColors = {
+  Shopee: ['#FCA14E', '#FF733F'],
+  Lazada: ['#4745A5', '#241E46'],
+  Tiki: ['#5BAFFE', '#366998'],
+  Sendo: ['#FF6060', '#993A3A'],
+  Tiktok: ['#000', '#000'],
+};
 
 const PLATFORM_TOTAL = computed(() => props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL);
 const total = computed(() => PLATFORM_TOTAL.value.platforms.reduce((acc, item) => acc + item.revenue, 0));
@@ -86,17 +89,6 @@ chartOptions.value = {
   },
   tooltip: {
     enabled: false,
-    formatter: function () {
-      if (props.isHideContent) {
-        const name = ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0 ? `${this.point.categoryName} ${this.point.index + 1}` : this.point.name;
-        return `${name}<br/>
-        <svg width="10" height="10">
-          <rect width="10" height="10" style="fill:${this.point.color};stroke-width:3;stroke:rgb(0,0,0)" />
-          </svg> ${this.series.name}: <strong>Đã bị ẩn</strong>`;
-      }
-
-      return `${this.point.name}: <strong>${formatSortTextCurrency(this.point.y)}</strong> (${this.point.percentage.toFixed(1)}%)`;
-    },
   },
   plotOptions: {
     pie: {
@@ -108,13 +100,19 @@ chartOptions.value = {
       dataLabels: {
         enabled: true,
         connectorShape: 'crookedLine',
-        format: '{point.name}: {point.percentage:.1f} %',
         style: {
           fontSize: '12px',
           color: '#241E46',
           fontWeight: 400,
           fontFamily: 'Inter'
-        }
+        },
+        formatter: function () {
+          if (props.isHideContent) {
+            return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
+          }
+
+          return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+        },
       }
     },
     series: {
@@ -142,7 +140,7 @@ chartOptions.value = {
   },
   series: [
     {
-      name: props.analyticType === 'revenue' ? $t('Doanh số (Đồng)') : $t('Sản lượng (Sản phẩm)'),
+      name: props.analyticType === 'revenue' ? $t('Doanh số (Đồng)') : $t('Số sản phẩm đã bán (Sản phẩm)'),
       data: PLATFORM_TOTAL.value.platforms.map(({platform_id, revenue}) => ({
         name: getPlatformById(platform_id).name,
         y: revenue,
@@ -161,10 +159,10 @@ chartOptions.value = {
 
 const dataSource = computed(() => {
   const PLATFORM_TOTAL = props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL;
-  return PLATFORM_TOTAL.platforms.map(({platform_id, revenue} = {}) => ({
+  return PLATFORM_TOTAL.platforms.map(({platform_id, revenue, ratio_revenue} = {}) => ({
     platform: getPlatformById(platform_id).name,
     platformIcon: getPlatformById(platform_id).urlLogo,
-    revenue: props.analyticType === 'revenue' ? formatCurrency(revenue) : formatNumberHuman(revenue),
+    revenue: props.isHideContent ? ratio_revenue.toFixed(2) : (props.analyticType === 'revenue' ? formatSortTextCurrency(revenue) : formatNumberHuman(revenue)),
   })).sort((a, b) => b.revenue - a.revenue);
 });
 
@@ -184,12 +182,12 @@ watch(() => props.analyticType, () => {
     <div style="">
       <div style="position: relative">
         <highchart :options="chartOptions"/>
-<!--        <div class="platform-chart-inner-box">-->
-<!--          <div class="platform-chart-inner-value">-->
-<!--            <div class="percent" style="color: #241E46; font-size: 24px;font-weight: bold; line-height: 32px; ">{{ innerPercent }}</div>-->
-<!--            <div class="name" style="color: #241E46; font-size: 12px;line-height: 20px;">{{ innerName }}</div>-->
-<!--          </div>-->
-<!--        </div>-->
+        <!--        <div class="platform-chart-inner-box">-->
+        <!--          <div class="platform-chart-inner-value">-->
+        <!--            <div class="percent" style="color: #241E46; font-size: 24px;font-weight: bold; line-height: 32px; ">{{ innerPercent }}</div>-->
+        <!--            <div class="name" style="color: #241E46; font-size: 12px;line-height: 20px;">{{ innerName }}</div>-->
+        <!--          </div>-->
+        <!--        </div>-->
       </div>
     </div>
     <div style="flex: 1;">
@@ -209,9 +207,9 @@ watch(() => props.analyticType, () => {
             </div>
           </template>
           <template v-if="column.key === 'revenue'">
-            <div>
-              {{ formatSortTextCurrency(record.revenue) }}
-            </div>
+            <BlurContent :is-hide-content="props.isHideContent">
+              {{ record.revenue }}
+            </BlurContent>
           </template>
         </template>
       </a-table>

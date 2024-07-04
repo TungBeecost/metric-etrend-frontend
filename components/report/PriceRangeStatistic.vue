@@ -136,7 +136,7 @@ const chartOptions = computed(() => {
       },
       {
         title: {
-          text: 'Sản lượng (Sản phẩm)',
+          text: 'Số sản phẩm đã bán (Sản phẩm)',
           enabled: false,
         },
         opposite: true,
@@ -150,7 +150,7 @@ const chartOptions = computed(() => {
     },
     series: [
       {
-        name: 'Sản lượng cả 3 sàn',
+        name: 'Số sản phẩm đã bán cả 3 sàn',
         color: '#1A1A46',
         type: 'spline',
         zIndex: 10,
@@ -201,28 +201,27 @@ const chartOptions = computed(() => {
         <div class="statistic-item__title">Phân khúc giá</div>
       </div>
     </div>
-    <div class="my-4 w-full text-center relative">
+    <div class="my-4 w-full text-center relative" style="position: relative">
       <highchart :options="chartOptions"/>
-<!--      <ChartMask v-if="isHideContent" @clickOnHidden="$emit('clickOnHidden')"/>-->
+      <ChartMask v-if="props.isHideContent"/>
     </div>
     <InsightBlock
         v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length"
     >
       <li>
-        Trong {{ diffMonths }} qua, phân khúc khách hàng thị trường
-        {{ props.data.name }}
-        thường mua chủ yếu ở mức giá khoảng
+        Trong {{ diffMonths }} qua, phân khúc giá đạt doanh số cao nhất là
         {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
-        {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}
+        {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }},
+        theo sau là phân khúc
+        {{ formatCurrency(priceRangesSortBy("revenue")[1].begin) }} -
+        {{ formatCurrency(priceRangesSortBy("revenue")[1].end) }}.
       </li>
       <li
           v-if="priceRangesSortBy('revenue') &&priceRangesSortBy('revenue').length > 1"
       >
-        Phân khúc giá phổ biến của {{ props.data.name }} là
-        {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
-        {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }} và
-        {{ formatCurrency(priceRangesSortBy("revenue")[1].begin) }} -
-        {{ formatCurrency(priceRangesSortBy("revenue")[1].end) }}
+        Về sản phẩm đã bán, phân khúc giá phổ biến là
+        {{ formatCurrency(priceRangesSortBy("sale")[0].begin) }} -
+        {{ formatCurrency(priceRangesSortBy("sale")[0].end) }}.
       </li>
     </InsightBlock>
   </div>

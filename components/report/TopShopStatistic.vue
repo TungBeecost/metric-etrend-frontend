@@ -53,34 +53,42 @@ const reportType = computed(() => props.data?.report_type);
           class="pie_chart_item"
       >
         <a-table
-            :columns="[
+          :columns="[
             {
               title: 'Loại shop',
               dataIndex: 'shop_type',
               key: 'shop_type',
               align: 'center',
-              width: 180
+              width: 180,
+              slots: {customRender: 'shop_type'}
             },
             {
               title: 'Số lượng shop',
               dataIndex: 'shop_count',
               key: 'shop_count',
               align: 'right',
-              width: 180
+              width: 180,
+              slots: {customRender: 'shop_count'}
             },
           ]"
-            :pagination="false"
-            :data-source="[
-              {
-                shop_type: 'Shop Mall',
-                shop_count: props.data.data_analytic.by_shop.ratio.mall.shop
-              },
-              {
-                shop_type: 'Shop thường',
-                shop_count: props.data.data_analytic.by_shop.ratio.normal.shop
-              }
+          :pagination="false"
+          :data-source="[
+            {
+              shop_type: 'Shop Mall',
+              shop_count: props.data.data_analytic.by_shop.ratio.mall.shop
+            },
+            {
+              shop_type: 'Shop thường',
+              shop_count: props.data.data_analytic.by_shop.ratio.normal.shop
+            }
           ]"
-        />
+        >
+          <template #shop_count="{text}">
+            <BlurContent :is-blurred="isHideContent">
+              {{ text }}
+            </BlurContent>
+          </template>
+        </a-table>
       </div>
       <div
           v-if="
@@ -100,7 +108,7 @@ const reportType = computed(() => props.data?.report_type);
               name: 'Sản phẩm đã bán',
               data: [
                 {
-                  name: 'Shop chính hãng',
+                  name: 'Shop Mall',
                   y: props.data.data_analytic.by_shop.ratio.mall?.revenue || props.data.data_analytic.by_shop.ratio.mall?.ratio_revenue,
                   color: '#D82618',
                 },
@@ -115,7 +123,7 @@ const reportType = computed(() => props.data?.report_type);
         />
       </div>
     </div>
-    <div style="width: 100%;max-width: 800px; margin: auto;">
+    <div style="width: 100%;max-width: 800px; margin: auto; position: relative;">
       <a-table
           :columns="[
         {
@@ -141,8 +149,8 @@ const reportType = computed(() => props.data?.report_type);
           slots: {customRender: 'shop'}
         },
       ]"
-        :pagination="false"
-        :data-source="props.data.data_analytic.by_shop.lst_shop.slice(10).map((shop, index) => ({...shop, stt: index + 1}))"
+          :pagination="false"
+          :data-source="props.data.data_analytic.by_shop.lst_shop.slice(10).map((shop, index) => ({...shop, stt: index + 1}))"
       >
         <template #platform="{record}">
           <div class="platform-column">
@@ -153,18 +161,20 @@ const reportType = computed(() => props.data?.report_type);
         <template #shop="{record}">
           <div style="display: flex; align-items: center; gap: 8px;">
             <div
-              style="width: 32px; height: 32px;"
-              @click="goToUrl(getUrlAnalyticShop(record.url_shop), '_blank')"
+                style="width: 32px; height: 32px;"
+                @click="goToUrl(getUrlAnalyticShop(record.url_shop), '_blank')"
             >
               <img :src="getUrlImageOption(record.url_image, 'thumbnail')" style="width: 100%; background-size: cover;">
             </div>
             <div @click="goToUrl(record.url_shop, '_blank')" style="cursor: pointer">
               {{ record.name }}
-              <img v-if="record.official_type === 1" src="/icons/mall_flag.svg" style="width: 30px; transform: translateY(2px); margin-left: 4px;"/>
+              <img v-if="record.official_type === 1" src="/icons/mall_flag.svg"
+                   style="width: 30px; transform: translateY(2px); margin-left: 4px;"/>
             </div>
           </div>
         </template>
       </a-table>
+      <ChartMask v-if="props.isHideContent"/>
     </div>
     <InsightBlock
         v-if="
