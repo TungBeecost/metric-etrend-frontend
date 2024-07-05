@@ -26,12 +26,15 @@ const isHideContent = ref(true);
 const data = ref<Data | null>(null);
 const loading = ref(true);
 
+
+const route = useRoute()
+const slug = route.params.slug;
+
+
 const fetchTableData = async () => {
   try {
     loading.value = true;
-    // const response = await axios.get('https://api-web.metric.vn/api/report/detail?slug=tui-xach-nu', {
-    const response = await axios.get('http://localhost:8000/api/report/detail?slug=tui-xach', {
-    // const response = await axios.get('http://localhost:8000/api/report/detail?slug=tui-xach-nu', {
+    const response = await axios.get(`http://localhost:8000/api/report/detail?slug=${slug}`, {
       headers: {
         'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImN1b25nbGRAbWV0cmljLnZuIiwiZXhwIjoxNzIwMTY4NzYzLCJpYXQiOjE3MTk1NjM5NjMsImlzcyI6IkF1dGhlbnRpY2F0aW9uIFNlcnZpY2UiLCJzdWIiOiJEdXkgQ8awxqFuZyBMw6oifQ.MPj9EZnFmAvKlH47jQenfaPeeQ_ZFmyBzfSaCRxmma4',
       }
