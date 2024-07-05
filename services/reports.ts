@@ -1,5 +1,5 @@
-import useBEEndpoint from "../composables/useBEEndpoint";
-import { REPORT_ENDPOINTS } from "../constant/endpoints";
+import useBEEndpoint from "~/composables/useBEEndpoint";
+import { REPORT_ENDPOINTS } from "~/constant/endpoints";
 
 export const searchReport = async (body: SearchReportPayload) => {
   const { data, error } = await useFetch(useBEEndpoint(REPORT_ENDPOINTS.search.endpoint), { method: REPORT_ENDPOINTS.search.method, body: body });

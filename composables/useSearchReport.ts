@@ -1,4 +1,4 @@
-import { searchReport, type SearchReportPayload } from "../services/reports";
+import { searchReport, type SearchReportPayload } from "~/services/reports";
 
 export default function useSearchReport() {
   const fetchSearch = async (value: string, options?: SearchReportPayload) => {

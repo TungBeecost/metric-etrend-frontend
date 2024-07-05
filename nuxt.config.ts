@@ -90,6 +90,7 @@ export default defineNuxtConfig({
         "~/assets/variables.less",
         "normalize.css"
     ],
+
     vite: {
         css: {
             preprocessorOptions: {

@@ -1,8 +1,13 @@
 export type METHODS = "POST" | "GET" | "HEAD" | "PATCH" | "PUT" | "DELETE" | "CONNECT" | "OPTIONS" | "TRACE";
 
 export const REPORT_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {
-  search: { endpoint: `/api/report/search`, method: "POST" },
+    search: {endpoint: `/api/report/search`, method: "POST"},
 
-  // reports
-  claim: { endpoint: `/api/report/claim`, method: "GET" }
+    // reports
+    claim: {endpoint: `/api/report/claim`, method: "GET"}
 };
+
+
+export const AUTH_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {
+    googleCallback: {endpoint: `/api/auth/google/callback`, method: "POST"}
+}
