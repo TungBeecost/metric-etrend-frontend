@@ -2,11 +2,19 @@
 import type {LstRecommed} from "~/services/reports";
 
 const props = defineProps({
-  listRecomend: {
+  recomends: {
     type: Array as () => LstRecommed[],
-    default: () => [],
-  },
+    required: true
+  }
 });
+
+const formatDate = (dateString: string) => {
+  const year = dateString.substring(0, 4);
+  const month = dateString.substring(4, 6);
+  const day = dateString.substring(6, 8);
+
+  return `${day}/${month}/${year}`;
+};
 </script>
 
 <template>
@@ -34,15 +42,15 @@ const props = defineProps({
         Có thể bạn quan tâm
       </div>
     </div>
-<!--    <div v-for="item in props.listRecomend" :key="item.id" class="item">-->
-<!--      <div class="image">-->
-<!--        <img :src="item.thumbnail" alt="">-->
-<!--      </div>-->
-<!--      <div class="info">-->
-<!--        <div class="breadcrumb">{{ item.category }} | {{ item.date }}</div>-->
-<!--        <div class="name">{{ item.name }}</div>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div v-for="item in props.recomends" :key="item.id" class="item">
+      <div class="image">
+        <img :src="item.url_thumbnail" alt="">
+      </div>
+      <div class="info">
+        <div class="breadcrumb">{{ item.category_report_name }} | {{ formatDate(item.start_date) }}</div>
+        <div class="name">{{ item.name }}</div>
+      </div>
+    </div>
   </div>
 </template>
 

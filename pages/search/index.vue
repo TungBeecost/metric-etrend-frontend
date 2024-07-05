@@ -10,10 +10,11 @@ import type SearchReport from "~/components/search/search-report.vue";
 import type {LstRecommed, SearchReportRes} from "~/services/reports";
 import {NAVIGATIONS} from "~/constant/constains";
 import {useSearchReport} from "#imports";
-const {fetchSearch, fetchListRecomend} = useSearchReport()
+const {fetchSearch, fetchListRecomend, fetchSuggest} = useSearchReport()
 const route = useRoute();
 const data = ref<SearchReportRes | null>(null);
 const listRecomend = ref<LstRecommed[] | null>(null);
+const listTagSuggest = useState<string[] | null>(() =>null);
 const displaySortReport = ref(false);
 const isModalVisible = ref(false);
 const checkedList = ref<Array<string>>([]);
@@ -22,14 +23,29 @@ const searchValueSearch = ref<string>();
 const page = ref(0);
 const isLoading = ref(false);
 const sortSelect = ref('popularity');
+const mostFrequentCategoryReportId = ref<string>();
 
 const handleListCheckbox = (newCheckedList: Array<string>) => {
   checkedList.value = newCheckedList;
 };
 
+watchEffect(() => {
+  if (mostFrequentCategoryReportId.value) {
+    fetchDataRecommend(mostFrequentCategoryReportId.value);
+  }
+});
+
+watchEffect(() => {
+  if (searchValueSearch.value) {
+    console.log(searchValueSearch.value);
+    fetchTagSuggest(searchValueSearch.value);
+  }
+});
+
 const handleCategorySelect = (newSelectedCategory: string) => {
   selectedCategory.value = newSelectedCategory;
   searchValueSearch.value = '';
+  listTagSuggest.value = [];
   const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
   navigateTo(`${NAVIGATIONS.search}?category_report_id=${newSelectedCategory}`);
   fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
@@ -41,6 +57,11 @@ const handleSortSelect = async (sortChange: string) => {
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
 };
 
+const handleTagClick = async (tag: string) => {
+  await handleSearch(tag);
+  searchValueSearch.value = tag;
+  navigateTo(`${NAVIGATIONS.search}?search=${tag}`);
+};
 
 if (typeof window !== 'undefined') {
   displaySortReport.value = window.matchMedia('(min-width: 768px)').matches; // change the value directly
@@ -71,28 +92,55 @@ const fetchData = async (searchValue: string = '', list_category_report_id: Arra
 
     if (Array.isArray(result) && result.length === 0) {
       data.value = null;
-    } else {
+    } else if (result) { // Add null check here
       data.value = result;
       isLoading.value = false;
+
+      const count: Record<string, number> = {};
+
+      result.lst_report.forEach(report => {
+        if (report.category_report_id in count) {
+          count[report.category_report_id]++;
+        } else {
+          count[report.category_report_id] = 1;
+        }
+      });
+
+      mostFrequentCategoryReportId.value = Object.keys(count).reduce((a, b) => count[a] > count[b] ? a : b);
     }
   } catch (e) {
     console.error(e);
   }
 };
 
-// const fetchDataRecommend = async(category_report_id: string) => {
-//   try{
-//     const result = await fetchListRecomend(category_report_id);
-//     if (result !== null) {
-//       listRecomend.value = result;
-//     } else {
-//       listRecomend.value = [];
-//     }
-//   }
-//   catch (e) {
-//     console.error(e);
-//   }
-// }
+const fetchDataRecommend = async(category_report_id: string) => {
+  try{
+    const result = await fetchListRecomend(category_report_id);
+    if (result !== null) {
+      listRecomend.value = result;
+    } else {
+      listRecomend.value = [];
+    }
+  }
+  catch (e) {
+    console.error(e);
+  }
+}
+
+const fetchTagSuggest = async (value: string) => {
+  try{
+    const result = await fetchSuggest(value);
+    if (result.length){
+      listTagSuggest.value = result;
+    } else {
+      listTagSuggest.value = [];
+    }
+  }
+  catch (e) {
+    console.error(e);
+
+  }
+};
 
 
 const clickButtonFilter = () => {
@@ -125,6 +173,7 @@ onMounted(() => {
   if(route.query.category_report_id && typeof route.query.category_report_id === 'string') {
     list_category_report_id.push(route.query.category_report_id);
     selectedCategory.value = route.query.category_report_id;
+    listTagSuggest.value = [];
   }
   if(route.query.search && typeof route.query.search === 'string') {
     searchValueSearch.value = route.query.search;
@@ -185,8 +234,8 @@ onMounted(() => {
       </div>
       <div class="relate_functions">
         <filter-report v-if="displaySortReport" class="filter_report" :select-category="selectedCategory" @listcheckbox="handleListCheckbox" @categoryselect="handleCategorySelect"/>
-        <popular-relate-keywords/>
-        <maybe-interested :lst-recomend="listRecomend"/>
+        <popular-relate-keywords v-if="listTagSuggest?.length" :tags="listTagSuggest" @tag-clicked="handleTagClick"/>
+        <maybe-interested v-if="listRecomend" :recomends="listRecomend"/>
       </div>
     </div>
     <div class="poster">

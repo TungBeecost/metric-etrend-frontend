@@ -1,7 +1,15 @@
 <script setup lang="ts">
-const listkeyword = ref(['Giày sneaker nam', 'Giày nam giá rẻ', 'Giày sục cho nam', 'Giày thể thao nam', 'Xăng đan & dép nam', 'Dép nam xỏ ngón'])
-</script>
 
+const emit = defineEmits(['tagClicked']);
+
+const tags = defineModel<string[]>("tags");
+
+console.log(tags);
+
+const onTagClick = (tag: string) => {
+  emit('tagClicked', tag);
+};
+</script>
 <template>
   <div class="popular_relate_keywords">
     <div class="title">
@@ -23,7 +31,12 @@ const listkeyword = ref(['Giày sneaker nam', 'Giày nam giá rẻ', 'Giày sụ
       </div>
     </div>
     <div class="list_keywords">
-      <div v-for="keyword in listkeyword" :key="keyword" class="keyword">
+      <div
+          v-for="keyword in tags"
+          :key="keyword"
+          class="keyword"
+          @click="onTagClick(keyword)"
+      >
         {{ keyword }}
       </div>
     </div>
@@ -69,6 +82,7 @@ const listkeyword = ref(['Giày sneaker nam', 'Giày nam giá rẻ', 'Giày sụ
       text-align: center;
       color: #241E46;
       line-height: 20px;
+      cursor: pointer;
     }
   }
 }

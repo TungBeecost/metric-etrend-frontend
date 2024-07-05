@@ -45,6 +45,8 @@ export const fetchListRecomendReport = async (categoryReportId: string, numberOf
       id: item.id,
       slug: item.slug,
       name: item.name,
+      category_report_name: item.category_report_name,
+      url_thumbnail: item.url_thumbnail,
       claimed_at: item.claimed_at,
       expired_at: item.expired_at,
       status: item.status,
@@ -102,6 +104,8 @@ export interface LstRecommed {
   id: number;
   slug: string;
   name: string;
+  category_report_name: string;
+  url_thumbnail: string;
   claimed_at: string | null;
   expired_at: string | null;
   status: string | null;
