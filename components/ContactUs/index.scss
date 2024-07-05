@@ -1,12 +1,12 @@
 .wrapper {
   position: relative;
   display: flex;
-  padding: 40px 120px;
+  padding: 40px 0;
   background: linear-gradient(90deg, #ff6931 1.09%, #ff9839 49.34%);
   overflow: hidden;
   // color: white;
 
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
   @include mobile {
@@ -28,10 +28,12 @@
 
   .content {
     z-index: 1;
-    width: 80%;
+    //width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 40px;
+    margin: auto;
 
     @include mobile {
       flex-direction: column;
@@ -45,6 +47,7 @@
     .info {
       flex: 1 0 0;
       gap: 24px;
+      max-width: 550px;
 
       .header {
         color: white;

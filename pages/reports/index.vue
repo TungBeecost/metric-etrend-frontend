@@ -30,6 +30,7 @@ import ItemNewReport from "~/components/report/ItemNewReport.vue";
     </div>
     <discover/>
     <featured-report/>
+    <ContactUs/>
   </div>
 </template>
 
@@ -97,10 +98,6 @@ import ItemNewReport from "~/components/report/ItemNewReport.vue";
 }
 
 @media (min-width: 1919px) {
-  .default_section {
-    width: 1440px;
-    margin: 0 auto;
-  }
   .title_report {
     .image {
       .title {
@@ -120,10 +117,6 @@ import ItemNewReport from "~/components/report/ItemNewReport.vue";
 }
 
 @media (max-width: 1919px) {
-  .default_section {
-    width: 1440px;
-    margin: 0 auto;
-  }
   .title_report {
     .image {
       .title {
@@ -143,10 +136,6 @@ import ItemNewReport from "~/components/report/ItemNewReport.vue";
 }
 
 @media (max-width: 1439px) {
-  .default_section {
-    width: 1200px;
-    margin: 0 auto;
-  }
   .title_report {
     .image {
       .title {
@@ -166,11 +155,6 @@ import ItemNewReport from "~/components/report/ItemNewReport.vue";
 }
 
 @media (max-width: 1023px) {
-  .default_section {
-    flex-direction: column;
-    width: 800px;
-    margin: 0 auto;
-  }
   .title_report {
     .image {
       .title {
@@ -190,11 +174,6 @@ import ItemNewReport from "~/components/report/ItemNewReport.vue";
 }
 
 @media (max-width: 767px) {
-  .default_section {
-    flex-direction: column;
-    width: 700px;
-    margin: 0 auto;
-  }
   .title_report {
     .image {
       .title {
@@ -216,11 +195,6 @@ import ItemNewReport from "~/components/report/ItemNewReport.vue";
 }
 
 @media (max-width: 424px) {
-  .default_section {
-    flex-direction: column;
-    width: 100%;
-    margin: 0 auto;
-  }
   .title_report {
     .image {
       .title {

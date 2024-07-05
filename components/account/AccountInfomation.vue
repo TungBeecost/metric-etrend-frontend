@@ -236,40 +236,9 @@ const user_info={
     }
   }
 }
-@media (min-width: 1919px) {
-  .default_section {
-    width: calc(100% - 600px);
-    margin: 0 auto;
-  }
-}
 
-@media (max-width: 1919px) {
-  .default_section {
-    width: calc(100% - 500px);
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 1439px) {
-  .default_section {
-    width: calc(100% - 300px);
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 1023px) {
-  .default_section {
-    width: calc(100% - 200px);
-    margin: 0 auto;
-  }
-}
 
 @media (max-width: 767px) {
-  .default_section {
-    width: calc(100% - 100px);
-    margin: 0 auto;
-  }
-
   #account_info{
 
     .account_info_content{
@@ -285,13 +254,6 @@ const user_info={
         }
       }
     }
-  }
-}
-
-@media (max-width: 424px) {
-  .default_section {
-    width: calc(100% - 50px);
-    margin: 0 auto;
   }
 }
 </style>

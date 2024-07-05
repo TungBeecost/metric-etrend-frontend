@@ -1,22 +1,281 @@
-<template>
-  <div class="wrapper">
-    <NuxtImg src="/images/orange-banner-wave.png" class="background" />
+<script setup>
 
-    <div class="content">
+const runtimeConfig = useRuntimeConfig()
+
+const rules = {
+  fullName: [{required: true, message: 'Vui lòng nhập họ và tên', trigger: ['blur', 'change']}],
+  email: [
+    {required: true, message: 'Vui lòng nhập email', trigger: 'blur'},
+    {type: 'email', message: 'Email không hợp lệ', trigger: ['blur', 'change']},
+  ],
+  phone: [
+    {required: true, message: 'Vui lòng nhập số điện thoại', trigger: 'blur'},
+    {pattern: /^0[0-9]{9}$/, message: 'Số điện thoại không hợp lệ', trigger: ['blur', 'change']},
+  ],
+}
+
+
+const mktLeadSourceOptions = [
+  {label: 'Đây là lần đầu tiên tôi biết tới Metric', value: 'Đây là lần đầu tiên tôi biết tới Metric'},
+  {label: 'Báo cáo thị trường Thương mại Điện tử', value: 'Báo cáo thị trường Thương mại Điện tử'},
+  {label: 'Tham gia sự kiện liên quan tới Ecommerce', value: 'Tham gia sự kiện liên quan tới Ecommerce'},
+  {label: 'Social Media (Facebook, LinkedIn?, Zalo…)', value: 'Social Media (Facebook, LinkedIn?, Zalo…)'},
+  {label: 'Báo chí', value: 'Báo chí'},
+  {label: 'Khác', value: 'Khác'},
+]
+
+const mktUserDemandOptions = [
+  {label: 'Nền tảng Phân tích Số liệu Ecommerce', value: 'Nền tảng Phân tích Số liệu Ecommerce'},
+  {label: 'Báo cáo thị trường ngành hàng', value: 'Báo cáo thị trường ngành hàng'},
+  {label: 'Dữ liệu thị trường theo yêu cầu', value: 'Dữ liệu thị trường theo yêu cầu'},
+  {label: 'Hợp tác khác', value: 'Hợp tác khác'},
+]
+
+const mktCompanyTypeOptions = [
+  {label: 'Doanh nghiệp', value: 'Doanh nghiệp'},
+  {label: 'Cá nhân', value: 'Cá nhân'},
+  {
+    label: 'Không kinh doanh, chỉ tham khảo thông tin thị trường',
+    value: 'Không kinh doanh, chỉ tham khảo thông tin thị trường'
+  },
+]
+
+
+const formData = useState('LandingPage.formData', () => ({
+  fullName: '',
+  email: '',
+  phone: undefined,
+  company: '',
+  mktLeadSource: [],
+  mktUserDemand: undefined,
+  mktCompanyType: undefined
+}))
+
+const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => false)
+const isShowErrorNotification = useState('LandingPage.isShowErrorNotification', () => false)
+const isSubmitFormLoading = useState('LandingPage.isSubmitFormLoading', () => false)
+
+const handleSubmitLeadForm = async () => {
+  isSubmitFormLoading.value = true
+  const urlCreateLead = `${runtimeConfig.public.baseMetricCrmUrl}/crm/create/lead_form`
+  // const userProfile = authStore.userProfile
+  const variables = {}
+  const utm_source = variables?.utmSource || ''
+  const utm_medium = variables?.utmMedium || ''
+  const utm_campaign = variables?.utmCampaign || ''
+  const utm_term = variables?.utmTerm || ''
+  const utm_content = variables?.utmContent || ''
+  const url_referrer = variables?.urlReferrer || ''
+  const pub = variables?.pub || ''
+  const emailProfile = userProfile?.email || ''
+  const first_visit = localStorage.getItem('first_visit') || ''
+  const mkLeadSource = formData.value.mktLeadSource || '[]'
+  const mkUserDemand = formData.value.mktUserDemand || ''
+  const mkCompanyType = formData.value.mktCompanyType || ''
+  let note = `From: ${window.location.href}\n`
+  note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
+  note += `lead_source: ${mkLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}`
+
+  const payload = {
+    name: formData.value.fullName,
+    phone: formData.value.phone,
+    email: formData.value.email,
+    organization_name: formData.value.company,
+    note,
+    label_init: 'Nóng',
+    source_name: 'Website',
+    campaign: 'Đăng ký dùng thử',
+    additional_info: {
+      ...variables,
+      mkLeadSource,
+      mkUserDemand,
+      mkCompanyType
+    },
+  }
+
+  try {
+    await http.post(urlCreateLead, payload)
+    isShowErrorNotification.value = false
+    isShowSuccessNotification.value = true
+
+    formData.value = {
+      fullName: '',
+      email: '',
+      phone: undefined,
+      company: '',
+      mktLeadSource: [],
+      mktUserDemand: undefined,
+      mktCompanyType: undefined
+    }
+  } catch (e) {
+    isShowSuccessNotification.value = false
+    isShowErrorNotification.value = true
+  } finally {
+    isSubmitFormLoading.value = false
+  }
+}
+</script>
+
+<template>
+  <div class="wrapper contact-us">
+    <NuxtImg src="/images/orange-banner-wave.png" class="background"
+    />
+
+    <div class="content default_section">
       <div class="info">
-        <p class="header">Đăng ký nghe tư vấn để Kinh doanh Bứt phá!</p>
-        <p class="desc">Thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến thông minh hơn.Ngay bây giờ!</p>
+        <h2 class="header">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</h2>
+        <p class="desc">Thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến thông minh hơn.Ngay
+          bây giờ!</p>
       </div>
 
-      <ContactUsForm submit-label="Đăng ký" submit-class="submitBtnLead" />
+      <a-form style="flex: 1; max-width: 450px; margin: auto;" ref="leadForm" :model="formData" :rules="rules"
+              @finish="handleSubmitLeadForm">
+        <div class="name-and-company-group">
+          <a-form-item name="fullName">
+            <a-input
+                v-model:value="formData.fullName"
+                class="input-form"
+                size="large"
+                placeholder="Họ và tên"
+            />
+          </a-form-item>
+        </div>
+        <div class="email-and-phone-group">
+          <a-form-item name="email">
+            <a-input
+                v-model:value="formData.email"
+                class="input-form"
+                size="large"
+                placeholder="Email"
+            />
+          </a-form-item>
+          <a-form-item name="phone">
+            <a-input
+                v-model:value="formData.phone"
+                class="input-form"
+                size="large"
+                placeholder="Số điện thoại"
+            />
+          </a-form-item>
+        </div>
+        <a-form-item name="mktLeadSource">
+          <a-select
+              v-model:value="formData.mktLeadSource"
+              class="multiple-select-form"
+              mode="multiple"
+              size="large"
+              :max-tag-count="3"
+              :max-tag-text-length="6"
+              :options="mktLeadSourceOptions"
+              placeholder="Bạn biến đến Metric từ kênh nào?"
+          />
+        </a-form-item>
+        <a-form-item name="mktUserDemand">
+          <a-select
+              v-model:value="formData.mktUserDemand"
+              class="single-select-form"
+              size="large"
+              :options="mktUserDemandOptions"
+              placeholder="Nhu cầu quan tâm"
+          />
+        </a-form-item>
+        <a-form-item name="mktCompanyType">
+          <a-select
+              v-model:value="formData.mktCompanyType"
+              class="single-select-form"
+              size="large"
+              :options="mktCompanyTypeOptions"
+              placeholder="Mô hinh kinh doanh"
+          />
+        </a-form-item>
+        <a-form-item>
+          <a-button
+              :loading="isSubmitFormLoading"
+              class="submit-button"
+              size="large" block
+              html-type="submit">Đăng ký
+          </a-button>
+        </a-form-item>
+      </a-form>
     </div>
 
   </div>
 </template>
 
-<script setup lang="ts">
-</script>
+
+<style lang="scss">
+.contact-us {
+  .ant-form-item {
+    flex: 1;
+    width: 100%;
+  }
+
+  .ant-input {
+    border-radius: var(--radius-md, 8px);
+  }
+
+  .submit-button {
+    display: flex;
+    height: 64px;
+    padding: 9px var(----spacing-4xl, 32px);
+    justify-content: center;
+    align-items: center;
+    gap: var(----spacing-lg, 12px);
+    flex: 1 0 0;
+
+    border-radius: var(--radius-md, 8px);
+    border-color: var(--Dark-blue-dark-blue-8, #241E46);
+    background: var(--Dark-blue-dark-blue-8, #241E46);
+
+    color: var(--Neutral-neutral-1, #FFF);
+    text-align: center;
+
+    span {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 28px; /* 140% */
+    }
+
+    &:hover, &:active {
+      background: var(--Dark-blue-dark-blue-9, #3A2E6E);
+      border-color: var(--Dark-blue-dark-blue-9, #3A2E6E);
+
+      color: var(--Neutral-neutral-1, #FFF);
+    }
+
+    &:focus {
+      background: var(--Dark-blue-dark-blue-9, #4A3D7C);
+      border-color: var(--Dark-blue-dark-blue-9, #4A3D7C);
+
+      color: var(--Neutral-neutral-1, #FFF);
+    }
+  }
+}
+</style>
+
 
 <style lang="scss" scoped>
 @import url("./index.scss");
+
+.background {
+  top: unset !important;
+  height: unset !important;
+}
+
+.email-and-phone-group {
+  display: flex;
+  gap: 16px;
+}
+
+
+.wrapper {
+  .background-image {
+    display: none;
+
+    img {
+      transform: scaleX(-1);
+      object-position: -180px 0;
+    }
+  }
+}
 </style>

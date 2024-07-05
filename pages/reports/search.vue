@@ -278,50 +278,6 @@ onMounted(() => {
   }
 }
 
-@media (min-width: 1919px) {
-  .default_section {
-    width: calc(100% - 200px);
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 1919px) {
-  .default_section {
-    width: calc(100% - 100px);
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 1439px) {
-  .default_section {
-    width: calc(100% - 50px);
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 1023px) {
-  .default_section {
-    width: calc(100% - 20px);
-    margin: 0 auto;
-  }
-
-}
-
-@media (max-width: 767px) {
-  .default_section {
-    flex-direction: column;
-    width: calc(100% - 20px);
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 424px) {
-  .default_section {
-    flex-direction: column;
-    width: calc(100% - 20px);
-    margin: 0 auto;
-  }
-}
 
 </style>
 <style lang="scss">
