@@ -20,5 +20,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import url("./pricing.scss");
+@import url("pricing.scss");
 </style>
