@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref} from 'vue';
 import {NAVIGATIONS} from "~/constant/constains";
-import {useCurrentUser} from "~/stores/current-user"
+import {useCurrentUser} from "~/stores/current-user.js"
 
 const isDesktop = ref(true);
 
@@ -113,12 +113,12 @@ const toggleUnlock = () => {
           </div>
         </div>
       </div>
-      <div class="footerModal">
-        <AButton size="large" class="optionBtn" @click="toggleUnlock">Huỷ</AButton>
-        <AButton v-if="currentUser.remainingUnlock" size="large" type="primary" class="optionBtn" @click="unlockReport">
+      <div class="unlock-report-modal-footer">
+        <AButton style="width: 100%;" size="large" class="optionBtn" @click="toggleUnlock">Huỷ</AButton>
+        <AButton style="width: 100%;" v-if="currentUser.remainingUnlock" size="large" type="primary" class="optionBtn" @click="unlockReport">
           Xem báo cáo
         </AButton>
-        <AButton v-else size="large" type="primary" class="optionBtn" @click="navigateTo(NAVIGATIONS.pricing)">
+        <AButton style="width: 100%;" v-else size="large" type="primary" class="optionBtn" @click="navigateTo(NAVIGATIONS.pricing)">
           Mua ngay
         </AButton>
       </div>
@@ -278,6 +278,12 @@ const toggleUnlock = () => {
         font-weight: 500;
       }
     }
+  }
+
+  .unlock-report-modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
   }
 }
 
