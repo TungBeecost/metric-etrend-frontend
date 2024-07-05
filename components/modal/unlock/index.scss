@@ -68,6 +68,10 @@
         color: $default_text_color;
       }
     }
+
+    .errorMessage {
+      color: red;
+    }
   }
 }
 
