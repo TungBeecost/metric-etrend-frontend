@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { CATEGORIES, COMPANY_TYPES, SOCIAL_MEDIA_TYPES } from "../../constant/constains";
+import { CATEGORIES, COMPANY_TYPES, SOCIAL_MEDIA_TYPES } from "~/constant/constains";
 import { filterSelectOption } from "../../helpers/supporter";
 import { ERRORS } from "~/constant/errors";
 import { EMAIL_REGEX, PHONE_REGEX } from "~/helpers/regexs";
