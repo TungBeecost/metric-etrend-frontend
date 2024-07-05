@@ -160,7 +160,6 @@ onMounted(() => {
 
 @media (min-width: 1919px) {
   .default_section {
-    flex-direction: row;
     width: 1440px;
     margin: 0 auto;
   }
@@ -168,7 +167,6 @@ onMounted(() => {
 
 @media (max-width: 1919px) {
   .default_section {
-    flex-direction: row;
     width: 1440px;
     margin: 0 auto;
   }
@@ -176,7 +174,6 @@ onMounted(() => {
 
 @media (max-width: 1439px) {
   .default_section {
-    flex-direction: row;
     width: 1280px;
     margin: 0 auto;
   }
@@ -184,7 +181,6 @@ onMounted(() => {
 
 @media (max-width: 1279px) {
   .default_section {
-    flex-direction: row;
     width: 1024px;
     margin: 0 auto;
   }

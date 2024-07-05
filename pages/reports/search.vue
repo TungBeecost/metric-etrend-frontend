@@ -1,46 +1,34 @@
 <script setup lang="ts">
 import BannerReport from "~/components/report/BannerReport.vue";
-import {ref, watchEffect, onUnmounted} from 'vue';
+import {onMounted, ref, watchEffect, onUnmounted} from 'vue';
+import axios from 'axios';
 import SortReport from "~/components/report/SortReport.vue";
 import ListReport from "~/components/report/ListReport.vue";
 import FilterReport from "~/components/report/FilterReport.vue";
 import PopularRelateKeywords from "~/components/report/PopularRelateKeywords.vue";
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
-import type SearchReport from "~/components/search/search-report.vue";
-import type {LstRecommed, SearchReportRes} from "~/services/reports";
-import {NAVIGATIONS} from "~/constant/constains";
-import {useSearchReport} from "#imports";
-const {fetchSearch, fetchListRecomend} = useSearchReport()
-const route = useRoute();
-const data = ref<SearchReportRes | null>(null);
-const listRecomend = ref<LstRecommed[] | null>(null);
+
+interface Report {
+  id: string;
+  name: string;
+  slug: string;
+  url_thumbnail: string;
+  revenue_monthly: number;
+  gr_quarter: number;
+  shop: string;
+  lst_category: { name: string }[];
+  lst_brand: string[];
+}
+
+interface Data {
+  total: number;
+  lst_report: Report[];
+}
+
+const data = ref<Data | null>(null);
+const current = ref(1);
 const displaySortReport = ref(false);
 const isModalVisible = ref(false);
-const checkedList = ref<Array<string>>([]);
-const selectedCategory = ref<string>();
-const searchValueSearch = ref<string>();
-const page = ref(0);
-const isLoading = ref(false);
-const sortSelect = ref('popularity');
-
-const handleListCheckbox = (newCheckedList: Array<string>) => {
-  checkedList.value = newCheckedList;
-};
-
-const handleCategorySelect = (newSelectedCategory: string) => {
-  selectedCategory.value = newSelectedCategory;
-  searchValueSearch.value = '';
-  const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
-  navigateTo(`${NAVIGATIONS.search}?category_report_id=${newSelectedCategory}`);
-  fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
-};
-
-const handleSortSelect = async (sortChange: string) => {
-  sortSelect.value = sortChange;
-  const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
-  await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
-};
-
 
 if (typeof window !== 'undefined') {
   displaySortReport.value = window.matchMedia('(min-width: 768px)').matches; // change the value directly
@@ -57,43 +45,29 @@ if (typeof window !== 'undefined') {
   });
 }
 
-const fetchData = async (searchValue: string = '', list_category_report_id: Array<string> = [], sortSelect: string,  newpage: number = 0) => {
+const fetchTableData = async () => {
   try {
-    isLoading.value = true;
-    const result = await fetchSearch(searchValue, {
-      'lst_year': [],
-      'lst_category_report_id': list_category_report_id,
-      'lst_field': ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop"],
-      'offset': newpage * 10,
-      'limit': 10,
-      'sort': sortSelect,
+    const response = await axios({
+      method: 'post',
+      url: 'https://api-web.metric.vn/api/report/search',
+      headers: {
+        'content-type': 'application/json',
+      },
+      data: {
+        'lst_category_report_id': ['c1513215936'],
+        'lst_query': [],
+        'lst_field': ['name', 'slug', 'url_thumbnail', 'revenue_monthly', 'gr_quarter', 'shop'],
+        'offset': 0,
+        'limit': 12,
+        'sort': 'popularity'
+      }
     });
-
-    if (Array.isArray(result) && result.length === 0) {
-      data.value = null;
-    } else {
-      data.value = result;
-      isLoading.value = false;
-    }
-  } catch (e) {
-    console.error(e);
+    data.value = response.data;
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
   }
 };
-
-// const fetchDataRecommend = async(category_report_id: string) => {
-//   try{
-//     const result = await fetchListRecomend(category_report_id);
-//     if (result !== null) {
-//       listRecomend.value = result;
-//     } else {
-//       listRecomend.value = [];
-//     }
-//   }
-//   catch (e) {
-//     console.error(e);
-//   }
-// }
-
 
 const clickButtonFilter = () => {
   isModalVisible.value = true;
@@ -107,48 +81,22 @@ const handleCancel = () => {
   isModalVisible.value = false;
 };
 
-const handleSearch = async (searchValue: string) => {
-  const lstCategoryReportId: string[] = [];
-  searchValueSearch.value = searchValue;
-  await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
-};
-
-const handlePageChange = async (newPage: number) => {
-  page.value = newPage;
-  const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
-  await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
-};
-
-
 onMounted(() => {
-  const list_category_report_id = [];
-  if(route.query.category_report_id && typeof route.query.category_report_id === 'string') {
-    list_category_report_id.push(route.query.category_report_id);
-    selectedCategory.value = route.query.category_report_id;
-  }
-  if(route.query.search && typeof route.query.search === 'string') {
-    searchValueSearch.value = route.query.search;
-  }
-  else{
-    searchValueSearch.value = '';
-  }
-  fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
+  fetchTableData();
 });
 </script>
 
 <template>
-  <banner-report v-if="data && data.breadcrumb" :title="data.breadcrumb[0].name"/>
+  <banner-report title="Giày dép nam"/>
   <div id="search_report">
-    <div class="sectionContent searchContent">
-      <SearchReport class="searchBox" :handle-search="handleSearch"/>
-    </div>
+    <div class="search" style="display: flex; justify-content: center">THANH SEARCH</div>
     <div class="container default_section">
       <div class="list_report_industry">
         <div class="general">
           <div class="count_result">
-            {{ (data?.total || 0).toLocaleString() }} kết quả
+            {{ data?.total.toLocaleString() }} kết quả
           </div>
-          <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect"/>
+          <sort-report v-if="displaySortReport" class="sort_report"/>
           <a-button v-else @click="clickButtonFilter">
             <div style="display: flex; gap: 8px; justify-content: center; align-items: center">
               <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -173,20 +121,19 @@ onMounted(() => {
             </div>
           </a-button>
           <a-modal v-model:visible="isModalVisible" title="Filter and Sort" @ok="handleOk" @cancel="handleCancel">
-            <sort-report class="sort_report" @sort-select="handleSortSelect"/>
+            <sort-report class="sort_report"/>
             <filter-report class="filter_report"/>
           </a-modal>
         </div>
-        <template v-if="isLoading" >
-          <a-skeleton style="padding-top: 40px; padding-bottom: 40px"/>
-        </template>
-        <list-report v-else :data="data?.lst_report" :total="data?.total" @page_change="handlePageChange"/>
-
+        <list-report :data="data?.lst_report"/>
+        <div class="page">
+          <a-pagination v-model:current="current" :total="1000" show-less-items />
+        </div>
       </div>
       <div class="relate_functions">
-        <filter-report v-if="displaySortReport" class="filter_report" :select-category="selectedCategory" @listcheckbox="handleListCheckbox" @categoryselect="handleCategorySelect"/>
+        <filter-report v-if="displaySortReport" class="filter_report"/>
         <popular-relate-keywords/>
-        <maybe-interested :lst-recomend="listRecomend"/>
+        <maybe-interested/>
       </div>
     </div>
     <div class="poster">
@@ -211,20 +158,6 @@ onMounted(() => {
 #search_report{
   background-color: #FBFAFC;
   overflow: auto;
-
-  .searchContent {
-    padding-top: 60px;
-    gap: 32px;
-    width: 100%;
-    align-self: center;
-    display: flex;
-    justify-content: center;
-
-    .searchBox {
-      width: 60%
-    }
-  }
-
   .container{
     display: flex;
     gap: 32px;
