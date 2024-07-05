@@ -4,28 +4,7 @@ import EmptyReport from "~/components/account/EmptyReport.vue";
 import ListReport from "~/components/report/ListReport.vue";
 import {onMounted, ref} from "vue";
 import axios from "axios";
-
-interface Report {
-  id: string;
-  name: string;
-  slug: string;
-  url_thumbnail: string;
-  revenue_monthly: number;
-  gr_quarter: number;
-  shop: string;
-  lst_category: { name: string }[];
-  lst_brand: string[];
-}
-
-interface Breadcrumb {
-  name: string;
-}
-
-interface Data {
-  total: number;
-  lst_report: Report[];
-  breadcrumb: Breadcrumb[];
-}
+import type {SearchReportRes} from "~/services/reports";
 
 const fetchTableData = async () => {
   try {
@@ -51,7 +30,7 @@ const fetchTableData = async () => {
   }
 };
 
-const data = ref<Data | null>(null);
+const data = ref<SearchReportRes | null>(null);
 
 onMounted(() => {
   fetchTableData();
@@ -67,7 +46,7 @@ onMounted(() => {
     </div>
     <div class="detailed_reports_viewed_content default_section">
       <div v-if="data">
-        <list-report :data="data?.lst_report"/>
+        <list-report :data="data?.lst_report" :total="data.total"/>
       </div>
       <div v-else>
         <empty-report />

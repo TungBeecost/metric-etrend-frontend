@@ -1,43 +1,16 @@
 <script setup lang="ts">
-const selectedOption = ref('Tất cả');
-const industries = ref([
-  'Tất cả',
-  'Điện Thoại & Máy Tính Bảng',
-  'Nhà Cửa - Đời Sống',
-  'Máy Tính, Laptop & Thiết Bị Văn Phòng',
-  'Bách Hóa - Thực Phẩm',
-  'Làm Đẹp',
-  'Sức Khoẻ',
-  'Thời Trang Nam',
-  'Thời Trang Nữ',
-  'Giày Dép Nam',
-  'Giày Dép Nữ',
-  'Túi Ví Nữ',
-  'Mẹ & Bé',
-  'Phụ Kiện Thời Trang',
-  'Đồng Hồ & Trang Sức',
-  'Voucher - Dịch Vụ',
-  'Văn Phòng Phẩm',
-  'Chăm Sóc Thú Cưng',
-  'Máy Ảnh & Máy Quay Phim',
-  'Nhạc & Phim',
-  'Sách & Tạp Chí',
-  'Thiết Bị Số & Gaming',
-  'Thiết Bị Âm Thanh',
-  'Thể Thao & Du Lịch',
-  'Thời Trang Trẻ Em',
-  'Túi Ví Nam',
-  'Ô Tô - Xe Máy',
-  'Điện Gia Dụng',
-  'Đồ Chơi'
-]);
-
-let selectedYears = ref([]);
-const years = ref(['2024', '2023', '2022', '2021', '2020', 'Trước 2020']);
-
-
+import type {CheckboxValueType} from "ant-design-vue/es/checkbox/interface";
+import type {DefaultOptionType} from "ant-design-vue/es/vc-cascader";
+import type {SelectValue} from "ant-design-vue/es/select";
+import allReports from '@/public/file_json/list_category.json';
+const selectedOption = ref('');
 const showSelectIndustry = ref(true);
-const showSelectTime = ref(true);
+const emit = defineEmits(['listcheckbox', 'categoryselect']);
+const selectedYears = ref<string[]>([]);
+const years = ['2024', '2023', '2022', '2021', '2020', 'Trước 2020'];
+const route = useRoute();
+
+const reports = allReports.filter(report => report.level === 1);
 
 const toggleSelectIndustry = () => {
   showSelectIndustry.value = !showSelectIndustry.value;
@@ -47,13 +20,58 @@ const toggleSelectTime = () => {
   showSelectTime.value = !showSelectTime.value;
 };
 
-// const handleAllCheckboxChange = (newSelectedYears) => {
-//   if (newSelectedYears.includes('all')) {
-//     selectedYears.value = ['all', ...years.value];
-//   } else {
-//     selectedYears.value = newSelectedYears.filter(year => year !== 'all');
-//   }
-// };
+const showSelectTime = ref(true);
+
+const state = computed(() => ({
+  checkAll: false,
+  indeterminate: true,
+  checkedList: selectedYears.value,
+}));
+
+const onCheckAllChange = (e: any) => {
+  selectedYears.value = e.target.checked ? years : [];
+  state.value.checkedList = e.target.checked ? years : [];
+  state.value.indeterminate = !e.target.checked;
+};
+
+const onCheckedListChange = (checkedList: CheckboxValueType[]) => {
+  selectedYears.value = checkedList as string[];
+  state.value.indeterminate = !!checkedList.length && checkedList.length < years.length;
+  state.value.checkAll = checkedList.length === years.length;
+};
+
+const handleChange = (value: SelectValue, option: DefaultOptionType | DefaultOptionType[]) => {
+  if (typeof value === "string") {
+    selectedOption.value = value;
+  }
+  console.log(selectedOption.value);
+  emit('categoryselect', selectedOption.value);
+};
+
+watch(
+    () => state.value.checkedList,
+    (newVal: CheckboxValueType[]) => {
+      onCheckedListChange(newVal);
+    },
+);
+
+watch(state.value.checkedList, (newVal) => {
+  emit('listcheckbox', newVal);
+});
+
+watch(
+    () => state.value.checkedList,
+    val => {
+      state.value.indeterminate = !!val.length && val.length < years.length;
+      state.value.checkAll = val.length === years.length;
+    },
+);
+
+onMounted(() => {
+  if(route.query.category_report_id && typeof route.query.category_report_id === 'string') {
+    selectedOption.value = route.query.category_report_id;
+  }
+});
 </script>
 
 <template>
@@ -94,8 +112,7 @@ const toggleSelectTime = () => {
           </div>
           <div>Ngành hàng</div>
         </div>
-        <a-select v-if="showSelectIndustry" v-model:value="selectedOption">
-          <a-select-option v-for="industry in industries" :value="industry" :key="industry">{{ industry }}</a-select-option>
+        <a-select v-if="showSelectIndustry" v-model:value="selectedOption" :options="reports" style="width: 100%" @change="handleChange">
         </a-select>
       </div>
       <div class="line"></div>
@@ -111,12 +128,16 @@ const toggleSelectTime = () => {
           </div>
           <div>Thời gian đăng tải</div>
         </div>
-        <a-checkbox-group v-if="showSelectTime" v-model="selectedYears" >
-          <a-checkbox value="all">Tất cả</a-checkbox>
-          <div v-for="year in years" :key="year">
-            <a-checkbox :value="year">{{ year }}</a-checkbox>
-          </div>
-        </a-checkbox-group>
+        <div>
+          <a-checkbox
+              v-model:checked="state.checkAll"
+              :indeterminate="state.indeterminate"
+              @change="onCheckAllChange"
+          >
+            Tất cả
+          </a-checkbox>
+        </div>
+        <a-checkbox-group v-model:value="state.checkedList" :options="years" @change="onCheckedListChange" />
       </div>
     </div>
   </div>

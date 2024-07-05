@@ -1,26 +1,24 @@
 <script setup lang="ts">
 import {defineProps, ref} from 'vue'
-
-interface DataItem {
-  id: string; // Add this line
-  name: string;
-  slug: string;
-  url_thumbnail: string;
-  revenue_monthly: number;
-  gr_quarter: number;
-  shop: string;
-  lst_category: { name: string }[]; // Add this line
-  lst_brand: string[]; // Add this line
-}
+import type {LstReport} from "~/services/reports";
 
 const props = defineProps({
   data: {
-    type: Array as () => DataItem[],
+    type: Array as () => LstReport[],
     default: () => [],
   },
+  total: {
+    type: Number,
+    default: 0,
+  },
 });
-
+const emit = defineEmits(['page_change']);
 const current = ref(1);
+const onChange = (page: number) => {
+  console.log(page);
+  current.value = page;
+  emit('page_change', page);
+};
 </script>
 
 <template>
@@ -38,7 +36,7 @@ const current = ref(1);
       </div>
     </div>
     <div class="page">
-      <a-pagination v-model:current="current" :total="1000" show-less-items />
+      <a-pagination v-model:current="current" :total="props.total" @change="onChange" show-less-items />
     </div>
   </div>
 </template>

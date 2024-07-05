@@ -1,37 +1,75 @@
-import useBEEndpoint from "~/composables/useBEEndpoint";
 import { REPORT_ENDPOINTS } from "~/constant/endpoints";
+import axios from "axios";
 
 export const searchReport = async (body: SearchReportPayload) => {
-  const { data, error } = await useFetch(useBEEndpoint(REPORT_ENDPOINTS.search.endpoint), { method: REPORT_ENDPOINTS.search.method, body: body });
-  const result = data.value as any as SearchReportRes;
+  try {
+    const response = await axios.post(REPORT_ENDPOINTS.search.endpoint, body);
+    const result = response.data as SearchReportRes;
 
-  if (error.value || !result?.lst_report) {
-    throw new Error(`Something went wrong: ${error.value}`);
+    if (!result?.lst_report) {
+      console.error("searchReport error: No reports found");
+      console.error("searchReport body: ", body);
+    }
+
+    return result;
+  } catch (error) {
+    console.error("searchReport error: ", error);
+    return null;
   }
-
-  return result;
 };
 
-export const fetchUnlockReport = async (slug: string) => {
-  const { error } = await useFetch(useBEEndpoint(REPORT_ENDPOINTS.claim.endpoint), { method: REPORT_ENDPOINTS.claim.method, query: { slug: slug } });
-
-  if (error.value) {
-    throw new Error(`Something went wrong: ${error.value}`);
-  }
+export const fetchUnlockReport = async (reportId: string) => {
+  console.log(reportId);
 
   return true;
 };
 
+export const fetchListRecomendReport = async (categoryReportId: string, numberOfReports: number) => {
+  try {
+    const response = await axios.get(REPORT_ENDPOINTS.list_recomend.endpoint, {
+      params: {
+        category_report_id: categoryReportId,
+        number_of_reports: numberOfReports
+      },
+      headers: {
+        'accept': 'application/json'
+      }
+    });
+
+    // Ensure the response data is in the expected format
+    if (!Array.isArray(response.data)) {
+      console.error("fetchListRecomendReport error: Unexpected response format");
+      return null;
+    }
+    const data: LstRecommed[] = response.data.map(item => ({
+      id: item.id,
+      slug: item.slug,
+      name: item.name,
+      claimed_at: item.claimed_at,
+      expired_at: item.expired_at,
+      status: item.status,
+      search_volume_shopee: item.search_volume_shopee,
+      start_date: item.start_date,
+    }));
+
+    return data;
+  } catch (error) {
+    console.error("fetchListRecomendReport error: ", error);
+    return null;
+  }
+};
 export interface SearchReportPayload {
   limit?: number;
   lst_category_report_id?: Array<string>;
   lst_field?: Array<string>;
   lst_query?: Array<string>;
+  lst_year?: Array<string>;
   offset?: number;
   sort?: string;
 }
+
 export interface SearchReportRes {
-  total: number;
+  total?: number;
   breadcrumb?: any;
   lst_category?: Array<string>;
   lst_query: Array<string>;
@@ -58,4 +96,24 @@ export interface LstCategory {
   parent_id?: any;
   parent_name?: any;
   is_leaf: boolean;
+}
+
+export interface LstRecommed {
+  id: number;
+  slug: string;
+  name: string;
+  claimed_at: string | null;
+  expired_at: string | null;
+  status: string | null;
+  search_volume_shopee: number;
+  start_date: string;
+}
+
+export interface ListCategory {
+  value: string;
+  label: string;
+  level: number;
+  is_leaf: string;
+  parent?: string;
+  parent_name?: string;
 }

@@ -1,41 +1,12 @@
 <script setup lang="ts">
-const lst_maybe_interested = ref([
-  {
-    id: 1,
-    name: 'Báo cáo Ngành hàng Giày nam',
-    thumbnail: 'https://streetstyleshop.vn/wp-content/uploads/2022/04/the-thao-nam-moi-nhat-5.jpg',
-    category: 'Giày dép nam',
-    date: '24/05/2024',
+import type {LstRecommed} from "~/services/reports";
+
+const props = defineProps({
+  listRecomend: {
+    type: Array as () => LstRecommed[],
+    default: () => [],
   },
-  {
-    id: 2,
-    name: 'Báo cáo Ngành hàng Điện thoại',
-    thumbnail: 'https://streetstyleshop.vn/wp-content/uploads/2022/04/the-thao-nam-moi-nhat-5.jpg',
-    category: 'Điện thoại & Máy tính bảng',
-    date: '24/05/2024',
-  },
-  {
-    id: 3,
-    name: 'Báo cáo Ngành hàng Đồng hồ',
-    thumbnail: 'https://streetstyleshop.vn/wp-content/uploads/2022/04/the-thao-nam-moi-nhat-5.jpg',
-    category: 'Đồng hồ & Trang sức',
-    date: '24/05/2024',
-  },
-  {
-    id: 4,
-    name: 'Báo cáo Ngành hàng Máy ảnh',
-    thumbnail: 'https://streetstyleshop.vn/wp-content/uploads/2022/04/the-thao-nam-moi-nhat-5.jpg',
-    category: 'Máy ảnh & Máy quay phim',
-    date: '24/05/2024',
-  },
-  {
-    id: 5,
-    name: 'Báo cáo Ngành hàng Sách',
-    thumbnail: 'https://streetstyleshop.vn/wp-content/uploads/2022/04/the-thao-nam-moi-nhat-5.jpg',
-    category: 'Sách & Tạp chí',
-    date: '24/05/2024',
-  }
-]);
+});
 </script>
 
 <template>
@@ -63,15 +34,15 @@ const lst_maybe_interested = ref([
         Có thể bạn quan tâm
       </div>
     </div>
-    <div v-for="item in lst_maybe_interested" :key="item.id" class="item">
-      <div class="image">
-        <img :src="item.thumbnail" alt="">
-      </div>
-      <div class="info">
-        <div class="breadcrumb">{{ item.category }} | {{ item.date }}</div>
-        <div class="name">{{ item.name }}</div>
-      </div>
-    </div>
+<!--    <div v-for="item in props.listRecomend" :key="item.id" class="item">-->
+<!--      <div class="image">-->
+<!--        <img :src="item.thumbnail" alt="">-->
+<!--      </div>-->
+<!--      <div class="info">-->
+<!--        <div class="breadcrumb">{{ item.category }} | {{ item.date }}</div>-->
+<!--        <div class="name">{{ item.name }}</div>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </template>
 

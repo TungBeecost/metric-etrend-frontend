@@ -125,7 +125,7 @@ onMounted(() => {
             <filter-report class="filter_report"/>
           </a-modal>
         </div>
-        <list-report :data="data?.lst_report"/>
+<!--        <list-report :data="data?.lst_report"/>-->
         <div class="page">
           <a-pagination v-model:current="current" :total="1000" show-less-items />
         </div>
