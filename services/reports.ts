@@ -1,7 +1,8 @@
-import { REPORT_ENDPOINTS } from "~/constant/endpoints";
+import useBEEndpoint from "../composables/useBEEndpoint";
+import { REPORT_ENDPOINTS } from "../constant/endpoints";
 
 export const searchReport = async (body: SearchReportPayload) => {
-  const { data, error } = await useFetch(REPORT_ENDPOINTS.search, { method: "post", body: body });
+  const { data, error } = await useFetch(useBEEndpoint(REPORT_ENDPOINTS.search.endpoint), { method: REPORT_ENDPOINTS.search.method, body: body });
   const result = data.value as any as SearchReportRes;
 
   if (error.value || !result?.lst_report) {
@@ -11,8 +12,12 @@ export const searchReport = async (body: SearchReportPayload) => {
   return result;
 };
 
-export const fetchUnlockReport = async (reportId: string) => {
-  console.log(reportId);
+export const fetchUnlockReport = async (slug: string) => {
+  const { error } = await useFetch(useBEEndpoint(REPORT_ENDPOINTS.claim.endpoint), { method: REPORT_ENDPOINTS.claim.method, query: { slug: slug } });
+
+  if (error.value) {
+    throw new Error(`Something went wrong: ${error.value}`);
+  }
 
   return true;
 };
