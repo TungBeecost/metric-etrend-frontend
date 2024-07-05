@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import {computed} from "vue";
-
-interface Report {
-  category_report_id: string;
-  image: string;
-  title: string;
-  url: string;
-}
+import type {ListCategory} from "~/services/reports";
 
 const props = defineProps({
   showMore:{
@@ -14,7 +8,7 @@ const props = defineProps({
     default: false
   },
   reports: {
-    type: Array as () => Report[],
+    type: Array as () => ListCategory[],
     required: true
   }
 });
@@ -29,13 +23,15 @@ const displayedReports = computed(() => {
     <router-link
         v-for="(report, index) in displayedReports"
         :key="index"
-        :to="{ path: '/search', query: { category_report_id: report.category_report_id }}"
+        :to="{ path: '/search', query: { category_report_id: report.value }}"
         class="item_discover"
     >
+      <!-- There is no 'image' property in your ListCategory interface, so you might need to replace it with an appropriate property -->
       <div class="image">
-        <img :src="report.image" alt="">
+        <!-- Placeholder image -->
+        <img src="" alt="icon">
       </div>
-      <div class="title">{{ report.title }}</div>
+      <div class="title">{{ report.label }}</div>
     </router-link>
   </div>
 </template>

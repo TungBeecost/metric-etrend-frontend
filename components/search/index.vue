@@ -57,6 +57,12 @@ const onChange = debounce(async () => {
   }
 });
 
+onMounted(() => {
+  if (searchValue.value) {
+    searchValue.value = "";
+  }
+})
+
 </script>
 
 <style lang="scss" scoped>

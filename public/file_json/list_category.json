@@ -1,0 +1,2528 @@
+[
+  {
+    "value": "c349363110",
+    "label": "Nhạc & Phim",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c278116751",
+    "label": "Album Ảnh",
+    "level": 2,
+    "parent": "c349363110",
+    "parent_name": "Nhạc & Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c802122071",
+    "label": "Băng - Đĩa",
+    "level": 2,
+    "parent": "c349363110",
+    "parent_name": "Nhạc & Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c591544966",
+    "label": "Nhạc Cụ & Phụ Kiện",
+    "level": 2,
+    "parent": "c349363110",
+    "parent_name": "Nhạc & Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c356247021",
+    "label": "Phim ảnh",
+    "level": 2,
+    "parent": "c349363110",
+    "parent_name": "Nhạc & Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c952389459",
+    "label": "Thiết Bị Âm Thanh",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c419583998",
+    "label": "Amply và đầu chỉnh âm",
+    "level": 2,
+    "parent": "c952389459",
+    "parent_name": "Thiết Bị Âm Thanh",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c415869671",
+    "label": "Cáp âm thanh/ video & Đầu chuyển",
+    "level": 2,
+    "parent": "c952389459",
+    "parent_name": "Thiết Bị Âm Thanh",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1663319998",
+    "label": "Dàn âm thanh - Loa",
+    "level": 2,
+    "parent": "c952389459",
+    "parent_name": "Thiết Bị Âm Thanh",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c790477384",
+    "label": "Máy nghe nhạc",
+    "level": 2,
+    "parent": "c952389459",
+    "parent_name": "Thiết Bị Âm Thanh",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1392647591",
+    "label": "Micro thu âm",
+    "level": 2,
+    "parent": "c952389459",
+    "parent_name": "Thiết Bị Âm Thanh",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c33055438",
+    "label": "Tai nghe nhét tai & chụp tai",
+    "level": 2,
+    "parent": "c952389459",
+    "parent_name": "Thiết Bị Âm Thanh",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2096031775",
+    "label": "Thiết bị âm thanh khác",
+    "level": 2,
+    "parent": "c952389459",
+    "parent_name": "Thiết Bị Âm Thanh",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1478997685",
+    "label": "Mẹ & Bé",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1735037546",
+    "label": "An toàn cho bé",
+    "level": 2,
+    "parent": "c1478997685",
+    "parent_name": "Mẹ & Bé",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1593226833",
+    "label": "Bộ & Gói quà tặng",
+    "level": 2,
+    "parent": "c1478997685",
+    "parent_name": "Mẹ & Bé",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c537606680",
+    "label": "Chăm sóc sức khỏe bé",
+    "level": 2,
+    "parent": "c1478997685",
+    "parent_name": "Mẹ & Bé",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1102393495",
+    "label": "Chăm sóc sức khoẻ mẹ",
+    "level": 2,
+    "parent": "c1478997685",
+    "parent_name": "Mẹ & Bé",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2092560146",
+    "label": "Đồ dùng ăn dặm cho bé",
+    "level": 2,
+    "parent": "c1478997685",
+    "parent_name": "Mẹ & Bé",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1792161332",
+    "label": "Đồ dùng du lịch cho bé",
+    "level": 2,
+    "parent": "c1478997685",
+    "parent_name": "Mẹ & Bé",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c921955014",
+    "label": "Đồ dùng phòng ngủ cho bé",
+    "level": 2,
+    "parent": "c1478997685",
+    "parent_name": "Mẹ & Bé",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1896936395",
+    "label": "Đồ dùng phòng tắm & Chăm sóc cơ thể bé",
+    "level": 2,
+    "parent": "c1478997685",
+    "parent_name": "Mẹ & Bé",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1837403583",
+    "label": "Mẹ & Bé khác",
+    "level": 2,
+    "parent": "c1478997685",
+    "parent_name": "Mẹ & Bé",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1186349525",
+    "label": "Phụ kiện cho mẹ",
+    "level": 2,
+    "parent": "c1478997685",
+    "parent_name": "Mẹ & Bé",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c448573331",
+    "label": "Sữa công thức & Thực phẩm cho bé",
+    "level": 2,
+    "parent": "c1478997685",
+    "parent_name": "Mẹ & Bé",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1702644256",
+    "label": "Tã, bỉm, vệ sinh cho bé",
+    "level": 2,
+    "parent": "c1478997685",
+    "parent_name": "Mẹ & Bé",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c937408522",
+    "label": "Thời Trang Nam",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1191689230",
+    "label": "Áo khoác nam",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1852932275",
+    "label": "Áo len nam",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1556485950",
+    "label": "Áo nam",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c816150983",
+    "label": "Bộ nam",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1526230846",
+    "label": "Comple, Vest",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c320943912",
+    "label": "Đồ big size",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1032756869",
+    "label": "Đồ hóa trang nam",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1283614496",
+    "label": "Đồ lót nam",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c612809375",
+    "label": "Đồ ngủ nam",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1941224357",
+    "label": "Đồ thể thao, du lịch",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c777548891",
+    "label": "Hoodie & Áo nỉ nam",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c639782190",
+    "label": "Quần dài",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1863019932",
+    "label": "Quần đùi nam",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1641528185",
+    "label": "Quần jean",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2060552781",
+    "label": "Thời trang nam khác",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c11818155",
+    "label": "Trang phục truyền thống",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c921032741",
+    "label": "Vớ - Tất nam",
+    "level": 2,
+    "parent": "c937408522",
+    "parent_name": "Thời Trang Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1000062491",
+    "label": "Thời Trang Nữ",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c2103002918",
+    "label": "Áo khoác nữ",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c6257044",
+    "label": "Áo len & Cardigan nữ",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c639748914",
+    "label": "Áo nữ",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c525083355",
+    "label": "Bộ nữ",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c860880964",
+    "label": "Chân váy",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c862199980",
+    "label": "Đầm - Váy",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1795629832",
+    "label": "Đồ Bầu",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c418177175",
+    "label": "Đồ Bigsize",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1795829422",
+    "label": "Đồ bơi",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1795666610",
+    "label": "Đồ đôi",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1864851609",
+    "label": "Đồ hóa trang nữ",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1230376990",
+    "label": "Đồ liền thân",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1315703188",
+    "label": "Đồ lót nữ",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1155516981",
+    "label": "Đồ ngủ nữ",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1795581601",
+    "label": "Đồ tập",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c407468195",
+    "label": "Đồ truyền thống",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c361487385",
+    "label": "Hoodie và Áo nỉ nữ",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1173179920",
+    "label": "Quần đùi nữ",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c196487109",
+    "label": "Quần jeans",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1852008657",
+    "label": "Quần nữ",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c780656577",
+    "label": "Thời trang nữ khác",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1985640818",
+    "label": "Thời trang trung niên",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c755835209",
+    "label": "Vải",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c847709394",
+    "label": "Váy cưới",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1580420359",
+    "label": "Vớ/ Tất nữ",
+    "level": 2,
+    "parent": "c1000062491",
+    "parent_name": "Thời Trang Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1149754732",
+    "label": "Thể Thao & Du Lịch",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1266110075",
+    "label": "Túi & Balo",
+    "level": 2,
+    "parent": "c1149754732",
+    "parent_name": "Thể Thao & Du Lịch",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1863184013",
+    "label": "Du lịch & Hành lý khác",
+    "level": 2,
+    "parent": "c1149754732",
+    "parent_name": "Thể Thao & Du Lịch",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c493738240",
+    "label": "Dụng Cụ Thể Thao & Dã Ngoại",
+    "level": 2,
+    "parent": "c1149754732",
+    "parent_name": "Thể Thao & Du Lịch",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c378617716",
+    "label": "Giày Thể Thao",
+    "level": 2,
+    "parent": "c1149754732",
+    "parent_name": "Thể Thao & Du Lịch",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1881089483",
+    "label": "Khác",
+    "level": 2,
+    "parent": "c1149754732",
+    "parent_name": "Thể Thao & Du Lịch",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1156753065",
+    "label": "Phụ kiện du lịch",
+    "level": 2,
+    "parent": "c1149754732",
+    "parent_name": "Thể Thao & Du Lịch",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c56985864",
+    "label": "Phụ Kiện Thể Thao & Dã Ngoại",
+    "level": 2,
+    "parent": "c1149754732",
+    "parent_name": "Thể Thao & Du Lịch",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c484788423",
+    "label": "Thể thao & Du lịch khác",
+    "level": 2,
+    "parent": "c1149754732",
+    "parent_name": "Thể Thao & Du Lịch",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2031185964",
+    "label": "Thời Trang Thể Thao & Dã Ngoại",
+    "level": 2,
+    "parent": "c1149754732",
+    "parent_name": "Thể Thao & Du Lịch",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1005824042",
+    "label": "Túi du lịch",
+    "level": 2,
+    "parent": "c1149754732",
+    "parent_name": "Thể Thao & Du Lịch",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1881406836",
+    "label": "Vali",
+    "level": 2,
+    "parent": "c1149754732",
+    "parent_name": "Thể Thao & Du Lịch",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1144728673",
+    "label": "Bách Hoá - Thực Phẩm",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c386719327",
+    "label": "Bách hóa - Thực phẩm khác",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c903485176",
+    "label": "Bộ quà tặng",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1343508014",
+    "label": "Các loại bánh",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c627775034",
+    "label": "Đồ ăn vặt",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2051051695",
+    "label": "Đồ chế biến sẵn, đồ khô",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c815038204",
+    "label": "Đồ làm bánh",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1880993585",
+    "label": "Đồ uống",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c936099779",
+    "label": "Đồ uống có cồn",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1358123234",
+    "label": "Ngũ cốc & mứt",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1433746500",
+    "label": "Nguyên liệu nấu ăn",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c885656749",
+    "label": "Nhu yếu phẩm",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1643053438",
+    "label": "Rau củ quả",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1325589749",
+    "label": "Sữa - trứng",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c38331935",
+    "label": "Thực phẩm tươi sống & đông lạnh",
+    "level": 2,
+    "parent": "c1144728673",
+    "parent_name": "Bách Hoá - Thực Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1182326609",
+    "label": "Nhà Cửa - Đời Sống",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1171223202",
+    "label": "Bảo hộ gia đình",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2130198176",
+    "label": "Chăm sóc nhà cửa",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1432123053",
+    "label": "Chất khử mùi, làm thơm nhà",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c511894885",
+    "label": "Đèn",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c376735041",
+    "label": "Đồ dùng bàn ăn",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1323859803",
+    "label": "Đồ dùng phòng ngủ",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1324098079",
+    "label": "Đồ dùng phòng tắm",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c655668755",
+    "label": "Đồ thờ cúng, đồ phong thủy",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c188651988",
+    "label": "Dụng cụ & Thiết bị tiện ích",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c541211960",
+    "label": "Dụng cụ chăm sóc nhà cửa",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1076432368",
+    "label": "Dụng cụ nhà bếp",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1699432016",
+    "label": "Ngoài trời & Làm vườn",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c988010563",
+    "label": "Nhà cửa - Đời sống khác",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c925008598",
+    "label": "Nội thất",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c442122423",
+    "label": "Sắp xếp nhà cửa",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2036059895",
+    "label": "Trang trí nhà cửa",
+    "level": 2,
+    "parent": "c1182326609",
+    "parent_name": "Nhà Cửa - Đời Sống",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c41293969",
+    "label": "Thời Trang Trẻ Em",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1427576295",
+    "label": "Bao tay trẻ em & Tất",
+    "level": 2,
+    "parent": "c41293969",
+    "parent_name": "Thời Trang Trẻ Em",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c25864052",
+    "label": "Giày bé gái",
+    "level": 2,
+    "parent": "c41293969",
+    "parent_name": "Thời Trang Trẻ Em",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c801505143",
+    "label": "Giày bé trai",
+    "level": 2,
+    "parent": "c41293969",
+    "parent_name": "Thời Trang Trẻ Em",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c453715849",
+    "label": "Phụ kiện trẻ em & trẻ sơ sinh",
+    "level": 2,
+    "parent": "c41293969",
+    "parent_name": "Thời Trang Trẻ Em",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1407564578",
+    "label": "Quần áo bé gái",
+    "level": 2,
+    "parent": "c41293969",
+    "parent_name": "Thời Trang Trẻ Em",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c685109427",
+    "label": "Quần áo bé trai",
+    "level": 2,
+    "parent": "c41293969",
+    "parent_name": "Thời Trang Trẻ Em",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2046330711",
+    "label": "Quần áo trẻ em",
+    "level": 2,
+    "parent": "c41293969",
+    "parent_name": "Thời Trang Trẻ Em",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1732564511",
+    "label": "Thời trang trẻ em khác",
+    "level": 2,
+    "parent": "c41293969",
+    "parent_name": "Thời Trang Trẻ Em",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c230833630",
+    "label": "Đồng Hồ & Trang Sức",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1971483830",
+    "label": "Bộ đồng hồ & Đồng hồ cặp",
+    "level": 2,
+    "parent": "c230833630",
+    "parent_name": "Đồng Hồ & Trang Sức",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c225650017",
+    "label": "Đồng hồ & Trang sức khác",
+    "level": 2,
+    "parent": "c230833630",
+    "parent_name": "Đồng Hồ & Trang Sức",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2128060971",
+    "label": "Đồng hồ nam",
+    "level": 2,
+    "parent": "c230833630",
+    "parent_name": "Đồng Hồ & Trang Sức",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1592675600",
+    "label": "Đồng hồ nữ",
+    "level": 2,
+    "parent": "c230833630",
+    "parent_name": "Đồng Hồ & Trang Sức",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2038782758",
+    "label": "Phụ kiện đồng hồ",
+    "level": 2,
+    "parent": "c230833630",
+    "parent_name": "Đồng Hồ & Trang Sức",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2037204953",
+    "label": "Trang sức & phụ kiện",
+    "level": 2,
+    "parent": "c230833630",
+    "parent_name": "Đồng Hồ & Trang Sức",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1776859460",
+    "label": "Phụ Kiện Thời Trang",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1184094819",
+    "label": "Bộ phụ kiện",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c326919147",
+    "label": "Bông tai",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1998590063",
+    "label": "Cà vạt & Nơ cổ",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c566145857",
+    "label": "Dây chuyền",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c878689573",
+    "label": "Găng tay",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1119036547",
+    "label": "Khăn choàng",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1012085881",
+    "label": "Kim loại quý",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1210909106",
+    "label": "Kính mắt",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c996389387",
+    "label": "Lắc chân",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c790009238",
+    "label": "Mũ - Nón",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1535723455",
+    "label": "Nhẫn",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1715598139",
+    "label": "Phụ kiện thêm",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2041404095",
+    "label": "Phụ kiện thời trang khác",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2022863936",
+    "label": "Phụ kiện tóc",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2035437248",
+    "label": "Thắt lưng",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1387938057",
+    "label": "Vòng tay & Lắc tay",
+    "level": 2,
+    "parent": "c1776859460",
+    "parent_name": "Phụ Kiện Thời Trang",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c950887968",
+    "label": "Làm Đẹp",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c355857336",
+    "label": "Bộ sản phẩm làm đẹp",
+    "level": 2,
+    "parent": "c950887968",
+    "parent_name": "Làm Đẹp",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c934285958",
+    "label": "Chăm sóc cá nhân",
+    "level": 2,
+    "parent": "c950887968",
+    "parent_name": "Làm Đẹp",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c157614325",
+    "label": "Chăm sóc da mặt",
+    "level": 2,
+    "parent": "c950887968",
+    "parent_name": "Làm Đẹp",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1000832412",
+    "label": "Chăm sóc nam giới",
+    "level": 2,
+    "parent": "c950887968",
+    "parent_name": "Làm Đẹp",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1144503254",
+    "label": "Chăm sóc tay, chân & móng",
+    "level": 2,
+    "parent": "c950887968",
+    "parent_name": "Làm Đẹp",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c936646986",
+    "label": "Chăm sóc tóc",
+    "level": 2,
+    "parent": "c950887968",
+    "parent_name": "Làm Đẹp",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1491330967",
+    "label": "Dụng cụ làm đẹp",
+    "level": 2,
+    "parent": "c950887968",
+    "parent_name": "Làm Đẹp",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1992871486",
+    "label": "Làm đẹp khác",
+    "level": 2,
+    "parent": "c950887968",
+    "parent_name": "Làm Đẹp",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2091884612",
+    "label": "Nước hoa",
+    "level": 2,
+    "parent": "c950887968",
+    "parent_name": "Làm Đẹp",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c55239955",
+    "label": "Tắm & chăm sóc cơ thể",
+    "level": 2,
+    "parent": "c950887968",
+    "parent_name": "Làm Đẹp",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1926323782",
+    "label": "Trang điểm",
+    "level": 2,
+    "parent": "c950887968",
+    "parent_name": "Làm Đẹp",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c890463890",
+    "label": "Túi Ví Nam",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1588775559",
+    "label": "Bóp - Ví",
+    "level": 2,
+    "parent": "c890463890",
+    "parent_name": "Túi Ví Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c978904926",
+    "label": "Cặp xách công sở",
+    "level": 2,
+    "parent": "c890463890",
+    "parent_name": "Túi Ví Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c113695429",
+    "label": "Túi đeo chéo",
+    "level": 2,
+    "parent": "c890463890",
+    "parent_name": "Túi Ví Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2059924995",
+    "label": "Túi ví nam khác",
+    "level": 2,
+    "parent": "c890463890",
+    "parent_name": "Túi Ví Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2037375622",
+    "label": "Ví cầm tay",
+    "level": 2,
+    "parent": "c890463890",
+    "parent_name": "Túi Ví Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1513215936",
+    "label": "Giày Dép Nam",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c2129562683",
+    "label": "Bốt",
+    "level": 2,
+    "parent": "c1513215936",
+    "parent_name": "Giày Dép Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1361970085",
+    "label": "Dép nam",
+    "level": 2,
+    "parent": "c1513215936",
+    "parent_name": "Giày Dép Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c820497823",
+    "label": "Giày dép nam khác",
+    "level": 2,
+    "parent": "c1513215936",
+    "parent_name": "Giày Dép Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c883008377",
+    "label": "Giày lười, giày mọi nam",
+    "level": 2,
+    "parent": "c1513215936",
+    "parent_name": "Giày Dép Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c619755004",
+    "label": "Giày sneaker - thể thao nam",
+    "level": 2,
+    "parent": "c1513215936",
+    "parent_name": "Giày Dép Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1560135692",
+    "label": "Giày sục",
+    "level": 2,
+    "parent": "c1513215936",
+    "parent_name": "Giày Dép Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1807125744",
+    "label": "Giày tăng chiều cao nam",
+    "level": 2,
+    "parent": "c1513215936",
+    "parent_name": "Giày Dép Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1725027456",
+    "label": "Giày tây nam",
+    "level": 2,
+    "parent": "c1513215936",
+    "parent_name": "Giày Dép Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c724144914",
+    "label": "Phụ kiện giày dép",
+    "level": 2,
+    "parent": "c1513215936",
+    "parent_name": "Giày Dép Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1324312358",
+    "label": "Xăng-đan & Dép",
+    "level": 2,
+    "parent": "c1513215936",
+    "parent_name": "Giày Dép Nam",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1890857051",
+    "label": "Giày Dép Nữ",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1791181962",
+    "label": "Bốt",
+    "level": 2,
+    "parent": "c1890857051",
+    "parent_name": "Giày Dép Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1326603599",
+    "label": "Giày cao gót",
+    "level": 2,
+    "parent": "c1890857051",
+    "parent_name": "Giày Dép Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c294597424",
+    "label": "Giày đế bằng",
+    "level": 2,
+    "parent": "c1890857051",
+    "parent_name": "Giày Dép Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c339798535",
+    "label": "Giày đế xuồng",
+    "level": 2,
+    "parent": "c1890857051",
+    "parent_name": "Giày Dép Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c563070399",
+    "label": "Giày dép nữ khác",
+    "level": 2,
+    "parent": "c1890857051",
+    "parent_name": "Giày Dép Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c724270934",
+    "label": "Giày sneaker nữ",
+    "level": 2,
+    "parent": "c1890857051",
+    "parent_name": "Giày Dép Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1192784619",
+    "label": "Giày thể thao - sneaker",
+    "level": 2,
+    "parent": "c1890857051",
+    "parent_name": "Giày Dép Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c953991966",
+    "label": "Phụ kiện & chăm sóc giày",
+    "level": 2,
+    "parent": "c1890857051",
+    "parent_name": "Giày Dép Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1571904248",
+    "label": "Phụ kiện giày",
+    "level": 2,
+    "parent": "c1890857051",
+    "parent_name": "Giày Dép Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c172908485",
+    "label": "Xăng-đan và dép",
+    "level": 2,
+    "parent": "c1890857051",
+    "parent_name": "Giày Dép Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c806141846",
+    "label": "Đồ Chơi",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1647720293",
+    "label": "Búp bê & Đồ chơi nhồi bông",
+    "level": 2,
+    "parent": "c806141846",
+    "parent_name": "Đồ Chơi",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c486787955",
+    "label": "Đồ chơi cho trẻ sơ sinh và trẻ nhỏ",
+    "level": 2,
+    "parent": "c806141846",
+    "parent_name": "Đồ Chơi",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1794361675",
+    "label": "Đồ chơi điều khiển từ xa",
+    "level": 2,
+    "parent": "c806141846",
+    "parent_name": "Đồ Chơi",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c74126057",
+    "label": "Đồ chơi giải trí",
+    "level": 2,
+    "parent": "c806141846",
+    "parent_name": "Đồ Chơi",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1230250200",
+    "label": "Đồ chơi giải trí khác",
+    "level": 2,
+    "parent": "c806141846",
+    "parent_name": "Đồ Chơi",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c878100978",
+    "label": "Đồ chơi giáo dục",
+    "level": 2,
+    "parent": "c806141846",
+    "parent_name": "Đồ Chơi",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1375056873",
+    "label": "Đồ chơi mô hình",
+    "level": 2,
+    "parent": "c806141846",
+    "parent_name": "Đồ Chơi",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1987584148",
+    "label": "Đồ chơi trẻ em khác",
+    "level": 2,
+    "parent": "c806141846",
+    "parent_name": "Đồ Chơi",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1795403109",
+    "label": "Đồ chơi truyền thống",
+    "level": 2,
+    "parent": "c806141846",
+    "parent_name": "Đồ Chơi",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c894437317",
+    "label": "Đồ chơi vận động & Ngoài trời",
+    "level": 2,
+    "parent": "c806141846",
+    "parent_name": "Đồ Chơi",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1017379713",
+    "label": "Đồ hóa trang",
+    "level": 2,
+    "parent": "c806141846",
+    "parent_name": "Đồ Chơi",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1278655688",
+    "label": "Văn Phòng Phẩm",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c265728430",
+    "label": "Bút Các Loại",
+    "level": 2,
+    "parent": "c1278655688",
+    "parent_name": "Văn Phòng Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c451221731",
+    "label": "Đồ Sưu Tầm",
+    "level": 2,
+    "parent": "c1278655688",
+    "parent_name": "Văn Phòng Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1286468304",
+    "label": "Hoạ Cụ",
+    "level": 2,
+    "parent": "c1278655688",
+    "parent_name": "Văn Phòng Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1551275748",
+    "label": "Quà Lưu Niệm",
+    "level": 2,
+    "parent": "c1278655688",
+    "parent_name": "Văn Phòng Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1233744702",
+    "label": "Quà Tặng - Giấy Gói",
+    "level": 2,
+    "parent": "c1278655688",
+    "parent_name": "Văn Phòng Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c34458464",
+    "label": "Sổ & Giấy Các Loại",
+    "level": 2,
+    "parent": "c1278655688",
+    "parent_name": "Văn Phòng Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2091778261",
+    "label": "Thiết Bị Trường Học & Văn Phòng",
+    "level": 2,
+    "parent": "c1278655688",
+    "parent_name": "Văn Phòng Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c77353201",
+    "label": "Văn phòng phẩm khác",
+    "level": 2,
+    "parent": "c1278655688",
+    "parent_name": "Văn Phòng Phẩm",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c997967148",
+    "label": "Máy Ảnh & Máy Quay Phim",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1166172067",
+    "label": "Camera giám sát",
+    "level": 2,
+    "parent": "c997967148",
+    "parent_name": "Máy Ảnh & Máy Quay Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c601747272",
+    "label": "Flycam",
+    "level": 2,
+    "parent": "c997967148",
+    "parent_name": "Máy Ảnh & Máy Quay Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1843021162",
+    "label": "Máy ảnh",
+    "level": 2,
+    "parent": "c997967148",
+    "parent_name": "Máy Ảnh & Máy Quay Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c873967294",
+    "label": "Máy ảnh & Máy quay phim khác",
+    "level": 2,
+    "parent": "c997967148",
+    "parent_name": "Máy Ảnh & Máy Quay Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1529358973",
+    "label": "Máy quay",
+    "level": 2,
+    "parent": "c997967148",
+    "parent_name": "Máy Ảnh & Máy Quay Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1311710719",
+    "label": "Ống kính",
+    "level": 2,
+    "parent": "c997967148",
+    "parent_name": "Máy Ảnh & Máy Quay Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1781669200",
+    "label": "Phụ kiện chăm sóc máy ảnh",
+    "level": 2,
+    "parent": "c997967148",
+    "parent_name": "Máy Ảnh & Máy Quay Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c517032888",
+    "label": "Phụ kiện Flycam",
+    "level": 2,
+    "parent": "c997967148",
+    "parent_name": "Máy Ảnh & Máy Quay Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1838853050",
+    "label": "Phụ kiện máy ảnh",
+    "level": 2,
+    "parent": "c997967148",
+    "parent_name": "Máy Ảnh & Máy Quay Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1046590642",
+    "label": "Phụ kiện ống kính",
+    "level": 2,
+    "parent": "c997967148",
+    "parent_name": "Máy Ảnh & Máy Quay Phim",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1919231407",
+    "label": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1733055825",
+    "label": "Cặp laptop",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1906525112",
+    "label": "Chuột & Bàn Phím",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c73774389",
+    "label": "Laptop",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2045705903",
+    "label": "Linh Kiện Máy Tính",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c473043796",
+    "label": "Màn Hình",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1207378943",
+    "label": "Máy In & Máy Scan",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c350171825",
+    "label": "Máy Tính Bàn",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c516620937",
+    "label": "Phần Mềm",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c74736069",
+    "label": "Phụ Kiện Máy Tính",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c723272251",
+    "label": "Phụ kiện Máy tính",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2083625818",
+    "label": "Phụ Kiện Máy Tính Khác",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1227292658",
+    "label": "Thiết Bị Lưu Trữ",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2124182589",
+    "label": "Thiết Bị Mạng",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1074871996",
+    "label": "Thiết Bị Văn Phòng",
+    "level": 2,
+    "parent": "c1919231407",
+    "parent_name": "Máy Tính, Laptop & Thiết Bị Văn Phòng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c796145721",
+    "label": "Ô Tô - Xe Máy",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c784227519",
+    "label": "Chăm sóc ô tô",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1132786544",
+    "label": "Dầu nhớt và phụ gia ô tô",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1896631755",
+    "label": "Dụng cụ sửa chữa ô tô",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2055833274",
+    "label": "Mô tô, xe máy",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1746245721",
+    "label": "Mô tô, xe máy khác",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1796858049",
+    "label": "Móc chìa khóa và Bọc chìa ô tô",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c186931382",
+    "label": "Mũ bảo hiểm & Phụ kiện",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c948265275",
+    "label": "Ô tô",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c996668870",
+    "label": "Ô tô khác",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1075509144",
+    "label": "Phụ kiện ngoại thất ô tô",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1328705336",
+    "label": "Phụ kiện nội thất ô tô",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1922899681",
+    "label": "Phụ kiện xe máy",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1602232226",
+    "label": "Phụ tùng ô tô",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1342039640",
+    "label": "Phụ tùng xe máy",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1975009694",
+    "label": "Thiết bị số cho ô tô, xe máy",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c56581606",
+    "label": "Xe đạp",
+    "level": 2,
+    "parent": "c796145721",
+    "parent_name": "Ô Tô - Xe Máy",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2035652732",
+    "label": "Sức Khoẻ",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c407923064",
+    "label": "Chăm sóc sức khỏe",
+    "level": 2,
+    "parent": "c2035652732",
+    "parent_name": "Sức Khoẻ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1221630203",
+    "label": "Dinh dưỡng thể thao, protein",
+    "level": 2,
+    "parent": "c2035652732",
+    "parent_name": "Sức Khoẻ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c62890642",
+    "label": "Dụng cụ chuyên khoa",
+    "level": 2,
+    "parent": "c2035652732",
+    "parent_name": "Sức Khoẻ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1633335178",
+    "label": "Dụng cụ vật lý trị liệu",
+    "level": 2,
+    "parent": "c2035652732",
+    "parent_name": "Sức Khoẻ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c98616588",
+    "label": "Máy móc y tế",
+    "level": 2,
+    "parent": "c2035652732",
+    "parent_name": "Sức Khoẻ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c745535130",
+    "label": "Sản phẩm hỗ trợ tình dục",
+    "level": 2,
+    "parent": "c2035652732",
+    "parent_name": "Sức Khoẻ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1110582659",
+    "label": "Sức khỏe khác",
+    "level": 2,
+    "parent": "c2035652732",
+    "parent_name": "Sức Khoẻ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1714776762",
+    "label": "Thiết bị massage",
+    "level": 2,
+    "parent": "c2035652732",
+    "parent_name": "Sức Khoẻ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c924166072",
+    "label": "Thiết bị y tế khác",
+    "level": 2,
+    "parent": "c2035652732",
+    "parent_name": "Sức Khoẻ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2140822537",
+    "label": "Thực phẩm chức năng",
+    "level": 2,
+    "parent": "c2035652732",
+    "parent_name": "Sức Khoẻ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c768366167",
+    "label": "Vật tư y tế",
+    "level": 2,
+    "parent": "c2035652732",
+    "parent_name": "Sức Khoẻ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1189843250",
+    "label": "Chăm Sóc Thú Cưng",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c59501562",
+    "label": "Chăm sóc sức khỏe thú cưng",
+    "level": 2,
+    "parent": "c1189843250",
+    "parent_name": "Chăm Sóc Thú Cưng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c905321599",
+    "label": "Chăm sóc thú cưng khác",
+    "level": 2,
+    "parent": "c1189843250",
+    "parent_name": "Chăm Sóc Thú Cưng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1270050461",
+    "label": "Làm đẹp cho thú cưng",
+    "level": 2,
+    "parent": "c1189843250",
+    "parent_name": "Chăm Sóc Thú Cưng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c992724464",
+    "label": "Phụ kiện cho thú cưng",
+    "level": 2,
+    "parent": "c1189843250",
+    "parent_name": "Chăm Sóc Thú Cưng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c436689863",
+    "label": "Thức ăn cho thú cưng",
+    "level": 2,
+    "parent": "c1189843250",
+    "parent_name": "Chăm Sóc Thú Cưng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1992403995",
+    "label": "Vệ sinh cho thú cưng",
+    "level": 2,
+    "parent": "c1189843250",
+    "parent_name": "Chăm Sóc Thú Cưng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1049283522",
+    "label": "Voucher - Dịch Vụ",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c2079502902",
+    "label": "Deal",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1973064998",
+    "label": "Dịch vụ khác",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c835168708",
+    "label": "Dịch vụ tài chính",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1970744092",
+    "label": "Du lịch & Khách sạn",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1737280552",
+    "label": "Gọi xe",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1815386695",
+    "label": "Khóa học",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1850167944",
+    "label": "Mã - Phiếu quà tặng",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c8921012",
+    "label": "Mua sắm",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c679345757",
+    "label": "Nạp tiền tài khoản",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c368324776",
+    "label": "Nhà hàng & Ăn uống",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1327528329",
+    "label": "Scan & Pay Voucher",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1523803224",
+    "label": "Sự kiện & Giải trí",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1092396885",
+    "label": "Sức khỏe & Làm đẹp",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c468766317",
+    "label": "Thanh toán hóa đơn",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1761218898",
+    "label": "Vé máy bay/tàu/xe",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c872499377",
+    "label": "Voucher khác",
+    "level": 2,
+    "parent": "c1049283522",
+    "parent_name": "Voucher - Dịch Vụ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c945324293",
+    "label": "Điện Gia Dụng",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c731123969",
+    "label": "Điện gia dụng khác",
+    "level": 2,
+    "parent": "c945324293",
+    "parent_name": "Điện Gia Dụng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c641426678",
+    "label": "Đồ gia dụng nhà bếp",
+    "level": 2,
+    "parent": "c945324293",
+    "parent_name": "Điện Gia Dụng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2143248160",
+    "label": "Mạch điện & Phụ tùng",
+    "level": 2,
+    "parent": "c945324293",
+    "parent_name": "Điện Gia Dụng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1632329766",
+    "label": "Pin",
+    "level": 2,
+    "parent": "c945324293",
+    "parent_name": "Điện Gia Dụng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c715833741",
+    "label": "Thiết bị công nghiệp",
+    "level": 2,
+    "parent": "c945324293",
+    "parent_name": "Điện Gia Dụng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c437885301",
+    "label": "Thiết bị điện gia dụng lớn",
+    "level": 2,
+    "parent": "c945324293",
+    "parent_name": "Điện Gia Dụng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c437653355",
+    "label": "Thiết bị điện gia dụng nhỏ",
+    "level": 2,
+    "parent": "c945324293",
+    "parent_name": "Điện Gia Dụng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1920021243",
+    "label": "Thiết bị điều khiển từ xa",
+    "level": 2,
+    "parent": "c945324293",
+    "parent_name": "Điện Gia Dụng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c960055921",
+    "label": "Tivi & Phụ kiện",
+    "level": 2,
+    "parent": "c945324293",
+    "parent_name": "Điện Gia Dụng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1704246187",
+    "label": "Điện Thoại & Máy Tính Bảng",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c2079129999",
+    "label": "Điện Thoại - Máy Tính Bảng",
+    "level": 2,
+    "parent": "c1704246187",
+    "parent_name": "Điện Thoại & Máy Tính Bảng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1827205403",
+    "label": "Điện thoại & Phụ kiện khác",
+    "level": 2,
+    "parent": "c1704246187",
+    "parent_name": "Điện Thoại & Máy Tính Bảng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1158314976",
+    "label": "Phụ Kiện Điện Thoại và Máy Tính Bảng",
+    "level": 2,
+    "parent": "c1704246187",
+    "parent_name": "Điện Thoại & Máy Tính Bảng",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2146627932",
+    "label": "Sách & Tạp Chí",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1991567710",
+    "label": "E-Books",
+    "level": 2,
+    "parent": "c2146627932",
+    "parent_name": "Sách & Tạp Chí",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c677517577",
+    "label": "Sách",
+    "level": 2,
+    "parent": "c2146627932",
+    "parent_name": "Sách & Tạp Chí",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1045383671",
+    "label": "Sách & Tạp chí khác",
+    "level": 2,
+    "parent": "c2146627932",
+    "parent_name": "Sách & Tạp Chí",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c715564263",
+    "label": "Tạp Chí & Báo Giấy",
+    "level": 2,
+    "parent": "c2146627932",
+    "parent_name": "Sách & Tạp Chí",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c984920598",
+    "label": "Thiết Bị Số & Gaming",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c1812247008",
+    "label": "Máy chơi game",
+    "level": 2,
+    "parent": "c984920598",
+    "parent_name": "Thiết Bị Số & Gaming",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c980023545",
+    "label": "Phụ kiện console",
+    "level": 2,
+    "parent": "c984920598",
+    "parent_name": "Thiết Bị Số & Gaming",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1547278188",
+    "label": "Thiết bị & Phụ kiện thông minh",
+    "level": 2,
+    "parent": "c984920598",
+    "parent_name": "Thiết Bị Số & Gaming",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1701606424",
+    "label": "Thiết Bị Đeo Thông Minh và Phụ Kiện",
+    "level": 2,
+    "parent": "c984920598",
+    "parent_name": "Thiết Bị Số & Gaming",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1708282229",
+    "label": "Thiết bị số & Gaming khác",
+    "level": 2,
+    "parent": "c984920598",
+    "parent_name": "Thiết Bị Số & Gaming",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c545384818",
+    "label": "Video Games",
+    "level": 2,
+    "parent": "c984920598",
+    "parent_name": "Thiết Bị Số & Gaming",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c109830509",
+    "label": "Túi Ví Nữ",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
+    "value": "c2005842184",
+    "label": "Phụ kiện túi",
+    "level": 2,
+    "parent": "c109830509",
+    "parent_name": "Túi Ví Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c803179068",
+    "label": "Túi đeo chéo & Túi đeo vai",
+    "level": 2,
+    "parent": "c109830509",
+    "parent_name": "Túi Ví Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c2113872909",
+    "label": "Túi đeo hông & Túi đeo ngực",
+    "level": 2,
+    "parent": "c109830509",
+    "parent_name": "Túi Ví Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c320843400",
+    "label": "Túi quai xách",
+    "level": 2,
+    "parent": "c109830509",
+    "parent_name": "Túi Ví Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1814161706",
+    "label": "Túi tote",
+    "level": 2,
+    "parent": "c109830509",
+    "parent_name": "Túi Ví Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c714085247",
+    "label": "Túi ví nữ khác",
+    "level": 2,
+    "parent": "c109830509",
+    "parent_name": "Túi Ví Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c837656004",
+    "label": "Ví",
+    "level": 2,
+    "parent": "c109830509",
+    "parent_name": "Túi Ví Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c285392990",
+    "label": "Ví dự tiệc & Ví cầm tay",
+    "level": 2,
+    "parent": "c109830509",
+    "parent_name": "Túi Ví Nữ",
+    "is_leaf": "True"
+  },
+  {
+    "value": "c1000000000",
+    "label": "Chưa phân loại",
+    "level": 1,
+    "is_leaf": "True"
+  }
+]

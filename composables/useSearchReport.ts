@@ -1,12 +1,12 @@
-import { searchReport, type SearchReportPayload } from "../services/reports";
+import {fetchListRecomendReport, searchReport, type SearchReportPayload} from "../services/reports";
 
 export default function useSearchReport() {
-  const fetchSearch = async (value: string, options?: SearchReportPayload) => {
+  const fetchSearch = async (value: string | null, options?: SearchReportPayload) => {
     try {
       const body: SearchReportPayload = {
         limit: 10,
         lst_field: ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop"],
-        lst_query: [value],
+        lst_query: value ? [value] : [],
         offset: 0,
         sort: "popularity",
         ...options
@@ -16,28 +16,41 @@ export default function useSearchReport() {
       return data;
     } catch (error) {
       console.error("fetchSearch error: ", error);
-      return [];
+      return null;
     }
   };
 
-  const fetchSuggest = async (value: string, options?: SearchReportPayload) => {
+  const fetchSuggest = async (value: string | null, options?: SearchReportPayload) => {
     try {
       const body: SearchReportPayload = {
         limit: 5,
         lst_field: ["name", "slug"],
         offset: 0,
         sort: "popularity",
-        lst_query: [value],
+        lst_query: value ? [value] : [],
         ...options
       };
       const data = await searchReport(body);
 
-      return data.lst_report.map((item) => item.name);
+      if (data && data.lst_report) {
+        return data.lst_report.map((item) => item.name);
+      } else {
+        return [];
+      }
     } catch (error) {
       console.error("fetchSuggest error: ", error);
       return [];
     }
   };
 
-  return { fetchSearch, fetchSuggest };
+  const fetchListRecomend = async (categoryReportId: string, numberOfReports: number = 5) => {
+    try {
+      return await fetchListRecomendReport(categoryReportId, numberOfReports);
+    } catch (error) {
+      console.error("fetchListRecomend error: ", error);
+      return null;
+    }
+  }
+
+  return { fetchSearch, fetchSuggest, fetchListRecomend };
 }
