@@ -294,5 +294,5 @@ import { CONTACTS } from "~/constant/constains.js";
 </script>
 
 <style lang="scss" scoped>
-@import url("./chinh-sach-bao-mat-thong-tin.scss");
+@import url("chinh-sach-bao-mat-thong-tin.scss");
 </style>

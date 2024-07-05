@@ -459,5 +459,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import url("./dieu-kien-giao-dich-chung.scss");
+@import url("dieu-kien-giao-dich-chung.scss");
 </style>
