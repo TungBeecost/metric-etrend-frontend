@@ -47,7 +47,7 @@ const value = ref('');
     </div>
     <div class="products-grid">
       <ProductItem
-          v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContent ? 6 : 9)"
+          v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContent ? 6 : 12)"
           :key="product.product_base_id"
           :product-item="product"
           :product="product"
