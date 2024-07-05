@@ -22,10 +22,9 @@ export const useCurrentUser = defineStore("currentUserStore", {
       // fetch data from API and update state
       //...
     },
-    async unlockReport(reportId: string) {
+    async unlockReport(slug: string) {
       // call BE to verify & update state
-      await fetchUnlockReport(reportId);
-      this.unlockInfo.remainingUnlock--;
+      await fetchUnlockReport(slug);
     }
   }
 });

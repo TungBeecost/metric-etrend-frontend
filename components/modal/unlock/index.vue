@@ -41,17 +41,18 @@ import {NAVIGATIONS} from "~/constant/constains";
 
 export type TypeModal = "success"
 
-defineProps<{
+const props = defineProps<{
   isOpen: boolean,
   onClose: () => void,
   reportTitle: string,
   classNameModal?: string,
+  slug: string
 }>()
 
 const currentUser = useCurrentUser();
 
 const unlockReport = async () => {
-  await currentUser.unlockReport('123');
+  await currentUser.unlockReport(props.slug);
 
   // if nothing wrong
   reloadNuxtApp();
