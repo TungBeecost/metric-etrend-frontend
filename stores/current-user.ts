@@ -11,7 +11,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
   state: () => ({
     userInfo: {} as CurrentUser,
     unlockInfo: {
-      remainingUnlock: 1
+      remainingUnlock: 0
     } as UnlockInfo
   }),
   getters: {

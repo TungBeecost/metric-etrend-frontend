@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { CONTACTS, TERM_AND_POLICIES } from '../../constant/constains';
+import { CONTACTS, TERM_AND_POLICIES } from '~/constant/constains';
 
 
 </script>

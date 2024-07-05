@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import type SearchReport from '../components/search/search-report.vue';
-import {NAVIGATIONS} from '../constant/constains';
+import {NAVIGATIONS} from '~/constant/constains';
 
 const recommendSearch = ["Ngành hàng Mẹ & Bé", "Ngành hàng Điện tử", "Thời trang Nam", "Điện Máy"]
 

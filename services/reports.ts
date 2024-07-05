@@ -1,4 +1,4 @@
-import { REPORT_ENDPOINTS } from "../constant/endpoints";
+import { REPORT_ENDPOINTS } from "~/constant/endpoints";
 
 export const searchReport = async (body: SearchReportPayload) => {
   const { data, error } = await useFetch(REPORT_ENDPOINTS.search, { method: "post", body: body });
