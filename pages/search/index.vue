@@ -285,7 +285,6 @@ onMounted(() => {
 
 @media (min-width: 1919px) {
   .default_section {
-    flex-direction: row;
     width: calc(100% - 200px);
     margin: 0 auto;
   }

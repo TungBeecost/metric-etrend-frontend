@@ -1,70 +1,70 @@
 <script setup lang="ts">
 const reports = [
   {
-    image: 'https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp',
+    image: 'https://picsum.photos/391',
     title: 'Báo cáo Ngành hàng Giày sneaker nam 1',
     date: '20/10/2021',
     description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 1',
     category: ['Thể thao', 'Kinh tế']
   },
   {
-    image: 'https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp',
+    image: 'https://picsum.photos/392',
     title: 'Báo cáo Ngành hàng Giày sneaker nam 2',
     date: '21/10/2021',
     description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 2',
     category: ['Thể thao', 'Kinh tế']
   },
   {
-    image: 'https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp',
+    image: 'https://picsum.photos/393',
     title: 'Báo cáo Ngành hàng Giày sneaker nam 3',
     date: '22/10/2021',
     description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 3',
     category: ['Thể thao', 'Kinh tế']
   },
   {
-    image: 'https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp',
+    image: 'https://picsum.photos/394',
     title: 'Báo cáo Ngành hàng Giày sneaker nam 4',
     date: '23/10/2021',
     description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 4',
     category: ['Thể thao', 'Kinh tế']
   },
   {
-    image: 'https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp',
+    image: 'https://picsum.photos/395',
     title: 'Báo cáo Ngành hàng Giày sneaker nam 5',
     date: '24/10/2021',
     description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 5',
     category: ['Thể thao', 'Kinh tế']
   },
   {
-    image: 'https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp',
+    image: 'https://picsum.photos/396',
     title: 'Báo cáo Ngành hàng Giày sneaker nam 6',
     date: '25/10/2021',
     description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 6',
     category: ['Thể thao', 'Kinh tế']
   },
   {
-    image: 'https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp',
+    image: 'https://picsum.photos/397',
     title: 'Báo cáo Ngành hàng Giày sneaker nam 7',
     date: '26/10/2021',
     description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 7',
     category: ['Thể thao', 'Kinh tế']
   },
   {
-    image: 'https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp',
+    image: 'https://picsum.photos/398',
     title: 'Báo cáo Ngành hàng Giày sneaker nam 8',
     date: '24/10/2021',
     description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 5',
     category: ['Thể thao', 'Kinh tế']
   },
   {
-    image: 'https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp',
+    image: 'https://picsum.photos/399',
     title: 'Báo cáo Ngành hàng Giày sneaker nam 9',
     date: '25/10/2021',
     description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 6',
     category: ['Thể thao', 'Kinh tế']
   },
   {
-    image: 'https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp',
+    image: 'https://picsum.photos/390',
     title: 'Báo cáo Ngành hàng Giày sneaker nam 10',
     date: '26/10/2021',
     description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 7',
@@ -134,7 +134,7 @@ const scrollReports = (direction: string) => {
     justify-content: flex-start;
     overflow-x: hidden;
     gap: 36px;
-    padding: 16px;
+    padding: 16px 0;
     scrollbar-width: thin;
     scrollbar-color: #888 #f5f5f5;
 
@@ -209,8 +209,8 @@ const scrollReports = (direction: string) => {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 48px;
-    height: 48px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     border: 1px solid #EEEBFF;
     background-color: #FFF;
@@ -219,12 +219,12 @@ const scrollReports = (direction: string) => {
   }
 
   .button_slice_left {
-    left: -20px;
+    left: -15px;
     top: 100px;
   }
 
   .button_slice_right {
-    right: -20px;
+    right: -15px;
     top: 100px;
   }
 }

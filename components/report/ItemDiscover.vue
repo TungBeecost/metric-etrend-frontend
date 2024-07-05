@@ -9,7 +9,7 @@ interface Report {
 }
 
 const props = defineProps({
-  showMore:{
+  showMore: {
     type: Boolean,
     default: false
   },
@@ -33,7 +33,8 @@ const displayedReports = computed(() => {
         class="item_discover"
     >
       <div class="image">
-        <img :src="report.image" alt="">
+        <!--        <img :src="report.image" alt="icon"/>-->
+        <component :is="report.image"/>
       </div>
       <div class="title">{{ report.title }}</div>
     </router-link>
@@ -41,7 +42,7 @@ const displayedReports = computed(() => {
 </template>
 
 <style scoped lang="scss">
-.item_discover{
+.item_discover {
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -55,12 +56,29 @@ const displayedReports = computed(() => {
 
   cursor: pointer;
 
+  transition: all 0.3s;
+
+  &:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+    border-radius: var(--radius-2xl, 16px);
+    border: 1px solid var(--Volcano-volcano-3, #F5B899);
+    background: var(--Volcano-volcano-1, #FDEEE7);
+
+    color: var(--Volcano-volcano-6, #E85912);
+  }
+
   .image {
     width: 40px;
     height: 40px;
 
-    img {
-      width: 100%;
+    svg {
+      width: 40px;
+      height: 40px;
+
+      * {
+        fill: none;
+      }
     }
   }
 
@@ -69,3 +87,13 @@ const displayedReports = computed(() => {
   }
 }
 </style>
+
+<!--<style lang="scss">-->
+<!--.item_discover {-->
+<!--  .image {-->
+<!--    svg {-->
+<!--      fill: none;-->
+<!--    }-->
+<!--  }-->
+<!--}-->
+<!--</style>-->
