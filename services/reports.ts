@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const searchReport = async (body: SearchReportPayload) => {
   try {
-    const response = await axios.post(REPORT_ENDPOINTS.search, body);
+    const response = await axios.post(REPORT_ENDPOINTS.search.endpoint, body);
     const result = response.data as SearchReportRes;
 
     if (!result?.lst_report) {
@@ -26,7 +26,7 @@ export const fetchUnlockReport = async (reportId: string) => {
 
 export const fetchListRecomendReport = async (categoryReportId: string, numberOfReports: number) => {
   try {
-    const response = await axios.get(REPORT_ENDPOINTS.list_recomend, {
+    const response = await axios.get(REPORT_ENDPOINTS.list_recomend.endpoint, {
       params: {
         category_report_id: categoryReportId,
         number_of_reports: numberOfReports

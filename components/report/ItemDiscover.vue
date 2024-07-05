@@ -2,10 +2,9 @@
 import {computed} from "vue";
 
 interface Report {
-  category_report_id: string;
-  image: string;
-  title: string;
-  url: string;
+  value: string;
+  icon: any;
+  label: string;
 }
 
 const props = defineProps({
@@ -29,14 +28,14 @@ const displayedReports = computed(() => {
     <router-link
         v-for="(report, index) in displayedReports"
         :key="index"
-        :to="{ path: '/search', query: { category_report_id: report.category_report_id }}"
+        :to="{ path: '/search', query: { category_report_id: report.value }}"
         class="item_discover"
     >
       <div class="image">
         <!--        <img :src="report.image" alt="icon"/>-->
-        <component :is="report.image"/>
+        <component :is="report.icon"/>
       </div>
-      <div class="title">{{ report.title }}</div>
+      <div class="title">{{ report.label }}</div>
     </router-link>
   </div>
 </template>
