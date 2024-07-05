@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NAVIGATIONS, PLANS } from '../../constant/constains';
+import { NAVIGATIONS, PLANS } from '~/constant/constains';
 
 defineProps<{
   isDarkTitle?: boolean,

@@ -2,7 +2,7 @@
 import {computed} from 'vue';
 import SummaryStatistic from "~/components/report/SummaryStatistic.vue";
 
-import {formatSortTextCurrency, formatSortTextCurrencyWithMinValue} from "~/helpers/utils";
+import {formatSortTextCurrency} from "~/helpers/utils";
 import dayjs from "dayjs";
 import {formatNumber} from "~/helpers/FormatHelper";
 
@@ -15,29 +15,12 @@ const props = defineProps({
   },
   isHideContent: {
     type: Boolean,
-    default: false
-  },
-  isFreeUser: {
-    type: Boolean,
-    default: true,
+    default: true
   },
 });
 
-const platformNames: Record<number, string> = {
-  1: "Shopee",
-  2: "Lazada",
-  3: "Tiki",
-  4: "Sendo",
-};
-
-const platformColors: Record<string, string> = {
-  Shopee: "#FF9264",
-  Lazada: "#47538F",
-  Tiki: "#5BAFFE",
-};
-
 const diffRevenueMonths = computed(() => {
-  const { lst_revenue_sale_monthly } = props.data.data_analytic.by_overview;
+  const {lst_revenue_sale_monthly} = props.data.data_analytic.by_overview;
   const latestMonth = lst_revenue_sale_monthly.slice(-1);
   const previousMonth = lst_revenue_sale_monthly.slice(-2, -1);
   const revenueLatestMonth = latestMonth.reduce(
@@ -57,7 +40,7 @@ const diffRevenueMonths = computed(() => {
 });
 
 const hightestMonthRevenue = computed(() => {
-  const { lst_revenue_sale_monthly } = props.data.data_analytic.by_overview;
+  const {lst_revenue_sale_monthly} = props.data.data_analytic.by_overview;
   const highestMonthRevenue = lst_revenue_sale_monthly.reduce(
       (acc: { revenue: number }, item: { revenue: number }) => {
         if (item.revenue > acc.revenue) {
@@ -71,7 +54,7 @@ const hightestMonthRevenue = computed(() => {
 });
 
 const diffHalfYear = computed(() => {
-  const { lst_revenue_sale_monthly } = props.data.data_analytic.by_overview;
+  const {lst_revenue_sale_monthly} = props.data.data_analytic.by_overview;
   const latestHalfYear = lst_revenue_sale_monthly.slice(-6);
   const previousHalfYear = lst_revenue_sale_monthly.slice(-12, -6);
   const revenueLatestHalfYear = latestHalfYear.reduce(
@@ -95,7 +78,7 @@ const formatDateFunc = (value: string, format: string) => {
 };
 
 const diffMonths = computed(() => {
-  const { start_date, end_date } = props.data.filter_custom;
+  const {start_date, end_date} = props.data.filter_custom;
   const startDate = dayjs(start_date);
   const endDate = dayjs(end_date);
   return endDate.diff(startDate, "months") + 1 + " tháng";
@@ -107,7 +90,13 @@ const charts = computed(() => {
   return [
     {
       title: {
-        text: ''
+        text: 'Doanh số và sản phẩm đã bán theo tháng',
+        style: {
+          fontSize: '14px',
+          color: '#241E46',
+          fontWeight: 700,
+          fontFamily: 'Inter'
+        }
       },
       tooltip: {
         enabled: false,
@@ -115,17 +104,29 @@ const charts = computed(() => {
       yAxis: [
         {
           title: {
-            text: null,
-          },
-          labels: {
-            enabled: false, // hide labels
+            text: 'Số sản phẩm đã bán',
+            style: {
+              fontSize: '12px',
+              color: '#241E46',
+              fontWeight: 400,
+              fontFamily: 'Inter'
+            }
           },
           opposite: true,
+          labels: {
+            style: {
+              fontSize: '12px',
+              color: '#241E46',
+              fontWeight: 400,
+              fontFamily: 'Inter'
+            }
+          }
         },
         {
-          title: {
-            text: 'Doanh số (VNĐ)',
-          },
+          title: false,
+          labels: {
+            enabled: false,
+          }
         },
       ],
       plotOptions: {
@@ -142,6 +143,14 @@ const charts = computed(() => {
         categories: props.data.data_analytic.by_overview.lst_revenue_sale_monthly.map(
             ({begin}: { begin: string }) => `${formatDateFunc(begin, 'MM/YYYY')}`
         ),
+        labels: {
+          style: {
+            fontSize: '12px',
+            color: '#241E46',
+            fontWeight: 400,
+            fontFamily: 'Inter'
+          }
+        }
       },
       series: [
         {
@@ -155,7 +164,6 @@ const charts = computed(() => {
         },
         {
           name: 'Doanh số',
-          color: platformColors[platformNames[platformId]],
           stack: 'platform_revenue_price_range',
           type: 'column',
           yAxis: 1,
@@ -163,11 +171,22 @@ const charts = computed(() => {
           data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
               .slice()
               .map(
-                  (monthly: { revenue: number, score?: number, by_platform?: { platform_id: number, revenue: number }[] }) =>
+                  (monthly: {
+                    revenue: number,
+                    score?: number,
+                    by_platform?: { platform_id: number, revenue: number }[]
+                  }) =>
                       monthly.revenue || (monthly.by_platform?.find(
                           (p: { platform_id: number }) => Number(p.platform_id) === platformId
                       )?.revenue || monthly.score)
               ),
+          color: {
+            linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
+            stops: [
+              [0, '#FCA14E'],
+              [1, '#FF733F']
+            ]
+          }
         },
       ]
     }
@@ -186,32 +205,33 @@ const charts = computed(() => {
         <div class="statistic-item__title">Tổng quan</div>
       </div>
     </div>
-    <summary-statistic :data="props.data" :is-hide-content="isHideContent"/>
+    <summary-statistic :data="props.data" :is-hide-content="props.isHideContent"/>
     <div
         id="monthly-growth-chart"
         ref="monthlyGrowthChart"
-        class="mb-10 w-full relative"
+        style="margin-bottom: 24px; position: relative;"
     >
       <highchart :options="charts[0]"/>
+      <ChartMask v-if="props.isHideContent"/>
     </div>
     <div id="thi-phan-cac-san-thuong-mai-dien-tu" class="items-center">
       <platform-chart
           v-if="props.data"
           :classified-analytic-response="{REVENUE_TOTAL: {platforms: data.data_analytic.by_marketplace.lst_marketplace}}"
-          :is-hide-content="props.isFreeUser"
+          :is-hide-content="props.isHideContent"
       />
     </div>
     <InsightBlock>
       <li>
     <span class="text-bold">
-      Doanh số bán {{ data.name }} trong {{ diffMonths }}: đạt
-      <BlurContent :is-hide-content="isFreeUser">
+      Trong {{ diffMonths }}, nhóm hàng {{ data.name }}:
+      đạt tổng doanh số <BlurContent :is-hide-content="props.isHideContent">
         <span>
           {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
         </span>
       </BlurContent>
       đồng, với
-      <BlurContent :is-hide-content="isHideContent">
+      <BlurContent :is-hide-content="props.isHideContent">
         <span>
           {{ formatSortTextCurrency(data.data_analytic.by_overview.sale) }}
         </span>
@@ -220,10 +240,10 @@ const charts = computed(() => {
     </span>
       </li>
       <li>
-        Cập nhật tình hình thị trường {{ data.name }} có hơn
+        Thị trường {{ data.name }} có hơn
         {{ formatNumber(data.data_analytic.by_overview.shop) }} nhà bán trên
         sàn TMĐT với hơn
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent :is-hide-content="props.isHideContent">
       <span>
         {{ formatNumber(data.data_analytic.by_overview.product) }}
       </span>
@@ -235,31 +255,37 @@ const charts = computed(() => {
           :key="platform.name"
       >
         <span class="text-bold">{{ platform.name }}</span> chiếm
-        {{ Number(platform.ratio_revenue * 100).toFixed(1) }}% tổng doanh số và
-        {{ Number(platform.ratio_sale * 100).toFixed(1) }}% về sản lượng
+        <BlurContent :is-hide-content="props.isHideContent">
+          {{ Number(platform.ratio_revenue * 100).toFixed(1) }}%
+        </BlurContent>
+        tổng doanh số, tương ứng
+        <BlurContent :is-hide-content="props.isHideContent">
+          {{ formatSortTextCurrency(platform.revenue) }}
+        </BlurContent>
+        đồng.
       </li>
       <li>
         Doanh số của sản phẩm {{ data.name }} trong tháng
         {{ formatDateFunc(hightestMonthRevenue.begin, "MM/YYYY") }}
         đạt mức cao nhất với
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent :is-hide-content="props.isHideContent">
       <span>
         {{ formatSortTextCurrency(hightestMonthRevenue.revenue) }}
       </span>
         </BlurContent>
         đồng và
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent :is-hide-content="props.isHideContent">
       <span>
         {{ formatSortTextCurrency(hightestMonthRevenue.sale) }}
       </span>
         </BlurContent>
-        về sản lượng.
+        về số sản phẩm đã bán.
       </li>
       <li>
         Quy mô thị trường {{ data.name }} tháng
         {{ formatDateFunc(diffRevenueMonths.latestMonth[0].begin, "MM/YYYY") }}
         đạt
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent :is-hide-content="props.isHideContent">
           <span>
             {{
               formatSortTextCurrency(diffRevenueMonths.latestMonth[0].revenue)
@@ -280,7 +306,7 @@ const charts = computed(() => {
               ? "tăng trưởng doanh thu"
               : "doanh thu giảm"
         }}
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent :is-hide-content="props.isHideContent">
     <span>
       {{ diffHalfYear.diffPercent }}
     </span>
@@ -292,7 +318,7 @@ const charts = computed(() => {
 </template>
 
 <style scoped lang="scss">
-.general_overview{
+.general_overview {
   border: 1px solid #EEEBFF;
   border-radius: 8px;
   padding: 24px;

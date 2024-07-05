@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import type { Search } from '../../.nuxt/components';
-import { NAVIGATIONS } from '../../constant/constains';
+// import type { Search } from '../../.nuxt/components';
+import { NAVIGATIONS } from '~/constant/constains';
 
 const props = defineProps<{
   handleSearch?: (searchValue: string) => Promise<void>

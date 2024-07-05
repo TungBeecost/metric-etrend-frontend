@@ -18,5 +18,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import url("./chinh-sach-doi-tra-san-pham.scss");
+@import url("chinh-sach-dat-hang.scss");
 </style>

@@ -12,10 +12,10 @@ const props = defineProps({
 const reportFilterDisplayFields = [
   'lst_platform_id',
   'lst_keyword',
-  'lst_keyword_exclude',
   'is_smart_queries',
   'is_remove_fake_sale',
-  'date_range'
+  'date_range',
+  'lst_keyword_exclude',
 ]
 
 type FieldLabels = {
@@ -31,10 +31,10 @@ const fieldLabel: FieldLabels = {
   lst_bee_category_base_id: 'Ngành hàng',
   lst_category_base_id: 'Ngành hàng',
   lst_keyword: 'Từ khóa',
-  lst_keyword_exclude: 'Từ khóa loại trừ',
   is_smart_queries: 'Tìm thông minh',
   is_remove_fake_sale: 'Lọc bỏ sản phẩm ảo/bất thường',
   date_range: 'Dữ liệu phân tích trong khoảng',
+  lst_keyword_exclude: 'Từ khóa loại trừ',
 }
 
 
@@ -49,6 +49,8 @@ const formatDate = (value: string | Date, format: string, inputFormat: string = 
   return moment(value, inputFormat).format(format);
 }
 
+const isExpanded = ref(false);
+
 const fieldValueParse: FieldValueParsers = {
   lst_platform_id: (value: number[]) => {
     if (!value || value.length === 4) {
@@ -57,14 +59,15 @@ const fieldValueParse: FieldValueParsers = {
     return value.map((platformId: number) => PLATFORMS[platformId]).join(', ')
   },
   lst_keyword: (value: string[]) => value ? value.join(', ') : '',
-  lst_keyword_exclude: (value: string[]) => value ? value.join(', ') : '',
   is_smart_queries: (value: boolean) => value ? 'Có' : 'Không',
   is_remove_fake_sale: (value: boolean) => value ? 'Loại trừ sản phẩm có tỉ lệ đánh giá / lượt bán thấp hơn 5%' : 'Không',
   date_range: () => {
     const {start_date, end_date} = props.data.filter_custom;
     return `${formatDate(start_date, 'DD/MM/YYYY')} - ${formatDate(end_date, 'DD/MM/YYYY')}`
   },
+  lst_keyword_exclude: (value: string[]) => value ? (!isExpanded.value ? value.slice(0, 3) : value).join(', ') : '',
 }
+
 </script>
 
 <template>
@@ -74,9 +77,9 @@ const fieldValueParse: FieldValueParsers = {
     </div>
     <div class="report-filter-content">
       <div
-        v-for="field in reportFilterDisplayFields"
-        :key="field"
-     >
+          v-for="field in reportFilterDisplayFields"
+          :key="field"
+      >
         <div class="report-filter-field">
           <div class="report-filter-field-title">
             {{ fieldLabel[field] }}
@@ -85,6 +88,19 @@ const fieldValueParse: FieldValueParsers = {
             {{ fieldValueParse[field](props.data.data_filter_report[field]) }}
           </div>
         </div>
+      </div>
+      <div>
+        <a-button type="link" size="small" @click="isExpanded = !isExpanded">
+          {{ isExpanded ? 'Thu gọn' : 'Xem thêm' }}
+          <svg
+              xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"
+              style="margin-left: 4px;"
+              :style="{ transform: isExpanded ? 'rotate(180deg) translateY(-3px)' : 'rotate(0deg) translateY(3px)' }"
+          >
+            <path d="M11.7949 6.17627L8.04492 9.67627L4.29492 6.17627" stroke="#E85912" stroke-width="1.3"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a-button>
       </div>
     </div>
   </div>

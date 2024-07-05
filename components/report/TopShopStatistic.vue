@@ -1,7 +1,8 @@
 <script setup>
-import { computed, defineProps} from 'vue';
+import {computed, defineProps} from 'vue';
 import PieChart from "~/components/report/PieChart.vue";
 import {getUrlImageOption, goToUrl} from "~/helpers/utils.js";
+import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
 
 const platformNames = {
   1: "Shopee",
@@ -15,7 +16,7 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
-  isFreeUser: {
+  isHideContent: {
     type: Boolean,
     default: false,
   },
@@ -23,20 +24,19 @@ const props = defineProps({
 
 const formatNumber = (value = "") => value.toLocaleString("vi-VN");
 
-const isHideContent = computed(() => props.isFreeUser);
 const isClient = computed(() => !import.meta.env.SSR);
 const reportType = computed(() => props.data?.report_type);
 </script>
 
 <template>
   <div
-    v-if="
+      v-if="
       props.data.data_analytic.by_shop &&
       props.data.data_analytic.by_shop.lst_top_shop &&
       props.data.data_analytic.by_shop.lst_top_shop.length > 1
     "
-    id="top-shop"
-    class="border statistic-block mb-6"
+      id="top-shop"
+      class="border statistic-block mb-6"
   >
     <div class="statistic-item__title">
       <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
@@ -49,48 +49,66 @@ const reportType = computed(() => props.data?.report_type);
     </div>
     <div class="pie_chart">
       <div
-        v-if="props.data.data_analytic.by_shop.lst_top_shop.length > 1"
-        class="pie_chart_item"
+          v-if="props.data.data_analytic.by_shop.lst_top_shop.length > 1"
+          class="pie_chart_item"
       >
-        <PieChart
-          title="Thống kê Top Shop"
-          subtitle="trong 12 tháng theo doanh số"
-          :is-hide-content="isHideContent"
-          :series="[
+        <a-table
+          :columns="[
             {
-              name: 'Doanh thu',
-              data: props.data.data_analytic.by_shop.lst_top_shop.map(
-                ({ name, revenue, ratio_revenue, platform_id } = {}) => {
-                  return {
-                    name: name + ' - ' + platformNames[platform_id],
-                    y: revenue || ratio_revenue,
-                    categoryName: 'Shop',
-                  };
-                }
-              ),
+              title: 'Loại shop',
+              dataIndex: 'shop_type',
+              key: 'shop_type',
+              align: 'center',
+              width: 180,
+              slots: {customRender: 'shop_type'}
+            },
+            {
+              title: 'Số lượng shop',
+              dataIndex: 'shop_count',
+              key: 'shop_count',
+              align: 'right',
+              width: 180,
+              slots: {customRender: 'shop_count'}
             },
           ]"
-        />
+          :pagination="false"
+          :data-source="[
+            {
+              shop_type: 'Shop Mall',
+              shop_count: props.data.data_analytic.by_shop.ratio.mall.shop
+            },
+            {
+              shop_type: 'Shop thường',
+              shop_count: props.data.data_analytic.by_shop.ratio.normal.shop
+            }
+          ]"
+        >
+          <template #shop_count="{text}">
+            <BlurContent :is-blurred="isHideContent">
+              {{ text }}
+            </BlurContent>
+          </template>
+        </a-table>
       </div>
       <div
-        v-if="
+          v-if="
           (props.data.data_analytic.by_shop.ratio.mall?.revenue > 0 &&
           props.data.data_analytic.by_shop.ratio.normal?.revenue) ||
           (props.data.data_analytic.by_shop.ratio.mall?.ratio_revenue > 0 &&
           props.data.data_analytic.by_shop.ratio.normal?.ratio_revenue)
         "
-        class="pie_chart_item"
+          class="pie_chart_item"
       >
         <PieChart
-          title="Tỉ trọng doanh số"
-          subtitle="Shop Mall và Shop thường"
-          :is-hide-content="isHideContent"
-          :series="[
+            title="Tỉ trọng doanh số"
+            subtitle="Shop Mall và Shop thường"
+            :is-hide-content="props.isHideContent"
+            :series="[
             {
               name: 'Sản phẩm đã bán',
               data: [
                 {
-                  name: 'Shop chính hãng',
+                  name: 'Shop Mall',
                   y: props.data.data_analytic.by_shop.ratio.mall?.revenue || props.data.data_analytic.by_shop.ratio.mall?.ratio_revenue,
                   color: '#D82618',
                 },
@@ -105,57 +123,68 @@ const reportType = computed(() => props.data?.report_type);
         />
       </div>
     </div>
-    <div class="line"></div>
-    <div
-      v-if="
-        props.data.data_analytic.by_shop &&
-        props.data.data_analytic.by_shop.lst_shop &&
-        props.data.data_analytic.by_shop.lst_shop.length > 1
-      "
-      class="list-shop-block mb-8"
-    >
-      <div class="list-shop-description text-center my-6">
-        <template v-if="isClient && reportType === 'report_product_line'">
-          Các shop phổ biến theo từ khoá {{ props.data.name }}
+    <div style="width: 100%;max-width: 800px; margin: auto; position: relative;">
+      <a-table
+          :columns="[
+        {
+          title: 'STT',
+          dataIndex: 'stt',
+          key: 'stt',
+          width: 100,
+          align: 'center',
+        },
+        {
+          title: 'Kênh bán',
+          dataIndex: 'platform',
+          key: 'platform',
+          align: 'center',
+          slots: {customRender: 'platform'}
+        },
+        {
+          title: 'Tên shop',
+          dataIndex: 'shop',
+          key: 'shop',
+          align: 'center',
+          width: '50%',
+          slots: {customRender: 'shop'}
+        },
+      ]"
+          :pagination="false"
+          :data-source="props.data.data_analytic.by_shop.lst_shop.slice(10).map((shop, index) => ({...shop, stt: index + 1}))"
+      >
+        <template #platform="{record}">
+          <div class="platform-column">
+            <img :src="getPlatformById(record.platform_id).urlLogo" class="platform-icon"/>
+            <!--          <span>{{ getPlatformById(record.platform_id).name }}</span>-->
+          </div>
         </template>
-        <template v-else>
-          Các shop phổ biến trong nhóm hàng {{ props.data.name }}
-        </template>
-      </div>
-      <div class="list-shop">
-        <div
-          v-for="shop in props.data.data_analytic.by_shop.lst_shop
-            .filter((shop) => shop.url_image && shop.url_image.length > 0)
-            .slice(0, 12)"
-          :key="shop.shop_base_id"
-          class="shop-item"
-        >
-          <div class="shop-img">
+        <template #shop="{record}">
+          <div style="display: flex; align-items: center; gap: 8px;">
             <div
-              class="cursor-pointer"
-              @click="goToUrl(getUrlAnalyticShop(shop.url_shop), '_blank')"
+                style="width: 32px; height: 32px;"
+                @click="goToUrl(getUrlAnalyticShop(record.url_shop), '_blank')"
             >
-              <img :src="getUrlImageOption(shop.url_image, 'thumbnail')"/>
+              <img :src="getUrlImageOption(record.url_image, 'thumbnail')" style="width: 100%; background-size: cover;">
+            </div>
+            <div @click="goToUrl(record.url_shop, '_blank')" style="cursor: pointer">
+              {{ record.name }}
+              <img v-if="record.official_type === 1" src="/icons/mall_flag.svg"
+                   style="width: 30px; transform: translateY(2px); margin-left: 4px;"/>
             </div>
           </div>
-          <div
-            class="shop-name cursor-pointer"
-            @click="goToUrl(shop.url_shop, '_blank')"
-          >
-            {{ shop.name }}
-          </div>
-        </div>
-      </div>
+        </template>
+      </a-table>
+      <ChartMask v-if="props.isHideContent"/>
     </div>
     <InsightBlock
-      v-if="
+        v-if="
         props.data.data_analytic.by_shop.ratio.mall &&
         props.data.data_analytic.by_shop.ratio.normal
       "
     >
       <li>
         Doanh thu của {{ props.data.name }} đến từ
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent :is-hide-content="props.isHideContent">
           <span>
             {{ formatNumber(props.data.data_analytic.by_shop.ratio.mall.shop) }}
           </span>
@@ -166,7 +195,7 @@ const reportType = computed(() => props.data?.report_type);
               props.data.data_analytic.by_shop.ratio.mall.ratio_revenue * 100
           ).toFixed(1)
         }}% và hơn
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent :is-hide-content="props.isHideContent">
           <span>
             {{ formatNumber(props.data.data_analytic.by_shop.ratio.normal.shop) }}
           </span>
@@ -183,7 +212,7 @@ const reportType = computed(() => props.data?.report_type);
           }}</span>
         có tỉ trọng doanh thu cao nhất chiếm
 
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent :is-hide-content="props.isHideContent">
           <span>
             {{
               Number(
@@ -194,7 +223,7 @@ const reportType = computed(() => props.data?.report_type);
         </BlurContent>
         % doanh số. Tiếp theo đó là các shop
         <template
-          v-if="
+            v-if="
             props.data.data_analytic &&
             props.data.data_analytic.by_shop.lst_top_shop &&
             props.data.data_analytic.by_shop.lst_top_shop.length >= 2
@@ -206,7 +235,7 @@ const reportType = computed(() => props.data?.report_type);
           >,
         </template>
         <template
-          v-if="
+            v-if="
             props.data.data_analytic &&
             props.data.data_analytic.by_shop.lst_top_shop &&
             props.data.data_analytic.by_shop.lst_top_shop.length >= 3
@@ -216,7 +245,7 @@ const reportType = computed(() => props.data?.report_type);
               props.data.data_analytic.by_shop.lst_top_shop[2].name
             }}</span>
           tương ứng thị phần doanh thu là
-          <BlurContent :is-hide-content="isHideContent">
+          <BlurContent :is-hide-content="props.isHideContent">
             <span>
               {{
                 Number(
@@ -229,13 +258,13 @@ const reportType = computed(() => props.data?.report_type);
         </template>
         và
         <template
-          v-if="
+            v-if="
             props.data.data_analytic &&
             props.data.data_analytic.by_shop.lst_top_shop &&
             props.data.data_analytic.by_shop.lst_top_shop.length >= 3
           "
         >
-          <BlurContent :is-hide-content="isHideContent">
+          <BlurContent :is-hide-content="props.isHideContent">
             <span>
               {{
                 Number(
@@ -250,6 +279,32 @@ const reportType = computed(() => props.data?.report_type);
     </InsightBlock>
   </div>
 </template>
+
+<style lang="scss">
+#top-shop {
+  .ant-table {
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+
+    .ant-table-thead > tr > th {
+      background: #EEEBFF !important;
+
+      font-size: 14px;
+      line-height: 22px;
+
+      color: #241E46;
+    }
+
+    .ant-table-tbody > tr > td {
+      font-size: 14px;
+      line-height: 22px;
+
+      color: #241E46;
+    }
+  }
+}
+</style>
 
 <style scoped lang="scss">
 .statistic-block {
@@ -311,7 +366,8 @@ const reportType = computed(() => props.data?.report_type);
     }
   }
 }
-.statistic-item__title{
+
+.statistic-item__title {
   display: flex;
   align-items: center;
   font-size: 20px;
@@ -326,15 +382,18 @@ const reportType = computed(() => props.data?.report_type);
   gap: 16px;
   justify-content: center;
   align-items: stretch;
-  margin-top: 16px;
-  margin-bottom: 16px;
 
   .pie_chart_item {
+    width: 100%;
     height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
-#top-shop{
+#top-shop {
   padding: 24px;
   border-radius: 8px;
   border: 1px solid #EEEBFF;
@@ -343,15 +402,34 @@ const reportType = computed(() => props.data?.report_type);
   gap: 16px;
 }
 
-.line{
+
+.platform-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+
+  color: #241E46;
+
+  .platform-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    margin-right: 10px;
+  }
+}
+
+.line {
   border: 1px solid #EEEBFF;
 }
 
-.list-shop-description{
+.list-shop-description {
   text-align: center;
 }
 
-.list-shop-block{
+.list-shop-block {
   display: flex;
   flex-direction: column;
   gap: 40px;

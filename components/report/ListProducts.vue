@@ -1,10 +1,10 @@
 <script setup>
-import { defineProps, ref } from 'vue';
+import {defineProps, ref} from 'vue';
 
 const props = defineProps({
-  isFreeUser: {
+  isHideContent: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   data: {
     type: Object,
@@ -17,15 +17,15 @@ const value = ref('');
 
 <template>
   <div
-    v-if="
+      v-if="
       props.data.data_analytic &&
       props.data.data_analytic.by_product &&
       props.data.data_analytic.by_product.lst_product_revenue_30d &&
       props.data.data_analytic.by_product.lst_product_revenue_30d.length > 0
     "
-    id="list-products"
-    class="border statistic-block"
-    style="margin-bottom: 16px;"
+      id="list-products"
+      class="border statistic-block"
+      style="margin-bottom: 16px;"
   >
     <div class="statistic-item__title" style="margin-bottom: 16px;">
       <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,250 +34,31 @@ const value = ref('');
       <div>
         <div class="statistic-item__title">Sản phẩm bán chạy</div>
         <div
-          v-if="
+            v-if="
             props.data.data_analytic &&
             props.data.data_analytic.by_product &&
             props.data.data_analytic.by_product.lst_product_revenue_30d &&
             props.data.data_analytic.by_product.lst_product_revenue_30d.length > 0
           "
-          class="statistic-item__subtitle"
+            class="statistic-item__subtitle"
         >Top sản phẩm doanh thu cao nhất 30 ngày qua
         </div>
       </div>
     </div>
-    <template v-if="props.isFreeUser">
-      <div
-        v-if="
-          props.data.data_analytic &&
-          props.data.data_analytic.by_product &&
-          props.data.data_analytic.by_product.lst_product_revenue_30d &&
-          props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, 4)
-            .length > 0
-        "
-        class="relative"
-      >
-        <div
-          class="flex mb-4 products-list"
-          :style="$device.isDesktop ? 'filter: blur(3px)' : ''"
-        >
-          <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(
-              0,
-              5
-            )"
-            :key="product.product_base_id"
-            :product-item="product"
-            :product="product"
-          />
-        </div>
-        <ChartMaskProductList
-          v-if="$device.isDesktop"
-        />
-      </div>
-      <div
-        v-if="
-          props.data.data_analytic &&
-          props.data.data_analytic.by_product &&
-          props.data.data_analytic.by_product.lst_product_revenue_30d &&
-          props.data.data_analytic.by_product.lst_product_revenue_30d.length > 0
-        "
-        class="relative"
-      >
-        <div
-          class="flex mb-4 products-list"
-          :style="$device.isMobile ? 'filter: blur(3px)' : ''"
-        >
-          <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(
-              5,
-              10
-            )"
-            :key="product.product_base_id"
-            :product-item="product"
-            :product="product"
-          />
-        </div>
-        <ChartMaskProductList
-          v-if="$device.isMobile"
-        />
-      </div>
-      <div
-        v-if="
-          props.data.data_analytic &&
-          props.data.data_analytic.by_product &&
-          props.data.data_analytic.by_product.lst_product_revenue_30d &&
-          props.data.data_analytic.by_product.lst_product_revenue_30d.length > 0
-        "
-        class="relative"
-      >
-        <div
-          class="flex mb-4 products-list"
-          :style="$device.isDesktop ? 'filter: blur(3px)' : ''"
-        >
-          <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(
-              10,
-              15
-            )"
-            :key="product.product_base_id"
-            :product-item="product"
-            :product="product"
-          />
-        </div>
-        <ChartMaskProductList
-          v-if="$device.isDesktop"
-        />
-      </div>
-      <hr class="mb-6"/>
-      <h2
-        v-if="
-          props.data.data_analytic.by_product &&
-          props.data.data_analytic.by_product.lst_product_new_30d &&
-          props.data.data_analytic.by_product.lst_product_new_30d?.length > 0
-        "
-        class="statistic-block-title-secondary"
-      >
-        Top sản phẩm mới đang bán chạy
-      </h2>
-      <div
-        v-if="
-          props.data.data_analytic &&
-          props.data.data_analytic.by_product &&
-          props.data.data_analytic.by_product.lst_product_revenue_30d &&
-          props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, 4)
-            .length > 0
-        "
-        class="relative"
-      >
-        <div
-          class="flex mb-4 products-list"
-          :style="$device.isDesktop ? 'filter: blur(3px)' : ''"
-        >
-          <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(
-              0,
-              5
-            )"
-            :key="product.product_base_id"
-            :product-item="product"
-            :product="product"
-          />
-        </div>
-        <ChartMaskProductList
-          v-if="$device.isDesktop"
-        />
-      </div>
-      <div
-        v-if="
-          props.data.data_analytic.by_product &&
-          props.data.data_analytic.by_product.lst_product_new_30d &&
-          props.data.data_analytic.by_product.lst_product_new_30d.slice(4, 8)
-            ?.length > 0
-        "
-        class="relative"
-      >
-        <div
-          class="flex mb-4 products-list"
-          :style="$device.isMobile ? 'filter: blur(3px)' : ''"
-        >
-          <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(
-              5,
-              10
-            )"
-            :key="product.product_base_id"
-            :product-item="product"
-            :product="product"
-          />
-        </div>
-        <ChartMaskProductList
-          v-if="$device.isMobile"
-          @clickOnHidden="$emit('clickOnHidden')"
-        />
-      </div>
-      <div
-        v-if="
-          props.data.data_analytic.by_product &&
-          props.data.data_analytic.by_product.lst_product_new_30d &&
-          props.data.data_analytic.by_product.lst_product_new_30d.slice(8, 12)
-            ?.length > 0
-        "
-        class="relative"
-      >
-        <div
-          class="flex mb-4 products-list"
-          :style="$device.isDesktop ? 'filter: blur(3px)' : ''"
-        >
-          <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(
-              10,
-              15
-            )"
-            :key="product.product_base_id"
-            :product-item="product"
-            :product="product"
-          />
-        </div>
-        <ChartMaskProductList
-          v-if="$device.isDesktop"
-        />
-      </div>
-    </template>
-    <template v-else>
-      <div
-        v-if="
-          props.data.data_analytic &&
-          props.data.data_analytic.by_product &&
-          props.data.data_analytic.by_product.lst_product_revenue_30d &&
-          props.data.data_analytic.by_product.lst_product_revenue_30d.length > 0
-        "
-        class="products-grid"
-      >
-        <ProductItem
-          v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d"
+    <div class="products-grid">
+      <ProductItem
+          v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContent ? 6 : 12)"
           :key="product.product_base_id"
           :product-item="product"
           :product="product"
-        />
-      </div>
-<!--      <hr class="mb-6"/>-->
-<!--      <div-->
-<!--        v-if="-->
-<!--          props.data.data_analytic.by_product &&-->
-<!--          props.data.data_analytic.by_product.lst_product_new_30d &&-->
-<!--          props.data.data_analytic.by_product.lst_product_new_30d?.length > 0-->
-<!--        "-->
-<!--        class="statistic-item__title"-->
-<!--        style="margin-bottom: 16px;"-->
-<!--      >-->
-<!--        <svg width="16" height="32" viewBox="0 0 16 32" fill="none"-->
-<!--             xmlns="http://www.w3.org/2000/svg">-->
-<!--          <rect width="16" height="32" rx="4" fill="#F9D7C6"/>-->
-<!--        </svg>-->
-<!--        <div>-->
-<!--          <div class="statistic-item__title">Top sản phẩm mới đang bán chạy</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div-->
-<!--        v-if="-->
-<!--          props.data.data_analytic.by_product &&-->
-<!--          props.data.data_analytic.by_product.lst_product_new_30d &&-->
-<!--          props.data.data_analytic.by_product.lst_product_new_30d?.length > 0-->
-<!--        "-->
-<!--        class="flex mb-4 products-list"-->
-<!--      >-->
-<!--        <ProductItem-->
-<!--          v-for="product in props.data.data_analytic.by_product.lst_product_new_30d"-->
-<!--          :key="product.product_base_id"-->
-<!--          :product-item="product"-->
-<!--          :product="product"-->
-<!--        />-->
-<!--      </div>-->
-    </template>
-    <div class="line"></div>
-    <div class="page">
-      <div class="currency_unit" style="flex: 1; display: flex; align-items: center">Đơn vị tiền tệ: Đồng</div>
-      <a-pagination v-model:current="current" :total="1000" show-less-items class="a_page" style="flex: 1" />
+          :is-hide-content="isHideContent"
+      />
+      <ChartMaskProductList v-if="isHideContent"/>
+    </div>
+    <!--    <div class="line"></div>-->
+    <div v-if="false" class="page">
+      <div class="currency_unit" style="flex: 1; display: flex; align-items: center"/>
+      <a-pagination v-model:current="current" :total="1000" show-less-items class="a_page" style="flex: 1"/>
       <a-input
           v-model:value="value"
           placeholder="Đi đến trang"
@@ -288,9 +69,13 @@ const value = ref('');
           <div style="display: flex;">
             <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_4367_23158)">
-                <path d="M10.5 17.5C14.6421 17.5 18 14.1421 18 10C18 5.85786 14.6421 2.5 10.5 2.5C6.35786 2.5 3 5.85786 3 10C3 14.1421 6.35786 17.5 10.5 17.5Z" stroke="#9D97BF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M7.375 10H13.625" stroke="#9D97BF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M11.125 7.5L13.625 10L11.125 12.5" stroke="#9D97BF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path
+                    d="M10.5 17.5C14.6421 17.5 18 14.1421 18 10C18 5.85786 14.6421 2.5 10.5 2.5C6.35786 2.5 3 5.85786 3 10C3 14.1421 6.35786 17.5 10.5 17.5Z"
+                    stroke="#9D97BF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7.375 10H13.625" stroke="#9D97BF" stroke-width="1.3" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+                <path d="M11.125 7.5L13.625 10L11.125 12.5" stroke="#9D97BF" stroke-width="1.3" stroke-linecap="round"
+                      stroke-linejoin="round"/>
               </g>
               <defs>
                 <clipPath id="clip0_4367_23158">
@@ -716,21 +501,26 @@ const value = ref('');
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-bottom: 16px;
+
+  position: relative;
+
+  overflow: hidden;
 }
 
-#list-products{
-  padding: 24px;
+
+#list-products {
+  padding: 24px 24px 0 24px;
   border-radius: 8px;
   border: 1px solid #EEEBFF;
   display: flex;
   flex-direction: column;
   gap: 16px;
 
-  .line{
+  .line {
     border: 1px solid #EEEBFF;
   }
 
-  .page{
+  .page {
     display: flex;
     justify-content: center;
     padding: 24px;
@@ -739,7 +529,7 @@ const value = ref('');
   }
 }
 
-.statistic-item__title{
+.statistic-item__title {
   display: flex;
   font-size: 20px;
   font-weight: 700;
@@ -787,34 +577,36 @@ const value = ref('');
 </style>
 <style lang="scss">
 #list-products {
-  .page{
-    .ant-pagination{
-      .ant-pagination-options{
+  .page {
+    .ant-pagination {
+      .ant-pagination-options {
         display: none;
       }
 
-      li{
+      li {
         background-color: #F5F5F5;
         align-items: center;
 
-        a{
+        a {
           text-align: center;
           font-size: 16px;
         }
       }
 
-      .ant-pagination-item-active{
+      .ant-pagination-item-active {
         background-color: #E85912;
-        a{
+
+        a {
           color: #FFF;
         }
 
       }
     }
-    .ant-input-search{
-      .ant-input-group{
-        .ant-input-group-addon{
-          .ant-btn{
+
+    .ant-input-search {
+      .ant-input-group {
+        .ant-input-group-addon {
+          .ant-btn {
             background-color: #FFF;
           }
         }
