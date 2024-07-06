@@ -14,7 +14,7 @@ const {fetchSearch, fetchListRecomend, fetchSuggest} = useSearchReport()
 const route = useRoute();
 const data = ref<SearchReportRes | null>(null);
 const listRecomend = ref<LstRecommed[] | null>(null);
-const listTagSuggest = useState<string[] | null>(() =>null);
+const listTagSuggestions = ref<string[]>([]);
 const displaySortReport = ref(false);
 const isModalVisible = ref(false);
 const checkedList = ref<Array<string>>([]);
@@ -29,23 +29,24 @@ const handleListCheckbox = (newCheckedList: Array<string>) => {
   checkedList.value = newCheckedList;
 };
 
-watchEffect(() => {
+watchEffect( async () => {
+  selectedCategory.value = '';
+  if (searchValueSearch.value) {
+    await handleSearch(searchValueSearch.value);
+  }
   if (mostFrequentCategoryReportId.value) {
-    fetchDataRecommend(mostFrequentCategoryReportId.value);
+    await fetchDataRecommend(mostFrequentCategoryReportId.value);
+  }
+  if (searchValueSearch.value) {
+    console.log('searchValueSearch', searchValueSearch.value);
+    await fetchTagSuggest(searchValueSearch.value);
   }
 });
 
-watchEffect(() => {
-  if (searchValueSearch.value) {
-    console.log(searchValueSearch.value);
-    fetchTagSuggest(searchValueSearch.value);
-  }
-});
 
 const handleCategorySelect = (newSelectedCategory: string) => {
   selectedCategory.value = newSelectedCategory;
   searchValueSearch.value = '';
-  listTagSuggest.value = [];
   const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
   navigateTo(`${NAVIGATIONS.search}?category_report_id=${newSelectedCategory}`);
   fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
@@ -58,8 +59,8 @@ const handleSortSelect = async (sortChange: string) => {
 };
 
 const handleTagClick = async (tag: string) => {
-  await handleSearch(tag);
   searchValueSearch.value = tag;
+  await handleSearch(tag);
   navigateTo(`${NAVIGATIONS.search}?search=${tag}`);
 };
 
@@ -77,6 +78,21 @@ if (typeof window !== 'undefined') {
     });
   });
 }
+
+const fetchTagSuggest = async (value: string) => {
+  console.log('fetchTagSuggest', value);
+  try{
+    const result = await fetchSuggest(value);
+    if (result.length){
+      listTagSuggestions.value = result;
+    } else {
+      listTagSuggestions.value = [];
+    }
+  }
+  catch (e) {
+    console.error(e);
+  }
+};
 
 const fetchData = async (searchValue: string = '', list_category_report_id: Array<string> = [], sortSelect: string,  newpage: number = 0) => {
   try {
@@ -105,8 +121,8 @@ const fetchData = async (searchValue: string = '', list_category_report_id: Arra
           count[report.category_report_id] = 1;
         }
       });
-
       mostFrequentCategoryReportId.value = Object.keys(count).reduce((a, b) => count[a] > count[b] ? a : b);
+      console.log('mostFrequentCategoryReportId', mostFrequentCategoryReportId.value);
     }
   } catch (e) {
     console.error(e);
@@ -126,22 +142,6 @@ const fetchDataRecommend = async(category_report_id: string) => {
     console.error(e);
   }
 }
-
-const fetchTagSuggest = async (value: string) => {
-  try{
-    const result = await fetchSuggest(value);
-    if (result.length){
-      listTagSuggest.value = result;
-    } else {
-      listTagSuggest.value = [];
-    }
-  }
-  catch (e) {
-    console.error(e);
-
-  }
-};
-
 
 const clickButtonFilter = () => {
   isModalVisible.value = true;
@@ -167,13 +167,12 @@ const handlePageChange = async (newPage: number) => {
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
 };
 
-
 onMounted(() => {
   const list_category_report_id = [];
   if(route.query.category_report_id && typeof route.query.category_report_id === 'string') {
     list_category_report_id.push(route.query.category_report_id);
     selectedCategory.value = route.query.category_report_id;
-    listTagSuggest.value = [];
+    // listTagSuggest.value = [];
   }
   if(route.query.search && typeof route.query.search === 'string') {
     searchValueSearch.value = route.query.search;
@@ -234,7 +233,7 @@ onMounted(() => {
       </div>
       <div class="relate_functions">
         <filter-report v-if="displaySortReport" class="filter_report" :select-category="selectedCategory" @listcheckbox="handleListCheckbox" @categoryselect="handleCategorySelect"/>
-        <popular-relate-keywords v-if="listTagSuggest?.length" :tags="listTagSuggest" @tag-clicked="handleTagClick"/>
+        <popular-relate-keywords v-if="listTagSuggestions?.length" :tags="listTagSuggestions" @tag-clicked="handleTagClick"/>
         <maybe-interested v-if="listRecomend" :recomends="listRecomend"/>
       </div>
     </div>

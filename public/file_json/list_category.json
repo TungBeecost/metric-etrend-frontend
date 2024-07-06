@@ -1,5 +1,11 @@
 [
   {
+    "value": "",
+    "label": "Tất cả",
+    "level": 1,
+    "is_leaf": "False"
+  },
+  {
     "value": "c349363110",
     "label": "Nhạc & Phim",
     "level": 1,

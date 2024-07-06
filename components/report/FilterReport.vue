@@ -3,6 +3,7 @@ import type {CheckboxValueType} from "ant-design-vue/es/checkbox/interface";
 import type {DefaultOptionType} from "ant-design-vue/es/vc-cascader";
 import type {SelectValue} from "ant-design-vue/es/select";
 import allReports from '@/public/file_json/list_category.json';
+import {defineProps} from "vue";
 const selectedOption = ref('');
 const showSelectIndustry = ref(true);
 const emit = defineEmits(['listcheckbox', 'categoryselect']);
@@ -11,6 +12,15 @@ const years = ['2024', '2023', '2022', '2021', '2020', 'Trước 2020'];
 const route = useRoute();
 
 const reports = allReports.filter(report => report.level === 1);
+
+const props = defineProps({
+  selectedCategory: {
+    type: String,
+    default: '',
+  },
+});
+console.log('selectedCategory', props.selectedCategory);
+selectedOption.value = props.selectedCategory;
 
 const toggleSelectIndustry = () => {
   showSelectIndustry.value = !showSelectIndustry.value;
@@ -44,7 +54,6 @@ const handleChange = (value: SelectValue, option: DefaultOptionType | DefaultOpt
   if (typeof value === "string") {
     selectedOption.value = value;
   }
-  console.log(selectedOption.value);
   emit('categoryselect', selectedOption.value);
 };
 
@@ -128,16 +137,18 @@ onMounted(() => {
           </div>
           <div>Thời gian đăng tải</div>
         </div>
-        <div>
-          <a-checkbox
-              v-model:checked="state.checkAll"
-              :indeterminate="state.indeterminate"
-              @change="onCheckAllChange"
-          >
-            Tất cả
-          </a-checkbox>
+        <div v-if="showSelectTime">
+          <div >
+            <a-checkbox
+                v-model:checked="state.checkAll"
+                :indeterminate="state.indeterminate"
+                @change="onCheckAllChange"
+            >
+              Tất cả
+            </a-checkbox>
+          </div>
+          <a-checkbox-group v-model:value="state.checkedList" :options="years" @change="onCheckedListChange" />
         </div>
-        <a-checkbox-group v-model:value="state.checkedList" :options="years" @change="onCheckedListChange" />
       </div>
     </div>
   </div>

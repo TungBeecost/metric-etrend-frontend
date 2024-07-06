@@ -15,6 +15,10 @@ const formatDate = (dateString: string) => {
 
   return `${day}/${month}/${year}`;
 };
+
+const handleItemClick = (item: LstRecommed) => {
+  console.log('Item clicked:', item);
+};
 </script>
 
 <template>
@@ -42,7 +46,7 @@ const formatDate = (dateString: string) => {
         Có thể bạn quan tâm
       </div>
     </div>
-    <div v-for="item in props.recomends" :key="item.id" class="item">
+    <div v-for="item in props.recomends" :key="item.id" class="item" @click="handleItemClick(item)">
       <div class="image">
         <img :src="item.url_thumbnail" alt="">
       </div>
@@ -81,6 +85,7 @@ const formatDate = (dateString: string) => {
     align-content: flex-start;
     gap: 16px;
     flex-wrap: wrap;
+    cursor: pointer;
 
     .image {
       img {

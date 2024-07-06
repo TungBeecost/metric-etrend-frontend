@@ -12,26 +12,30 @@ const props = defineProps({
     default: 0,
   },
 });
-const emit = defineEmits(['page_change']);
+const emit = defineEmits(['page_change', 'item_click']);
 const current = ref(1);
 const onChange = (page: number) => {
   console.log(page);
   current.value = page;
   emit('page_change', page);
 };
+const onItemClicked = (item: LstReport) => {
+  console.log('Item clicked:', item); // Thêm dòng log này
+  emit('item_click', item);
+};
 </script>
 
 <template>
   <div id="lst_report_id">
-    <div v-for="item in props.data" :key="item.id" class="lst_item">
+    <div v-for="item in props.data" :key="item.id" class="lst_item" @click="onItemClicked(item)">
       <div class="item">
         <div class="image">
           <img :src="item.url_thumbnail" alt="">
         </div>
         <div class="info">
-          <div class="breadcrumb">{{item.lst_category[0].name}} | 24/05/2024</div>
+          <div class="breadcrumb">{{item?.lst_category && item.lst_category.length > 0 ? item.lst_category[0].name : ''}} | 24/05/2024</div>
           <div class="name">Báo cáo {{item.name}}</div>
-          <div class="description">Báo cáo thị phần thương hiệu hàng đầu như {{ item.lst_brand.join(', ') }} v.v</div>
+          <div class="description">Báo cáo thị phần thương hiệu hàng đầu như {{ item.lst_brand ? item.lst_brand.join(', ') : '' }} v.v</div>
         </div>
       </div>
     </div>
@@ -57,6 +61,7 @@ const onChange = (page: number) => {
       background-color: #FFF;
       border-radius: 16px;
       width: 100%;
+      cursor: pointer;
 
       .image{
         img{

@@ -9,7 +9,7 @@ import C937408522Icon from '~/public/icons/categories/Thời Trang Nam.svg'
 import C1000062491Icon from '~/public/icons/categories/Thời Trang Nữ.svg'
 import C1149754732Icon from '~/public/icons/categories/Thể Thao & Du Lịch.svg'
 import C1144728673Icon from '~/public/icons/categories/Bách Hoá - Thực Phẩm.svg'
-import C1182326609Icon from '~/public/icons/categories/Nhà Cửa - Đời Sống.svg'
+// import C1182326609Icon from '~/public/icons/categories/Nhà Cửa - Đời Sống.svg'
 import C41293969Icon from '~/public/icons/categories/Thời Trang Trẻ Em.svg'
 import C230833630Icon from '~/public/icons/categories/Đồng Hồ & Trang Sức.svg'
 import C1776859460Icon from '~/public/icons/categories/Phụ Kiện Thời Trang.svg'
@@ -41,7 +41,7 @@ const cateIcons = {
   c1000062491: C1000062491Icon,
   c1149754732: C1149754732Icon,
   c1144728673: C1144728673Icon,
-  c1182326609: C1182326609Icon,
+  // c1182326609: C1182326609Icon,
   c41293969: C41293969Icon,
   c230833630: C230833630Icon,
   c1776859460: C1776859460Icon,

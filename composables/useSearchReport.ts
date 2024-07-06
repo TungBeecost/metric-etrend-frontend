@@ -1,4 +1,4 @@
-import {fetchListRecomendReport, searchReport, type SearchReportPayload} from "../services/reports";
+import {fetchListRecomendReport, searchReport, type SearchReportPayload} from "~/services/reports";
 
 export default function useSearchReport() {
   const fetchSearch = async (value: string | null, options?: SearchReportPayload) => {
@@ -11,6 +11,7 @@ export default function useSearchReport() {
         sort: "popularity",
         ...options
       };
+
       const data = await searchReport(body);
 
       return data;

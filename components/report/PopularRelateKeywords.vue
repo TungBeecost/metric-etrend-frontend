@@ -2,9 +2,16 @@
 
 const emit = defineEmits(['tagClicked']);
 
-const tags = defineModel<string[]>("tags");
+// const tags = defineModel<string[]>("tags");
 
-console.log(tags);
+const props = defineProps({
+  tags: {
+    type: Array as () => string[],
+    default: () => [],
+  },
+});
+
+console.log('tags', props.tags);
 
 const onTagClick = (tag: string) => {
   emit('tagClicked', tag);
