@@ -36,6 +36,13 @@ const props = defineProps<{
 
 const route = useRoute();
 
+watch(() => route.query, (newQuery) => {
+  if (newQuery.search) {
+    searchValue.value = newQuery.search as string;
+  } else {
+    searchValue.value = '';
+  }
+});
 
 const searchValue = useState<string>(() => route.query.search as string || "");
 const isShowSuggestions = useState<boolean>(() => false);

@@ -20,7 +20,6 @@ const onChange = (page: number) => {
   emit('page_change', page);
 };
 const onItemClicked = (item: LstReport) => {
-  console.log('Item clicked:', item); // Thêm dòng log này
   emit('item_click', item);
 };
 </script>

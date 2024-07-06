@@ -11,8 +11,6 @@ const props = defineProps({
   },
 });
 
-console.log('tags', props.tags);
-
 const onTagClick = (tag: string) => {
   emit('tagClicked', tag);
 };

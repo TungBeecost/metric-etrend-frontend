@@ -16,7 +16,6 @@ const onSearch = async (searchValue: string) => {
     navigateTo(`${NAVIGATIONS.search}?search=${searchValue}`);
     return;
   } else {
-    console.log('searchValue', searchValue);
     navigateTo(`${NAVIGATIONS.search}?search=${searchValue}`);
   }
   if (props.handleSearch) await props.handleSearch(searchValue);

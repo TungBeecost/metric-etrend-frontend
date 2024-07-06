@@ -38,7 +38,6 @@ watchEffect( async () => {
     await fetchDataRecommend(mostFrequentCategoryReportId.value);
   }
   if (searchValueSearch.value) {
-    console.log('searchValueSearch', searchValueSearch.value);
     await fetchTagSuggest(searchValueSearch.value);
   }
 });
@@ -47,6 +46,7 @@ watchEffect( async () => {
 const handleCategorySelect = (newSelectedCategory: string) => {
   selectedCategory.value = newSelectedCategory;
   searchValueSearch.value = '';
+  listTagSuggestions.value = [];
   const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
   navigateTo(`${NAVIGATIONS.search}?category_report_id=${newSelectedCategory}`);
   handleSearch(searchValueSearch.value, lstCategoryReportId);
@@ -122,7 +122,6 @@ const fetchData = async (searchValue: string = '', list_category_report_id: Arra
         }
       });
       mostFrequentCategoryReportId.value = Object.keys(count).reduce((a, b) => count[a] > count[b] ? a : b);
-      console.log('mostFrequentCategoryReportId', mostFrequentCategoryReportId.value);
     }
   } catch (e) {
     console.error(e);
@@ -157,7 +156,6 @@ const handleCancel = () => {
 
 const handleSearch = async (searchValue: string, lstCategoryReportId: string[] = []) => {
   searchValueSearch.value = searchValue;
-  console.log('searchValue', searchValue);
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
 };
 

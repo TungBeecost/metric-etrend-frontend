@@ -19,7 +19,6 @@ const props = defineProps({
     default: '',
   },
 });
-console.log('selectedCategory', props.selectedCategory);
 selectedOption.value = props.selectedCategory;
 
 const toggleSelectIndustry = () => {
