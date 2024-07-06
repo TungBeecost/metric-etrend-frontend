@@ -1,22 +1,21 @@
-import {REPORT_ENDPOINTS} from "~/constant/endpoints";
-import useBEEndpoint from "~/composables/useBEEndpoint";
-import axios from "axios";
+import { REPORT_ENDPOINTS } from "~/constant/endpoints";
+import axios from "./axios-wrapper";
 
 export const searchReport = async (body: SearchReportPayload) => {
-    try {
-        const {data} = await useFetch(useBEEndpoint(REPORT_ENDPOINTS.search.endpoint), {body,  method: REPORT_ENDPOINTS.search.method});
-        const result = data.value as any as SearchReportRes;
+  try {
+    const response = await axios.post(useBEEndpoint(REPORT_ENDPOINTS.search.endpoint), body);
+    const result = response.data as SearchReportRes;
 
-        if (!result?.lst_report) {
-            console.error("searchReport error: No reports found");
-            console.error("searchReport body: ", result);
-        }
-
-        return result;
-    } catch (error) {
-        console.error("searchReport error: ", error);
-        return null;
+    if (!result?.lst_report) {
+      console.error("searchReport error: No reports found");
+      console.error("searchReport body: ", body);
     }
+
+    return result;
+  } catch (error) {
+    console.error("searchReport error: ", error);
+    return null;
+  }
 };
 
 export const fetchUnlockReport = async (slug: string) => {
@@ -33,94 +32,99 @@ export const fetchUnlockReport = async (slug: string) => {
 };
 
 export const fetchListRecomendReport = async (categoryReportId: string, numberOfReports: number) => {
-    if (!categoryReportId) {
-        console.error("fetchListRecomendReport error: categoryReportId is null");
-        return null;
+  try {
+    const response = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.list_recomend.endpoint), {
+      params: {
+        category_report_id: categoryReportId,
+        number_of_reports: numberOfReports
+      },
+      headers: {
+        accept: "application/json"
+      }
+    });
+
+    // Ensure the response data is in the expected format
+    if (!Array.isArray(response.data)) {
+      console.error("fetchListRecomendReport error: Unexpected response format");
+      return null;
     }
-    try {
-        const {data} = await useFetch(useBEEndpoint(REPORT_ENDPOINTS.list_recomend.endpoint), {
-            params: {
-                category_report_id: categoryReportId,
-                number_of_reports: numberOfReports
-            },
-            headers: {
-                'accept': 'application/json'
-            },
-            method: REPORT_ENDPOINTS.list_recomend.method
-        });
+    const data: LstRecommed[] = response.data.map((item) => ({
+      id: item.id,
+      slug: item.slug,
+      name: item.name,
+      url_thumbnail: item.url_thumbnail,
+      category_report_name: item.category_report_name,
+      claimed_at: item.claimed_at,
+      expired_at: item.expired_at,
+      status: item.status,
+      search_volume_shopee: item.search_volume_shopee,
+      start_date: item.start_date
+    }));
 
-        const result = data.value as any as LstRecommed[];
-
-        if (!Array.isArray(result)) {
-            console.error("fetchListRecomendReport error: Unexpected response format");
-            return null;
-        }
-
-        return result;
-    } catch (error) {
-        console.error("fetchListRecomendReport error: ", error);
-        return null;
-    }
+    return data;
+  } catch (error) {
+    console.error("fetchListRecomendReport error: ", error);
+    return null;
+  }
 };
-
 export interface SearchReportPayload {
-    limit?: number;
-    lst_category_report_id?: Array<string>;
-    lst_field?: Array<string>;
-    lst_query?: Array<string>;
-    lst_year?: Array<string>;
-    offset?: number;
-    sort?: string;
+  limit?: number;
+  lst_category_report_id?: Array<string>;
+  lst_field?: Array<string>;
+  lst_query?: Array<string>;
+  lst_year?: Array<string>;
+  offset?: number;
+  sort?: string;
 }
 
 export interface SearchReportRes {
-    total?: number;
-    breadcrumb?: any;
-    lst_category?: Array<string>;
-    lst_query: Array<string>;
-    lst_report: LstReport[];
+  total?: number;
+  breadcrumb?: any;
+  lst_category?: Array<string>;
+  lst_query: Array<string>;
+  lst_report: LstReport[];
 }
 
 export interface LstReport {
-    id: string;
-    slug: string;
-    name: string;
-    url_thumbnail: string;
-    revenue_monthly: number;
-    gr_quarter: number;
-    shop: number;
-    category_report_id: string;
-    lst_category: LstCategory[];
-    lst_brand: Array<string>;
+  id: string;
+  slug: string;
+  name: string;
+  url_thumbnail: string;
+  revenue_monthly: number;
+  gr_quarter: number;
+  shop: number;
+  category_report_id: string;
+  lst_category: LstCategory[];
+  lst_brand: Array<string>;
 }
 
 export interface LstCategory {
-    id: string;
-    name: string;
-    level: number;
-    parent_id?: any;
-    parent_name?: any;
-    is_leaf: boolean;
+  id: string;
+  name: string;
+  level: number;
+  parent_id?: any;
+  parent_name?: any;
+  is_leaf: boolean;
 }
 
 export interface LstRecommed {
-    id: number;
-    slug: string;
-    name: string;
-    category_report_name: string;
-    url_thumbnail: string;
-    claimed_at: string | null;
-    expired_at: string | null;
-    status: string | null;
-    search_volume_shopee: number;
-    start_date: string;
+  id: number;
+  slug: string;
+  name: string;
+  url_thumbnail: string;
+  category_report_name: string;
+  claimed_at: string | null;
+  expired_at: string | null;
+  status: string | null;
+  search_volume_shopee: number;
+  start_date: string;
 }
 
 export interface ListCategory {
-    value: string;
-    label: string;
-    level: number;
-    is_leaf: string;
-    parent?: string;
-    parent_name?: string;
+  value: string;
+  label: string;
+  level: number;
+  is_leaf: string;
+  parent?: string;
+  parent_name?: string;
 }

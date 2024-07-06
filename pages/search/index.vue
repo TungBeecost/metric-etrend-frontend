@@ -49,7 +49,7 @@ const handleCategorySelect = (newSelectedCategory: string) => {
   searchValueSearch.value = '';
   const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
   navigateTo(`${NAVIGATIONS.search}?category_report_id=${newSelectedCategory}`);
-  fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
+  handleSearch(searchValueSearch.value, lstCategoryReportId);
 };
 
 const handleSortSelect = async (sortChange: string) => {
@@ -155,13 +155,13 @@ const handleCancel = () => {
   isModalVisible.value = false;
 };
 
-const handleSearch = async (searchValue: string) => {
-  const lstCategoryReportId: string[] = [];
+const handleSearch = async (searchValue: string, lstCategoryReportId: string[] = []) => {
   searchValueSearch.value = searchValue;
+  console.log('searchValue', searchValue);
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
 };
 
-const handlePageChange = async (newPage: number) => {
+const handlePageChange = async (newPage: number, ) => {
   page.value = newPage;
   const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
