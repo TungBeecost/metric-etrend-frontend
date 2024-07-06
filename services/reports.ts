@@ -75,6 +75,7 @@ export interface SearchReportPayload {
   lst_year?: Array<string>;
   offset?: number;
   sort?: string;
+  order?: string;
 }
 
 export interface SearchReportRes {
