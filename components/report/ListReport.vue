@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {defineProps, ref} from 'vue'
 import type {LstReport} from "~/services/reports";
+import {NAVIGATIONS} from "~/constant/constains";
 
 const props = defineProps({
   data: {
@@ -12,6 +13,7 @@ const props = defineProps({
     default: 0,
   },
 });
+
 const emit = defineEmits(['page_change', 'item_click']);
 const current = ref(1);
 const onChange = (page: number) => {
@@ -20,7 +22,7 @@ const onChange = (page: number) => {
   emit('page_change', page);
 };
 const onItemClicked = (item: LstReport) => {
-  emit('item_click', item);
+  navigateTo(`${NAVIGATIONS.home}${item.slug}`);
 };
 </script>
 

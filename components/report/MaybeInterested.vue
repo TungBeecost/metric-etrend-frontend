@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type {LstRecommed} from "~/services/reports";
+import {NAVIGATIONS} from "~/constant/constains";
 
 const props = defineProps({
   recomends: {
@@ -17,7 +18,7 @@ const formatDate = (dateString: string) => {
 };
 
 const handleItemClick = (item: LstRecommed) => {
-  console.log('Item clicked:', item);
+  navigateTo(`${NAVIGATIONS.home}${item.slug}`);
 };
 </script>
 
