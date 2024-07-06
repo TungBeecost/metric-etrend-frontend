@@ -1,5 +1,5 @@
 import { REPORT_ENDPOINTS } from "~/constant/endpoints";
-import axios from "axios";
+import axios from "./axios-wrapper";
 
 export const searchReport = async (body: SearchReportPayload) => {
   try {
@@ -18,8 +18,15 @@ export const searchReport = async (body: SearchReportPayload) => {
   }
 };
 
-export const fetchUnlockReport = async (reportId: string) => {
-  console.log(reportId);
+export const fetchUnlockReport = async (slug: string) => {
+  const { statusText, status } = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.claim.endpoint), {
+    method: REPORT_ENDPOINTS.claim.method,
+    params: { slug: slug }
+  });
+
+  if (status !== 200) {
+    throw new Error(`Something went wrong: ${statusText}`);
+  }
 
   return true;
 };
@@ -32,7 +39,7 @@ export const fetchListRecomendReport = async (categoryReportId: string, numberOf
         number_of_reports: numberOfReports
       },
       headers: {
-        'accept': 'application/json'
+        accept: "application/json"
       }
     });
 
@@ -41,7 +48,7 @@ export const fetchListRecomendReport = async (categoryReportId: string, numberOf
       console.error("fetchListRecomendReport error: Unexpected response format");
       return null;
     }
-    const data: LstRecommed[] = response.data.map(item => ({
+    const data: LstRecommed[] = response.data.map((item) => ({
       id: item.id,
       slug: item.slug,
       name: item.name,
@@ -49,7 +56,7 @@ export const fetchListRecomendReport = async (categoryReportId: string, numberOf
       expired_at: item.expired_at,
       status: item.status,
       search_volume_shopee: item.search_volume_shopee,
-      start_date: item.start_date,
+      start_date: item.start_date
     }));
 
     return data;
