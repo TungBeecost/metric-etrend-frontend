@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import type {CheckboxValueType} from "ant-design-vue/es/checkbox/interface";
 import type {DefaultOptionType} from "ant-design-vue/es/vc-cascader";
 import type {SelectValue} from "ant-design-vue/es/select";
 import allReports from '@/public/file_json/list_category.json';
 import {defineProps} from "vue";
+import { TreeSelect } from 'ant-design-vue';
 const selectedOption = ref('');
 const showSelectIndustry = ref(true);
 const emit = defineEmits(['listcheckbox', 'categoryselect']);
-const selectedYears = ref<string[]>([]);
-const years = ['2024', '2023', '2022', '2021', '2020', 'Trước 2020'];
 const route = useRoute();
 
-const reports = allReports.filter(report => report.level === 1);
+
 
 const props = defineProps({
   selectedCategory: {
@@ -21,33 +19,44 @@ const props = defineProps({
 });
 selectedOption.value = props.selectedCategory;
 
+interface ReportItem {
+  value: string;
+  label: string;
+  level: number;
+  is_leaf: string;
+  parent?: string;
+  parent_name?: string;
+  children?: ReportItem[];
+}
+
+const transformToTreeData = (data: ReportItem[]): ReportItem[] => {
+  const treeData: ReportItem[] = [];
+  const map = new Map(data.map((item: ReportItem) => [item.value, {...item, children: [] as ReportItem[]}]));
+  data.forEach((item: ReportItem) => {
+    if (item.parent) {
+      const parent = map.get(item.parent);
+      if (parent && item.value) {
+        const child = map.get(item.value);
+        if (child) {
+          parent.children.push(child);
+        }
+      }
+    } else if (item.value) {
+      const child = map.get(item.value);
+      if (child) {
+        treeData.push(child);
+      }
+    }
+  });
+  return treeData;
+};
+
+const treeData = transformToTreeData(allReports);
+
 const toggleSelectIndustry = () => {
   showSelectIndustry.value = !showSelectIndustry.value;
 };
 
-const toggleSelectTime = () => {
-  showSelectTime.value = !showSelectTime.value;
-};
-
-const showSelectTime = ref(true);
-
-const state = computed(() => ({
-  checkAll: false,
-  indeterminate: true,
-  checkedList: selectedYears.value,
-}));
-
-const onCheckAllChange = (e: any) => {
-  selectedYears.value = e.target.checked ? years : [];
-  state.value.checkedList = e.target.checked ? years : [];
-  state.value.indeterminate = !e.target.checked;
-};
-
-const onCheckedListChange = (checkedList: CheckboxValueType[]) => {
-  selectedYears.value = checkedList as string[];
-  state.value.indeterminate = !!checkedList.length && checkedList.length < years.length;
-  state.value.checkAll = checkedList.length === years.length;
-};
 
 const handleChange = (value: SelectValue, option: DefaultOptionType | DefaultOptionType[]) => {
   if (typeof value === "string") {
@@ -55,25 +64,6 @@ const handleChange = (value: SelectValue, option: DefaultOptionType | DefaultOpt
   }
   emit('categoryselect', selectedOption.value);
 };
-
-watch(
-    () => state.value.checkedList,
-    (newVal: CheckboxValueType[]) => {
-      onCheckedListChange(newVal);
-    },
-);
-
-watch(state.value.checkedList, (newVal) => {
-  emit('listcheckbox', newVal);
-});
-
-watch(
-    () => state.value.checkedList,
-    val => {
-      state.value.indeterminate = !!val.length && val.length < years.length;
-      state.value.checkAll = val.length === years.length;
-    },
-);
 
 onMounted(() => {
   if(route.query.category_report_id && typeof route.query.category_report_id === 'string') {
@@ -120,34 +110,13 @@ onMounted(() => {
           </div>
           <div>Ngành hàng</div>
         </div>
-        <a-select v-if="showSelectIndustry" v-model:value="selectedOption" :options="reports" style="width: 100%" @change="handleChange">
-        </a-select>
-      </div>
-      <div class="line"></div>
-      <div class="filter_time">
-        <div class="title_time">
-          <div @click="toggleSelectTime">
-            <svg v-if="!showSelectTime" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9.26465 6.30762L14.5146 11.9326L9.26465 17.5576" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M17.6924 9.26416L12.0674 14.5142L6.44238 9.26416" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div>Thời gian đăng tải</div>
-        </div>
-        <div v-if="showSelectTime">
-          <div >
-            <a-checkbox
-                v-model:checked="state.checkAll"
-                :indeterminate="state.indeterminate"
-                @change="onCheckAllChange"
-            >
-              Tất cả
-            </a-checkbox>
-          </div>
-          <a-checkbox-group v-model:value="state.checkedList" :options="years" @change="onCheckedListChange" />
-        </div>
+        <TreeSelect
+            v-if="showSelectIndustry"
+            v-model:value="selectedOption"
+            :tree-data="treeData"
+            style="width: 100%"
+            @change="handleChange"
+        />
       </div>
     </div>
   </div>

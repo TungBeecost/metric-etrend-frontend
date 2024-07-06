@@ -43,6 +43,11 @@ export default defineNuxtConfig({
             // __dangerouslyDisableSanitizers: ["script"],
             script: [
                 {
+                    src: "https://accounts.google.com/gsi/client",
+                    async: true,
+                    defer: true,
+                },
+                {
                     src: "https://www.googletagmanager.com/gtag/js?id=G-GC4KKGMFXN",
                     async: true,
                 },

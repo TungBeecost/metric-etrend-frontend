@@ -44,6 +44,14 @@ watch(() => route.query, (newQuery) => {
   }
 });
 
+onMounted(() => {
+  if (route.query.search) {
+    searchValue.value = route.query.search as string;
+  } else {
+    searchValue.value = '';
+  }
+});
+
 const searchValue = useState<string>(() => route.query.search as string || "");
 const isShowSuggestions = useState<boolean>(() => false);
 
