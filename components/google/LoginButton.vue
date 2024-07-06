@@ -1,5 +1,5 @@
 <template>
-  <div id="googleButton"></div>
+  <div id="googleButton" />
 </template>
 
 <script setup>
@@ -10,7 +10,7 @@ const authStore = useCurrentUser();
 onMounted(() => {
   // initialize Google Sign in
   google.accounts.id.initialize({
-    client_id: runtimeConfig.public.CLIENT_ID,
+    client_id: runtimeConfig.public.clientId,
     // client_id: "242705303058-gjse069upbsb4ng9tcb8tf8aoh9b3ch2.apps.googleusercontent.com",
     callback: authStore.handleGoogleCredentialResponse, //method to run after user clicks the Google sign in button
     context: "signin",
