@@ -1,5 +1,6 @@
 import {REPORT_ENDPOINTS} from "~/constant/endpoints";
 import useBEEndpoint from "~/composables/useBEEndpoint";
+import axios from "axios";
 
 export const searchReport = async (body: SearchReportPayload) => {
     try {
