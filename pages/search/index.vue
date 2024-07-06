@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BannerReport from "~/components/report/BannerReport.vue";
-import {ref, watchEffect, onUnmounted} from 'vue';
+import {onUnmounted, ref, watchEffect} from 'vue';
 import SortReport from "~/components/report/SortReport.vue";
 import ListReport from "~/components/report/ListReport.vue";
 import FilterReport from "~/components/report/FilterReport.vue";
@@ -94,7 +94,7 @@ const fetchTagSuggest = async (value: string) => {
   }
 };
 
-const fetchData = async (searchValue: string = '', list_category_report_id: Array<string> = [], sortSelect: string,  newpage: number = 0) => {
+const fetchData = async (searchValue: string = '', list_category_report_id: Array<string> = [], sortSelect: string, newpage: number = 0) => {
   try {
     isLoading.value = true;
     const result = await fetchSearch(searchValue, {
@@ -169,15 +169,13 @@ const handlePageChange = async (newPage: number) => {
 
 onMounted(() => {
   const list_category_report_id = [];
-  if(route.query.category_report_id && typeof route.query.category_report_id === 'string') {
+  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
     list_category_report_id.push(route.query.category_report_id);
     selectedCategory.value = route.query.category_report_id;
-    // listTagSuggest.value = [];
   }
-  if(route.query.search && typeof route.query.search === 'string') {
+  if (route.query.search && typeof route.query.search === 'string') {
     searchValueSearch.value = route.query.search;
-  }
-  else{
+  } else {
     searchValueSearch.value = '';
   }
   fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
@@ -201,15 +199,27 @@ onMounted(() => {
             <div style="display: flex; gap: 8px; justify-content: center; align-items: center">
               <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_4202_14089)">
-                  <path d="M8 4.375C8 5.41053 8.83947 6.25 9.875 6.25C10.9105 6.25 11.75 5.41053 11.75 4.375C11.75 3.33947 10.9105 2.5 9.875 2.5C8.83947 2.5 8 3.33947 8 4.375Z" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M11.75 10C11.75 11.0355 12.5895 11.875 13.625 11.875C14.6605 11.875 15.5 11.0355 15.5 10C15.5 8.96447 14.6605 8.125 13.625 8.125C12.5895 8.125 11.75 8.96447 11.75 10Z" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M5.5 15.625C5.5 16.6605 6.33947 17.5 7.375 17.5C8.41053 17.5 9.25 16.6605 9.25 15.625C9.25 14.5895 8.41053 13.75 7.375 13.75C6.33947 13.75 5.5 14.5895 5.5 15.625Z" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M17.375 4.375L11.75 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M17.375 15.625L9.25 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M17.375 10L15.5 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M8 4.375L3.625 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M5.5 15.625L3.625 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M11.75 10L3.625 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path
+                      d="M8 4.375C8 5.41053 8.83947 6.25 9.875 6.25C10.9105 6.25 11.75 5.41053 11.75 4.375C11.75 3.33947 10.9105 2.5 9.875 2.5C8.83947 2.5 8 3.33947 8 4.375Z"
+                      stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path
+                      d="M11.75 10C11.75 11.0355 12.5895 11.875 13.625 11.875C14.6605 11.875 15.5 11.0355 15.5 10C15.5 8.96447 14.6605 8.125 13.625 8.125C12.5895 8.125 11.75 8.96447 11.75 10Z"
+                      stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path
+                      d="M5.5 15.625C5.5 16.6605 6.33947 17.5 7.375 17.5C8.41053 17.5 9.25 16.6605 9.25 15.625C9.25 14.5895 8.41053 13.75 7.375 13.75C6.33947 13.75 5.5 14.5895 5.5 15.625Z"
+                      stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M17.375 4.375L11.75 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M17.375 15.625L9.25 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M17.375 10L15.5 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M8 4.375L3.625 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M5.5 15.625L3.625 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M11.75 10L3.625 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
                 </g>
                 <defs>
                   <clipPath id="clip0_4202_14089">
@@ -225,7 +235,7 @@ onMounted(() => {
             <filter-report class="filter_report"/>
           </a-modal>
         </div>
-        <template v-if="isLoading" >
+        <template v-if="isLoading">
           <a-skeleton style="padding-top: 40px; padding-bottom: 40px"/>
         </template>
         <list-report v-else :data="data?.lst_report" :total="data?.total" @page_change="handlePageChange"/>
@@ -256,7 +266,7 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-#search_report{
+#search_report {
   background-color: #FBFAFC;
   overflow: auto;
 
@@ -273,35 +283,38 @@ onMounted(() => {
     }
   }
 
-  .container{
+  .container {
     display: flex;
     gap: 32px;
     padding-top: 40px;
     padding-bottom: 100px;
-    .list_report_industry{
+
+    .list_report_industry {
       display: flex;
       flex-direction: column;
       gap: 24px;
       flex: 0.8;
 
-      .general{
+      .general {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        .count_result{
+
+        .count_result {
           font-size: 16px;
           font-weight: 500;
           color: #716B95;
         }
       }
 
-      .page{
+      .page {
         display: flex;
         justify-content: center;
 
       }
     }
-    .relate_functions{
+
+    .relate_functions {
       flex: 0.2;
       display: flex;
       flex-direction: column;
@@ -313,7 +326,8 @@ onMounted(() => {
       padding-bottom: 40px;
     }
   }
-  .poster{
+
+  .poster {
     display: flex;
     height: 335px;
     padding: 40px 120px;
@@ -321,32 +335,38 @@ onMounted(() => {
     gap: 64px;
     background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 49.34%);
     position: relative;
-    .info{
+
+    .info {
       display: flex;
       width: 500px;
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
       gap: 24px;
-      .content{
+
+      .content {
         font-size: 40px;
         font-weight: bold;
         color: #FFFFFF;
         line-height: 56px;
       }
     }
-    .big_logo_metric{
+
+    .big_logo_metric {
       position: absolute;
-      img{
+
+      img {
         opacity: 0.5;
       }
     }
-    .chart_image{
+
+    .chart_image {
       position: absolute;
       right: 0;
       top: 0;
     }
-    .line_styling_image{
+
+    .line_styling_image {
       position: absolute;
       right: 500px;
       top: 70px;
@@ -356,9 +376,10 @@ onMounted(() => {
       flex-direction: column;
       align-items: center;
       text-align: center;
-      .info{
+      .info {
         width: 100%;
-        .content{
+
+        .content {
           font-size: 24px;
         }
       }
@@ -367,80 +388,38 @@ onMounted(() => {
     @media (max-width: 767px) {
       height: 384px;
       padding: 32px 16px;
-      .info{
+      .info {
         align-items: center;
-        .content{
+
+        .content {
           line-height: 38px;
           font-size: 24px;
         }
       }
-      .chart_image{
+      .chart_image {
         top: 225px;
         right: 0;
-        img{
+
+        img {
           width: 300px;
         }
 
       }
-      .line_styling_image{
+      .line_styling_image {
         top: 250px;
         right: 220px;
-        img{
+
+        img {
           width: 150px;
         }
       }
     }
   }
 }
-
-@media (min-width: 1919px) {
-  .default_section {
-    width: calc(100% - 200px);
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 1919px) {
-  .default_section {
-    width: calc(100% - 100px);
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 1439px) {
-  .default_section {
-    width: calc(100% - 50px);
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 1023px) {
-  .default_section {
-    width: calc(100% - 20px);
-    margin: 0 auto;
-  }
-
-}
-
-@media (max-width: 767px) {
-  .default_section {
-    flex-direction: column;
-    width: calc(100% - 20px);
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 424px) {
-  .default_section {
-    flex-direction: column;
-    width: calc(100% - 20px);
-    margin: 0 auto;
-  }
-}
-
 </style>
+
 <style lang="scss">
-#search_report{
+#search_report {
   .ant-modal {
     @media (max-width: 767px) {
       width: 90% !important;
@@ -456,28 +435,34 @@ onMounted(() => {
       width: 30% !important;
     }
   }
-  .ant-pagination{
-    .ant-pagination-item{
+
+  .ant-pagination {
+    .ant-pagination-item {
       background-color: #F5F5F5;
       border-radius: 8px;
-      a{
+
+      a {
         background-color: #F5F5F5;
         border-radius: 8px;
       }
     }
-    .ant-pagination-item-active{
+
+    .ant-pagination-item-active {
       background-color: #E85912;
       color: #FFFFFF;
-      a{
+
+      a {
         background-color: #E85912;
         color: #FFFFFF;
       }
     }
-    .ant-pagination-options{
+
+    .ant-pagination-options {
       display: none;
     }
   }
-  .ant-btn.ant-btn-default{
+
+  .ant-btn.ant-btn-default {
     display: flex;
     padding: 9px 16px;
     flex-direction: column;
@@ -491,13 +476,15 @@ onMounted(() => {
     background: #241E46;
     border: 1px solid #241E46;
   }
-  .ant-modal-footer{
-    display:flex;
+
+  .ant-modal-footer {
+    display: flex;
     align-items: center;
     justify-content: flex-end;
   }
+
   @media (max-width: 767px) {
-    .ant-btn.ant-btn-default{
+    .ant-btn.ant-btn-default {
       background: #FFF;
       border: 1px solid #FFF;
       color: #241E46;

@@ -18,10 +18,17 @@ export const searchReport = async (body: SearchReportPayload) => {
     }
 };
 
-export const fetchUnlockReport = async (reportId: string) => {
-    console.log(reportId);
+export const fetchUnlockReport = async (slug: string) => {
+  const { statusText, status } = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.claim.endpoint), {
+    method: REPORT_ENDPOINTS.claim.method,
+    params: { slug: slug }
+  });
 
-    return true;
+  if (status !== 200) {
+    throw new Error(`Something went wrong: ${statusText}`);
+  }
+
+  return true;
 };
 
 export const fetchListRecomendReport = async (categoryReportId: string, numberOfReports: number) => {

@@ -29,17 +29,22 @@
       }
     }
   }
-  
-  .parterItem {
-    width: 139px;
-    height: 80px;
-    margin: 0px 10px;
 
-    @include mobile {
-      width: 116px;
-      height: 62px;
+  .marqueeWrapper {
+    display: flex;
+    align-items: center;
+
+    .parterItem {
+      width: 139px;
+      margin: 0px 10px;
+
+      @include mobile {
+        width: 116px;
+      }
     }
   }
+  
+  
 
   
 }

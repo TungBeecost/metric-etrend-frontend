@@ -1,5 +1,6 @@
 import {formatNumber} from "~/helpers/FormatHelper.js";
 import {ALL_PLATFORM_BASE_OBJECT} from "~/constant/general/GeneralConstant.js";
+import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
 
 export const extractDomain = (url) => {
     if (url == null) {
@@ -89,12 +90,6 @@ export const getUrlImageOption = (urlImage, type = "thumbnail") => {
     return urlImage;
 };
 
-export const goToUrl = (url, mode = "_self") => {
-    if (url?.length > 0) {
-        window.open(url, mode);
-    }
-};
-
 export const getPlatformByUrl = (url) => {
     if (!url) {
         return null
@@ -115,3 +110,32 @@ export const getPlatformByUrl = (url) => {
         }
     }
 }
+
+export const getShopUrlByShopBaseId = (shopBaseId) => {
+    const platformId = shopBaseId.split('__')[0]
+    const shopId = shopBaseId.split('__')[1]
+
+    const platform = getPlatformById(platformId)
+
+    if (!platform) {
+        return null
+    }
+
+    if (platform.uniqueName === 'shopee') {
+        return `https://shopee.vn/shop/${shopId}`
+    }
+    if (platform.uniqueName === 'lazada') {
+        return `https://www.lazada.vn/shop/${shopId}`
+    }
+
+    if (platform.uniqueName === 'tiki') {
+        return `https://tiki.vn/cua-hang/${shopId}`
+    }
+}
+
+
+export const goToUrl = (url, mode = "_self") => {
+    if (url?.length > 0) {
+        window.open(url, mode);
+    }
+};

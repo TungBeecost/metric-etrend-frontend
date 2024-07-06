@@ -178,22 +178,41 @@ export const PLANS: Array<IPLAN> = [
 ];
 
 export const TESTIMONIAL_BRANDS = [
-  "/images/branch/vietnamnet.png",
-  "/images/branch/tuoitre.png",
-  "/images/branch/vtv.png",
-  "/images/branch/vnexpress.png",
-  "/images/branch/dantri.png",
-  "/images/branch/thanhnien.png"
+  "/images/brand_news/Cafef.png",
+  "/images/brand_news/Dan-tri.png",
+  "/images/brand_news/Dau-tu-online.png",
+  "/images/brand_news/Deal-Street-ASIA.png",
+  "/images/brand_news/Dien-dan-doanh-nghiep.png",
+  "/images/brand_news/Kinh-te-SG-online.png",
+  "/images/brand_news/Phap-luat-07.png",
+  "/images/brand_news/Thanh-nien.png",
+  "/images/brand_news/Thoi-bao-tai-chinh.png",
+  "/images/brand_news/Tien-phong.png",
+  "/images/brand_news/Truyen-hinh-quoc-hoi-vn.png",
+  "/images/brand_news/Vietnam-net.png",
+  "/images/brand_news/Vn-Economy.png",
+  "/images/brand_news/Vn-Express.png",
+  "/images/brand_news/VTC-2.png",
+  "/images/brand_news/VTV.png"
 ];
 
 export const PARTERS = [
-  "/images/branch/branch1.png",
-  "/images/branch/guardian.png",
-  "/images/branch/lazada.png",
-  "/images/branch/shopee.png",
-  "/images/branch/themobileworld.png",
-  "/images/branch/tiki.png",
-  "/images/branch/unilever.png"
+  "/images/brand/Bayer.png",
+  "/images/brand/Canifa.png",
+  "/images/brand/Coway.png",
+  "/images/brand/Dien-Quang.png",
+  "/images/brand/everon.png",
+  "/images/brand/Guardian.png",
+  "/images/brand/Idea.png",
+  "/images/brand/Lazada.png",
+  "/images/brand/Shisedo.png",
+  "/images/brand/Shopee.png",
+  "/images/brand/The-gioi-di-dong.png",
+  "/images/brand/Thien-long.png",
+  "/images/brand/tiki.png",
+  "/images/brand/unilever.png",
+  "/images/brand/vecom.png",
+  "/images/brand/VNlife.png"
 ];
 
 export const TERM_AND_POLICIES = [
