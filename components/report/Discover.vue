@@ -64,7 +64,7 @@ const cateIcons = {
   c109830509: C109830509Icon,
 }
 
-const reports = allReports.filter(cate => cate.level === 1 && cate.value !== 'c1000000000').map(cate => {
+const reports = allReports.filter(cate => cate.level === 1 && cate.value !== 'c1000000000' && cate.value !== '').map(cate => {
   const icon = cateIcons[cate.value];
   return {
     ...cate,

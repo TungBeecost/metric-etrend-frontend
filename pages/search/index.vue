@@ -17,17 +17,12 @@ const listRecomend = ref<LstRecommed[] | null>(null);
 const listTagSuggestions = ref<string[]>([]);
 const displaySortReport = ref(false);
 const isModalVisible = ref(false);
-const checkedList = ref<Array<string>>([]);
 const selectedCategory = ref<string>();
 const searchValueSearch = ref<string>();
 const page = ref(0);
 const isLoading = ref(false);
 const sortSelect = ref('popularity');
 const mostFrequentCategoryReportId = ref<string>();
-
-const handleListCheckbox = (newCheckedList: Array<string>) => {
-  checkedList.value = newCheckedList;
-};
 
 watchEffect( async () => {
   selectedCategory.value = '';
@@ -240,7 +235,7 @@ onMounted(() => {
 
       </div>
       <div class="relate_functions">
-        <filter-report v-if="displaySortReport" class="filter_report" :select-category="selectedCategory" @listcheckbox="handleListCheckbox" @categoryselect="handleCategorySelect"/>
+        <filter-report v-if="displaySortReport" class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect"/>
         <popular-relate-keywords v-if="listTagSuggestions?.length" :tags="listTagSuggestions" @tag-clicked="handleTagClick"/>
         <maybe-interested v-if="listRecomend" :recomends="listRecomend"/>
       </div>

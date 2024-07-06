@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
+import {NAVIGATIONS} from "~/constant/constains";
 
 const {reports} = defineProps({
   reports: {
@@ -7,13 +8,18 @@ const {reports} = defineProps({
     default: () => []
   }
 })
+
+const handleItemClick = (report: any) => {
+  // Navigate to report detail page
+  navigateTo(`${NAVIGATIONS.home}${report.slug}`);
+}
 </script>
 
 <template>
   <div class="new-report-slide">
     <Carousel :items-to-show="2" :items-to-scroll="1" :wrap-around="true" style="width: 100%;" :snap-align="'start'">
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
-        <div class="slide-item">
+        <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
             <img :src="report.url_thumbnail" alt="" style="width: 100%; object-fit: cover">
           </div>
@@ -47,7 +53,7 @@ const {reports} = defineProps({
     .slide-item {
       border-radius: 16px;
       background: var(--Neutral-neutral-1, #FFF);
-      //box-shadow: 10px 10px 40px 0px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
       border: 1px solid #f0f0f0;
 
       display: flex;

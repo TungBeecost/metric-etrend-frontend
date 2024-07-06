@@ -61,7 +61,7 @@ const breadcrumbs = computed(() => {
         value: "search",
       },
       ...(data.value.lst_category || []).map((item) => {
-        const url = `${toSeoName(item.name, "category")}-c.${item.id}`;
+        const url = `search?category_report_id=${item.id}`;
         return {
           name: item.name,
           value: url,

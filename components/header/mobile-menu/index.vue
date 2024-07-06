@@ -2,12 +2,10 @@
   <div :class="{ headerNavbar: 1, active: active }">
     <div class="login">
       <p>Đăng nhập ngay để không bỏ lỡ hàng trăm báo cáo và xu hướng mới nhất!</p>
-      <AButton type="primary" size="large" @click="redirectMenu(NAVIGATIONS.signIn)">Đăng nhập</AButton>
+      <AButton type="primary" size="large" @click="authStore.setShowPopupLogin(true)">Đăng nhập</AButton>
     </div>
 
     <div class="divider" />
-
-
     <NuxtLink v-for="item in MENUS" :key="item.label" :to="item.to" class="menu">
       <AButton size="large" type="text" class="menuItem" @click="setShowMenu(false)">
 
@@ -39,10 +37,10 @@ defineProps<{
 
 const { setShowMenu } = useShowMainMenu();
 
-const redirectMenu = (url: string) => {
-  setShowMenu(false);
-  navigateTo(url);
-}
+const authStore = useAuthStore();
+onBeforeMount(() => {
+  authStore.checkAuth();
+});
 </script>
 
 <style lang="scss" scoped>
