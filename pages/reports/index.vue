@@ -3,6 +3,35 @@
 import Discover from "~/components/report/Discover.vue";
 import FeaturedReport from "~/components/report/FeaturedReport.vue";
 import ItemNewReport from "~/components/report/ItemNewReport.vue";
+import {searchReport, type SearchReportPayload} from "~/services/reports";
+
+
+const lstReportNew = ref([])
+
+const fetchReport = async () => {
+  try {
+    const body: SearchReportPayload = {
+      limit: 10,
+      lst_field: ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop", "created_at"],
+      lst_query: [],
+      lst_category_report_id: [],
+      offset: 0,
+      sort: "popularity",
+      order: "desc",
+    };
+    const response: any = await searchReport(body)
+
+    lstReportNew.value = response.lst_report;
+
+    console.log(response)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+onMounted(() => {
+  fetchReport()
+})
 </script>
 
 <template>
@@ -22,7 +51,7 @@ import ItemNewReport from "~/components/report/ItemNewReport.vue";
               <div class="title_new_report">
                 Báo cáo mới nhất
               </div>
-              <item-new-report/>
+              <item-new-report :reports="lstReportNew"/>
             </div>
           </div>
         </div>

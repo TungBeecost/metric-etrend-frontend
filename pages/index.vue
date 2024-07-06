@@ -33,9 +33,9 @@
     </div>
 
     <!-- highligh section-->
-    <div class="section">
-      <ReportFeaturedReport/>
-    </div>
+    <!--    <div class="section">-->
+    <ReportFeaturedReport/>
+    <!--    </div>-->
 
     <!-- testimonials section-->
     <div class="section">

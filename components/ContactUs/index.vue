@@ -1,5 +1,9 @@
 <script setup>
 
+import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
+import ErrorNotification from "~/components/ContactUs/ErrorNotification.vue";
+import axios from "axios";
+
 const runtimeConfig = useRuntimeConfig()
 
 const rules = {
@@ -58,6 +62,7 @@ const isSubmitFormLoading = useState('LandingPage.isSubmitFormLoading', () => fa
 const handleSubmitLeadForm = async () => {
   isSubmitFormLoading.value = true
   const urlCreateLead = `${runtimeConfig.public.baseMetricCrmUrl}/crm/create/lead_form`
+  const userProfile = {}
   // const userProfile = authStore.userProfile
   const variables = {}
   const utm_source = variables?.utmSource || ''
@@ -94,7 +99,8 @@ const handleSubmitLeadForm = async () => {
   }
 
   try {
-    await http.post(urlCreateLead, payload)
+    const urlCreateLead = `${runtimeConfig.public.baseMetricCrmUrl}/crm/create/lead_form`
+    await axios.post(urlCreateLead, payload)
     isShowErrorNotification.value = false
     isShowSuccessNotification.value = true
 
@@ -110,6 +116,7 @@ const handleSubmitLeadForm = async () => {
   } catch (e) {
     isShowSuccessNotification.value = false
     isShowErrorNotification.value = true
+    isSubmitFormLoading.value = false
   } finally {
     isSubmitFormLoading.value = false
   }
@@ -198,8 +205,10 @@ const handleSubmitLeadForm = async () => {
         </a-form-item>
       </a-form>
     </div>
-
   </div>
+
+  <SuccessNotification v-model:visible="isShowSuccessNotification"/>
+  <ErrorNotification v-model:visible="isShowErrorNotification"/>
 </template>
 
 

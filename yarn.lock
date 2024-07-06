@@ -969,7 +969,7 @@
   optionalDependencies:
     ipx "^2.1.0"
 
-"@nuxt/kit@^3.11.2", "@nuxt/kit@^3.12.1", "@nuxt/kit@^3.2.0", "@nuxt/kit@^3.2.2", "@nuxt/kit@^3.4.0", "@nuxt/kit@^3.5.0", "@nuxt/kit@^3.7.3", "@nuxt/kit@3.12.2":
+"@nuxt/kit@^3.11.0", "@nuxt/kit@^3.11.2", "@nuxt/kit@^3.12.1", "@nuxt/kit@^3.2.0", "@nuxt/kit@^3.2.2", "@nuxt/kit@^3.4.0", "@nuxt/kit@^3.5.0", "@nuxt/kit@^3.7.3", "@nuxt/kit@3.12.2":
   version "3.12.2"
   resolved "https://registry.npmjs.org/@nuxt/kit/-/kit-3.12.2.tgz"
   integrity sha512-5kOqEzfc3FsAncjK2je7vuq4/QsR5ypViTnop52mlFLf0Ku1NMCrWCSWYowAh4P0yqTACMAZYa+HdRZHscU84g==
@@ -8892,6 +8892,19 @@ vue-virtual-scroller@2.0.0-beta.8:
     "@vue/runtime-dom" "3.4.29"
     "@vue/server-renderer" "3.4.29"
     "@vue/shared" "3.4.29"
+
+vue3-carousel-nuxt@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/vue3-carousel-nuxt/-/vue3-carousel-nuxt-1.1.2.tgz"
+  integrity sha512-Q8X0J1XMK9yITAVLfZ2OAjAdeHpXAyng3qlsDSMiBi44pKH4zapSJpy9Id9LCC/9pfiQu+WYVPeieAsUGwZt7g==
+  dependencies:
+    "@nuxt/kit" "^3.11.0"
+    vue3-carousel "^0.3.3"
+
+vue3-carousel@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.npmjs.org/vue3-carousel/-/vue3-carousel-0.3.3.tgz"
+  integrity sha512-VsuOBE4LG9lxAiYGR9U7ps4RyJ4oFQGzk79/49ybvoxzNpahPAVWIDHKK3a1lOv0CSplFq6u4FvaFLZ8x3FgWg==
 
 vue3-marquee@^4.2.0:
   version "4.2.0"

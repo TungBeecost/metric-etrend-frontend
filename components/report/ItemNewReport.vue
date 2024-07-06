@@ -1,216 +1,121 @@
 <script setup lang="ts">
-const reports = [
-  {
-    image: 'https://picsum.photos/391',
-    title: 'Báo cáo Ngành hàng Giày sneaker nam 1',
-    date: '20/10/2021',
-    description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 1',
-    category: ['Thể thao', 'Kinh tế']
-  },
-  {
-    image: 'https://picsum.photos/392',
-    title: 'Báo cáo Ngành hàng Giày sneaker nam 2',
-    date: '21/10/2021',
-    description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 2',
-    category: ['Thể thao', 'Kinh tế']
-  },
-  {
-    image: 'https://picsum.photos/393',
-    title: 'Báo cáo Ngành hàng Giày sneaker nam 3',
-    date: '22/10/2021',
-    description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 3',
-    category: ['Thể thao', 'Kinh tế']
-  },
-  {
-    image: 'https://picsum.photos/394',
-    title: 'Báo cáo Ngành hàng Giày sneaker nam 4',
-    date: '23/10/2021',
-    description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 4',
-    category: ['Thể thao', 'Kinh tế']
-  },
-  {
-    image: 'https://picsum.photos/395',
-    title: 'Báo cáo Ngành hàng Giày sneaker nam 5',
-    date: '24/10/2021',
-    description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 5',
-    category: ['Thể thao', 'Kinh tế']
-  },
-  {
-    image: 'https://picsum.photos/396',
-    title: 'Báo cáo Ngành hàng Giày sneaker nam 6',
-    date: '25/10/2021',
-    description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 6',
-    category: ['Thể thao', 'Kinh tế']
-  },
-  {
-    image: 'https://picsum.photos/397',
-    title: 'Báo cáo Ngành hàng Giày sneaker nam 7',
-    date: '26/10/2021',
-    description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 7',
-    category: ['Thể thao', 'Kinh tế']
-  },
-  {
-    image: 'https://picsum.photos/398',
-    title: 'Báo cáo Ngành hàng Giày sneaker nam 8',
-    date: '24/10/2021',
-    description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 5',
-    category: ['Thể thao', 'Kinh tế']
-  },
-  {
-    image: 'https://picsum.photos/399',
-    title: 'Báo cáo Ngành hàng Giày sneaker nam 9',
-    date: '25/10/2021',
-    description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 6',
-    category: ['Thể thao', 'Kinh tế']
-  },
-  {
-    image: 'https://picsum.photos/390',
-    title: 'Báo cáo Ngành hàng Giày sneaker nam 10',
-    date: '26/10/2021',
-    description: 'Báo cáo thị phần thương hiệu hàng đầu như yadou, elly, floralpunk, hapas, yuumy, mx luxury, lesac, i.t - zooler i fashion, nallcheer, naha, v.v 7',
-    category: ['Thể thao', 'Kinh tế']
-  },
-];
+import dayjs from "dayjs";
 
-const sliceInfoRef: Ref<HTMLElement | null> = ref(null);
-
-const scrollReports = (direction: string) => {
-  let scrollAmount;
-  if (window.innerWidth <= 1023) {
-    scrollAmount = 300;
-  } else {
-    scrollAmount = 750;
+const {reports} = defineProps({
+  reports: {
+    type: Array<any>,
+    default: () => []
   }
-  const scrollOptions: ScrollToOptions = {
-    behavior: 'smooth',
-    left: direction === 'left' ? -scrollAmount : scrollAmount
-  };
-  if (sliceInfoRef.value) {
-    sliceInfoRef.value.scrollBy(scrollOptions);
-  }
-};
+})
 </script>
 
 <template>
-  <div class="slice">
-    <button class="button_slice button_slice_left" @click="scrollReports('left')">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M19.5898 23.3525L12.5898 15.8525L19.5898 8.35254" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <div class="slice_info" ref="sliceInfoRef">
-      <div v-for="report in reports" v-bind="report" :key="report.title">
-        <div class="item_new_report">
-          <div class="image">
-            <img :src="report.image" alt="">
+  <div class="new-report-slide">
+    <Carousel :items-to-show="2" :items-to-scroll="1" :wrap-around="true" style="width: 100%;" :snap-align="'start'">
+      <Slide v-for="report in reports" v-bind="report" :key="report.name">
+        <div class="slide-item">
+          <div class="thumbnail">
+            <img :src="report.url_thumbnail" alt="" style="width: 100%; object-fit: cover">
           </div>
-          <div class="content">
-            <div class="block_category">
-              <div class="category">{{ report.category.join(', ') }} | {{ report.date }}</div>
+          <div class="content" style="text-align: left;">
+            <div class="category_date" style="text-align: left;">
+              {{ report.lst_category?.map((item: any) => item.name).join(' > ') }} <span style="color: #EEEBFF">|</span> {{ dayjs(report.created_at).format('DD/MM/YYYY') }}
             </div>
-            <div class="title">{{ report.title }}</div>
-            <div class="description">{{ report.description }}</div>
+            <div class="title" style="text-align: left;">
+              Báo cáo nhóm hàng {{ report.name }}
+            </div>
+            <div class="description line-clamp__2" style="text-align: left;">
+              Thương hiệu bán chạy:
+              {{ report.lst_brand?.slice(5)?.join(', ') }}.
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <button class="button_slice button_slice_right" @click="scrollReports('right')">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12.5898 8.35254L19.5898 15.8525L12.5898 23.3525" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
+      </Slide>
+      <template #addons>
+        <navigation/>
+        <pagination/>
+      </template>
+    </Carousel>
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
+.new-report-slide {
+  .carousel__slide {
+    padding: 8px;
 
-.slice{
-  display: flex;
-  justify-content: center;
-  position: relative;
+    .slide-item {
+      border-radius: 16px;
+      background: var(--Neutral-neutral-1, #FFF);
+      //box-shadow: 10px 10px 40px 0px rgba(0, 0, 0, 0.05);
+      border: 1px solid #f0f0f0;
 
-  .slice_info {
-    display: flex;
-    justify-content: flex-start;
-    overflow-x: hidden;
-    gap: 36px;
-    padding: 16px 0;
-    scrollbar-width: thin;
-    scrollbar-color: #888 #f5f5f5;
-
-    .item_new_report {
       display: flex;
-      gap: 16px;
+      flex-direction: row;
 
-      width: 700px;
+      overflow: hidden;
 
-      padding: 16px;
-
-      border: 1px solid #EEEBFF;
-      border-radius: 8px;
-      background: #FFF;
-
-      .image {
-        width: 168px;
-
-        img {
-          width: 100%;
-          border-radius: 8px;
-        }
+      .thumbnail {
+        width: 170px;
+        height: 170px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #f0f0f0;
       }
 
       .content {
+        padding: 16px;
         flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
 
-        .block_category {
-          display: flex;
-          gap: 8px;
+        .category_date {
+          color: var(--Dark-blue-dark-blue-6, #716B95);
 
-          .category {
-            font-size: 14px;
-            color: #9e9e9e;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-          }
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 22px; /* 157.143% */
+
+          margin-bottom: 16px;
         }
 
         .title {
-          margin: 8px 0;
-
+          color: var(--Dark-blue-dark-blue-8, #241E46);
           font-size: 20px;
-          font-weight: bold;
+          font-weight: 700;
+          line-height: 28px; /* 140% */
 
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
+          margin-bottom: 8px;
+
+          text-transform: capitalize;
         }
 
         .description {
-          font-size: 16px;
-          line-height: 24px;
-          color: #9e9e9e;
-
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
           overflow: hidden;
+          color: var(--Dark-blue-dark-blue-6, #716B95);
+          text-overflow: ellipsis;
+
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 24px; /* 150% */
         }
       }
     }
   }
 
-  .button_slice {
+  .carousel__prev {
+    left: -25px;
+  }
+
+  .carousel__next {
+    right: -25px;
+  }
+
+  .carousel__prev, .carousel__next {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30px;
-    height: 30px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     border: 1px solid #EEEBFF;
     background-color: #FFF;
@@ -218,72 +123,47 @@ const scrollReports = (direction: string) => {
     position: absolute;
   }
 
-  .button_slice_left {
-    left: -15px;
-    top: 100px;
-  }
 
-  .button_slice_right {
-    right: -15px;
-    top: 100px;
-  }
-}
-
-@media (max-width: 1023px) {
-  .slice{
-    .slice_info {
-      gap: 16px;
-      padding: 8px;
-
-      .item_new_report {
-        width: 350px;
-
-        .image {
-          flex: 1;
-        }
-
-        .content {
-          flex: 1;
-          gap: 0;
-          .block_category {
-            .category {
-              font-size: 10px;
-            }
-
-            .space {
-              font-size: 10px;
-            }
-
-            .date {
-              font-size: 10px;
-            }
-          }
-
-          .title {
-            font-size: 14px;
-          }
-
-          .description {
-            font-size: 12px;
-          }
-        }
-      }
-    }
-
-    .button_slice {
-      width: 40px;
-      height: 40px;
-    }
-
-    .button_slice_left {
-      left: 90px;
-      top: 180px;
-    }
-
-    .button_slice_right {
-      right: 90px;
-      top: 180px;
-    }
-  }
+  //.carousel__slide {
+  //  //border-radius: 16px;
+  //  //background: var(--Neutral-neutral-1, #FFF);
+  //  //box-shadow: 10px 10px 40px 0px rgba(0, 0, 0, 0.05);
+  //}
+  //
+  //.carousel__viewport {
+  //  perspective: 2000px;
+  //}
+  //
+  //.carousel__track {
+  //  transform-style: preserve-3d;
+  //}
+  //
+  //.carousel__slide--sliding {
+  //  transition: 0.5s;
+  //}
+  //
+  //.carousel__slide {
+  //  opacity: 0.9;
+  //  transform: rotateY(-20deg) scale(0.95);
+  //}
+  //
+  //.carousel__slide--active ~ .carousel__slide {
+  //  transform: rotateY(20deg) scale(0.95);
+  //}
+  //
+  //.carousel__slide--prev {
+  //  opacity: 1;
+  //  transform: rotateY(-10deg) scale(0.95);
+  //}
+  //
+  //.carousel__slide--next {
+  //  opacity: 1;
+  //  transform: rotateY(10deg) scale(0.95);
+  //}
+  //
+  //.carousel__slide--active {
+  //  opacity: 1;
+  //  transform: rotateY(0) scale(1.05);
+  //}
 }
 </style>

@@ -77,13 +77,14 @@ export default defineNuxtConfig({
 
         // Keys exposed client-side too
         public: {
-            apiBase: "https://api-ereport.staging.muadee.vn"
+            // apiBase: "https://api-ereport.staging.muadee.vn"
+            apiBase: "http://localhost:8000"
         }
     },
     typescript: {
         typeCheck: true
     },
-    plugins: ["~/plugins/antd.js"],
+    plugins: ["~/plugins/antd.js","~/plugins/vue3-carousel.client.js"],
     css: [
         "~/assets/reset.css",
         "~/assets/antd.css",
@@ -109,6 +110,7 @@ export default defineNuxtConfig({
         "@nuxt/test-utils/module",
         "@nuxtjs/device",
         "@nuxt/image",
+        "vue3-carousel-nuxt",
         ["nuxt-highcharts", {}],
         async function () {
             for (const key in AntD) {
