@@ -1,41 +1,18 @@
 <script setup lang="ts">
-
 import EmptyReport from "~/components/account/EmptyReport.vue";
 import ListReport from "~/components/report/ListReport.vue";
-import {onMounted, ref} from "vue";
-import axios from "axios";
-import type {SearchReportRes} from "~/services/reports";
+import type {ListClaimed} from "~/services/reports";
 
-const fetchTableData = async () => {
-  try {
-    const response = await axios({
-      method: 'post',
-      url: 'https://api-web.metric.vn/api/report/search',
-      headers: {
-        'content-type': 'application/json',
-      },
-      data: {
-        'lst_category_report_id': ['c1189843250'],
-        'lst_query': [],
-        'lst_field': ['name', 'slug', 'url_thumbnail', 'revenue_monthly', 'gr_quarter', 'shop'],
-        'offset': 0,
-        'limit': 12,
-        'sort': 'popularity'
-      }
-    });
-    data.value = response.data;
-    console.log(response.data);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const data = ref<SearchReportRes | null>(null);
-
-onMounted(() => {
-  fetchTableData();
+const props = defineProps({
+  data: {
+    type: Array as () => ListClaimed[] | null,
+    default: () => [],
+  },
+  total: {
+    type: Number,
+    default: 0,
+  },
 });
-
 </script>
 
 <template>
@@ -48,8 +25,8 @@ onMounted(() => {
       <div class="detailed_reports_viewed_header_title">Báo cáo chi tiết đã xem</div>
     </div>
     <div class="detailed_reports_viewed_content default_section">
-      <div v-if="data">
-        <list-report :data="data?.lst_report" :total="data.total"/>
+      <div v-if="props.data">
+        <list-report :data="props.data" :total="props.total"/>
       </div>
       <div v-else>
         <empty-report/>

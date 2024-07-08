@@ -1,14 +1,34 @@
 <script setup lang="ts">
 import AccountInfomation from "~/components/account/AccountInfomation.vue";
 import DetailedReportsViewed from "~/components/account/DetailedReportsViewed.vue";
+import {onMounted, ref} from "vue";
+import type {ListClaimed} from "~/services/reports";
+import {useSearchReport} from "#imports";
+
+const data = ref<ListClaimed[] | null>(null);
+
+const {fetchClaimedList} = useSearchReport()
+const fetchTableData = async () => {
+  try {
+    const response = await fetchClaimedList();
+    data.value = response;
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 
+onMounted(async () => {
+  await fetchTableData();
+  console.log(data.value);
+});
 </script>
 
 <template>
   <div class="account_container">
     <account-infomation class="info" />
-    <detailed-reports-viewed class="detail-report" />
+    <detailed-reports-viewed :data="data" :total='1000' class="detail-report" />
   </div>
 
 </template>

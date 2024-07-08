@@ -3,8 +3,10 @@ import ItemFeatureReport from './ItemFeatureReport.vue';
 import {searchReport, type SearchReportPayload} from "~/services/reports";
 
 const lstReport = ref([])
+const isLoading = ref(false);
 
 const fetchReport = async () => {
+  isLoading.value = true;
   try {
     const body: SearchReportPayload = {
       limit: 10,
@@ -18,7 +20,7 @@ const fetchReport = async () => {
     const response: any = await searchReport(body)
 
     lstReport.value = response.lst_report;
-
+    isLoading.value = false;
     console.log(response)
   } catch (e) {
     console.log(e)
@@ -42,7 +44,12 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <item-feature-report :reports="lstReport.slice(0, 10)"/>
+      <template v-if="isLoading">
+        <a-skeleton active :paragraph="{ rows: 6 }"/>
+      </template>
+      <div :class="{ 'hidden-report': isLoading, 'visible-report': !isLoading }" class="new_report">
+        <item-feature-report :reports="lstReport.slice(0, 10)"/>
+      </div>
     </div>
   </div>
 </template>
@@ -76,6 +83,16 @@ onMounted(() => {
   color: #241E46;
 
   margin-bottom: 16px;
+}
+
+.hidden-report {
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.visible-report {
+  opacity: 1;
+  transition: opacity 0.9s ease;
 }
 
 .content {

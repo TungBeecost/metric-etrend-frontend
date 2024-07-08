@@ -43,7 +43,6 @@ export const fetchListRecomendReport = async (categoryReportId: string, numberOf
       }
     });
 
-    // Ensure the response data is in the expected format
     if (!Array.isArray(response.data)) {
       console.error("fetchListRecomendReport error: Unexpected response format");
       return null;
@@ -67,6 +66,36 @@ export const fetchListRecomendReport = async (categoryReportId: string, numberOf
     return null;
   }
 };
+
+export const fetchClaimedListReport = async () => {
+  try {
+    const response = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.list_claimed.endpoint), {});
+    if (!Array.isArray(response.data)) {
+      console.error("fetchClaimedListReport error: Unexpected response format");
+      return null;
+    }
+    const data: ListClaimed[] = response.data.map((item) => ({
+      id: item.id,
+      slug: item.slug,
+      name: item.name,
+      claimed_at: item.claimed_at,
+      expired_at: item.expired_at,
+      status: item.status,
+      search_volume_shopee: item.search_volume_shopee,
+      start_date: item.start_date,
+      category_report_id: item.category_report_id,
+      category_report_name: item.category_report_name,
+      url_thumbnail: item.url_thumbnail
+    }));
+    return data;
+  }catch (error) {
+    console.error("fetchClaimedListReport error: ", error);
+    return null;
+  }
+}
+
+
+
 export interface SearchReportPayload {
   limit?: number;
   lst_category_report_id?: Array<string>;
@@ -128,4 +157,18 @@ export interface ListCategory {
   is_leaf: string;
   parent?: string;
   parent_name?: string;
+}
+
+export interface ListClaimed {
+  "id": number,
+  "slug": string,
+  "name": string,
+  "claimed_at": string,
+  "expired_at": string,
+  "status": string,
+  "search_volume_shopee": string,
+  "start_date": string,
+  "category_report_id": string,
+  "category_report_name": string,
+  "url_thumbnail": string
 }

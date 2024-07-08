@@ -229,9 +229,9 @@ onMounted(() => {
           </a-modal>
         </div>
         <template v-if="isLoading">
-          <a-skeleton style="padding-top: 40px; padding-bottom: 40px"/>
+          <a-skeleton :paragraph="{ rows: 40 }" style="padding-top: 40px; padding-bottom: 40px"/>
         </template>
-        <list-report v-else :data="data?.lst_report" :total="data?.total" @page_change="handlePageChange"/>
+        <list-report v-else :class="{ 'hidden-list': isLoading, 'visible-list': !isLoading }" :data="data?.lst_report" :total="data?.total" @page_change="handlePageChange"/>
 
       </div>
       <div class="relate_functions">
@@ -409,6 +409,7 @@ onMounted(() => {
     }
   }
 }
+
 </style>
 
 <style lang="scss">

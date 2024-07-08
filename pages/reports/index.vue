@@ -5,10 +5,11 @@ import FeaturedReport from "~/components/report/FeaturedReport.vue";
 import ItemNewReport from "~/components/report/ItemNewReport.vue";
 import {searchReport, type SearchReportPayload} from "~/services/reports";
 
-
+const isLoading = ref(false);
 const lstReportNew = ref([])
 
 const fetchReport = async () => {
+  isLoading.value = true;
   try {
     const body: SearchReportPayload = {
       limit: 10,
@@ -22,8 +23,7 @@ const fetchReport = async () => {
     const response: any = await searchReport(body)
 
     lstReportNew.value = response.lst_report;
-
-    console.log(response)
+    isLoading.value = false;
   } catch (e) {
     console.log(e)
   }
@@ -47,7 +47,10 @@ onMounted(() => {
             </div>
           </div>
           <div class="new_report">
-            <div class="new_report">
+            <template v-if="isLoading">
+              <a-skeleton active :paragraph="{ rows: 6 }"/>
+            </template>
+            <div :class="{ 'hidden-report': isLoading, 'visible-report': !isLoading }" class="new_report">
               <div class="title_new_report">
                 Báo cáo mới nhất
               </div>
@@ -105,6 +108,16 @@ onMounted(() => {
       }
     }
   }
+}
+
+.hidden-report {
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.visible-report {
+  opacity: 1;
+  transition: opacity 0.9s ease;
 }
 
 .new_report {

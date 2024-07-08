@@ -1,4 +1,9 @@
-import {fetchListRecomendReport, searchReport, type SearchReportPayload} from "~/services/reports";
+import {
+  fetchClaimedListReport,
+  fetchListRecomendReport,
+  searchReport,
+  type SearchReportPayload
+} from "~/services/reports";
 
 export default function useSearchReport() {
   const fetchSearch = async (value: string | null, options?: SearchReportPayload) => {
@@ -53,5 +58,14 @@ export default function useSearchReport() {
     }
   }
 
-  return { fetchSearch, fetchSuggest, fetchListRecomend };
+  const fetchClaimedList = async () => {
+    try{
+        return await fetchClaimedListReport();
+    } catch (error) {
+        console.error("fetchClaimedList error: ", error);
+        return null;
+    }
+  }
+
+  return { fetchSearch, fetchSuggest, fetchListRecomend, fetchClaimedList };
 }

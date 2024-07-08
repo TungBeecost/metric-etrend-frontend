@@ -6,7 +6,7 @@ axios.interceptors.request.use(
 
     // add Auth header
     const accessToken = useCookie("access-token");
-    config.headers.Authorization = `Bearer ${accessToken.value || "l2JThNULdYlK0FPBMkjAOWE3ZU1QMaZYPCPirMydtdA"}`;
+    config.headers.Authorization = `Bearer ${accessToken.value || "K7YrXMU3bcibX-TmdGs_dVF1xYqau-zvtVDTmpOlmUM"}`;
 
     return config;
   },
