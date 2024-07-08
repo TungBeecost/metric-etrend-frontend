@@ -88,7 +88,7 @@ const onItemClicked = (item: LstReport) => {
       </div>
     </div>
     <div class="page">
-      <a-pagination v-model:current="current" :total="props.total" @change="onChange" show-less-items />
+      <a-pagination v-model:current="current" :total="props.total" show-less-items @change="onChange" />
     </div>
   </div>
 </template>
