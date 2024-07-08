@@ -85,16 +85,6 @@ onMounted(() => {
   margin-bottom: 16px;
 }
 
-.hidden-report {
-  opacity: 0;
-  transition: opacity 0.9s ease;
-}
-
-.visible-report {
-  opacity: 1;
-  transition: opacity 0.9s ease;
-}
-
 .content {
   text-align: center;
   font-size: 20px;

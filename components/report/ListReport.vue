@@ -52,9 +52,9 @@ const onItemClicked = (item: LstReport) => {
           <img :src="item.url_thumbnail" alt="">
         </div>
         <div class="info">
-          <div class="breadcrumb">{{item?.lst_category && item.lst_category.length > 0 ? item.lst_category[0].name : ''}} | {{formatDate(item.created_at, item.claimed_at)}}</div>
+          <div class="breadcrumb"> {{ item.lst_category?.map((item: any) => item.name).join(' > ') }} <span style="color: #EEEBFF"> | </span>  {{formatDate(item.created_at, item.claimed_at)}}</div>
           <div class="name">Báo cáo {{item.name}}</div>
-          <div class="summary-info">
+          <div v-if="item.revenue_monthly" class="summary-info">
             <div class="info_item">
               <svg data-v-f4382b3b="" width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateY(0px); margin-right: 4px;"><g clip-path="url(#clip0_1518_34097)" data-v-f4382b3b=""><path d="M14 16H2V6" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" data-v-f4382b3b=""></path><path d="M12.5 7.5L8 12L6 10L2 14" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" data-v-f4382b3b=""></path><path d="M12.5 10V7.5H10" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" data-v-f4382b3b=""></path></g><defs data-v-f4382b3b=""><clipPath id="clip0_1518_34097" data-v-f4382b3b=""><rect width="16" height="16" fill="white" transform="translate(0 3)" data-v-f4382b3b=""></rect></clipPath></defs></svg>
               <span>

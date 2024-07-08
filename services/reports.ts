@@ -85,7 +85,8 @@ export const fetchClaimedListReport = async () => {
       start_date: item.start_date,
       category_report_id: item.category_report_id,
       category_report_name: item.category_report_name,
-      url_thumbnail: item.url_thumbnail
+      url_thumbnail: item.url_thumbnail,
+      lst_brand: item.lst_brand
     }));
     return data;
   }catch (error) {
@@ -170,5 +171,6 @@ export interface ListClaimed {
   "start_date": string,
   "category_report_id": string,
   "category_report_name": string,
-  "url_thumbnail": string
+  "url_thumbnail": string,
+  "lst_brand": Array<string>
 }
