@@ -141,9 +141,9 @@ chartOptions.value = {
   series: [
     {
       name: props.analyticType === 'revenue' ? $t('Doanh số (Đồng)') : $t('Số sản phẩm đã bán (Sản phẩm)'),
-      data: PLATFORM_TOTAL.value.platforms.map(({platform_id, revenue}) => ({
+      data: PLATFORM_TOTAL.value.platforms.map(({platform_id, revenue, ratio_revenue}) => ({
         name: getPlatformById(platform_id).name,
-        y: revenue,
+        y: revenue || ratio_revenue,
         // color: platformColors[getPlatformById(platform_id).name],
         color: {
           linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},

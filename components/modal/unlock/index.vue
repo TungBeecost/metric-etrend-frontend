@@ -1,76 +1,177 @@
-<template>
-  <Modal :is-open="isOpen" :on-close="onClose" :class="classNameModal" modal-class="wrapperSpec">
-    <template #content>
-      <div v-if="currentUser.remainingUnlock" class="contentModal">
-        <NuxtImg v-if="currentUser.remainingUnlock" src="/images/Unlock-Document.png" class="statusIcon" />
+<script setup>
+import {onMounted, ref} from 'vue';
+import {NAVIGATIONS} from "~/constant/constains";
+import {useCurrentUser} from "~/stores/current-user.js"
 
-        <div class="content">
-          <p class="header">Xác nhận xem báo cáo</p>
-          <p class="description">Bạn có chắc chắn muốn sử dụng <span class="highlight">01 lượt xem</span> trong vòng <span class="highlight">24 giờ</span> cho <span class="textBold">{{
-            reportTitle
-              }}</span> không?
-          </p>
+const isDesktop = ref(true);
 
-          <p v-if="errorMessage" class="errorMessage">{{ errorMessage }}</p>
-        </div>
-      </div>
+onMounted(() => {
+  isDesktop.value = window.innerWidth >= 768;
+});
 
-      <div v-else class="contentModal">
-        <CustomIcon v-if="!currentUser.remainingUnlock" type="UnlockDocumentFailure" :is-custom-size="true" class="statusIcon" />
-
-        <div class="content">
-          <p class="header">Hết lượt xem báo cáo</p>
-          <p class="description">Mua thêm gói dịch vụ để tiếp tục xem báo cáo chi tiết</p>
-        </div>
-      </div>
-
-      <div class="footerModal">
-        <AButton size="large" class="optionBtn" @click="onClose">Huỷ</AButton>
-
-        <AButton v-if="currentUser.remainingUnlock" size="large" type="primary" class="optionBtn" @click="unlockReport">
-          Xem báo cáo
-        </AButton>
-        <AButton v-else size="large" type="primary" class="optionBtn" @click="navigateTo(NAVIGATIONS.pricing)">Mua ngay
-        </AButton>
-      </div>
-    </template>
+const emits = defineEmits(["update:showUnlock"]);
 
 
-  </modal>
-</template>
-
-<script setup lang="ts">
-import { useCurrentUser } from "~/stores/current-user"
-import { NAVIGATIONS } from "~/constant/constains";
-
-export type TypeModal = "success"
-
-const props = defineProps<{
-  isOpen: boolean,
-  onClose: () => void,
-  reportTitle: string,
-  classNameModal?: string,
-  slug: string
-}>()
-
-const errorMessage = useState(() => "");
 const currentUser = useCurrentUser();
 
 const unlockReport = async () => {
-  try {
-    await currentUser.unlockReport(props.slug);
+  await currentUser.unlockReport('123');
 
-    // if nothing wrong
-    reloadNuxtApp();
-  } catch (err: any) {
-    console.log(err);
+  // if nothing wrong
+  reloadNuxtApp();
+}
 
-    errorMessage.value = err.response?.data?.detail || err.message || err.value || err;
+const {showUnlock} = defineProps({
+  showUnlock: {
+    type: Boolean,
+    default: false
   }
+});
+
+
+const toggleUnlock = () => {
+  emits('update:showUnlock', false);
 }
 
 </script>
 
-<style lang="scss">
-@import url("./index.scss");
+<template>
+  <a-modal
+      :visible="showUnlock"
+      :footer="null"
+      @cancel="toggleUnlock"
+      @ok="toggleUnlock"
+  >
+    <div class="unlock-report-modal">
+      <div v-if="currentUser.remainingUnlock">
+        <div style="text-align: center;">
+          <NuxtImg src="/images/Unlock-Document.png" class="unlock-icon"/>
+        </div>
+
+        <div class="content">
+          <div class="remaining-unlock">
+            Số lượt xem hiện tại: {{ currentUser.remainingUnlock }}
+          </div>
+          <div class="header">Xác nhận xem báo cáo</div>
+          <div class="description">
+            Bạn có chắc chắn muốn sử dụng
+            <span class="highlight">01 lượt xem</span>
+            trong vòng 24 giờ cho
+            <span class="report-name">
+              Túi xách nữ - Báo cáo xu hướng thị trường sàn TMĐT
+            </span>
+            không?
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <div style="text-align: center;">
+          <NuxtImg src="/images/Unlock-Document-faded.svg" class="unlock-icon"/>
+        </div>
+
+        <div class="content">
+          <div class="remaining-unlock">
+            Số lượt xem hiện tại: {{ currentUser.remainingUnlock }}
+          </div>
+          <div class="header">Hết lượt xem báo cáo</div>
+          <div class="description">
+            Mua thêm gói dịch vụ để tiếp tục xem báo cáo chi tiết
+          </div>
+        </div>
+      </div>
+      <div class="unlock-report-modal-footer">
+        <AButton style="width: 100%;" size="large" class="optionBtn" @click="toggleUnlock">Huỷ</AButton>
+        <AButton v-if="currentUser.remainingUnlock" style="width: 100%;" size="large" type="primary" class="optionBtn"
+                 @click="unlockReport">
+          Xem báo cáo
+        </AButton>
+        <AButton v-else style="width: 100%;" size="large" type="primary" class="optionBtn"
+                 @click="navigateTo(NAVIGATIONS.pricing)">
+          Mua ngay
+        </AButton>
+      </div>
+    </div>
+  </a-modal>
+</template>
+
+<style scoped lang="scss">
+
+.unlock-report-modal {
+  font-family: Inter, Montserrat, sans-serif;
+
+  .unlock-icon {
+    width: 212px;
+
+    margin: 0 auto 32px;
+  }
+
+  .content {
+    text-align: center;
+
+    margin-bottom: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    .remaining-unlock {
+      color: #241E46;
+      text-align: center;
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+    }
+
+    .header {
+      color: var(--Dark-blue-dark-blue-8, #241E46);
+      text-align: center;
+
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 38px;
+    }
+
+    .description {
+      color: #716B95;
+      text-align: center;
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+
+      .highlight {
+        color: #E85912;
+
+        font-weight: 500;
+      }
+
+      .report-name {
+        color: var(--Dark-blue-dark-blue-8, #241E46);
+
+        font-weight: 500;
+      }
+    }
+  }
+
+  .unlock-report-modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .chart-mask {
+    padding: 5% 10%;
+
+    .chart-mask-content {
+      .title {
+        font-size: 24px;
+        line-height: 28px;
+      }
+    }
+  }
+}
 </style>
