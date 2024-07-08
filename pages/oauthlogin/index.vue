@@ -30,7 +30,7 @@ onMounted(async () => {
   if (!tokenData?.access_token) {
     return
   }
-  const accessToken = useCookie("access-token");
+  const accessToken = useCookie("access-token", { maxAge: 60 * 60 * 24 });
   accessToken.value = tokenData.access_token;
   navigateTo('/')
 })
