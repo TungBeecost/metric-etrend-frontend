@@ -13,13 +13,10 @@
       </div>
 
       <div class="sectionContent searchContent">
-        <SearchReport class="searchBox"/>
+        <SearchReport class="searchBox" />
 
         <div class="recommendSearch">
-          <AButton
-              v-for="(item, index) in recommendSearch" :key="index" class="recommendItem"
-              @click="onClickSuggestion(item)"
-          >
+          <AButton v-for="(item, index) in recommendSearch" :key="index" class="recommendItem" @click="onClickSuggestion(item)">
             {{ item }}
           </AButton>
         </div>
@@ -29,28 +26,28 @@
 
     <!-- parter section -->
     <div class="section">
-      <Parters/>
+      <Parters />
     </div>
 
     <!-- highligh section-->
     <!--    <div class="section">-->
-    <ReportFeaturedReport/>
+    <ReportFeaturedReport />
     <!--    </div>-->
 
     <!-- testimonials section-->
     <div class="section">
-      <Testimonials/>
+      <Testimonials />
     </div>
 
 
     <!-- pricing section -->
     <div class="section planSection">
-      <Plans :is-dark-title="true"/>
+      <Plans :is-dark-title="true" />
     </div>
 
     <!-- contact us section -->
     <div class="">
-      <ContactUs/>
+      <ContactUs />
 
     </div>
   </div>
@@ -58,7 +55,7 @@
 
 <script setup lang="ts">
 import type SearchReport from '../components/search/search-report.vue';
-import {NAVIGATIONS} from '~/constant/constains';
+import { NAVIGATIONS } from '~/constant/constains';
 
 console.log(`This is gg tag:`, process.env.NUXT_PUBLIC_GTAG_ID);
 
@@ -83,7 +80,8 @@ const onClickSuggestion = (suggestion: string) => {
       font-size: 64px;
       font-style: normal;
       font-weight: 700;
-      line-height: 80px; /* 125% */
+      line-height: 80px;
+      /* 125% */
 
       margin-bottom: 24px;
     }

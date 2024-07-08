@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import AccountInfomation from "~/components/account/AccountInfomation.vue";
 import DetailedReportsViewed from "~/components/account/DetailedReportsViewed.vue";
+import { PAGE_TITLES } from "../../constant/constains";
 
+useSeoMeta({
+  title: PAGE_TITLES.account
+})
 
 </script>
 
@@ -14,21 +18,23 @@ import DetailedReportsViewed from "~/components/account/DetailedReportsViewed.vu
 </template>
 
 <style scoped lang="scss">
-.info{
+.info {
   background-color: #FBFAFC;
   padding-top: 40px;
 }
-.detail-report{
+
+.detail-report {
   background-color: #FBFAFC;
   padding-top: 24px;
   padding-bottom: 40px;
 }
 
 @media (max-width: 767px) {
-  .info{
+  .info {
     background-color: #FFF;
   }
-  .detail-report{
+
+  .detail-report {
     background-color: #FFF;
   }
 }

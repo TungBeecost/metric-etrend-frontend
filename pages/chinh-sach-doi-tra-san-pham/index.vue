@@ -18,6 +18,11 @@
 </template>
 
 <script setup lang="ts">
+import { PAGE_TITLES } from '../../constant/constains';
+
+useSeoMeta({
+  title: PAGE_TITLES.refundPolicy
+})
 </script>
 
 <style lang="scss" scoped>

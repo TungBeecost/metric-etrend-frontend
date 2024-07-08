@@ -290,7 +290,11 @@
 </template>
 
 <script setup lang="ts">
-import { CONTACTS } from "~/constant/constains.js";
+import { CONTACTS, PAGE_TITLES } from "~/constant/constains.js";
+
+useSeoMeta({
+  title: PAGE_TITLES.inforSecurityPolicy
+})
 </script>
 
 <style lang="scss" scoped>
