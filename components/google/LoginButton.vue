@@ -1,3 +1,28 @@
+<script setup>
+import { useAuthStore } from '~/helpers/auth.js';
+
+const authStore = useAuthStore()
+const runtimeConfig = useRuntimeConfig();
+
+onMounted(() => {
+  google.accounts.id.initialize({
+    client_id: runtimeConfig.public.CLIENT_ID,
+    callback: authStore.handleGoogleCredentialResponse,
+  })
+  google.accounts.id.renderButton(
+      document.getElementById('googleButton'),
+      {
+        type: 'standard',
+        size: 'large',
+        text: 'signin_with',
+        shape: 'rectangular',
+        logo_alignment: 'center',
+        // width: 250
+      }
+  )
+})
+</script>
+
 <template>
   <div class="login_container">
     <div class="logo">
@@ -42,35 +67,6 @@
   </div>
 
 </template>
-
-<script setup>
-
-
-const authStore = useAuthStore()
-const runtimeConfig = useRuntimeConfig();
-
-
-onMounted(() => {
-  // initialize Google Sign in
-  google.accounts.id.initialize({
-    client_id: runtimeConfig.public.CLIENT_ID,
-    callback: authStore.handleGoogleCredentialResponse, //method to run after user clicks the Google sign in button
-    // context: 'signin'
-  })
-  // render button
-  google.accounts.id.renderButton(
-      document.getElementById('googleButton'),
-      {
-        type: 'standard',
-        size: 'large',
-        text: 'signin_with',
-        shape: 'rectangular',
-        logo_alignment: 'center',
-        // width: 250
-      }
-  )
-})
-</script>
 
 <style lang="scss" scoped>
 #googleButton {

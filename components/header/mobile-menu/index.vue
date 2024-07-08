@@ -30,13 +30,13 @@
 <script setup lang="ts">
 
 import { MENUS, NAVIGATIONS } from '~/constant/constains';
+import {useAuthStore} from "~/helpers/auth";
 
 defineProps<{
   active: boolean;
 }>()
 
 const { setShowMenu } = useShowMainMenu();
-
 const authStore = useAuthStore();
 onBeforeMount(() => {
   authStore.checkAuth();

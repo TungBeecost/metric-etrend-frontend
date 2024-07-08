@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import jwt_decode from "jwt-decode";
-import { useCurrentUser } from "~/stores/current-user";
+import { useCurrentUser } from "~/stores/current-user.js";
 
 export const useAuthStore = defineStore("auth", {
     state: () => ({

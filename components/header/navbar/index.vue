@@ -25,6 +25,7 @@
 import { MENUS, NAVIGATIONS } from '~/constant/constains';
 import LoginButton from "~/components/google/LoginButton.vue";
 import UserProfile from "~/components/account/UserProfile.vue";
+import {useAuthStore} from "~/helpers/auth";
 
 defineProps<{
   isDarkBlueHeader: boolean
