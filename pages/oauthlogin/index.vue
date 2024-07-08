@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {LocationQuery} from "vue-router";
+import type { LocationQuery } from "vue-router";
 
 const route = useRoute()
 
@@ -30,16 +30,14 @@ onMounted(async () => {
   if (!tokenData?.access_token) {
     return
   }
-  localStorage.setItem('accessToken', tokenData?.access_token)
-  localStorage.setItem('tokenType', tokenData?.token_type)
+  const accessToken = useCookie("access-token");
+  accessToken.value = tokenData.access_token;
   navigateTo('/')
 })
 </script>
 
 <template>
-  <div class="oauth-page"/>
+  <div class="oauth-page" />
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
