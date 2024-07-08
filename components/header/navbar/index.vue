@@ -5,15 +5,10 @@
       </AButton>
     </div>
     <div id="headButtonLogin" class="headerNavbarCallButton">
-      <a-button v-if="!authStore.authenticated" type="primary" @click="authStore.setShowPopupLogin(true)">Đăng nhập</a-button>
-      <user-profile v-else/>
-      <a-modal
-          class="button_login"
-          :visible="authStore.isShowPopupLogin"
-          @ok="authStore.setShowPopupLogin(false)"
-          @cancel="authStore.setShowPopupLogin(false)"
-      >
-        <login-button/>
+      <a-button v-if="!authStore.authenticated" @click="authStore.setShowPopupLogin(true)">Đăng nhập</a-button>
+      <user-profile v-else />
+      <a-modal class="button_login" :visible="authStore.isShowPopupLogin" @ok="authStore.setShowPopupLogin(false)" @cancel="authStore.setShowPopupLogin(false)">
+        <login-button />
       </a-modal>
       <AButton type="primary" @click="navigateTo(NAVIGATIONS.contactUs)">Liên hệ tư vấn</AButton>
     </div>
@@ -42,12 +37,13 @@ onBeforeMount(() => {
 </style>
 
 <style lang="scss">
-.button_login{
-  .ant-modal-content{
-    .ant-modal-body{
+.button_login {
+  .ant-modal-content {
+    .ant-modal-body {
       padding: 0;
     }
-    .ant-modal-footer{
+
+    .ant-modal-footer {
       display: none;
     }
   }

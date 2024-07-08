@@ -39,7 +39,11 @@
 </template>
 
 <script setup lang="ts">
-import { CONTACTS } from "~/constant/constains";
+import { CONTACTS, PAGE_TITLES } from "~/constant/constains";
+
+useSeoMeta({
+  title: PAGE_TITLES.contactUs
+})
 </script>
 
 <style lang="scss" scoped>

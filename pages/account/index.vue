@@ -6,6 +6,7 @@ import type {ListClaimed} from "~/services/reports";
 import {useSearchReport} from "#imports";
 
 const data = ref<ListClaimed[] | null>(null);
+import { PAGE_TITLES } from "../../constant/constains";
 
 const {fetchClaimedList} = useSearchReport()
 const fetchTableData = async () => {
@@ -17,6 +18,9 @@ const fetchTableData = async () => {
     console.log(error);
   }
 };
+useSeoMeta({
+  title: PAGE_TITLES.account
+})
 
 
 onMounted(async () => {
@@ -34,21 +38,23 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
-.info{
+.info {
   background-color: #FBFAFC;
   padding-top: 40px;
 }
-.detail-report{
+
+.detail-report {
   background-color: #FBFAFC;
   padding-top: 24px;
   padding-bottom: 40px;
 }
 
 @media (max-width: 767px) {
-  .info{
+  .info {
     background-color: #FFF;
   }
-  .detail-report{
+
+  .detail-report {
     background-color: #FFF;
   }
 }

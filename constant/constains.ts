@@ -263,3 +263,16 @@ export const CONTACTS = [
     icon: "MapPin"
   }
 ];
+
+export const PAGE_TITLES = {
+  account: "Trang của tôi",
+  inforSecurityPolicy: "Chính sách bảo mật thông tin",
+  placeOrderPolicy: "Chính sách đặt hàng",
+  refundPolicy: "Chính sách đổi trả sản phẩm",
+  contactUs: "Liên hệ",
+  transactionPolicy: "Điều kiện giao dịch chung",
+  pricing: "Gói dịch vụ",
+  reports: "Báo cáo",
+  reportDetail: "Chi tiết báo cáo",
+  search: "Tìm kiếm"
+};

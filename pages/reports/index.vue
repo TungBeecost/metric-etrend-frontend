@@ -3,7 +3,8 @@
 import Discover from "~/components/report/Discover.vue";
 import FeaturedReport from "~/components/report/FeaturedReport.vue";
 import ItemNewReport from "~/components/report/ItemNewReport.vue";
-import {searchReport, type SearchReportPayload} from "~/services/reports";
+import { searchReport, type SearchReportPayload } from "~/services/reports";
+import { PAGE_TITLES } from "../../constant/constains";
 
 const isLoading = ref(false);
 const lstReportNew = ref([])
@@ -32,6 +33,10 @@ const fetchReport = async () => {
 onMounted(() => {
   fetchReport()
 })
+
+useSeoMeta({
+  title: PAGE_TITLES.reports
+})
 </script>
 
 <template>
@@ -54,15 +59,15 @@ onMounted(() => {
               <div class="title_new_report">
                 Báo cáo mới nhất
               </div>
-              <item-new-report :reports="lstReportNew"/>
+              <item-new-report :reports="lstReportNew" />
             </div>
           </div>
         </div>
       </div>
     </div>
-    <discover/>
-    <featured-report/>
-    <ContactUs/>
+    <discover />
+    <featured-report />
+    <ContactUs />
   </div>
 </template>
 
@@ -256,5 +261,4 @@ onMounted(() => {
     }
   }
 }
-
 </style>

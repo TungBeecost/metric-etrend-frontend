@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import BannerReport from "~/components/report/BannerReport.vue";
-import {onUnmounted, ref, watchEffect} from 'vue';
+import { onUnmounted, ref, watchEffect } from 'vue';
 import SortReport from "~/components/report/SortReport.vue";
 import ListReport from "~/components/report/ListReport.vue";
 import FilterReport from "~/components/report/FilterReport.vue";
 import PopularRelateKeywords from "~/components/report/PopularRelateKeywords.vue";
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import type SearchReport from "~/components/search/search-report.vue";
-import type {LstRecommed, SearchReportRes} from "~/services/reports";
-import {NAVIGATIONS} from "~/constant/constains";
-import {useSearchReport} from "#imports";
-const {fetchSearch, fetchListRecomend, fetchSuggest} = useSearchReport()
+import type { LstRecommed, SearchReportRes } from "~/services/reports";
+import { NAVIGATIONS, PAGE_TITLES } from "~/constant/constains";
+import { useSearchReport } from "#imports";
+const { fetchSearch, fetchListRecomend, fetchSuggest } = useSearchReport()
 const route = useRoute();
 const data = ref<SearchReportRes | null>(null);
 const listRecomend = ref<LstRecommed[] | null>(null);
@@ -24,7 +24,7 @@ const isLoading = ref(false);
 const sortSelect = ref('popularity');
 const mostFrequentCategoryReportId = ref<string>();
 
-watchEffect( async () => {
+watchEffect(async () => {
   selectedCategory.value = '';
   if (searchValueSearch.value) {
     await handleSearch(searchValueSearch.value);
@@ -76,9 +76,9 @@ if (typeof window !== 'undefined') {
 
 const fetchTagSuggest = async (value: string) => {
   console.log('fetchTagSuggest', value);
-  try{
+  try {
     const result = await fetchSuggest(value);
-    if (result.length){
+    if (result.length) {
       listTagSuggestions.value = result;
     } else {
       listTagSuggestions.value = [];
@@ -123,8 +123,8 @@ const fetchData = async (searchValue: string = '', list_category_report_id: Arra
   }
 };
 
-const fetchDataRecommend = async(category_report_id: string) => {
-  try{
+const fetchDataRecommend = async (category_report_id: string) => {
+  try {
     const result = await fetchListRecomend(category_report_id);
     if (result !== null) {
       listRecomend.value = result;
@@ -154,7 +154,7 @@ const handleSearch = async (searchValue: string, lstCategoryReportId: string[] =
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
 };
 
-const handlePageChange = async (newPage: number, ) => {
+const handlePageChange = async (newPage: number,) => {
   page.value = newPage;
   const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
@@ -173,13 +173,17 @@ onMounted(() => {
   }
   fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
 });
+
+useSeoMeta({
+  title: PAGE_TITLES.search
+})
 </script>
 
 <template>
-  <banner-report v-if="data && data.breadcrumb" :title="data.breadcrumb[0].name"/>
+  <banner-report v-if="data && data.breadcrumb" :title="data.breadcrumb[0].name" />
   <div id="search_report">
     <div class="sectionContent searchContent">
-      <SearchReport class="searchBox" :handle-search="handleSearch"/>
+      <SearchReport class="searchBox" :handle-search="handleSearch" />
     </div>
     <div class="container default_section">
       <div class="list_report_industry">
@@ -187,36 +191,27 @@ onMounted(() => {
           <div class="count_result">
             {{ (data?.total || 0).toLocaleString() }} kết quả
           </div>
-          <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect"/>
+          <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect" />
           <a-button v-else @click="clickButtonFilter">
             <div style="display: flex; gap: 8px; justify-content: center; align-items: center">
               <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_4202_14089)">
-                  <path
-                      d="M8 4.375C8 5.41053 8.83947 6.25 9.875 6.25C10.9105 6.25 11.75 5.41053 11.75 4.375C11.75 3.33947 10.9105 2.5 9.875 2.5C8.83947 2.5 8 3.33947 8 4.375Z"
-                      stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path
-                      d="M11.75 10C11.75 11.0355 12.5895 11.875 13.625 11.875C14.6605 11.875 15.5 11.0355 15.5 10C15.5 8.96447 14.6605 8.125 13.625 8.125C12.5895 8.125 11.75 8.96447 11.75 10Z"
-                      stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path
-                      d="M5.5 15.625C5.5 16.6605 6.33947 17.5 7.375 17.5C8.41053 17.5 9.25 16.6605 9.25 15.625C9.25 14.5895 8.41053 13.75 7.375 13.75C6.33947 13.75 5.5 14.5895 5.5 15.625Z"
-                      stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M17.375 4.375L11.75 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
-                        stroke-linejoin="round"/>
-                  <path d="M17.375 15.625L9.25 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
-                        stroke-linejoin="round"/>
-                  <path d="M17.375 10L15.5 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
-                        stroke-linejoin="round"/>
-                  <path d="M8 4.375L3.625 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
-                        stroke-linejoin="round"/>
-                  <path d="M5.5 15.625L3.625 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
-                        stroke-linejoin="round"/>
-                  <path d="M11.75 10L3.625 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
-                        stroke-linejoin="round"/>
+                  <path d="M8 4.375C8 5.41053 8.83947 6.25 9.875 6.25C10.9105 6.25 11.75 5.41053 11.75 4.375C11.75 3.33947 10.9105 2.5 9.875 2.5C8.83947 2.5 8 3.33947 8 4.375Z" stroke="#241E46"
+                    stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M11.75 10C11.75 11.0355 12.5895 11.875 13.625 11.875C14.6605 11.875 15.5 11.0355 15.5 10C15.5 8.96447 14.6605 8.125 13.625 8.125C12.5895 8.125 11.75 8.96447 11.75 10Z"
+                    stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M5.5 15.625C5.5 16.6605 6.33947 17.5 7.375 17.5C8.41053 17.5 9.25 16.6605 9.25 15.625C9.25 14.5895 8.41053 13.75 7.375 13.75C6.33947 13.75 5.5 14.5895 5.5 15.625Z"
+                    stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M17.375 4.375L11.75 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M17.375 15.625L9.25 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M17.375 10L15.5 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M8 4.375L3.625 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M5.5 15.625L3.625 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M11.75 10L3.625 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
                 </g>
                 <defs>
                   <clipPath id="clip0_4202_14089">
-                    <rect width="20" height="20" fill="white" transform="translate(0.5)"/>
+                    <rect width="20" height="20" fill="white" transform="translate(0.5)" />
                   </clipPath>
                 </defs>
               </svg>
@@ -224,8 +219,8 @@ onMounted(() => {
             </div>
           </a-button>
           <a-modal v-model:visible="isModalVisible" title="Filter and Sort" @ok="handleOk" @cancel="handleCancel">
-            <sort-report class="sort_report" @sort-select="handleSortSelect"/>
-            <filter-report class="filter_report"/>
+            <sort-report class="sort_report" @sort-select="handleSortSelect" />
+            <filter-report class="filter_report" />
           </a-modal>
         </div>
         <template v-if="isLoading">
@@ -235,9 +230,9 @@ onMounted(() => {
 
       </div>
       <div class="relate_functions">
-        <filter-report v-if="displaySortReport" class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect"/>
-        <popular-relate-keywords v-if="listTagSuggestions?.length" :tags="listTagSuggestions" @tag-clicked="handleTagClick"/>
-        <maybe-interested v-if="listRecomend" :recomends="listRecomend"/>
+        <filter-report v-if="displaySortReport" class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect" />
+        <popular-relate-keywords v-if="listTagSuggestions?.length" :tags="listTagSuggestions" @tag-clicked="handleTagClick" />
+        <maybe-interested v-if="listRecomend" :recomends="listRecomend" />
       </div>
     </div>
     <div class="poster">
@@ -369,6 +364,7 @@ onMounted(() => {
       flex-direction: column;
       align-items: center;
       text-align: center;
+
       .info {
         width: 100%;
 
@@ -381,6 +377,7 @@ onMounted(() => {
     @media (max-width: 767px) {
       height: 384px;
       padding: 32px 16px;
+
       .info {
         align-items: center;
 
@@ -389,6 +386,7 @@ onMounted(() => {
           font-size: 24px;
         }
       }
+
       .chart_image {
         top: 225px;
         right: 0;
@@ -398,6 +396,7 @@ onMounted(() => {
         }
 
       }
+
       .line_styling_image {
         top: 250px;
         right: 220px;
@@ -409,7 +408,6 @@ onMounted(() => {
     }
   }
 }
-
 </style>
 
 <style lang="scss">
@@ -419,12 +417,15 @@ onMounted(() => {
       width: 90% !important;
       margin: 0 auto;
     }
+
     @media (min-width: 768px) {
       width: 70% !important;
     }
+
     @media (min-width: 1024px) {
       width: 50% !important;
     }
+
     @media (min-width: 1200px) {
       width: 30% !important;
     }
@@ -485,5 +486,4 @@ onMounted(() => {
     }
   }
 }
-
 </style>
