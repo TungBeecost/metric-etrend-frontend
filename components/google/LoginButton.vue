@@ -6,7 +6,7 @@ const runtimeConfig = useRuntimeConfig();
 
 onMounted(() => {
   google.accounts.id.initialize({
-    client_id: runtimeConfig.public.CLIENT_ID,
+    client_id: '426000576581-0o4c24jbbcmi9mkiqs1kh87p50ki5f7n.apps.googleusercontent.com',
     callback: authStore.handleGoogleCredentialResponse,
   })
   google.accounts.id.renderButton(
@@ -53,7 +53,7 @@ onMounted(() => {
         </div>
       </div>
       <div class="button_login">
-        <div id="googleButton"></div>
+        <div id="googleButton" style="display: flex;"></div>
         <div>
           <div class="conent_login">
             Bằng việc <b>Đăng nhập/đăng ký</b>, bạn đồng ý với

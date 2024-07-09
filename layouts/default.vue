@@ -31,7 +31,8 @@
         <Footer/>
       </footer>
     </div>
-    <div v-else>
+    <div v-else
+         style="display: flex; align-items: center; justify-content: center;width: 100%; height: 100%; position: fixed;">
       <a-spin size="large"/>
     </div>
   </a-config-provider>
@@ -55,7 +56,7 @@ const {isShowMenu, setShowMenu} = useShowMainMenu();
 
 // mobile menu always using white header
 watch(isShowMenu, () => {
-  if (isShowMenu.value === true) isDarkBlueHeader.value = false;
+  if (isShowMenu.value) isDarkBlueHeader.value = false;
   else recheckHeader();
 })
 
