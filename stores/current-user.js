@@ -52,13 +52,18 @@ export const useCurrentUser = defineStore("currentUserStore", {
                 this.fetchedUser = true;
                 return
             }
-            this.userInfo = jwt_decode(access_token);
-            this.fetchedUser = true;
-            const {currentPlan, ...userInfo} = await fetchUserProfile();
-            if (!userInfo?.id) return;
-            this.userInfo = {...userInfo, current_plan: currentPlan};
-            this.fetchedUser = true;
-            console.log(222, this.userInfo)
+            try {
+                this.userInfo = jwt_decode(access_token);
+                this.fetchedUser = true;
+                const {currentPlan, ...userInfo} = await fetchUserProfile();
+                if (!userInfo?.id) return;
+                this.userInfo = {...userInfo, current_plan: currentPlan};
+                this.fetchedUser = true;
+                console.log(222, this.userInfo)
+            } catch (err) {
+                this.fetchedUser = true;
+                console.log("Error: ", err);
+            }
         },
         async unlockReport(slug) {
             // call BE to verify & update state
