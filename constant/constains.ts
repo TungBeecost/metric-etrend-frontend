@@ -135,6 +135,7 @@ export const LABEL_PERMISSION_PLAN = {
 interface IPLAN {
   type: string;
   description: string;
+  plan_code: string;
   price: string;
   unit?: string;
   isHighlight?: boolean;
@@ -147,6 +148,7 @@ interface IPLAN {
 export const PLANS: Array<IPLAN> = [
   {
     type: "Free",
+    plan_code: "free",
     description: "Truy cập kho báo cáo và cập nhật xu hướng",
     price: "Miễn phí",
     unit: undefined,
@@ -158,6 +160,7 @@ export const PLANS: Array<IPLAN> = [
   },
   {
     type: "Pro",
+    plan_code: "e_pro",
     description: "Phù hợp nhu cầu phân tích chuyên sâu",
     price: "7,9 Triệu",
     unit: "năm",

@@ -23,20 +23,20 @@ export const useCurrentUser = defineStore("currentUserStore", {
       display_name: undefined,
       first_name: undefined,
       last_name: undefined,
-      avatar: undefined
-    },
-    planInfo: {
-      plan_id: undefined,
-      plan_name: undefined,
-      plan_code: undefined,
-      remain_claim: undefined,
-      remain_claim_basic: undefined,
-      remain_claim_pro: undefined,
-      remain_claim_expert: undefined
+      avatar: undefined,
+      current_plan: {
+        plan_id: undefined,
+        plan_name: undefined,
+        plan_code: undefined,
+        remain_claim: undefined,
+        remain_claim_basic: undefined,
+        remain_claim_pro: undefined,
+        remain_claim_expert: undefined
+      },
     },
   }),
   getters: {
-    remainingUnlock: (state) => state.planInfo.remain_claim
+    remainingUnlock: (state) => state.current_plan.remain_claim
   },
   actions: {
     async fetchCurrentUser() {
@@ -45,7 +45,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
       this.fetchedUser = true;
       if (!userInfo?.id) return;
       this.userInfo = userInfo;
-      this.planInfo = currentPlan;
+      this.current_plan = currentPlan;
     },
     async unlockReport(slug) {
       // call BE to verify & update state

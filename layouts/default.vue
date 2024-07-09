@@ -10,7 +10,7 @@
       <!-- header section -->
       <header :class="{ darkBlueHeader: isDarkBlueHeader }">
         <NuxtImg :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'" class="logo"
-                 :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32"/>
+                 :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" @click="navigateToHome" style="cursor: pointer"/>
 
         <div @click="setShowMenu(!isShowMenu)">
           <CustomIcon v-if="device.isMobile && !isShowMenu" :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'"/>
@@ -63,6 +63,10 @@ const menuDarkBlue = [NAVIGATIONS.home, NAVIGATIONS.pricing];
 const isDarkBlueHeader = useState(() => false);
 const recheckHeader = () => {
   if (isDarkBlueHeader.value !== !!menuDarkBlue.includes(route.path)) isDarkBlueHeader.value = !isDarkBlueHeader.value;
+}
+
+const navigateToHome = () => {
+  navigateTo(NAVIGATIONS.home);
 }
 // recheck header color when change route
 watch(() => route.path, () => {
