@@ -5,8 +5,11 @@
         v-model:value="searchValue" :placeholder="placeholder || 'Tìm kiếm báo cáo'"
         size="large"
         allow-clear
-        @change="onChange" @search="handleSearch(searchValue)"
-        @press-enter="handleSearch(searchValue)" @focus="isShowSuggestions = true"
+        style="padding: 8px; border: 1px solid #D7D1F9; border-radius: 8px;"
+        @change="onChange"
+        @search="handleSearch(searchValue)" @press-enter="handleSearch(searchValue)"
+        @focus="isShowSuggestions = true"
+        @blur="isShowSuggestions = false"
     >
       <template #enterButton>
         <CustomIcon type="Search"/>
@@ -78,8 +81,23 @@ const onChange = debounce(async () => {
   }
 });
 
+onMounted(() => {
+    onChange();
+});
 </script>
 
 <style lang="scss" scoped>
 @import url("./index.scss");
+</style>
+
+<style>
+.wrapper {
+  span{
+    span{
+      span{
+        border: none;
+      }
+    }
+  }
+}
 </style>

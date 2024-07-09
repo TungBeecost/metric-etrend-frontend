@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { NAVIGATIONS, PLANS } from '~/constant/constains';
+const {userInfo} = useCurrentUser();
 
 defineProps<{
   isDarkTitle?: boolean,
@@ -8,7 +9,7 @@ defineProps<{
 
 <template>
   <div class="wrapper">
-    <p :class="{ header: true, dark: isDarkTitle }">Mở khoá và truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</p>
+    <p :class="{ header: true, dark: isDarkTitle }">Truy cập kho dữ liệu với hàng trăm báo cáo <br/>và xu hướng mới nhất</p>
 
     <div class="pricings">
       <div v-for="plan in PLANS" :class="{ planItem: true, highlight: plan.isHighlight }">
@@ -29,18 +30,19 @@ defineProps<{
               <div v-for="permission in plan.permissions" class="permissionItem">
                 <div class="perm">
                   <CustomIcon :type="permission.icon as any" :is-custom-size="true" class="permissionIcon" />
-                  <p>{{ permission.label }}</p>
+                  <div>{{ permission.label }}</div>
                 </div>
                 <div v-for="subPerm in permission.sub" class="perm subPerm">
                   <CustomIcon type="Tick" :is-custom-size="true" class="permissionIcon" />
-                  <p>{{ subPerm }}</p>
+                  <div>{{ subPerm }}</div>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- <AButton type="primary">Mua gói {{ plan.type }}</AButton> -->
-          <AButton type="primary" @click="navigateTo(NAVIGATIONS.contactUs)">Liên hệ tư vấn</AButton>
+          <AButton v-if="plan.plan_code === 'free'" class="user_plan" @click="navigateTo(NAVIGATIONS.contactUs)"> Đang sử dụng </AButton>
+          <AButton v-else :class="userInfo.current_plan.plan_code === plan.plan_code ? 'user_plan' : 'not_user_plan'" @click="navigateTo(NAVIGATIONS.contactUs)">{{ userInfo.current_plan.plan_code === plan.plan_code ? 'Đang sử dụng' : 'Liên hệ để mua gói Pro' }}</AButton>
         </div>
       </div>
     </div>

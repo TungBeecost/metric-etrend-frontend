@@ -218,6 +218,12 @@ const onItemClicked = (item: LstReport) => {
 <style lang="scss">
 #lst_report_id{
   .ant-pagination{
+    .ant-pagination-prev{
+      background-color: #F5F5F5;
+    }
+    .ant-pagination-next{
+      background-color: #F5F5F5;
+    }
     .ant-pagination-item{
       background-color: #F5F5F5;
       border-radius: 8px;

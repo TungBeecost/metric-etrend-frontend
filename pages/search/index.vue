@@ -183,7 +183,7 @@ useSeoMeta({
   <banner-report v-if="data && data.breadcrumb" :title="data.breadcrumb[0].name" />
   <div id="search_report">
     <div class="sectionContent searchContent">
-      <SearchReport class="searchBox" :handle-search="handleSearch" />
+      <SearchReport class="default_section" :handle-search="handleSearch" />
     </div>
     <div class="container default_section">
       <div class="list_report_industry">
@@ -266,9 +266,6 @@ useSeoMeta({
     display: flex;
     justify-content: center;
 
-    .searchBox {
-      width: 60%
-    }
   }
 
   .container {
@@ -340,14 +337,6 @@ useSeoMeta({
       }
     }
 
-    .big_logo_metric {
-      position: absolute;
-
-      img {
-        opacity: 0.5;
-      }
-    }
-
     .chart_image {
       position: absolute;
       right: 0;
@@ -408,6 +397,7 @@ useSeoMeta({
     }
   }
 }
+
 </style>
 
 <style lang="scss">
