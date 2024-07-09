@@ -13,12 +13,29 @@ const {reports} = defineProps({
 const handleItemClick = (report: any) => {
   navigateTo(`${NAVIGATIONS.home}${report.slug}`);
 }
+
+const windowWidth = ref(window.innerWidth);
+
+const onResize = () => {
+  windowWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', onResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', onResize);
+});
+
+const itemsToShow = computed(() => {
+  return windowWidth.value < 768 ? 1 : 4;
+});
 </script>
 
 <template>
   <div class="report-slide">
-    <Carousel :items-to-show="4" :items-to-scroll="3" :wrap-around="true" style="width: 100%;" :snap-align="'start'">
-      <Slide v-for="report in reports" v-bind="report" :key="report.name">
+    <Carousel :items-to-show="itemsToShow" :items-to-scroll="1" :wrap-around="true" style="width: 100%;" :snap-align="'start'">      <Slide v-for="report in reports" v-bind="report" :key="report.name">
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
             <img :src="report.url_thumbnail" alt="" style="width: 100%; object-fit: cover">
@@ -124,48 +141,55 @@ const handleItemClick = (report: any) => {
     cursor: pointer;
     position: absolute;
   }
+}
 
+@media (max-width: 767px) {
+  .report-slide {
+    .carousel__slide {
+      .slide-item {
+        height: auto;
+        flex-direction: column;
 
-  //.carousel__slide {
-  //  //border-radius: 16px;
-  //  //background: var(--Neutral-neutral-1, #FFF);
-  //  //box-shadow: 10px 10px 40px 0px rgba(0, 0, 0, 0.05);
-  //}
-  //
-  //.carousel__viewport {
-  //  perspective: 2000px;
-  //}
-  //
-  //.carousel__track {
-  //  transform-style: preserve-3d;
-  //}
-  //
-  //.carousel__slide--sliding {
-  //  transition: 0.5s;
-  //}
-  //
-  //.carousel__slide {
-  //  opacity: 0.9;
-  //  transform: rotateY(-20deg) scale(0.95);
-  //}
-  //
-  //.carousel__slide--active ~ .carousel__slide {
-  //  transform: rotateY(20deg) scale(0.95);
-  //}
-  //
-  //.carousel__slide--prev {
-  //  opacity: 1;
-  //  transform: rotateY(-10deg) scale(0.95);
-  //}
-  //
-  //.carousel__slide--next {
-  //  opacity: 1;
-  //  transform: rotateY(10deg) scale(0.95);
-  //}
-  //
-  //.carousel__slide--active {
-  //  opacity: 1;
-  //  transform: rotateY(0) scale(1.05);
-  //}
+        .thumbnail {
+          width: 100%;
+          height: auto;
+          border-bottom: none;
+        }
+
+        .content {
+          padding: 8px;
+
+          .category_date, .title, .description {
+            text-align: center;
+          }
+
+          .title {
+            font-size: 18px;
+            margin-bottom: 4px;
+          }
+
+          .description {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .carousel__prev {
+      left: 40%;
+      top: 100%;
+      transform: translateX(-60px);
+    }
+
+    .carousel__next {
+      left: 50%;
+      top: 100%;
+      transform: translateX(20px);
+    }
+
+    .carousel__pagination{
+      display: none;
+    }
+  }
 }
 </style>

@@ -7,9 +7,9 @@
         allow-clear
         style="padding: 8px; border: 1px solid #D7D1F9; border-radius: 8px;"
         @change="onChange"
-        @search="handleSearch(searchValue)" @press-enter="handleSearch(searchValue)"
+        @search="handleSearch(searchValue)"
+        @press-enter="handleSearch(searchValue)"
         @focus="isShowSuggestions = true"
-        @blur="isShowSuggestions = false"
     >
       <template #enterButton>
         <CustomIcon type="Search"/>
@@ -63,6 +63,16 @@ const setShowSuggestions = () => {
   isShowSuggestions.value = false;
 }
 
+const handleSearch = async (value: string) => {
+  if (!value) return;
+
+  isShowSuggestions.value = false;
+
+  if (props.handleSearch) {
+    await props.handleSearch(value);
+  }
+}
+
 const handleSuggestionClick = async (suggestion: string) => {
   searchValue.value = suggestion;
   isShowSuggestions.value = false;
@@ -71,18 +81,18 @@ const handleSuggestionClick = async (suggestion: string) => {
   await props.handleSearch(suggestion);
 }
 
-const onChange = debounce(async () => {
+const onChange = debounce(async (showSuggestions = true) => {
   if (!props.handleChange) return;
 
   const result = await props.handleChange(searchValue.value);
-
+  isShowSuggestions.value = showSuggestions;
   if (result) {
     suggestions.value = result;
   }
 });
 
 onMounted(() => {
-    onChange();
+  onChange(false); // Call onChange with false to not show suggestions
 });
 </script>
 

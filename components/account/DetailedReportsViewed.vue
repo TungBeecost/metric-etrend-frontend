@@ -2,6 +2,7 @@
 import EmptyReport from "~/components/account/EmptyReport.vue";
 import ListReport from "~/components/report/ListReport.vue";
 import type {ListClaimed} from "~/services/reports";
+import {ref} from "vue";
 
 const props = defineProps({
   data: {
@@ -13,6 +14,11 @@ const props = defineProps({
     default: 0,
   },
 });
+
+const current = ref(1);
+const onChange = async (page: number) => {
+  current.value = page;
+};
 </script>
 
 <template>
@@ -26,7 +32,10 @@ const props = defineProps({
     </div>
     <div class="detailed_reports_viewed_content default_section">
       <div v-if="props.data">
-        <list-report :data="props.data" :total="props.total"/>
+        <list-report :data="props.data"/>
+        <div class="page">
+          <a-pagination v-model:current="current" :total="props.total" show-less-items @change="onChange" />
+        </div>
       </div>
       <div v-else>
         <empty-report/>

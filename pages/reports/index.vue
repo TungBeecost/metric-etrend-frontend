@@ -241,7 +241,7 @@ useSeoMeta({
   }
 }
 
-@media (max-width: 424px) {
+@media (max-width: 460px) {
   .title_report {
     .image {
       .title {

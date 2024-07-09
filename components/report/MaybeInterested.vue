@@ -53,7 +53,7 @@ const handleItemClick = (item: LstRecommed) => {
       </div>
       <div class="info">
         <div class="breadcrumb">{{ item.category_report_name }} | {{ formatDate(item.start_date) }}</div>
-        <div class="name">{{ item.name }}</div>
+        <div class="name">Báo cáo Nhóm hàng {{ item.name }}</div>
       </div>
     </div>
   </div>
@@ -90,8 +90,8 @@ const handleItemClick = (item: LstRecommed) => {
 
     .image {
       img {
-        width: 45px;
-        height: 45px;
+        width: 60px;
+        height: 60px;
         border-radius: 8px;
       }
     }
