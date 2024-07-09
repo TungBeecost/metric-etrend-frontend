@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toSeoName } from "~/helpers/StringHelper";
+import {toSeoName} from "~/helpers/StringHelper";
 import GeneralOverview from "~/components/report/GeneralOverview.vue";
 import Overview from "~/components/report/Overview.vue";
 import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
@@ -7,10 +7,11 @@ import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ReportContent from "~/components/report/ReportContent.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
-import { ref } from "vue";
+import {ref} from "vue";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import axios from "axios";
-import { PAGE_TITLES } from "../constant/constains";
+import {PAGE_TITLES} from "~/constant/constains";
+import UnlockReport from "~/components/report/UnlockReport.vue";
 
 interface Category {
   name: string;
@@ -41,7 +42,7 @@ const fetchTableData = async () => {
       }
     });
     console.log(response.data)
-    const { tier_report } = response.data;
+    const {tier_report} = response.data;
     if (tier_report !== 'free') {
       isHideContent.value = false;
     }
@@ -92,7 +93,7 @@ useSeoMeta({
   <div v-if="!loading" class="container_content">
     <div class="title default_section">
       <div v-if="data" class="breadcrumbs">
-        <Breadcrumb :breadcrumbs="breadcrumbs" />
+        <Breadcrumb :breadcrumbs="breadcrumbs"/>
       </div>
       <h1 v-if="data" class="report-title">
         {{ data.name }} - Báo cáo xu hướng thị trường sàn TMĐT
@@ -100,19 +101,20 @@ useSeoMeta({
     </div>
     <div class="container default_section">
       <div v-if="data" class="general_overview_container">
-        <general-overview :data="data as Record<string, any>" :is-hide-content="isHideContent" />
-        <price-range-statistic :data="data" :is-hide-content="isHideContent" />
-        <brand-statistic :data="data" :is-hide-content="isHideContent" />
-        <top-shop-statistic :data="data" :is-hide-content="isHideContent" />
-        <list-products :data="data" :is-hide-content="isHideContent" />
+        <general-overview :data="data as Record<string, any>" :is-hide-content="isHideContent"/>
+        <price-range-statistic :data="data" :is-hide-content="isHideContent"/>
+        <brand-statistic :data="data" :is-hide-content="isHideContent"/>
+        <top-shop-statistic :data="data" :is-hide-content="isHideContent"/>
+        <list-products :data="data" :is-hide-content="isHideContent"/>
       </div>
       <div v-if="data" class="different_info">
-        <overview :is-hide-content="isHideContent" :data="data as Record<string, any>" />
-        <report-content />
-        <report-filter-detail :data="data" :filter="data.filter_custom" class="report-filter-detail" />
+        <unlock-report/>
+        <overview :is-hide-content="isHideContent" :data="data as Record<string, any>"/>
+        <report-content/>
+        <report-filter-detail :data="data" :filter="data.filter_custom" class="report-filter-detail"/>
       </div>
     </div>
-    <poster-detail-report />
+    <poster-detail-report/>
   </div>
 </template>
 
@@ -153,7 +155,7 @@ useSeoMeta({
       flex: 0.3;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 24px;
     }
   }
 }

@@ -1,7 +1,5 @@
 <script setup>
 import {onMounted, ref} from 'vue';
-import {NAVIGATIONS} from "~/constant/constains";
-import {useCurrentUser} from "~/stores/current-user.js"
 
 const isDesktop = ref(true);
 
@@ -9,15 +7,6 @@ onMounted(() => {
   isDesktop.value = window.innerWidth >= 768;
 });
 
-
-const currentUser = useCurrentUser();
-
-const unlockReport = async () => {
-  await currentUser.unlockReport('123');
-
-  // if nothing wrong
-  reloadNuxtApp();
-}
 
 const showUnlock = ref(false);
 
@@ -70,60 +59,7 @@ const toggleUnlock = () => {
     </div>
   </div>
 
-  <a-modal
-      :visible="showUnlock"
-      :footer="null"
-      @cancel="toggleUnlock"
-      @ok="toggleUnlock"
-  >
-    <div class="unlock-report-modal">
-      <div v-if="currentUser.remainingUnlock">
-        <div style="text-align: center;">
-          <NuxtImg src="/images/Unlock-Document.png" class="unlock-icon"/>
-        </div>
-
-        <div class="content">
-          <div class="remaining-unlock">
-            Số lượt xem hiện tại: {{ currentUser.remainingUnlock }}
-          </div>
-          <div class="header">Xác nhận xem báo cáo</div>
-          <div class="description">
-            Bạn có chắc chắn muốn sử dụng
-            <span class="highlight">01 lượt xem</span>
-            trong vòng 24 giờ cho
-            <span class="report-name">
-              Túi xách nữ - Báo cáo xu hướng thị trường sàn TMĐT
-            </span>
-            không?
-          </div>
-        </div>
-      </div>
-      <div v-else>
-        <div style="text-align: center;">
-          <NuxtImg src="/images/Unlock-Document-faded.svg" class="unlock-icon"/>
-        </div>
-
-        <div class="content">
-          <div class="remaining-unlock">
-            Số lượt xem hiện tại: {{ currentUser.remainingUnlock }}
-          </div>
-          <div class="header">Hết lượt xem báo cáo</div>
-          <div class="description">
-            Mua thêm gói dịch vụ để tiếp tục xem báo cáo chi tiết
-          </div>
-        </div>
-      </div>
-      <div class="unlock-report-modal-footer">
-        <AButton style="width: 100%;" size="large" class="optionBtn" @click="toggleUnlock">Huỷ</AButton>
-        <AButton style="width: 100%;" v-if="currentUser.remainingUnlock" size="large" type="primary" class="optionBtn" @click="unlockReport">
-          Xem báo cáo
-        </AButton>
-        <AButton style="width: 100%;" v-else size="large" type="primary" class="optionBtn" @click="navigateTo(NAVIGATIONS.pricing)">
-          Mua ngay
-        </AButton>
-      </div>
-    </div>
-  </a-modal>
+  <ModalUnlock v-model:showUnlock="showUnlock"/>
 </template>
 
 <style lang="scss" scoped>
