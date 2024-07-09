@@ -71,8 +71,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: calc(100% - 80px);
-
+  width: 100%;
   margin-bottom: 64px;
 }
 
@@ -100,6 +99,7 @@ onMounted(() => {
 
   .title_content {
     gap: 8px;
+    margin-bottom: 40px;
   }
 
   .tittle {
@@ -127,4 +127,6 @@ onMounted(() => {
     }
   }
 }
+
+
 </style>

@@ -145,7 +145,10 @@ const toggleSeeMore = () => {
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 460px) {
+  .discover{
+    padding-top: 300px;
+  }
   .lst_item {
     width: calc(100% - 50px);
     grid-template-columns: repeat(2, 1fr);

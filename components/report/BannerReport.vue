@@ -1,17 +1,11 @@
 <script setup lang="ts">
 
-const props = defineProps({
-  title: {
-    type: String,
-    default: "",
-  }
-});
 </script>
 
 <template>
   <div class="banner">
       <div class="title">
-        {{props.title}}
+        Danh sách báo cáo
       </div>
   </div>
 </template>
@@ -32,10 +26,10 @@ const props = defineProps({
     }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 767px) {
   .banner{
     .title{
-      font-size: 36px;
+      font-size: 30px;
       padding: 40px 16px;
       height: 108px;
     }

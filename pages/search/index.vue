@@ -9,6 +9,7 @@ import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import type SearchReport from "~/components/search/search-report.vue";
 import type { LstRecommed, SearchReportRes } from "~/services/reports";
 import { NAVIGATIONS, PAGE_TITLES } from "~/constant/constains";
+import allReports from '@/public/file_json/list_category.json';
 import { useSearchReport } from "#imports";
 const { fetchSearch, fetchListRecomend, fetchSuggest } = useSearchReport()
 const route = useRoute();
@@ -18,6 +19,7 @@ const listTagSuggestions = ref<string[]>([]);
 const displaySortReport = ref(false);
 const isModalVisible = ref(false);
 const selectedCategory = ref<string>();
+const selectedCategoryName = ref<string>();
 const searchValueSearch = ref<string>();
 const page = ref(0);
 const isLoading = ref(false);
@@ -37,13 +39,14 @@ watchEffect(async () => {
   }
 });
 
-
 const handleCategorySelect = (newSelectedCategory: string) => {
   selectedCategory.value = newSelectedCategory;
   searchValueSearch.value = '';
   listTagSuggestions.value = [];
   const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
   navigateTo(`${NAVIGATIONS.search}?category_report_id=${newSelectedCategory}`);
+  const category = allReports.find(cat => cat.value === newSelectedCategory);
+  selectedCategoryName.value = category ? category.label : '';
   handleSearch(searchValueSearch.value, lstCategoryReportId);
 };
 
@@ -154,10 +157,11 @@ const handleSearch = async (searchValue: string, lstCategoryReportId: string[] =
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
 };
 
-const handlePageChange = async (newPage: number,) => {
-  page.value = newPage;
+const current = ref(1);
+const onChange = async (page: number) => {
+  current.value = page;
   const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
-  await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
+  await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page);
 };
 
 onMounted(() => {
@@ -180,10 +184,18 @@ useSeoMeta({
 </script>
 
 <template>
-  <banner-report v-if="data && data.breadcrumb" :title="data.breadcrumb[0].name" />
+  <banner-report/>
   <div id="search_report">
-    <div class="sectionContent searchContent">
-      <SearchReport class="default_section" :handle-search="handleSearch" />
+    <div class="sectionTitle default_section">
+      <div v-if="route.query.category_report_id && selectedCategoryName" class="sectionTitle_content" >
+        Kết quả tìm kiếm cho ngành hàng <b>"{{selectedCategoryName}}"</b>
+      </div>
+      <div v-if="route.query.search && searchValueSearch" class="sectionTitle_content">
+        Kết quả tìm kiếm cho nhóm hàng <b>"{{searchValueSearch}}"</b>
+      </div>
+      <div class="sectionContent searchContent">
+        <SearchReport class="default_section" :handle-search="handleSearch" />
+      </div>
     </div>
     <div class="container default_section">
       <div class="list_report_industry">
@@ -192,7 +204,7 @@ useSeoMeta({
             {{ (data?.total || 0).toLocaleString() }} kết quả
           </div>
           <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect" />
-          <a-button v-else @click="clickButtonFilter">
+          <a-button style="border: 1px solid #9D97BF" v-else @click="clickButtonFilter">
             <div style="display: flex; gap: 8px; justify-content: center; align-items: center">
               <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_4202_14089)">
@@ -220,14 +232,16 @@ useSeoMeta({
           </a-button>
           <a-modal v-model:visible="isModalVisible" title="Filter and Sort" @ok="handleOk" @cancel="handleCancel">
             <sort-report class="sort_report" @sort-select="handleSortSelect" />
-            <filter-report class="filter_report" />
+            <filter-report class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect"/>
           </a-modal>
         </div>
         <template v-if="isLoading">
           <a-skeleton :paragraph="{ rows: 40 }" style="padding-top: 40px; padding-bottom: 40px"/>
         </template>
-        <list-report v-else :class="{ 'hidden-list': isLoading, 'visible-list': !isLoading }" :data="data?.lst_report" :total="data?.total" @page_change="handlePageChange"/>
-
+        <list-report v-else :class="{ 'hidden-list': isLoading, 'visible-list': !isLoading }" :data="data?.lst_report"/>
+        <div class="page">
+          <a-pagination v-model:current="current" :total="data?.total" show-less-items @change="onChange" />
+        </div>
       </div>
       <div class="relate_functions">
         <filter-report v-if="displaySortReport" class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect" />
@@ -258,14 +272,25 @@ useSeoMeta({
   background-color: #FBFAFC;
   overflow: auto;
 
-  .searchContent {
-    padding-top: 60px;
-    gap: 32px;
-    width: 100%;
-    align-self: center;
+  .sectionTitle{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 36px;
+    padding-top: 36px;
 
+    .sectionTitle_content{
+      color: #241E46;
+      font-size: 20px;
+    }
+
+    .searchContent {
+      gap: 32px;
+      width: 100%;
+      align-self: center;
+      display: flex;
+      justify-content: center;
+
+    }
   }
 
   .container {
@@ -328,6 +353,7 @@ useSeoMeta({
       justify-content: center;
       align-items: flex-start;
       gap: 24px;
+      position: absolute;
 
       .content {
         font-size: 40px;
@@ -397,7 +423,15 @@ useSeoMeta({
     }
   }
 }
-
+@media (max-width: 767px) {
+  #search_report{
+    .sectionTitle{
+      .sectionTitle_content{
+        font-size: 14px;
+      }
+    }
+  }
+}
 </style>
 
 <style lang="scss">

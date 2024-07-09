@@ -13,21 +13,47 @@ const handleItemClick = (report: any) => {
   // Navigate to report detail page
   navigateTo(`${NAVIGATIONS.home}${report.slug}`);
 }
+
+const windowWidth = ref(window.innerWidth);
+
+const onResize = () => {
+  windowWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', onResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', onResize);
+});
+
+const itemsToShow = computed(() => {
+  return windowWidth.value < 768 ? 1 : 2; // 768px is a common breakpoint for mobile devices
+});
+
+const getDisplayedCategories = (report: any) => {
+  if (windowWidth.value < 768) {
+    return report.lst_category?.length ? report.lst_category[report.lst_category.length - 1].name : '';
+  } else {
+    return report.lst_category?.map((item: any) => item.name).join(' > ') || '';
+  }
+};
 </script>
 
 <template>
   <div class="new-report-slide">
-    <Carousel :items-to-show="2" :items-to-scroll="1" :wrap-around="true" style="width: 100%;" :snap-align="'start'">
+    <Carousel :items-to-show="itemsToShow" :items-to-scroll="1" :wrap-around="true" style="width: 100%;" :snap-align="'start'">
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
             <img :src="report.url_thumbnail" alt="" style="width: 100%; object-fit: cover">
           </div>
           <div class="content" style="text-align: left;">
-            <div class="category_date" style="text-align: left;">
-              {{ report.lst_category?.map((item: any) => item.name).join(' > ') }} <span style="color: #EEEBFF">|</span> {{ dayjs(report.created_at).format('DD/MM/YYYY') }}
+            <div class="category_date line-clamp__2" style="text-align: left;">
+              {{ getDisplayedCategories(report) }} <span style="color: #EEEBFF">|</span> {{ dayjs(report.created_at).format('DD/MM/YYYY') }}
             </div>
-            <div class="title" style="text-align: left;">
+            <div class="title line-clamp__2" style="text-align: left;">
               Báo cáo nhóm hàng {{ report.name }}
             </div>
             <div class="description line-clamp__2" style="text-align: left;">
@@ -79,8 +105,9 @@ const handleItemClick = (report: any) => {
 
           font-size: 14px;
           font-weight: 400;
-          line-height: 22px; /* 157.143% */
-
+          line-height: 22px;
+          overflow: hidden;
+          text-overflow: ellipsis;
           margin-bottom: 16px;
         }
 
@@ -129,47 +156,64 @@ const handleItemClick = (report: any) => {
     position: absolute;
   }
 
+}
 
-  //.carousel__slide {
-  //  //border-radius: 16px;
-  //  //background: var(--Neutral-neutral-1, #FFF);
-  //  //box-shadow: 10px 10px 40px 0px rgba(0, 0, 0, 0.05);
-  //}
-  //
-  //.carousel__viewport {
-  //  perspective: 2000px;
-  //}
-  //
-  //.carousel__track {
-  //  transform-style: preserve-3d;
-  //}
-  //
-  //.carousel__slide--sliding {
-  //  transition: 0.5s;
-  //}
-  //
-  //.carousel__slide {
-  //  opacity: 0.9;
-  //  transform: rotateY(-20deg) scale(0.95);
-  //}
-  //
-  //.carousel__slide--active ~ .carousel__slide {
-  //  transform: rotateY(20deg) scale(0.95);
-  //}
-  //
-  //.carousel__slide--prev {
-  //  opacity: 1;
-  //  transform: rotateY(-10deg) scale(0.95);
-  //}
-  //
-  //.carousel__slide--next {
-  //  opacity: 1;
-  //  transform: rotateY(10deg) scale(0.95);
-  //}
-  //
-  //.carousel__slide--active {
-  //  opacity: 1;
-  //  transform: rotateY(0) scale(1.05);
-  //}
+@media (max-width: 767px) {
+  .new-report-slide {
+    .carousel__slide {
+      .slide-item {
+        .thumbnail {
+          padding-left: 12px;
+          height: auto;
+          border-bottom: none;
+        }
+
+        .content {
+          padding: 8px;
+
+          .category_date{
+            text-align: center;
+          }
+
+          .title {
+            font-size: 16px;
+            margin-bottom: 4px;
+          }
+
+          .description {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .carousel__prev, .carousel__next {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid #EEEBFF;
+      background-color: #FFF;
+      cursor: pointer;
+      position: absolute;
+      top: auto;
+      bottom: -20px;
+    }
+
+    .carousel__prev {
+      bottom: auto;
+      left: 40%;
+      transform: translateX(-60px);
+    }
+
+    .carousel__next {
+      bottom: auto;
+      left: 50%;
+      transform: translateX(20px);
+    }
+
+    .carousel__pagination{
+      display: none;
+    }
+  }
 }
 </style>

@@ -81,18 +81,18 @@ const handleSuggestionClick = async (suggestion: string) => {
   await props.handleSearch(suggestion);
 }
 
-const onChange = debounce(async () => {
+const onChange = debounce(async (showSuggestions = true) => {
   if (!props.handleChange) return;
 
   const result = await props.handleChange(searchValue.value);
-  isShowSuggestions.value = true;
+  isShowSuggestions.value = showSuggestions;
   if (result) {
     suggestions.value = result;
   }
 });
 
 onMounted(() => {
-    onChange();
+  onChange(false); // Call onChange with false to not show suggestions
 });
 </script>
 

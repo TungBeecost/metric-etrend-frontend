@@ -10,19 +10,10 @@ const props = defineProps({
     type: Array as () => any[],
     default: () => [],
   },
-  total: {
-    type: Number,
-    default: 0,
-  },
 });
 
-const emit = defineEmits(['page_change', 'item_click']);
-const current = ref(1);
-const onChange = (page: number) => {
-  console.log(page);
-  current.value = page;
-  emit('page_change', page);
-};
+const windowWidth = ref(window.innerWidth);
+
 
 const formatPercentage = (value: number) => {
   return `${(value * 100).toFixed(2)}%`;
@@ -42,6 +33,26 @@ const formatDate = (createdDate: string | undefined, claimedDate: string | undef
 const onItemClicked = (item: LstReport) => {
   navigateTo(`${NAVIGATIONS.home}${item.slug}`);
 };
+
+const onResize = () => {
+  windowWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', onResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', onResize);
+});
+
+const getDisplayedCategories = (item: any) => {
+  if (windowWidth.value < 768) {
+    return item.lst_category?.length ? item.lst_category[item.lst_category.length - 1].name : '';
+  } else {
+    return item.lst_category?.map((item: any) => item.name).join(' > ') || '';
+  }
+};
 </script>
 
 <template>
@@ -52,7 +63,7 @@ const onItemClicked = (item: LstReport) => {
           <img :src="item.url_thumbnail" alt="">
         </div>
         <div class="info">
-          <div class="breadcrumb"> {{ item.lst_category?.map((item: any) => item.name).join(' > ') }} <span style="color: #EEEBFF"> | </span>  {{formatDate(item.created_at, item.claimed_at)}}</div>
+          <div class="breadcrumb"> {{ getDisplayedCategories(item) }} <span style="color: #EEEBFF"> | </span>  {{formatDate(item.created_at, item.claimed_at)}}</div>
           <div class="name">Báo cáo {{item.name}}</div>
           <div v-if="item.revenue_monthly" class="summary-info">
             <div class="info_item">
@@ -63,13 +74,13 @@ const onItemClicked = (item: LstReport) => {
                 </BlurContent>
               </span> - doanh số trung bình tháng
               <div class="gr_quarter">
-                <div class="gr_quarter_item" style="color: rgb(0, 194, 89)" v-if="item.gr_quarter > 0">
-                  <svg data-v-f4382b3b="" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-f4382b3b="" d="M19.9375 4.8125L11.6875 13.0625L8.25 9.625L2.0625 15.8125" stroke="#2EB553" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path><path data-v-f4382b3b="" d="M19.9375 10.3125V4.8125H14.4375" stroke="#2EB553" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                  {{ formatPercentage(item.gr_quarter) }}
+                <div v-if="item.gr_quarter > 0" class="gr_quarter_item" >
+                  <svg v-if="windowWidth >= 768" data-v-f4382b3b="" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-f4382b3b="" d="M19.9375 4.8125L11.6875 13.0625L8.25 9.625L2.0625 15.8125" stroke="#2EB553" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path><path data-v-f4382b3b="" d="M19.9375 10.3125V4.8125H14.4375" stroke="#2EB553" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  <span style="color: rgb(0, 194, 89)">{{ formatPercentage(item.gr_quarter) }}</span>
                 </div>
-                <div class="gr_quarter_item" style="color: rgb(245, 0, 0)" v-else-if="item.gr_quarter < 0">
-                  <svg data-v-f4382b3b="" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-f4382b3b="" d="M19.9375 17.1875L11.6875 8.9375L8.25 12.375L2.0625 6.1875" stroke="#EE3324" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path><path data-v-f4382b3b="" d="M19.9375 11.6875V17.1875H14.4375" stroke="#EE3324" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                  {{ formatPercentage(item.gr_quarter) }}
+                <div v-else-if="item.gr_quarter < 0" class="gr_quarter_item" >
+                  <svg v-if="windowWidth >= 768" data-v-f4382b3b="" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-f4382b3b="" d="M19.9375 17.1875L11.6875 8.9375L8.25 12.375L2.0625 6.1875" stroke="#EE3324" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path><path data-v-f4382b3b="" d="M19.9375 11.6875V17.1875H14.4375" stroke="#EE3324" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  <span style="color: rgb(245, 0, 0)">{{ formatPercentage(item.gr_quarter) }}</span>
                 </div>
                 <div v-else></div>
               </div>
@@ -86,9 +97,6 @@ const onItemClicked = (item: LstReport) => {
           <div class="description">Báo cáo thị phần thương hiệu hàng đầu như {{ item.lst_brand ? item.lst_brand.join(', ') : '' }} v.v</div>
         </div>
       </div>
-    </div>
-    <div class="page">
-      <a-pagination v-model:current="current" :total="props.total" show-less-items @change="onChange" />
     </div>
   </div>
 </template>
@@ -114,7 +122,7 @@ const onItemClicked = (item: LstReport) => {
       .image{
         img{
           width: 170px;
-          height: 130px;
+          height: 170px;
           object-fit: cover;
           border-radius: 8px;
         }
@@ -158,9 +166,12 @@ const onItemClicked = (item: LstReport) => {
             .gr_quarter{
               .gr_quarter_item{
                 display: flex;
-                align-items: center;
-                gap: 6px;
-                font-size: 14px;
+                gap: 4px;
+                span{
+                  display: flex;
+                  align-items: center;
+                  gap: 6px;
+                }
               }
             }
           }
@@ -198,12 +209,27 @@ const onItemClicked = (item: LstReport) => {
         }
 
         .info {
+          gap: 4px;
           .breadcrumb {
             font-size: 10px;
           }
 
           .name {
             font-size: 14px;
+          }
+
+          .summary-info{
+            .info_item{
+              font-size: 10px;
+            }
+
+            span{
+              font-size: 10px;
+            }
+
+            .gr_quarter{
+              display: none;
+            }
           }
 
           .description {
