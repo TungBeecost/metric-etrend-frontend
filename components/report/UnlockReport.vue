@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {useAuthStore} from "~/helpers/auth";
+import {useCurrentUser} from "~/stores/current-user"
 import {ref} from "vue";
 
-const authStore = useAuthStore();
+const currentUserStore = useCurrentUser();
 
 const showUnlock = ref(false);
 
@@ -74,7 +74,7 @@ const toggleUnlock = () => {
       <a-button style="width: 100%;" type="primary" size="large" @click="toggleUnlock">Xem báo cáo chi tiết</a-button>
       <div>
         Đã có tài khoản?
-        <a @click="authStore.setShowPopupLogin(true)">
+        <a @click="currentUserStore.setShowPopupLogin(true)">
           Đăng nhập ngay
         </a>
       </div>

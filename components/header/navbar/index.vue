@@ -1,35 +1,38 @@
 <template>
   <div class="headerNavbar">
     <div class="headerNavbarMenu">
-      <AButton v-for="(item, index) in MENUS" :key="index" type="text" :class="{ headerText: isDarkBlueHeader, headerTextDarkBlue: !isDarkBlueHeader }" @click="navigateTo(item.to)">{{ item.label }}
+      <AButton v-for="(item, index) in MENUS" :key="index" type="text"
+               :class="{ headerText: isDarkBlueHeader, headerTextDarkBlue: !isDarkBlueHeader }"
+               @click="navigateTo(item.to)">{{ item.label }}
       </AButton>
     </div>
     <div id="headButtonLogin" class="headerNavbarCallButton">
-      <a-button v-if="!authStore.authenticated" @click="authStore.setShowPopupLogin(true)">Đăng nhập</a-button>
-      <user-profile v-else />
-      <a-modal class="button_login" :visible="authStore.isShowPopupLogin" @ok="authStore.setShowPopupLogin(false)" @cancel="authStore.setShowPopupLogin(false)">
-        <login-button />
-      </a-modal>
-      <AButton type="primary" @click="navigateTo(NAVIGATIONS.contactUs)">Liên hệ tư vấn</AButton>
+      <div v-if="!currentUserStore.authenticated" style="display: flex; gap: 16px">
+        <a-button @click="currentUserStore.setShowPopupLogin(true)">Đăng nhập</a-button>
+        <AButton type="primary" @click="navigateTo(NAVIGATIONS.contactUs)">Liên hệ tư vấn</AButton>
+      </div>
+      <user-profile v-else/>
     </div>
 
+    <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"
+             @ok="currentUserStore.setShowPopupLogin(false)"
+             @cancel="currentUserStore.setShowPopupLogin(false)">
+      <login-button/>
+    </a-modal>
   </div>
 </template>
 
 <script setup lang="ts">
-import { MENUS, NAVIGATIONS } from '~/constant/constains';
+import {MENUS, NAVIGATIONS} from '~/constant/constains';
 import LoginButton from "~/components/google/LoginButton.vue";
 import UserProfile from "~/components/account/UserProfile.vue";
-import {useAuthStore} from "~/helpers/auth";
+import {useCurrentUser} from "~/stores/current-user"
 
 defineProps<{
   isDarkBlueHeader: boolean
 }>()
 
-const authStore = useAuthStore();
-onBeforeMount(() => {
-  authStore.checkAuth();
-});
+const currentUserStore = useCurrentUser();
 </script>
 
 <style lang="scss" scoped>

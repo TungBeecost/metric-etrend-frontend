@@ -1,16 +1,24 @@
 <template>
-  <a-config-provider :theme="{
-    token: {
-      colorPrimary: '#E85912',
-      colorText: '#241E46',
-      fontFamily: 'Inter'
-    },
-  }">
-    <div v-if="fetchedUser" class="container">
+  <a-config-provider
+      v-if="fetchedUser"
+      :theme="{
+        token: {
+          colorPrimary: '#E85912',
+          colorText: '#241E46',
+          fontFamily: 'Inter'
+        },
+      }"
+  >
+    <div
+        class="container"
+    >
       <!-- header section -->
       <header :class="{ darkBlueHeader: isDarkBlueHeader }">
-        <NuxtImg :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'" class="logo"
-                 :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" @click="navigateToHome" style="cursor: pointer"/>
+        <NuxtImg
+            :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'" class="logo"
+            :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" style="cursor: pointer"
+            @click="navigateToHome"
+        />
 
         <div @click="setShowMenu(!isShowMenu)">
           <CustomIcon v-if="device.isMobile && !isShowMenu" :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'"/>
@@ -31,11 +39,14 @@
         <Footer/>
       </footer>
     </div>
-    <div v-else
-         style="display: flex; align-items: center; justify-content: center;width: 100%; height: 100%; position: fixed;">
-      <a-spin size="large"/>
-    </div>
   </a-config-provider>
+  <div
+      v-else
+      class="loading"
+      style="display: flex; align-items: center; justify-content: center;width: 100%; height: 100%; position: fixed;"
+  >
+    <a-spin size="large"/>
+  </div>
 </template>
 
 <script setup lang="ts">

@@ -1,13 +1,12 @@
 <script setup>
-import { useAuthStore } from '~/helpers/auth.js';
+import { useCurrentUser } from '~/stores/current-user'
 
-const authStore = useAuthStore()
-const runtimeConfig = useRuntimeConfig();
+const currentUserStore = useCurrentUser()
 
 onMounted(() => {
   google.accounts.id.initialize({
     client_id: '426000576581-0o4c24jbbcmi9mkiqs1kh87p50ki5f7n.apps.googleusercontent.com',
-    callback: authStore.handleGoogleCredentialResponse,
+    callback: currentUserStore.handleGoogleCredentialResponse,
   })
   google.accounts.id.renderButton(
       document.getElementById('googleButton'),

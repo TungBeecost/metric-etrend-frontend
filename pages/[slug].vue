@@ -9,9 +9,9 @@ import ReportContent from "~/components/report/ReportContent.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
 import {ref} from "vue";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
-import axios from "axios";
 import {PAGE_TITLES} from "~/constant/constains";
 import UnlockReport from "~/components/report/UnlockReport.vue";
+import axios from "~/services/axios-wrapper";
 
 interface Category {
   name: string;
@@ -36,11 +36,7 @@ const slug = route.params.slug;
 const fetchTableData = async () => {
   try {
     loading.value = true;
-    const response = await axios.get(`https://api-ereport.staging.muadee.vn/api/report/detail?slug=${slug}`, {
-      headers: {
-        'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImN1b25nbGRAbWV0cmljLnZuIiwiZXhwIjoxNzIwMTY4NzYzLCJpYXQiOjE3MTk1NjM5NjMsImlzcyI6IkF1dGhlbnRpY2F0aW9uIFNlcnZpY2UiLCJzdWIiOiJEdXkgQ8awxqFuZyBMw6oifQ.MPj9EZnFmAvKlH47jQenfaPeeQ_ZFmyBzfSaCRxmma4',
-      }
-    });
+    const response = await axios.get(`http://localhost:8000/api/report/detail?slug=${slug}`)
     console.log(response.data)
     const {tier_report} = response.data;
     if (tier_report !== 'free') {
@@ -90,7 +86,54 @@ useSeoMeta({
 </script>
 
 <template>
-  <div v-if="!loading" class="container_content">
+  <div v-if="loading" class="container_content">
+    <div class="title default_section">
+      <div class="loading-skeleton">
+        <div>
+          <a-skeleton-input size="large" active style="width: max(50%, 300px); margin-bottom: 24px;"/>
+        </div>
+        <div style="display: flex; justify-content: space-between;width: 100%; margin-bottom: 24px;">
+          <a-skeleton-input size="small" active style="width: max(30%, 300px); "/>
+        </div>
+        <div class="container">
+          <div class="general_overview_container" style="display: flex; width: 100%; gap: 24px">
+            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px; border-radius: 16px 0 0 16px">
+              <a-skeleton-avatar active size="large"/>
+              <a-skeleton active size="large"/>
+            </div>
+            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;">
+              <a-skeleton-avatar active size="large"/>
+              <a-skeleton active size="large"/>
+            </div>
+            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;" class="hide-on-mobile">
+              <a-skeleton-avatar active size="large"/>
+              <a-skeleton active size="large"/>
+            </div>
+            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px; border-radius: 0 16px 16px 0"
+                 class="hide-on-mobile">
+              <a-skeleton-avatar active size="large"/>
+              <a-skeleton active size="large"/>
+            </div>
+          </div>
+          <div class="different_info">
+            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;" class="hide-on-mobile">
+              <a-skeleton-avatar active size="large"/>
+              <a-skeleton active size="large"/>
+            </div>
+            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;" class="hide-on-mobile">
+              <a-skeleton-avatar active size="large"/>
+              <a-skeleton active size="large"/>
+            </div>
+            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;" class="hide-on-mobile">
+              <a-skeleton-avatar active size="large"/>
+              <a-skeleton active size="large"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div v-else class="container_content">
     <div class="title default_section">
       <div v-if="data" class="breadcrumbs">
         <Breadcrumb :breadcrumbs="breadcrumbs"/>
@@ -108,7 +151,7 @@ useSeoMeta({
         <list-products :data="data" :is-hide-content="isHideContent"/>
       </div>
       <div v-if="data" class="different_info">
-        <unlock-report/>
+        <unlock-report v-if="isHideContent"/>
         <overview :is-hide-content="isHideContent" :data="data as Record<string, any>"/>
         <report-content/>
         <report-filter-detail :data="data" :filter="data.filter_custom" class="report-filter-detail"/>
@@ -116,6 +159,7 @@ useSeoMeta({
     </div>
     <poster-detail-report/>
   </div>
+
 </template>
 
 <style scoped lang="scss">

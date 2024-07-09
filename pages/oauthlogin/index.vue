@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LocationQuery } from "vue-router";
+import type {LocationQuery} from "vue-router";
 
 const route = useRoute()
 
@@ -17,7 +17,11 @@ const oAuthGoogleCallback = async (query: LocationQuery): Promise<TokenData | nu
       headers: {
         'Content-Type': 'application/json'
       },
-      query: query
+      query
+      // query: {
+      //   code: query.code,
+      //   state: query.state
+      // }
     })
   } catch (error) {
     console.error(error)
@@ -30,14 +34,14 @@ onMounted(async () => {
   if (!tokenData?.access_token) {
     return
   }
-  const accessToken = useCookie("access-token", { maxAge: 60 * 60 * 24 });
+  const accessToken = useCookie("access-token", {maxAge: 60 * 60 * 24});
   accessToken.value = tokenData.access_token;
   navigateTo('/')
 })
 </script>
 
 <template>
-  <div class="oauth-page" />
+  <div class="oauth-page"/>
 </template>
 
 <style scoped lang="scss"></style>

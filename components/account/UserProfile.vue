@@ -1,22 +1,21 @@
 <script setup>
-import { useAuthStore } from "~/helpers/auth.js";
+import {useCurrentUser} from "~/stores/current-user"
 
-const authStore = useAuthStore();
+const currentUserStore = useCurrentUser();
 
-const userData = computed(() => authStore.user);
-console.log(userData.value);
+const userData = computed(() => currentUserStore.userInfo);
 </script>
 
 <template>
   <a-dropdown placement="bottomRight" trigger="click">
-    <div class="user-profile">
-      <a-avatar class="avatar-image" :src="userData.avatar" size="small" />
-      <span class="user-name">{{ userData.first_name }} {{ userData.last_name }}</span>
+    <div v-if="userData?.id" class="user-profile">
+      <a-avatar class="avatar-image" :src="userData?.avatar" size="small"/>
+      <span class="user-name">{{ userData?.display_name }}</span>
     </div>
     <template #overlay>
       <a-menu class="user-profile-btn-dropdown">
         <a-menu-item>
-          <span @click="authStore.logOut()">Sign out</span>
+          <span @click="currentUserStore.logOut()">Sign out</span>
         </a-menu-item>
       </a-menu>
     </template>
@@ -26,6 +25,7 @@ console.log(userData.value);
 <style scoped lang="scss">
 .user-profile {
   cursor: pointer;
+
   .avatar-image {
     border-radius: 50%;
     border: 1px solid #eeebff;
@@ -33,11 +33,8 @@ console.log(userData.value);
     width: 32px;
     height: 32px;
   }
-  .user-name {
-    line-height: 50px;
-  }
-
 }
+
 .user-profile:hover {
   box-shadow: inset 0 -2px #e85912;
   color: #e85912;
