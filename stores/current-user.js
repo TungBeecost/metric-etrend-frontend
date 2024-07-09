@@ -16,6 +16,7 @@ const googleCallback = async (body) => {
 
 export const useCurrentUser = defineStore("currentUserStore", {
   state: () => ({
+    fetchedUser: false,
     userInfo: {
       id: undefined,
       email: undefined,
@@ -33,16 +34,16 @@ export const useCurrentUser = defineStore("currentUserStore", {
       remain_claim_pro: undefined,
       remain_claim_expert: undefined
     },
-    authenticated: false
   }),
   getters: {
     remainingUnlock: (state) => state.planInfo.remain_claim
   },
   actions: {
     async fetchCurrentUser() {
+      this.fetchedUser = false;
       const { currentPlan, ...userInfo } = await fetchUserProfile();
+      this.fetchedUser = true;
       if (!userInfo?.id) return;
-
       this.userInfo = userInfo;
       this.planInfo = currentPlan;
     },

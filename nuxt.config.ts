@@ -82,8 +82,8 @@ export default defineNuxtConfig({
 
         // Keys exposed client-side too
         public: {
-            // apiBase: "https://api-ereport.staging.muadee.vn"
-            apiBase: process.env.NUXT_PUBLIC_API_BASE
+            apiBase: "https://api-ereport.staging.muadee.vn"
+            // apiBase: process.env.NUXT_PUBLIC_API_BASE
         }
     },
     typescript: {

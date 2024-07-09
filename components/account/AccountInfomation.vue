@@ -1,21 +1,10 @@
 <script setup lang="ts">
-const user_info={
-  "id": 118102,
-  "email": "cuongld@metric.vn",
-  "username": null,
-  "first_name": "Duy Cương",
-  "last_name": " Lê",
-  "roles": [
-    "market_staff"
-  ],
-  "first_login": "2024-01-16T06:38:28.205769Z",
-  "last_login": "2024-06-28T08:39:23.10264Z",
-  "end_query_time": "2025-04-09T23:59:59+07:00",
-  "link_emails": [],
-  "referral_code": "ED7710AB",
-  "url_thumbnail": "https://lh3.googleusercontent.com/a/ACg8ocLuT_Lp5-BbPbpx7rXnF7zuJISm2mJkzRS63tBoZ7E5=s96-c",
-  "maximum_devices": 3
-}
+const props = defineProps({
+  userInfo: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
 
 <template>
@@ -27,10 +16,10 @@ const user_info={
     <div class="account_info_content default_section">
       <div class="user_info">
         <div class="basic_info">
-          <img :src="user_info.url_thumbnail" alt="user-avatar">
+          <img :src="props.userInfo.avatar" alt="user-avatar">
           <div class="basic_info_text">
-            <div class="name">{{user_info.first_name}} {{user_info.last_name}}</div>
-            <div class="email">{{user_info.email}}</div>
+            <div class="name">{{props.userInfo.first_name}} {{props.userInfo.last_name}}</div>
+            <div class="email">{{props.userInfo.email}}</div>
           </div>
         </div>
         <div class="line"></div>

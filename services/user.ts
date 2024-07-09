@@ -23,7 +23,7 @@ interface CurrentPlan {
 
 export const fetchUserProfile = async () => {
   try {
-    const response = await axios.post(useBEEndpoint(USER_ENDPOINTS.profile.endpoint), USER_ENDPOINTS.profile.method);
+    const response = await axios.get(useBEEndpoint(USER_ENDPOINTS.profile.endpoint));
     const result = response.data as ProfileRes;
 
     if (!result?.id) {
