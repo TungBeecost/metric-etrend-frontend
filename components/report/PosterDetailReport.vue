@@ -7,6 +7,14 @@ const recommendSearch = ["Ngành hàng Mẹ & Bé", "Ngành hàng Điện tử",
 const onClickSuggestion = (suggestion: string) => {
   navigateTo(`${NAVIGATIONS.search}?search=${suggestion}`);
 }
+
+const props = defineProps({
+  listSuggest: {
+    type: Array as () => string[],
+    default: () => [],
+  },
+});
+
 </script>
 
 <template>
@@ -18,19 +26,19 @@ const onClickSuggestion = (suggestion: string) => {
       <SearchReport class="searchBox" />
       <div class="recommendSearch">
         <div class="content_key">Từ khoá liên quan nổi bật</div>
-        <AButton ghost v-for="(item, index) in recommendSearch" :key="index" class="recommendItem" @click="onClickSuggestion(item)">
+        <AButton v-for="(item, index) in props.listSuggest" :key="index" ghost class="recommendItem" @click="onClickSuggestion(item)">
           {{ item }}
         </AButton>
       </div>
     </div>
-<!--    <div class="big_logo_metric">-->
-<!--      <img src="/images/big_logo_metric.svg" alt="">-->
-<!--    </div>-->
+    <div class="big_logo_metric">
+      <img src="/images/big_logo_metric.svg" alt="">
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.poster_detail_report{
+.poster_detail_report {
   background: linear-gradient(270deg, #4745A5 -67.05%, #241E46 98.36%);
   padding: 60px 120px;
   display: flex;
@@ -40,7 +48,7 @@ const onClickSuggestion = (suggestion: string) => {
   gap: 40px;
   position: relative;
 
-  .title{
+  .title {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -51,20 +59,21 @@ const onClickSuggestion = (suggestion: string) => {
     line-height: 56px;
   }
 
-  .searchContent{
+  .searchContent {
     display: flex;
     flex-direction: column;
     gap: 24px;
     width: 100%;
     padding: 0 200px;
+    z-index: 999;
 
-    .recommendSearch{
+    .recommendSearch {
       display: flex;
       gap: 16px;
       justify-content: center;
       align-items: center;
 
-      .content_key{
+      .content_key {
         font-size: 16px;
         font-weight: 700;
         color: #FFF;
@@ -73,12 +82,39 @@ const onClickSuggestion = (suggestion: string) => {
     }
   }
 
-  .big_logo_metric{
+  .big_logo_metric {
     opacity: 0.5;
     mix-blend-mode: luminosity;
     position: absolute;
     top: 0;
     right: 400px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 30px 60px;
+
+    .title {
+      font-size: 24px;
+      line-height: 32px;
+    }
+
+    .searchContent {
+      padding: 0 20px;
+
+      .recommendSearch {
+        flex-direction: column;
+        align-items: stretch;
+
+        .content_key {
+          margin-right: 0;
+          margin-bottom: 16px;
+        }
+      }
+    }
+
+    .big_logo_metric {
+      right: 20px;
+    }
   }
 }
 </style>

@@ -13,6 +13,8 @@ import {PAGE_TITLES} from "~/constant/constains";
 import UnlockReport from "~/components/report/UnlockReport.vue";
 import axios from "~/services/axios-wrapper";
 import {useCurrentUser} from "~/stores/current-user";
+import {searchReport, type SearchReportPayload} from "~/services/reports";
+const listTagSuggestions = ref<string[]>([]);
 
 interface Category {
   name: string;
@@ -40,18 +42,58 @@ const slug = route.params.slug;
 const fetchTableData = async () => {
   try {
     loading.value = true;
-    const response = await axios.get(`http://localhost:8000/api/report/detail?slug=${slug}`)
-    console.log(response.data)
+    const response = await axios.get(`https://api-ereport.staging.muadee.vn/api/report/detail?slug=${slug}`);
+    console.log(response.data);
     const {tier_report} = response.data;
     if (tier_report !== 'free') {
       isHideContent.value = false;
     }
     data.value = response.data;
     loading.value = false;
+    if (data.value) {
+      await fetchTagSuggest(data.value.name);
+    }
   } catch (error) {
     loading.value = false;
-    // handle the error here
     console.error(error);
+  }
+};
+
+const fetchSuggest = async (value: string | null, options?: SearchReportPayload) => {
+  try {
+    const body: SearchReportPayload = {
+      limit: 5,
+      lst_field: ["name", "slug"],
+      offset: 0,
+      sort: "popularity",
+      lst_query: value ? [value] : [],
+      ...options
+    };
+    const data = await searchReport(body);
+
+    if (data && data.lst_report) {
+      return data.lst_report.map((item) => item.name);
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error("fetchSuggest error: ", error);
+    return [];
+  }
+};
+
+const fetchTagSuggest = async (value: string) => {
+  console.log('fetchTagSuggest', value);
+  try {
+    const result = await fetchSuggest(value);
+    if (result.length) {
+      listTagSuggestions.value = result;
+    } else {
+      listTagSuggestions.value = [];
+    }
+  }
+  catch (e) {
+    console.error(e);
   }
 };
 
@@ -161,7 +203,7 @@ useSeoMeta({
         <report-filter-detail :data="data" :filter="data.filter_custom" class="report-filter-detail"/>
       </div>
     </div>
-    <poster-detail-report/>
+    <poster-detail-report :list-suggest="listTagSuggestions"/>
   </div>
 
 </template>

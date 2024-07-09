@@ -178,6 +178,10 @@ onMounted(() => {
   fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
 });
 
+const onClickViewPrice = () => {
+  navigateTo(NAVIGATIONS.pricing);
+};
+
 useSeoMeta({
   title: PAGE_TITLES.search
 })
@@ -252,7 +256,7 @@ useSeoMeta({
     <div class="poster">
       <div class="info">
         <div class="content">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</div>
-        <a-button>Xem báo giá</a-button>
+        <a-button @click="onClickViewPrice">Xem báo giá</a-button>
       </div>
       <div class="big_logo_metric">
         <img src="/images/big_logo_metric.svg" alt="">

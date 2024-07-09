@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { PAGE_TITLES } from '../../constant/constains';
+import { PAGE_TITLES } from '~/constant/constains';
 
 useSeoMeta({
   title: PAGE_TITLES.pricing

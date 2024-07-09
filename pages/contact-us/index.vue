@@ -84,6 +84,7 @@ useSeoMeta({
   position: relative;
 
   .info {
+    position: absolute;
     display: flex;
     width: 500px;
     flex-direction: column;
