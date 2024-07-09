@@ -12,6 +12,7 @@ import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import {PAGE_TITLES} from "~/constant/constains";
 import UnlockReport from "~/components/report/UnlockReport.vue";
 import axios from "~/services/axios-wrapper";
+import {useCurrentUser} from "~/stores/current-user";
 
 interface Category {
   name: string;
@@ -23,6 +24,9 @@ interface Data {
   lst_category: Category[];
   filter_custom: any;
 }
+
+const currentUserStore = useCurrentUser();
+
 
 const isHideContent = ref(true);
 const data = ref<Data | null>(null);
@@ -151,7 +155,7 @@ useSeoMeta({
         <list-products :data="data" :is-hide-content="isHideContent"/>
       </div>
       <div v-if="data" class="different_info">
-        <unlock-report v-if="isHideContent"/>
+        <unlock-report v-if="!currentUserStore.authenticated"/>
         <overview :is-hide-content="isHideContent" :data="data as Record<string, any>"/>
         <report-content/>
         <report-filter-detail :data="data" :filter="data.filter_custom" class="report-filter-detail"/>

@@ -48,11 +48,12 @@ export const useCurrentUser = defineStore("currentUserStore", {
         async fetchCurrentUser() {
             this.fetchedUser = false;
             const access_token = localStorage.getItem("access_token");
-            if (access_token) {
-                this.userInfo = jwt_decode(access_token);
-                console.log(111, this.userInfo)
+            if (!access_token) {
                 this.fetchedUser = true;
+                return
             }
+            this.userInfo = jwt_decode(access_token);
+            this.fetchedUser = true;
             const {currentPlan, ...userInfo} = await fetchUserProfile();
             if (!userInfo?.id) return;
             this.userInfo = {...userInfo, current_plan: currentPlan};
@@ -68,7 +69,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
             localStorage.removeItem("access_token");
             this.user = null;
 
-            window.location.href = "/login";
+            window.location.reload();
         },
         async handleGoogleCredentialResponse(response) {
             console.log("Handling Google Credential Response");
@@ -77,7 +78,6 @@ export const useCurrentUser = defineStore("currentUserStore", {
             try {
                 const data = await googleCallback({credential});
 
-                console.log("Data: ", data, data.value);
                 const access_token = data?.value?.access_token;
                 if (access_token) {
                     localStorage.setItem("access_token", access_token);
