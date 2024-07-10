@@ -11,11 +11,11 @@
 
     <div class="section infoSection">
       <div class="block contactInfo">
-        <p class="title">Thông tin liên hệ</p>
+        <div class="title">Thông tin liên hệ</div>
         <div class="information">
           <div v-for="(item, index) in CONTACTS" :key="index" class="contactItem">
             <CustomIcon :type="item.icon as any" />
-            <p class="inforDetail">{{ item.label }}</p>
+            <div class="inforDetail">{{ item.label }}</div>
           </div>
 
           <iframe class="map"
@@ -25,8 +25,8 @@
       </div>
 
       <div class="block contactForm">
-        <p class="title">Liên hệ với chúng tôi</p>
-        <p class="description">Liên hệ với chúng tôi để thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến ngay bây giờ!</p>
+        <div class="title">Liên hệ với chúng tôi</div>
+        <div class="description" style="font-size: 16px">Liên hệ với chúng tôi để thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến ngay bây giờ!</div>
 
         <ContactUsForm />
 

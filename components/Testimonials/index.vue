@@ -3,14 +3,14 @@
     <div class="sectionHeader">
       <p class="sectionTitle">Nguồn số liệu đáng tin cậy <br> được các đơn vị truyền thông, báo chí sử dụng</p>
     </div>
-    <div class="testimonialsList">
+    <Vue3Marquee :gradient="true" class="marqueeWrapper">
       <BrandItem v-for="(branch, index) in TESTIMONIAL_BRANDS" :key="index" :src="branch" class="brandItem" />
-    </div>
+    </Vue3Marquee>
   </div>
 </template>
 
 <script setup lang="ts">
-import { TESTIMONIAL_BRANDS } from "~/constant/constains"
+import {TESTIMONIAL_BRANDS} from "~/constant/constains"
 
 </script>
 

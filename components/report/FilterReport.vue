@@ -17,7 +17,13 @@ const props = defineProps({
     default: '',
   },
 });
-selectedOption.value = props.selectedCategory;
+if(props.selectedCategory == ''){
+  selectedOption.value = "c0000000000";
+}
+else{
+  selectedOption.value = props.selectedCategory;
+}
+
 
 interface ReportItem {
   value: string;
@@ -30,8 +36,11 @@ interface ReportItem {
 }
 
 const transformToTreeData = (data: ReportItem[]): ReportItem[] => {
+
   const treeData: ReportItem[] = [];
   const map = new Map(data.map((item: ReportItem) => [item.value, {...item, children: [] as ReportItem[]}]));
+
+
   data.forEach((item: ReportItem) => {
     if (item.parent) {
       const parent = map.get(item.parent);
@@ -48,6 +57,7 @@ const transformToTreeData = (data: ReportItem[]): ReportItem[] => {
       }
     }
   });
+
   return treeData;
 };
 
@@ -62,7 +72,11 @@ const handleChange = (value: SelectValue, option: DefaultOptionType | DefaultOpt
   if (typeof value === "string") {
     selectedOption.value = value;
   }
-  emit('categoryselect', selectedOption.value);
+  if(selectedOption.value == "c0000000000")
+    emit('categoryselect', '');
+  else{
+    emit('categoryselect', selectedOption.value);
+  }
 };
 
 onMounted(() => {

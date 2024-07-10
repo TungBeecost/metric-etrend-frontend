@@ -22,21 +22,17 @@
     }
   }
 
-  .testimonialsList {
+  .marqueeWrapper {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     align-items: center;
-    gap: 30px;
 
     .brandItem {
-
       width: 139px;
+      margin: 0px 10px;
 
       @include mobile {
-        width: 86px;
+        width: 116px;
       }
-
     }
   }
 }
