@@ -60,7 +60,7 @@ const toggleUnlock = () => {
       <div class="subtitle">Bạn cần mở khoá để xem số liệu đầy đủ</div>
       <div>
         <a-button class="register-btn" :size="isDesktop ? 'large' : 'default'" type="primary" @click="toggleUnlock">
-          Xem báo cáo chi tiết
+          Xem báo cáo
         </a-button>
       </div>
     </div>

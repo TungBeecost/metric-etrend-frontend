@@ -94,22 +94,19 @@ const top5Shops = (): string[] => {
       <br>
       <div>
         <span class="text-bold">
-          Báo cáo doanh thu {{ props.data.name }} trên sàn TMĐT
+          Báo cáo doanh thu {{ props.data.name }} trên sàn TMĐT đạt
+          <BlurContent :is-hide-content="isHideContent">
+            {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
+          </BlurContent>
         </span>
-        đạt
+        trong {{ diffMonths }}.
+        Đánh giá thị trường {{ props.data.name }}, phân khúc giá có doanh số cao nhất là từ
         <BlurContent :is-hide-content="isHideContent">
-          {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
+          {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
+          {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}
         </BlurContent>
-        trong {{ diffMonths }}, trong đó quý gần nhất có doanh số
-        {{ diffRevenueLatestQuarterPercent() > 0 ? "tăng" : "giảm" }}
-        <BlurContent :is-hide-content="isHideContent">
-        {{ Math.abs(diffRevenueLatestQuarterPercent()).toFixed(1) }}%
-        </BlurContent> so với quý liền kề.
-        Đánh giá thị trường {{ props.data.name }}, các Shop
-        kinh doanh bán với mức giá phổ biến từ {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
-        {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}. Thương hiệu {{ props.data.name }} được phân phối và
-        bán
-        chạy nhất là
+          . Những thương hiệu {{ props.data.name }} được phân phối và
+        bán chạy nhất là
         <BlurContent :is-hide-content="isHideContent">
           <span class="text-bold">{{ top5Shops().join(',q ') }}</span>
         </BlurContent>

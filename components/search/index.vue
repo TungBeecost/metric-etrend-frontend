@@ -64,8 +64,6 @@ const setShowSuggestions = () => {
 }
 
 const handleSearch = async (value: string) => {
-  if (!value) return;
-
   isShowSuggestions.value = false;
 
   if (props.handleSearch) {

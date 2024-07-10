@@ -14,8 +14,7 @@ const fetchReport = async () => {
       lst_query: [],
       lst_category_report_id: [],
       offset: 0,
-      sort: "created_at",
-      order: "desc",
+      sort: "popularity",
     };
     const response: any = await searchReport(body)
 

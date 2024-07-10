@@ -37,7 +37,7 @@ const itemsToShow = computed(() => {
 
 <template>
   <div class="report-slide">
-    <Carousel :items-to-show="itemsToShow" :items-to-scroll="1" :wrap-around="true" style="width: 110%;" :snap-align="'start'">
+    <Carousel :items-to-show="itemsToShow" :items-to-scroll="1" :wrap-around="true" style="width: 100%;" :snap-align="'start'">
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
