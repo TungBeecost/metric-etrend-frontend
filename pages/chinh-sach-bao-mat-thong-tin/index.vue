@@ -2,17 +2,17 @@
   <TermAndPolicy :banner="{ type: 'GuardDocument', title: 'CHÍNH SÁCH BẢO MẬT THÔNG TIN' }">
     <template #detail>
       <div class="detail">
-        <p class="summary">
-          ereport.metric.vn (eReport by Metric) là website cung cấp (bán) phần mềm cung cấp báo cáo thị trường cho những người có nhu cầu đăng ký sử dụng dịch vụ. Chính
-          sách này mô tả thông tin mà chúng tôi xử lý để hỗ trợ ereport.metric.vn nhằm nâng cao chất lượng sản phẩm cũng như đảm bảo dịch vụ được cung cấp một cách tối ưu
-          nhất cho bạn và những người khác. Để cung cấp Sản phẩm của ereport.metric.vn, chúng tôi phải xử lý các thông tin bạn cung cấp hoặc chia sẻ. Các loại thông tin mà
-          chúng tôi xử lý phụ thuộc vào cách bạn sử dụng sản phẩm của chúng tôi.
-        </p>
-
+        <div class="summary">
+          Metric.vn là website cung cấp (bán) phần mềm phân tích thị trường và quản lý bán hàng cho những người có nhu
+          cầu đăng ký sử dụng dịch vụ. Chính sách này mô tả thông tin mà chúng tôi xử lý để hỗ trợ Metric.vn nhằm nâng
+          cao chất lượng sản phẩm cũng như đảm bảo dịch vụ được cung cấp một cách tối ưu nhất cho bạn và những người khác.
+          Để cung cấp Sản phẩm của Metric.vn, chúng tôi phải xử lý các thông tin bạn cung cấp hoặc chia sẻ. Các loại thông
+          tin mà chúng tôi xử lý phụ thuộc vào cách bạn sử dụng sản phẩm của chúng tôi.
+        </div>
         <div class="clause">
           <div class="header">
             <div class="mark" />
-            <p class="label">Mục đích và phạm vi thu thập thông tin</p>
+            <div class="label">Mục đích và phạm vi thu thập thông tin</div>
           </div>
 
           <ul class="statement">
@@ -102,15 +102,15 @@
             </li>
           </ul>
 
-          <p>
+          <div style="font-size: 16px; margin-bottom: 0">
             Các thành viên sẽ tự chịu trách nhiệm về bảo mật và lưu giữ mọi hoạt động sử dụng dịch vụ dưới tên đăng ký, mật khẩu và hộp thư điện tử của mình. Ngoài ra,
             thành viên có trách nhiệm thông báo kịp thời cho ereport.metric.vn về những hành vi sử dụng trái phép, lạm dụng, vi phạm bảo mật, lưu giữ tên đăng ký và mật
             khẩu của bên thứ ba để có biện pháp giải quyết phù hợp.
-          </p>
+          </div>
 
           <div class="header">
             <div class="mark" />
-            <p class="label">Phạm vi sử dụng thông tin và những người hoặc tổ chức có thể tiếp cận được với thông tin cá nhân của khách hàng</p>
+            <div class="label">Phạm vi sử dụng thông tin và những người hoặc tổ chức có thể tiếp cận được với thông tin cá nhân của khách hàng</div>
           </div>
 
           <ul class="statement">
@@ -170,7 +170,7 @@
 
           <div class="header">
             <div class="mark" />
-            <p class="label">Những trường hợp không được chia sẻ:</p>
+            <div class="label">Những trường hợp không được chia sẻ:</div>
           </div>
 
           <ul class="statement">
@@ -201,29 +201,29 @@
 
           <div class="header">
             <div class="mark" />
-            <p class="label">Thời gian lưu trữ thông tin</p>
+            <div class="label">Thời gian lưu trữ thông tin</div>
           </div>
 
-          <p>Chúng tôi cung cấp cho bạn khả năng truy cập, sửa đổi, sao chép và xóa dữ liệu của mình.</p>
-          <p>
+          <div style="font-size: 16px">Chúng tôi cung cấp cho bạn khả năng truy cập, sửa đổi, sao chép và xóa dữ liệu của mình.</div>
+          <div style="font-size: 16px">
             Chúng tôi lưu trữ dữ liệu cho đến khi không còn cần cung cấp dịch vụ và Sản phẩm của ereport.metric.vn nữa hoặc cho đến khi tài khoản của bạn bị xóa, tùy trường
             hợp nào xảy ra trước. Tùy theo từng trường hợp, chúng tôi sẽ quyết định dựa trên những yếu tố như bản chất của dữ liệu, lý do thu thập và xử lý dữ liệu, cũng
             như các nhu cầu lưu giữ vì mục đích hoạt động hoặc pháp lý có liên quan.
-          </p>
-          <p>
+          </div>
+          <div style="font-size: 16px">
             Khi bạn xóa tài khoản, chúng tôi sẽ xóa nội dung bạn đã đăng. Còn lại trong mọi trường hợp thông tin cá nhân thành viên sẽ được bảo mật trên máy chủ của
             ereport.metric.vn.
-          </p>
+          </div>
 
           <div class="header">
             <div class="mark" />
-            <p class="label">Địa chỉ của đơn vị thu thập và quản lý thông tin cá nhân</p>
+            <div class="label">Địa chỉ của đơn vị thu thập và quản lý thông tin cá nhân</div>
           </div>
 
           <div class="addressBlock">
             <div v-for="(item, index) in CONTACTS" :key="index" class="contactItem">
               <CustomIcon :type="item.icon as any" />
-              <p>{{ item.label }}</p>
+              <div style="font-size: 16px">{{ item.label }}</div>
             </div>
           </div>
 
@@ -241,7 +241,7 @@
 
           <div class="header">
             <div class="mark" />
-            <p class="label">Cam kết bảo mật thông tin cá nhân khách hàng</p>
+            <div class="label">Cam kết bảo mật thông tin cá nhân khách hàng</div>
           </div>
 
           <ul class="statement">
@@ -271,18 +271,17 @@
 
           <div class="header">
             <div class="mark" />
-            <p class="label">Cơ chế tiếp nhận và giải quyết khiếu nại của người tiêu dùng liên quan đến việc thông tin cá nhân bị sử dụng sai mục đích</p>
+            <div class="label">Cơ chế tiếp nhận và giải quyết khiếu nại của người tiêu dùng liên quan đến việc thông tin cá nhân bị sử dụng sai mục đích</div>
           </div>
-
-          <p>
+          <div style="font-size: 16px">
             Khi phát hiện thông tin cá nhân của mình bị sử dụng sai mục đích hoặc phạm vi, khách hàng vui ̣ lòng gửi email khiếu nại đến email:
             <b>info@ereport.metric.vn</b> hoặc gọi điện thoại tới <b>033.806.2221</b> để khiếu nại và cung cấp chứng cứ liên quan tới vụ việc cho Ban quản ̣ trị. Ban quản
             trị cam kết sẽ phản hồi ngay lập tức hoặc muộn nhất là trong vòng 48 giờ làm việc kể từ thời điểm nhận được khiếu nại.
-          </p>
-          <p>
+          </div>
+          <div style="font-size: 16px">
             Chúng tôi sẽ thông báo cho bạn trước khi thay đổi chính sách này và cung cấp cho bạn tùy chọn xem lại chính sách đã sửa đổi trước khi bạn chọn tiếp tục sử dụng
             Sản phẩm của chúng tôi.
-          </p>
+          </div>
         </div>
       </div>
     </template>

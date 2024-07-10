@@ -7,7 +7,7 @@
             Các điều khoản giao dịch trên Website Metric.vn:
           </li>
           <li class="header">Định nghĩa:
-            <p class="desc"><b>Khách hàng/người mua/bạn</b>: Là các cá nhân/tổ chức tại Việt Nam, có nhu cầu mua phần mềm phân tích thị trường và quản lý bán hàng.</p>
+            <div class="desc" style="font-size: 16px"><b>Khách hàng/người mua/bạn</b>: Là các cá nhân/tổ chức tại Việt Nam, có nhu cầu mua phần mềm phân tích thị trường và quản lý bán hàng.</div>
           </li>
           <li class="header">Điều khoản chung:
             <ul class="nestedLi">
@@ -17,11 +17,11 @@
               <li>Người mua hiểu rõ quyền lợi, trách nhiệm và hoàn toàn tự nguyện khi đặt mua phần mềm tại website ereport.metric.vn.</li>
               <li>Mọi giao dịch thông qua website ereport.metric.vn được mặc định hiểu rằng quý bạn đã đọc và cam kết việc đồng ý theo chính sách này.</li>
             </ul>
-            <p>Quý bạn cần đọc rõ những điều khoản được quy định tại chính sách này để tránh những vấn đề ngộ nhận ngoài ý muốn.</p>
+            <div style="font-size: 16px">Quý bạn cần đọc rõ những điều khoản được quy định tại chính sách này để tránh những vấn đề ngộ nhận ngoài ý muốn.</div>
           </li>
           <li class="header">Trách nhiệm của các bên là gì?
             <ul class="nestedLi">Trách nhiệm của website ereport.metric.vn:
-              <p>Chính sách về trách nhiệm với hàng hóa thông qua các hoạt động giao dịch của website ereport.metric.vn được thực hiện theo quy định dưới đây:</p>
+              <div style="font-size: 16px">Chính sách về trách nhiệm với hàng hóa thông qua các hoạt động giao dịch của website ereport.metric.vn được thực hiện theo quy định dưới đây:</div>
               <li>Bảo đảm quá trình giao dịch đặt hàng của bạn diễn ra an toàn.</li>
               <li>Theo dõi, cập nhật thông tin, tư vấn và hỗ trợ quý bạn để hoàn tất các thủ tục giúp việc giao dịch được thành công.</li>
               <li>Website ereport.metric.vn cam kết việc hỗ trợ bạn xử lý các tình huống phát sinh trong và sau quá trình đặt mua hàng và lúc đã nhận hàng theo đúng chính sách của
@@ -92,91 +92,91 @@
             </ul>
           </li>
           <li class="header">Từ chối bảo đảm:
-            <p>Bạn chấp nhận rủi ro khi sử dụng website và thừa nhận rằng các sản phẩm trên website ereport.metric.vn là được cung cấp trên nền tảng “có sẵn”. Chúng tôi cố gắng cung cấp thông tin
+            <div>Bạn chấp nhận rủi ro khi sử dụng website và thừa nhận rằng các sản phẩm trên website ereport.metric.vn là được cung cấp trên nền tảng “có sẵn”. Chúng tôi cố gắng cung cấp thông tin
               chính xác và cập nhật thông qua website ereport.metric.vn. Website ereport.metric.vn không chịu trách nhiệm về việc chậm trễ, gián đoạn hoặc không thể truy cập trang web và thực hiện
               giao dịch của Bạn do nhà cung cấp dịch vụ Internet/mạng thông tin viễn thông không đáng tin cậy, phần mềm, thiết bị Bạn sử dụng cho việc truy cập không tương thích hoặc bị hỏng hóc, hoặc
-              các nguyên nhân khác ngoài tầm kiểm soát của website ereport.metric.vn.</p>
+              các nguyên nhân khác ngoài tầm kiểm soát của website ereport.metric.vn.</div>
           </li>
           <li class="header">Giới hạn trách nhiệm:
-            <p>Trong mọi trường hợp, website ereport.metric.vn không chịu trách nhiệm cho bất kỳ thiệt hại gián tiếp, đặc biệt, ngẫu nhiên, có tính chất trừng phạt hay cảnh cáo (bao gồm nhưng không
+            <div>Trong mọi trường hợp, website ereport.metric.vn không chịu trách nhiệm cho bất kỳ thiệt hại gián tiếp, đặc biệt, ngẫu nhiên, có tính chất trừng phạt hay cảnh cáo (bao gồm nhưng không
               giới hạn tổn thất kinh doanh, giảm doanh thu hay lợi nhuận, mất uy tín, cơ hội, gián đoạn kinh doanh hoặc mất thông tin) phát sinh từ việc sử dụng hoặc không thể sử dụng tài khoản hay
               website ereport.metric.vn của Bạn, thậm chí nếu ngay cả khi chúng tôi nhận được thông báo về khả năng xảy ra những thiệt hại đó.
-            </p>
+            </div>
           </li>
           <li class="header">Sửa đổi các điều khoản dịch vụ của website ereport.metric.vn:
-            <p>Chúng tôi có thể sửa đổi các điều khoản dịch vụ này vào bất cứ lúc nào mà không cần thông báo. Việc Bạn tiếp tục sử dụng website ereport.metric.vn sau những điều chỉnh đó xuất hiện sẽ
+            <div>Chúng tôi có thể sửa đổi các điều khoản dịch vụ này vào bất cứ lúc nào mà không cần thông báo. Việc Bạn tiếp tục sử dụng website ereport.metric.vn sau những điều chỉnh đó xuất hiện sẽ
               được xem như Bạn đã đồng ý với những điều khoản đã được sửa đổi.
-            </p>
+            </div>
           </li>
           <li class="header">Thông báo:
-            <p>Các thông báo gửi đến số điện thoại Bạn cung cấp khi đặt hàng thành công, tin tức và/hoặc thông tin được đăng tải trên Website là phương thức chính mà chúng tôi dùng để thông tin đến
+            <div>Các thông báo gửi đến số điện thoại Bạn cung cấp khi đặt hàng thành công, tin tức và/hoặc thông tin được đăng tải trên Website là phương thức chính mà chúng tôi dùng để thông tin đến
               Bạn. Bạn cũng có thể gửi thông báo hoặc thông tin khác tới website ereport.metric.vn thông qua email hoặc Gọi điện thông qua thông tin ở phần Liên hệ.
-            </p>
+            </div>
           </li>
           <li class="header">Giao dịch mua hàng chỉ giữa Bạn và website ereport.metric.vn:
-            <p>Website ereport.metric.vn là bên trực tiếp bán sản phẩm cho bạn. Website ereport.metric.vn đại diện, bảo đảm hay bảo hành liên quan đến chất lượng và sự phù hợp của các sản phẩm Bạn đặt
-              hàng.</p>
+            <div>Website ereport.metric.vn là bên trực tiếp bán sản phẩm cho bạn. Website ereport.metric.vn đại diện, bảo đảm hay bảo hành liên quan đến chất lượng và sự phù hợp của các sản phẩm Bạn đặt
+              hàng.</div>
           </li>
           <li class="header">Giao hàng:
-            <p>Website ereport.metric.vn sẽ nỗ lực hợp lý để giao hàng đến cho Bạn theo lịch trình giao hàng của công ty vận chuyển, tuy nhiên điều này không được đảm bảo và không hình thành một phần
-              của thỏa thuận giữa website ereport.metric.vn và Bạn. website ereport.metric.vn không chịu trách nhiệm với bất kỳ hư hại hay tổn thất gây ra bởi sự chậm trễ của công ty vận chuyển.</p>
+            <div>Website ereport.metric.vn sẽ nỗ lực hợp lý để giao hàng đến cho Bạn theo lịch trình giao hàng của công ty vận chuyển, tuy nhiên điều này không được đảm bảo và không hình thành một phần
+              của thỏa thuận giữa website ereport.metric.vn và Bạn. website ereport.metric.vn không chịu trách nhiệm với bất kỳ hư hại hay tổn thất gây ra bởi sự chậm trễ của công ty vận chuyển.</div>
           </li>
           <li class="header">Mất mát hoặc thiệt hại trong vận chuyển hàng:
-            <p>Trong trường hợp mất mát hoặc thiệt hại tất cả hoặc một phần của đơn hàng, ereport.metric.vn sẽ hoàn tiền phí vận chuyển đối với kiện hàng bị ảnh hưởng (và giá trị hàng hóa nếu kiện
+            <div>Trong trường hợp mất mát hoặc thiệt hại tất cả hoặc một phần của đơn hàng, ereport.metric.vn sẽ hoàn tiền phí vận chuyển đối với kiện hàng bị ảnh hưởng (và giá trị hàng hóa nếu kiện
               hàng được bảo hiểm) vào tài khoản ngân hàng của bạn.
-            </p>
+            </div>
           </li>
           <li class="header">Tạo khiếu nại:
-            <p>Bất cứ khiếu nại về mất mát hoặc tổn thất dịch vụ phải được trình lên website ereport.metric.vn trong vòng 3 ngày kể từ ngày kiện hàng được giao đến cho Bạn. Nếu không, chúng tôi không
+            <div>Bất cứ khiếu nại về mất mát hoặc tổn thất dịch vụ phải được trình lên website ereport.metric.vn trong vòng 3 ngày kể từ ngày kiện hàng được giao đến cho Bạn. Nếu không, chúng tôi không
               chịu bất cứ trách nhiệm nào với các khiếu nại của Bạn. Khiếu nại phải được thực hiện bằng việc tạo yêu cầu khiếu nại trên hệ thống, gửi kèm với các giấy tờ hỗ trợ, ảnh hàng bị hư hỏng và
               Hóa đơn có liên quan cho Sản phẩm đó.
-            </p>
+            </div>
           </li>
           <li class="header">Hoàn trả hoặc đổi trả hàng hóa:
-            <p>Nếu sau khi hàng được giao, Bạn muốn hoàn trả hàng, website ereport.metric.vn sẽ hỗ trợ bạn sớm nhất có thể cho việc hoàn trả, hoàn tiền hoặc đổi trả sản phẩm theo Chính sách đổi trả và
-              hoàn tiền của chúng tôi.</p>
+            <div>Nếu sau khi hàng được giao, Bạn muốn hoàn trả hàng, website ereport.metric.vn sẽ hỗ trợ bạn sớm nhất có thể cho việc hoàn trả, hoàn tiền hoặc đổi trả sản phẩm theo Chính sách đổi trả và
+              hoàn tiền của chúng tôi.</div>
           </li>
           <li class="header">Thay đổi dịch vụ Website Metric.vn:
-            <p>Chúng tôi có thể sửa đổi hoặc chấm dứt dịch vụ của chúng tôi vào bất cứ lúc nào theo thông báo hợp lý, kể cả tạm thời hay vĩnh viễn, mà không chịu trách nhiệm với Bạn ngoại trừ việc
-              hoàn thành xử lý đơn hàng của Bạn được đặt trước ngày dịch vụ bị chấm dứt.</p>
+            <div>Chúng tôi có thể sửa đổi hoặc chấm dứt dịch vụ của chúng tôi vào bất cứ lúc nào theo thông báo hợp lý, kể cả tạm thời hay vĩnh viễn, mà không chịu trách nhiệm với Bạn ngoại trừ việc
+              hoàn thành xử lý đơn hàng của Bạn được đặt trước ngày dịch vụ bị chấm dứt.</div>
           </li>
           <li class="header">Chấm dứt:
-            <p>Bạn có thể chấm dứt thỏa thuận này và việc sử dụng tài khoản website ereport.metric.vn của Bạn vào bất cứ lúc nào.
-            </p>
+            <div>Bạn có thể chấm dứt thỏa thuận này và việc sử dụng tài khoản website ereport.metric.vn của Bạn vào bất cứ lúc nào.
+            </div>
           </li>
           <li class="header">Các tình huống ngoài kiểm soát của chúng tôi:
-            <p>Website ereport.metric.vn không chịu trách nhiệm cho bất cứ tổn thất hay mất mát phát sinh trong những tình huống ngoài kiểm soát của chúng tôi; bao gồm nhưng không giới hạn: Thảm họa
+            <div>Website ereport.metric.vn không chịu trách nhiệm cho bất cứ tổn thất hay mất mát phát sinh trong những tình huống ngoài kiểm soát của chúng tôi; bao gồm nhưng không giới hạn: Thảm họa
               thiên nhiên, ví dụ hỏa hoạn, động đất, bão lũ,…; tai nạn máy bay hoặc cấm vận; chiến tranh, bạo động dân sự hoặc đình công, dịch bệnh, mất điện, gián đoạn thông tin liên lạc hoặc các
               tiện ích khác, hành động hoặc không hành động của chính phủ, các hình ảnh điện tử hoặc ảnh chụp, dữ liệu và các bản ghi bị xóa hoặc bị hỏng do nhiễu điện hoặc từ trường.
-            </p>
+            </div>
           </li>
           <li class="header">Bồi thường:
-            <p>Bạn đồng ý bồi thường, bảo vệ và giữ cho website ereport.metric.vn và các cố đông, nhân viên, giám đốc, công ty liên kết và các đại lý khỏi các khiếu nại, mất mát, tổn thất, trách nhiệm
+            <div>Bạn đồng ý bồi thường, bảo vệ và giữ cho website ereport.metric.vn và các cố đông, nhân viên, giám đốc, công ty liên kết và các đại lý khỏi các khiếu nại, mất mát, tổn thất, trách nhiệm
               và chi phí (bao gồm phí luật sư hợp lý) phát sinh từ việc sử dụng website và dịch vụ website ereport.metric.vn của Bạn , bao gồm nhưng không giới hạn các hành động cẩu thả hoặc thiếu sót
               của Bạn, bất cứ sự sai lệch Bạn gây ra liên quan đến việc sử dụng dịch vụ website ereport.metric.vn và việc Bạn không tuân thủ các điều khoản này.
-            </p>
+            </div>
           </li>
           <li class="header">Toàn bộ thỏa thuận:
-            <p>Các điều khoản này (hoặc bản sửa đổi theo từng giai đoạn) hình thành toàn bộ thỏa thuận giữa Bạn và website ereport.metric.vn cho việc sử dụng website ereport.metric.vn, việc sử dụng
+            <div>Các điều khoản này (hoặc bản sửa đổi theo từng giai đoạn) hình thành toàn bộ thỏa thuận giữa Bạn và website ereport.metric.vn cho việc sử dụng website ereport.metric.vn, việc sử dụng
               thông tin của Bạn và điều khoản của dịch vụ website ereport.metric.vn. Bất cứ thông báo bằng văn bản hoặc truyền miệng đều bị bỏ qua và không có hiệu lực.
-            </p>
+            </div>
           </li>
           <li class="header">Vô hiệu một phần:
-            <p>Nếu bất cứ điều khoản của thỏa thuận này được một tòa án hoặc cơ quan có thẩm quyền đánh giá là bất hợp pháp, không hợp lệ hoặc không thể thi hành, điều khoản đó sẽ được coi là đã bị
+            <div>Nếu bất cứ điều khoản của thỏa thuận này được một tòa án hoặc cơ quan có thẩm quyền đánh giá là bất hợp pháp, không hợp lệ hoặc không thể thi hành, điều khoản đó sẽ được coi là đã bị
               xóa mà không ảnh hưởng đến bất kỳ điều khoản nào khác trong thỏa thuận này.
-            </p>
+            </div>
           </li>
           <li class="header">Từ bỏ:
-            <p>Nếu Bạn hoặc website ereport.metric.vn không thực thi bất kỳ điều khoản nào của thỏa thuận này, hoặc không thực hiện bất kỳ quyền vào bất cứ lúc nào thì sẽ không được coi là từ bỏ.
-            </p>
+            <div>Nếu Bạn hoặc website ereport.metric.vn không thực thi bất kỳ điều khoản nào của thỏa thuận này, hoặc không thực hiện bất kỳ quyền vào bất cứ lúc nào thì sẽ không được coi là từ bỏ.
+            </div>
           </li>
           <li class="header">Các đề mục:
-            <p>Các đề mục là để thuận tiện tham khảo và không hình thành một phần của thỏa thuận này.
-            </p>
+            <div>Các đề mục là để thuận tiện tham khảo và không hình thành một phần của thỏa thuận này.
+            </div>
           </li>
           <li class="header">Luật pháp điều chỉnh:
-            <p>Thỏa thuận này được điều chỉnh bởi pháp luật Việt Nam, không xung đột với các nguyên tắc của pháp luật.
-            </p>
+            <div>Thỏa thuận này được điều chỉnh bởi pháp luật Việt Nam, không xung đột với các nguyên tắc của pháp luật.
+            </div>
           </li>
 
         </ul>
@@ -186,7 +186,7 @@
 </template>
 
 <script setup lang="ts">
-import { PAGE_TITLES } from '../../constant/constains';
+import { PAGE_TITLES } from '~/constant/constains';
 
 useSeoMeta({
   title: PAGE_TITLES.transactionPolicy

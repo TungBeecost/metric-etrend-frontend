@@ -85,10 +85,12 @@ onMounted(() => {
 }
 
 .content {
-  text-align: center;
-  font-size: 20px;
-  color: #716B95;
-  line-height: 32px;
+  div{
+    text-align: center;
+    font-size: 20px;
+    color: #716B95;
+    line-height: 32px;
+  }
 }
 
 @media (max-width: 1023px) {

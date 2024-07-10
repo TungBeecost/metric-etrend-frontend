@@ -3,7 +3,6 @@
     <TermAndPolicySidebarTerm />
     <div class="content">
       <TermAndPolicyBannerTerm :icon-type="banner.type" :title="banner.title" />
-
       <div class="detail">
         <slot name="detail" />
       </div>

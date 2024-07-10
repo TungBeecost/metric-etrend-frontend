@@ -123,7 +123,7 @@ export const LABEL_PERMISSION_PLAN = {
     }
   },
   numberOfUnlockReport: {
-    label: (number: number) => `${number} lượt mở khoá báo cáo`,
+    label: (number: number) => `${number} lượt xem báo cáo`,
     icon: "Unlock"
   },
   customFilterAnalysis: {

@@ -3,6 +3,10 @@
   flex-direction: column;
   gap: 40px;
 
+  .summary{
+    font-size: 16px;
+  }
+
   .clause {
     display: flex;
     flex-direction: column;
@@ -15,7 +19,7 @@
       align-self: stretch;
       margin-top: 24px;
 
-      p {
+      .label {
         font-size: 24px;
         font-weight: 700;
         line-height: 32px;
@@ -24,12 +28,16 @@
       .mark {
         background-color: #f9d7c6;
         width: 16px;
+        height: 30px;
         border-radius: 4px;
       }
+
     }
 
     .statement {
       list-style-type: disc;
+      font-size: 16px;
+      margin-bottom: 0;
 
       li {
         margin: 8px 0px;

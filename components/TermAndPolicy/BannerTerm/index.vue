@@ -1,6 +1,6 @@
 <template>
   <div class="bannerWrapper">
-    <p class="title">{{ title }}</p>
+    <div class="title">{{ title }}</div>
     <CustomIcon :type="iconType" :is-custom-size="true" class="icon" />
   </div>
 
