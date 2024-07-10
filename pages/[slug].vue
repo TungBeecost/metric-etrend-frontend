@@ -42,7 +42,7 @@ const slug = route.params.slug;
 const fetchTableData = async () => {
   try {
     loading.value = true;
-    const response = await axios.get(`https://api-ereport.staging.muadee.vn/api/report/detail?slug=${slug}`);
+    const response = await axios.get(`http://localhost:8000/api/report/detail?slug=${slug}`);
     console.log(response.data);
     const {tier_report} = response.data;
     if (tier_report !== 'free') {

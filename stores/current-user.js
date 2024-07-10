@@ -38,7 +38,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
     }),
     getters: {
         isShowPopupLogin: (state) => state.showPopupLogin,
-        remainingUnlock: (state) => state.current_plan.remain_claim,
+        remainingUnlock: (state) => state.userInfo.current_plan.remain_claim,
         authenticated: (state) => state.userInfo.id !== undefined,
     },
     actions: {
@@ -55,9 +55,9 @@ export const useCurrentUser = defineStore("currentUserStore", {
             try {
                 this.userInfo = jwt_decode(access_token);
                 this.fetchedUser = true;
-                const {currentPlan, ...userInfo} = await fetchUserProfile();
+                const {current_plan, ...userInfo} = await fetchUserProfile();
                 if (!userInfo?.id) return;
-                this.userInfo = {...userInfo, current_plan: currentPlan};
+                this.userInfo = {...userInfo, current_plan};
                 this.fetchedUser = true;
                 console.log(222, this.userInfo)
             } catch (err) {

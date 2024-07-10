@@ -1,7 +1,7 @@
 <script setup>
 import {computed, defineProps} from 'vue';
 import PieChart from "~/components/report/PieChart.vue";
-import {getUrlImageOption, goToUrl} from "~/helpers/utils.js";
+import {formatSortTextCurrency, getUrlImageOption, goToUrl} from "~/helpers/utils.js";
 import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
 
 const platformNames = {
@@ -53,7 +53,7 @@ const reportType = computed(() => props.data?.report_type);
           class="pie_chart_item"
       >
         <a-table
-          :columns="[
+            :columns="[
             {
               title: 'Loại shop',
               dataIndex: 'shop_type',
@@ -71,8 +71,8 @@ const reportType = computed(() => props.data?.report_type);
               slots: {customRender: 'shop_count'}
             },
           ]"
-          :pagination="false"
-          :data-source="[
+            :pagination="false"
+            :data-source="[
             {
               shop_type: 'Shop Mall',
               shop_count: props.data.data_analytic.by_shop.ratio.mall.shop
@@ -183,98 +183,52 @@ const reportType = computed(() => props.data?.report_type);
       "
     >
       <li>
-        Doanh thu của {{ props.data.name }} đến từ
+        Thống kê về loại gian hàng, thị trường có
         <BlurContent :is-hide-content="props.isHideContent">
-          <span>
-            {{ formatNumber(props.data.data_analytic.by_shop.ratio.mall.shop) }}
-          </span>
+          {{ formatNumber(props.data.data_analytic.by_shop.ratio.mall.shop) }}
         </BlurContent>
-        shop mall chiếm
-        {{
-          Number(
-              props.data.data_analytic.by_shop.ratio.mall.ratio_revenue * 100
-          ).toFixed(1)
-        }}% và hơn
+        shop Mall chiếm
         <BlurContent :is-hide-content="props.isHideContent">
-          <span>
-            {{ formatNumber(props.data.data_analytic.by_shop.ratio.normal.shop) }}
-          </span>
+          {{
+            Number(
+                props.data.data_analytic.by_shop.ratio.mall.ratio_revenue * 100
+            ).toFixed(1)
+          }}%
+        </BlurContent>
+        thị phần doanh số với
+        <BlurContent :is-hide-content="props.isHideContent">
+          {{ formatSortTextCurrency(props.data.data_analytic.by_shop.ratio.mall.revenue) }} đồng
+        </BlurContent>
+        và
+        <BlurContent :is-hide-content="props.isHideContent">
+          {{ formatNumber(props.data.data_analytic.by_shop.ratio.normal.shop) }}
         </BlurContent>
         shop thường chiếm
-        {{
-          Number(
-              props.data.data_analytic.by_shop.ratio.normal.ratio_revenue * 100
-          ).toFixed(1)
-        }}% doanh số. Báo cáo về {{ data.name }} của 10 shop bán chạy hàng đầu,
-        Shop
-        <span class="text-bold">{{
-            props.data.data_analytic.by_shop.lst_top_shop[0].name
-          }}</span>
-        có tỉ trọng doanh thu cao nhất chiếm
-
         <BlurContent :is-hide-content="props.isHideContent">
-          <span>
-            {{
-              Number(
-                  props.data.data_analytic.by_shop.lst_top_shop[0].ratio_revenue * 100
-              ).toFixed(2)
-            }}
-          </span>
+          {{
+            Number(
+                props.data.data_analytic.by_shop.ratio.normal.ratio_revenue * 100
+            ).toFixed(1)
+          }}%
         </BlurContent>
-        % doanh số. Tiếp theo đó là các shop
-        <template
-            v-if="
-            props.data.data_analytic &&
-            props.data.data_analytic.by_shop.lst_top_shop &&
-            props.data.data_analytic.by_shop.lst_top_shop.length >= 2
-          "
-        >
-          <span class="text-bold">{{
-              props.data.data_analytic.by_shop.lst_top_shop[1].name
-            }}</span
-          >,
-        </template>
-        <template
-            v-if="
-            props.data.data_analytic &&
-            props.data.data_analytic.by_shop.lst_top_shop &&
-            props.data.data_analytic.by_shop.lst_top_shop.length >= 3
-          "
-        >
-          <span class="text-bold">{{
-              props.data.data_analytic.by_shop.lst_top_shop[2].name
-            }}</span>
-          tương ứng thị phần doanh thu là
-          <BlurContent :is-hide-content="props.isHideContent">
-            <span>
-              {{
-                Number(
-                    props.data.data_analytic.by_shop.lst_top_shop[1].ratio_revenue * 100
-                ).toFixed(2)
-              }}
-            </span>
-          </BlurContent>
-          %
-        </template>
+        doanh số tương ứng
+        <BlurContent :is-hide-content="props.isHideContent">
+          {{ formatSortTextCurrency(props.data.data_analytic.by_shop.ratio.normal.revenue) }} đồng
+        </BlurContent>.
+      </li>
+      <li>
+        Trong top 10 gian hàng bán chạy, Shop
+        <BlurContent :is-hide-content="props.isHideContent">
+          {{ props.data.data_analytic.by_shop.lst_top_shop[0].name }}
+        </BlurContent>
+        có tỷ trọng doanh số cao nhất, tiếp theo đó là
+        <BlurContent :is-hide-content="props.isHideContent">
+          {{ props.data.data_analytic.by_shop.lst_top_shop[1].name }}
+        </BlurContent>
         và
-        <template
-            v-if="
-            props.data.data_analytic &&
-            props.data.data_analytic.by_shop.lst_top_shop &&
-            props.data.data_analytic.by_shop.lst_top_shop.length >= 3
-          "
-        >
-          <BlurContent :is-hide-content="props.isHideContent">
-            <span>
-              {{
-                Number(
-                    props.data.data_analytic.by_shop.lst_top_shop[2].ratio_revenue * 100
-                ).toFixed(2)
-              }}
-            </span>
-          </BlurContent>
-        </template>
-        %.
+        <BlurContent :is-hide-content="props.isHideContent">
+          {{ props.data.data_analytic.by_shop.lst_top_shop[2].name }}
+        </BlurContent>.
       </li>
     </InsightBlock>
   </div>
