@@ -21,7 +21,7 @@ defineProps<{
           <div class="summary">
             <p class="planType">{{ plan.type }}</p>
             <p class="planDesc">{{ plan.description }}</p>
-            <p class="planPrice">{{ plan.price }}<span v-if="plan.unit" class="priceUnit">/{{ plan.unit }}</span></p>
+            <div class="planPrice">{{ plan.price }}<span v-if="plan.unit" class="priceUnit">/{{ plan.unit }}</span></div>
           </div>
 
           <div class="divider"/>

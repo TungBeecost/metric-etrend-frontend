@@ -4,6 +4,7 @@ export const NAVIGATIONS = {
   search: "/search",
   home: "/",
   report: "/reports",
+  account: "/account",
   pricing: "/pricing",
   contactUs: "/contact-us",
   signIn: "/sign-in",
@@ -175,7 +176,6 @@ export const PLANS: Array<IPLAN> = [
         label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(100),
         icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
       },
-      LABEL_PERMISSION_PLAN.customFilterAnalysis
     ]
   }
 ];

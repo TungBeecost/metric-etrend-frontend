@@ -7,11 +7,13 @@
       </AButton>
     </div>
     <div id="headButtonLogin" class="headerNavbarCallButton">
-      <div v-if="!currentUserStore.authenticated" style="display: flex; gap: 16px">
-        <a-button @click="currentUserStore.setShowPopupLogin(true)">Đăng nhập</a-button>
+      <div style="display: flex; gap: 16px">
+        <a-button v-if="!currentUserStore.authenticated" @click="currentUserStore.setShowPopupLogin(true)">Đăng nhập</a-button>
         <AButton type="primary" @click="navigateTo(NAVIGATIONS.contactUs)">Liên hệ tư vấn</AButton>
+        <span v-if="currentUserStore.authenticated" style="color: #EEEBFF">|</span>
+        <user-profile v-if="currentUserStore.authenticated" :is-dark-blue-header="isDarkBlueHeader"/>
       </div>
-      <user-profile v-else/>
+
     </div>
 
     <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"

@@ -34,10 +34,6 @@ const itemsToShow = computed(() => {
   return windowWidth.value < 768 ? 1 : 2; // 768px is a common breakpoint for mobile devices
 });
 
-const formatPercentage = (value: number) => {
-  return `${(value * 100).toFixed(2)}%`;
-};
-
 const getDisplayedCategories = (report: any) => {
   if (windowWidth.value < 768) {
     return report.lst_category?.length ? report.lst_category[report.lst_category.length - 1].name : '';
@@ -57,7 +53,7 @@ const getDisplayedCategories = (report: any) => {
           </div>
           <div class="content" style="text-align: left;">
             <div class="category_date line-clamp__2" style="text-align: left;">
-              {{ getDisplayedCategories(report) }} <span style="color: #EEEBFF">|</span> {{ dayjs(report.created_at).format('DD/MM/YYYY') }}
+              {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span> {{ dayjs(report.created_at).format('DD/MM/YYYY') }}
             </div>
             <div class="title line-clamp__2" style="text-align: left;">
               Báo cáo nhóm hàng {{ report.name }}
@@ -70,17 +66,6 @@ const getDisplayedCategories = (report: any) => {
                   {{ formatAndRoundSortTextCurrencyWithMinValue(report.revenue_monthly) }}
                 </BlurContent>
               </span> - doanh số trung bình tháng
-                <div class="gr_quarter">
-                  <div v-if="report.gr_quarter > 0" class="gr_quarter_item" >
-                    <svg v-if="windowWidth >= 768" data-v-f4382b3b="" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-f4382b3b="" d="M19.9375 4.8125L11.6875 13.0625L8.25 9.625L2.0625 15.8125" stroke="#2EB553" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path><path data-v-f4382b3b="" d="M19.9375 10.3125V4.8125H14.4375" stroke="#2EB553" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                    <span style="color: rgb(0, 194, 89)">{{ formatPercentage(report.gr_quarter) }}</span>
-                  </div>
-                  <div v-else-if="report.gr_quarter < 0" class="gr_quarter_item" >
-                    <svg v-if="windowWidth >= 768" data-v-f4382b3b="" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-f4382b3b="" d="M19.9375 17.1875L11.6875 8.9375L8.25 12.375L2.0625 6.1875" stroke="#EE3324" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path><path data-v-f4382b3b="" d="M19.9375 11.6875V17.1875H14.4375" stroke="#EE3324" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                    <span style="color: rgb(245, 0, 0)">{{ formatPercentage(report.gr_quarter) }}</span>
-                  </div>
-                  <div v-else></div>
-                </div>
               </div>
               <div class="info_item">
                 <svg data-v-f4382b3b="" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateY(0px); margin-right: 4px;"><g clip-path="url(#clip0_1518_34114)" data-v-f4382b3b=""><path d="M3 8.72437V13C3 13.1326 3.05268 13.2598 3.14645 13.3535C3.24021 13.4473 3.36739 13.5 3.5 13.5H12.5C12.6326 13.5 12.7598 13.4473 12.8536 13.3535C12.9473 13.2598 13 13.1326 13 13V8.72437" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" data-v-f4382b3b=""></path><path d="M3.375 2.5H12.625C12.7336 2.50002 12.8393 2.53541 12.926 2.60081C13.0127 2.66621 13.0758 2.75807 13.1056 2.8625L14 6H2L2.89625 2.8625C2.92603 2.75838 2.98881 2.66675 3.07514 2.60137C3.16148 2.536 3.26671 2.50043 3.375 2.5Z" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" data-v-f4382b3b=""></path><path d="M6 6V7C6 7.53043 5.78929 8.03914 5.41421 8.41421C5.03914 8.78929 4.53043 9 4 9C3.46957 9 2.96086 8.78929 2.58579 8.41421C2.21071 8.03914 2 7.53043 2 7V6" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" data-v-f4382b3b=""></path><path d="M10 6V7C10 7.53043 9.78929 8.03914 9.41421 8.41421C9.03914 8.78929 8.53043 9 8 9C7.46957 9 6.96086 8.78929 6.58579 8.41421C6.21071 8.03914 6 7.53043 6 7V6" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" data-v-f4382b3b=""></path><path d="M14 6V7C14 7.53043 13.7893 8.03914 13.4142 8.41421C13.0391 8.78929 12.5304 9 12 9C11.4696 9 10.9609 8.78929 10.5858 8.41421C10.2107 8.03914 10 7.53043 10 7V6" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" data-v-f4382b3b=""></path></g><defs data-v-f4382b3b=""><clipPath id="clip0_1518_34114" data-v-f4382b3b=""><rect width="16" height="16" fill="white" data-v-f4382b3b=""></rect></clipPath></defs></svg>
@@ -142,10 +127,12 @@ const getDisplayedCategories = (report: any) => {
             display: flex;
             flex-wrap: wrap;
             gap: 4px;
+            font-size: 16px;
 
             span{
               font-weight: bold;
               color: #241e46;
+              font-size: 16px;
             }
 
             .gr_quarter{
