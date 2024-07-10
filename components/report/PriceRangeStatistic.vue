@@ -210,18 +210,24 @@ const chartOptions = computed(() => {
     >
       <li>
         Trong {{ diffMonths }} qua, phân khúc giá đạt doanh số cao nhất là
-        {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
-        {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }},
+        <BlurContent :is-hide-content="props.isHideContent">
+          {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
+          {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}
+        </BlurContent>,
         theo sau là phân khúc
-        {{ formatCurrency(priceRangesSortBy("revenue")[1].begin) }} -
-        {{ formatCurrency(priceRangesSortBy("revenue")[1].end) }}.
+        <BlurContent :is-hide-content="props.isHideContent">
+          {{ formatCurrency(priceRangesSortBy("revenue")[1].begin) }} -
+          {{ formatCurrency(priceRangesSortBy("revenue")[1].end) }}
+        </BlurContent>.
       </li>
       <li
           v-if="priceRangesSortBy('revenue') &&priceRangesSortBy('revenue').length > 1"
       >
         Về sản phẩm đã bán, phân khúc giá phổ biến là
-        {{ formatCurrency(priceRangesSortBy("sale")[0].begin) }} -
-        {{ formatCurrency(priceRangesSortBy("sale")[0].end) }}.
+        <BlurContent :is-hide-content="props.isHideContent">
+          {{ formatCurrency(priceRangesSortBy("sale")[0].begin) }} -
+          {{ formatCurrency(priceRangesSortBy("sale")[0].end) }}
+        </BlurContent>.
       </li>
     </InsightBlock>
   </div>

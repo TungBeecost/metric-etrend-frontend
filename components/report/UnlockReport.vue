@@ -71,7 +71,9 @@ const toggleUnlock = () => {
       </div>
     </div>
     <div class="action-btns">
-      <a-button style="width: 100%;" type="primary" size="large" @click="toggleUnlock">Xem báo cáo chi tiết</a-button>
+      <NuxtLink to="/pricing" style="width: 100%;">
+        <a-button style="width: 100%;" type="primary" size="large">Xem báo cáo</a-button>
+      </NuxtLink>
       <div>
         Đã có tài khoản?
         <a @click="currentUserStore.setShowPopupLogin(true)">

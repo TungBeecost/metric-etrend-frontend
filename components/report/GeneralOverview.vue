@@ -295,8 +295,14 @@ const charts = computed(() => {
         doanh số và tăng trưởng
         {{ Number(diffRevenueMonths.diffPercent) > 0 ? "tốt" : "thấp" }} hơn so với
         tháng
-        {{ formatDateFunc(diffRevenueMonths.previousMonth[0].begin, "MM/YYYY") }}
-        là {{ Math.abs(Number(diffRevenueMonths.diffPercent)) }}%.
+        <BlurContent :is-hide-content="props.isHideContent">
+          {{ formatDateFunc(diffRevenueMonths.previousMonth[0].begin, "MM/YYYY") }}
+        </BlurContent>
+        là
+        <BlurContent :is-hide-content="props.isHideContent">{{
+            Math.abs(Number(diffRevenueMonths.diffPercent))
+          }}%
+        </BlurContent>
       </li>
       <li>
         <span class="text-bold">Nhận xét trung hạn</span> trong 6 tháng gần
