@@ -23,12 +23,15 @@ const props = defineProps({
       Truy cập kho dữ liệu với hàng trăm <br/> báo cáo và xu hướng mới nhất
     </div>
     <div class="searchContent">
-      <SearchReport class="searchBox" />
+      <SearchReport class="searchBox"/>
       <div class="recommendSearch">
         <div class="content_key">Từ khoá liên quan nổi bật</div>
-        <AButton v-for="(item, index) in props.listSuggest" :key="index" ghost class="recommendItem" @click="onClickSuggestion(item)">
-          {{ item }}
-        </AButton>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <AButton v-for="(item, index) in props.listSuggest" :key="index" ghost class="recommendItem"
+                   @click="onClickSuggestion(item)">
+            {{ item }}
+          </AButton>
+        </div>
       </div>
     </div>
     <div class="big_logo_metric">
@@ -64,20 +67,23 @@ const props = defineProps({
     flex-direction: column;
     gap: 24px;
     width: 100%;
-    padding: 0 200px;
+    max-width: 800px;
+    //padding: 0 200px;
     z-index: 999;
 
     .recommendSearch {
       display: flex;
       gap: 16px;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
 
       .content_key {
         font-size: 16px;
         font-weight: 700;
         color: #FFF;
         margin-right: 16px;
+
+        white-space: nowrap;
       }
     }
   }
