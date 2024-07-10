@@ -46,7 +46,7 @@ onMounted(() => {
           type="primary"
           @click="$emit('clickOnHidden')"
         >
-          Đăng ký nhận số liệu
+          Xem báo cáo
         </a-button>
       </div>
     </div>

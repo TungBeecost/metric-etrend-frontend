@@ -28,8 +28,9 @@ const value = ref('');
       style="margin-bottom: 16px;"
   >
     <div class="statistic-item__title" style="margin-bottom: 16px;">
-      <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="16" height="32" rx="4" fill="#EEEBFF"/>
+      <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
+           xmlns="http://www.w3.org/2000/svg">
+        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
         <div class="statistic-item__title">Sản phẩm bán chạy</div>
@@ -41,7 +42,7 @@ const value = ref('');
             props.data.data_analytic.by_product.lst_product_revenue_30d.length > 0
           "
             class="statistic-item__subtitle"
-        >Top sản phẩm doanh thu cao nhất 30 ngày qua
+        >Top sản phẩm doanh số cao nhất 365 ngày qua
         </div>
       </div>
     </div>

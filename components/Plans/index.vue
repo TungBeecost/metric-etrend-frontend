@@ -17,7 +17,7 @@ defineProps<{
     </p>
 
     <div class="pricings">
-      <div v-for="plan in PLANS" :class="{ planItem: true, highlight: plan.isHighlight }">
+      <div v-for="plan in PLANS" class="planItem">
         <div class="focusHeader"/>
 
         <div class="content">

@@ -45,15 +45,19 @@ const reportType = computed(() => props.data?.report_type);
       </svg>
       <div>
         <div class="statistic-item__title">Shop hàng đầu</div>
+        <div style="font-size: 14px; color: #716B95">Top gian hàng trong 365 ngày qua</div>
       </div>
     </div>
     <div class="pie_chart">
       <div
           v-if="props.data.data_analytic.by_shop.lst_top_shop.length > 1"
           class="pie_chart_item"
+          style="flex-direction: column; gap: 24px; justify-content: flex-start"
       >
-        <a-table
-            :columns="[
+        <div style="font-size: 16px; font-weight: bold; line-height: 22px; text-align: center; color: #241E46">Số lượng gian hàng</div>
+        <div>
+          <a-table
+              :columns="[
             {
               title: 'Loại shop',
               dataIndex: 'shop_type',
@@ -71,8 +75,8 @@ const reportType = computed(() => props.data?.report_type);
               slots: {customRender: 'shop_count'}
             },
           ]"
-            :pagination="false"
-            :data-source="[
+              :pagination="false"
+              :data-source="[
             {
               shop_type: 'Shop Mall',
               shop_count: props.data.data_analytic.by_shop.ratio.mall.shop
@@ -82,13 +86,14 @@ const reportType = computed(() => props.data?.report_type);
               shop_count: props.data.data_analytic.by_shop.ratio.normal.shop
             }
           ]"
-        >
-          <template #shop_count="{text}">
-            <BlurContent :is-blurred="isHideContent">
-              {{ text }}
-            </BlurContent>
-          </template>
-        </a-table>
+          >
+            <template #shop_count="{text}">
+              <BlurContent :is-blurred="isHideContent">
+                {{ text }}
+              </BlurContent>
+            </template>
+          </a-table>
+        </div>
       </div>
       <div
           v-if="
@@ -100,7 +105,7 @@ const reportType = computed(() => props.data?.report_type);
           class="pie_chart_item"
       >
         <PieChart
-            title="Tỉ trọng doanh số"
+            title="Tỷ trọng doanh số theo loại gian hàng"
             subtitle="Shop Mall và Shop thường"
             :is-hide-content="props.isHideContent"
             :series="[
@@ -336,6 +341,7 @@ const reportType = computed(() => props.data?.report_type);
   gap: 16px;
   justify-content: center;
   align-items: stretch;
+  padding-top: 16px;
 
   .pie_chart_item {
     width: 100%;

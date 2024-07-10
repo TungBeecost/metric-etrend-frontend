@@ -16,7 +16,7 @@
         <SearchReport class="searchBox" />
 
         <div class="recommendSearch">
-          <AButton v-for="(item, index) in recommendSearch" :key="index" class="recommendItem" @click="onClickSuggestion(item)">
+          <AButton v-for="(item, index) in listTagSuggestions" :key="index" class="recommendItem" @click="onClickSuggestion(item)">
             {{ item }}
           </AButton>
         </div>
@@ -56,10 +56,54 @@
 <script setup lang="ts">
 import type SearchReport from '../components/search/search-report.vue';
 import { NAVIGATIONS } from '~/constant/constains';
+import {searchReport, type SearchReportPayload} from "~/services/reports";
+import {ref} from "vue";
 
 console.log(`This is gg tag:`, process.env.NUXT_PUBLIC_GTAG_ID);
 
-const recommendSearch = ["Ngành hàng Mẹ & Bé", "Ngành hàng Điện tử", "Thời trang Nam", "Điện Máy"]
+const listTagSuggestions = ref<string[]>([]);
+
+const fetchTagSuggest = async (value: string) => {
+  console.log('fetchTagSuggest', value);
+  try {
+    const result = await fetchSuggest(value);
+    if (result.length) {
+      listTagSuggestions.value = result;
+    } else {
+      listTagSuggestions.value = [];
+    }
+  }
+  catch (e) {
+    console.error(e);
+  }
+};
+
+const fetchSuggest = async (value: string | null, options?: SearchReportPayload) => {
+  try {
+    const body: SearchReportPayload = {
+      limit: 5,
+      lst_field: ["name", "slug"],
+      offset: 0,
+      sort: "popularity",
+      lst_query: value ? [value] : [],
+      ...options
+    };
+    const data = await searchReport(body);
+
+    if (data && data.lst_report) {
+      return data.lst_report.map((item) => item.name);
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error("fetchSuggest error: ", error);
+    return [];
+  }
+};
+
+onMounted(() => {
+  fetchTagSuggest('');
+});
 
 const onClickSuggestion = (suggestion: string) => {
   navigateTo(`${NAVIGATIONS.search}?search=${suggestion}`);
@@ -69,10 +113,7 @@ const onClickSuggestion = (suggestion: string) => {
 
 <style lang="scss" scoped>
 @import url("./index.scss");
-
-
 .section {
-
   .sectionHeader {
     .sectionTitle {
       color: var(--Neutral-neutral-1, #FFF);
@@ -87,4 +128,17 @@ const onClickSuggestion = (suggestion: string) => {
     }
   }
 }
+
+@media (max-width: 767px) {
+  .section {
+    .sectionHeader {
+      .sectionTitle {
+        font-size: 36px;
+        line-height: 44px;
+      }
+    }
+  }
+}
+
+
 </style>

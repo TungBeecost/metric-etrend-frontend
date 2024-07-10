@@ -97,7 +97,7 @@ const itemsToShow = computed(() => {
       cursor: pointer;
       border: 1px solid #f0f0f0;
 
-      height: 650px;
+      height: 600px;
       overflow: hidden;
 
       .thumbnail {
