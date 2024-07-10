@@ -15,7 +15,7 @@
     </div>
     <div class="content">
       <div class="title">
-        I. Tổng quan chung
+        Tổng quan chung
       </div>
       <ul>
         <li>Quy mô thị trường</li>
@@ -23,33 +23,33 @@
         <li>Thị phần các sàn TMĐT</li>
       </ul>
       <div class="title">
-        II. Phân khúc giá
+        Phân khúc giá
       </div>
       <ul>
         <li>Doanh thu theo phân khúc giá và sàn</li>
       </ul>
       <div class="title">
-        III. Thương hiệu
+        Thương hiệu
       </div>
       <ul>
         <li>Top thương hiệu theo doanh số</li>
         <li>Top thương hiệu theo số sản phẩm đã bán</li>
       </ul>
       <div class="title">
-        IV. Gian hàng hàng đầu
+        Gian hàng hàng đầu
       </div>
       <ul>
         <li>Thống kê top gian hàng</li>
         <li>Tỉ trọng doanh số theo loại gian hàng</li>
       </ul>
       <div class="title">
-        V. Sản phẩm bán chạy
+        Sản phẩm bán chạy
       </div>
       <ul>
         <li>Top sản phẩm doanh thu cao nhất</li>
       </ul>
       <div class="title">
-        VI. Top sản phẩm mới đang bán chạy
+        Top sản phẩm mới đang bán chạy
       </div>
     </div>
   </div>
