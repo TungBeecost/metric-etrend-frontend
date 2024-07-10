@@ -5,6 +5,17 @@ import {useCurrentUser} from "~/stores/current-user.js"
 
 const isDesktop = ref(true);
 
+const {showUnlock, report} = defineProps({
+  showUnlock: {
+    type: Boolean,
+    default: false
+  },
+  report: {
+    type: Object,
+    required: true
+  }
+});
+
 onMounted(() => {
   isDesktop.value = window.innerWidth >= 768;
 });
@@ -14,19 +25,20 @@ const emits = defineEmits(["update:showUnlock"]);
 
 const currentUser = useCurrentUser();
 
+const loading = ref(false);
+
 const unlockReport = async () => {
-  await currentUser.unlockReport('123');
+  try {
+    loading.value = true;
 
-  // if nothing wrong
-  reloadNuxtApp();
-}
-
-const {showUnlock} = defineProps({
-  showUnlock: {
-    type: Boolean,
-    default: false
+    await currentUser.unlockReport(report.slug);
+    loading.value = false;
+    reloadNuxtApp();
+  } catch (e) {
+    loading.value = false;
+    console.log(e)
   }
-});
+}
 
 
 const toggleUnlock = () => {

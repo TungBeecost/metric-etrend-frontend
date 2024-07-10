@@ -3,6 +3,13 @@ import {onMounted, ref} from 'vue';
 
 const isDesktop = ref(true);
 
+const {report} = defineProps({
+  report: {
+    type: Object,
+    required: true
+  }
+});
+
 onMounted(() => {
   isDesktop.value = window.innerWidth >= 768;
 });
@@ -59,7 +66,7 @@ const toggleUnlock = () => {
     </div>
   </div>
 
-  <ModalUnlock v-model:showUnlock="showUnlock"/>
+  <ModalUnlock v-model:showUnlock="showUnlock" :report="report"/>
 </template>
 
 <style lang="scss" scoped>

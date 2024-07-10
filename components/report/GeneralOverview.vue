@@ -212,7 +212,7 @@ const charts = computed(() => {
         style="margin-bottom: 24px; position: relative;"
     >
       <highchart :options="charts[0]"/>
-      <ChartMask v-if="props.isHideContent"/>
+      <ChartMask v-if="props.isHideContent" :report="props.data"/>
     </div>
     <div id="thi-phan-cac-san-thuong-mai-dien-tu" class="items-center">
       <platform-chart
