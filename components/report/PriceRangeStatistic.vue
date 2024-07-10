@@ -107,7 +107,7 @@ const chartOptions = computed(() => {
         return formatPriceRange({begin, end}, ['<', '>']);
       }),
       title: {
-        text: 'Mức giá (Đồng)',
+        text: '',
         align: 'high',
         style: {
           fontSize: '12px',
@@ -150,7 +150,7 @@ const chartOptions = computed(() => {
     },
     series: [
       {
-        name: 'Số sản phẩm đã bán cả 3 sàn',
+        name: 'Số sản phẩm đã bán',
         color: '#1A1A46',
         type: 'spline',
         zIndex: 10,
@@ -158,33 +158,23 @@ const chartOptions = computed(() => {
             .slice()
             .map((item) => item.sale || item.ratio_revenue),
       },
-      ...lstPlatform.map((platformId) => {
-            const platform = getPlatformById(platformId)
-            return {
-              name: platform.name,
-              color: {
-                linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
-                stops: [
-                  [0, platformColors[getPlatformById(platformId).name][0]],
-                  [1, platformColors[getPlatformById(platformId).name][1]]
-                ]
-              },
-              borderRadius: 4,
-              yAxis: 1,
-              data: BY__PRICE_RANGE.map(
-                  ({lst_platform}) => lst_platform.find(
-                      ({platform_id}) => platform_id === platformId
-                  )?.revenue || lst_platform.find(
-                      ({platform_id}) => platform_id === platformId
-                  )?.ratio_revenue || 0
-              ),
-              tooltip: {
-                valueSuffix: " đ"
-              },
-            }
-          }
-      )
-    ]
+      {
+        name: 'Doanh số',
+        color: {
+          linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
+          stops: [
+            [0, '#FCA14E'],
+            [1, '#FF733F']
+          ]
+        },
+        borderRadius: 4,
+        yAxis: 1,
+        type: 'column',
+        data: props.data.data_analytic.by_price_range.lst_price_range
+            .slice()
+            .map((item) => item.revenue || item.ratio_revenue),
+      },
+    ],
   }
 });
 
@@ -213,12 +203,14 @@ const chartOptions = computed(() => {
         <BlurContent :is-hide-content="props.isHideContent">
           {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
           {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}
-        </BlurContent>,
+        </BlurContent>
+        ,
         theo sau là phân khúc
         <BlurContent :is-hide-content="props.isHideContent">
           {{ formatCurrency(priceRangesSortBy("revenue")[1].begin) }} -
           {{ formatCurrency(priceRangesSortBy("revenue")[1].end) }}
-        </BlurContent>.
+        </BlurContent>
+        .
       </li>
       <li
           v-if="priceRangesSortBy('revenue') &&priceRangesSortBy('revenue').length > 1"
@@ -227,7 +219,8 @@ const chartOptions = computed(() => {
         <BlurContent :is-hide-content="props.isHideContent">
           {{ formatCurrency(priceRangesSortBy("sale")[0].begin) }} -
           {{ formatCurrency(priceRangesSortBy("sale")[0].end) }}
-        </BlurContent>.
+        </BlurContent>
+        .
       </li>
     </InsightBlock>
   </div>

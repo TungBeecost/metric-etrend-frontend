@@ -223,21 +223,20 @@ const charts = computed(() => {
     </div>
     <InsightBlock>
       <li>
-    <span class="text-bold">
-      Trong {{ diffMonths }}, nhóm hàng {{ data.name }}:
-      đạt tổng doanh số <BlurContent :is-hide-content="props.isHideContent">
+        Trong {{ diffMonths }}, nhóm hàng {{ data.name }}:
+        đạt tổng doanh số
+        <BlurContent :is-hide-content="props.isHideContent">
         <span>
           {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
         </span>
-      </BlurContent>
-      đồng, với
-      <BlurContent :is-hide-content="props.isHideContent">
+        </BlurContent>
+        đồng, với
+        <BlurContent :is-hide-content="props.isHideContent">
         <span>
           {{ formatSortTextCurrency(data.data_analytic.by_overview.sale) }}
         </span>
-      </BlurContent>
-      sản phẩm bán ra
-    </span>
+        </BlurContent>
+        sản phẩm bán ra.
       </li>
       <li>
         Thị trường {{ data.name }} có hơn
@@ -248,7 +247,7 @@ const charts = computed(() => {
         {{ formatNumber(data.data_analytic.by_overview.product) }}
       </span>
         </BlurContent>
-        mặt hàng
+        mặt hàng.
       </li>
       <li
           v-for="platform in data.data_analytic.by_marketplace.lst_marketplace"
@@ -265,59 +264,11 @@ const charts = computed(() => {
         đồng.
       </li>
       <li>
-        Doanh số của sản phẩm {{ data.name }} trong tháng
-        {{ formatDateFunc(hightestMonthRevenue.begin, "MM/YYYY") }}
-        đạt mức cao nhất với
+        Tháng
         <BlurContent :is-hide-content="props.isHideContent">
-      <span>
-        {{ formatSortTextCurrency(hightestMonthRevenue.revenue) }}
-      </span>
+          {{ formatDateFunc(hightestMonthRevenue.begin, "MM/YYYY") }}
         </BlurContent>
-        đồng và
-        <BlurContent :is-hide-content="props.isHideContent">
-      <span>
-        {{ formatSortTextCurrency(hightestMonthRevenue.sale) }}
-      </span>
-        </BlurContent>
-        về số sản phẩm đã bán.
-      </li>
-      <li>
-        Quy mô thị trường {{ data.name }} tháng
-        {{ formatDateFunc(diffRevenueMonths.latestMonth[0].begin, "MM/YYYY") }}
-        đạt
-        <BlurContent :is-hide-content="props.isHideContent">
-          <span>
-            {{
-              formatSortTextCurrency(diffRevenueMonths.latestMonth[0].revenue)
-            }}
-          </span>
-        </BlurContent>
-        doanh số và tăng trưởng
-        {{ Number(diffRevenueMonths.diffPercent) > 0 ? "tốt" : "thấp" }} hơn so với
-        tháng
-        <BlurContent :is-hide-content="props.isHideContent">
-          {{ formatDateFunc(diffRevenueMonths.previousMonth[0].begin, "MM/YYYY") }}
-        </BlurContent>
-        là
-        <BlurContent :is-hide-content="props.isHideContent">{{
-            Math.abs(Number(diffRevenueMonths.diffPercent))
-          }}%
-        </BlurContent>
-      </li>
-      <li>
-        <span class="text-bold">Nhận xét trung hạn</span> trong 6 tháng gần
-        nhất, {{ data.name }}
-        {{
-          Number(diffHalfYear.diffPercent) > 0
-              ? "tăng trưởng doanh thu"
-              : "doanh thu giảm"
-        }}
-        <BlurContent :is-hide-content="props.isHideContent">
-    <span>
-      {{ diffHalfYear.diffPercent }}
-    </span>
-        </BlurContent>
-        % so với 6 tháng liền kề.
+        ghi nhận doanh số cao nhất trong 12 tháng
       </li>
     </InsightBlock>
   </div>
