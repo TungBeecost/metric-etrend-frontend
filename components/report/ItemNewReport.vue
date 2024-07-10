@@ -88,6 +88,32 @@ const getDisplayedCategories = (report: any) => {
 </template>
 
 <style lang="scss">
+.carousel__pagination-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel__pagination-button {
+  width: 10px;
+  margin: 0 2px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.carousel__pagination-button:after {
+  display: none;
+}
+
+.carousel__pagination-button:hover,
+.carousel__pagination-button--active {
+  background-color: #ccc;
+  color: #fff;
+}
 .new-report-slide {
   .carousel__slide {
     padding: 8px;
@@ -257,3 +283,4 @@ const getDisplayedCategories = (report: any) => {
   }
 }
 </style>
+

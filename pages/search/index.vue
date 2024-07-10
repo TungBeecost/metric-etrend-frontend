@@ -195,7 +195,7 @@ useSeoMeta({
         Kết quả tìm kiếm cho ngành hàng <b>"{{selectedCategoryName}}"</b>
       </div>
       <div v-if="route.query.search && searchValueSearch" class="sectionTitle_content">
-        Kết quả tìm kiếm cho nhóm hàng <b>"{{searchValueSearch}}"</b>
+        Kết quả tìm kiếm cho từ khoá <b>"{{searchValueSearch}}"</b>
       </div>
       <div class="sectionContent searchContent">
         <SearchReport class="default_section" :handle-search="handleSearch" />
