@@ -109,7 +109,10 @@ const top5Shops = (): string[] => {
         kinh doanh bán với mức giá phổ biến từ {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
         {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}. Thương hiệu {{ props.data.name }} được phân phối và
         bán
-        chạy nhất là <span class="text-bold">{{ top5Shops().join(', ') }}</span>
+        chạy nhất là
+        <BlurContent :is-hide-content="isHideContent">
+          <span class="text-bold">{{ top5Shops().join(',q ') }}</span>
+        </BlurContent>
         v.v...
       </div>
     </div>

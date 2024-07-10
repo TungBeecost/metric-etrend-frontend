@@ -53,7 +53,7 @@ const handleItemClick = (item: LstRecommed) => {
       </div>
       <div class="info">
         <div class="breadcrumb">{{ item.category_report_name }} | {{ formatDate(item.start_date) }}</div>
-        <div class="name">Báo cáo Nhóm hàng {{ item.name }}</div>
+        <div class="name">Báo cáo {{ item.name }}</div>
       </div>
     </div>
   </div>

@@ -13,8 +13,12 @@ import {PAGE_TITLES} from "~/constant/constains";
 import UnlockReport from "~/components/report/UnlockReport.vue";
 import axios from "~/services/axios-wrapper";
 import {useCurrentUser} from "~/stores/current-user";
-import {searchReport, type SearchReportPayload} from "~/services/reports";
+import {type LstRecommed, searchReport, type SearchReportPayload} from "~/services/reports"
+import MaybeInterested from "~/components/report/MaybeInterested.vue";
+import {useSearchReport} from "#imports";
+const { fetchListRecomend } = useSearchReport()
 const listTagSuggestions = ref<string[]>([]);
+const listRecomend = ref<LstRecommed[] | null>(null);
 
 interface Category {
   name: string;
@@ -24,7 +28,8 @@ interface Category {
 interface Data {
   name: string;
   lst_category: Category[];
-  filter_custom: any;
+  filter_custom: any
+  category_report_id: string;
 }
 
 const currentUserStore = useCurrentUser();
@@ -52,6 +57,8 @@ const fetchTableData = async () => {
     loading.value = false;
     if (data.value) {
       await fetchTagSuggest(data.value.name);
+      console.log(data.value.lst_category[0].id);
+      await fetchDataRecommend(data.value.category_report_id);
     }
   } catch (error) {
     loading.value = false;
@@ -96,6 +103,20 @@ const fetchTagSuggest = async (value: string) => {
     console.error(e);
   }
 };
+
+const fetchDataRecommend = async (category_report_id: string) => {
+  try {
+    const result = await fetchListRecomend(category_report_id);
+    if (result !== null) {
+      listRecomend.value = result;
+    } else {
+      listRecomend.value = [];
+    }
+  }
+  catch (e) {
+    console.error(e);
+  }
+}
 
 const breadcrumbs = computed(() => {
   if (data.value) {
@@ -201,6 +222,7 @@ useSeoMeta({
         <overview :is-hide-content="isHideContent" :data="data as Record<string, any>"/>
         <report-content/>
         <report-filter-detail :data="data" :filter="data.filter_custom" class="report-filter-detail"/>
+        <maybe-interested v-if="listRecomend" :recomends="listRecomend" />
       </div>
     </div>
     <poster-detail-report :list-suggest="listTagSuggestions"/>

@@ -53,10 +53,11 @@ export const useCurrentUser = defineStore("currentUserStore", {
                 return
             }
             try {
-                this.userInfo = jwt_decode(access_token);
+                this.userInfo = {...this.userInfo, ...jwt_decode(access_token)};
                 this.fetchedUser = true;
                 const {current_plan, ...userInfo} = await fetchUserProfile();
                 if (!userInfo?.id) return;
+                console.log(1231231231, userInfo, current_plan)
                 this.userInfo = {...userInfo, current_plan};
                 this.fetchedUser = true;
                 console.log(222, this.userInfo)

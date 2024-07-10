@@ -16,7 +16,6 @@ const props = defineProps({
     default: () => true,
   },
 });
-console.log(props.data);
 const platformColors = {
   Shopee: ['#FCA14E', '#FF733F'],
   Lazada: ['#4745A5', '#241E46'],

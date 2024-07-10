@@ -19,26 +19,6 @@ const props = defineProps({
   },
 });
 
-const diffRevenueMonths = computed(() => {
-  const {lst_revenue_sale_monthly} = props.data.data_analytic.by_overview;
-  const latestMonth = lst_revenue_sale_monthly.slice(-1);
-  const previousMonth = lst_revenue_sale_monthly.slice(-2, -1);
-  const revenueLatestMonth = latestMonth.reduce(
-      (acc: number, item: { revenue: number }) => acc + item.revenue,
-      0
-  );
-  const revenuePreviousMonth = previousMonth.reduce(
-      (acc: number, item: { revenue: number }) => acc + item.revenue,
-      0
-  );
-  const diff = revenueLatestMonth - revenuePreviousMonth;
-  return {
-    diffPercent: ((diff / revenuePreviousMonth) * 100).toFixed(1),
-    latestMonth,
-    previousMonth,
-  };
-});
-
 const hightestMonthRevenue = computed(() => {
   const {lst_revenue_sale_monthly} = props.data.data_analytic.by_overview;
   const highestMonthRevenue = lst_revenue_sale_monthly.reduce(
@@ -51,26 +31,6 @@ const hightestMonthRevenue = computed(() => {
       lst_revenue_sale_monthly[0]
   );
   return highestMonthRevenue;
-});
-
-const diffHalfYear = computed(() => {
-  const {lst_revenue_sale_monthly} = props.data.data_analytic.by_overview;
-  const latestHalfYear = lst_revenue_sale_monthly.slice(-6);
-  const previousHalfYear = lst_revenue_sale_monthly.slice(-12, -6);
-  const revenueLatestHalfYear = latestHalfYear.reduce(
-      (acc: number, item: { revenue: number }) => acc + item.revenue,
-      0
-  );
-  const revenuePreviousHalfYear = previousHalfYear.reduce(
-      (acc: number, item: { revenue: number }) => acc + item.revenue,
-      0
-  );
-  const diff = revenueLatestHalfYear - revenuePreviousHalfYear;
-  return {
-    diffPercent: ((diff / revenuePreviousHalfYear) * 100).toFixed(1),
-    latestHalfYear,
-    previousHalfYear,
-  };
 });
 
 const formatDateFunc = (value: string, format: string) => {
@@ -240,7 +200,12 @@ const charts = computed(() => {
       </li>
       <li>
         Thị trường {{ data.name }} có hơn
-        {{ formatNumber(data.data_analytic.by_overview.shop) }} nhà bán trên
+        <BlurContent :is-hide-content="props.isHideContent">
+          <span>
+            {{ formatNumber(data.data_analytic.by_overview.shop) }}
+          </span>
+        </BlurContent>
+         nhà bán trên
         sàn TMĐT với hơn
         <BlurContent :is-hide-content="props.isHideContent">
       <span>

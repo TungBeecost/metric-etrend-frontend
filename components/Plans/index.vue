@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import {NAVIGATIONS, PLANS} from '~/constant/constains';
 
-const {userInfo} = useCurrentUser();
+const currentUserStore = useCurrentUser();
+
+const {userInfo} = storeToRefs(currentUserStore);
+
 
 defineProps<{
   isDarkTitle?: boolean,
@@ -21,7 +24,8 @@ defineProps<{
           <div class="summary">
             <p class="planType">{{ plan.type }}</p>
             <p class="planDesc">{{ plan.description }}</p>
-            <div class="planPrice">{{ plan.price }}<span v-if="plan.unit" class="priceUnit">/{{ plan.unit }}</span></div>
+            <div class="planPrice">{{ plan.price }}<span v-if="plan.unit" class="priceUnit">/{{ plan.unit }}</span>
+            </div>
           </div>
 
           <div class="divider"/>
@@ -41,7 +45,6 @@ defineProps<{
               </div>
             </div>
           </div>
-
           <!-- <AButton type="primary">Mua gói {{ plan.type }}</AButton> -->
           <div v-if="userInfo.current_plan">
             <AButton v-if="plan.plan_code === 'free'" class="user_plan" @click="navigateTo(NAVIGATIONS.contactUs)"> Đang
