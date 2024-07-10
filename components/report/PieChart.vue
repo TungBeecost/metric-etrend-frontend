@@ -110,7 +110,7 @@ watchEffect(() => {
     title: {
       text: props.title,
       style: {
-        fontFamily: "Montserrat, Inter, sans-serif",
+        fontFamily: "Inter, sans-serif",
         fontWeight: '700',
         fontSize: '16px',
         colr: '#241E46'

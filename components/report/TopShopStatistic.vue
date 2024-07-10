@@ -174,7 +174,7 @@ const reportType = computed(() => props.data?.report_type);
           </div>
         </template>
       </a-table>
-      <ChartMask v-if="props.isHideContent"/>
+      <ChartMask v-if="props.isHideContent" :report="props.data"/>
     </div>
     <InsightBlock
         v-if="
