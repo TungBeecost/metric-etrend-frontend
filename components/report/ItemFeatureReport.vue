@@ -1,33 +1,39 @@
 <script setup lang="ts">
-import 'vue3-carousel/dist/carousel.css'
+import { onMounted, onUnmounted, ref, computed } from 'vue';
+import 'vue3-carousel/dist/carousel.css';
 import dayjs from "dayjs";
-import {NAVIGATIONS} from "~/constant/constains";
-import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper";
+import { NAVIGATIONS } from "~/constant/constains";
+import { formatAndRoundSortTextCurrencyWithMinValue } from "~/helpers/FormatHelper";
 import BlurContent from "~/components/BlurContent.vue";
 
-const {reports} = defineProps({
+const { reports } = defineProps({
   reports: {
     type: Array<any>,
     default: () => []
   }
-})
+});
 
 const handleItemClick = (report: any) => {
   navigateTo(`${NAVIGATIONS.home}${report.slug}`);
-}
+};
 
-const windowWidth = ref(window.innerWidth);
+const windowWidth = ref(1024);
 
 const onResize = () => {
   windowWidth.value = window.innerWidth;
 };
 
 onMounted(() => {
-  window.addEventListener('resize', onResize);
+  if (typeof window !== 'undefined') {
+    windowWidth.value = window.innerWidth;
+    window.addEventListener('resize', onResize);
+  }
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', onResize);
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', onResize);
+  }
 });
 
 const itemsToShow = computed(() => {

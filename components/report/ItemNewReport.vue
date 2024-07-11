@@ -1,46 +1,46 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref, computed } from 'vue';
+import 'vue3-carousel/dist/carousel.css';
 import dayjs from "dayjs";
-import {NAVIGATIONS} from "~/constant/constains";
-import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper";
+import { NAVIGATIONS } from "~/constant/constains";
+import { formatAndRoundSortTextCurrencyWithMinValue } from "~/helpers/FormatHelper";
 import BlurContent from "~/components/BlurContent.vue";
 
-const {reports} = defineProps({
+const { reports } = defineProps({
   reports: {
     type: Array<any>,
     default: () => []
   }
-})
+});
 
 const handleItemClick = (report: any) => {
-  // Navigate to report detail page
   navigateTo(`${NAVIGATIONS.home}${report.slug}`);
-}
+};
 
-const windowWidth = ref(window.innerWidth);
+const windowWidth = ref(1024);
 
 const onResize = () => {
-  windowWidth.value = window.innerWidth;
+  if (typeof window !== 'undefined') {
+    windowWidth.value = window.innerWidth;
+  }
 };
 
 onMounted(() => {
-  window.addEventListener('resize', onResize);
+  if (typeof window !== 'undefined') {
+    windowWidth.value = window.innerWidth;
+    window.addEventListener('resize', onResize);
+  }
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', onResize);
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', onResize);
+  }
 });
 
 const itemsToShow = computed(() => {
-  return windowWidth.value < 768 ? 1 : 2; // 768px is a common breakpoint for mobile devices
+  return windowWidth.value < 768 ? 1 : 4;
 });
-
-const getDisplayedCategories = (report: any) => {
-  if (windowWidth.value < 768) {
-    return report.lst_category?.length ? report.lst_category[report.lst_category.length - 1].name : '';
-  } else {
-    return report.lst_category?.map((item: any) => item.name).join(' > ') || '';
-  }
-};
 </script>
 
 <template>

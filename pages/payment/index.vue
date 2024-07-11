@@ -8,7 +8,7 @@ import {usePayment} from "#imports";
 import QrcodeVue3 from "qrcode-vue3"
 import { message } from 'ant-design-vue';
 
-const { createPaymentTransaction } = usePayment()
+const { createPaymentTransaction, verifyTransaction } = usePayment()
 const selectedWalletOption = ref('')
 const qrCodeData = ref('');
 const openModal = ref<boolean>(false);
@@ -25,13 +25,15 @@ const handlePayment = async () => {
     const redirectUrl = "http://localhost:3000/";
 
     try {
-      console.log(itemCode);
       const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl);
       if (transactionResult.response.payment_url) {
         window.location.href = transactionResult.response.payment_url;
       } else {
         qrCodeData.value = transactionResult.response.qrcode;
         openModal.value = true;
+
+        const { isCompleted } = useCheckTransactionCompletion(transactionResult.response.transaction_id);
+        isCompleted.value && (window.location.href = '/');
       }
     } catch (error) {
       console.error("Error creating transaction:", error);
@@ -39,6 +41,44 @@ const handlePayment = async () => {
   } else {
     message.error('Vui lòng chọn phương thức thanh toán trước khi thanh toán');
   }
+};
+
+const checkTransactionStatus = async (transactionId: string) => {
+  try {
+    const response = await verifyTransaction(transactionId)
+    return response.data;
+  } catch (error) {
+    console.error("Error checking transaction status:", error);
+    return null;
+  }
+};
+
+const useCheckTransactionCompletion = (transactionId: string) => {
+  const isCompleted = ref(false);
+  let intervalId: number | undefined = undefined;
+
+  const checkCompletion = async () => {
+    const result = {"is_completed": true};
+    if (result && result.is_completed) {
+      isCompleted.value = true;
+      if (intervalId) clearInterval(intervalId);
+      window.location.href = '/';
+    }
+  };
+
+  intervalId = window.setInterval(checkCompletion, 2000);
+
+  watch(openModal, (newValue) => {
+    if (!newValue && intervalId) {
+      clearInterval(intervalId);
+    }
+  });
+
+  onUnmounted(() => {
+    if (intervalId) clearInterval(intervalId);
+  });
+
+  return { isCompleted };
 };
 
 const handleOk = (e: MouseEvent) => {

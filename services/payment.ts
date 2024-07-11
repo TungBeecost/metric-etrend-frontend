@@ -8,10 +8,24 @@ export const createTransaction = async (paymentMethod: string, itemCode: string,
                 'accept': 'application/json',
             }
         });
-
         return response.data;
     } catch (error) {
         console.error("createTransaction error: ", error);
+        return null;
+    }
+};
+
+
+export const checkTransactionStatus = async (transactionId: string) => {
+    try {
+        const response = await axios.get(`${useBEEndpoint(PAYMENT_ENDPOINTS.checkTransaction.endpoint)}?transaction_code=${transactionId}`, {
+            headers: {
+                'accept': 'application/json',
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error checking transaction status:", error);
         return null;
     }
 };

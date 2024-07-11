@@ -18,5 +18,6 @@ export const USER_ENDPOINTS: { [key: string]: { endpoint: string; method: METHOD
 }
 
 export const PAYMENT_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {
-    payment: {endpoint: `/api/payment/create-transaction`, method: "POST"}
+    payment: {endpoint: `/api/payment/create-transaction`, method: "POST"},
+    checkTransaction: {endpoint: `/api/payment/transaction/check`, method: "GET"}
 }
