@@ -2,6 +2,13 @@
 import {createLoadingTask, VuePdf} from 'vue3-pdfjs';
 import axios from "axios";
 
+const {data} = defineProps({
+  data: {
+    type: Object,
+    required: true,
+  }
+})
+
 const isLoading = ref(false)
 const loadingPercentage = ref(0)
 
@@ -58,7 +65,7 @@ const fetchPdf = async (newValue) => {
 onMounted(() => {
   const pdfFile = '/Bao cao TMDT nua dau 2023-by Metric.full.VI.pdf';
   // const pdfFile = 'https://drive.google.com/file/d/12VDOoDOzuPWy-vThfyNs-HFiah50xwPY/view';
-  fetchPdf(pdfFile)
+  fetchPdf(data.url_report_pdf)
 })
 
 
