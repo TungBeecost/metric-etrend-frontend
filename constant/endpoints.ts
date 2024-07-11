@@ -16,3 +16,7 @@ export const AUTH_ENDPOINTS: { [key: string]: { endpoint: string; method: METHOD
 export const USER_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {
     profile: {endpoint: `/api/user/profile`, method: "GET"}
 }
+
+export const PAYMENT_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {
+    payment: {endpoint: `/api/payment/create-transaction`, method: "POST"}
+}

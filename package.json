@@ -40,6 +40,7 @@
     "pinia": "^2.1.7",
     "pm2": "^5.4.1",
     "prettier": "^3.3.2",
+    "qrcode-vue3": "^1.6.8",
     "unplugin-vue-components": "^0.27.2",
     "vue": "^3.4.29",
     "vue-highcharts": "^0.2.0",

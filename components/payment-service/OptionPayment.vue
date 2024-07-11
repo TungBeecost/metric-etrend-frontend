@@ -3,8 +3,12 @@ import { WALLET } from "~/constant/constains";
 import { ref } from 'vue';
 
 const value = ref('');
-const selectedWallet = ref('');
+const emit = defineEmits(['selectedOption']);
 
+watch(value, (newValue) => {
+  console.log('newValue', newValue);
+  emit('selectedOption', newValue);
+});
 </script>
 
 <template>
@@ -23,7 +27,8 @@ const selectedWallet = ref('');
       </div>
       <div class="option">
         <a-radio-group v-model:value="value" style="display: flex; gap: 64px" name="radioGroup">
-          <a-radio v-for="wallet in WALLET" :key="wallet.code" :style="{ border: wallet.code === value ? '1px solid #E85912' : '1px solid #EEEBFF', borderRadius: '12px', padding: '0 12px', alignItems: 'center', display: 'flex' }" :value="wallet.code">            <img style="width: 100px; height: 100px" :src="wallet.thumbnail" alt="icon" />
+          <a-radio v-for="wallet in WALLET" :key="wallet.code" :style="{ border: wallet.code === value ? '1px solid #E85912' : '1px solid #EEEBFF', borderRadius: '12px', padding: '0 12px', alignItems: 'center', display: 'flex' }" :value="wallet.code">
+            <img style="width: 100px; height: 100px" :src="wallet.thumbnail" alt="icon" />
           </a-radio>
         </a-radio-group>
       </div>
