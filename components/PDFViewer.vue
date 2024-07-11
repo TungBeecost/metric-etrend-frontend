@@ -51,21 +51,16 @@ const fetchPdf = async (newValue) => {
       loadingPercentage.value = Math.floor(progressEvent.loaded / progressEvent.total * 100)
     }
   })
-  console.log(response)
+
   const pdf = await createLoadingTask(response.data).promise
   pdfSrc.value = response.data
   numOfPages.value = pdf.numPages
   console.log(response, pdf)
   isLoading.value = false
-  // setTimeout(() => {
-  //   isLoading.value = true
-  // }, 1000)
 }
 
 onMounted(() => {
-  const pdfFile = '/Bao cao TMDT nua dau 2023-by Metric.full.VI.pdf';
-  // const pdfFile = 'https://drive.google.com/file/d/12VDOoDOzuPWy-vThfyNs-HFiah50xwPY/view';
-  fetchPdf('https://static-files.staging.muadee.vn/ereport-static/Bao%20cao%20TMDT%20Q3.2023-by%20Metric.VI_full.pdf')
+  fetchPdf(data.url_report_pdf)
 })
 
 
