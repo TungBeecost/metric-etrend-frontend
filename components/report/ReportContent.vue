@@ -5,41 +5,41 @@ const {tableOfContent} = defineProps({
     type: Array[Object],
     default: () => [
       {
-        title: 'Tổng quan chung',
+        title: 'Tổng quan',
         children: [
           {title: 'Quy mô thị trường'},
-          {title: 'Thống kê doanh thu theo tháng'},
-          {title: 'Thị phần các sàn TMĐT'},
+          {title: 'Doanh số, sản phẩm đã bán theo tháng'},
+          {title: 'Tỷ trọng doanh số theo sàn'},
         ],
       },
       {
         title: 'Phân khúc giá',
         children: [
-          {title: 'Doanh thu theo phân khúc giá và sàn'}
+          {title: 'Doanh số, sản phẩm đã bán theo phân khúc giá'}
         ],
       },
       {
         title: 'Thương hiệu',
         children: [
           {title: 'Top thương hiệu theo doanh số'},
-          {title: 'Top thương hiệu theo số sản phẩm đã bán'},
+          {title: 'Top thương hiệu theo sản lượng bán'},
         ],
       },
       {
         title: 'Gian hàng hàng đầu',
         children: [
-          {title: 'Thống kê top gian hàng'},
-          {title: 'Tỉ trọng doanh số theo loại gian hàng'},
+          {title: 'Tỷ trọng doanh số theo loại gian hàng'},
+          {title: 'Thống kê top gian hàng hàng đầu'},
         ],
       },
       {
         title: 'Sản phẩm bán chạy',
         children: [
-          {title: 'Top sản phẩm doanh thu cao nhất'},
+          {title: 'Top sản phẩm bán chạy'},
         ],
       },
       {
-        title: 'Top sản phẩm mới đang bán chạy',
+        title: 'Top sản phẩm bán chạy',
         children: []
       },
     ]
