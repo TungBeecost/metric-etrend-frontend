@@ -107,14 +107,10 @@ onMounted(() => {
           <!--          <a-tooltip v-for="index in numOfPages">-->
           <div
               v-for="index in numOfPages"
-              style="width: 14px; height: 14px; background: #fff; border: 1px solid #aaa; cursor: pointer;"
+              style="width: 12px; height: 12px; background: #fff; border: 2px solid #fff; cursor: pointer;"
               :style="{background: currentPage === index ? '#FF6931' : '#fff'}"
               @click="currentPage = index"
           />
-          <!--            <template #title>-->
-          <!--              {{ index}}-->
-          <!--            </template>-->
-          <!--          </a-tooltip>-->
         </div>
         <div
             style="color: #fff;line-height: 1; margin-top: 12px; user-select: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
