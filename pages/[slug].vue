@@ -5,7 +5,6 @@ import Overview from "~/components/report/Overview.vue";
 import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
 import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
-import ReportContent from "~/components/report/ReportContent.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
 import {ref} from "vue";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
@@ -44,7 +43,7 @@ const route = useRoute()
 const slug = route.params.slug;
 
 
-const fetchTableData = async () => {
+const fetchReportData = async () => {
   try {
     loading.value = true;
     const response = await axios.get(`https://api-ereport.staging.muadee.vn/api/report/detail?slug=${slug}`);
@@ -141,7 +140,7 @@ const breadcrumbs = computed(() => {
 });
 
 onMounted(() => {
-  fetchTableData();
+  fetchReportData();
 });
 
 console.log(toSeoName(slug));

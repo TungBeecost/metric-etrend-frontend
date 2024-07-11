@@ -1,4 +1,50 @@
-<script setup lang="ts">
+<script setup>
+
+const {tableOfContent} = defineProps({
+  tableOfContent: {
+    type: Array[Object],
+    default: () => [
+      {
+        title: 'Tổng quan chung',
+        children: [
+          {title: 'Quy mô thị trường'},
+          {title: 'Thống kê doanh thu theo tháng'},
+          {title: 'Thị phần các sàn TMĐT'},
+        ],
+      },
+      {
+        title: 'Phân khúc giá',
+        children: [
+          {title: 'Doanh thu theo phân khúc giá và sàn'}
+        ],
+      },
+      {
+        title: 'Thương hiệu',
+        children: [
+          {title: 'Top thương hiệu theo doanh số'},
+          {title: 'Top thương hiệu theo số sản phẩm đã bán'},
+        ],
+      },
+      {
+        title: 'Gian hàng hàng đầu',
+        children: [
+          {title: 'Thống kê top gian hàng'},
+          {title: 'Tỉ trọng doanh số theo loại gian hàng'},
+        ],
+      },
+      {
+        title: 'Sản phẩm bán chạy',
+        children: [
+          {title: 'Top sản phẩm doanh thu cao nhất'},
+        ],
+      },
+      {
+        title: 'Top sản phẩm mới đang bán chạy',
+        children: []
+      },
+    ]
+  }
+});
 
 </script>
 
@@ -14,46 +60,23 @@
       </div>
     </div>
     <div class="content">
-      <div class="title">
-        Tổng quan
+      <div v-for="(item, index) in tableOfContent">
+
+        <div class="title">
+          {{ item?.title || item }}
+        </div>
+
+        <ul v-if="item?.children?.length">
+          <li v-for="child in item.children">{{ child.title }}</li>
+        </ul>
+        <br v-else-if="index !== tableOfContent.length - 1">
       </div>
-      <ul>
-        <li>Quy mô thị trường</li>
-        <li>Doanh số, sản phẩm đã bán theo tháng</li>
-        <li>Tỷ trọng doanh số theo sàn</li>
-      </ul>
-      <div class="title">
-        Phân khúc giá
-      </div>
-      <ul>
-        <li>Doanh số, sản phẩm đã bán theo phân khúc giá</li>
-      </ul>
-      <div class="title">
-        Thương hiệu
-      </div>
-      <ul>
-        <li>Top thương hiệu theo doanh số</li>
-        <li>Top thương hiệu theo sản lượng bán</li>
-      </ul>
-      <div class="title">
-        Gian hàng hàng đầu
-      </div>
-      <ul>
-        <li>Tỷ trọng doanh số theo loại gian hàng</li>
-        <li>Thống kê top gian hàng hàng đầu</li>
-      </ul>
-      <div class="title">
-        Sản phẩm bán chạy
-      </div>
-      <ul>
-        <li>Top sản phẩm bán chạy</li>
-      </ul>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.report_content{
+.report_content {
   padding: 24px;
   border-radius: 8px;
   border: 1px solid #EEEBFF;
@@ -61,6 +84,7 @@
   flex-direction: column;
   gap: 16px;
 }
+
 .statistic-item__title {
   display: flex;
   align-items: center;
@@ -69,26 +93,23 @@
   font-weight: 700;
   color: #241E46;
 }
-.content{
+
+.content {
   font-size: 14px;
   line-height: 24px;
 }
-.title{
+
+.title {
   font-size: 16px;
   font-weight: 600;
   color: #241E46;
 }
-ul{
+
+ul {
   padding-left: 16px;
 }
-li{
-  margin-top: 8px;
-}
 
-@media (max-width: 768px) {
-  .report_content {
-    padding: 16px;
-    border: none;
-  }
+li {
+  margin-top: 8px;
 }
 </style>

@@ -47,7 +47,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
         },
         async fetchCurrentUser() {
             this.fetchedUser = false;
-            const access_token = localStorage.getItem("access_token");
+            const access_token = typeof window !== 'undefined' ? localStorage.getItem("access_token") : "";
             if (!access_token) {
                 this.fetchedUser = true;
                 return
@@ -72,7 +72,9 @@ export const useCurrentUser = defineStore("currentUserStore", {
         },
         logOut() {
             console.log("Logging out");
-            localStorage.removeItem("access_token");
+            if (typeof window !== 'undefined') {
+                localStorage.removeItem("access_token");
+            }
             this.user = null;
 
             window.location.reload();
@@ -86,7 +88,9 @@ export const useCurrentUser = defineStore("currentUserStore", {
 
                 const access_token = data?.value?.access_token;
                 if (access_token) {
-                    localStorage.setItem("access_token", access_token);
+                    if (typeof window !== 'undefined') {
+                        localStorage.setItem("access_token", access_token);
+                    }
                     // localStorage.setItem("refresh_token", refreshToken);
                     if (access_token && typeof access_token === "string" && access_token.length > 0) {
                         try {

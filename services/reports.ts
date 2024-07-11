@@ -52,6 +52,43 @@ export const fetchListRecomendReport = async (categoryReportId: string, numberOf
       slug: item.slug,
       name: item.name,
       url_thumbnail: item.url_thumbnail,
+      source: item.source,
+      category_report_name: item.category_report_name,
+      claimed_at: item.claimed_at,
+      expired_at: item.expired_at,
+      status: item.status,
+      search_volume_shopee: item.search_volume_shopee,
+      start_date: item.start_date
+    }));
+
+    return data;
+  } catch (error) {
+    console.error("fetchListRecomendReport error: ", error);
+    return null;
+  }
+};
+
+export const fetchListRecomendReportMarketing = async (numberOfReports: number) => {
+  try {
+    const response = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.marketing_report_recommend.endpoint), {
+      params: {
+        number_of_reports: numberOfReports
+      },
+      headers: {
+        accept: "application/json"
+      }
+    });
+
+    if (!Array.isArray(response.data)) {
+      console.error("fetchListRecomendReport error: Unexpected response format");
+      return null;
+    }
+    const data: LstRecommed[] = response.data.map((item) => ({
+      id: item.id,
+      slug: item.slug,
+      name: item.name,
+      source: item.source,
+      url_thumbnail: item.url_thumbnail,
       category_report_name: item.category_report_name,
       claimed_at: item.claimed_at,
       expired_at: item.expired_at,
@@ -143,6 +180,7 @@ export interface LstRecommed {
   slug: string;
   name: string;
   url_thumbnail: string;
+  source: string;
   category_report_name: string;
   claimed_at: string | null;
   expired_at: string | null;

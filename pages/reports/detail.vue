@@ -5,12 +5,12 @@ import Overview from "~/components/report/Overview.vue";
 import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
 import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
-import ReportContent from "~/components/report/ReportContent.vue";
+// import ReportContent from "~/components/report/ReportContent.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
 import { ref } from "vue";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import axios from "axios";
-import { PAGE_TITLES } from "../../constant/constains";
+import { PAGE_TITLES } from "~/constant/constains";
 
 interface Category {
   name: string;
