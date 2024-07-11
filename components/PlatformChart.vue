@@ -190,7 +190,7 @@ watch(() => props.analyticType, () => {
         <!--        </div>-->
       </div>
     </div>
-    <div style="flex: 1;">
+    <div style="width: 100%">
       <a-table
           :columns="columns"
           :data-source="dataSource"
@@ -322,6 +322,14 @@ watch(() => props.analyticType, () => {
 
   @media (max-width: 768px) {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  #platform_chart {
+    .platform-table {
+      margin-bottom: 16px;
+    }
   }
 }
 </style>

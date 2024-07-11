@@ -144,4 +144,11 @@ const top5Shops = (): string[] => {
   font-weight: 700;
   line-height: 24px;
 }
+
+@media (max-width: 768px) {
+  .overview {
+    padding: 16px;
+    border: none;
+  }
+}
 </style>

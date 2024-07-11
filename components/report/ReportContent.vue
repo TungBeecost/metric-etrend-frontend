@@ -84,4 +84,11 @@ ul{
 li{
   margin-top: 8px;
 }
+
+@media (max-width: 768px) {
+  .report_content {
+    padding: 16px;
+    border: none;
+  }
+}
 </style>

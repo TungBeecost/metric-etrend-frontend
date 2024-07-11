@@ -641,4 +641,15 @@ const formatNumber = (value = 0) => {
   flex-direction: column;
   gap: 16px;
 }
+
+@media (max-width: 768px) {
+  #thong-ke-thuong-hieu {
+    padding: 16px;
+    border: none;
+  }
+
+  .pie_chart{
+    flex-direction: column;
+  }
+}
 </style>

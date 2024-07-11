@@ -7,6 +7,7 @@ export const NAVIGATIONS = {
   account: "/account",
   pricing: "/pricing",
   contactUs: "/contact-us",
+  paymentService: "/payment-service",
   signIn: "/sign-in",
   informationPolicy: "/chinh-sach-bao-mat-thong-tin",
   paymentMethod: "/hinh-thuc-thanh-toan",
@@ -179,6 +180,25 @@ export const PLANS: Array<IPLAN> = [
     ]
   }
 ];
+
+
+interface IWALLET {
+  code: string;
+  label: string;
+  thumbnail: string;
+}
+export const WALLET: Array<IWALLET> = [
+    {
+        code: "momo",
+        label: "Momo",
+        thumbnail: "/images/wallet/momo.png"
+    },
+    {
+        code: "vnpay",
+        label: "VnPay",
+        thumbnail: "/images/wallet/vnpay.png"
+    }
+    ];
 
 export const TESTIMONIAL_BRANDS = [
   "/images/brand_news/Cafef.png",

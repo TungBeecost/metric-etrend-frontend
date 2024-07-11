@@ -20,12 +20,12 @@ const props = defineProps({
 <template>
   <div class="poster_detail_report">
     <div class="title">
-      Truy cập kho dữ liệu với hàng trăm <br/> báo cáo và xu hướng mới nhất
+      Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất
     </div>
     <div class="searchContent">
       <SearchReport class="searchBox"/>
       <div class="recommendSearch">
-        <div class="content_key">Từ khoá liên quan nổi bật</div>
+        <div class="content_key">Từ khoá liên quan nổi bật: </div>
         <div style="display: flex; gap: 16px; flex-wrap: wrap;">
           <AButton v-for="(item, index) in props.listSuggest" :key="index" ghost class="recommendItem"
                    @click="onClickSuggestion(item)">
@@ -97,7 +97,7 @@ const props = defineProps({
   }
 
   @media (max-width: 768px) {
-    padding: 30px 60px;
+    padding: 16px;
 
     .title {
       font-size: 24px;

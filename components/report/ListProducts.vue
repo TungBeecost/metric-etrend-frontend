@@ -575,6 +575,20 @@ const value = ref('');
     }
   }
 }
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(1, 1fr);
+
+    .product-item{
+      display: flex;
+    }
+  }
+  #list-products{
+    padding: 16px;
+    border: none;
+  }
+}
 </style>
 <style lang="scss">
 #list-products {

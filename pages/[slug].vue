@@ -147,6 +147,20 @@ onMounted(() => {
 console.log(toSeoName(slug));
 
 
+const isMobile = ref(window.innerWidth <= 768);
+
+const updateWindowSize = () => {
+  isMobile.value = window.innerWidth <= 768;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', updateWindowSize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateWindowSize);
+});
+
 useSeoMeta({
   title: PAGE_TITLES.reportDetail + " " + toSeoName(slug)
 })
@@ -222,9 +236,10 @@ useSeoMeta({
         <overview :is-hide-content="isHideContent" :data="data as Record<string, any>"/>
         <report-content/>
         <report-filter-detail :data="data" :filter="data.filter_custom" class="report-filter-detail"/>
-        <maybe-interested v-if="listRecomend" :recomends="listRecomend" />
+        <maybe-interested v-if="listRecomend && !isMobile" :recomends="listRecomend"/>
       </div>
     </div>
+    <maybe-interested v-if="listRecomend && isMobile" :recomends="listRecomend"/>
     <poster-detail-report :list-suggest="listTagSuggestions"/>
   </div>
 
@@ -270,5 +285,17 @@ useSeoMeta({
       gap: 24px;
     }
   }
+}
+
+
+@media (max-width: 768px) {
+  .different_info {
+    order: -1;
+  }
+
+  .different_info .maybe-interested-component {
+    order: 2; /* Ensures that maybe-interested is moved to the bottom */
+  }
+
 }
 </style>

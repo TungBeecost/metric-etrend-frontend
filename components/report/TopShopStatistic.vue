@@ -44,7 +44,7 @@ const reportType = computed(() => props.data?.report_type);
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Shop hàng đầu</div>
+        <div class="statistic-item__title">Gian hàng hàng đầu</div>
         <div style="font-size: 14px; color: #716B95">Top gian hàng trong 365 ngày qua</div>
       </div>
     </div>
@@ -395,17 +395,13 @@ const reportType = computed(() => props.data?.report_type);
   gap: 40px;
 }
 
-@media (min-width: 768px) {
-  .statistic-block {
-    .list-shop-block {
-      .list-shop {
-        justify-content: center;
-
-        .shop-item {
-          width: calc(100% / 4 - 32px);
-        }
-      }
-    }
+@media (max-width: 768px) {
+  .pie_chart {
+    flex-direction: column;
+  }
+  #top-shop{
+    padding: 16px;
+    border: none;
   }
 }
 </style>

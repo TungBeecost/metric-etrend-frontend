@@ -19,6 +19,20 @@ const props = defineProps({
   },
 });
 
+const screenWidth = ref(window.innerWidth);
+
+const updateScreenWidth = () => {
+  screenWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', updateScreenWidth);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateScreenWidth);
+});
+
 const hightestMonthRevenue = computed(() => {
   const {lst_revenue_sale_monthly} = props.data.data_analytic.by_overview;
   const highestMonthRevenue = lst_revenue_sale_monthly.reduce(
@@ -47,6 +61,15 @@ const diffMonths = computed(() => {
 const charts = computed(() => {
   if (!props.data) return [];
   const platformId = props.data.filter_custom.lst_platform_id[0];
+  const isMobile = screenWidth.value < 768; // Assuming 768px as a breakpoint for mobile devices
+
+  let yAxisTitleText = 'Số sản phẩm đã bán';
+  let xAxisTitleText = '';
+
+  if (isMobile) {
+    yAxisTitleText = '';
+    xAxisTitleText = 'Số sản phẩm đã bán';
+  }
   return [
     {
       title: {
@@ -55,6 +78,18 @@ const charts = computed(() => {
           fontSize: '14px',
           color: '#241E46',
           fontWeight: 700,
+          fontFamily: 'Inter',
+        },
+        margin: 50,
+      },
+      legend: {
+        enabled: true,
+        symbolHeight: 10,
+        symbolWidth: 10,
+        itemStyle: {
+          fontSize: '12px',
+          color: '#241E46',
+          fontWeight: 400,
           fontFamily: 'Inter'
         }
       },
@@ -64,15 +99,15 @@ const charts = computed(() => {
       yAxis: [
         {
           title: {
-            text: 'Số sản phẩm đã bán',
+            text: yAxisTitleText,
             style: {
               fontSize: '12px',
               color: '#241E46',
               fontWeight: 400,
               fontFamily: 'Inter'
-            }
+            },
           },
-          opposite: true,
+          opposite: false,
           labels: {
             style: {
               fontSize: '12px',
@@ -94,11 +129,6 @@ const charts = computed(() => {
           stacking: 'normal'
         }
       },
-      legend: {
-        enabled: true,
-        reversed: true,
-        symbolRadius: 1,
-      },
       xAxis: {
         categories: props.data.data_analytic.by_overview.lst_revenue_sale_monthly.map(
             ({begin}: { begin: string }) => `${formatDateFunc(begin, 'MM/YYYY')}`
@@ -110,7 +140,19 @@ const charts = computed(() => {
             fontWeight: 400,
             fontFamily: 'Inter'
           }
-        }
+        },
+        title: {
+          text: xAxisTitleText,
+          align: 'low',
+          style: {
+            fontSize: '12px',
+            color: '#241E46',
+            fontWeight: 400,
+            fontFamily: 'Inter'
+          },
+          y: -290,
+          x: -50,
+        },
       },
       series: [
         {
@@ -262,6 +304,12 @@ const charts = computed(() => {
     align-items: center;
     gap: 20px;
   }
+}
 
+@media (max-width: 768px) {
+  .general_overview {
+    border: none;
+    padding: 16px;
+  }
 }
 </style>

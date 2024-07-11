@@ -687,4 +687,11 @@ const chartOptions = computed(() => {
     }
   }
 }
+
+@media (max-width: 768px) {
+  #thong-ke-phan-khuc-gia{
+    border: none;
+    padding: 16px;
+  }
+}
 </style>

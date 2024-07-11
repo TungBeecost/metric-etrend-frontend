@@ -228,17 +228,7 @@ const $t = (text) => {
 
 @media (max-width: 768px) {
   .summary-statistic {
-    flex-direction: column;
-
-    .summary-statistic-item {
-      flex: 1 1 100%;
-      border-right: none;
-      border-bottom: 1px solid #EEEBFF;
-
-      &:last-child {
-        border-bottom: none;
-      }
-    }
+    grid-template-columns: 1fr;
   }
 }
 </style>
