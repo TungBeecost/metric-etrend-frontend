@@ -115,10 +115,10 @@ onMounted(() => {
         {{ data.name }} - Báo cáo xu hướng thị trường sàn TMĐT
       </h1>
     </div>
-    <div class="container default_section" style="overflow: hidden">
+    <div class="container default_section" style="padding-bottom: 120px;">
       <div class="general_overview_container">
         <client-only v-if="data">
-          <PDFViewer/>
+          <PDFViewer :data="data"/>
           <!--          <template #fallback>-->
           <!--            &lt;!&ndash; this will be rendered on server side &ndash;&gt;-->
           <!--            <p>Loading comments...</p>-->
@@ -153,6 +153,7 @@ onMounted(() => {
         <maybe-interested v-if="listRecomend" :recomends="listRecomend"/>
       </div>
     </div>
+    <ReportFeaturedReport />
   </div>
 </template>
 

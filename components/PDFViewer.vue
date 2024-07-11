@@ -2,6 +2,13 @@
 import {createLoadingTask, VuePdf} from 'vue3-pdfjs';
 import axios from "axios";
 
+const {data} = defineProps({
+  data: {
+    type: Object,
+    required: true,
+  }
+})
+
 const isLoading = ref(false)
 const loadingPercentage = ref(0)
 
@@ -58,7 +65,7 @@ const fetchPdf = async (newValue) => {
 onMounted(() => {
   const pdfFile = '/Bao cao TMDT nua dau 2023-by Metric.full.VI.pdf';
   // const pdfFile = 'https://drive.google.com/file/d/12VDOoDOzuPWy-vThfyNs-HFiah50xwPY/view';
-  fetchPdf(pdfFile)
+  fetchPdf(data.url_report_pdf)
 })
 
 
@@ -107,14 +114,10 @@ onMounted(() => {
           <!--          <a-tooltip v-for="index in numOfPages">-->
           <div
               v-for="index in numOfPages"
-              style="width: 14px; height: 14px; background: #fff; border: 1px solid #aaa; cursor: pointer;"
+              style="width: 12px; height: 12px; background: #fff; border: 2px solid #fff; cursor: pointer;"
               :style="{background: currentPage === index ? '#FF6931' : '#fff'}"
               @click="currentPage = index"
           />
-          <!--            <template #title>-->
-          <!--              {{ index}}-->
-          <!--            </template>-->
-          <!--          </a-tooltip>-->
         </div>
         <div
             style="color: #fff;line-height: 1; margin-top: 12px; user-select: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
