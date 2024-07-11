@@ -65,7 +65,7 @@ const fetchPdf = async (newValue) => {
 onMounted(() => {
   const pdfFile = '/Bao cao TMDT nua dau 2023-by Metric.full.VI.pdf';
   // const pdfFile = 'https://drive.google.com/file/d/12VDOoDOzuPWy-vThfyNs-HFiah50xwPY/view';
-  fetchPdf(data.url_report_pdf)
+  fetchPdf('https://static-files.staging.muadee.vn/ereport-static/Bao%20cao%20TMDT%20Q3.2023-by%20Metric.VI_full.pdf')
 })
 
 
