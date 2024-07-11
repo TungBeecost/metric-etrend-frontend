@@ -36,7 +36,7 @@ const fetchReportData = async () => {
   try {
     loading.value = true;
     const response = await axios.get(
-        `http://localhost:8000/api/report/report_insight_detail`,
+        `https://api-ereport.staging.muadee.vn/api/report/report_insight_detail`,
         {
           params: {
             slug,
