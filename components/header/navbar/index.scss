@@ -1,10 +1,10 @@
-.headerNavbar {
+#headerNavbar {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  
-  .headerText,.headerTextDarkBlue {
+
+  .headerText, .headerTextDarkBlue {
     font-weight: 500;
     font-size: 16px;
   }
@@ -19,6 +19,7 @@
 
   .headerTextDarkBlue {
     color: $default_text_color;
+
 
     &:hover {
       color: $primary;
@@ -41,7 +42,9 @@
 .headerNavbarCallButton {
   display: flex;
   flex-direction: row;
-  gap: 16px;
+  gap: 24px;
+
+  align-items: center;
 }
 
 .mobileMenu {

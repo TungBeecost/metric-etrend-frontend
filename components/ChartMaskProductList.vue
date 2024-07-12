@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue';
 const isDesktop = ref(false);
 
 onMounted(() => {
-  isDesktop.value = window.innerWidth >= 768;
+  isDesktop.value = window?.innerWidth >= 768;
 });
 </script>
 
@@ -46,7 +46,7 @@ onMounted(() => {
           type="primary"
           @click="$emit('clickOnHidden')"
         >
-          Đăng ký nhận số liệu
+          Xem báo cáo
         </a-button>
       </div>
     </div>

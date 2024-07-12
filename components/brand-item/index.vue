@@ -1,6 +1,8 @@
 <template>
   <div class="wrapper">
-    <img :src="src" class="branch">
+    <div style="width: 100%; height: 100%">
+      <img :src="src" class="branch">
+    </div>
   </div>
 </template>
 
@@ -13,7 +15,7 @@ defineProps<{
 <style lang="scss" scoped>
 .wrapper {
   display: flex;
-  width: 173px;
+  width: 200px;
   height: 100px;
   padding: 8px;
   flex-direction: column;
@@ -28,6 +30,7 @@ defineProps<{
   background: #FFF;
 
   width: 100%;
-  height: 100%;
+
+  background-size: cover;
 }
 </style>

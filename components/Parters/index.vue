@@ -3,7 +3,7 @@
     <div class="sectionHeader">
       <p class="sectionTitle">Hơn 500+ đối tác tin cậy của Metric</p>
     </div>
-    <Vue3Marquee gradient="true">
+    <Vue3Marquee :gradient="true" class="marqueeWrapper">
       <BrandItem v-for="(branch, index) in PARTERS" :key="index" :src="branch" class="parterItem" />
     </Vue3Marquee>
   </div>

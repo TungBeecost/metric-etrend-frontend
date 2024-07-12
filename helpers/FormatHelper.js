@@ -20,7 +20,45 @@ const formatCurrency = (price) => {
     return formatNumber(priceNormalize) + '₫'
 }
 
+const roundAndFormat = (price, divisor, unit, $t) => {
+    price = Math.floor(price / divisor);
+    if (price >= 1000) {
+        price = Math.floor(price / 1000) * 1000;
+    } else if (price >= 100) {
+        price = Math.floor(price / 100) * 100;
+    } else if (price >= 10) {
+        price = Math.floor(price / 10) * 10;
+    }
+    return `${formatNumberRound(price)}+ ${$t(unit)}`;
+};
+
+const formatAndRoundSortTextCurrencyWithMinValue = (
+    price,
+    isShortest = false,
+    min = 1000,
+    $t = (text) => text
+) => {
+    if (!!+price === false) {
+        return price;
+    }
+    price = +price;
+    if (price - (price % 1000000000) !== 0) {
+        return roundAndFormat(price, 1000000000, isShortest ? " tỷ" : " tỷ", $t);
+    }
+    if (price - (price % 1000000) !== 0 && price >= min) {
+        return roundAndFormat(price, 1000000, isShortest ? " tr" : "triệu", $t);
+    }
+    if (price - (price % 1000) !== 0 && price >= min) {
+        return roundAndFormat(price, 1000, isShortest ? " ng" : "nghìn", $t);
+    }
+    return roundAndFormat(price, 1, "", $t);
+};
+
+const formatNumberRound = (number) => {
+    return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+};
+
 export {
-    formatNumberHuman, formatCurrency
+    formatNumberHuman, formatCurrency, formatAndRoundSortTextCurrencyWithMinValue
 }
 
