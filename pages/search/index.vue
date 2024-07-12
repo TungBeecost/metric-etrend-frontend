@@ -234,10 +234,6 @@ useSeoMeta({
               Bộ lọc
             </div>
           </a-button>
-          <a-modal v-model:visible="isModalVisible" title="Filter and Sort" @ok="handleOk" @cancel="handleCancel">
-            <sort-report class="sort_report" @sort-select="handleSortSelect" />
-            <filter-report class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect"/>
-          </a-modal>
         </div>
         <template v-if="isLoading">
           <a-skeleton :paragraph="{ rows: 40 }" style="padding-top: 40px; padding-bottom: 40px"/>
@@ -270,6 +266,10 @@ useSeoMeta({
         </div>
       </div>
     </div>
+    <a-modal v-model:visible="isModalVisible" style="position: absolute; left: 15px" title="Filter and Sort" @ok="handleOk" @cancel="handleCancel">
+      <sort-report class="sort_report" @sort-select="handleSortSelect" />
+      <filter-report class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect"/>
+    </a-modal>
   </div>
 </template>
 
@@ -343,6 +343,7 @@ useSeoMeta({
   }
   .background_poster{
     background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 49.34%);
+    overflow-x: hidden;
     .poster {
       display: flex;
       height: 335px;

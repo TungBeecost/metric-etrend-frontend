@@ -32,9 +32,11 @@
 @media (max-width: 767px) {
   .banner{
     .title{
-      font-size: 30px;
-      padding: 40px 16px;
       height: 108px;
+      padding: 40px 16px;
+      .content{
+        font-size: 30px;
+      }
     }
   }
 }

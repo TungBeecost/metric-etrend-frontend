@@ -94,6 +94,7 @@ const props = defineProps({
     position: absolute;
     top: 0;
     right: 400px;
+    overflow-x: hidden;
   }
 
   @media (max-width: 768px) {
@@ -120,6 +121,7 @@ const props = defineProps({
 
     .big_logo_metric {
       right: 20px;
+      overflow-x: hidden;
     }
   }
 }
