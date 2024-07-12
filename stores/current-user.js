@@ -52,15 +52,27 @@ export const useCurrentUser = defineStore("currentUserStore", {
                 this.fetchedUser = true;
                 return
             }
+            const isValidToken = access_token.split(".").length === 3;
+            if (!isValidToken) {
+                localStorage.removeItem("access_token");
+                this.fetchedUser = true;
+                return;
+            }
+
+            const isExpired = jwt_decode(access_token).exp < Date.now() / 1000;
+            if (isExpired) {
+                localStorage.removeItem("access_token");
+                this.fetchedUser = true;
+                return;
+            }
+
             try {
                 this.userInfo = {...this.userInfo, ...jwt_decode(access_token)};
                 this.fetchedUser = true;
                 const {current_plan, ...userInfo} = await fetchUserProfile();
                 if (!userInfo?.id) return;
-                console.log(1231231231, userInfo, current_plan)
                 this.userInfo = {...userInfo, current_plan};
                 this.fetchedUser = true;
-                console.log(222, this.userInfo)
             } catch (err) {
                 this.fetchedUser = true;
                 console.log("Error: ", err);
