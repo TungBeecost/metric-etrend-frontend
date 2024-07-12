@@ -7,7 +7,7 @@ export const NAVIGATIONS = {
   account: "/account",
   pricing: "/pricing",
   contactUs: "/contact-us",
-  paymentService: "/payment-service",
+  payment: "/payment",
   signIn: "/sign-in",
   informationPolicy: "/chinh-sach-bao-mat-thong-tin",
   paymentMethod: "/hinh-thuc-thanh-toan",

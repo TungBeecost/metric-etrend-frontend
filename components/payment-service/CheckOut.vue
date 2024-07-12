@@ -1,41 +1,50 @@
 <script setup lang="ts">
 import TotalPayment from "~/components/payment-service/TotalPayment.vue";
-
-const value = ref<string>('');
-
+import CustomInputDiscount from "~/components/CustomInputDiscount.vue";
+const discountValue = ref<string>('');
+const errors = useState<Partial<IFormValue>>(() => ({}));
 const emit = defineEmits(['payment']);
-
+interface IFormValue {
+  discount: string;
+}
 const handlePayment = () => {
   emit('payment', "payment");
 };
+
+const handleDiscount = () => {
+  if (!discountValue.value) {
+    errors.value.discount = 'Vui lòng nhập mã giảm giá';
+  } else {
+    errors.value.discount = 'Mã giảm giá không tồn tại';
+  }
+};
+
 </script>
 
 <template>
-    <div id="option_payment" class="border statistic-block">
-      <div class="statistic-item__title">
-        <div class="title">
-          <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="16" height="32" rx="4" fill="#EEEBFF"/>
-          </svg>
-          <div class="title_content">Thành tiền đơn hàng</div>
-        </div>
-      </div>
-      <div class="statistic-item__content">
-        <div class="discount_code">
-          <div class="content">
-            Nhập mã giảm giá
-          </div>
-          <div class="input_discount">
-            <a-input v-model:value="value" style="border-radius: 4px" placeholder="Nhập mã giảm giá" />
-            <a-button type="primary">Áp dụng</a-button>
-          </div>
-        </div>
-        <div class="total">
-          <total-payment/>
-          <a-button style="width: 100%; margin-top: 16px" type="primary" @click="handlePayment">Thanh toán</a-button>
-        </div>
+  <div id="option_payment" class="border statistic-block">
+    <div class="statistic-item__title">
+      <div class="title">
+        <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="16" height="32" rx="4" fill="#EEEBFF"/>
+        </svg>
+        <div class="title_content">Thành tiền đơn hàng</div>
       </div>
     </div>
+    <div class="statistic-item__content">
+      <div class="discount_code">
+        <div class="input_discount">
+          <CustomInputDiscount v-model:input="discountValue" style="display: flex" :error-message="errors.discount"
+                       label="Nhập mã giảm giá" :is-required="true" :input-props="{ placeholder: 'Nhập mã giảm giá' }" @apply-discount="handleDiscount"/>
+        </div>
+
+      </div>
+      <div class="total">
+        <total-payment/>
+        <a-button style="width: 100%; margin-top: 16px" type="primary" @click="handlePayment">Thanh toán</a-button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -90,8 +99,8 @@ const handlePayment = () => {
 
       .input_discount{
         display: flex;
+        align-items: flex-end;
         gap: 16px;
-        padding: 16px 0;
       }
     }
   }

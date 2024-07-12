@@ -2,7 +2,6 @@
 import {NAVIGATIONS, PLANS} from '~/constant/constains';
 
 const currentUserStore = useCurrentUser();
-
 const {userInfo} = storeToRefs(currentUserStore);
 
 
@@ -47,12 +46,12 @@ defineProps<{
           </div>
           <!-- <AButton type="primary">Mua gói {{ plan.type }}</AButton> -->
           <div v-if="userInfo.current_plan">
-            <AButton v-if="plan.plan_code === 'free'" class="user_plan" @click="navigateTo(NAVIGATIONS.contactUs)"> Đang
-              sử dụng
-            </AButton>
-            <AButton v-else :class="userInfo.current_plan.plan_code === plan.plan_code ? 'user_plan' : 'not_user_plan'"
-                     @click="navigateTo(NAVIGATIONS.contactUs)">
-              {{ userInfo.current_plan.plan_code === plan.plan_code ? 'Đang sử dụng' : 'Liên hệ để mua gói Pro' }}
+            <AButton v-if="plan.plan_code === 'free'" class="user_plan" disabled>Đang sử dụng</AButton>
+            <AButton v-else
+                     :class="userInfo.current_plan.plan_code === plan.plan_code ? 'user_plan' : 'not_user_plan'"
+                     :disabled="userInfo.current_plan.plan_code === plan.plan_code"
+                     @click="userInfo.current_plan.plan_code !== plan.plan_code ? navigateTo(NAVIGATIONS.payment) : null">
+              {{ userInfo.current_plan.plan_code === plan.plan_code ? 'Đang sử dụng' : 'Mua ngay' }}
             </AButton>
           </div>
         </div>

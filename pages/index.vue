@@ -164,11 +164,21 @@ const onClickSuggestion = (suggestion: string) => {
   }
 }
 
-.modal_content{
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal_content {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  animation: fadeIn 0.5s ease-out forwards;
 
   .alert_success{
     display: flex;

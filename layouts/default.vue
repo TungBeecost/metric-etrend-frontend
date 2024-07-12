@@ -13,7 +13,7 @@
         class="container"
     >
       <!-- header section -->
-      <header :class="{ darkBlueHeader: isDarkBlueHeader }">
+      <header :class="{ darkBlueHeader: isDarkBlueHeader }" class="default_section">
         <NuxtImg
             :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'" class="logo"
             :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" style="cursor: pointer"

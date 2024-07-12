@@ -7,6 +7,8 @@ import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import {usePayment} from "#imports";
 import QrcodeVue3 from "qrcode-vue3"
 import { message } from 'ant-design-vue';
+const currentUserStore = useCurrentUser();
+const {userInfo} = storeToRefs(currentUserStore);
 
 const { createPaymentTransaction, verifyTransaction } = usePayment()
 const selectedWalletOption = ref('')
@@ -19,47 +21,51 @@ const handleSelectedOption = (selectedOption: string) => {
 };
 
 const handlePayment = async () => {
-  if (selectedWalletOption.value) {
-    const paymentMethod = selectedWalletOption.value;
-    const itemCode = "e_pro__12m";
-    const redirectUrl = "http://localhost:3000/";
+  if(!userInfo.value.id)
+    message.error('Vui lòng đăng nhập trước khi thanh toán');
+  else{
+    if (selectedWalletOption.value) {
+      const runtimeConfig = useRuntimeConfig()
+      const paymentMethod = selectedWalletOption.value;
+      const itemCode = "e_pro__12m";
+      const redirectUrl = `${runtimeConfig.public.apiBase}/`;
+      try {
+        const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl);
+        if (transactionResult.response.payment_url) {
+          window.location.href = transactionResult.response.payment_url;
+        } else {
+          qrCodeData.value = transactionResult.response.qrcode;
+          openModal.value = true;
 
-    try {
-      const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl);
-      if (transactionResult.response.payment_url) {
-        window.location.href = transactionResult.response.payment_url;
-      } else {
-        qrCodeData.value = transactionResult.response.qrcode;
-        openModal.value = true;
-
-        const { isCompleted } = useCheckTransactionCompletion(transactionResult.response.transaction_id);
-        isCompleted.value && (window.location.href = '/');
+          const { isCompleted } = useCheckTransactionCompletion(transactionResult.response.transaction_id);
+          isCompleted.value && (window.location.href = '/');
+        }
+      } catch (error) {
+        console.error("Error creating transaction:", error);
       }
-    } catch (error) {
-      console.error("Error creating transaction:", error);
+    } else {
+      message.error('Vui lòng chọn phương thức thanh toán trước khi thanh toán');
     }
-  } else {
-    message.error('Vui lòng chọn phương thức thanh toán trước khi thanh toán');
   }
+
 };
 
-// const checkTransactionStatus = async (transactionId: string) => {
-//   try {
-//     const response = await verifyTransaction(transactionId)
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error checking transaction status:", error);
-//     return null;
-//   }
-// };
+const checkTransactionStatus = async (transactionId: string) => {
+  try {
+    const response = await verifyTransaction(transactionId)
+    return response.data;
+  } catch (error) {
+    console.error("Error checking transaction status:", error);
+    return null;
+  }
+};
 
 const useCheckTransactionCompletion = (transactionId: string) => {
   const isCompleted = ref(false);
   let intervalId: number | undefined = undefined;
 
   const checkCompletion = async () => {
-    // const result = await checkTransactionStatus(transactionId);
-    const result = { is_completed: true };
+    const result = await checkTransactionStatus(transactionId);
     if (result && result.is_completed) {
       isCompleted.value = true;
       if (intervalId) clearInterval(intervalId);
