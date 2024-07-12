@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type {LstRecommed} from "~/services/reports";
 import {NAVIGATIONS} from "~/constant/constains";
+import moment from "moment";
 
 const props = defineProps({
   recomends: {
@@ -9,13 +10,18 @@ const props = defineProps({
   }
 });
 
-const formatDate = (dateString: string) => {
-  const year = dateString.substring(0, 4);
-  const month = dateString.substring(4, 6);
-  const day = dateString.substring(6, 8);
+// const formatDate = (dateString: string) => {
+//   const year = dateString.substring(0, 4);
+//   const month = dateString.substring(4, 6);
+//   const day = dateString.substring(6, 8);
+//
+//   return `${day}/${month}/${year}`;
+// };
 
-  return `${day}/${month}/${year}`;
-};
+const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
+  return moment(value, inputFormat).format(format);
+}
+
 
 const handleItemClick = (item: LstRecommed) => {
   if (item.source === 'marketing') {
@@ -64,10 +70,12 @@ const handleItemClick = (item: LstRecommed) => {
         <img :src="item.url_thumbnail" alt="">
       </div>
       <div class="info">
-        <div v-if="item.category_report_name" class="breadcrumb">{{ item.category_report_name }} |
-          {{ formatDate(item.start_date) }}
+        <div v-if="item.category_report_name" class="breadcrumb">{{ item.category_report_name }}
+          | {{ formatDate(item.start_date, 'DD/MM/YYYY') }}
         </div>
-        <nuxt-link  :to="item.source === 'marketing' ? `/insight/${item.slug}` : `/${item.slug}`" class="name">Báo cáo {{ item.name }}</nuxt-link>
+        <nuxt-link :to="item.source === 'marketing' ? `/insight/${item.slug}` : `/${item.slug}`" class="name">Báo cáo
+          {{ item.name }}
+        </nuxt-link>
       </div>
     </div>
   </div>
@@ -110,6 +118,8 @@ const handleItemClick = (item: LstRecommed) => {
         width: 60px;
         height: 60px;
         border-radius: 8px;
+
+        object-fit: cover;
       }
     }
 
@@ -131,6 +141,8 @@ const handleItemClick = (item: LstRecommed) => {
         font-weight: bold;
         color: #241E46;
         line-height: 24px;
+
+        text-decoration: none;
       }
     }
   }

@@ -15,9 +15,9 @@ import {useCurrentUser} from "~/stores/current-user";
 import {type LstRecommed, searchReport, type SearchReportPayload} from "~/services/reports"
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import {useSearchReport} from "#imports";
-const { fetchListRecomend } = useSearchReport()
+const { fetchListRecommend } = useSearchReport()
 const listTagSuggestions = ref<string[]>([]);
-const listRecomend = ref<LstRecommed[] | null>(null);
+const listRecommend = ref<LstRecommed[] | null>(null);
 
 interface Category {
   name: string;
@@ -105,11 +105,11 @@ const fetchTagSuggest = async (value: string) => {
 
 const fetchDataRecommend = async (category_report_id: string) => {
   try {
-    const result = await fetchListRecomend(category_report_id);
+    const result = await fetchListRecommend(category_report_id);
     if (result !== null) {
-      listRecomend.value = result;
+      listRecommend.value = result;
     } else {
-      listRecomend.value = [];
+      listRecommend.value = [];
     }
   }
   catch (e) {
@@ -235,10 +235,10 @@ useSeoMeta({
         <overview :is-hide-content="isHideContent" :data="data as Record<string, any>"/>
         <report-content/>
         <report-filter-detail :data="data" :filter="data.filter_custom" class="report-filter-detail"/>
-        <maybe-interested v-if="listRecomend && !isMobile" :recomends="listRecomend"/>
+        <maybe-interested v-if="listRecommend && !isMobile" :recomends="listRecommend"/>
       </div>
     </div>
-    <maybe-interested v-if="listRecomend && isMobile" :recomends="listRecomend"/>
+    <maybe-interested v-if="listRecommend && isMobile" :recomends="listRecommend"/>
     <poster-detail-report :list-suggest="listTagSuggestions"/>
   </div>
 

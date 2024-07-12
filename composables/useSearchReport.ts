@@ -1,6 +1,7 @@
 import {
     fetchClaimedListReport,
-    fetchListRecomendReport, fetchListRecomendReportMarketing,
+    fetchListRecommendReport,
+    fetchListRecommendReportMarketing,
     searchReport,
     type SearchReportPayload
 } from "~/services/reports";
@@ -49,11 +50,11 @@ export default function useSearchReport() {
         }
     };
 
-    const fetchListRecomend = async (categoryReportId: string, numberOfReports: number = 5) => {
+    const fetchListRecommend = async (categoryReportId: string, numberOfReports: number = 5) => {
         try {
-            return await fetchListRecomendReport(categoryReportId, numberOfReports);
+            return await fetchListRecommendReport(categoryReportId, numberOfReports);
         } catch (error) {
-            console.error("fetchListRecomend error: ", error);
+            console.error("fetchListRecommend error: ", error);
             return null;
         }
     }
@@ -67,14 +68,14 @@ export default function useSearchReport() {
         }
     }
 
-    const fetchListRecomendMarketing = async (numberOfReports: number = 5) => {
+    const fetchListRecommendMarketing = async (numberOfReports: number = 5, report_type: string = '') => {
         try {
-            return await fetchListRecomendReportMarketing(numberOfReports);
+            return await fetchListRecommendReportMarketing(numberOfReports, report_type);
         } catch (error) {
-            console.error("fetchListRecomend error: ", error);
+            console.error("fetchListRecommend error: ", error);
             return null;
         }
     }
 
-    return {fetchSearch, fetchSuggest, fetchListRecomend, fetchListRecomendMarketing, fetchClaimedList};
+    return {fetchSearch, fetchSuggest, fetchListRecommend, fetchListRecommendMarketing, fetchClaimedList};
 }

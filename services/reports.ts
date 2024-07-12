@@ -31,7 +31,7 @@ export const fetchUnlockReport = async (slug: string) => {
   return true;
 };
 
-export const fetchListRecomendReport = async (categoryReportId: string, numberOfReports: number) => {
+export const fetchListRecommendReport = async (categoryReportId: string, numberOfReports: number) => {
   try {
     const response = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.list_recomend.endpoint), {
       params: {
@@ -44,7 +44,7 @@ export const fetchListRecomendReport = async (categoryReportId: string, numberOf
     });
 
     if (!Array.isArray(response.data)) {
-      console.error("fetchListRecomendReport error: Unexpected response format");
+      console.error("fetchListRecommendReport error: Unexpected response format");
       return null;
     }
     const data: LstRecommed[] = response.data.map((item) => ({
@@ -63,16 +63,17 @@ export const fetchListRecomendReport = async (categoryReportId: string, numberOf
 
     return data;
   } catch (error) {
-    console.error("fetchListRecomendReport error: ", error);
+    console.error("fetchListRecommendReport error: ", error);
     return null;
   }
 };
 
-export const fetchListRecomendReportMarketing = async (numberOfReports: number) => {
+export const fetchListRecommendReportMarketing = async (numberOfReports: number, report_type: string) => {
   try {
     const response = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.marketing_report_recommend.endpoint), {
       params: {
-        number_of_reports: numberOfReports
+        number_of_reports: numberOfReports,
+        report_type
       },
       headers: {
         accept: "application/json"
@@ -80,7 +81,7 @@ export const fetchListRecomendReportMarketing = async (numberOfReports: number) 
     });
 
     if (!Array.isArray(response.data)) {
-      console.error("fetchListRecomendReport error: Unexpected response format");
+      console.error("fetchListRecommendReport error: Unexpected response format");
       return null;
     }
     const data: LstRecommed[] = response.data.map((item) => ({
@@ -99,7 +100,7 @@ export const fetchListRecomendReportMarketing = async (numberOfReports: number) 
 
     return data;
   } catch (error) {
-    console.error("fetchListRecomendReport error: ", error);
+    console.error("fetchListRecommendReport error: ", error);
     return null;
   }
 };
