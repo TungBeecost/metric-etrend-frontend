@@ -90,7 +90,7 @@ const handleItemClick = (item: LstRecommed) => {
     gap: 16px;
 
     .title_content {
-      font-size: 16px;
+      font-size: 20px;
       font-weight: bold;
       color: #241E46;
       line-height: 24px;
@@ -119,17 +119,19 @@ const handleItemClick = (item: LstRecommed) => {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      padding: 8px 0;
+      gap:8px;
       flex: 1 0 0;
 
       .breadcrumb {
-        font-size: 10px;
+        font-size: 14px;
         color: #716B95;
         font-weight: 400;
         line-height: 14px;
       }
 
       .name {
-        font-size: 14px;
+        font-size: 16px;
         font-weight: bold;
         color: #241E46;
         line-height: 24px;

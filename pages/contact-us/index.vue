@@ -5,11 +5,11 @@
         <div class="left" />
         <NuxtImg src="/images/contact-banner.png" class="background" />
       </div>
-      <p class="title">Liên hệ tư vấn</p>
-      <p class="description">Liên hệ với chúng tôi để nhận được tư vấn, hỗ trợ và giải đáp các thắc mắc</p>
+      <p class="title default_section">Liên hệ tư vấn</p>
+      <p class="description default_section">Liên hệ với chúng tôi để nhận được tư vấn, hỗ trợ và giải đáp các thắc mắc</p>
     </div>
 
-    <div class="section infoSection">
+    <div class="section infoSection default_section">
       <div class="block contactInfo">
         <div class="title">Thông tin liên hệ</div>
         <div class="information">
@@ -33,11 +33,14 @@
       </div>
     </div>
 
-    <div class="poster">
-      <div class="info">
-        <div class="content">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</div>
-        <a-button
-            style="
+    <div class="background_poster">
+      <div class="poster default_section">
+        <div class="default_section">
+        </div>
+        <div class="info ">
+          <div class="content">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</div>
+          <a-button
+              style="
               background-color: #241E46;
               color: #FFF;
               border: 1px solid #241E46;
@@ -45,21 +48,23 @@
               justify-content: center;
               align-items: center
             "
-            @click="navigateTo(NAVIGATIONS.pricing)"
-        >
-          Xem báo giá
-        </a-button>
-      </div>
-      <div class="big_logo_metric">
-        <img src="/images/big_logo_metric.svg" alt="">
-      </div>
-      <div class="chart_image">
-        <img src="/images/chart_image.svg" alt="">
-      </div>
-      <div class="line_styling_image">
-        <img src="/images/line_styling_image.svg" alt="">
+              @click="navigateTo(NAVIGATIONS.pricing)"
+          >
+            Xem báo giá
+          </a-button>
+        </div>
+        <div class="big_logo_metric">
+          <img src="/images/big_logo_metric.svg" alt="">
+        </div>
+        <div class="chart_image">
+          <img src="/images/chart_image.svg" alt="">
+        </div>
+        <div class="line_styling_image">
+          <img src="/images/line_styling_image.svg" alt="">
+        </div>
       </div>
     </div>
+
 
   </div>
 </template>
@@ -74,96 +79,101 @@ useSeoMeta({
 
 <style lang="scss" scoped>
 @import url("contact-us.scss");
-.poster {
-  display: flex;
-  height: 335px;
-  padding: 40px 120px;
-  align-items: center;
-  gap: 64px;
+.background_poster{
   background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 49.34%);
-  position: relative;
 
-  .info {
-    position: absolute;
+  .poster {
     display: flex;
-    width: 500px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 24px;
-    z-index: 999;
-
-    .content {
-      font-size: 40px;
-      font-weight: bold;
-      color: #FFFFFF;
-      line-height: 56px;
-    }
-  }
-
-  .big_logo_metric {
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-
-  .chart_image {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
-  .line_styling_image {
-    position: absolute;
-    right: 500px;
-    top: 70px;
-  }
-
-  @media (max-width: 1023px) {
-    flex-direction: column;
+    height: 335px;
+    padding: 40px 0;
     align-items: center;
-    text-align: center;
+    gap: 64px;
+
+    position: relative;
 
     .info {
-      width: 100%;
+      position: absolute;
+      display: flex;
+      width: 500px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
+      z-index: 999;
 
       .content {
-        font-size: 24px;
+        font-size: 40px;
+        font-weight: bold;
+        color: #FFFFFF;
+        line-height: 56px;
       }
     }
-  }
 
-  @media (max-width: 767px) {
-    height: 384px;
-    padding: 32px 16px;
-
-    .info {
-      align-items: center;
-
-      .content {
-        line-height: 38px;
-        font-size: 24px;
-      }
+    .big_logo_metric {
+      position: absolute;
+      left: 0;
+      top: 0;
     }
 
     .chart_image {
-      top: 225px;
+      position: absolute;
       right: 0;
-
-      img {
-        width: 300px;
-      }
-
+      top: 0;
     }
 
     .line_styling_image {
-      top: 250px;
-      right: 220px;
+      position: absolute;
+      right: 500px;
+      top: 70px;
+    }
 
-      img {
-        width: 150px;
+    @media (max-width: 1023px) {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+
+      .info {
+        width: 100%;
+
+        .content {
+          font-size: 24px;
+        }
+      }
+    }
+
+    @media (max-width: 767px) {
+      height: 384px;
+      padding: 32px 16px;
+
+      .info {
+        align-items: center;
+
+        .content {
+          line-height: 38px;
+          font-size: 24px;
+        }
+      }
+
+      .chart_image {
+        top: 225px;
+        right: 0;
+
+        img {
+          width: 300px;
+        }
+
+      }
+
+      .line_styling_image {
+        top: 250px;
+        right: 220px;
+
+        img {
+          width: 150px;
+        }
       }
     }
   }
 }
+
 </style>

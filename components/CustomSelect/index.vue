@@ -23,3 +23,14 @@ const selectModel = defineModel<string>("select");
 <style lang="scss" scoped>
 @import url("./index.scss");
 </style>
+
+<style lang="scss">
+.selectWrapper{
+  .ant-select{
+    .ant-select-selector{
+      height: 40px;
+    }
+  }
+}
+
+</style>

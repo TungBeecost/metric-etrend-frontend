@@ -44,7 +44,6 @@ const mktCompanyTypeOptions = [
   },
 ]
 
-
 const formData = useState('LandingPage.formData', () => ({
   fullName: '',
   email: '',
@@ -99,7 +98,7 @@ const handleSubmitLeadForm = async () => {
   }
 
   try {
-    const urlCreateLead = `${runtimeConfig.public.baseMetricCrmUrl}/crm/create/lead_form`
+    const urlCreateLead = `https://api-crm.metric.vn/crm/create/lead_form`
     await axios.post(urlCreateLead, payload)
     isShowErrorNotification.value = false
     isShowSuccessNotification.value = true

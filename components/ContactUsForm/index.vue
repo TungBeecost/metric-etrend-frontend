@@ -22,7 +22,7 @@
                     :select-props="{ placeholder: 'Chọn kênh', showSearch: true, options: SOCIAL_MEDIA_TYPES, filterOption: filterSelectOption as any }"
                     class="infoBlock"/>
     </div>
-    <AButton type="primary" :class="submitClass" @click="validateForm">{{ submitLabel || "Gửi" }}</AButton>
+    <AButton style="height: 40px" type="primary" :class="submitClass" @click="validateForm">{{ submitLabel || "Gửi" }}</AButton>
   </div>
 
   <ModalStatus :is-open="isOpenModal" :on-close="toggleModal" :type="typeModal.type" :header="typeModal.header"

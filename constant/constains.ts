@@ -150,7 +150,7 @@ interface IPLAN {
 export const PLANS: Array<IPLAN> = [
   {
     type: "Free",
-    plan_code: "free",
+    plan_code: 'free',
     description: "Truy cập kho báo cáo và cập nhật xu hướng",
     price: "Miễn phí",
     unit: undefined,

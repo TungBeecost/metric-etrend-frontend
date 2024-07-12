@@ -153,7 +153,7 @@ onMounted(() => {
     gap: 16px;
 
     .title_word{
-      font-size: 16px;
+      font-size: 20px;
       font-weight: bold;
       color: #241E46;
       line-height: 24px;

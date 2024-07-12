@@ -96,7 +96,7 @@ const top5Shops = (): string[] => {
         <span class="text-bold">
           Báo cáo doanh thu {{ props.data.name }} trên sàn TMĐT đạt
           <BlurContent :is-hide-content="isHideContent">
-            {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
+            <b>{{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }} đồng</b>
           </BlurContent>
         </span>
         trong {{ diffMonths }}.
@@ -108,7 +108,7 @@ const top5Shops = (): string[] => {
           . Những thương hiệu {{ props.data.name }} được phân phối và
         bán chạy nhất là
         <BlurContent :is-hide-content="isHideContent">
-          <span class="text-bold">{{ top5Shops().join(',q ') }}</span>
+          <span>{{ top5Shops().join(',q ') }}</span>
         </BlurContent>
         v.v...
       </div>

@@ -22,8 +22,6 @@ const onSearch = async (searchValue: string) => {
     await props.handleSearch(searchValue);
 
 };
-
-
 </script>
 
 <template>

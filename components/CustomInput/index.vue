@@ -30,3 +30,9 @@ const inputModel = defineModel<string>("input");
 <style lang="scss" scoped>
 @import url("./index.scss");
 </style>
+
+<style lang="scss">
+.ant-input{
+  height: 40px;
+}
+</style>

@@ -91,9 +91,6 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
             {{ product.shop_platform_name }}
           </span>
         </div>
-        <div v-if="props.product.platform_created_at" class="product-info-item">
-          {{ $t('Ngày tạo') }}: {{ timestampToDate(props.product.platform_created_at) }}
-        </div>
       </div>
       <div class="product-statistic-info">
         <div class="product-statistic-info-item">
