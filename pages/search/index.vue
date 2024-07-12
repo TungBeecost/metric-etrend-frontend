@@ -307,7 +307,7 @@ useSeoMeta({
       display: flex;
       flex-direction: column;
       gap: 24px;
-      flex: 0.8;
+      flex: 0.7;
 
       .general {
         display: flex;
@@ -329,7 +329,7 @@ useSeoMeta({
     }
 
     .relate_functions {
-      flex: 0.2;
+      flex: 0.3;
       display: flex;
       flex-direction: column;
       gap: 24px;
