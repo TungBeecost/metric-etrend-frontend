@@ -2,7 +2,6 @@
 import {defineProps, ref} from 'vue'
 import type {LstReport} from "~/services/reports";
 import {NAVIGATIONS} from "~/constant/constains";
-import {formatSortTextCurrency} from "~/helpers/utils";
 import BlurContent from "~/components/BlurContent.vue";
 import {formatAndRoundSortTextCurrencyWithMinValue} from "../../helpers/FormatHelper";
 
@@ -13,24 +12,16 @@ const props = defineProps({
   },
 });
 
-const windowWidth = ref(window.innerWidth);
-
-
-const formatPercentage = (value: number) => {
-  return `${(value * 100).toFixed(2)}%`;
-};
+const windowWidth = ref(window?.innerWidth);
 
 
 const formatDate = (startDate: string | undefined) => {
   if (!startDate || startDate.length !== 8) {
     return '';
   }
-  // Extract year, month, and day from the startDate string
   const year = startDate.substring(0, 4);
   const month = startDate.substring(4, 6);
   const day = startDate.substring(6, 8);
-
-  // Format the date as dd/mm/yyyy
   return `${day}/${month}/${year}`;
 };
 

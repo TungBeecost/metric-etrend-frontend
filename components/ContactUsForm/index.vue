@@ -52,12 +52,21 @@ interface IFormValue {
   organization_name: string;
   category: string;
   note: string;
-  label_init?: string;
+  label_init?: string | 'nóng';
   source_name?: string | 'e-report';
   socialMediaType: string;
   campaign: string | 'Đăng ký dùng thử';
   additional_info: IAdditionalInfo;
 }
+
+function getCookie(name: any) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+const urlReferrerValue = getCookie('urlReferrer');
+
 
 const formValues = reactive<IFormValue>({
   name: "",
@@ -129,8 +138,7 @@ const validateForm = async () => {
           campaign: information.campaign,
           additional_info: {
             ...information.additional_info,
-            mkUserDemandmkUserDemand: information.companyType,
-            mkUserDemand: information.category,
+            urlReferrer: urlReferrerValue,
           },
         },
         {
