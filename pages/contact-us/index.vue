@@ -91,6 +91,7 @@ useSeoMeta({
     justify-content: center;
     align-items: flex-start;
     gap: 24px;
+    z-index: 999;
 
     .content {
       font-size: 40px;
@@ -98,6 +99,12 @@ useSeoMeta({
       color: #FFFFFF;
       line-height: 56px;
     }
+  }
+
+  .big_logo_metric {
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 
   .chart_image {

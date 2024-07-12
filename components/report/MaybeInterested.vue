@@ -10,14 +10,6 @@ const props = defineProps({
   }
 });
 
-// const formatDate = (dateString: string) => {
-//   const year = dateString.substring(0, 4);
-//   const month = dateString.substring(4, 6);
-//   const day = dateString.substring(6, 8);
-//
-//   return `${day}/${month}/${year}`;
-// };
-
 const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
   return moment(value, inputFormat).format(format);
 }
@@ -141,7 +133,6 @@ const handleItemClick = (item: LstRecommed) => {
         font-weight: bold;
         color: #241E46;
         line-height: 24px;
-
         text-decoration: none;
       }
     }
