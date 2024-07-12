@@ -47,7 +47,7 @@ const getDisplayedCategories = (item: any) => {
 
 <template>
   <div id="lst_report_id">
-    <nuxt-link v-for="item in props.data" :key="item.id" class="lst_item" :to="`${NAVIGATIONS.home}${item.slug}`">
+    <nuxt-link v-for="item in props.data" :key="item.id" class="lst_item" :to="`${NAVIGATIONS.home}${item.source ==='marketing' ? 'insight/' + item.slug : item.slug}`">
       <div class="item">
         <div class="image">
           <img :src="item.url_thumbnail" alt="">
