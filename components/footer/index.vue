@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="footerContent default_section">
+    <div class="footerContent">
       <!-- introduce -->
       <div class="info introduce">
         <NuxtImg src="/images/Logo-black.svg" width="186" height="36" />

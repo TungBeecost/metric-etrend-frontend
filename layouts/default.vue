@@ -13,20 +13,22 @@
         class="container"
     >
       <!-- header section -->
-      <header :class="{ darkBlueHeader: isDarkBlueHeader }" class="default_section">
-        <NuxtImg
-            :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'" class="logo"
-            :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" style="cursor: pointer"
-            @click="navigateToHome"
-        />
+      <header :class="{ darkBlueHeader: isDarkBlueHeader }">
+        <div class="header default_section">
+          <NuxtImg
+              :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'" class="logo"
+              :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" style="cursor: pointer"
+              @click="navigateToHome"
+          />
 
-        <div @click="setShowMenu(!isShowMenu)">
-          <CustomIcon v-if="device.isMobile && !isShowMenu" :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'"/>
-          <CustomIcon v-else-if="isShowMenu" type="Close"/>
+          <div @click="setShowMenu(!isShowMenu)">
+            <CustomIcon v-if="device.isMobile && !isShowMenu" :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'"/>
+            <CustomIcon v-else-if="isShowMenu" type="Close"/>
+          </div>
+
+          <HeaderNavbar v-if="!device.isMobile" :is-dark-blue-header="isDarkBlueHeader"/>
+          <HeaderMobileMenu v-else :active="isShowMenu"/>
         </div>
-
-        <HeaderNavbar v-if="!device.isMobile" :is-dark-blue-header="isDarkBlueHeader"/>
-        <HeaderMobileMenu v-else :active="isShowMenu"/>
       </header>
 
       <!-- content section -->
@@ -36,7 +38,9 @@
 
       <!-- footer section -->
       <footer>
-        <Footer/>
+        <div class="default_section footer">
+          <Footer/>
+        </div>
       </footer>
     </div>
   </a-config-provider>

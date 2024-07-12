@@ -53,7 +53,7 @@ const handlePayment = async () => {
 const checkTransactionStatus = async (transactionId: string) => {
   try {
     const response = await verifyTransaction(transactionId)
-    return response.data;
+    return  response;
   } catch (error) {
     console.error("Error checking transaction status:", error);
     return null;
@@ -67,6 +67,7 @@ const useCheckTransactionCompletion = (transactionId: string) => {
   const checkCompletion = async () => {
     const result = await checkTransactionStatus(transactionId);
     if (result && result.is_completed) {
+      console.log("Transaction", isCompleted.value);
       isCompleted.value = true;
       if (intervalId) clearInterval(intervalId);
       window.location.href = '/?payment=success';
