@@ -1,30 +1,40 @@
 <template>
   <div class="wrapperLeadForm">
     <div class="information">
-      <CustomInput v-model:input="formValues.name" label="Họ và tên" :error-message="errors.name" :is-required="true" :input-props="{ placeholder: 'Nhập họ và tên' }" class="infoBlock" />
+      <CustomInput v-model:input="formValues.name" label="Họ và tên" :error-message="errors.name" :is-required="true"
+                   :input-props="{ placeholder: 'Nhập họ và tên' }" class="infoBlock"/>
       <div class="infoBlock contactInfo">
-        <CustomInput v-model:input="formValues.email" class="contactItem" :error-message="errors.email" label="Email" :input-props="{ placeholder: 'example@gmail.com', type: 'email' }" />
-        <CustomInput v-model:input="formValues.phone" class="contactItem" :error-message="errors.phone" label="Số điện thoại" :is-required="true" :input-props="{ placeholder: 'Nhập SĐT' }" />
+        <CustomInput v-model:input="formValues.email" class="contactItem" :error-message="errors.email" label="Email"
+                     :input-props="{ placeholder: 'example@gmail.com', type: 'email' }"/>
+        <CustomInput v-model:input="formValues.phone" class="contactItem" :error-message="errors.phone"
+                     label="Số điện thoại" :is-required="true" :input-props="{ placeholder: 'Nhập SĐT' }"/>
       </div>
-      <CustomSelect v-model:select="formValues.category" :error-message="errors.category" label="Ngành hàng quan tâm" :is-required="true"
-        :select-props="{ placeholder: 'Chọn ngành hàng', showSearch: true, options: CATEGORIES, filterOption: filterSelectOption as any }" class="infoBlock" />
-      <CustomSelect v-model:select="formValues.companyType" label="Mô hình doanh nghiệp" :error-message="errors.companyType"
-        :select-props="{ placeholder: 'Chọn mô hình doanh nghiệp', showSearch: true, options: COMPANY_TYPES, filterOption: filterSelectOption as any }" class="infoBlock" />
-      <CustomSelect v-model:select="formValues.socialMediaType" label="Bạn biết tới Metric từ kênh nào?" :error-message="errors.socialMediaType"
-        :select-props="{ placeholder: 'Chọn kênh', showSearch: true, options: SOCIAL_MEDIA_TYPES, filterOption: filterSelectOption as any }" class="infoBlock" />
+      <CustomSelect v-model:select="formValues.category" :error-message="errors.category" label="Ngành hàng quan tâm"
+                    :is-required="true"
+                    :select-props="{ placeholder: 'Chọn ngành hàng', showSearch: true, options: CATEGORIES, filterOption: filterSelectOption as any }"
+                    class="infoBlock"/>
+      <CustomSelect v-model:select="formValues.companyType" label="Mô hình doanh nghiệp"
+                    :error-message="errors.companyType"
+                    :select-props="{ placeholder: 'Chọn mô hình doanh nghiệp', showSearch: true, options: COMPANY_TYPES, filterOption: filterSelectOption as any }"
+                    class="infoBlock"/>
+      <CustomSelect v-model:select="formValues.socialMediaType" label="Bạn biết tới Metric từ kênh nào?"
+                    :error-message="errors.socialMediaType"
+                    :select-props="{ placeholder: 'Chọn kênh', showSearch: true, options: SOCIAL_MEDIA_TYPES, filterOption: filterSelectOption as any }"
+                    class="infoBlock"/>
     </div>
     <AButton type="primary" :class="submitClass" @click="validateForm">{{ submitLabel || "Gửi" }}</AButton>
   </div>
 
-  <ModalStatus :is-open="isOpenModal" :on-close="toggleModal" :type="typeModal.type" :header="typeModal.header" :description="typeModal.description" class-name-modal="statusModal" />
+  <ModalStatus :is-open="isOpenModal" :on-close="toggleModal" :type="typeModal.type" :header="typeModal.header"
+               :description="typeModal.description" class-name-modal="statusModal"/>
 </template>
 
 <script setup lang="ts">
-import { CATEGORIES, COMPANY_TYPES, SOCIAL_MEDIA_TYPES } from "~/constant/constains";
-import { filterSelectOption } from "~/helpers/supporter";
-import { ERRORS } from "~/constant/errors";
-import { EMAIL_REGEX, PHONE_REGEX } from "~/helpers/regexs";
-import type { TypeModal } from "~/components/modal/status/index.vue";
+import {CATEGORIES, COMPANY_TYPES, SOCIAL_MEDIA_TYPES} from "~/constant/constains";
+import {filterSelectOption} from "~/helpers/supporter";
+import {ERRORS} from "~/constant/errors";
+import {EMAIL_REGEX, PHONE_REGEX} from "~/helpers/regexs";
+import type {TypeModal} from "~/components/modal/status/index.vue";
 import axios from "axios";
 
 defineProps<{
@@ -85,6 +95,8 @@ const routeName = String(route.name) || "";
 const utm_medium = getCookie('utm_campaign');
 console.log('utm_medium', utm_medium);
 
+const emit = defineEmits(['handle-submit-success']);
+
 const formValues = reactive<IFormValue>({
   name: "",
   email: "",
@@ -110,8 +122,20 @@ const formValues = reactive<IFormValue>({
 const errors = useState<Partial<IFormValue>>(() => ({}));
 
 const isOpenModal = useState<boolean>(() => false);
-const typeModal = useState<{ type: TypeModal; header: string; description: string }>(() => ({ type: "success" as TypeModal, header: "Đã gửi thành công", description: "Chúng tôi đã nhận được thông tin và sẽ phản hồi sớm nhất tới quý khách!" }));
-const toggleModal = () => (isOpenModal.value = !isOpenModal.value);
+const typeModal = useState<{
+  type: TypeModal;
+  header: string;
+  description: string
+}>(() => ({
+  type: "success" as TypeModal,
+  header: "Đã gửi thành công",
+  description: "Chúng tôi đã nhận được thông tin và sẽ phản hồi sớm nhất tới quý khách!"
+}));
+const toggleModal = () => {
+  isOpenModal.value = !isOpenModal.value
+
+  emit('handle-submit-success');
+};
 
 const validateForm = async () => {
   errors.value = {};
@@ -174,8 +198,7 @@ const validateForm = async () => {
     );
 
     console.log("Response from server:", response.data);
-    toggleModal();
-
+    isOpenModal.value = true;
   } catch (error) {
     console.error("Error submitting form:", error);
   }

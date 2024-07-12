@@ -6,7 +6,6 @@ import {addComponent} from "@nuxt/kit";
 
 export default defineNuxtConfig({
     app: {
-
         head: {
             title: "Metric - Nền tảng Số liệu E-commerce",
             htmlAttrs: {
@@ -82,8 +81,8 @@ export default defineNuxtConfig({
 
         // Keys exposed client-side too
         public: {
-            // apiBase: "http://localhost:8000"
-            apiBase: "https://api-ereport.staging.muadee.vn"
+            apiBase: "http://localhost:8000"
+            // apiBase: "https://api-ereport.staging.muadee.vn"
             // apiBase: process.env.NUXT_PUBLIC_API_BASE
         }
     },
