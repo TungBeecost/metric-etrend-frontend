@@ -6,7 +6,7 @@ import {useSearchReport} from "#imports";
 import UnlockReportMarketing from "~/components/report/UnlockReportMarketing.vue";
 
 const route = useRoute()
-const {fetchListRecomendMarketing} = useSearchReport()
+const {fetchListRecommendMarketing} = useSearchReport()
 
 const data = ref({})
 
@@ -16,16 +16,16 @@ const openContactForm = ref(false)
 
 const loading = ref(true)
 const isHideContent = ref(true)
-const listRecomend = ref([])
+const listRecommend = ref([])
 
 
-const fetchDataRecommend = async () => {
+const fetchDataRecommend = async (report_type) => {
   try {
-    const result = await fetchListRecomendMarketing();
+    const result = await fetchListRecommendMarketing(5, report_type);
     if (result !== null) {
-      listRecomend.value = result;
+      listRecommend.value = result;
     } else {
-      listRecomend.value = [];
+      listRecommend.value = [];
     }
   } catch (e) {
     console.error(e);
@@ -54,7 +54,7 @@ const fetchReportData = async () => {
     if (data.value) {
       // await fetchTagSuggest(data.value.name);
       // console.log(data.value.lst_category[0].id);
-      await fetchDataRecommend();
+      await fetchDataRecommend(response.data.report_type);
     }
   } catch (error) {
     loading.value = false;
@@ -144,7 +144,7 @@ onMounted(() => {
             v-if="data?.data_analytic?.table_of_content.filter(item => item !== 'Không có').length"
             :table-of-content="data?.data_analytic?.table_of_content.filter(item => item !== 'Không có')"
         />
-        <maybe-interested v-if="listRecomend" :recomends="listRecomend"/>
+        <maybe-interested v-if="listRecommend" :recomends="listRecommend"/>
       </div>
     </div>
     <ReportFeaturedReport/>

@@ -11,10 +11,10 @@ import type { LstRecommed, SearchReportRes } from "~/services/reports";
 import { NAVIGATIONS, PAGE_TITLES } from "~/constant/constains";
 import allReports from '@/public/file_json/list_category.json';
 import { useSearchReport } from "#imports";
-const { fetchSearch, fetchListRecomend, fetchSuggest } = useSearchReport()
+const { fetchSearch, fetchListRecommend, fetchSuggest } = useSearchReport()
 const route = useRoute();
 const data = ref<SearchReportRes | null>(null);
-const listRecomend = ref<LstRecommed[] | null>(null);
+const listRecommend = ref<LstRecommed[] | null>(null);
 const listTagSuggestions = ref<string[]>([]);
 const displaySortReport = ref(false);
 const isModalVisible = ref(false);
@@ -128,11 +128,11 @@ const fetchData = async (searchValue: string = '', list_category_report_id: Arra
 
 const fetchDataRecommend = async (category_report_id: string) => {
   try {
-    const result = await fetchListRecomend(category_report_id);
+    const result = await fetchListRecommend(category_report_id);
     if (result !== null) {
-      listRecomend.value = result;
+      listRecommend.value = result;
     } else {
-      listRecomend.value = [];
+      listRecommend.value = [];
     }
   }
   catch (e) {
@@ -250,7 +250,7 @@ useSeoMeta({
       <div class="relate_functions">
         <filter-report v-if="displaySortReport" class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect" />
         <popular-relate-keywords v-if="listTagSuggestions?.length" :tags="listTagSuggestions" @tag-clicked="handleTagClick" />
-        <maybe-interested v-if="listRecomend" :recomends="listRecomend" />
+        <maybe-interested v-if="listRecommend" :recomends="listRecommend" />
       </div>
     </div>
     <div class="poster">
