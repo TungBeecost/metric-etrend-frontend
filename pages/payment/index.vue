@@ -15,6 +15,14 @@ const selectedWalletOption = ref('')
 const qrCodeData = ref('');
 const openModal = ref<boolean>(false);
 
+interface ErrorResponse {
+  response: {
+    data: {
+      detail: string;
+      status_code: number;
+    };
+  };
+}
 
 const handleSelectedOption = (selectedOption: string) => {
   selectedWalletOption.value = selectedOption
@@ -42,6 +50,13 @@ const handlePayment = async () => {
         }
       } catch (error) {
         console.error("Error creating transaction:", error);
+        const typedError = error as ErrorResponse;
+        if (typedError.response && typedError.response.data && typedError.response.data.detail === "User already has a subscription" && typedError.response.data.status_code === 400) {
+          message.error('Bạn đã có một đăng ký. Không thể thực hiện thêm.');
+        } else {
+          // Handle other errors
+          message.error('Đã xảy ra lỗi khi tạo giao dịch. Vui lòng thử lại.');
+        }
       }
     } else {
       message.error('Vui lòng chọn phương thức thanh toán trước khi thanh toán');
