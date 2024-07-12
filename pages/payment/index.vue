@@ -58,7 +58,7 @@ const useCheckTransactionCompletion = (transactionId: string) => {
   let intervalId: number | undefined = undefined;
 
   const checkCompletion = async () => {
-    const result = {"is_completed": true};
+    const result = await checkTransactionStatus(transactionId);
     if (result && result.is_completed) {
       isCompleted.value = true;
       if (intervalId) clearInterval(intervalId);

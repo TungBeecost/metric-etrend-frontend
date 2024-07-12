@@ -39,7 +39,7 @@ onUnmounted(() => {
 });
 
 const itemsToShow = computed(() => {
-  return windowWidth.value < 768 ? 1 : 4;
+  return windowWidth.value < 768 ? 1 : 2;
 });
 </script>
 
