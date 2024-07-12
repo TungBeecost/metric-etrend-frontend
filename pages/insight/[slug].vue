@@ -62,7 +62,18 @@ const fetchReportData = async () => {
   }
 };
 
+const handleSubmitSuccess = () => {
+  localStorage.setItem('report_mkt_unlocked', 'true');
+
+  openContactForm.value = false;
+  isHideContent.value = false;
+};
+
 onMounted(() => {
+  const unlockedMktReports = localStorage.getItem('report_mkt_unlocked');
+  if (unlockedMktReports === 'true') {
+    isHideContent.value = false;
+  }
   fetchReportData();
 });
 
@@ -139,7 +150,7 @@ onMounted(() => {
         </div>
       </div>
       <div v-if="data" class="different_info">
-        <unlock-report-marketing @handle-unlock-report="openContactForm = true"/>
+        <unlock-report-marketing v-if="isHideContent" @handle-unlock-report="openContactForm = true"/>
         <report-content
             v-if="data?.data_analytic?.table_of_content.filter(item => item !== 'Không có').length"
             :table-of-content="data?.data_analytic?.table_of_content.filter(item => item !== 'Không có')"
@@ -161,7 +172,7 @@ onMounted(() => {
           <span>“Dép nam - Báo cáo xu hướng thị trường sàn TMĐT”</span>
         </div>
       </div>
-      <ContactUsForm/>
+      <ContactUsForm @handle-submit-success="handleSubmitSuccess"/>
     </a-modal>
   </div>
 </template>
