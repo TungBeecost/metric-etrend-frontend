@@ -87,7 +87,7 @@ const onChange = debounce(async (showSuggestions = true) => {
   if (result) {
     suggestions.value = result;
   }
-});
+}, 300);
 
 onMounted(() => {
   onChange(false); // Call onChange with false to not show suggestions

@@ -208,7 +208,7 @@ useSeoMeta({
             {{ (data?.total || 0).toLocaleString() }} kết quả
           </div>
           <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect" />
-          <a-button style="border: 1px solid #9D97BF" v-else @click="clickButtonFilter">
+          <a-button v-else style="border: 1px solid #9D97BF" @click="clickButtonFilter">
             <div style="display: flex; gap: 8px; justify-content: center; align-items: center">
               <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_4202_14089)">
@@ -274,7 +274,7 @@ useSeoMeta({
 <style scoped lang="scss">
 #search_report {
   background-color: #FBFAFC;
-  overflow: auto;
+  //overflow: auto;
 
   .sectionTitle{
     display: flex;
