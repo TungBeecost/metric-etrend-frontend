@@ -194,3 +194,15 @@ onMounted(() => {
 
 }
 </style>
+
+<style lang="scss">
+.filter_industry{
+  .ant-select{
+    .ant-select-selector{
+      display: flex;
+      align-items: center;
+      height: 40px;
+    }
+  }
+}
+</style>

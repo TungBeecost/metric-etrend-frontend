@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {NAVIGATIONS, PLANS} from '~/constant/constains';
+import LoginButton from "~/components/google/LoginButton.vue";
 
 const currentUserStore = useCurrentUser();
 const {userInfo} = storeToRefs(currentUserStore);
@@ -46,13 +47,13 @@ defineProps<{
           </div>
           <div v-if="userInfo.current_plan">
             <AButton
-                v-if="!(userInfo.current_plan.plan_code === 'e_pro' && plan.plan_code === 'free')"
-                :class="userInfo.current_plan.plan_code === plan.plan_code ? 'user_plan' : 'not_user_plan'"
-                :disabled="userInfo.current_plan.plan_code === plan.plan_code"
-                @click="userInfo.current_plan.plan_code !== plan.plan_code ? navigateTo(NAVIGATIONS.payment) : null"
+                v-if="!(userInfo.current_plan?.plan_code === 'e_pro' && plan.plan_code === 'free')"
+                :class="userInfo.current_plan?.plan_code === plan.plan_code ? 'user_plan' : 'not_user_plan'"
+                :disabled="userInfo.current_plan?.plan_code === plan.plan_code"
                 style="height: 40px"
+                @click="userInfo.id ? (userInfo.current_plan?.plan_code !== plan.plan_code ? navigateTo(NAVIGATIONS.payment) : null) : currentUserStore.setShowPopupLogin(true)"
             >
-              {{ userInfo.current_plan.plan_code === plan.plan_code ? 'Đang sử dụng' : 'Mua ngay' }}
+              {{ userInfo.current_plan?.plan_code === plan.plan_code ? 'Đang sử dụng' : 'Mua ngay' }}
             </AButton>
           </div>
         </div>

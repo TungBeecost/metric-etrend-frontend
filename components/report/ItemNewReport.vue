@@ -88,6 +88,10 @@ const itemsToShow = computed(() => {
 </template>
 
 <style lang="scss">
+.carousel__pagination{
+  display: none;
+}
+
 .carousel__pagination-item {
   display: flex;
   justify-content: center;
