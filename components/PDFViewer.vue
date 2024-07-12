@@ -2,9 +2,17 @@
 import {createLoadingTask, VuePdf} from 'vue3-pdfjs';
 import axios from "axios";
 
-const {data} = defineProps({
+const {data, isHideContent, openContactForm} = defineProps({
   data: {
     type: Object,
+    required: true,
+  },
+  isHideContent: {
+    type: Boolean,
+    required: true,
+  },
+  openContactForm: {
+    type: Boolean,
     required: true,
   }
 })
@@ -15,6 +23,8 @@ const loadingPercentage = ref(0)
 const pdfSrc = ref('')
 const numOfPages = ref(0)
 const currentPage = ref(1)
+
+const emit = defineEmits(['update:openContactForm'])
 
 const onChangePage = (change) => {
   const page = currentPage.value + change
@@ -59,6 +69,12 @@ const fetchPdf = async (newValue) => {
   isLoading.value = false
 }
 
+const handleUnlockReport = () => {
+  console.log('handleUnlockReport')
+
+  emit('update:openContactForm', true)
+}
+
 onMounted(() => {
   fetchPdf(data.url_report_pdf)
 })
@@ -81,6 +97,12 @@ onMounted(() => {
               :page="currentPage"
               :num-pages="numOfPages"
               style="width: 100%;"
+          />
+          <ChartMask
+              v-if="isHideContent && currentPage === index && index >= 9"
+              subtitle="Vui lòng đăng ký để nhận và xem bản đầy đủ của báo cáo"
+              ok-button="Đăng ký nhận báo cáo"
+              :handle-unlock-report="handleUnlockReport"
           />
           <div
               v-if="currentPage === index"

@@ -3,10 +3,26 @@ import {onMounted, ref} from 'vue';
 
 const isDesktop = ref(true);
 
-const {report} = defineProps({
+const {report, title, subtitle, okButton, handleUnlockReport} = defineProps({
   report: {
     type: Object,
     required: true
+  },
+  title: {
+    type: String,
+    default: 'Số liệu bị khoá'
+  },
+  subtitle: {
+    type: String,
+    default: 'Bạn cần mở khoá để xem số liệu đầy đủ'
+  },
+  okButton: {
+    type: String,
+    default: 'Xem báo cáo'
+  },
+  handleUnlockReport: {
+    type: Function,
+    default: null
   }
 });
 
@@ -18,6 +34,9 @@ onMounted(() => {
 const showUnlock = ref(false);
 
 const toggleUnlock = () => {
+  if (handleUnlockReport) {
+    return handleUnlockReport();
+  }
   showUnlock.value = !showUnlock.value;
 }
 
@@ -56,11 +75,11 @@ const toggleUnlock = () => {
         </div>
       </div>
 
-      <div class="title">Số liệu bị khoá</div>
-      <div class="subtitle">Bạn cần mở khoá để xem số liệu đầy đủ</div>
+      <div class="title">{{ title }}</div>
+      <div class="subtitle">{{ subtitle }}</div>
       <div>
         <a-button class="register-btn" :size="isDesktop ? 'large' : 'default'" type="primary" @click="toggleUnlock">
-          Xem báo cáo
+          {{ okButton }}
         </a-button>
       </div>
     </div>

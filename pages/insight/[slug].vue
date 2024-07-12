@@ -1,6 +1,5 @@
 <script setup>
 import axios from "~/services/axios-wrapper";
-import UnlockReport from "~/components/report/UnlockReport.vue";
 // import ReportContent from "~/components/report/ReportContent.vue";
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import {useSearchReport} from "#imports";
@@ -12,6 +11,8 @@ const {fetchListRecomendMarketing} = useSearchReport()
 const data = ref({})
 
 const slug = route.params.slug;
+
+const openContactForm = ref(false)
 
 const loading = ref(true)
 const isHideContent = ref(true)
@@ -118,13 +119,9 @@ onMounted(() => {
     <div class="container default_section" style="padding-bottom: 120px;">
       <div class="general_overview_container">
         <client-only v-if="data">
-          <PDFViewer :data="data"/>
-          <!--          <template #fallback>-->
-          <!--            &lt;!&ndash; this will be rendered on server side &ndash;&gt;-->
-          <!--            <p>Loading comments...</p>-->
-          <!--          </template>-->
+          <PDFViewer v-model:openContactForm="openContactForm" :data="data" :is-hide-content="isHideContent"/>
         </client-only>
-        <div class="introduction" v-if="data.introduction && data.introduction !== 'Không có'">
+        <div v-if="data.introduction && data.introduction !== 'Không có'" class="introduction">
           <div class="statistic-item__title">
             <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
                  xmlns="http://www.w3.org/2000/svg">
@@ -135,9 +132,6 @@ onMounted(() => {
             </div>
           </div>
           <div class="introduction-content">
-            <!--            <p v-for="paragraph in data.introduction.split('\n')">-->
-            <!--              {{ paragraph }}-->
-            <!--            </p>-->
             <p>
               {{ data.introduction }}
             </p>
@@ -145,7 +139,7 @@ onMounted(() => {
         </div>
       </div>
       <div v-if="data" class="different_info">
-        <unlock-report-marketing/>
+        <unlock-report-marketing @handle-unlock-report="openContactForm = true"/>
         <report-content
             v-if="data?.data_analytic?.table_of_content.filter(item => item !== 'Không có').length"
             :table-of-content="data?.data_analytic?.table_of_content.filter(item => item !== 'Không có')"
@@ -153,7 +147,22 @@ onMounted(() => {
         <maybe-interested v-if="listRecomend" :recomends="listRecomend"/>
       </div>
     </div>
-    <ReportFeaturedReport />
+    <ReportFeaturedReport/>
+
+    <a-modal
+        :visible="openContactForm"
+        :footer="false"
+        @cancel="openContactForm = false"
+    >
+      <div class="modal-contact-us">
+        <div class="title">Đăng ký nhận báo cáo</div>
+        <div class="description" style="font-size: 16px">
+          Vui lòng điền biểu mẫu bên dưới để nhận ngay báo cáo chi tiết
+          <span>“Dép nam - Báo cáo xu hướng thị trường sàn TMĐT”</span>
+        </div>
+      </div>
+      <ContactUsForm/>
+    </a-modal>
   </div>
 </template>
 
@@ -221,6 +230,37 @@ onMounted(() => {
 
     .introduction-content {
       text-align: justify;
+    }
+  }
+}
+
+.modal-contact-us {
+  .title {
+    color: var(--Dark-blue-dark-blue-7, #332D59);
+    text-align: center;
+
+    /* Headline/Headline 4 */
+    font-family: Inter, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 38px; /* 158.333% */
+
+    margin-bottom: 24px;
+  }
+
+  .description {
+    color: #475467;
+
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    letter-spacing: -0.48px;
+
+    margin-bottom: 24px;
+
+    span {
+      color: var(--Dark-blue-dark-blue-8, #241E46);
     }
   }
 }

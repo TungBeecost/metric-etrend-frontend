@@ -6,16 +6,14 @@ const currentUserStore = useCurrentUser();
 
 const showUnlock = ref(false);
 
-const toggleUnlock = () => {
-  showUnlock.value = !showUnlock.value;
-}
+const emit = defineEmits(['handle-unlock-report'])
 
 </script>
 
 <template>
   <div class="unlock-report">
     <div class="unlock-report-title">
-      Truy cập kho dữ liệu với hàng trăm báo cáo mới nhất
+      Đăng ký thông tin để nhận ngay báo cáo miễn phí
     </div>
     <div class="advantages">
       <div class="advantage-item">
@@ -33,7 +31,7 @@ const toggleUnlock = () => {
             </defs>
           </svg>
         </div>
-        Số liệu chính xác, khách quan, cập nhật bằng công nghệ Big Data
+        Truy cập tìm kiếm kho báo cáo không giới hạn
       </div>
       <div class="advantage-item">
         <div class="icon">
@@ -50,7 +48,7 @@ const toggleUnlock = () => {
             </defs>
           </svg>
         </div>
-        Thông tin trực quan, dễ theo dõi
+        Khám phá toàn bộ báo cáo thị trường miễn phí
       </div>
       <div class="advantage-item">
         <div class="icon">
@@ -67,16 +65,14 @@ const toggleUnlock = () => {
             </defs>
           </svg>
         </div>
-        Dễ dàng lưu trữ
+        Dữ liệu đầy đủ và trực quan
       </div>
     </div>
     <div class="action-btns">
-      <NuxtLink to="/pricing" style="width: 100%;">
-        <a-button style="width: 100%;" type="primary" size="large">Xem báo cáo</a-button>
-      </NuxtLink>
+      <a-button style="width: 100%;" type="primary" size="large" @click="emit('handle-unlock-report')">Đăng ký nhận báo cáo</a-button>
       <div>
         Đã có tài khoản?
-        <a @click="currentUserStore.setShowPopupLogin(true)">
+        <a @click="currentUserStore.setShowPopupLogin(true)" style="cursor: pointer">
           Đăng nhập ngay
         </a>
       </div>
