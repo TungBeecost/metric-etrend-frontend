@@ -146,10 +146,10 @@ onMounted(() => {
 console.log(toSeoName(slug));
 
 
-const isMobile = ref(window.innerWidth <= 768);
+const isMobile = ref(window?.innerWidth <= 768);
 
 const updateWindowSize = () => {
-  isMobile.value = window.innerWidth <= 768;
+  isMobile.value = window?.innerWidth <= 768;
 };
 
 onMounted(() => {

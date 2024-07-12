@@ -27,7 +27,7 @@ const {report, title, subtitle, okButton, handleUnlockReport} = defineProps({
 });
 
 onMounted(() => {
-  isDesktop.value = window.innerWidth >= 768;
+  isDesktop.value = window?.innerWidth >= 768;
 });
 
 

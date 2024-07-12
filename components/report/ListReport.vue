@@ -30,7 +30,7 @@ const onItemClicked = (item: LstReport) => {
 };
 
 const onResize = () => {
-  windowWidth.value = window.innerWidth;
+  windowWidth.value = window?.innerWidth;
 };
 
 onMounted(() => {

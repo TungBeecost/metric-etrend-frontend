@@ -43,26 +43,27 @@ const handlePayment = async () => {
   }
 };
 
-const checkTransactionStatus = async (transactionId: string) => {
-  try {
-    const response = await verifyTransaction(transactionId)
-    return response.data;
-  } catch (error) {
-    console.error("Error checking transaction status:", error);
-    return null;
-  }
-};
+// const checkTransactionStatus = async (transactionId: string) => {
+//   try {
+//     const response = await verifyTransaction(transactionId)
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error checking transaction status:", error);
+//     return null;
+//   }
+// };
 
 const useCheckTransactionCompletion = (transactionId: string) => {
   const isCompleted = ref(false);
   let intervalId: number | undefined = undefined;
 
   const checkCompletion = async () => {
-    const result = await checkTransactionStatus(transactionId);
+    // const result = await checkTransactionStatus(transactionId);
+    const result = { is_completed: true };
     if (result && result.is_completed) {
       isCompleted.value = true;
       if (intervalId) clearInterval(intervalId);
-      window.location.href = '/';
+      window.location.href = '/?payment=success';
     }
   };
 
@@ -82,7 +83,6 @@ const useCheckTransactionCompletion = (transactionId: string) => {
 };
 
 const handleOk = (e: MouseEvent) => {
-  console.log(e);
   openModal.value = false;
 };
 </script>

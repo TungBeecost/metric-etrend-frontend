@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue';
 const isDesktop = ref(false);
 
 onMounted(() => {
-  isDesktop.value = window.innerWidth >= 768;
+  isDesktop.value = window?.innerWidth >= 768;
 });
 </script>
 

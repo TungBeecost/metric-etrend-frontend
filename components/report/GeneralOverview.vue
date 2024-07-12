@@ -19,10 +19,10 @@ const props = defineProps({
   },
 });
 
-const screenWidth = ref(window.innerWidth);
+const screenWidth = ref(window?.innerWidth);
 
 const updateScreenWidth = () => {
-  screenWidth.value = window.innerWidth;
+  screenWidth.value = window?.innerWidth;
 };
 
 onMounted(() => {

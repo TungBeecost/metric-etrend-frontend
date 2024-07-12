@@ -17,7 +17,7 @@ const {showUnlock, report} = defineProps({
 });
 
 onMounted(() => {
-  isDesktop.value = window.innerWidth >= 768;
+  isDesktop.value = window?.innerWidth >= 768;
 });
 
 const emits = defineEmits(["update:showUnlock"]);

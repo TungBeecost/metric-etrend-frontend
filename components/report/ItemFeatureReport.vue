@@ -20,12 +20,12 @@ const handleItemClick = (report: any) => {
 const windowWidth = ref(1024);
 
 const onResize = () => {
-  windowWidth.value = window.innerWidth;
+  windowWidth.value = window?.innerWidth;
 };
 
 onMounted(() => {
   if (typeof window !== 'undefined') {
-    windowWidth.value = window.innerWidth;
+    windowWidth.value = window?.innerWidth;
     window.addEventListener('resize', onResize);
   }
 });
