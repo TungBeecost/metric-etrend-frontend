@@ -49,7 +49,9 @@ defineProps<{
                 v-if="!(userInfo.current_plan.plan_code === 'e_pro' && plan.plan_code === 'free')"
                 :class="userInfo.current_plan.plan_code === plan.plan_code ? 'user_plan' : 'not_user_plan'"
                 :disabled="userInfo.current_plan.plan_code === plan.plan_code"
-                @click="userInfo.current_plan.plan_code !== plan.plan_code ? navigateTo(NAVIGATIONS.payment) : null">
+                @click="userInfo.current_plan.plan_code !== plan.plan_code ? navigateTo(NAVIGATIONS.payment) : null"
+                style="height: 40px"
+            >
               {{ userInfo.current_plan.plan_code === plan.plan_code ? 'Đang sử dụng' : 'Mua ngay' }}
             </AButton>
           </div>

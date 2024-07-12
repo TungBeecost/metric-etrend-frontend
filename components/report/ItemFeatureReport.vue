@@ -93,50 +93,65 @@ const itemsToShow = computed(() => {
 </style>
 
 <style lang="scss">
-.report-slide {
+.carousel__pagination-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel__pagination-button {
+  width: 10px;
+  margin: 0 2px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.carousel__pagination-button:after {
+  display: none;
+}
+
+.carousel__pagination-button:hover,
+.carousel__pagination-button--active {
+  background-color: #ccc;
+  color: #fff;
+}
+.new-report-slide {
   .carousel__slide {
     padding: 8px;
 
     .slide-item {
+      width: 100%;
       border-radius: 16px;
       background: var(--Neutral-neutral-1, #FFF);
       cursor: pointer;
       border: 1px solid #f0f0f0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-      height: 600px;
+      display: flex;
+      flex-direction: row;
       overflow: hidden;
 
       .thumbnail {
+        width: 170px;
+        height: 170px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-bottom: 1px solid #f0f0f0;
       }
 
       .content {
-        padding: 16px;
         display: flex;
         flex-direction: column;
-
-        .category_date {
-          color: var(--Dark-blue-dark-blue-6, #716B95);
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 22px; /* 157.143% */
-          margin-bottom: 16px;
-          flex: 1;
-        }
-
-        .title {
-          color: var(--Dark-blue-dark-blue-8, #241E46);
-          font-size: 20px;
-          font-weight: 700;
-          line-height: 28px; /* 140% */
-          margin-bottom: 8px;
-          text-transform: capitalize;
-          flex: 1;
-        }
+        padding: 16px;
+        flex: 1;
 
         .summary-info{
           margin-bottom: 8px;
-          flex : 1;
 
           .info_item{
             align-items: center;
@@ -166,25 +181,38 @@ const itemsToShow = computed(() => {
           }
         }
 
-        .description {
-          overflow: hidden;
+        .category_date {
           color: var(--Dark-blue-dark-blue-6, #716B95);
-          text-overflow: ellipsis;
-          flex: 1;
-          font-size: 16px;
+
+          font-size: 17px;
           font-weight: 400;
-          line-height: 24px; /* 150% */
+          line-height: 22px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-bottom: 16px;
         }
+
+        .title {
+          color: var(--Dark-blue-dark-blue-8, #241E46);
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 28px; /* 140% */
+
+          margin-bottom: 8px;
+
+          text-transform: capitalize;
+        }
+
       }
     }
   }
 
   .carousel__prev {
-    left: -80px;
+    left: -25px;
   }
 
   .carousel__next {
-    right: -80px;
+    right: -25px;
   }
 
   .carousel__prev, .carousel__next {
@@ -199,17 +227,15 @@ const itemsToShow = computed(() => {
     cursor: pointer;
     position: absolute;
   }
+
 }
 
 @media (max-width: 767px) {
-  .report-slide {
+  .new-report-slide {
     .carousel__slide {
       .slide-item {
-        height: auto;
-        flex-direction: column;
-
         .thumbnail {
-          width: 100%;
+          padding-left: 12px;
           height: auto;
           border-bottom: none;
         }
@@ -217,12 +243,12 @@ const itemsToShow = computed(() => {
         .content {
           padding: 8px;
 
-          .category_date, .title, .description {
+          .category_date{
             text-align: center;
           }
 
           .title {
-            font-size: 18px;
+            font-size: 16px;
             margin-bottom: 4px;
           }
 
@@ -233,15 +259,27 @@ const itemsToShow = computed(() => {
       }
     }
 
+    .carousel__prev, .carousel__next {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid #EEEBFF;
+      background-color: #FFF;
+      cursor: pointer;
+      position: absolute;
+      top: auto;
+      bottom: -20px;
+    }
+
     .carousel__prev {
+      bottom: auto;
       left: 40%;
-      top: 100%;
       transform: translateX(-60px);
     }
 
     .carousel__next {
+      bottom: auto;
       left: 50%;
-      top: 100%;
       transform: translateX(20px);
     }
 

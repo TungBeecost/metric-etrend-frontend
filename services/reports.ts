@@ -107,12 +107,12 @@ export const fetchListRecommendReportMarketing = async (numberOfReports: number,
 
 export const fetchClaimedListReport = async () => {
   try {
-    const response = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.list_claimed.endpoint), {});
-    if (!Array.isArray(response.data)) {
+    const response = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.list_claimed.endpoint));
+    if (!response.data || !Array.isArray(response.data.reports)) {
       console.error("fetchClaimedListReport error: Unexpected response format");
       return null;
     }
-    const data: ListClaimed[] = response.data.map((item) => ({
+    const data: ListClaimed[] = response.data.reports.map((item: any) => ({
       id: item.id,
       slug: item.slug,
       name: item.name,
@@ -124,14 +124,15 @@ export const fetchClaimedListReport = async () => {
       category_report_id: item.category_report_id,
       category_report_name: item.category_report_name,
       url_thumbnail: item.url_thumbnail,
-      lst_brand: item.lst_brand
+      lst_brand: item.lst_brand,
+      lst_category: item.lst_category
     }));
-    return data;
-  }catch (error) {
+    return { total: response.data.total, reports: data };
+  } catch (error) {
     console.error("fetchClaimedListReport error: ", error);
     return null;
   }
-}
+};
 
 
 
@@ -199,6 +200,12 @@ export interface ListCategory {
   parent_name?: string;
 }
 
+export interface ResponseListClaimed {
+    total: number,
+    reports: Array<ListClaimed>
+
+}
+
 export interface ListClaimed {
   "id": number,
   "slug": string,
@@ -212,4 +219,5 @@ export interface ListClaimed {
   "category_report_name": string,
   "url_thumbnail": string,
   "lst_brand": Array<string>
+  "lst_category": Array<string>
 }

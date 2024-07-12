@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import {defineProps, ref} from 'vue'
-import type {LstReport} from "~/services/reports";
 import {NAVIGATIONS} from "~/constant/constains";
 import BlurContent from "~/components/BlurContent.vue";
-import {formatAndRoundSortTextCurrencyWithMinValue} from "../../helpers/FormatHelper";
+import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper";
 import moment from "moment";
 
 const props = defineProps({
@@ -19,10 +18,6 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
   console.log(value, format, inputFormat)
   return moment(value, inputFormat).format(format);
 }
-
-const onItemClicked = (item: LstReport) => {
-  navigateTo(`${NAVIGATIONS.home}${item.slug}`);
-};
 
 const onResize = () => {
   windowWidth.value = window?.innerWidth;

@@ -1,9 +1,11 @@
 <template>
-  <div class="headerNavbar">
+  <div id="headerNavbar">
     <div class="headerNavbarMenu">
       <AButton v-for="(item, index) in MENUS" :key="index" type="text"
                :class="{ headerText: isDarkBlueHeader, headerTextDarkBlue: !isDarkBlueHeader }"
-               @click="navigateTo(item.to)">{{ item.label }}
+               @click="navigateTo(item.to)"
+      >
+        {{ item.label }}
       </AButton>
     </div>
     <div id="headButtonLogin" class="headerNavbarCallButton">
@@ -42,15 +44,24 @@ const currentUserStore = useCurrentUser();
 </style>
 
 <style lang="scss">
-.button_login {
-  .ant-modal-content {
-    .ant-modal-body {
-      padding: 0;
-    }
+#headerNavbar{
+  .button_login {
+    .ant-modal-content {
+      .ant-modal-body {
+        padding: 0;
+      }
 
-    .ant-modal-footer {
-      display: none;
+      .ant-modal-footer {
+        display: none;
+      }
     }
   }
+
+  span{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+  }
 }
+
 </style>

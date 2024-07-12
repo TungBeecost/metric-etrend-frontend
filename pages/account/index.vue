@@ -2,18 +2,19 @@
 import AccountInfomation from "~/components/account/AccountInfomation.vue";
 import DetailedReportsViewed from "~/components/account/DetailedReportsViewed.vue";
 import {onMounted, ref} from "vue";
-import type {ListClaimed} from "~/services/reports";
 import {useSearchReport} from "#imports";
 import { PAGE_TITLES } from "~/constant/constains";
-const {userInfo} = useCurrentUser();
-const data = ref<ListClaimed[] | null>(null);
+import type {ListClaimed} from "~/services/reports";
+const currentUserStore = useCurrentUser();
+const {userInfo} = storeToRefs(currentUserStore);
+const data = ref<{ total: number; reports: ListClaimed[] } | null>(null);
 const {fetchClaimedList} = useSearchReport()
 
 const fetchTableData = async () => {
   try {
     const response = await fetchClaimedList();
-    data.value = response;
     console.log(response);
+    data.value = response;
   } catch (error) {
     console.log(error);
   }
@@ -31,8 +32,8 @@ onMounted(async () => {
 
 <template>
   <div class="account_container">
-    <account-infomation :user-info="userInfo" class="info" />
-    <detailed-reports-viewed :data="data" :total='1000' class="detail-report" />
+    <account-infomation v-if="userInfo.id" :user-info="userInfo" class="info" />
+    <detailed-reports-viewed v-if="data" :data="data.reports" :total='data.total' class="detail-report" />
   </div>
 </template>
 

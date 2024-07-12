@@ -1,5 +1,5 @@
 <template>
-  <div v-on-click-outside="setShowSuggestions" class="wrapper search-report-component">
+  <div id="search_input" v-on-click-outside="setShowSuggestions" class="wrapper search-report-component">
     <!-- input -->
     <AInputSearch
         v-model:value="searchValue" :placeholder="placeholder || 'Tìm kiếm báo cáo'"
