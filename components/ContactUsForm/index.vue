@@ -22,7 +22,10 @@
                     :select-props="{ placeholder: 'Chọn kênh', showSearch: true, options: SOCIAL_MEDIA_TYPES, filterOption: filterSelectOption as any }"
                     class="infoBlock"/>
     </div>
-    <AButton style="height: 40px" type="primary" :class="submitClass" @click="validateForm">{{ submitLabel || "Gửi" }}</AButton>
+    <AButton style="height: 40px" type="primary" :class="submitClass" @click="validateForm">{{
+        submitLabel || "Gửi"
+      }}
+    </AButton>
   </div>
 
   <ModalStatus :is-open="isOpenModal" :on-close="toggleModal" :type="typeModal.type" :header="typeModal.header"
@@ -37,9 +40,10 @@ import {EMAIL_REGEX, PHONE_REGEX} from "~/helpers/regexs";
 import type {TypeModal} from "~/components/modal/status/index.vue";
 import axios from "axios";
 
-defineProps<{
+const {handleSubmitSuccess} = defineProps<{
   submitLabel?: string;
   submitClass?: string;
+  handleSubmitSuccess?: any;
 }>();
 
 interface IAdditionalInfo {
@@ -95,8 +99,6 @@ const routeName = String(route.name) || "";
 const utm_medium = getCookie('utm_campaign');
 console.log('utm_medium', utm_medium);
 
-const emit = defineEmits(['handle-submit-success']);
-
 const formValues = reactive<IFormValue>({
   name: "",
   email: "",
@@ -133,8 +135,6 @@ const typeModal = useState<{
 }));
 const toggleModal = () => {
   isOpenModal.value = !isOpenModal.value
-
-  emit('handle-submit-success');
 };
 
 const validateForm = async () => {
@@ -196,6 +196,10 @@ const validateForm = async () => {
           },
         }
     );
+
+    if (handleSubmitSuccess) {
+      return handleSubmitSuccess()
+    }
 
     console.log("Response from server:", response.data);
     isOpenModal.value = true;
