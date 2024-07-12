@@ -1,7 +1,7 @@
 <template>
   <div class="inputWrapper">
     <label v-if="label" for="" class="label">{{ label }} <span v-if="isRequired" class="requiredDot"> * </span> </label>
-    <div style="display: flex; gap: 8px">
+    <div style="display: flex; gap: 8px; align-items: center">
       <AInput v-bind="inputProps"
               v-model:value="inputModel"
               style="border: 1px solid #9D97BF; border-radius: 8px;"
@@ -10,7 +10,7 @@
           <InfoCircleOutlined class="errorIcon" />
         </template>
       </AInput>
-      <a-button type="primary" @click="validateDiscount">Áp dụng</a-button>
+      <a-button style="height: 100%" type="primary" @click="validateDiscount">Áp dụng</a-button>
     </div>
     <p v-if="errorMessage" class="errorMessage">{{ errorMessage }}</p>
   </div>
