@@ -5,7 +5,7 @@ import PackService from "~/components/payment-service/PackService.vue";
 import {ref} from "vue";
 import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import {usePayment} from "#imports";
-import QrcodeVue3 from "qrcode-vue3"
+import QRCode from "qrcode-vue3";
 import { message } from 'ant-design-vue';
 const currentUserStore = useCurrentUser();
 const {userInfo} = storeToRefs(currentUserStore);
@@ -47,7 +47,6 @@ const handlePayment = async () => {
       message.error('Vui lòng chọn phương thức thanh toán trước khi thanh toán');
     }
   }
-
 };
 
 const checkTransactionStatus = async (transactionId: string) => {
@@ -89,7 +88,7 @@ const useCheckTransactionCompletion = (transactionId: string) => {
   return { isCompleted };
 };
 
-const handleOk = (e: MouseEvent) => {
+const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an underscore or remove it if not needed
   openModal.value = false;
 };
 </script>
@@ -118,7 +117,7 @@ const handleOk = (e: MouseEvent) => {
       </template>
       <div class="payment_info">
         <div class="qr_code">
-          <QrcodeVue3 :value="qrCodeData" :size="200" color="black" />
+          <QRCode :value="qrCodeData" :size="200" color="black" />
         </div>
         <div style="padding: 16px; width: 100%">
           <total-payment />
