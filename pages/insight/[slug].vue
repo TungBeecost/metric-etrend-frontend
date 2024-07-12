@@ -157,7 +157,7 @@ onMounted(() => {
           <div class="title">
             Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất
           </div>
-          <div style="text-align: center;width: 100%;">
+          <div style="text-align: center;width: 100%;position: relative;z-index: 2;">
             <nuxt-link to="/search" style="text-align: center;">
               <a-button type="primary" size="large" style="margin: auto;">
                 Khám phá ngay
@@ -443,6 +443,8 @@ onMounted(() => {
           z-index: 1;
 
           opacity: 0.5;
+
+          user-select: none;
         }
       }
     }
