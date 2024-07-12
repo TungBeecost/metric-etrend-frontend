@@ -326,7 +326,6 @@ useSeoMeta({
       .page {
         display: flex;
         justify-content: center;
-
       }
     }
 

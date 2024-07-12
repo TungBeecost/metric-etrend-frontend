@@ -328,5 +328,4 @@ const getDisplayedCategories = (item: any) => {
     }
   }
 }
-
 </style>
