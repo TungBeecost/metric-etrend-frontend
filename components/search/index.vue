@@ -1,11 +1,11 @@
 <template>
-  <div v-on-click-outside="setShowSuggestions" class="wrapper">
+  <div v-on-click-outside="setShowSuggestions" class="wrapper search-report-component">
     <!-- input -->
     <AInputSearch
         v-model:value="searchValue" :placeholder="placeholder || 'Tìm kiếm báo cáo'"
         size="large"
         allow-clear
-        style="padding: 8px; border: 1px solid #D7D1F9; border-radius: 8px;"
+        style="border: 1px solid #D7D1F9; padding: 8px;"
         @change="onChange"
         @search="handleSearch(searchValue)"
         @press-enter="handleSearch(searchValue)"
@@ -98,14 +98,46 @@ onMounted(() => {
 @import url("./index.scss");
 </style>
 
-<style>
-.wrapper {
-  span{
-    span{
-      span{
-        border: none;
+<style lang="scss">
+.search-report-component {
+  .ant-input-group-wrapper {
+    border-radius: var(--radius-md, 8px);
+    border: 1px solid var(--Dark-blue-dark-blue-3, #D7D1F9);
+    background: var(--Neutral-neutral-1, #FFF);
+
+    .ant-input-affix-wrapper {
+      border: none;
+      padding-top: 0;
+      padding-bottom: 0;
+
+      &:focus {
+        box-shadow: none;
+      }
+
+      .ant-input {
+        color: var(--Dark-blue-dark-blue-8, #241E46);
+
+        /* Body/Body Text 1 */
+        font-family: Inter, sans-serif;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 32px; /* 160% */
+
+        height: 56px;
+
+      }
+    }
+
+    .ant-input-group-addon {
+      button {
+        width: 56px;
+        height: 56px;
+
+        border-radius: 4px !important;
       }
     }
   }
+
 }
 </style>
