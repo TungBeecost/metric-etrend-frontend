@@ -110,7 +110,7 @@ onMounted(() => {
       padding-top: 0;
       padding-bottom: 0;
 
-      &:focus {
+      &:focus, &.ant-input-affix-wrapper-focused {
         box-shadow: none;
       }
 
