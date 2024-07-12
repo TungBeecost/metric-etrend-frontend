@@ -89,9 +89,6 @@ const itemsToShow = computed(() => {
   </div>
 </template>
 
-<style lang="scss" scoped>
-</style>
-
 <style lang="scss">
 .report-slide {
   .carousel__slide {
