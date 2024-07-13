@@ -154,6 +154,7 @@ const handleCancel = () => {
 
 const handleSearch = async (searchValue: string, lstCategoryReportId: string[] = []) => {
   searchValueSearch.value = searchValue;
+  current.value = 1;
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
 };
 
