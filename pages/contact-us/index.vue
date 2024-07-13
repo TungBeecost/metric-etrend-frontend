@@ -110,6 +110,8 @@ useSeoMeta({
     }
 
     .big_logo_metric {
+      width: inherit;
+      overflow: hidden;
       position: absolute;
       left: 0;
       top: 0;

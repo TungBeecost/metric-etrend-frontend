@@ -24,7 +24,7 @@ const handleClick = () => {
 <template>
   <a-dropdown placement="bottomRight" trigger="click" @visibleChange="handleVisibleChange">
     <div v-if="userData?.id" class="user-profile">
-      <a-avatar style="cursor: pointer" class="avatar-image" :src="userData?.avatar" size="small"/>
+        <a-avatar style="cursor: pointer" class="avatar-image" :src="userData?.avatar" size="small"/>
       <span :class="{ headerText: props.isDarkBlueHeader, headerTextDarkBlue: !props.isDarkBlueHeader }" class="user-name" style="cursor: pointer">
       {{ userData?.display_name }}
     </span>

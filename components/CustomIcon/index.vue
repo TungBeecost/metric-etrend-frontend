@@ -30,6 +30,7 @@ import GuardDocument from "~/public/icons/Guard-Document.svg";
 import PaymentMethod from "~/public/icons/Payment-Method.svg";
 import RefundDocument from "~/public/icons/Refund-Document.svg";
 import TransactionDocument from "~/public/icons/Transaction-Document.svg";
+import Logout from "~/public/icons/Logout.svg";
 
 export type TypeIcon =
   | "Building"
@@ -59,6 +60,7 @@ export type TypeIcon =
   | "PaymentMethod"
   | "RefundDocument"
   | "TransactionDocument"
+  | "Logout"
 
 
 defineProps<{
@@ -94,6 +96,7 @@ const iconMappings = {
   "PaymentMethod": PaymentMethod,
   "RefundDocument": RefundDocument,
   "TransactionDocument": TransactionDocument,
+  "Logout": Logout,
 }
 
 // Something wrong with lazy import in Nuxt, this below code made page unable to re-load when redirect

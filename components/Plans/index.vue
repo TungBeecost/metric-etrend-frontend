@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {NAVIGATIONS, PLANS} from '~/constant/constains';
-import LoginButton from "~/components/google/LoginButton.vue";
 
 const currentUserStore = useCurrentUser();
 const {userInfo} = storeToRefs(currentUserStore);
