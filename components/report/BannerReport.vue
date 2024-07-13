@@ -12,14 +12,14 @@
 
 <style scoped lang="scss">
 .banner{
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 217px;
     .title{
       padding: 80px 0;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
       background: linear-gradient(90deg, #241E46 0%, rgba(36, 30, 70, 0.00) 100%), url(/images/ecommerce_1.png) no-repeat;
       background-size: cover;
-      height: 217px;
 
       .content{
         font-size: 44px;

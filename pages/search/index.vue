@@ -253,7 +253,7 @@ useSeoMeta({
       <div class="poster default_section">
         <div class="info">
           <div class="content">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</div>
-          <a-button @click="onClickViewPrice">Xem báo giá</a-button>
+          <a-button style="height: 40px" @click="onClickViewPrice">Xem báo giá</a-button>
         </div>
         <div class="big_logo_metric">
           <img src="/images/big_logo_metric.svg" alt="">
@@ -343,7 +343,6 @@ useSeoMeta({
   }
   .background_poster{
     background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 49.34%);
-    overflow-x: hidden;
     .poster {
       display: flex;
       height: 335px;

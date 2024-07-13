@@ -164,8 +164,8 @@ const getDisplayedCategories = (item: any) => {
 
       .image {
         img {
-          width: 170px;
-          height: 170px;
+          width: 180px;
+          height: 180px;
           object-fit: cover;
           border-radius: 8px;
         }

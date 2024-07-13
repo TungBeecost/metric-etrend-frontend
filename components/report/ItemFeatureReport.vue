@@ -90,6 +90,9 @@ const itemsToShow = computed(() => {
 </template>
 
 <style lang="scss">
+.carousel__pagination{
+  display: none;
+}
 .report-slide {
   .carousel__slide {
     padding: 8px;

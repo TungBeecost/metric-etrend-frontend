@@ -37,7 +37,7 @@ const onTagClick = (tag: string) => {
           </clipPath>
         </defs>
       </svg>
-      <div class="title_content">
+      <div style="font-size: 20px" class="title_content">
         Từ khoá phổ biến liên quan
       </div>
     </div>
@@ -86,10 +86,11 @@ const onTagClick = (tag: string) => {
     flex-wrap: wrap;
 
     .keyword {
+      display: flex;
+      align-items: center;
       padding: 2px 10px;
       border-radius: 4px;
       justify-content: center;
-      align-items: center;
       gap: 8px;
       border: 1px solid #9D97BF;
       font-size: 12px;
@@ -97,6 +98,7 @@ const onTagClick = (tag: string) => {
       color: #241E46;
       line-height: 20px;
       cursor: pointer;
+      height: 30px;
     }
   }
 }

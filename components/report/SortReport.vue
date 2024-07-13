@@ -49,3 +49,14 @@ const handleChange = (value: any, _option: any) => {
   }
 }
 </style>
+<style lang="scss">
+.sort_report{
+  .ant-select{
+    .ant-select-selector{
+      display: flex;
+      align-items: center;
+      height: 40px;
+    }
+  }
+}
+</style>
