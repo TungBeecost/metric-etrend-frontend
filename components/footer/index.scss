@@ -66,6 +66,10 @@
   height: 1px;
   background-color: $divider;
   margin: 40px 0px;
+
+    @include mobile {
+        margin: 24px 0px;
+    }
 }
 
 .footerSignature {

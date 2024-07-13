@@ -44,6 +44,7 @@
       border-radius: 16px;
       overflow: hidden;
       background: white;
+
       transition: background-color 0.3s ease, transform 0.3s ease;
       flex: 1 0 0;
       position: relative;
@@ -51,6 +52,7 @@
 
       &:hover {
         transform: translateY(-20px) scale(1.05);
+        z-index: 99;
         .focusHeader {
           background: $primary;
         }

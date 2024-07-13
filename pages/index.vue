@@ -2,7 +2,6 @@
   <div>
     <!-- search section -->
     <div class="section sectionSearch">
-
       <div class="sectionHeader searchHeader">
         <h1 class="sectionTitle">Kho Báo Cáo <br> Ecommerce Toàn Diện</h1>
         <p class="sectionDescription">

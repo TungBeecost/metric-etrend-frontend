@@ -370,6 +370,8 @@ useSeoMeta({
       }
 
       .big_logo_metric {
+        width: inherit;
+        overflow: hidden;
         position: absolute;
         left: 0;
         top: 0;
@@ -441,6 +443,7 @@ useSeoMeta({
 @media (max-width: 767px) {
   #search_report{
     .sectionTitle{
+      padding-top: 16px;
       .sectionTitle_content{
         font-size: 14px;
       }

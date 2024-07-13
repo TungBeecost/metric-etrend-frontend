@@ -31,6 +31,7 @@
 
 @media (max-width: 767px) {
   .banner{
+    height: 112px;
     .title{
       height: 108px;
       padding: 40px 16px;
