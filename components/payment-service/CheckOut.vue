@@ -101,6 +101,7 @@ const handleDiscount = () => {
         display: flex;
         align-items: flex-end;
         gap: 16px;
+        width: 100%;
       }
     }
   }

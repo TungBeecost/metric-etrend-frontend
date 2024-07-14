@@ -15,7 +15,6 @@ const props = defineProps({
 const windowWidth = ref(window?.innerWidth);
 
 const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFormat: string = "YYYY-MM-DD[T]HH:mm:ss"): string => {
-  console.log(value, format, inputFormat)
   return moment(value, inputFormat).format(format);
 }
 

@@ -1,10 +1,10 @@
 <template>
   <div class="inputWrapper">
     <label v-if="label" for="" class="label">{{ label }} <span v-if="isRequired" class="requiredDot"> * </span> </label>
-    <div style="display: flex; gap: 8px; align-items: center">
+    <div style="display: flex; gap: 8px; align-items: center; width: 100%">
       <AInput v-bind="inputProps"
               v-model:value="inputModel"
-              style="border: 1px solid #9D97BF; border-radius: 8px;"
+              style="border: 1px solid #9D97BF; border-radius: 8px; width: 100%; height: 40px;"
               :status="errorMessage ? 'error' : ''">
         <template v-if="errorMessage" #suffix>
           <InfoCircleOutlined class="errorIcon" />
@@ -42,6 +42,7 @@ const inputModel = defineModel<string>("input");
   justify-content: center;
   align-items: flex-start;
   gap: 8px;
+  width: 100%;
 
   .label {
     font-size: 14px;

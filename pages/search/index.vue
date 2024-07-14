@@ -52,8 +52,12 @@ const handleCategorySelect = (newSelectedCategory: string) => {
 
 const handleSortSelect = async (sortChange: string) => {
   sortSelect.value = sortChange;
-  const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
-  await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
+  console.log(selectedCategory.value);
+  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
+    await fetchData(searchValueSearch.value, [route.query.category_report_id], sortChange, page.value);
+  } else {
+    await fetchData(searchValueSearch.value, [], sortChange, page.value);
+  }
 };
 
 const handleTagClick = async (tag: string) => {

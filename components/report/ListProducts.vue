@@ -54,7 +54,7 @@ const value = ref('');
           :product="product"
           :is-hide-content="isHideContent"
       />
-      <ChartMaskProductList v-if="isHideContent" @click-on-hidden="handleClickOnHidden"/>
+      <ChartMask v-if="props.isHideContent" :report="props.data"/>
     </div>
     <!--    <div class="line"></div>-->
     <div v-if="false" class="page">

@@ -51,7 +51,7 @@
       will-change: transform, background-color;
 
       &:hover {
-        transform: translateY(-20px) scale(1.05);
+        transform: translateY(0px) scale(1.05);
         z-index: 99;
         .focusHeader {
           background: $primary;

@@ -96,6 +96,7 @@ const {tableOfContent} = defineProps({
 .title {
   font-size: 16px;
   font-weight: 600;
+  margin-top: 8px;
   color: #241E46;
 }
 

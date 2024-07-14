@@ -230,11 +230,6 @@ const chartOptions = computed(() => {
   display: none !important;
 }
 
-//.highcharts-container {
-//  width: 100% !important;
-//  height: 100% !important;
-//}
-
 .ant-collapse > .ant-collapse-item {
   border: none;
 

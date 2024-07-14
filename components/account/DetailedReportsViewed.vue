@@ -32,7 +32,7 @@ const onChange = async (page: number) => {
       <div class="detailed_reports_viewed_header_title">Báo cáo chi tiết đã xem</div>
     </div>
     <div class="detailed_reports_viewed_content default_section">
-      <div v-if="props.data" style="display: flex; flex-direction: column; gap: 24px">
+      <div v-if="props.data?.length" style="display: flex; flex-direction: column; gap: 24px">
         <list-report :data="props.data"/>
         <div class="page">
           <a-pagination v-model:current="current" :total="props.total" show-less-items @change="onChange" />
@@ -50,7 +50,6 @@ const onChange = async (page: number) => {
   .detailed_reports_viewed_header {
     display: flex;
     padding: 24px;
-    align-items: center;
     gap: 16px;
     border-radius: 8px 8px 0 0;
     border: 1px solid #EEEBFF;
@@ -79,14 +78,14 @@ const onChange = async (page: number) => {
 }
 
 @media (max-width: 767px) {
+  .detailed_reports_viewed_header{
+    flex-direction: row;
+  }
   .detailed_reports_viewed_content {
     padding-top: 40px;
   }
-
 }
 
-@media (max-width: 424px) {
-}
 </style>
 
 <style lang="scss">

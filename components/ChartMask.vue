@@ -2,6 +2,8 @@
 import {onMounted, ref} from 'vue';
 
 const isDesktop = ref(true);
+const currentUserStore = useCurrentUser();
+const {userInfo} = storeToRefs(currentUserStore);
 
 const {report, title, subtitle, okButton, handleUnlockReport} = defineProps({
   report: {
@@ -33,7 +35,17 @@ onMounted(() => {
 
 const showUnlock = ref(false);
 
+const handleButtonClick = () => {
+  console.log('userInfo', userInfo.value);
+  if (userInfo.value.id) {
+    toggleUnlock();
+  } else {
+    currentUserStore.setShowPopupLogin(true);
+  }
+};
+
 const toggleUnlock = () => {
+  console.log('toggleUnlock');
   if (handleUnlockReport) {
     return handleUnlockReport();
   }
@@ -78,7 +90,7 @@ const toggleUnlock = () => {
       <div class="title">{{ title }}</div>
       <div class="subtitle">{{ subtitle }}</div>
       <div>
-        <a-button class="register-btn" :size="isDesktop ? 'large' : 'default'" type="primary" @click="toggleUnlock">
+        <a-button class="register-btn" :size="isDesktop ? 'large' : 'default'" type="primary" @click="handleButtonClick">
           {{ okButton }}
         </a-button>
       </div>
@@ -261,4 +273,12 @@ const toggleUnlock = () => {
     }
   }
 }
+</style>
+<style lang="scss">
+@media (max-width: 767px) {
+  .ant-modal {
+    margin: 15px;
+  }
+}
+
 </style>

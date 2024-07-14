@@ -10,7 +10,6 @@ const props = defineProps({
 });
 
 const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFormat: string = "YYYY-MM-DD[T]HH:mm:ss"): string => {
-  console.log(value, format, inputFormat)
   return moment(value, inputFormat).format(format);
 }
 
@@ -265,7 +264,9 @@ const handleClickPlan = () => {
 
 @media (max-width: 767px) {
   #account_info{
-
+    .account_info_header{
+      flex-direction: row;
+    }
     .account_info_content{
       .user_info{
         flex-direction: column;
