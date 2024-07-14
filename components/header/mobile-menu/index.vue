@@ -4,7 +4,7 @@
       <p>Đăng nhập ngay để không bỏ lỡ hàng trăm báo cáo và xu hướng mới nhất!</p>
       <AButton type="primary" size="large" @click="currentUserStore.setShowPopupLogin(true)">Đăng nhập</AButton>
     </div>
-    <div v-else class="user_info" style="display: flex; flex-direction: row; gap: 16px">
+    <div v-if="userInfo.id" style="display: flex; gap: 16px">
       <div class="ava">
         <a-avatar style="cursor: pointer" class="avatar-image" :src="userInfo?.avatar" size="large"/>
       </div>

@@ -33,10 +33,9 @@ const handlePayment = async () => {
     message.error('Vui lòng đăng nhập trước khi thanh toán');
   else{
     if (selectedWalletOption.value) {
-      const runtimeConfig = useRuntimeConfig()
       const paymentMethod = selectedWalletOption.value;
       const itemCode = "e_pro__12m";
-      const redirectUrl = `${runtimeConfig.public.apiBase}/`;
+      const redirectUrl = `https://ereport.staging.muadee.vn/`;
       try {
         const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl);
         if (transactionResult.response.payment_url) {
@@ -109,7 +108,7 @@ const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an unders
 </script>
 
 <template>
-  <div class="payment_service">
+  <div id="payment" class="payment_service">
     <div class="default_section" style=" display: flex; padding: 40px 0; gap: 24px;">
       <div class="payment_service_option">
         <pack-service />
@@ -126,7 +125,7 @@ const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an unders
             <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="16" height="32" rx="4" fill="#EEEBFF"/>
             </svg>
-            <div class="title_content">Hình thức thanh toán</div>
+            <div class="title_content">Quét mã QR để thanh toán</div>
           </div>
         </div>
       </template>
@@ -179,5 +178,14 @@ const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an unders
       font-weight: bold;
     }
   }
+}
+</style>
+<style lang="scss">
+@media (max-width: 768px) {
+
+  .payment_info {
+    flex-direction: column;
+  }
+
 }
 </style>

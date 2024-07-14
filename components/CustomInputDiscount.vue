@@ -10,7 +10,7 @@
           <InfoCircleOutlined class="errorIcon" />
         </template>
       </AInput>
-      <a-button style="height: 100%" type="primary" @click="validateDiscount">Áp dụng</a-button>
+      <a-button style="height: 40px" type="primary" @click="validateDiscount">Áp dụng</a-button>
     </div>
     <p v-if="errorMessage" class="errorMessage">{{ errorMessage }}</p>
   </div>

@@ -26,7 +26,7 @@ watch(value, (newValue) => {
         Lựa chọn một trong những cổng thanh toán dưới đây để nhận mã QR
       </div>
       <div class="option">
-        <a-radio-group v-model:value="value" style="display: flex; gap: 64px" name="radioGroup">
+        <a-radio-group v-model:value="value" class="radio-group" name="radioGroup">
           <a-radio v-for="wallet in WALLET" :key="wallet.code" :style="{ border: wallet.code === value ? '1px solid #E85912' : '1px solid #EEEBFF', borderRadius: '12px', padding: '0 12px', alignItems: 'center', display: 'flex' }" :value="wallet.code">
             <img style="width: 100px; height: 100px" :src="wallet.thumbnail" alt="icon" />
           </a-radio>
@@ -77,6 +77,33 @@ watch(value, (newValue) => {
       display: flex;
       align-items: flex-start;
       padding: 16px 0;
+
+      .radio-group {
+        display: flex;
+        gap: 64px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #option_payment{
+    .statistic-item__title{
+      padding: 16px;
+    }
+
+    .statistic-item__content{
+      padding: 16px;
+
+      .option{
+        padding: 8px 0;
+
+        .radio-group {
+          flex-direction: column;
+          gap: 8px;
+          width: 100%;
+        }
+      }
     }
   }
 }

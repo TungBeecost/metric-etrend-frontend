@@ -41,7 +41,7 @@ const handleDiscount = () => {
       </div>
       <div class="total">
         <total-payment/>
-        <a-button style="width: 100%; margin-top: 16px" type="primary" @click="handlePayment">Thanh toán</a-button>
+        <a-button style="width: 100%; height: 40px; margin-top: 16px" type="primary" @click="handlePayment">Thanh toán</a-button>
       </div>
     </div>
   </div>

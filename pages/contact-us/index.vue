@@ -45,6 +45,7 @@
               color: #FFF;
               border: 1px solid #241E46;
               display: flex;
+              height: 40px;
               justify-content: center;
               align-items: center
             "
