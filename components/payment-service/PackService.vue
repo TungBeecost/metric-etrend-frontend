@@ -202,8 +202,8 @@ const plan = PLANS[1];
       }
 
       .user_plan{
-        background: #9FA5B2;
-        color: #FFF;
+        background: #DEDEE4;
+        color: #9D9BB0;
         width: 100%;
       }
     }

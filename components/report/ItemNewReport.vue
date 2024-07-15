@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import { NAVIGATIONS } from "~/constant/constains";
 import { formatAndRoundSortTextCurrencyWithMinValue } from "~/helpers/FormatHelper";
 import BlurContent from "~/components/BlurContent.vue";
+import moment from "moment/moment";
 
 const { reports } = defineProps({
   reports: {
@@ -38,6 +39,10 @@ onUnmounted(() => {
   }
 });
 
+const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
+  return moment(value, inputFormat).format(format);
+}
+
 const itemsToShow = computed(() => {
   return windowWidth.value < 768 ? 1 : 2;
 });
@@ -53,7 +58,7 @@ const itemsToShow = computed(() => {
           </div>
           <div class="content" style="text-align: left;">
             <div class="category_date line-clamp__2" style="text-align: left;">
-              {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span> {{ dayjs(report.created_at).format('DD/MM/YYYY') }}
+              {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span> {{ formatDate(report.start_date, 'DD/MM/YYYY') }}
             </div>
             <div class="title line-clamp__2" style="text-align: left;">
               Báo cáo nhóm hàng {{ report.name }}

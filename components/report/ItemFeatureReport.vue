@@ -51,7 +51,7 @@ const itemsToShow = computed(() => {
           </div>
           <div class="content" style="text-align: left;">
             <div class="category_date" style="text-align: left;">
-              {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span> {{ dayjs(report.created_at).format('DD/MM/YYYY') }}
+              {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span> {{ dayjs(report.start_date).format('DD/MM/YYYY') }}
             </div>
             <div class="title" style="text-align: left;">
               Báo cáo nhóm hàng {{ report.name }}
