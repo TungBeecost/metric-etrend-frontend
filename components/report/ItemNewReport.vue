@@ -240,6 +240,7 @@ const itemsToShow = computed(() => {
       .slide-item {
         .thumbnail {
           padding-left: 12px;
+          width: 120px;
           height: auto;
           border-bottom: none;
         }
@@ -249,11 +250,28 @@ const itemsToShow = computed(() => {
 
           .category_date{
             text-align: center;
+            font-size: 10px;
+            margin-bottom: 0;
           }
 
           .title {
-            font-size: 16px;
+            font-size: 14px;
             margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .summary-info{
+            .info_item{
+              font-size: 12px;
+
+              span{
+                span{
+                  font-size: 12px;
+                }
+              }
+            }
           }
 
           .description {

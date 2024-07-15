@@ -220,7 +220,6 @@ export const TESTIMONIAL_BRANDS = [
 ];
 
 export const PARTERS = [
-  "/images/brand/Bayer.png",
   "/images/brand/Canifa.png",
   "/images/brand/Coway.png",
   "/images/brand/Dien-Quang.png",

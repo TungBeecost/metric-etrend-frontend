@@ -85,6 +85,19 @@ const displayedReports = computed(() => {
     font-size: 20px;
   }
 }
+
+@media (max-width: 768px) {
+  .item_discover {
+    .image {
+      width: 24px;
+      height: 24px;
+    }
+
+    .title {
+      font-size: 24px;
+    }
+  }
+}
 </style>
 
 <!--<style lang="scss">-->

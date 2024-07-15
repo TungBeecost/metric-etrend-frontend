@@ -1,8 +1,8 @@
 <template>
   <div :class="{ headerNavbar: 1, active: active }">
     <div v-if="!userInfo.id" class="login">
-      <p>Đăng nhập ngay để không bỏ lỡ hàng trăm báo cáo và xu hướng mới nhất!</p>
-      <AButton type="primary" size="large" @click="currentUserStore.setShowPopupLogin(true)">Đăng nhập</AButton>
+      <p style="font-weight: 500; font-size: 16px">Đăng nhập ngay để không bỏ lỡ hàng trăm báo cáo và xu hướng mới nhất!</p>
+      <AButton style="font-weight: 500 " type="primary" size="large" @click="currentUserStore.setShowPopupLogin(true)">Đăng nhập</AButton>
     </div>
     <div v-if="userInfo.id" style="display: flex; gap: 16px">
       <div class="ava">
@@ -30,7 +30,7 @@
       </AButton>
     </NuxtLink>
 
-    <div class="divider"/>
+    <div v-if="userInfo.id" class="divider"/>
 
     <NuxtLink v-if="userInfo.id" :to="NAVIGATIONS.home" class="menu">
       <AButton size="large" type="text" class="menuItem" @click="setLogOut">
