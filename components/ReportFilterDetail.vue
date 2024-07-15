@@ -97,7 +97,7 @@ const fieldValueParse: FieldValueParsers = {
         </div>
       </div>
       <div>
-        <a-button type="link" size="small" @click="isExpanded = !isExpanded">
+        <a-button style="color: #E85912" type="link" size="small" @click="isExpanded = !isExpanded">
           {{ isExpanded ? 'Thu gọn' : 'Xem thêm' }}
           <svg
               xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"

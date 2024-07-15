@@ -288,6 +288,15 @@ useSeoMeta({
 
 @media (max-width: 768px) {
 
+  .container_content {
+    .title {
+      .report-title{
+        font-size: 24px;
+        line-height: 32px;
+      }
+    }
+  }
+
   .different_info {
     order: -1;
   }
