@@ -15,9 +15,12 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["change"]);
+
 const current = ref(1);
 const onChange = async (page: number) => {
   current.value = page;
+  emit("change", page);
 };
 </script>
 
@@ -50,7 +53,7 @@ const onChange = async (page: number) => {
   .detailed_reports_viewed_header {
     display: flex;
     padding: 24px;
-    gap: 16px;
+    gap: 8px;
     border-radius: 8px 8px 0 0;
     border: 1px solid #EEEBFF;
     background: #FFF;

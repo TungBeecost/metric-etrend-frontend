@@ -59,7 +59,7 @@ const handleClickPlan = () => {
                   <path d="M24 27.3338C27.6824 27.3338 30.6675 24.3486 30.6675 20.6663C30.6675 16.9839 27.6824 13.9988 24 13.9988C20.3177 13.9988 17.3325 16.9839 17.3325 20.6663C17.3325 24.3486 20.3177 27.3338 24 27.3338Z" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M13.9988 33.1678C16.0167 29.6809 19.6818 27.3337 24 27.3337C28.3183 27.3337 31.9833 29.6809 34.0013 33.1678" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <div style="flex: 1">
+                <div class="title_plan" style="flex: 1">
                   <div class="plan_info_name">Gói Free</div>
                   <div class="plan_info_description">Nâng cấp gói ngay để truy cập kho dữ liệu với hàng trăm báo cáo mới nhất ngay hôm nay</div>
                 </div>
@@ -94,7 +94,7 @@ const handleClickPlan = () => {
   .account_info_header{
     display: flex;
     padding: 24px;
-    gap: 16px;
+    gap: 8px;
     border-radius: 12px 12px 0  0;
     border: 1px solid #EEEBFF;
     background-color: #FFF;

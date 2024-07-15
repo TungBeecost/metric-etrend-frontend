@@ -105,13 +105,20 @@ export const fetchListRecommendReportMarketing = async (numberOfReports: number,
   }
 };
 
-export const fetchClaimedListReport = async () => {
+export const fetchClaimedListReport = async (page: number = 0, limit: number = 10) => {
   try {
-    const response = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.list_claimed.endpoint));
+    const response = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.list_claimed.endpoint), {
+      params: {
+        page,
+        limit
+      }
+    });
+
     if (!response.data || !Array.isArray(response.data.reports)) {
       console.error("fetchClaimedListReport error: Unexpected response format");
       return null;
     }
+
     const data: ListClaimed[] = response.data.reports.map((item: any) => ({
       id: item.id,
       slug: item.slug,
@@ -127,6 +134,7 @@ export const fetchClaimedListReport = async () => {
       lst_brand: item.lst_brand,
       lst_category: item.lst_category
     }));
+
     return { total: response.data.total, reports: data };
   } catch (error) {
     console.error("fetchClaimedListReport error: ", error);

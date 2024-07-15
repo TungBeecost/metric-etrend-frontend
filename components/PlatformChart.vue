@@ -21,6 +21,25 @@ const props = defineProps({
   }
 });
 
+const windowWidth = ref(window?.innerWidth);
+
+const updateWindowWidth = () => {
+  windowWidth.value = window?.innerWidth;
+};
+
+// Step 3: Use a computed property for chart width
+const chartWidth = computed(() => {
+  return windowWidth?.value < 768 ? 300 : 600;
+});
+
+onMounted(() => {
+  window.addEventListener('resize', updateWindowWidth);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateWindowWidth);
+});
+
 const chartOptions = ref(null);
 
 const platformColors = {
@@ -63,6 +82,7 @@ const $t = (text) => text;
 chartOptions.value = {
   chart: {
     type: "pie",
+    width: 600,
     style: {
       fontFamily: "Inter",
     },
@@ -247,6 +267,7 @@ watch(() => props.analyticType, () => {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  overflow: hidden;
 
 
   .platform-chart-inner-box {

@@ -143,4 +143,12 @@ const toggleUnlock = () => {
     }
   }
 }
+
+@media (max-width: 768px) {
+  .unlock-report {
+    .unlock-report-title {
+      font-size: 20px;
+    }
+  }
+}
 </style>

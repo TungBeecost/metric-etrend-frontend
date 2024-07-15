@@ -59,9 +59,14 @@ export default function useSearchReport() {
         }
     }
 
-    const fetchClaimedList = async () => {
+    const fetchClaimedList = async (page: number = 0, limit: number = 10) => {
         try {
-            return await fetchClaimedListReport();
+            const response = await fetchClaimedListReport(page, limit);
+            if (!response) {
+                console.error("fetchClaimedList error: No response");
+                return null;
+            }
+            return response;
         } catch (error) {
             console.error("fetchClaimedList error: ", error);
             return null;

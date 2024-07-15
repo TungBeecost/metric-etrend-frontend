@@ -1,18 +1,37 @@
 <script setup lang="ts">
-import {NAVIGATIONS, PLANS} from '~/constant/constains';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { NAVIGATIONS, PLANS } from '~/constant/constains';
 
 const currentUserStore = useCurrentUser();
-const {userInfo} = storeToRefs(currentUserStore);
-
+const { userInfo } = storeToRefs(currentUserStore);
 
 defineProps<{
   isDarkTitle?: boolean,
 }>()
+
+const windowWidth = ref(window?.innerWidth);
+
+const isMobile = computed(() => windowWidth?.value < 768);
+
+const onResize = () => {
+  windowWidth.value = window?.innerWidth;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', onResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', onResize);
+});
 </script>
 
 <template>
   <div class="wrapper">
-    <p :class="{ header: true, dark: isDarkTitle }">Truy cập kho dữ liệu với hàng trăm báo cáo <br/>và xu hướng mới nhất
+    <p :class="{ header: true, dark: isDarkTitle }">
+      Truy cập kho dữ liệu với hàng trăm báo cáo
+      <template v-if="!isMobile"> <br/> </template>
+      và xu hướng mới nhất
     </p>
 
     <div class="pricings">

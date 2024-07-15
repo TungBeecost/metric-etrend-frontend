@@ -287,6 +287,16 @@ useSeoMeta({
 
 
 @media (max-width: 768px) {
+
+  .container_content {
+    .title {
+      .report-title{
+        font-size: 24px;
+        line-height: 32px;
+      }
+    }
+  }
+
   .different_info {
     order: -1;
   }
@@ -294,6 +304,7 @@ useSeoMeta({
   .different_info .maybe-interested-component {
     order: 2; /* Ensures that maybe-interested is moved to the bottom */
   }
+
 
 }
 </style>

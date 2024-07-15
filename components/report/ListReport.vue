@@ -81,17 +81,6 @@ const getDisplayedCategories = (item: any) => {
                   {{ formatAndRoundSortTextCurrencyWithMinValue(item.revenue_monthly) }}
                 </BlurContent>
               </span> - doanh số trung bình tháng
-              <!--              <div class="gr_quarter">-->
-              <!--                <div v-if="item.gr_quarter > 0" class="gr_quarter_item" >-->
-              <!--                  <svg v-if="windowWidth >= 768" data-v-f4382b3b="" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-f4382b3b="" d="M19.9375 4.8125L11.6875 13.0625L8.25 9.625L2.0625 15.8125" stroke="#2EB553" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path><path data-v-f4382b3b="" d="M19.9375 10.3125V4.8125H14.4375" stroke="#2EB553" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>-->
-              <!--                  <span style="color: rgb(0, 194, 89)">{{ formatPercentage(item.gr_quarter) }}</span>-->
-              <!--                </div>-->
-              <!--                <div v-else-if="item.gr_quarter < 0" class="gr_quarter_item" >-->
-              <!--                  <svg v-if="windowWidth >= 768" data-v-f4382b3b="" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-f4382b3b="" d="M19.9375 17.1875L11.6875 8.9375L8.25 12.375L2.0625 6.1875" stroke="#EE3324" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path><path data-v-f4382b3b="" d="M19.9375 11.6875V17.1875H14.4375" stroke="#EE3324" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>-->
-              <!--                  <span style="color: rgb(245, 0, 0)">{{ formatPercentage(item.gr_quarter) }}</span>-->
-              <!--                </div>-->
-              <!--                <div v-else></div>-->
-              <!--              </div>-->
             </div>
             <div class="info_item">
               <svg data-v-f4382b3b="" width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -141,6 +130,7 @@ const getDisplayedCategories = (item: any) => {
 </template>
 
 <style scoped lang="scss">
+
 #lst_report_id {
   display: flex;
   flex-direction: column;
@@ -262,19 +252,26 @@ const getDisplayedCategories = (item: any) => {
 
           .breadcrumb {
             font-size: 10px;
+            span{
+              font-size: 10px;
+            }
           }
 
           .name {
             font-size: 14px;
+            -webkit-line-clamp: 1;
           }
 
           .summary-info {
+            margin-bottom: 0;
             .info_item {
               font-size: 10px;
-            }
 
-            span {
-              font-size: 10px;
+              span{
+                span{
+                  font-size: 10px;
+                }
+              }
             }
 
             .gr_quarter {
@@ -283,7 +280,7 @@ const getDisplayedCategories = (item: any) => {
           }
 
           .description {
-            font-size: 12px;
+            font-size: 10px;
           }
         }
       }

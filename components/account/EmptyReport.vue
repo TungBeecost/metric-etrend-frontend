@@ -7,7 +7,7 @@
     <div class="empty_report_container">
       <img src="/icons/Empty-report.svg" alt="empty-report" />
       <div class="content">
-        <div class="content_noti">Chưa có báo cáo chi tiết đã xem</div>
+        <div class="content_noti">Chưa có báo cáo đã xem</div>
         <div class="content_info">Dữ liệu hiện tại đang trống</div>
       </div>
       <a-button style="height: 40px" class="button" href="/reports">
@@ -36,6 +36,7 @@
 
     .content{
       .content_noti{
+        text-align: center;
         font-size: 24px;
         color: #241E46;
         font-weight: 700;
