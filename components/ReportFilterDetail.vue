@@ -72,8 +72,15 @@ const fieldValueParse: FieldValueParsers = {
 
 <template>
   <div class="report-filter">
+
     <div class="report-filter-title">
-      Chi tiết bộ lọc nhóm hàng
+      <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
+           xmlns="http://www.w3.org/2000/svg">
+        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
+      </svg>
+      <div class="title">
+        Chi tiết bộ lọc nhóm hàng
+      </div>
     </div>
     <div class="report-filter-content">
       <div
@@ -117,12 +124,16 @@ const fieldValueParse: FieldValueParsers = {
 
 
   .report-filter-title {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 28px;
+    display: flex;
+    gap: 8px;
 
-    margin-bottom: 16px;
+    .title{
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 28px;
+      margin-bottom: 16px;
+    }
   }
 
   .report-filter-content {

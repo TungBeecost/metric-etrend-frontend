@@ -44,13 +44,15 @@
       border-radius: 16px;
       overflow: hidden;
       background: white;
+
       transition: background-color 0.3s ease, transform 0.3s ease;
       flex: 1 0 0;
       position: relative;
       will-change: transform, background-color;
 
       &:hover {
-        transform: translateY(-20px) scale(1.05);
+        transform: translateY(0px) scale(1.05);
+        z-index: 99;
         .focusHeader {
           background: $primary;
         }
@@ -173,8 +175,8 @@
         }
 
         .user_plan{
-          background: #9FA5B2;
-          color: #FFF;
+          background: #DEDEE4;
+          color: #9D9BB0;
           width: 100%;
         }
       }

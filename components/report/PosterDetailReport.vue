@@ -89,11 +89,14 @@ const props = defineProps({
   }
 
   .big_logo_metric {
+    width: inherit;
+    overflow: hidden;
     opacity: 0.5;
     mix-blend-mode: luminosity;
     position: absolute;
     top: 0;
     right: 400px;
+    overflow-x: hidden;
   }
 
   @media (max-width: 768px) {
@@ -119,6 +122,8 @@ const props = defineProps({
     }
 
     .big_logo_metric {
+      width: inherit;
+      overflow: hidden;
       right: 20px;
     }
   }

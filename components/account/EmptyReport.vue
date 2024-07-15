@@ -10,7 +10,7 @@
         <div class="content_noti">Chưa có báo cáo chi tiết đã xem</div>
         <div class="content_info">Dữ liệu hiện tại đang trống</div>
       </div>
-      <a-button class="button" href="/reports">
+      <a-button style="height: 40px" class="button" href="/reports">
         <span>Khám phá ngay</span>
       </a-button>
     </div>

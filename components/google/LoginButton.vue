@@ -132,4 +132,36 @@ onMounted(() => {
     }
   }
 }
+
+@media (max-width: 767px) {
+  .login_container {
+    gap: 16px;
+
+    .container {
+      gap: 16px;
+
+      .title_login {
+        gap: 4px;
+
+        .title {
+          font-size: 20px;
+          line-height: 28px;
+        }
+
+        .description {
+          font-size: 14px;
+          line-height: 20px;
+        }
+      }
+
+      .button_login {
+        gap: 12px;
+      }
+    }
+  }
+
+  #googleButton {
+    justify-content: center;
+  }
+}
 </style>

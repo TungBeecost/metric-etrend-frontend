@@ -45,6 +45,7 @@
               color: #FFF;
               border: 1px solid #241E46;
               display: flex;
+              height: 40px;
               justify-content: center;
               align-items: center
             "
@@ -110,6 +111,8 @@ useSeoMeta({
     }
 
     .big_logo_metric {
+      width: inherit;
+      overflow: hidden;
       position: absolute;
       left: 0;
       top: 0;

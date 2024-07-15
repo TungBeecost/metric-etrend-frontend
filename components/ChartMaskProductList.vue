@@ -6,6 +6,10 @@ const isDesktop = ref(false);
 onMounted(() => {
   isDesktop.value = window?.innerWidth >= 768;
 });
+
+
+const handleClick = () => {
+};
 </script>
 
 <template>
@@ -44,7 +48,8 @@ onMounted(() => {
         <a-button
           class="register-btn"
           type="primary"
-          @click="$emit('clickOnHidden')"
+          style="height: 40px"
+          @click="handleClick"
         >
           Xem báo cáo
         </a-button>

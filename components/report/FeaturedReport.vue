@@ -20,7 +20,6 @@ const fetchReport = async () => {
 
     lstReport.value = response.lst_report;
     isLoading.value = false;
-    console.log(response)
   } catch (e) {
     console.log(e)
   }

@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import { NAVIGATIONS } from "~/constant/constains";
 import { formatAndRoundSortTextCurrencyWithMinValue } from "~/helpers/FormatHelper";
 import BlurContent from "~/components/BlurContent.vue";
+import moment from "moment/moment";
 
 const { reports } = defineProps({
   reports: {
@@ -38,6 +39,10 @@ onUnmounted(() => {
   }
 });
 
+const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
+  return moment(value, inputFormat).format(format);
+}
+
 const itemsToShow = computed(() => {
   return windowWidth.value < 768 ? 1 : 2;
 });
@@ -45,7 +50,7 @@ const itemsToShow = computed(() => {
 
 <template>
   <div class="new-report-slide">
-    <Carousel :items-to-show="itemsToShow" :items-to-scroll="2" :wrap-around="true" style="width: 100%;" :snap-align="'start'">
+    <Carousel :items-to-show="itemsToShow" :items-to-scroll="itemsToShow" :wrap-around="true" style="width: 100%;" :snap-align="'start'">
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
@@ -53,7 +58,7 @@ const itemsToShow = computed(() => {
           </div>
           <div class="content" style="text-align: left;">
             <div class="category_date line-clamp__2" style="text-align: left;">
-              {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span> {{ dayjs(report.created_at).format('DD/MM/YYYY') }}
+              {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span> {{ formatDate(report.start_date, 'DD/MM/YYYY') }}
             </div>
             <div class="title line-clamp__2" style="text-align: left;">
               Báo cáo nhóm hàng {{ report.name }}
@@ -88,6 +93,10 @@ const itemsToShow = computed(() => {
 </template>
 
 <style lang="scss">
+.carousel__pagination{
+  display: none;
+}
+
 .carousel__pagination-item {
   display: flex;
   justify-content: center;
@@ -231,6 +240,7 @@ const itemsToShow = computed(() => {
       .slide-item {
         .thumbnail {
           padding-left: 12px;
+          width: 120px;
           height: auto;
           border-bottom: none;
         }
@@ -240,11 +250,28 @@ const itemsToShow = computed(() => {
 
           .category_date{
             text-align: center;
+            font-size: 10px;
+            margin-bottom: 0;
           }
 
           .title {
-            font-size: 16px;
+            font-size: 14px;
             margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .summary-info{
+            .info_item{
+              font-size: 12px;
+
+              span{
+                span{
+                  font-size: 12px;
+                }
+              }
+            }
           }
 
           .description {

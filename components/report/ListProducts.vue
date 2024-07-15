@@ -54,39 +54,7 @@ const value = ref('');
           :product="product"
           :is-hide-content="isHideContent"
       />
-      <ChartMaskProductList v-if="isHideContent"/>
-    </div>
-    <!--    <div class="line"></div>-->
-    <div v-if="false" class="page">
-      <div class="currency_unit" style="flex: 1; display: flex; align-items: center"/>
-      <a-pagination v-model:current="current" :total="1000" show-less-items class="a_page" style="flex: 1"/>
-      <a-input
-          v-model:value="value"
-          placeholder="Đi đến trang"
-          size="large"
-          style="flex: 1"
-      >
-        <template #addonAfter>
-          <div style="display: flex;">
-            <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_4367_23158)">
-                <path
-                    d="M10.5 17.5C14.6421 17.5 18 14.1421 18 10C18 5.85786 14.6421 2.5 10.5 2.5C6.35786 2.5 3 5.85786 3 10C3 14.1421 6.35786 17.5 10.5 17.5Z"
-                    stroke="#9D97BF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M7.375 10H13.625" stroke="#9D97BF" stroke-width="1.3" stroke-linecap="round"
-                      stroke-linejoin="round"/>
-                <path d="M11.125 7.5L13.625 10L11.125 12.5" stroke="#9D97BF" stroke-width="1.3" stroke-linecap="round"
-                      stroke-linejoin="round"/>
-              </g>
-              <defs>
-                <clipPath id="clip0_4367_23158">
-                  <rect width="20" height="20" fill="white" transform="translate(0.5)"/>
-                </clipPath>
-              </defs>
-            </svg>
-          </div>
-        </template>
-      </a-input>
+      <ChartMask v-if="props.isHideContent" :report="props.data"/>
     </div>
   </div>
 </template>

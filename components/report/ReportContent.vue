@@ -38,10 +38,6 @@ const {tableOfContent} = defineProps({
           {title: 'Top sản phẩm bán chạy'},
         ],
       },
-      {
-        title: 'Top sản phẩm bán chạy',
-        children: []
-      },
     ]
   }
 });
@@ -61,11 +57,9 @@ const {tableOfContent} = defineProps({
     </div>
     <div class="content">
       <div v-for="(item, index) in tableOfContent">
-
         <div class="title">
           {{ item?.title || item }}
         </div>
-
         <ul v-if="item?.children?.length">
           <li v-for="child in item.children">{{ child.title }}</li>
         </ul>
@@ -102,6 +96,7 @@ const {tableOfContent} = defineProps({
 .title {
   font-size: 16px;
   font-weight: 600;
+  margin-top: 8px;
   color: #241E46;
 }
 
@@ -111,5 +106,12 @@ ul {
 
 li {
   margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .report_content {
+    padding: 16px;
+    border: none;
+  }
 }
 </style>

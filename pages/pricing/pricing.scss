@@ -10,7 +10,6 @@
 }
 
 .sectionPricing {
-  // background-color: #241e46;
   position: relative;
   overflow: hidden;
   gap: 48px;
@@ -59,6 +58,7 @@
 
     @include mobile {
       flex-direction: column-reverse;
+      gap: 50px;
     }
 
     .planItem {

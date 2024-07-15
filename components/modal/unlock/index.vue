@@ -15,7 +15,6 @@ const {showUnlock, report} = defineProps({
     required: true
   }
 });
-
 onMounted(() => {
   isDesktop.value = window?.innerWidth >= 768;
 });
@@ -70,7 +69,7 @@ const toggleUnlock = () => {
             <span class="highlight">01 lượt xem</span>
             trong vòng 24 giờ cho
             <span class="report-name">
-              Túi xách nữ - Báo cáo xu hướng thị trường sàn TMĐT
+              {{ report.name }} - Báo cáo xu hướng thị trường sàn TMĐT
             </span>
             không?
           </div>

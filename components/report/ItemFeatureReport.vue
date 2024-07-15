@@ -43,7 +43,7 @@ const itemsToShow = computed(() => {
 
 <template>
   <div class="report-slide">
-    <Carousel :items-to-show="itemsToShow" :items-to-scroll="4" :wrap-around="true" style="width: 100%;" :snap-align="'start'">
+    <Carousel :items-to-show="itemsToShow" :items-to-scroll="itemsToShow" :wrap-around="true" style="width: 100%;" :snap-align="'start'">
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
@@ -51,7 +51,7 @@ const itemsToShow = computed(() => {
           </div>
           <div class="content" style="text-align: left;">
             <div class="category_date" style="text-align: left;">
-              {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span> {{ dayjs(report.created_at).format('DD/MM/YYYY') }}
+              {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span> {{ dayjs(report.start_date).format('DD/MM/YYYY') }}
             </div>
             <div class="title" style="text-align: left;">
               Báo cáo nhóm hàng {{ report.name }}
@@ -89,69 +89,54 @@ const itemsToShow = computed(() => {
   </div>
 </template>
 
-<style lang="scss" scoped>
-</style>
-
 <style lang="scss">
-.carousel__pagination-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.carousel__pagination-button {
-  width: 10px;
-  margin: 0 2px;
-  height: 10px;
-  border-radius: 50%;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.carousel__pagination-button:after {
+.carousel__pagination{
   display: none;
 }
-
-.carousel__pagination-button:hover,
-.carousel__pagination-button--active {
-  background-color: #ccc;
-  color: #fff;
-}
-.new-report-slide {
+.report-slide {
   .carousel__slide {
     padding: 8px;
 
     .slide-item {
-      width: 100%;
       border-radius: 16px;
       background: var(--Neutral-neutral-1, #FFF);
       cursor: pointer;
       border: 1px solid #f0f0f0;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-      display: flex;
-      flex-direction: row;
+      height: 600px;
       overflow: hidden;
 
       .thumbnail {
-        width: 170px;
-        height: 170px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         border-bottom: 1px solid #f0f0f0;
       }
 
       .content {
+        padding: 16px;
         display: flex;
         flex-direction: column;
-        padding: 16px;
-        flex: 1;
+
+        .category_date {
+          color: var(--Dark-blue-dark-blue-6, #716B95);
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 22px; /* 157.143% */
+          margin-bottom: 16px;
+          flex: 1;
+        }
+
+        .title {
+          color: var(--Dark-blue-dark-blue-8, #241E46);
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 28px; /* 140% */
+          margin-bottom: 8px;
+          text-transform: capitalize;
+          flex: 1;
+        }
 
         .summary-info{
           margin-bottom: 8px;
+          flex : 1;
 
           .info_item{
             align-items: center;
@@ -181,38 +166,25 @@ const itemsToShow = computed(() => {
           }
         }
 
-        .category_date {
-          color: var(--Dark-blue-dark-blue-6, #716B95);
-
-          font-size: 17px;
-          font-weight: 400;
-          line-height: 22px;
+        .description {
           overflow: hidden;
+          color: var(--Dark-blue-dark-blue-6, #716B95);
           text-overflow: ellipsis;
-          margin-bottom: 16px;
+          flex: 1;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 24px; /* 150% */
         }
-
-        .title {
-          color: var(--Dark-blue-dark-blue-8, #241E46);
-          font-size: 20px;
-          font-weight: 700;
-          line-height: 28px; /* 140% */
-
-          margin-bottom: 8px;
-
-          text-transform: capitalize;
-        }
-
       }
     }
   }
 
   .carousel__prev {
-    left: -25px;
+    left: -80px;
   }
 
   .carousel__next {
-    right: -25px;
+    right: -80px;
   }
 
   .carousel__prev, .carousel__next {
@@ -227,15 +199,17 @@ const itemsToShow = computed(() => {
     cursor: pointer;
     position: absolute;
   }
-
 }
 
 @media (max-width: 767px) {
-  .new-report-slide {
+  .report-slide {
     .carousel__slide {
       .slide-item {
+        height: auto;
+        flex-direction: column;
+
         .thumbnail {
-          padding-left: 12px;
+          width: 100%;
           height: auto;
           border-bottom: none;
         }
@@ -243,12 +217,12 @@ const itemsToShow = computed(() => {
         .content {
           padding: 8px;
 
-          .category_date{
+          .category_date, .title, .description {
             text-align: center;
           }
 
           .title {
-            font-size: 16px;
+            font-size: 18px;
             margin-bottom: 4px;
           }
 
@@ -259,27 +233,15 @@ const itemsToShow = computed(() => {
       }
     }
 
-    .carousel__prev, .carousel__next {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 1px solid #EEEBFF;
-      background-color: #FFF;
-      cursor: pointer;
-      position: absolute;
-      top: auto;
-      bottom: -20px;
-    }
-
     .carousel__prev {
-      bottom: auto;
       left: 40%;
+      top: 100%;
       transform: translateX(-60px);
     }
 
     .carousel__next {
-      bottom: auto;
       left: 50%;
+      top: 100%;
       transform: translateX(20px);
     }
 

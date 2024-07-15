@@ -1,6 +1,5 @@
 <template>
   <div id="search_input" v-on-click-outside="setShowSuggestions" class="wrapper search-report-component">
-    <!-- input -->
     <AInputSearch
         v-model:value="searchValue" :placeholder="placeholder || 'Tìm kiếm báo cáo'"
         size="large"
@@ -126,8 +125,14 @@ onMounted(() => {
 
         height: 56px;
 
+
       }
     }
+
+    .ant-input-suffix{
+      display: none;
+    }
+
 
     .ant-input-group-addon {
       button {

@@ -28,6 +28,8 @@ const selectModel = defineModel<string>("select");
 .selectWrapper{
   .ant-select{
     .ant-select-selector{
+      display: flex;
+      align-items: center;
       height: 40px;
     }
   }

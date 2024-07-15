@@ -4,14 +4,11 @@
       <div class="bg">
         <img src="/images/background-search.png" class="background">
       </div>
-
       <Plans />
     </div>
-
     <div class="section sectionPartner">
       <Parters />
     </div>
-
     <ContactUs />
   </div>
 </template>

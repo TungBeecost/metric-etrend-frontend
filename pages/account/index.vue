@@ -13,7 +13,6 @@ const {fetchClaimedList} = useSearchReport()
 const fetchTableData = async () => {
   try {
     const response = await fetchClaimedList();
-    console.log(response);
     data.value = response;
   } catch (error) {
     console.log(error);

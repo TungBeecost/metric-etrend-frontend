@@ -56,7 +56,6 @@ const fetchReportData = async () => {
     loading.value = false;
     if (data.value) {
       await fetchTagSuggest(data.value.name);
-      console.log(data.value.lst_category[0].id);
       await fetchDataRecommend(data.value.category_report_id);
     }
   } catch (error) {

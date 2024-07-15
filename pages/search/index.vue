@@ -52,8 +52,12 @@ const handleCategorySelect = (newSelectedCategory: string) => {
 
 const handleSortSelect = async (sortChange: string) => {
   sortSelect.value = sortChange;
-  const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
-  await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
+  console.log(selectedCategory.value);
+  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
+    await fetchData(searchValueSearch.value, [route.query.category_report_id], sortChange, page.value);
+  } else {
+    await fetchData(searchValueSearch.value, [], sortChange, page.value);
+  }
 };
 
 const handleTagClick = async (tag: string) => {
@@ -154,6 +158,7 @@ const handleCancel = () => {
 
 const handleSearch = async (searchValue: string, lstCategoryReportId: string[] = []) => {
   searchValueSearch.value = searchValue;
+  current.value = 1;
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
 };
 
@@ -234,10 +239,6 @@ useSeoMeta({
               Bộ lọc
             </div>
           </a-button>
-          <a-modal v-model:visible="isModalVisible" title="Filter and Sort" @ok="handleOk" @cancel="handleCancel">
-            <sort-report class="sort_report" @sort-select="handleSortSelect" />
-            <filter-report class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect"/>
-          </a-modal>
         </div>
         <template v-if="isLoading">
           <a-skeleton :paragraph="{ rows: 40 }" style="padding-top: 40px; padding-bottom: 40px"/>
@@ -257,7 +258,7 @@ useSeoMeta({
       <div class="poster default_section">
         <div class="info">
           <div class="content">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</div>
-          <a-button @click="onClickViewPrice">Xem báo giá</a-button>
+          <a-button style="height: 40px" @click="onClickViewPrice">Xem báo giá</a-button>
         </div>
         <div class="big_logo_metric">
           <img src="/images/big_logo_metric.svg" alt="">
@@ -270,6 +271,10 @@ useSeoMeta({
         </div>
       </div>
     </div>
+    <a-modal v-model:visible="isModalVisible" style="position: absolute; left: 15px" title="Filter and Sort" @ok="handleOk" @cancel="handleCancel">
+      <sort-report class="sort_report" @sort-select="handleSortSelect" />
+      <filter-report class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect"/>
+    </a-modal>
   </div>
 </template>
 
@@ -326,7 +331,6 @@ useSeoMeta({
       .page {
         display: flex;
         justify-content: center;
-
       }
     }
 
@@ -371,6 +375,8 @@ useSeoMeta({
       }
 
       .big_logo_metric {
+        width: inherit;
+        overflow: hidden;
         position: absolute;
         left: 0;
         top: 0;
@@ -442,6 +448,7 @@ useSeoMeta({
 @media (max-width: 767px) {
   #search_report{
     .sectionTitle{
+      padding-top: 16px;
       .sectionTitle_content{
         font-size: 14px;
       }
