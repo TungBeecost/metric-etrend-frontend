@@ -337,7 +337,8 @@ onMounted(() => {
         <div class="title">Đăng ký nhận báo cáo</div>
         <div class="description" style="font-size: 16px">
           Vui lòng điền biểu mẫu bên dưới để nhận ngay báo cáo chi tiết
-          <span>“Dép nam - Báo cáo xu hướng thị trường sàn TMĐT”</span>
+          <br>
+          <span>"{{data.name}}"</span>
         </div>
       </div>
       <ContactUsForm :handle-submit-success="handleSubmitSuccess"/>
