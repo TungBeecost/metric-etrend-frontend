@@ -42,23 +42,6 @@ interface Shop {
   name: string;
 }
 
-const diffRevenueLatestQuarterPercent = () => {
-  const {lst_revenue_sale_monthly} = props.data.data_analytic.by_overview;
-  const latestQuarter = lst_revenue_sale_monthly.slice(-3);
-  const previousQuarter = lst_revenue_sale_monthly.slice(-6, -3);
-  const revenueLatestQuarter = latestQuarter.reduce(
-      (acc: number, item: { revenue: number }) => acc + item.revenue,
-      0
-  );
-  const revenuePreviousQuarter = previousQuarter.reduce(
-      (acc: number, item: { revenue: number }) => acc + item.revenue,
-      0
-  );
-  const diff = revenueLatestQuarter - revenuePreviousQuarter;
-  return (diff / revenuePreviousQuarter) * 100;
-};
-
-
 const top5Shops = (): string[] => {
   const shops: Shop[] = props.data.data_analytic.by_shop.lst_top_shop;
   return shops.slice(0, 5).map(shop => shop.name);
@@ -73,7 +56,7 @@ const top5Shops = (): string[] => {
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Tổng quan</div>
+        <div class="statistic-item__title">Giới thiệu</div>
       </div>
     </div>
     <div class="content">
@@ -148,7 +131,6 @@ const top5Shops = (): string[] => {
 @media (max-width: 768px) {
   .overview {
     padding: 16px;
-    border: none;
   }
 }
 </style>

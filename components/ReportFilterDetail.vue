@@ -170,7 +170,7 @@ const fieldValueParse: FieldValueParsers = {
 @media (max-width: 768px) {
   .report-filter {
     padding: 16px;
-    border: none;
+    //border: none;
   }
 }
 </style>

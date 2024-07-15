@@ -94,7 +94,7 @@ const handleClickPlan = () => {
   .account_info_header{
     display: flex;
     padding: 24px;
-    gap: 16px;
+    gap: 8px;
     border-radius: 12px 12px 0  0;
     border: 1px solid #EEEBFF;
     background-color: #FFF;

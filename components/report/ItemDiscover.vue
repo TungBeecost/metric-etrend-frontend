@@ -32,7 +32,6 @@ const displayedReports = computed(() => {
         class="item_discover"
     >
       <div class="image">
-        <!--        <img :src="report.image" alt="icon"/>-->
         <component :is="report.icon"/>
       </div>
       <div class="title">{{ report.label }}</div>
@@ -83,29 +82,31 @@ const displayedReports = computed(() => {
 
   .title {
     font-size: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
 @media (max-width: 768px) {
   .item_discover {
+    gap: 16px;
+    padding: 16px;
     .image {
       width: 24px;
       height: 24px;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
     }
 
     .title {
-      font-size: 24px;
+      font-size: 16px;
     }
   }
 }
 </style>
-
-<!--<style lang="scss">-->
-<!--.item_discover {-->
-<!--  .image {-->
-<!--    svg {-->
-<!--      fill: none;-->
-<!--    }-->
-<!--  }-->
-<!--}-->
-<!--</style>-->

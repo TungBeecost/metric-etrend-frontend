@@ -115,14 +115,11 @@ onMounted(() => {
 
       .ant-input {
         color: var(--Dark-blue-dark-blue-8, #241E46);
-
-        /* Body/Body Text 1 */
         font-family: Inter, sans-serif;
         font-size: 20px;
         font-style: normal;
         font-weight: 400;
         line-height: 32px; /* 160% */
-
         height: 56px;
 
 
@@ -143,6 +140,34 @@ onMounted(() => {
       }
     }
   }
+}
 
+@media screen and (max-width: 768px) {
+  .search-report-component {
+    .ant-input-group-wrapper {
+      .ant-input-affix-wrapper {
+        .ant-input {
+          font-size: 16px;
+          line-height: 24px;
+          height: 32px;
+        }
+      }
+
+      .ant-input-group-addon {
+        button {
+          width: 32px;
+          height: 32px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          svg {
+            width: 16px;
+            height: 16px;
+          }
+        }
+      }
+    }
+  }
 }
 </style>

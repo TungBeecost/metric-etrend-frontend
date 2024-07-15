@@ -287,6 +287,7 @@ useSeoMeta({
 
 
 @media (max-width: 768px) {
+
   .different_info {
     order: -1;
   }
@@ -294,6 +295,7 @@ useSeoMeta({
   .different_info .maybe-interested-component {
     order: 2; /* Ensures that maybe-interested is moved to the bottom */
   }
+
 
 }
 </style>

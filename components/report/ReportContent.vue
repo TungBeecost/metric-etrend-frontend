@@ -111,7 +111,7 @@ li {
 @media (max-width: 768px) {
   .report_content {
     padding: 16px;
-    border: none;
+    //border: none;
   }
 }
 </style>
