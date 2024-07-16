@@ -177,34 +177,27 @@ useSeoMeta({
         <div class="container">
           <div class="general_overview_container" style="display: flex; width: 100%; gap: 24px">
             <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px; border-radius: 16px 0 0 16px">
-              <a-skeleton-avatar active size="large"/>
               <a-skeleton active size="large"/>
             </div>
             <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;">
-              <a-skeleton-avatar active size="large"/>
               <a-skeleton active size="large"/>
             </div>
             <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;" class="hide-on-mobile">
-              <a-skeleton-avatar active size="large"/>
               <a-skeleton active size="large"/>
             </div>
             <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px; border-radius: 0 16px 16px 0"
                  class="hide-on-mobile">
-              <a-skeleton-avatar active size="large"/>
               <a-skeleton active size="large"/>
             </div>
           </div>
           <div class="different_info">
             <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;" class="hide-on-mobile">
-              <a-skeleton-avatar active size="large"/>
               <a-skeleton active size="large"/>
             </div>
             <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;" class="hide-on-mobile">
-              <a-skeleton-avatar active size="large"/>
               <a-skeleton active size="large"/>
             </div>
             <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;" class="hide-on-mobile">
-              <a-skeleton-avatar active size="large"/>
               <a-skeleton active size="large"/>
             </div>
           </div>
