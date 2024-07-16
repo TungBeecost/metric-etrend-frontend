@@ -5,7 +5,7 @@ import PackService from "~/components/payment-service/PackService.vue";
 import {ref} from "vue";
 import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import {usePayment} from "#imports";
-import QRCode from "qrcode-vue3";
+import QRCode from "qrcode.vue";
 import { message } from 'ant-design-vue';
 const currentUserStore = useCurrentUser();
 const {userInfo} = storeToRefs(currentUserStore);
@@ -131,7 +131,7 @@ const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an unders
       </template>
       <div class="payment_info">
         <div class="qr_code">
-          <QRCode :value="qrCodeData" :size="200" color="black" />
+          <QRCode :value="qrCodeData" :size="250" />
         </div>
         <div style="padding: 16px; width: 100%">
           <total-payment />
@@ -161,7 +161,7 @@ const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an unders
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
+  padding-top: 16px
 }
 
 .statistic-item__title{

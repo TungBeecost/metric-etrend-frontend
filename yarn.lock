@@ -7144,6 +7144,11 @@ qrcode-vue3@^1.6.8:
   dependencies:
     qrcode-generator "^1.4.4"
 
+qrcode.vue@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/qrcode.vue/-/qrcode.vue-3.4.1.tgz#dd8141da9c4ea07ee56b111cd13eadf123af822a"
+  integrity sha512-wq/zHsifH4FJ1GXQi8/wNxD1KfQkckIpjK1KPTc/qwYU5/Bkd4me0w4xZSg6EXk6xLBkVDE0zxVagewv5EMAVA==
+
 queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
@@ -8636,11 +8641,6 @@ vue-demi@>=0.14.5, vue-demi@>=0.14.8:
   resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.14.8.tgz"
   integrity sha512-Uuqnk9YE9SsWeReYqK2alDI5YzciATE0r2SkA6iMAtuXvNTMNACJLJEXNXaEy94ECuBe4Sk6RzRU80kjdbIo1Q==
 
-vue-demi@^0.12.5:
-  version "0.12.5"
-  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.12.5.tgz#8eeed566a7d86eb090209a11723f887d28aeb2d1"
-  integrity sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==
-
 vue-devtools-stub@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/vue-devtools-stub/-/vue-devtools-stub-0.1.0.tgz"
@@ -8735,13 +8735,6 @@ vue3-carousel@^0.3.3:
   version "0.3.3"
   resolved "https://registry.npmjs.org/vue3-carousel/-/vue3-carousel-0.3.3.tgz"
   integrity sha512-VsuOBE4LG9lxAiYGR9U7ps4RyJ4oFQGzk79/49ybvoxzNpahPAVWIDHKK3a1lOv0CSplFq6u4FvaFLZ8x3FgWg==
-
-vue3-lazyload@^0.3.8:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/vue3-lazyload/-/vue3-lazyload-0.3.8.tgz#82749a6b89a4d475c9a7fa409d0cff6c4abbd59d"
-  integrity sha512-UiJHRT7mzry102WbhtrRgJh+f8Z8u4Z+H1RU4dvPmQeq7wFSDFxZB9iJOWGihH2FscXN/8rMGLDOQJAmjwqpCg==
-  dependencies:
-    vue-demi "^0.12.5"
 
 vue3-marquee@^4.2.0:
   version "4.2.0"
