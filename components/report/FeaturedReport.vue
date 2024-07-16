@@ -61,7 +61,7 @@ onMounted(() => {
   padding-top: 60px;
   //width: 100%;
   height: 100%;
-  background-color: #FBFAFC;
+  //background-color: #FBFAFC;
   padding-bottom: 100px;
 }
 
