@@ -6,7 +6,7 @@ import ItemNewReport from "~/components/report/ItemNewReport.vue";
 import { searchReport, type SearchReportPayload } from "~/services/reports";
 import { PAGE_TITLES } from "../../constant/constains";
 
-const isLoading = ref(false);
+const isLoading = ref(true);
 const lstReportNew = ref([])
 
 const fetchReport = async () => {
@@ -52,14 +52,14 @@ useSeoMeta({
             </div>
           </div>
           <div class="new_report">
-            <template v-if="isLoading">
-              <a-skeleton active :paragraph="{ rows: 6 }"/>
-            </template>
-            <div :class="{ 'hidden-report': isLoading, 'visible-report': !isLoading }" class="new_report">
+<!--            <template v-if="isLoading">-->
+<!--              <a-skeleton active :paragraph="{ rows: 6 }"/>-->
+<!--            </template>-->
+            <div class="new_report">
               <div class="title_new_report">
                 Báo cáo mới nhất
               </div>
-              <item-new-report :reports="lstReportNew" />
+              <item-new-report :reports="lstReportNew" :loading="isLoading" />
             </div>
           </div>
         </div>
