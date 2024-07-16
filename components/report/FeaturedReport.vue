@@ -3,7 +3,7 @@ import ItemFeatureReport from './ItemFeatureReport.vue';
 import {searchReport, type SearchReportPayload} from "~/services/reports";
 
 const lstReport = ref([])
-const isLoading = ref(false);
+const isLoading = ref(true);
 
 const fetchReport = async () => {
   isLoading.value = true;
@@ -21,6 +21,7 @@ const fetchReport = async () => {
     lstReport.value = response.lst_report;
     isLoading.value = false;
   } catch (e) {
+    isLoading.value = false;
     console.log(e)
   }
 }
@@ -42,11 +43,19 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <template v-if="isLoading">
-        <a-skeleton active :paragraph="{ rows: 6 }"/>
-      </template>
-      <div :class="{ 'hidden-report': isLoading, 'visible-report': !isLoading }" class="new_report">
-        <item-feature-report :reports="lstReport.slice(0, 10)"/>
+<!--      <div v-if="isLoading">-->
+      <!--        <Carousel :items-to-show="4" :items-to-scroll="4" :wrap-around="true" style="width: 100%;"-->
+      <!--                  :snap-align="'start'">-->
+      <!--          <Slide v-for="item in [1,2,3,4]" :key="item">-->
+      <!--            <div style="width: 100%; display: flex; flex-direction: column; padding: 16px;">-->
+      <!--              <a-skeleton-image style="margin-bottom: 24px;"/>-->
+      <!--              <a-skeleton/>-->
+      <!--            </div>-->
+      <!--          </Slide>-->
+      <!--        </Carousel>-->
+      <!--      </div>-->
+      <div  class="new_report">
+        <item-feature-report :reports="lstReport.slice(0, 10)" :loading="isLoading"/>
       </div>
     </div>
   </div>
@@ -83,7 +92,7 @@ onMounted(() => {
 }
 
 .content {
-  div{
+  div {
     text-align: center;
     font-size: 20px;
     color: #716B95;
