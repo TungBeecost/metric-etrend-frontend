@@ -22,7 +22,7 @@ const selectedCategory = ref<string>();
 const selectedCategoryName = ref<string>();
 const searchValueSearch = ref<string>();
 const page = ref(0);
-const isLoading = ref(false);
+const isLoading = ref(true);
 const sortSelect = ref('popularity');
 const mostFrequentCategoryReportId = ref<string>();
 
@@ -126,6 +126,7 @@ const fetchData = async (searchValue: string = '', list_category_report_id: Arra
       mostFrequentCategoryReportId.value = Object.keys(count).reduce((a, b) => count[a] > count[b] ? a : b);
     }
   } catch (e) {
+      isLoading.value = false;
     console.error(e);
   }
 };

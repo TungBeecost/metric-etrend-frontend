@@ -8,14 +8,18 @@
         {{ item.label }}
       </AButton>
     </div>
-    <div id="headButtonLogin" class="headerNavbarCallButton">
-      <div style="display: flex; gap: 16px">
-        <a-button v-if="!currentUserStore.authenticated" style="height: 40px" @click="currentUserStore.setShowPopupLogin(true)">Đăng nhập</a-button>
+    <div v-if="fetchedUser" id="headButtonLogin" class="headerNavbarCallButton">
+      <div v-if="!userInfo.email" style="display: flex; gap: 16px">
+        <a-button style="height: 40px" @click="currentUserStore.setShowPopupLogin(true)">
+          Đăng nhập
+        </a-button>
         <AButton style="height: 40px" type="primary" @click="navigateTo(NAVIGATIONS.contactUs)">Liên hệ tư vấn</AButton>
-        <span v-if="currentUserStore.authenticated" style="color: #EEEBFF">|</span>
-        <user-profile v-if="currentUserStore.authenticated" :is-dark-blue-header="isDarkBlueHeader"/>
       </div>
-
+      <div v-else style="display: flex; gap: 16px">
+        <AButton style="height: 40px" type="primary" @click="navigateTo(NAVIGATIONS.contactUs)">Liên hệ tư vấn</AButton>
+        <span style="color: #EEEBFF">|</span>
+        <user-profile :is-dark-blue-header="isDarkBlueHeader"/>
+      </div>
     </div>
 
     <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"
@@ -37,6 +41,8 @@ defineProps<{
 }>()
 
 const currentUserStore = useCurrentUser();
+
+const {fetchedUser, userInfo} = storeToRefs(currentUserStore);
 </script>
 
 <style lang="scss" scoped>
@@ -44,7 +50,7 @@ const currentUserStore = useCurrentUser();
 </style>
 
 <style lang="scss">
-#headerNavbar{
+#headerNavbar {
   .button_login {
     .ant-modal-content {
       .ant-modal-body {
@@ -57,7 +63,7 @@ const currentUserStore = useCurrentUser();
     }
   }
 
-  span{
+  span {
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
