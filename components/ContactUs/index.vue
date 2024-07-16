@@ -134,7 +134,7 @@ const handleSubmitLeadForm = async () => {
           bây giờ!</p>
       </div>
 
-      <a-form style="flex: 1; max-width: 450px; margin: auto;" ref="leadForm" :model="formData" :rules="rules"
+      <a-form ref="leadForm" style="flex: 1; max-width: 450px; margin: auto;" :model="formData" :rules="rules"
               @finish="handleSubmitLeadForm">
         <div class="name-and-company-group">
           <a-form-item name="fullName">

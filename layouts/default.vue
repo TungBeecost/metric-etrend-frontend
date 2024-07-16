@@ -13,7 +13,7 @@
         class="container"
     >
       <!-- header section -->
-      <header :class="{ darkBlueHeader: isDarkBlueHeader }">
+      <header ref="headerRef" :class="{ darkBlueHeader: isDarkBlueHeader, 'shadow': isScrolled }">
         <div class="header default_section">
           <NuxtImg
               :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'" class="logo"
@@ -59,10 +59,16 @@ import {NAVIGATIONS} from '~/constant/constains';
 const {fetchCurrentUser} = useCurrentUser();
 const {userInfo, fetchedUser} = storeToRefs(useCurrentUser());
 const route = useRoute();
+const headerRef = ref(null);
+const isScrolled = ref(false);
 
 if (!userInfo.value.id) {
   fetchCurrentUser();
 }
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 0;
+};
 
 // side bar handler
 const device = useDevice();
@@ -88,6 +94,15 @@ const navigateToHome = () => {
 watch(() => route.path, () => {
   recheckHeader()
 }, {immediate: true})
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+  handleScroll(); // Initialize on mount in case the page is already scrolled
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 
 </script>
 
