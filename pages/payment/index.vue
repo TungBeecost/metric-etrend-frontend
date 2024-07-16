@@ -161,7 +161,7 @@ const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an unders
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding-top: 16px
+  padding-top: 16px;
 }
 
 .statistic-item__title{
