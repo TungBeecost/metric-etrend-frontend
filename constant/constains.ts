@@ -112,7 +112,7 @@ export const LABEL_PERMISSION_PLAN = {
     label: "Tìm kiếm báo cáo không giới hạn",
     icon: "SearchFilled"
   },
-  viewReport: {
+  viewReportPro: {
     label: "Xem báo cáo chi tiết",
     icon: "Docs",
     sub: {
@@ -122,6 +122,16 @@ export const LABEL_PERMISSION_PLAN = {
       brand: "Số liệu về thương hiệu",
       topTierSell: "Danh sách gian hàng bán chạy",
       topTierProduct: "Danh sách sản phẩm bán chạy"
+    }
+  },
+  viewReportBasic: {
+    label: "Xem báo cáo chi tiết",
+    icon: "Docs",
+    sub: {
+      summary: "Số liệu tổng quan",
+      priceSegment: "Số liệu về phân khúc giá",
+      category: "Số liệu về ngành hàng/ nhóm hàng",
+      brand: "Số liệu về thương hiệu",
     }
   },
   numberOfUnlockReport: {
@@ -161,20 +171,39 @@ export const PLANS: Array<IPLAN> = [
     ]
   },
   {
-    type: "Pro",
-    plan_code: "e_pro",
+    type: "Basic",
+    plan_code: "e_basic",
     description: "Phù hợp nhu cầu phân tích chuyên sâu",
-    price: "7,9 Triệu",
+    price: "5000000",
     unit: "năm",
     isHighlight: true,
     permissions: [
       LABEL_PERMISSION_PLAN.searchReport,
       {
-        ...LABEL_PERMISSION_PLAN.viewReport,
-        sub: Object.values(LABEL_PERMISSION_PLAN.viewReport.sub)
+        ...LABEL_PERMISSION_PLAN.viewReportBasic,
+        sub: Object.values(LABEL_PERMISSION_PLAN.viewReportBasic.sub)
       },
       {
-        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(100),
+        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(200),
+        icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
+      },
+    ]
+  },
+  {
+    type: "Pro",
+    plan_code: "e_pro",
+    description: "Phù hợp nhu cầu phân tích chuyên sâu",
+    price: "7900000",
+    unit: "năm",
+    isHighlight: true,
+    permissions: [
+      LABEL_PERMISSION_PLAN.searchReport,
+      {
+        ...LABEL_PERMISSION_PLAN.viewReportPro,
+        sub: Object.values(LABEL_PERMISSION_PLAN.viewReportPro.sub)
+      },
+      {
+        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(200),
         icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
       },
     ]

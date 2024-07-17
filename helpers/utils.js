@@ -43,11 +43,43 @@ export const formatSortTextCurrencyWithMinValue = (price, isShortest = false, mi
     }
     return formatNumber(price);
 };
+
+export const formatSortTextCurrencyWithMinValuePlan = (price, isShortest = false, min = 1000) => {
+    if (!!+price === false) {
+        return price;
+    }
+    price = +price;
+    let result;
+    if (price - (price % 1000000000) !== 0) {
+        result = price / 1000000000;
+        result = result % 1 !== 0 ? result.toFixed(1) : Math.round(result);
+        return `${formatNumber(result)}${isShortest ? " tỷ" : " tỷ"}`;
+    }
+    if (price - (price % 1000000) !== 0 && price >= min) {
+        result = price / 1000000;
+        result = result % 1 !== 0 ? result.toFixed(1) : Math.round(result);
+        return `${formatNumber(result)}${isShortest ? " tr" : " triệu"}`;
+    }
+    if (price - (price % 1000) !== 0 && price >= min) {
+        result = price / 1000;
+        result = result % 1 !== 0 ? result.toFixed(1) : Math.round(result);
+        return `${formatNumber(result)}${isShortest ? " ng" : " nghìn"}`;
+    }
+    return formatNumber(price);
+};
+
 export const formatSortTextCurrency = (price, isShortest = false) => {
     if (!!+price === false) {
         return price;
     }
     return formatSortTextCurrencyWithMinValue(price, isShortest)
+};
+
+export const formatSortTextCurrencyPlan = (price, isShortest = false) => {
+    if (!!+price === false) {
+        return price;
+    }
+    return formatSortTextCurrencyWithMinValuePlan(price, isShortest)
 };
 
 export const getUrlImageOption = (urlImage, type = "thumbnail") => {

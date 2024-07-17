@@ -1,12 +1,21 @@
 <script setup lang="ts">
+const {plan} = defineProps({
+  plan: {
+    type: Object,
+    required: true
+  }
+});
 
+function formatPrice(price: any) {
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 </script>
 
 <template>
   <div class="calculate">
     <div class="calculate_item">
       <div class="money">Số tiền</div>
-      <div class="money">7.900.000đ</div>
+      <div class="money">{{formatPrice(plan.price)}}đ</div>
     </div>
     <div class="calculate_item">
       <div class="money">Chiết khấu</div>
@@ -22,7 +31,7 @@
     </div>
     <div class="calculate_item">
       <div class="total">Thành tiền</div>
-      <div class="total_price">7.900.000đ</div>
+      <div class="total_price">{{formatPrice(plan.price)}}đ</div>
     </div>
   </div>
 </template>

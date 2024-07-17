@@ -39,6 +39,7 @@ watch(value, (newValue) => {
 <style scoped lang="scss">
 #option_payment{
   display: flex;
+  border-radius: 16px;
   flex-direction: column;
   background-color: #FFF;
   .statistic-item__title{

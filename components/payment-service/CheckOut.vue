@@ -7,6 +7,16 @@ const emit = defineEmits(['payment']);
 interface IFormValue {
   discount: string;
 }
+
+const {plan} = defineProps({
+  plan: {
+    type: Object,
+    required: true
+  }
+});
+
+console.log(plan);
+
 const handlePayment = () => {
   emit('payment', "payment");
 };
@@ -40,7 +50,7 @@ const handleDiscount = () => {
 
       </div>
       <div class="total">
-        <total-payment/>
+        <total-payment v-if="plan" :plan="plan"/>
         <a-button style="width: 100%; height: 40px; margin-top: 16px" type="primary" @click="handlePayment">Thanh toán</a-button>
       </div>
     </div>
@@ -49,7 +59,8 @@ const handleDiscount = () => {
 
 <style scoped lang="scss">
 #option_payment{
-  height: 100%;
+  //height: 100%;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   background-color: #FFF;

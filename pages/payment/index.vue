@@ -7,13 +7,16 @@ import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import {usePayment} from "#imports";
 import QRCode from "qrcode.vue";
 import { message } from 'ant-design-vue';
+import {PLANS} from "~/constant/constains";
 const currentUserStore = useCurrentUser();
 const {userInfo} = storeToRefs(currentUserStore);
+const redirectUrl = ref('');
 
 const { createPaymentTransaction, verifyTransaction } = usePayment()
 const selectedWalletOption = ref('')
 const qrCodeData = ref('');
 const openModal = ref<boolean>(false);
+const planCode = ref('');
 
 interface ErrorResponse {
   response: {
@@ -34,10 +37,9 @@ const handlePayment = async () => {
   else{
     if (selectedWalletOption.value) {
       const paymentMethod = selectedWalletOption.value;
-      const itemCode = "e_pro__12m";
-      const redirectUrl = `https://ereport.staging.muadee.vn/`;
+      const itemCode = `${plan.value?.plan_code}__12m`;
       try {
-        const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl);
+        const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value);
         if (transactionResult.response.payment_url) {
           window.location.href = transactionResult.response.payment_url;
         } else {
@@ -102,6 +104,14 @@ const useCheckTransactionCompletion = (transactionId: string) => {
   return { isCompleted };
 };
 
+const plan = computed(() => PLANS.find(p => p.plan_code === planCode.value));
+
+onMounted(() => {
+  const route = useRoute();
+  planCode.value = route.query.plan_code as string || '';
+  redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/`;
+});
+
 const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an underscore or remove it if not needed
   openModal.value = false;
 };
@@ -111,11 +121,11 @@ const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an unders
   <div id="payment" class="payment_service">
     <div class="default_section" style=" display: flex; padding: 40px 0; gap: 24px;">
       <div class="payment_service_option">
-        <pack-service />
-        <option-payment @selected-option="handleSelectedOption" />
+        <pack-service v-if="plan" :plan="plan" />
       </div>
       <div class="check-out">
-        <check-out @payment="handlePayment"/>
+        <option-payment @selected-option="handleSelectedOption" />
+        <check-out v-if="plan" :plan="plan" @payment="handlePayment"/>
       </div>
     </div>
     <a-modal v-model:open="openModal" width="800px" destroy-on-close :footer="null" @ok="handleOk">
@@ -134,7 +144,7 @@ const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an unders
           <QRCode :value="qrCodeData" :size="250" />
         </div>
         <div style="padding: 16px; width: 100%">
-          <total-payment />
+          <total-payment v-if="plan" :plan="plan"/>
         </div>
       </div>
     </a-modal>
@@ -146,13 +156,13 @@ const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an unders
   background-color: #FBFAFC;
 
   .payment_service_option{
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
     flex: 0.7;
   }
 
   .check-out{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
     flex: 0.3;
   }
 }

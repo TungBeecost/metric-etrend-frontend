@@ -1,7 +1,11 @@
 <script setup lang="ts">
+const {plan} = defineProps({
+  plan: {
+    type: Object,
+    required: true
+  }
+});
 
-import {PLANS} from "~/constant/constains";
-const plan = PLANS[1];
 </script>
 
 <template>

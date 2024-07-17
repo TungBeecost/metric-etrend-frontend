@@ -4,7 +4,7 @@ import Discover from "~/components/report/Discover.vue";
 import FeaturedReport from "~/components/report/FeaturedReport.vue";
 import ItemNewReport from "~/components/report/ItemNewReport.vue";
 import { searchReport, type SearchReportPayload } from "~/services/reports";
-import { PAGE_TITLES } from "../../constant/constains";
+import { PAGE_TITLES } from "~/constant/constains";
 
 const isLoading = ref(true);
 const lstReportNew = ref([])

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { NAVIGATIONS, PLANS } from '~/constant/constains';
+import {formatSortTextCurrencyPlan} from "~/helpers/utils";
 
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
@@ -8,6 +9,10 @@ const { userInfo } = storeToRefs(currentUserStore);
 defineProps<{
   isDarkTitle?: boolean,
 }>()
+
+const navigateToPayment = (planCode: string) => {
+  navigateTo(`${NAVIGATIONS.payment}?plan_code=${planCode}`);
+};
 
 const windowWidth = ref(window?.innerWidth);
 
@@ -42,7 +47,7 @@ onUnmounted(() => {
           <div class="summary">
             <p class="planType">{{ plan.type }}</p>
             <p class="planDesc">{{ plan.description }}</p>
-            <div class="planPrice">{{ plan.price }}<span v-if="plan.unit" class="priceUnit">/{{ plan.unit }}</span>
+            <div class="planPrice">{{ formatSortTextCurrencyPlan(plan.price) }}<span v-if="plan.unit" class="priceUnit">/{{ plan.unit }}</span>
             </div>
           </div>
 
@@ -65,11 +70,11 @@ onUnmounted(() => {
           </div>
           <div v-if="userInfo.current_plan">
             <AButton
-                v-if="!(userInfo.current_plan?.plan_code === 'e_pro' && plan.plan_code === 'free')"
-                :class="userInfo.current_plan?.plan_code === plan.plan_code ? 'user_plan' : 'not_user_plan'"
+                v-if="!(plan.plan_code === 'free' && userInfo.current_plan?.plan_code !== plan.plan_code)"
+                :class="(userInfo.current_plan?.plan_code === plan.plan_code) || (plan.plan_code === 'free') ? 'user_plan' : 'not_user_plan'"
                 :disabled="userInfo.current_plan?.plan_code === plan.plan_code"
                 style="height: 40px"
-                @click="userInfo.id ? (userInfo.current_plan?.plan_code !== plan.plan_code ? navigateTo(NAVIGATIONS.payment) : null) : currentUserStore.setShowPopupLogin(true)"
+                @click="userInfo.id ? (userInfo.current_plan?.plan_code !== plan.plan_code ? navigateToPayment(plan.plan_code) : null) : currentUserStore.setShowPopupLogin(true)"
             >
               {{ userInfo.current_plan?.plan_code === plan.plan_code ? 'Đang sử dụng' : 'Mua ngay' }}
             </AButton>

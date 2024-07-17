@@ -13,6 +13,7 @@
       <a-button style="height: 40px" type="primary" @click="validateDiscount">Áp dụng</a-button>
     </div>
     <p v-if="errorMessage" class="errorMessage">{{ errorMessage }}</p>
+    <p v-else class="errorMessage"/>
   </div>
 </template>
 
@@ -63,6 +64,7 @@ const inputModel = defineModel<string>("input");
     font-size: 12px;
     font-weight: 400;
     line-height: 20px;
+    min-height: 20px;
   }
 }
 
