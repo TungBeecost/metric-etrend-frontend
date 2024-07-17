@@ -15,7 +15,7 @@
         </a-button>
         <AButton style="height: 40px" type="primary" @click="navigateTo(NAVIGATIONS.contactUs)">Liên hệ tư vấn</AButton>
       </div>
-      <div v-else style="display: flex; gap: 16px">
+      <div v-else style="display: flex; gap: 16px; align-items: center">
         <AButton style="height: 40px" type="primary" @click="navigateTo(NAVIGATIONS.contactUs)">Liên hệ tư vấn</AButton>
         <span style="color: #EEEBFF">|</span>
         <user-profile :is-dark-blue-header="isDarkBlueHeader"/>
@@ -23,6 +23,7 @@
     </div>
 
     <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"
+             :footer="false"
              @ok="currentUserStore.setShowPopupLogin(false)"
              @cancel="currentUserStore.setShowPopupLogin(false)">
       <login-button/>
