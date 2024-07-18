@@ -70,7 +70,7 @@
           <div class="title_content_sucess">
             <div class="title_success">Thanh toán thành công</div>
             <div class="content_success"><span style="color: #E85912; font-size: 16px">Để được bảo vệ và hỗ trợ</span> trong quá trình xử lý thanh toán và sử dụng dịch vụ, xin vui lòng cập nhật thông tin:</div>
-            <payment-success-form />
+            <payment-success-form v-if="transactionId" :transaction-id="transactionId"  />
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@ import { NAVIGATIONS } from '~/constant/constains';
 import {searchReport, type SearchReportPayload} from "~/services/reports";
 import {ref} from "vue";
 import PaymentSuccessForm from "~/components/payment-service/PaymentSuccessForm.vue";
-
+const transactionId = ref<string | null>(null);
 console.log(`This is gg tag:`, process.env.NUXT_PUBLIC_GTAG_ID);
 
 const listTagSuggestions = ref<string[]>([]);
@@ -134,8 +134,9 @@ const handleOk = () => {
 
 onMounted(() => {
   const urlParams = new URLSearchParams(window.location.search);
-  const paymentStatus = urlParams.get('payment');
-  if (paymentStatus === 'success') {
+  transactionId.value = urlParams.get('transaction_id');
+  console.log('paymentStatus', transactionId.value);
+  if (transactionId.value) {
     showModal.value = true;
   }
   fetchTagSuggest('');

@@ -88,7 +88,7 @@ const useCheckTransactionCompletion = (transactionId: string) => {
       console.log("Transaction", isCompleted.value);
       isCompleted.value = true;
       if (intervalId) clearInterval(intervalId);
-      window.location.href = '/?payment=success';
+      window.location.href = `/?transaction_id=${transactionId}`;
     }
   };
 

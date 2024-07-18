@@ -1,4 +1,4 @@
-import {checkTransactionStatus, createTransaction} from "~/services/payment";
+import {checkTransactionStatus, createTransaction, sendLeadInformation} from "~/services/payment";
 
 export default function usePayment() {
     const createPaymentTransaction = async (paymentMethod: string, itemCode: string, redirectUrl: string) => {
@@ -19,6 +19,14 @@ export default function usePayment() {
         }
     };
 
+    const submitLeadInformation = async (name: string, email: string, phone: string, nameCompany: string, transactionId: string) => {
+        try {
+            return await sendLeadInformation(name, email, phone, nameCompany, transactionId);
+        } catch (error) {
+            console.error("submitLeadInformation error: ", error);
+            return { message: "Failed to submit lead information", code: "SUBMIT_LEAD_INFORMATION_ERROR" };
+        }
+    };
 
-    return { createPaymentTransaction, verifyTransaction };
+    return { createPaymentTransaction, verifyTransaction, submitLeadInformation };
 }

@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import {ERRORS} from "~/constant/errors";
 import {EMAIL_REGEX, PHONE_REGEX} from "~/helpers/regexs";
+const { submitLeadInformation } = usePayment()
+
+const props = defineProps({
+  transactionId: {
+    type: String,
+    required: true,
+  },
+});
 
 interface IFormPaymentValue {
   name: string;
@@ -18,7 +26,7 @@ const formValues = reactive<IFormPaymentValue>({
 
 const errors = useState<Partial<IFormPaymentValue>>(() => ({}));
 
-const validateForm = () => {
+const validateForm = async () => {
   errors.value = {};
 
   const information = formValues;
@@ -28,8 +36,9 @@ const validateForm = () => {
     errorValues.name = ERRORS.NOT_EMPTY("họ và tên");
   }
 
-  if (information.email && !information.email.match(EMAIL_REGEX)) {
-    errorValues.phone = ERRORS.NOT_EMPTY("email");
+  if (!information.email) {
+    errorValues.email = ERRORS.NOT_EMPTY("email");
+  } else if (information.email && !information.email.match(EMAIL_REGEX)) {
     errorValues.email = ERRORS.WRONG_TYPE_INPUT("email");
   }
 
@@ -41,6 +50,13 @@ const validateForm = () => {
 
   if (!information.companyName) {
     errorValues.companyName = ERRORS.NOT_EMPTY("tên công ty");
+  }
+
+  try {
+    const response =  await submitLeadInformation(information.name, information.email, information.phone, information.companyName, props.transactionId);
+    console.log('response', response);
+  } catch (error) {
+    console.error('error', error);
   }
 };
 
