@@ -1,8 +1,13 @@
 <script setup>
 import {defineProps, ref} from 'vue';
+import {useCurrentUser} from "~/stores/current-user.js";
 
 const props = defineProps({
   isHideContent: {
+    type: Boolean,
+    default: true,
+  },
+  isHide:{
     type: Boolean,
     default: true,
   },
@@ -12,7 +17,12 @@ const props = defineProps({
   },
 });
 
-const value = ref('');
+const currentUserStore = useCurrentUser();
+const {userInfo} = storeToRefs(currentUserStore);
+const isHideContentBasic = ref(true);
+if (userInfo.current_plan?.plan_code === 'e_pro' && !props.isHide) {
+  isHideContentBasic.value = false;
+}
 </script>
 
 <template>
@@ -54,7 +64,7 @@ const value = ref('');
           :product="product"
           :is-hide-content="isHideContent"
       />
-      <ChartMask v-if="props.isHideContent" :report="props.data"/>
+      <ChartMask v-if="isHideContent" :subtitle="!props.isHide ? 'Nâng cấp để xem chi tiết' :'Bạn cần mở khoá để xem số liệu đầy đủ'" :ok-button="!props.isHideContent ? 'Nâng cấp ngay' :'Xem báo cáo'" :report="data"/>
     </div>
   </div>
 </template>

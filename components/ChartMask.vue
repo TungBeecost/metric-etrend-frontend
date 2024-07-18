@@ -1,5 +1,6 @@
 <script setup>
 import {onMounted, ref} from 'vue';
+import { NAVIGATIONS } from "~/constant/constains";
 
 const isDesktop = ref(true);
 const currentUserStore = useCurrentUser();
@@ -38,7 +39,12 @@ const showUnlock = ref(false);
 const handleButtonClick = () => {
   console.log('userInfo', userInfo.value);
   if (userInfo.value.id) {
-    toggleUnlock();
+    if(okButton === 'Nâng cấp ngay'){
+      navigateTo(`${NAVIGATIONS.pricing}`);
+    }
+    else{
+      toggleUnlock();
+    }
   } else {
     currentUserStore.setShowPopupLogin(true);
   }

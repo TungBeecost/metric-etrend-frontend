@@ -69,7 +69,8 @@
           </div>
           <div class="title_content_sucess">
             <div class="title_success">Thanh toán thành công</div>
-            <div class="content_success">Cảm ơn bạn đã tin tưởng và sử dụng gói dịch vụ <b style="color: #E85912; font-size: 16px">eReport by Metric!</b></div>
+            <div class="content_success"><span style="color: #E85912; font-size: 16px">Để được bảo vệ và hỗ trợ</span> trong quá trình xử lý thanh toán và sử dụng dịch vụ, xin vui lòng cập nhật thông tin:</div>
+            <payment-success-form />
           </div>
         </div>
       </div>
@@ -82,6 +83,7 @@ import type SearchReport from '../components/search/search-report.vue';
 import { NAVIGATIONS } from '~/constant/constains';
 import {searchReport, type SearchReportPayload} from "~/services/reports";
 import {ref} from "vue";
+import PaymentSuccessForm from "~/components/payment-service/PaymentSuccessForm.vue";
 
 console.log(`This is gg tag:`, process.env.NUXT_PUBLIC_GTAG_ID);
 

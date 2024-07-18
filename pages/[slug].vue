@@ -32,8 +32,7 @@ interface Data {
 }
 
 const currentUserStore = useCurrentUser();
-
-
+const {userInfo} = storeToRefs(currentUserStore);
 const isHideContent = ref(true);
 const data = ref<Data | null>(null);
 const loading = ref(true);
@@ -63,6 +62,11 @@ const fetchReportData = async () => {
     console.error(error);
   }
 };
+
+const isHideContentBasic = ref(true);
+if (userInfo.value.current_plan?.plan_code === 'e_pro' && !isHideContent.value) {
+  isHideContentBasic.value = false;
+}
 
 const fetchSuggest = async (value: string | null, options?: SearchReportPayload) => {
   try {
@@ -219,8 +223,8 @@ useSeoMeta({
         <general-overview :data="data as Record<string, any>" :is-hide-content="isHideContent"/>
         <price-range-statistic :data="data" :is-hide-content="isHideContent"/>
         <brand-statistic :data="data" :is-hide-content="isHideContent"/>
-        <top-shop-statistic :data="data" :is-hide-content="isHideContent"/>
-        <list-products :data="data" :is-hide-content="isHideContent"/>
+        <top-shop-statistic :data="data" :is-hide-content="isHideContentBasic" :is-hide="isHideContent"/>
+        <list-products :data="data" :is-hide-content="isHideContentBasic" :is-hide="isHideContent"/>
       </div>
       <div v-if="data" class="different_info">
         <unlock-report v-if="!currentUserStore.authenticated"/>

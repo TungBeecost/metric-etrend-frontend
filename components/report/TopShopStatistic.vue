@@ -1,16 +1,12 @@
 <script setup>
-import {computed, defineProps} from 'vue';
+import {defineProps, ref} from 'vue';
 import PieChart from "~/components/report/PieChart.vue";
 import {formatSortTextCurrency, getUrlImageOption, goToUrl} from "~/helpers/utils.js";
 import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
+import {useCurrentUser} from "~/stores/current-user.js";
 
-const platformNames = {
-  1: "Shopee",
-  2: "Lazada",
-  3: "Tiki",
-  4: "Sendo",
-};
-
+const currentUserStore = useCurrentUser();
+const {userInfo} = storeToRefs(currentUserStore);
 const props = defineProps({
   data: {
     type: Object,
@@ -20,12 +16,17 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isHide:{
+    type: Boolean,
+    default: true,
+  },
 });
 
+const isHideContentBasic = ref(true);
+if (userInfo.current_plan?.plan_code === 'e_pro' && !props.isHide) {
+  isHideContentBasic.value = false;
+}
 const formatNumber = (value = "") => value.toLocaleString("vi-VN");
-
-const isClient = computed(() => !import.meta.env.SSR);
-const reportType = computed(() => props.data?.report_type);
 </script>
 
 <template>
@@ -88,7 +89,7 @@ const reportType = computed(() => props.data?.report_type);
           ]"
           >
             <template #shop_count="{text}">
-              <BlurContent :is-blurred="isHideContent">
+              <BlurContent :is-hide-content="isHideContentBasic">
                 {{ text }}
               </BlurContent>
             </template>
@@ -107,7 +108,7 @@ const reportType = computed(() => props.data?.report_type);
         <PieChart
             title="Tỷ trọng doanh số theo loại gian hàng"
             subtitle="Shop Mall và Shop thường"
-            :is-hide-content="props.isHideContent"
+            :is-hide-content="isHideContentBasic"
             :series="[
             {
               name: 'Sản phẩm đã bán',
@@ -179,7 +180,7 @@ const reportType = computed(() => props.data?.report_type);
           </div>
         </template>
       </a-table>
-      <ChartMask v-if="props.isHideContent" :report="props.data"/>
+      <ChartMask v-if="isHideContentBasic" :subtitle="!props.isHide ? 'Nâng cấp để xem chi tiết' :'Bạn cần mở khoá để xem số liệu đầy đủ'" :ok-button="!props.isHide ? 'Nâng cấp ngay' :'Xem báo cáo'" :report="data"/>
     </div>
     <InsightBlock
         v-if="
@@ -189,11 +190,11 @@ const reportType = computed(() => props.data?.report_type);
     >
       <li>
         Thống kê về loại gian hàng, thị trường có
-        <BlurContent :is-hide-content="props.isHideContent">
+        <BlurContent :is-hide-content="isHideContentBasic">
           {{ formatNumber(props.data.data_analytic.by_shop.ratio.mall.shop) }}
         </BlurContent>
         shop Mall chiếm
-        <BlurContent :is-hide-content="props.isHideContent">
+        <BlurContent :is-hide-content="isHideContentBasic">
           {{
             Number(
                 props.data.data_analytic.by_shop.ratio.mall.ratio_revenue * 100
@@ -201,15 +202,15 @@ const reportType = computed(() => props.data?.report_type);
           }}%
         </BlurContent>
         thị phần doanh số với
-        <BlurContent :is-hide-content="props.isHideContent">
+        <BlurContent :is-hide-content="isHideContentBasic">
           {{ formatSortTextCurrency(props.data.data_analytic.by_shop.ratio.mall.revenue) }} đồng
         </BlurContent>
         và
-        <BlurContent :is-hide-content="props.isHideContent">
+        <BlurContent :is-hide-content="isHideContentBasic">
           {{ formatNumber(props.data.data_analytic.by_shop.ratio.normal.shop) }}
         </BlurContent>
         shop thường chiếm
-        <BlurContent :is-hide-content="props.isHideContent">
+        <BlurContent :is-hide-content="isHideContentBasic">
           {{
             Number(
                 props.data.data_analytic.by_shop.ratio.normal.ratio_revenue * 100
@@ -217,21 +218,21 @@ const reportType = computed(() => props.data?.report_type);
           }}%
         </BlurContent>
         doanh số tương ứng
-        <BlurContent :is-hide-content="props.isHideContent">
+        <BlurContent :is-hide-content="isHideContentBasic">
           {{ formatSortTextCurrency(props.data.data_analytic.by_shop.ratio.normal.revenue) }} đồng
         </BlurContent>.
       </li>
       <li>
         Trong top 10 gian hàng bán chạy, Shop
-        <BlurContent :is-hide-content="props.isHideContent">
+        <BlurContent :is-hide-content="isHideContentBasic">
           {{ props.data.data_analytic.by_shop.lst_top_shop[0].name }}
         </BlurContent>
         có tỷ trọng doanh số cao nhất, tiếp theo đó là
-        <BlurContent :is-hide-content="props.isHideContent">
+        <BlurContent :is-hide-content="isHideContentBasic">
           {{ props.data.data_analytic.by_shop.lst_top_shop[1].name }}
         </BlurContent>
         và
-        <BlurContent :is-hide-content="props.isHideContent">
+        <BlurContent :is-hide-content="isHideContentBasic">
           {{ props.data.data_analytic.by_shop.lst_top_shop[2].name }}
         </BlurContent>.
       </li>
