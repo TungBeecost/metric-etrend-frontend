@@ -24,8 +24,6 @@ COPY --from=ssr /app/.output /app/.output
 COPY --from=ssr /app/ecosystem.config.cjs /app/
 COPY --from=ssr /app/package.json /app/
 
-CMD ["npm", "run", "preview"]
-
 FROM build-stage as spa
 ENV SSR=false
 COPY . /app
