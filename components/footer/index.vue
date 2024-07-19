@@ -4,25 +4,25 @@
       <!-- introduce -->
       <div class="info introduce">
         <NuxtImg src="/images/Logo-black.svg" width="186" height="36" />
-        <p>Metric là Nền tảng Số liệu Thương mại Điện tử dành cho Doanh nghiệp, Thương hiệu và Nhà bán. Metric tạo ra báo cáo phân tích dữ liệu thị trường chỉ trong 30 giây, giúp việc thực thi và ra
+        <p style="font-size: 16px">Metric là Nền tảng Số liệu Thương mại Điện tử dành cho Doanh nghiệp, Thương hiệu và Nhà bán. Metric tạo ra báo cáo phân tích dữ liệu thị trường chỉ trong 30 giây, giúp việc thực thi và ra
           quyết định kinh doanh nhanh hơn 5 lần.</p>
         <NuxtImg src="/images/gov-mark.png" width="176" height="67" />
       </div>
 
       <!-- term & policy -->
-      <div class="info term">
-        <div class="title">Chính sách & quy định</div>
-        <NuxtLink v-for="(item, index) in termAndPolicies" :key="index" :to="item.link" class="termLink">
+      <div class="info term" style="font-size: 16px">
+        <div class="title" >Chính sách & quy định</div>
+        <NuxtLink v-for="(item, index) in TERM_AND_POLICIES" :key="index" style="font-size: 16px" :to="item.link" class="termLink">
           {{ item.label }}
         </NuxtLink>
       </div>
 
       <!-- contact -->
-      <div class="info contact">
+      <div class="info contact" style="font-size: 16px">
         <div class="title">Liên hệ</div>
         <div v-for="(item, index) in CONTACTS" :key="index" class="contactItem">
           <CustomIcon :type="item.icon as any" />
-          <p>{{ item.label }}</p>
+          <p style="font-size: 16px">{{ item.label }}</p>
         </div>
       </div>
     </div>
@@ -48,25 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { CONTACTS } from '../../constant/constains';
-
-
-const termAndPolicies = [{
-  label: "Chính sách bảo mật thông tin",
-  link: "/",
-}, {
-  label: "Hình thức thanh toán",
-  link: "/",
-}, {
-  label: "Chính sách đổi trả sản phẩm",
-  link: "/",
-}, {
-  label: "Chính sách đặt hàng",
-  link: "/",
-}, {
-  label: "Điều kiện giao dịch chung",
-  link: "/",
-}]
+import { CONTACTS, TERM_AND_POLICIES } from '~/constant/constains';
 
 
 </script>

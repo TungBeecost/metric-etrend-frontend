@@ -1,7 +1,10 @@
 <template>
   <div class="inputWrapper">
     <label v-if="label" for="" class="label">{{ label }} <span v-if="isRequired" class="requiredDot"> * </span> </label>
-    <AInput v-bind="inputProps" v-model:value="inputModel" :status="errorMessage ? 'error' : ''">
+    <AInput v-bind="inputProps"
+            v-model:value="inputModel"
+            style="border: 1px solid #9D97BF; border-radius: 8px;"
+            :status="errorMessage ? 'error' : ''">
       <template v-if="errorMessage" #suffix>
         <InfoCircleOutlined class="errorIcon" />
       </template>
@@ -26,4 +29,10 @@ const inputModel = defineModel<string>("input");
 
 <style lang="scss" scoped>
 @import url("./index.scss");
+</style>
+
+<style lang="scss">
+.ant-input{
+  height: 40px;
+}
 </style>

@@ -1,16 +1,10 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
-import { getPlatformById } from "~/helpers/PermissionPlatformHelper";
-import {formatCurrency, formatNumberHuman} from "~/helpers/FormatHelper.js";
+import {computed, ref, watch} from 'vue';
+import {getPlatformById} from "~/helpers/PermissionPlatformHelper";
+import {formatNumberHuman} from "~/helpers/FormatHelper.js";
+import {formatSortTextCurrency} from "~/helpers/utils.js";
+import Highcharts from "highcharts";
 
-const chartOptions = ref(null);
-const platformColors = {
-  Shopee: "#FF9264",
-  Lazada: "#47538F",
-  Tiki: "#5BAFFE",
-  Sendo: "#FF6060",
-  Tiktok: "#000",
-};
 
 const props = defineProps({
   classifiedAnalyticResponse: {
@@ -26,6 +20,35 @@ const props = defineProps({
     default: () => true
   }
 });
+
+const windowWidth = ref(window?.innerWidth);
+
+const updateWindowWidth = () => {
+  windowWidth.value = window?.innerWidth;
+};
+
+// Step 3: Use a computed property for chart width
+const chartWidth = computed(() => {
+  return windowWidth?.value < 768 ? 300 : 600;
+});
+
+onMounted(() => {
+  window.addEventListener('resize', updateWindowWidth);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateWindowWidth);
+});
+
+const chartOptions = ref(null);
+
+const platformColors = {
+  Shopee: ['#FCA14E', '#FF733F'],
+  Lazada: ['#4745A5', '#241E46'],
+  Tiki: ['#5BAFFE', '#366998'],
+  Sendo: ['#FF6060', '#993A3A'],
+  Tiktok: ['#000', '#000'],
+};
 
 const PLATFORM_TOTAL = computed(() => props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL);
 const total = computed(() => PLATFORM_TOTAL.value.platforms.reduce((acc, item) => acc + item.revenue, 0));
@@ -59,13 +82,19 @@ const $t = (text) => text;
 chartOptions.value = {
   chart: {
     type: "pie",
+    width: 600,
     style: {
       fontFamily: "Inter",
     },
-    width: 300
   },
   title: {
-    text: "",
+    text: "Tỷ trọng doanh số theo sàn",
+    style: {
+      fontSize: '14px',
+      color: '#241E46',
+      fontWeight: 700,
+      fontFamily: 'Inter'
+    }
   },
   legend: {
     enabled: true,
@@ -79,34 +108,31 @@ chartOptions.value = {
     }
   },
   tooltip: {
-    enabled: true,
-    formatter: function () {
-      if (props.isHideContent) {
-        const name = ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0 ? `${this.point.categoryName} ${this.point.index + 1}` : this.point.name;
-        return `${name}<br/>
-        <svg width="10" height="10">
-          <rect width="10" height="10" style="fill:${this.point.color};stroke-width:3;stroke:rgb(0,0,0)" />
-          </svg> ${this.series.name}: <strong>Đã bị ẩn</strong>`;
-      }
-
-      return `${this.point.name}: <strong>${formatCurrency(this.point.y)}</strong> (${this.point.percentage.toFixed(1)}%)`;
-    },
+    enabled: false,
   },
   plotOptions: {
     pie: {
       cursor: "pointer",
       showInLegend: true,
-      innerSize: '70%',
+      innerSize: '60%',
       borderWidth: 1,
       borderColor: null,
       dataLabels: {
         enabled: true,
+        connectorShape: 'crookedLine',
         style: {
           fontSize: '12px',
           color: '#241E46',
           fontWeight: 400,
           fontFamily: 'Inter'
-        }
+        },
+        formatter: function () {
+          if (props.isHideContent) {
+            return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
+          }
+
+          return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+        },
       }
     },
     series: {
@@ -121,7 +147,7 @@ chartOptions.value = {
         }
       },
       events: {
-        mouseOut: (_event) => { // Prefix the event parameter with an underscore
+        mouseOut: (_event) => {
           const PLATFORM_TOTAL = props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL;
           const total = PLATFORM_TOTAL.platforms.reduce((acc, item) => acc + item.revenue, 0);
           innerName.value = PLATFORM_TOTAL.platforms[0] ? getPlatformById(PLATFORM_TOTAL.platforms[0].platform_id).name : '';
@@ -135,10 +161,17 @@ chartOptions.value = {
   series: [
     {
       name: props.analyticType === 'revenue' ? $t('Doanh số (Đồng)') : $t('Số sản phẩm đã bán (Sản phẩm)'),
-      data: PLATFORM_TOTAL.value.platforms.map(({platform_id, revenue}) => ({
+      data: PLATFORM_TOTAL.value.platforms.map(({platform_id, revenue, ratio_revenue}) => ({
         name: getPlatformById(platform_id).name,
-        y: revenue,
-        color: platformColors[getPlatformById(platform_id).name]
+        y: revenue || ratio_revenue,
+        // color: platformColors[getPlatformById(platform_id).name],
+        color: {
+          linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
+          stops: [
+            [0, platformColors[getPlatformById(platform_id).name][0]],
+            [1, platformColors[getPlatformById(platform_id).name][1]]
+          ]
+        }
       })).sort((a, b) => b.y - a.y),
     }
   ]
@@ -146,10 +179,10 @@ chartOptions.value = {
 
 const dataSource = computed(() => {
   const PLATFORM_TOTAL = props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL;
-  return PLATFORM_TOTAL.platforms.map(({platform_id, revenue} = {}) => ({
+  return PLATFORM_TOTAL.platforms.map(({platform_id, revenue, ratio_revenue} = {}) => ({
     platform: getPlatformById(platform_id).name,
     platformIcon: getPlatformById(platform_id).urlLogo,
-    revenue: props.analyticType === 'revenue' ? formatCurrency(revenue) : formatNumberHuman(revenue),
+    revenue: props.isHideContent ? ratio_revenue.toFixed(2) : (props.analyticType === 'revenue' ? formatSortTextCurrency(revenue) : formatNumberHuman(revenue)),
   })).sort((a, b) => b.revenue - a.revenue);
 });
 
@@ -165,19 +198,19 @@ watch(() => props.analyticType, () => {
 </script>
 
 <template>
-  <div class="PlatformChart">
-    <div style="flex: 1">
+  <div id="platform_chart" class="PlatformChart">
+    <div style="">
       <div style="position: relative">
         <highchart :options="chartOptions"/>
-        <div class="platform-chart-inner-box">
-          <div class="platform-chart-inner-value">
-            <div class="percent" style="color: #241E46; font-size: 24px;font-weight: bold; line-height: 32px; ">{{ innerPercent }}</div>
-            <div class="name" style="color: #241E46; font-size: 12px;line-height: 20px;">{{ innerName }}</div>
-          </div>
-        </div>
+        <!--        <div class="platform-chart-inner-box">-->
+        <!--          <div class="platform-chart-inner-value">-->
+        <!--            <div class="percent" style="color: #241E46; font-size: 24px;font-weight: bold; line-height: 32px; ">{{ innerPercent }}</div>-->
+        <!--            <div class="name" style="color: #241E46; font-size: 12px;line-height: 20px;">{{ innerName }}</div>-->
+        <!--          </div>-->
+        <!--        </div>-->
       </div>
     </div>
-    <div style="flex: 1;  max-width: 500px;">
+    <div style="width: 100%">
       <a-table
           :columns="columns"
           :data-source="dataSource"
@@ -186,31 +219,19 @@ watch(() => props.analyticType, () => {
           class="platform-table"
           size="large"
       >
-        <div style="flex: 1;  max-width: 500px;">
-          <a-table
-              :columns="columns"
-              :data-source="dataSource"
-              :pagination="false"
-              :row-key="record => record.platform"
-              class="platform-table"
-              size="large"
-          >
-            <template #platform="{ record }">
-              <div style="display: flex;">
-                <img :src="record.platformIcon" class="platform-icon"
-                     style="width: 32px;height: 32px;border-radius: 8px;margin-right: 10px;"/>
-                <span style="font-weight: 400;">{{ record.platform }}</span>
-              </div>
-            </template>
-            <template #revenue="{ record }">
-          <span style="font-weight: 400;">
-            <BlurContent :is-hide-content="isHideContent">
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'platform'">
+            <div class="platform-column">
+              <img :src="record.platformIcon" class="platform-icon"/>
+              <span>{{ record.platform }}</span>
+            </div>
+          </template>
+          <template v-if="column.key === 'revenue'">
+            <BlurContent :is-hide-content="props.isHideContent">
               {{ record.revenue }}
             </BlurContent>
-          </span>
-            </template>
-          </a-table>
-        </div>
+          </template>
+        </template>
       </a-table>
     </div>
   </div>
@@ -218,8 +239,7 @@ watch(() => props.analyticType, () => {
 
 
 <style lang="scss">
-.PlatformChart {
-  width: 100%;
+.platform_chart {
 
   .platform-table {
     .ant-table-thead > tr > th {
@@ -242,16 +262,20 @@ watch(() => props.analyticType, () => {
 </style>
 
 <style scoped lang="scss">
-.PlatformChart {
+#platform_chart {
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-around;
+  overflow: hidden;
+
 
   .platform-chart-inner-box {
     width: 100%;
     height: 100%;
 
     position: absolute;
-    top: -5px;
+    top: 10px;
     left: 0px;
 
     display: flex;
@@ -300,6 +324,8 @@ watch(() => props.analyticType, () => {
 
 
     .platform-column {
+      display: flex;
+      align-items: center;
       font-weight: 400;
       font-size: 14px;
       line-height: 22px;
@@ -317,6 +343,14 @@ watch(() => props.analyticType, () => {
 
   @media (max-width: 768px) {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  #platform_chart {
+    .platform-table {
+      margin-bottom: 16px;
+    }
   }
 }
 </style>

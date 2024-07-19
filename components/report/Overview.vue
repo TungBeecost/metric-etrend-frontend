@@ -1,17 +1,51 @@
 <script setup lang="ts">
+import {formatSortTextCurrency} from "~/helpers/utils";
+import {computed} from "vue";
+import dayjs from "dayjs";
+import {formatCurrency} from "~/helpers/FormatHelper";
+
 const props = defineProps({
   data: {
     type: Object,
     default: () => {
     },
   },
+  isHideContent: {
+    type: Boolean,
+    default: false
+  },
 });
+
+const diffMonths = computed(() => {
+  const {start_date, end_date} = props.data.filter_custom;
+  const startDate = dayjs(start_date);
+  const endDate = dayjs(end_date);
+  return endDate.diff(startDate, "months") + 1 + " tháng";
+});
+
+interface PriceRange {
+  revenue: number;
+
+  [key: string]: number;
+}
+
+const priceRangesSortBy = (field: keyof PriceRange = 'revenue') => {
+  const {lst_price_range} = props.data.data_analytic.by_price_range;
+  return lst_price_range.slice().sort((a: PriceRange, b: PriceRange) => b[field] - a[field]) || [];
+};
 
 interface Platform {
   name: string;
 }
 
-console.log(props.data);
+interface Shop {
+  name: string;
+}
+
+const top5Shops = (): string[] => {
+  const shops: Shop[] = props.data.data_analytic.by_shop.lst_top_shop;
+  return shops.slice(0, 5).map(shop => shop.name);
+};
 </script>
 
 <template>
@@ -22,31 +56,51 @@ console.log(props.data);
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Tổng quan</div>
+        <div class="statistic-item__title">Giới thiệu</div>
       </div>
     </div>
     <div class="content">
       <div>
-        Báo cáo nghiên cứu thị trường {{props.data.name}} trên sàn Thương mại điện tử
-        {{ props.data.data_analytic.by_marketplace.lst_marketplace.map((platform: Platform) => platform.name).join(', ') }}
-        từ tháng {{ props.data.filter_custom.start_date.slice(4,6) + '/' + props.data.filter_custom.start_date.slice(0,4) }}
-        đến tháng {{ props.data.filter_custom.end_date.slice(4,6) + '/' + props.data.filter_custom.end_date.slice(0,4) }},
+        Báo cáo nghiên cứu thị trường {{ props.data.name }} trên sàn Thương mại điện tử
+        {{
+          props.data.data_analytic.by_marketplace.lst_marketplace.map((platform: Platform) => platform.name).join(', ')
+        }}
+        từ tháng
+        {{ props.data.filter_custom.start_date.slice(4, 6) + '/' + props.data.filter_custom.start_date.slice(0, 4) }}
+        đến tháng {{
+          props.data.filter_custom.end_date.slice(4, 6) + '/' + props.data.filter_custom.end_date.slice(0, 4)
+        }},
         được thực hiện bởi
-        <a style="color: #E85912" href="https://metric.vn/" target="_blank">Metric.vn - Nền tảng phân tích số liệu thị trường</a>.
+        <a style="color: #E85912" href="https://metric.vn/" target="_blank">Metric.vn - Nền tảng phân tích số liệu thị
+          trường</a>.
       </div>
-      <br/>
+      <br>
       <div>
-        Báo cáo doanh thu {{ props.data.name }} trên sàn TMĐT FILL THEM VAO trong 12 tháng và so với quý gần nhất giảm.
-        FILL THEM VAO %. Đánh giá thị trường {{ props.data.name }}, các Shop kinh doanh có thể bán với mức giá phổ biến
-        từ FILL THEM VAO đến FILL THEM VAO. Thương hiệu {{ props.data.name }} được phân phối và bán chạy nhất là
-        FILL THEM VAO v.v...
+        <span class="text-bold">
+          Báo cáo doanh thu {{ props.data.name }} trên sàn TMĐT đạt
+          <BlurContent :is-hide-content="isHideContent">
+            <b>{{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }} đồng</b>
+          </BlurContent>
+        </span>
+        trong {{ diffMonths }}.
+        Đánh giá thị trường {{ props.data.name }}, phân khúc giá có doanh số cao nhất là từ
+        <BlurContent :is-hide-content="isHideContent">
+          {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
+          {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}
+        </BlurContent>
+          . Những thương hiệu {{ props.data.name }} được phân phối và
+        bán chạy nhất là
+        <BlurContent :is-hide-content="isHideContent">
+          <span>{{ top5Shops().join(',q ') }}</span>
+        </BlurContent>
+        v.v...
       </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.overview{
+.overview {
   padding: 24px;
   border-radius: 8px;
   border: 1px solid #EEEBFF;
@@ -54,13 +108,29 @@ console.log(props.data);
   flex-direction: column;
   gap: 16px;
 }
-  .statistic-item__title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 32px;
-    color: #101828;
+
+.statistic-item__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  color: #101828;
+}
+
+.text-bold {
+  color: var(--Dark-blue-dark-blue-7, #332D59);
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+@media (max-width: 768px) {
+  .overview {
+    padding: 16px;
   }
+}
 </style>

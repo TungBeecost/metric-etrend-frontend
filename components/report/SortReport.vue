@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const selectedOption = ref('newest');
+const selectedOption = ref('popularity');
+const emit = defineEmits(['sortSelect']);
 const handleChange = (value: any, _option: any) => {
-  console.log(value);
+  emit('sortSelect', value);
 };
 </script>
 
@@ -11,9 +12,8 @@ const handleChange = (value: any, _option: any) => {
   <div class="sort-report">
     <div class="title">Sắp xếp theo</div>
     <a-select v-model:value="selectedOption" @change="handleChange">
-      <a-select-option value="price">Giá</a-select-option>
-      <a-select-option value="popularity">Phổ biến</a-select-option>
-      <a-select-option value="newest">Mới nhất</a-select-option>
+      <a-select-option value="popularity">Phổ biến nhất</a-select-option>
+      <a-select-option value="revenue">Doanh số cao nhất</a-select-option>
     </a-select>
   </div>
 </template>
@@ -45,6 +45,17 @@ const handleChange = (value: any, _option: any) => {
       border-radius: 8px;
       border: 1px solid #9D97BF;
       background: #FFF;
+    }
+  }
+}
+</style>
+<style lang="scss">
+.sort_report{
+  .ant-select{
+    .ant-select-selector{
+      display: flex;
+      align-items: center;
+      height: 40px;
     }
   }
 }

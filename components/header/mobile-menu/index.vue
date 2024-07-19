@@ -1,47 +1,74 @@
 <template>
   <div :class="{ headerNavbar: 1, active: active }">
-    <div class="login">
-      <p>Đăng nhập ngay để không bỏ lỡ hàng trăm báo cáo và xu hướng mới nhất!</p>
-      <AButton type="primary" size="large" @click="redirectMenu(NAVIGATIONS.signIn)">Đăng nhập</AButton>
+    <div v-if="!userInfo.id" class="login">
+      <p style="font-weight: 500; font-size: 16px">Đăng nhập ngay để không bỏ lỡ hàng trăm báo cáo và xu hướng mới nhất!</p>
+      <AButton style="font-weight: 500 " type="primary" size="large" @click="currentUserStore.setShowPopupLogin(true)">Đăng nhập</AButton>
     </div>
-
-    <div class="divider" />
-
-
+    <div v-if="userInfo.id" style="display: flex; gap: 16px" @click="handleClickInfo">
+      <div class="ava">
+        <a-avatar style="cursor: pointer" class="avatar-image" :src="userInfo?.avatar" size="large"/>
+      </div>
+      <div class="name_and_mail">
+        <div class="name" style="font-size: 16px; font-weight: 700">{{ userInfo?.display_name }}</div>
+        <div class="email" style="font-size: 12px">{{ userInfo?.email }}</div>
+      </div>
+    </div>
+    <div class="divider"/>
     <NuxtLink v-for="item in MENUS" :key="item.label" :to="item.to" class="menu">
       <AButton size="large" type="text" class="menuItem" @click="setShowMenu(false)">
-
-        <CustomIcon :type="item.icon as any" class="menuIcon" />
+        <CustomIcon :type="item.icon as any" class="menuIcon"/>
         {{ item.label }}
       </AButton>
     </NuxtLink>
 
-    <div class="divider" />
+    <div class="divider"/>
 
     <NuxtLink :to="NAVIGATIONS.contactUs" class="menu">
       <AButton size="large" type="text" class="menuItem" @click="setShowMenu(false)">
-        <CustomIcon type="ContactUs" class="menuIcon" />
+        <CustomIcon type="ContactUs" class="menuIcon"/>
         Liên hệ tư vấn
       </AButton>
     </NuxtLink>
 
+    <div v-if="userInfo.id" class="divider"/>
 
+    <NuxtLink v-if="userInfo.id" :to="NAVIGATIONS.home" class="menu">
+      <AButton size="large" type="text" class="menuItem" @click="setLogOut">
+        <CustomIcon type="Logout" class="menuIcon"/>
+        Đăng xuất
+      </AButton>
+    </NuxtLink>
+
+    <!-- Login Modal -->
+    <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"
+             :footer="false"
+             @ok="currentUserStore.setShowPopupLogin(false)"
+             @cancel="currentUserStore.setShowPopupLogin(false)">
+      <login-button/>
+    </a-modal>
   </div>
 </template>
 
 <script setup lang="ts">
 
-import { MENUS, NAVIGATIONS } from '../../../constant/constains';
-
+import {MENUS, NAVIGATIONS} from '~/constant/constains';
+import LoginButton from "~/components/google/LoginButton.vue";
 defineProps<{
   active: boolean;
 }>()
 
-const { setShowMenu } = useShowMainMenu();
+const {setShowMenu} = useShowMainMenu();
+const currentUserStore = useCurrentUser();
+const {userInfo} = storeToRefs(currentUserStore);
 
-const redirectMenu = (url: string) => {
+const setLogOut = () => {
+  currentUserStore.logOut();
   setShowMenu(false);
-  navigateTo(url);
+}
+
+const handleClickInfo=()=>{
+  setShowMenu(false);
+  navigateTo(NAVIGATIONS.account);
 }
 </script>
 

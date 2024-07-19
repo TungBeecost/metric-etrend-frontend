@@ -1,6 +1,6 @@
 <script setup>
 import Highcharts from 'highcharts';
-import { ref, defineProps, watchEffect } from 'vue';
+import {defineProps, ref, watchEffect} from 'vue';
 
 const props = defineProps({
   series: {
@@ -33,7 +33,7 @@ const colors = [
 
 
 const isMobile = ref(window?.innerWidth < 768);
-const chartWidth = ref(!isMobile.value ? 600 : 250);
+const chartWidth = ref(!isMobile.value ? 450 : 250);
 
 const tooltip = ref({});
 const dataLabels = ref({});
@@ -58,7 +58,7 @@ watchEffect(() => {
       ? {
         enabled: !isMobile.value,
         formatter: function () {
-          return ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0 ? `<span style="color: #8c8c8c">Đã ẩn</span>` : '<span>' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          return '<span>' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
         },
       }
       : {
@@ -81,11 +81,15 @@ watchEffect(() => {
     chart: {
       type: "pie",
       width: chartWidth.value,
+      // height: chartWidth.value,
       style: {
-        fontFamily: "Montserrat",
+        fontFamily: "Montserrat, Inter, sans-serif",
       },
     },
-    tooltip: tooltip.value,
+    // tooltip: tooltip.value,
+    tooltip: {
+      enabled: false
+    },
     plotOptions: {
       pie: {
         colors: colors,
@@ -99,13 +103,14 @@ watchEffect(() => {
           },
         },
         showInLegend: isMobile.value,
+        size: '50%',
         innerSize: '50%',
       },
     },
     title: {
       text: props.title,
       style: {
-        fontFamily: "Montserrat",
+        fontFamily: "Inter, sans-serif",
         fontWeight: '700',
         fontSize: '16px',
         colr: '#241E46'

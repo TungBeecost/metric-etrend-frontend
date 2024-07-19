@@ -32,7 +32,7 @@
   .pricings {
     display: flex;
     align-items: stretch;
-    gap: 16px;
+    gap: 24px;
     min-width: 60%;
 
     @include mobile {
@@ -44,13 +44,23 @@
       border-radius: 16px;
       overflow: hidden;
       background: white;
+
+      transition: background-color 0.3s ease, transform 0.3s ease;
       flex: 1 0 0;
+      position: relative;
+      will-change: transform, background-color;
+
+      &:hover {
+        transform: translateY(0px) scale(1.05);
+        z-index: 99;
+        .focusHeader {
+          background: $primary;
+        }
+      }
 
       @include mobile {
         flex: unset;
       }
-
-      margin: 28px 0px;
 
       .focusHeader {
         background: $hovering;
@@ -156,6 +166,18 @@
               }
             }
           }
+        }
+        
+        .not_user_plan{
+          background: #E85912;
+          color: #FFF;
+          width: 100%;
+        }
+
+        .user_plan{
+          background: #DEDEE4;
+          color: #9D9BB0;
+          width: 100%;
         }
       }
     }

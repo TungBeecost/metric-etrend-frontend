@@ -1,5 +1,5 @@
 .wrapperSpec {
-  width: 60% !important;
+  width: 40% !important;
 
   @include mobile {
     width: 90% !important;
@@ -67,6 +67,10 @@
         font-weight: 500;
         color: $default_text_color;
       }
+    }
+
+    .errorMessage {
+      color: red;
     }
   }
 }
