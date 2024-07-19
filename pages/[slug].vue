@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import {toSeoName} from "~/helpers/StringHelper";
 import GeneralOverview from "~/components/report/GeneralOverview.vue";
 import Overview from "~/components/report/Overview.vue";
@@ -7,70 +7,24 @@ import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
 import {ref} from "vue";
-import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import {PAGE_TITLES} from "~/constant/constains";
 import UnlockReport from "~/components/report/UnlockReport.vue";
-import axios from "~/services/axios-wrapper";
 import {useCurrentUser} from "~/stores/current-user";
-import {type LstRecommed, searchReport, type SearchReportPayload} from "~/services/reports"
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
-import {useSearchReport} from "#imports";
-const { fetchListRecommend } = useSearchReport()
-const listTagSuggestions = ref<string[]>([]);
-const listRecommend = ref<LstRecommed[] | null>(null);
-
-interface Category {
-  name: string;
-  id: string;
-}
-
-interface Data {
-  name: string;
-  lst_category: Category[];
-  filter_custom: any
-  category_report_id: string;
-}
+import {REPORT_ENDPOINTS} from "~/constant/endpoints";
+import moment from "moment";
+import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 
 const currentUserStore = useCurrentUser();
-const {userInfo} = storeToRefs(currentUserStore);
-const isHideContent = ref(true);
-const data = ref<Data | null>(null);
-const loading = ref(true);
-
 
 const route = useRoute()
 const slug = route.params.slug;
 
+const config = useRuntimeConfig();
 
-const fetchReportData = async () => {
+const fetchSuggest = async (value = '', options = {}) => {
   try {
-    loading.value = true;
-    const response = await axios.get(`https://api-ereport.staging.muadee.vn/api/report/detail?slug=${slug}`);
-    console.log(response.data);
-    const {tier_report} = response.data;
-    if (tier_report !== 'free') {
-      isHideContent.value = false;
-    }
-    data.value = response.data;
-    loading.value = false;
-    if (data.value) {
-      await fetchTagSuggest(data.value.name);
-      await fetchDataRecommend(data.value.category_report_id);
-    }
-  } catch (error) {
-    loading.value = false;
-    console.error(error);
-  }
-};
-
-const isHideContentBasic = ref(true);
-if (userInfo.value.current_plan?.plan_code === 'e_pro' && !isHideContent.value) {
-  isHideContentBasic.value = false;
-}
-
-const fetchSuggest = async (value: string | null, options?: SearchReportPayload) => {
-  try {
-    const body: SearchReportPayload = {
+    const body = {
       limit: 5,
       lst_field: ["name", "slug"],
       offset: 0,
@@ -78,56 +32,156 @@ const fetchSuggest = async (value: string | null, options?: SearchReportPayload)
       lst_query: value ? [value] : [],
       ...options
     };
-    const data = await searchReport(body);
-
-    if (data && data.lst_report) {
-      return data.lst_report.map((item) => item.name);
-    } else {
-      return [];
-    }
+    const {lst_report} = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
+      method: 'POST',
+      body
+    })
+    return lst_report
   } catch (error) {
-    console.error("fetchSuggest error: ", error);
     return [];
   }
 };
 
-const fetchTagSuggest = async (value: string) => {
-  console.log('fetchTagSuggest', value);
+const fetchRecommend = async (categoryReportId) => {
   try {
-    const result = await fetchSuggest(value);
-    if (result.length) {
-      listTagSuggestions.value = result;
-    } else {
-      listTagSuggestions.value = [];
-    }
-  }
-  catch (e) {
-    console.error(e);
+    return await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.list_recomend.endpoint}?category_report_id=${categoryReportId}`)
+  } catch (error) {
+    return [];
   }
 };
 
-const fetchDataRecommend = async (category_report_id: string) => {
+const fetchReportData = async () => {
+  const slug = route.params.slug;
   try {
-    const result = await fetchListRecommend(category_report_id);
-    if (result !== null) {
-      listRecommend.value = result;
-    } else {
-      listRecommend.value = [];
+    let isHideContent = true;
+
+    const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
+    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
+    if (config.public.SSR === 'true') {
+      url += `&is_bot=true`;
     }
+    const response = await $fetch(
+        url,
+        {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        }
+    );
+    const {tier_report} = response;
+    // console.log('tier_report', tier_report)
+    // console.log('SSR', config.public.SSR)
+    if (tier_report !== 'free' || config.public.SSR === 'true') {
+      isHideContent = false;
+    }
+    const [listRecommend] = await Promise.all([
+      // fetchSuggest(response.name),
+      fetchRecommend(response.category_report_id)
+    ]);
+
+    return {
+      reportDetail: response,
+      listRecommend,
+      isHideContent,
+    }
+  } catch (error) {
+    console.log(error)
+
+    return {}
   }
-  catch (e) {
-    console.error(e);
-  }
+};
+
+const {data} = await useAsyncData(fetchReportData);
+
+if (data?.reportDetail) {
+  const title =
+      `Báo cáo thị trường ${data.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ` +
+      moment().format("MM/YYYY");
+
+  const description = `Báo cáo chi tiết thị trường ${data.reportDetail.name}`
+
+  const itemListElement = [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Metric",
+      item: "https://metric.vn",
+    },
+    ...(data.reportDetail.lst_category || []).map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 2,
+      name: item.name,
+      item: `https://metric.vn/${toSeoName(item.name)}-c.${item.id}`,
+    })),
+  ];
+  const ogImage = data.reportDetail?.url_cover || data.reportDetail?.url_thumbnail;
+  const urlCanonical = process.env.BASE_URL + route.fullPath;
+
+  useHead({
+    title: `${data.reportDetail.name} - Báo cáo xu hướng thị trường sàn TMĐT`,
+    meta: [
+      {charset: "utf-8"},
+      {name: "viewport", content: "width=device-width, initial-scale=1"},
+      {
+        hid: "description",
+        name: "description",
+        content: description,
+      },
+      {
+        hid: "og:title",
+        property: "og:title",
+        content: title,
+      },
+      {
+        hid: "og:description",
+        property: "og:description",
+        content: description,
+      },
+      {
+        hid: "og:image",
+        property: "og:image",
+        content: ogImage,
+      },
+      {
+        hid: "og:image:alt",
+        property: "og:image:alt",
+        content: title,
+      },
+    ],
+    link: [
+      {
+        hid: "canonical",
+        rel: "canonical",
+        href: urlCanonical,
+      },
+    ],
+    script: [
+      {
+        type: "application/ld+json",
+        json: {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement,
+        },
+      },
+    ],
+  })
 }
+const {data: tagSuggestions} = await useAsyncData(
+    'fetchSuggest',
+    async () => {
+      return await fetchSuggest(data?.reportDetail?.name, {limit: 5});
+    }
+);
 
 const breadcrumbs = computed(() => {
-  if (data.value) {
+  if (data?.reportDetail) {
     return [
       {
         name: "Báo cáo",
         value: "search",
       },
-      ...(data.value.lst_category || []).map((item) => {
+      ...(data.reportDetail.lst_category || []).map((item) => {
         const url = `search?category_report_id=${item.id}`;
         return {
           name: item.name,
@@ -135,29 +189,18 @@ const breadcrumbs = computed(() => {
         };
       }),
       {
-        name: data.value.name,
+        name: data.reportDetail.name,
         value: null,
       },
     ];
   }
 });
 
-onMounted(() => {
-  fetchReportData();
-});
-
-console.log(toSeoName(slug));
-
-
 const isMobile = ref(window?.innerWidth <= 768);
 
 const updateWindowSize = () => {
   isMobile.value = window?.innerWidth <= 768;
 };
-
-onMounted(() => {
-  window.addEventListener('resize', updateWindowSize);
-});
 
 onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);
@@ -169,75 +212,34 @@ useSeoMeta({
 </script>
 
 <template>
-  <div v-if="loading" class="container_content">
+  <div class="container_content">
     <div class="title default_section">
-      <div class="loading-skeleton">
-        <div>
-          <a-skeleton-input size="large" active style="width: max(50%, 300px); margin-bottom: 24px;"/>
-        </div>
-        <div style="display: flex; justify-content: space-between;width: 100%; margin-bottom: 24px;">
-          <a-skeleton-input size="small" active style="width: max(30%, 300px); "/>
-        </div>
-        <div class="container">
-          <div class="general_overview_container" style="display: flex; width: 100%; gap: 24px">
-            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px; border-radius: 16px 0 0 16px">
-              <a-skeleton active size="large"/>
-            </div>
-            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;">
-              <a-skeleton active size="large"/>
-            </div>
-            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;" class="hide-on-mobile">
-              <a-skeleton active size="large"/>
-            </div>
-            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px; border-radius: 0 16px 16px 0"
-                 class="hide-on-mobile">
-              <a-skeleton active size="large"/>
-            </div>
-          </div>
-          <div class="different_info">
-            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;" class="hide-on-mobile">
-              <a-skeleton active size="large"/>
-            </div>
-            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;" class="hide-on-mobile">
-              <a-skeleton active size="large"/>
-            </div>
-            <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px;" class="hide-on-mobile">
-              <a-skeleton active size="large"/>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div v-else class="container_content">
-    <div class="title default_section">
-      <div v-if="data" class="breadcrumbs">
+      <div class="breadcrumbs">
         <Breadcrumb :breadcrumbs="breadcrumbs"/>
       </div>
-      <h1 v-if="data" class="report-title">
-        {{ data.name }} - Báo cáo xu hướng thị trường sàn TMĐT
+      <h1 class="report-title">
+        {{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT
       </h1>
     </div>
     <div class="container default_section">
-      <div v-if="data" class="general_overview_container">
-        <general-overview :data="data as Record<string, any>" :is-hide-content="isHideContent"/>
-        <price-range-statistic :data="data" :is-hide-content="isHideContent"/>
-        <brand-statistic :data="data" :is-hide-content="isHideContent"/>
-        <top-shop-statistic :data="data" :is-hide-content="isHideContentBasic" :is-hide="isHideContent"/>
-        <list-products :data="data" :is-hide-content="isHideContentBasic" :is-hide="isHideContent"/>
+      <div class="general_overview_container">
+        <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+        <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+        <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+        <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+        <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
       </div>
-      <div v-if="data" class="different_info">
+      <div class="different_info">
         <unlock-report v-if="!currentUserStore.authenticated"/>
-        <overview :is-hide-content="isHideContent" :data="data as Record<string, any>"/>
+        <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
         <report-content/>
-        <report-filter-detail :data="data" :filter="data.filter_custom" class="report-filter-detail"/>
-        <maybe-interested v-if="listRecommend && !isMobile" :recomends="listRecommend"/>
+        <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>
+        <maybe-interested v-if="!isMobile" :recomends="data.listRecommend"/>
       </div>
     </div>
-    <maybe-interested v-if="listRecommend && isMobile" :recomends="listRecommend"/>
-    <poster-detail-report :list-suggest="listTagSuggestions"/>
+    <maybe-interested v-if="isMobile" :recomends="data?.listRecommend"/>
+    <poster-detail-report :list-suggest="tagSuggestions"/>
   </div>
-
 </template>
 
 <style scoped lang="scss">
@@ -287,7 +289,7 @@ useSeoMeta({
 
   .container_content {
     .title {
-      .report-title{
+      .report-title {
         font-size: 24px;
         line-height: 32px;
       }

@@ -5,6 +5,7 @@ import {addComponent} from "@nuxt/kit";
 
 
 export default defineNuxtConfig({
+    ssr: process.env.SSR === 'true',
     app: {
         head: {
             title: "Metric - Nền tảng Số liệu E-commerce",
@@ -70,7 +71,7 @@ export default defineNuxtConfig({
     },
     $production: {
         routeRules: {
-            "/**": {isr: true}
+            "/**": {ssr: true}
         }
     },
     $development: {
@@ -82,14 +83,17 @@ export default defineNuxtConfig({
         // Keys exposed client-side too
         public: {
             // apiBase: "http://localhost:8000"
-            apiBase: "https://api-ereport.staging.muadee.vn"
-            // apiBase: process.env.NUXT_PUBLIC_API_BASE
+            // apiBase: "https://api-ereport.staging.muadee.vn"
+            apiBase: process.env.API_ENDPOINT,
+            API_ENDPOINT: process.env.API_ENDPOINT,
+            MODE: process.env.MODE,
+            SSR: process.env.SSR,
         }
     },
     typescript: {
         typeCheck: true
     },
-    plugins: ["~/plugins/antd.js","~/plugins/vue3-carousel.client.js"],
+    plugins: ["~/plugins/antd.js", "~/plugins/vue3-carousel.client.js"],
     css: [
         "~/assets/reset.css",
         "~/assets/antd.css",

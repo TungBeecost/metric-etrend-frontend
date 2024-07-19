@@ -1,12 +1,15 @@
 <script setup>
-import {defineProps, ref} from 'vue';
+import {defineProps} from 'vue';
 import PieChart from "~/components/report/PieChart.vue";
 import {formatSortTextCurrency, getUrlImageOption, goToUrl} from "~/helpers/utils.js";
 import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
 import {useCurrentUser} from "~/stores/current-user.js";
 
 const currentUserStore = useCurrentUser();
+const config = useRuntimeConfig();
+
 const {userInfo} = storeToRefs(currentUserStore);
+
 const props = defineProps({
   data: {
     type: Object,
@@ -16,16 +19,19 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  isHide:{
+  isHide: {
     type: Boolean,
     default: true,
   },
 });
 
-const isHideContentBasic = ref(true);
-if (userInfo.current_plan?.plan_code === 'e_pro' && !props.isHide) {
-  isHideContentBasic.value = false;
-}
+const isHideContentBasic = computed(() => {
+  if (config.public.SSR === 'true') {
+    return false
+  }
+  return userInfo.value?.current_plan?.plan_code !== 'e_pro';
+});
+
 const formatNumber = (value = "") => value.toLocaleString("vi-VN");
 </script>
 
@@ -55,7 +61,9 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
           class="pie_chart_item"
           style="flex-direction: column; gap: 24px; justify-content: flex-start"
       >
-        <div style="font-size: 16px; font-weight: bold; line-height: 22px; text-align: center; color: #241E46">Số lượng gian hàng</div>
+        <div style="font-size: 16px; font-weight: bold; line-height: 22px; text-align: center; color: #241E46">Số lượng
+          gian hàng
+        </div>
         <div>
           <a-table
               :columns="[
@@ -180,7 +188,9 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
           </div>
         </template>
       </a-table>
-      <ChartMask v-if="isHideContentBasic" :subtitle="!props.isHide ? 'Nâng cấp để xem chi tiết' :'Bạn cần mở khoá để xem số liệu đầy đủ'" :ok-button="!props.isHide ? 'Nâng cấp ngay' :'Xem báo cáo'" :report="data"/>
+      <ChartMask v-if="isHideContentBasic"
+                 :subtitle="!props.isHide ? 'Nâng cấp để xem chi tiết' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
+                 :ok-button="!props.isHide ? 'Nâng cấp ngay' :'Xem báo cáo'" :report="data"/>
     </div>
     <InsightBlock
         v-if="
@@ -220,7 +230,8 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
         doanh số tương ứng
         <BlurContent :is-hide-content="isHideContentBasic">
           {{ formatSortTextCurrency(props.data.data_analytic.by_shop.ratio.normal.revenue) }} đồng
-        </BlurContent>.
+        </BlurContent>
+        .
       </li>
       <li>
         Trong top 10 gian hàng bán chạy, Shop
@@ -234,7 +245,8 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
         và
         <BlurContent :is-hide-content="isHideContentBasic">
           {{ props.data.data_analytic.by_shop.lst_top_shop[2].name }}
-        </BlurContent>.
+        </BlurContent>
+        .
       </li>
     </InsightBlock>
   </div>
@@ -400,7 +412,7 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
   .pie_chart {
     flex-direction: column;
   }
-  #top-shop{
+  #top-shop {
     padding: 16px;
     border: none;
   }

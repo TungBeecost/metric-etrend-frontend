@@ -2,15 +2,13 @@
 import type SearchReport from "~/components/search/search-report.vue";
 import {NAVIGATIONS} from "~/constant/constains";
 
-const recommendSearch = ["Ngành hàng Mẹ & Bé", "Ngành hàng Điện tử", "Thời trang Nam", "Điện Máy"]
-
 const onClickSuggestion = (suggestion: string) => {
   navigateTo(`${NAVIGATIONS.search}?search=${suggestion}`);
 }
 
 const props = defineProps({
   listSuggest: {
-    type: Array as () => string[],
+    type: Array as () => { name: string }[],
     default: () => [],
   },
 });
@@ -28,8 +26,8 @@ const props = defineProps({
         <div class="content_key">Từ khoá liên quan nổi bật: </div>
         <div style="display: flex; gap: 16px; flex-wrap: wrap;">
           <AButton v-for="(item, index) in props.listSuggest" :key="index" ghost class="recommendItem"
-                   @click="onClickSuggestion(item)">
-            {{ item }}
+                   @click="onClickSuggestion(item.name)">
+            {{ item.name }}
           </AButton>
         </div>
       </div>

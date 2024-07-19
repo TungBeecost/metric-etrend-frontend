@@ -15,27 +15,31 @@ const googleCallback = async (body) => {
 };
 
 export const useCurrentUser = defineStore("currentUserStore", {
-    state: () => ({
-        fetchedUser: false,
-        showPopupLogin: false,
-        userInfo: {
-            id: undefined,
-            email: undefined,
-            display_name: undefined,
-            first_name: undefined,
-            last_name: undefined,
-            avatar: undefined,
-            current_plan: {
-                plan_id: undefined,
-                plan_name: undefined,
-                plan_code: undefined,
-                remain_claim: undefined,
-                remain_claim_basic: undefined,
-                remain_claim_pro: undefined,
-                remain_claim_expert: undefined
+    state: () => {
+        const isServerRender = process.env.SSR === 'true'
+
+        return {
+            fetchedUser: isServerRender,
+            showPopupLogin: false,
+            userInfo: {
+                id: undefined,
+                email: undefined,
+                display_name: undefined,
+                first_name: undefined,
+                last_name: undefined,
+                avatar: undefined,
+                current_plan: {
+                    plan_id: undefined,
+                    plan_name: undefined,
+                    plan_code: undefined,
+                    remain_claim: undefined,
+                    remain_claim_basic: undefined,
+                    remain_claim_pro: undefined,
+                    remain_claim_expert: undefined
+                },
             },
-        },
-    }),
+        }
+    },
     getters: {
         isShowPopupLogin: (state) => state.showPopupLogin,
         remainingUnlock: (state) => state.userInfo.current_plan.remain_claim,
@@ -46,23 +50,26 @@ export const useCurrentUser = defineStore("currentUserStore", {
             this.showPopupLogin = value
         },
         async fetchCurrentUser() {
-            this.fetchedUser = false;
-            const access_token = typeof window !== 'undefined' ? localStorage.getItem("access_token") : "";
-            if (typeof window !== 'undefined' && !access_token) {
+            if (typeof window === 'undefined') {
+                return
+            }
+
+            const access_token = typeof window !== 'undefined' ? localStorage?.getItem("access_token") : "";
+            if (!access_token) {
                 console.log("No access token");
                 this.fetchedUser = true;
                 return
             }
             const isValidToken = access_token.split(".").length === 3;
             if (!isValidToken) {
-                localStorage.removeItem("access_token");
+                localStorage?.removeItem("access_token");
                 this.fetchedUser = true;
                 return;
             }
 
             const isExpired = jwt_decode(access_token).exp < Date.now() / 1000;
             if (isExpired) {
-                localStorage.removeItem("access_token");
+                localStorage?.removeItem("access_token");
                 this.fetchedUser = true;
                 return;
             }
