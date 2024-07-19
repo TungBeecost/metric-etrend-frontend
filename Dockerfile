@@ -18,6 +18,7 @@ RUN npm run build
 #CMD pm2-runtime start pm2.config.js --env production --only nuxtjs --name nuxtjs
 
 FROM runner as ssr-release
+ENV SSR=true
 COPY --from=ssr /app/.nuxt /app/.nuxt
 COPY --from=ssr /app/nuxt.config.ts /app/
 COPY --from=ssr /app/.output /app/.output
@@ -30,6 +31,7 @@ COPY . /app
 RUN npm run build
 
 FROM runner as spa-release
+ENV SSR=false
 COPY --from=spa /app/.nuxt /app/.nuxt
 COPY --from=spa /app/nuxt.config.ts /app/
 COPY --from=spa /app/ecosystem.config.cjs /app/
