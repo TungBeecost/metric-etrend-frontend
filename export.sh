@@ -7,5 +7,5 @@ if [[ "SSR" == "true" ]]; then
 else
     export NUXT_APP_CDN_URL=${BASE_URL}/ssr 
 fi
-env 
-#npm run start 
+
+npm run start 
