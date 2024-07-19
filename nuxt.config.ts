@@ -85,6 +85,7 @@ export default defineNuxtConfig({
             // apiBase: "http://localhost:8000"
             // apiBase: "https://api-ereport.staging.muadee.vn"
             apiBase: process.env.API_ENDPOINT,
+            BASE_URL: process.env.BASE_URL,
             API_ENDPOINT: process.env.API_ENDPOINT,
             MODE: process.env.MODE,
             SSR: process.env.SSR,

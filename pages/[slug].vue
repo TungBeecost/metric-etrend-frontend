@@ -7,19 +7,15 @@ import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
 import {ref} from "vue";
-import {PAGE_TITLES} from "~/constant/constains";
+import moment from "moment";
 import UnlockReport from "~/components/report/UnlockReport.vue";
 import {useCurrentUser} from "~/stores/current-user";
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import {REPORT_ENDPOINTS} from "~/constant/endpoints";
-import moment from "moment";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 
 const currentUserStore = useCurrentUser();
-
 const route = useRoute()
-const slug = route.params.slug;
-
 const config = useRuntimeConfig();
 
 const fetchSuggest = async (value = '', options = {}) => {
@@ -93,80 +89,6 @@ const fetchReportData = async () => {
 
 const {data} = await useAsyncData(fetchReportData);
 
-if (data?.reportDetail) {
-  const title =
-      `Báo cáo thị trường ${data.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ` +
-      moment().format("MM/YYYY");
-
-  const description = `Báo cáo chi tiết thị trường ${data.reportDetail.name}`
-
-  const itemListElement = [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Metric",
-      item: "https://metric.vn",
-    },
-    ...(data.reportDetail.lst_category || []).map((item, index) => ({
-      "@type": "ListItem",
-      position: index + 2,
-      name: item.name,
-      item: `https://metric.vn/${toSeoName(item.name)}-c.${item.id}`,
-    })),
-  ];
-  const ogImage = data.reportDetail?.url_cover || data.reportDetail?.url_thumbnail;
-  const urlCanonical = process.env.BASE_URL + route.fullPath;
-
-  useHead({
-    title: `${data.reportDetail.name} - Báo cáo xu hướng thị trường sàn TMĐT`,
-    meta: [
-      {charset: "utf-8"},
-      {name: "viewport", content: "width=device-width, initial-scale=1"},
-      {
-        hid: "description",
-        name: "description",
-        content: description,
-      },
-      {
-        hid: "og:title",
-        property: "og:title",
-        content: title,
-      },
-      {
-        hid: "og:description",
-        property: "og:description",
-        content: description,
-      },
-      {
-        hid: "og:image",
-        property: "og:image",
-        content: ogImage,
-      },
-      {
-        hid: "og:image:alt",
-        property: "og:image:alt",
-        content: title,
-      },
-    ],
-    link: [
-      {
-        hid: "canonical",
-        rel: "canonical",
-        href: urlCanonical,
-      },
-    ],
-    script: [
-      {
-        type: "application/ld+json",
-        json: {
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement,
-        },
-      },
-    ],
-  })
-}
 const {data: tagSuggestions} = await useAsyncData(
     'fetchSuggest',
     async () => {
@@ -205,13 +127,40 @@ const updateWindowSize = () => {
 onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);
 });
-
-useSeoMeta({
-  title: PAGE_TITLES.reportDetail + " " + toSeoName(slug)
-})
 </script>
 
 <template>
+  <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
+  <Meta name="og:title"
+        :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>
+  <Meta name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+  <Meta name="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+  <Meta name="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>
+  <Meta name="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>
+  <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>
+  <component is="script" type="application/ld+json">
+    {{
+      JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Metric",
+            item: "https://metric.vn",
+          },
+          ...(data.reportDetail.lst_category || []).map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 2,
+            name: item.name,
+            item: `https://metric.vn/${toSeoName(item.name)}-c.${item.id}`,
+          })),
+        ]
+      })
+    }}
+  </component>
+
   <div class="container_content">
     <div class="title default_section">
       <div class="breadcrumbs">
