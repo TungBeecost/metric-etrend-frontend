@@ -94,7 +94,7 @@ export default defineNuxtConfig({
     typescript: {
         typeCheck: true
     },
-    plugins: ["~/plugins/antd.js", "~/plugins/vue3-carousel.client.js"],
+    plugins: ["~/plugins/antd.ts", "~/plugins/vue3-carousel.client.ts"],
     css: [
         "~/assets/reset.css",
         "~/assets/antd.css",
