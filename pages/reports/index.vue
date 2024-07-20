@@ -3,14 +3,14 @@
 import Discover from "~/components/report/Discover.vue";
 import FeaturedReport from "~/components/report/FeaturedReport.vue";
 import ItemNewReport from "~/components/report/ItemNewReport.vue";
-import { searchReport, type SearchReportPayload } from "~/services/reports";
-import { PAGE_TITLES } from "~/constant/constains";
+import {type SearchReportPayload} from "~/services/reports";
+import {PAGE_TITLES} from "~/constant/constains";
+import {REPORT_ENDPOINTS} from "~/constant/endpoints";
 
-const isLoading = ref(true);
-const lstReportNew = ref([])
+const config = useRuntimeConfig();
 
 const fetchReport = async () => {
-  isLoading.value = true;
+  console.log('fetchReport')
   try {
     const body: SearchReportPayload = {
       limit: 10,
@@ -21,18 +21,17 @@ const fetchReport = async () => {
       sort: "popularity",
       order: "desc",
     };
-    const response: any = await searchReport(body)
-
-    lstReportNew.value = response.lst_report;
-    isLoading.value = false;
+    const {lst_report}: any = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
+      method: 'POST',
+      body
+    })
+    return lst_report
   } catch (e) {
     console.log(e)
   }
 }
+const {data: lstReport} = await useAsyncData(fetchReport)
 
-onMounted(() => {
-  fetchReport()
-})
 
 useSeoMeta({
   title: PAGE_TITLES.reports
@@ -52,22 +51,22 @@ useSeoMeta({
             </div>
           </div>
           <div class="new_report">
-<!--            <template v-if="isLoading">-->
-<!--              <a-skeleton active :paragraph="{ rows: 6 }"/>-->
-<!--            </template>-->
+            <!--            <template v-if="isLoading">-->
+            <!--              <a-skeleton active :paragraph="{ rows: 6 }"/>-->
+            <!--            </template>-->
             <div class="new_report">
               <div class="title_new_report">
                 Báo cáo mới nhất
               </div>
-              <item-new-report :reports="lstReportNew" :loading="isLoading" />
+              <item-new-report :reports="lstReport"/>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <discover />
-    <featured-report />
-    <ContactUs />
+    <discover/>
+    <featured-report/>
+    <ContactUs/>
   </div>
 </template>
 

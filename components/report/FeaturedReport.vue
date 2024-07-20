@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import ItemFeatureReport from './ItemFeatureReport.vue';
-import {searchReport, type SearchReportPayload} from "~/services/reports";
+import {type SearchReportPayload} from "~/services/reports";
+import {REPORT_ENDPOINTS} from "~/constant/endpoints";
 
-const lstReport = ref([])
-const isLoading = ref(true);
+const config = useRuntimeConfig();
+
 
 const fetchReport = async () => {
-  isLoading.value = true;
+  console.log('fetchReport')
   try {
     const body: SearchReportPayload = {
       limit: 10,
@@ -16,19 +17,17 @@ const fetchReport = async () => {
       offset: 0,
       sort: "popularity",
     };
-    const response: any = await searchReport(body)
-
-    lstReport.value = response.lst_report;
-    isLoading.value = false;
+    const {lst_report}: any = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
+      method: 'POST',
+      body
+    })
+    return lst_report
   } catch (e) {
-    isLoading.value = false;
     console.log(e)
   }
 }
 
-onMounted(() => {
-  fetchReport()
-})
+const {data: lstReport} = await useAsyncData(fetchReport)
 </script>
 
 <template>
@@ -43,7 +42,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-<!--      <div v-if="isLoading">-->
+      <!--      <div v-if="isLoading">-->
       <!--        <Carousel :items-to-show="4" :items-to-scroll="4" :wrap-around="true" style="width: 100%;"-->
       <!--                  :snap-align="'start'">-->
       <!--          <Slide v-for="item in [1,2,3,4]" :key="item">-->
@@ -54,8 +53,8 @@ onMounted(() => {
       <!--          </Slide>-->
       <!--        </Carousel>-->
       <!--      </div>-->
-      <div  class="new_report">
-        <item-feature-report :reports="lstReport.slice(0, 10)" :loading="isLoading"/>
+      <div class="new_report">
+        <item-feature-report :reports="lstReport.slice(0, 10)"/>
       </div>
     </div>
   </div>
