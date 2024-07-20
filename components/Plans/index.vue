@@ -29,6 +29,24 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', onResize);
 });
+
+// const activatePlan = async (planCode: string) => {
+//   try {
+//     if (planCode === 'e_community') {
+//       const response = await axios.get('http://127.0.0.1:8080/api/plan/enable_package_community', {
+//         headers: {
+//           'accept': 'application/json',
+//         },
+//       });
+//       console.log('Activation response:', response.data);
+//     } else {
+//       // Handle other plan codes as needed
+//     }
+//     await currentUserStore.fetchCurrentUser();
+//   } catch (error) {
+//     console.error('Error activating plan:', error);
+//   }
+
 </script>
 
 <template>
@@ -64,7 +82,7 @@ onUnmounted(() => {
                 <div v-for="subPerm in permission.sub" class="perm subPerm">
                   <CustomIcon type="Tick" :is-custom-size="true" class="permissionIcon"/>
                   <div>{{ subPerm }}</div>
-                </div>
+                </div>`
               </div>
             </div>
           </div>
