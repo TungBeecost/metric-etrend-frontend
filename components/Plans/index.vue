@@ -88,7 +88,7 @@ onUnmounted(() => {
           </div>
           <div v-if="userInfo.current_plan">
             <AButton
-                v-if="!(plan.plan_code === 'free' && userInfo.current_plan?.plan_code !== plan.plan_code)"
+                v-if="!(plan.plan_code === 'free' && userInfo.current_plan?.plan_code !== 'free') && !(userInfo.current_plan?.plan_code === 'e_pro' && (plan.plan_code === 'free' || plan.plan_code === 'e_basic')) && !(userInfo.current_plan?.plan_code === 'e_basic' && plan.plan_code === 'free')"
                 :class="(userInfo.current_plan?.plan_code === plan.plan_code) || (plan.plan_code === 'free') ? 'user_plan' : 'not_user_plan'"
                 :disabled="userInfo.current_plan?.plan_code === plan.plan_code"
                 style="height: 40px"
