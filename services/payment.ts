@@ -32,8 +32,7 @@ export const checkTransactionStatus = async (transactionId: string) => {
 
 export const sendLeadInformation = async (name: string, email: string, phone: string, nameCompany: string, transactionId: string) => {
     try {
-        const url = `http://localhost:8000/api/payment/lead_information?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}&name_company=${encodeURIComponent(nameCompany)}&transaction_id=${encodeURIComponent(transactionId)}`;
-        // const url = `${useBEEndpoint(PAYMENT_ENDPOINTS.leadInformation.endpoint)}?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}&name_company=${encodeURIComponent(nameCompany)}&transaction_id=${encodeURIComponent(transactionId)}`;
+        const url = `${useBEEndpoint(PAYMENT_ENDPOINTS.leadInformation.endpoint)}?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}&name_company=${encodeURIComponent(nameCompany)}&transaction_id=${encodeURIComponent(transactionId)}`;
         const response = await axios.post(url, {}, {
             headers: {
                 'accept': 'application/json',
