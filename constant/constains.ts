@@ -112,8 +112,12 @@ export const LABEL_PERMISSION_PLAN = {
     label: "Tìm kiếm báo cáo không giới hạn",
     icon: "SearchFilled"
   },
+  viewReportDetailFree: {
+    label: "Truy cập kho báo cáo miễn phí không giới hạn",
+    icon: "ProjectorScreenChart"
+  },
   viewReportPro: {
-    label: "Xem báo cáo chi tiết",
+    label: "Xem chi tiết số liệu báo cáo:",
     icon: "Docs",
     sub: {
       summary: "Số liệu tổng quan",
@@ -165,20 +169,20 @@ export const PLANS: Array<IPLAN> = [
     price: "Miễn phí",
     unit: undefined,
     permissions: [
-      {
-        ...LABEL_PERMISSION_PLAN.searchReport
-      }
+        LABEL_PERMISSION_PLAN.searchReport,
+        LABEL_PERMISSION_PLAN.viewReportDetailFree,
     ]
   },
   {
     type: "Basic",
     plan_code: "e_basic",
-    description: "Phù hợp nhu cầu phân tích chuyên sâu",
+    description: "Xem số liệu tổng quan về thị trường",
     price: "5000000",
     unit: "năm",
     isHighlight: true,
     permissions: [
       LABEL_PERMISSION_PLAN.searchReport,
+      LABEL_PERMISSION_PLAN.viewReportDetailFree,
       {
         ...LABEL_PERMISSION_PLAN.viewReportBasic,
         sub: Object.values(LABEL_PERMISSION_PLAN.viewReportBasic.sub)
@@ -193,11 +197,12 @@ export const PLANS: Array<IPLAN> = [
     type: "Pro",
     plan_code: "e_pro",
     description: "Phù hợp nhu cầu phân tích chuyên sâu",
-    price: "7900000",
+    price: "8000000",
     unit: "năm",
     isHighlight: true,
     permissions: [
       LABEL_PERMISSION_PLAN.searchReport,
+      LABEL_PERMISSION_PLAN.viewReportDetailFree,
       {
         ...LABEL_PERMISSION_PLAN.viewReportPro,
         sub: Object.values(LABEL_PERMISSION_PLAN.viewReportPro.sub)
@@ -291,7 +296,8 @@ export const TERM_AND_POLICIES = [
 
 export const COMPANY_INFOS = {
   name: "CÔNG TY CỔ PHẦN KHOA HỌC DỮ LIỆU",
-  address: "Tầng 6 Tòa nhà AZ Lâm Viên, 107A Nguyễn Phong Sắc, phường Dịch Vọng Hậu, quận Cầu Giấy, thành phố Hà Nội, Việt Nam",
+  address: "Địa điểm kinh doanh: Tầng 4 Tòa nhà HH2, Dương Đình Nghệ, phường Yên Hoà, quận Cầu Giấy, thành phố Hà Nội",
+  base: "Trụ sở ĐKKD: Tầng 6 Tòa nhà AZ Lâm Viên, 107A Nguyễn Phong Sắc, phường Dịch Vọng Hậu, quận Cầu Giấy, thành phố Hà Nội, Việt Nam",
   phoneNumber: "033.806.2221",
   email: "info@metric.vn"
 };
@@ -302,6 +308,14 @@ export const CONTACTS = [
     icon: "Building"
   },
   {
+    label: COMPANY_INFOS.address,
+    icon: "MapPin"
+  },
+  {
+    label: COMPANY_INFOS.base,
+    icon: "House"
+  },
+  {
     label: COMPANY_INFOS.phoneNumber,
     icon: "Phone"
   },
@@ -309,10 +323,6 @@ export const CONTACTS = [
     label: COMPANY_INFOS.email,
     icon: "Envelope"
   },
-  {
-    label: COMPANY_INFOS.address,
-    icon: "MapPin"
-  }
 ];
 
 export const PAGE_TITLES = {

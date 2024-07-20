@@ -7,6 +7,7 @@ import Building from "~/public/icons/Buildings.svg";
 import Close from "~/public/icons/Close.svg";
 import Envelope from "~/public/icons/Envelope.svg";
 import MapPin from "~/public/icons/MapPin.svg";
+import House from "~/public/icons/House.svg";
 import Menu from "~/public/icons/Menu.svg";
 import MenuBlack from "~/public/icons/Menu-Black.svg";
 import Phone from "~/public/icons/Phone.svg";
@@ -22,6 +23,7 @@ import ContactUs from "~/public/icons/Contact-Us.svg";
 import SuccessTick from "~/public/icons/Success-Tick.svg";
 import Chart from "~/public/icons/Chart.svg";
 import Docs from "~/public/icons/Docs.svg";
+import ProjectorScreenChart from "~/public/icons/ProjectorScreenChart.svg"
 import Tick from "~/public/icons/Tick.svg";
 import Unlock from "~/public/icons/Unlock.svg";
 import UnlockDocumentFailure from "~/public/icons/Unlock-Document-Failure.svg";
@@ -52,6 +54,8 @@ export type TypeIcon =
   | "SuccessTick"
   | "Chart"
   | "Docs"
+  | "ProjectorScreenChart"
+  | "House"
   | "Tick"
   | "Unlock"
   | "UnlockDocumentFailure"
@@ -73,6 +77,7 @@ const iconMappings = {
   "Close": Close,
   "Envelope": Envelope,
   "MapPin": MapPin,
+  "House": House,
   "Menu": Menu,
   "MenuBlack": MenuBlack,
   "Phone": Phone,
@@ -88,6 +93,7 @@ const iconMappings = {
   "SuccessTick": SuccessTick,
   "Chart": Chart,
   "Docs": Docs,
+  "ProjectorScreenChart": ProjectorScreenChart,
   "Tick": Tick,
   "Unlock": Unlock,
   "UnlockDocumentFailure": UnlockDocumentFailure,
