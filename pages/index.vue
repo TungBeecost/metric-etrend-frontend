@@ -67,7 +67,7 @@
             <div class="content_success"><span style="color: #E85912; font-size: 16px">Để được bảo vệ và hỗ trợ</span>
               trong quá trình xử lý thanh toán và sử dụng dịch vụ, xin vui lòng cập nhật thông tin:
             </div>
-            <payment-success-form v-if="transactionId" :transaction-id="transactionId"/>
+            <payment-success-form v-if="transactionId" :transaction-id="transactionId" @form-submitted="handdleUpdate"/>
           </div>
         </div>
       </div>
@@ -127,6 +127,10 @@ const fetchSuggest = async (value: string | null, options?: SearchReportPayload)
 };
 
 const handleOk = () => {
+  showModal.value = false;
+};
+
+const handdleUpdate = () => {
   showModal.value = false;
 };
 

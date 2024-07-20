@@ -54,7 +54,7 @@ const {data: lstReport} = await useAsyncData(fetchReport)
       <!--        </Carousel>-->
       <!--      </div>-->
       <div class="new_report">
-        <item-feature-report :reports="lstReport.slice(0, 10)"/>
+        <item-feature-report :reports="(lstReport || []).slice(0, 10)"/>
       </div>
     </div>
   </div>

@@ -26,6 +26,9 @@ const formValues = reactive<IFormPaymentValue>({
 
 const errors = useState<Partial<IFormPaymentValue>>(() => ({}));
 
+const emit = defineEmits(['formSubmitted']);
+
+
 const validateForm = async () => {
   errors.value = {};
 
@@ -52,11 +55,15 @@ const validateForm = async () => {
     errorValues.companyName = ERRORS.NOT_EMPTY("tên công ty");
   }
 
-  try {
-    const response =  await submitLeadInformation(information.name, information.email, information.phone, information.companyName, props.transactionId);
-    console.log('response', response);
-  } catch (error) {
-    console.error('error', error);
+  if (Object.keys(errorValues).length === 0) {
+    try {
+      const response = await submitLeadInformation(information.name, information.email, information.phone, information.companyName, props.transactionId);
+      console.log('response', response);
+      // Emit formSubmitted event only if submission is successful
+      emit('formSubmitted', "formSubmitted");
+    } catch (error) {
+      console.error('error', error);
+    }
   }
 };
 

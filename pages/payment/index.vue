@@ -112,7 +112,7 @@ const plan = computed(() => PLANS.find(p => p.plan_code === planCode.value));
 onMounted(() => {
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
-  redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/`;
+  redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}`;
 });
 
 const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an underscore or remove it if not needed
