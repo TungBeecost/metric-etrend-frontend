@@ -95,7 +95,7 @@ const toggleUnlock = () => {
 
       <div class="title">{{ title }}</div>
       <div class="subtitle">{{ subtitle }}</div>
-      <div>
+      <div v-if="okButton">
         <a-button class="register-btn" :size="isDesktop ? 'large' : 'default'" type="primary" @click="handleButtonClick">
           {{ okButton }}
         </a-button>

@@ -5,10 +5,7 @@ import {formatSortTextCurrency, getUrlImageOption, goToUrl} from "~/helpers/util
 import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
 import {useCurrentUser} from "~/stores/current-user.js";
 
-const currentUserStore = useCurrentUser();
 const config = useRuntimeConfig();
-
-const {userInfo} = storeToRefs(currentUserStore);
 
 const props = defineProps({
   data: {
@@ -25,13 +22,11 @@ const props = defineProps({
   },
 });
 
-console.log(props.isHide);
-
 const isHideContentBasic = computed(() => {
   if (config.public.SSR === 'true') {
     return false
   }
-  return userInfo.value?.current_plan?.plan_code !== 'e_pro';
+  return props.data?.tier_report !== 'e_pro';
 });
 
 const formatNumber = (value = "") => value.toLocaleString("vi-VN");
@@ -47,7 +42,6 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
       id="top-shop"
       class="border statistic-block mb-6"
   >
-
     <div class="statistic-item__title">
       <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
            xmlns="http://www.w3.org/2000/svg">
@@ -191,9 +185,12 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
           </div>
         </template>
       </a-table>
-      <ChartMask v-if="isHideContentBasic"
-                 :subtitle="props.isHide ? 'Nâng cấp để xem chi tiết' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
-                 :ok-button="props.isHide ? 'Nâng cấp ngay' :'Xem báo cáo'" :report="data"/>
+      <ChartMask
+          v-if="isHideContentBasic"
+          :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
+          :ok-button="isHideContentBasic ? '' :'Xem báo cáo'"
+          :report="data"
+      />
     </div>
     <InsightBlock
         v-if="

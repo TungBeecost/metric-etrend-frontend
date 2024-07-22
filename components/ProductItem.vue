@@ -313,16 +313,29 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
           font-size: 14px;
           font-weight: 500;
           line-height: 22px; /* 157.143% */
+
+          margin-bottom: 8px;
         }
 
         .product-rating {
           display: flex;
           align-items: center;
 
+          color: var(--Dark-blue-dark-blue-5, #716B95);
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 14px;
           gap: 4px;
 
           svg {
             transform: translateY(-1px);
+          }
+
+          .product-rating-count {
+            color: var(--Dark-blue-dark-blue-5, #716B95);
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 14px;
           }
         }
       }
@@ -469,26 +482,25 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
   .product-name {
     -webkit-line-clamp: 1;
   }
-  .product-price-rating{
+  .product-price-rating {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 8px;
 
-    .product-rating{
+    .product-rating {
       font-size: 10px;
     }
 
-    span{
+    span {
       font-size: 10px;
     }
   }
 
-  .product-info-item{
+  .product-info-item {
     display: none;
   }
 }
-
 
 
 </style>
