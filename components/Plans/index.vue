@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue';
-import { NAVIGATIONS, PLANS } from '~/constant/constains';
+import {computed, onMounted, onUnmounted, ref} from 'vue';
+import {NAVIGATIONS, PLANS} from '~/constant/constains';
 import {formatSortTextCurrencyPlan} from "~/helpers/utils";
 
 const currentUserStore = useCurrentUser();
-const { userInfo } = storeToRefs(currentUserStore);
+const {userInfo}: any = storeToRefs(currentUserStore);
 
 defineProps<{
   isDarkTitle?: boolean,
 }>()
 
 const navigateToPayment = (planCode: string) => {
+  console.log('Navigate to payment:', planCode);
   navigateTo(`${NAVIGATIONS.payment}?plan_code=${planCode}`);
 };
 
@@ -47,13 +48,27 @@ onUnmounted(() => {
 //     console.error('Error activating plan:', error);
 //   }
 
+const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
+  console.log('getIsShowActiveButton', user_plan_code, plan_code)
+
+  if (user_plan_code === 'free') {
+    return 'Mua ngay'
+  }
+
+
+  if (user_plan_code === plan_code) {
+    return 'Đang sử dụng'
+  }
+
+  return ''
+}
 </script>
 
 <template>
   <div class="wrapper">
     <p :class="{ header: true, dark: isDarkTitle }">
       Truy cập kho dữ liệu với hàng trăm báo cáo
-      <template v-if="!isMobile"> <br/> </template>
+      <template v-if="!isMobile"><br/></template>
       và xu hướng mới nhất
     </p>
 
@@ -65,7 +80,9 @@ onUnmounted(() => {
           <div class="summary">
             <p class="planType">{{ plan.type }}</p>
             <p class="planDesc">{{ plan.description }}</p>
-            <div class="planPrice">{{ formatSortTextCurrencyPlan(plan.price) }}<span v-if="plan.unit" class="priceUnit">/{{ plan.unit }}</span>
+            <div class="planPrice">{{ formatSortTextCurrencyPlan(plan.price) }}<span v-if="plan.unit" class="priceUnit">/{{
+                plan.unit
+              }}</span>
             </div>
           </div>
 
@@ -86,15 +103,15 @@ onUnmounted(() => {
               </div>
             </div>
           </div>
-          <div v-if="userInfo.current_plan">
+          <div v-if="userInfo.current_plan?.plan_code">
             <AButton
-                v-if="!(plan.plan_code === 'free' && userInfo.current_plan?.plan_code !== 'free') && !(userInfo.current_plan?.plan_code === 'e_pro' && (plan.plan_code === 'free' || plan.plan_code === 'e_basic')) && !(userInfo.current_plan?.plan_code === 'e_basic' && plan.plan_code === 'free')"
-                :class="(userInfo.current_plan?.plan_code === plan.plan_code) || (plan.plan_code === 'free') ? 'user_plan' : 'not_user_plan'"
-                :disabled="userInfo.current_plan?.plan_code === plan.plan_code"
+                v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code)"
+                :class="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code) === 'Đang sử dụng' ? 'user_plan' : 'not_user_plan'"
+                :disabled="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code) !== 'Mua ngay'"
                 style="height: 40px"
                 @click="userInfo.id ? (userInfo.current_plan?.plan_code !== plan.plan_code ? navigateToPayment(plan.plan_code) : null) : currentUserStore.setShowPopupLogin(true)"
             >
-              {{ userInfo.current_plan?.plan_code === plan.plan_code ? 'Đang sử dụng' : 'Mua ngay' }}
+              {{ getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code) }}
             </AButton>
           </div>
         </div>
