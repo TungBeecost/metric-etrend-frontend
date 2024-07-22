@@ -3,6 +3,7 @@
 import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
 import ErrorNotification from "~/components/ContactUs/ErrorNotification.vue";
 import axios from "axios";
+import {getGlobalVariable} from "~/services/GlobalVariableService.js";
 
 const runtimeConfig = useRuntimeConfig()
 
@@ -63,7 +64,7 @@ const handleSubmitLeadForm = async () => {
   const urlCreateLead = `${runtimeConfig.public.baseMetricCrmUrl}/crm/create/lead_form`
   const userProfile = {}
   // const userProfile = authStore.userProfile
-  const variables = {}
+  const variables = getGlobalVariable();
   const utm_source = variables?.utmSource || ''
   const utm_medium = variables?.utmMedium || ''
   const utm_campaign = variables?.utmCampaign || ''
