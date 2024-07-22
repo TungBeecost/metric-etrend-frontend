@@ -227,11 +227,11 @@ export const WALLET: Array<IWALLET> = [
         label: "Momo",
         thumbnail: "/images/wallet/momo.png"
     },
-    // {
-    //     code: "vnpay",
-    //     label: "VnPay",
-    //     thumbnail: "/images/wallet/vnpay.png"
-    // }
+    {
+        code: "vnpay",
+        label: "VnPay",
+        thumbnail: "/images/wallet/vnpay.png"
+    }
     ];
 
 export const TESTIMONIAL_BRANDS = [
