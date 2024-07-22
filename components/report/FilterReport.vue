@@ -17,6 +17,7 @@ const props = defineProps({
     default: '',
   },
 });
+
 if(props.selectedCategory == ''){
   selectedOption.value = "c0000000000";
 }

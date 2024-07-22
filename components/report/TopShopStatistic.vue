@@ -25,6 +25,8 @@ const props = defineProps({
   },
 });
 
+console.log(props.isHide);
+
 const isHideContentBasic = computed(() => {
   if (config.public.SSR === 'true') {
     return false
@@ -45,6 +47,7 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
       id="top-shop"
       class="border statistic-block mb-6"
   >
+
     <div class="statistic-item__title">
       <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
            xmlns="http://www.w3.org/2000/svg">
@@ -189,8 +192,8 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
         </template>
       </a-table>
       <ChartMask v-if="isHideContentBasic"
-                 :subtitle="!props.isHide ? 'Nâng cấp để xem chi tiết' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
-                 :ok-button="!props.isHide ? 'Nâng cấp ngay' :'Xem báo cáo'" :report="data"/>
+                 :subtitle="props.isHide ? 'Nâng cấp để xem chi tiết' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
+                 :ok-button="props.isHide ? 'Nâng cấp ngay' :'Xem báo cáo'" :report="data"/>
     </div>
     <InsightBlock
         v-if="

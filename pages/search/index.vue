@@ -159,6 +159,7 @@ const handleCancel = () => {
 
 const handleSearch = async (searchValue: string, lstCategoryReportId: string[] = []) => {
   searchValueSearch.value = searchValue;
+  selectedCategory.value = '';
   current.value = 1;
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
 };
@@ -246,7 +247,7 @@ useSeoMeta({
         </template>
         <list-report v-else :class="{ 'hidden-list': isLoading, 'visible-list': !isLoading }" :data="data?.lst_report"/>
         <div class="page">
-          <a-pagination v-model:current="current" :total="data?.total" show-less-items @change="onChange" />
+          <a-pagination v-if="data?.total" v-model:current="current" :total="data?.total > 200 ? 200 : data?.total" show-less-items @change="onChange" />
         </div>
       </div>
       <div class="relate_functions">

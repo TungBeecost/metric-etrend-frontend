@@ -19,6 +19,8 @@ const props = defineProps({
   },
 });
 
+
+
 const screenWidth = ref(window?.innerWidth);
 
 const updateScreenWidth = () => {
@@ -197,6 +199,7 @@ const charts = computed(() => {
 </script>
 
 <template>
+
   <div class="general_overview">
     <div class="statistic-item__title">
       <svg width="16" height="32" viewBox="0 0 16 32" fill="none"

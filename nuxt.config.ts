@@ -5,7 +5,8 @@ import {addComponent} from "@nuxt/kit";
 
 
 export default defineNuxtConfig({
-    ssr: process.env.SSR === 'true',
+    // ssr: process.env.SSR === 'false',
+    ssr: false,
     app: {
         head: {
             title: "Metric - Nền tảng Số liệu E-commerce",
@@ -83,10 +84,11 @@ export default defineNuxtConfig({
         // Keys exposed client-side too
         public: {
             // apiBase: "http://localhost:8000",
-            // apiBase: "https://api-ereport.staging.muadee.vn",
-            apiBase: process.env.API_ENDPOINT,
+            API_ENDPOINT: "http://localhost:8000",
+            apiBase: "https://api-ereport.staging.muadee.vn",
+            // apiBase: process.env.API_ENDPOINT,
             BASE_URL: process.env.BASE_URL,
-            API_ENDPOINT: process.env.API_ENDPOINT,
+            // API_ENDPOINT: process.env.API_ENDPOINT,
             MODE: process.env.MODE,
             SSR: process.env.SSR,
         }

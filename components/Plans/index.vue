@@ -82,7 +82,7 @@ onUnmounted(() => {
                 <div v-for="subPerm in permission.sub" class="perm subPerm">
                   <CustomIcon type="Tick" :is-custom-size="true" class="permissionIcon"/>
                   <div>{{ subPerm }}</div>
-                </div>`
+                </div>
               </div>
             </div>
           </div>

@@ -79,7 +79,7 @@ const handleSubmitLeadForm = async () => {
   let note = `From: ${window.location.href}\n`
   note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
   note += `lead_source: ${mkLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}`
-
+  console.log('note', formData.value.fullName)
   const payload = {
     name: formData.value.fullName,
     phone: formData.value.phone,
@@ -130,7 +130,7 @@ const handleSubmitLeadForm = async () => {
     <div class="content default_section">
       <div class="info">
         <h2 class="header">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</h2>
-        <p class="desc">Thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến thông minh hơn.Ngay
+        <p class="desc">Thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến thông minh hơn. Ngay
           bây giờ!</p>
       </div>
 
