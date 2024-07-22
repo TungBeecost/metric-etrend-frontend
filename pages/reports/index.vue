@@ -45,8 +45,8 @@ useSeoMeta({
         <div class="title">
           <div class="content">
             <div class="report_title">Báo cáo</div>
-            <div class="description">Cung cấp thông tin chi tiết về doanh số và số sản phẩm đã bán bán hàng của các sản
-              phẩm theo từng ngành hàng trên các sàn, Cung cấp thông tin chi tiết về doanh số và số sản phẩm đã bán bán
+            <div class="description">Cung cấp thông tin chi tiết về doanh số và số sản phẩm đã bán hàng của các sản
+              phẩm theo từng ngành hàng trên các sàn, Cung cấp thông tin chi tiết về doanh số và số sản phẩm đã bán
               hàng của các sản phẩm theo từng ngành hàng trên các sàn.
             </div>
           </div>
