@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {formatCurrency} from "../../helpers/FormatHelper";
+
 const {plan} = defineProps({
   plan: {
     type: Object,
@@ -15,23 +17,23 @@ function formatPrice(price: any) {
   <div class="calculate">
     <div class="calculate_item">
       <div class="money">Số tiền</div>
-      <div class="money">{{formatPrice(plan.price)}}đ</div>
+      <div class="money">{{formatCurrency(plan.price)}}</div>
     </div>
     <div class="calculate_item">
       <div class="money">Chiết khấu</div>
-      <div class="money">-0đ</div>
+      <div class="money">0₫</div>
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Chương trình khuyến mại</div>
-      <div class="promotional_program">-0đ</div>
+      <div class="promotional_program">0₫</div>
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Áp dụng mã giảm giá</div>
-      <div class="promotional_program">-0đ</div>
+      <div class="promotional_program">0₫</div>
     </div>
     <div class="calculate_item">
       <div class="total">Thành tiền</div>
-      <div class="total_price">{{formatPrice(plan.price)}}đ</div>
+      <div class="total_price">{{formatCurrency(plan.price)}}</div>
     </div>
   </div>
 </template>
