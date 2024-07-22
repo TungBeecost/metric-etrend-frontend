@@ -3,7 +3,6 @@ import {defineProps} from 'vue';
 import PieChart from "~/components/report/PieChart.vue";
 import {formatSortTextCurrency, getUrlImageOption, goToUrl} from "~/helpers/utils.js";
 import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
-import {useCurrentUser} from "~/stores/current-user.js";
 
 const config = useRuntimeConfig();
 
