@@ -106,7 +106,7 @@ useSeoMeta({
 
         .description {
           font-size: 16px;
-          max-width: 500px;
+          max-width: 650px;
           color: #FFF;
         }
       }
@@ -173,7 +173,7 @@ useSeoMeta({
 
           .description {
             font-size: 14px;
-            width: 400px;
+            width: 650px;
           }
         }
       }
@@ -211,7 +211,7 @@ useSeoMeta({
 
           .description {
             font-size: 12px;
-            width: 300px;
+            width: 550px;
           }
         }
       }
