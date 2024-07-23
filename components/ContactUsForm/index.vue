@@ -220,7 +220,7 @@ const validateForm = async () => {
     organization_name: formData.organization_name,
     note,
     label_init: 'Nóng',
-    source_name: 'Website',
+    source_name: 'Report Free',
     campaign: 'Đăng ký dùng thử',
     additional_info: {
       ...variables,
