@@ -59,6 +59,10 @@ const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
     return 'Mua ngay'
   }
 
+  if(!user_plan_code){
+    return 'Mua ngay'
+  }
+
   return ''
 }
 </script>
@@ -102,7 +106,6 @@ const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
               </div>
             </div>
           </div>
-          <div v-if="userInfo.current_plan?.plan_code">
             <AButton
                 v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code)"
                 :class="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code) === 'Đang sử dụng' ? 'user_plan' : 'not_user_plan'"
@@ -112,7 +115,6 @@ const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
             >
               {{ getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code) }}
             </AButton>
-          </div>
         </div>
       </div>
     </div>
