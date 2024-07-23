@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted, onUnmounted, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import 'vue3-carousel/dist/carousel.css';
 import dayjs from "dayjs";
 import {NAVIGATIONS} from "~/constant/constains";
@@ -23,22 +23,11 @@ const handleItemClick = (report: any) => {
 
 const windowWidth = ref(1024);
 
-const onResize = () => {
-  windowWidth.value = window?.innerWidth;
-};
-
-// onMounted(() => {
-//   if (typeof window !== 'undefined') {
-//     windowWidth.value = window?.innerWidth;
-//     window.addEventListener('resize', onResize);
-//   }
-// });
-//
-// onUnmounted(() => {
-//   if (typeof window !== 'undefined') {
-//     window.removeEventListener('resize', onResize);
-//   }
-// });
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    windowWidth.value = window.innerWidth;
+  }
+});
 
 const itemsToShow = computed(() => {
   return windowWidth.value < 768 ? 1 : 4;
@@ -218,6 +207,9 @@ const itemsToShow = computed(() => {
             flex-wrap: wrap;
             gap: 4px;
             font-size: 16px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             span {
               font-weight: bold;

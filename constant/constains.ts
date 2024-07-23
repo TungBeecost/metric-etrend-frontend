@@ -196,7 +196,7 @@ export const PLANS: Array<IPLAN> = [
   {
     type: "Pro",
     plan_code: "e_pro",
-    description: "Phù hợp nhu cầu phân tích chuyên sâu",
+    description: "Xem số liệu chi tiết về thị trường",
     price: "9000000",
     unit: "năm",
     isHighlight: true,

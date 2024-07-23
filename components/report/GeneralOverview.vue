@@ -19,21 +19,11 @@ const props = defineProps({
   },
 });
 
-
-
 const screenWidth = ref(window?.innerWidth);
 
-const updateScreenWidth = () => {
-  screenWidth.value = window?.innerWidth;
-};
-
-// onMounted(() => {
-//   window.addEventListener('resize', updateScreenWidth);
-// });
-//
-// onUnmounted(() => {
-//   window.removeEventListener('resize', updateScreenWidth);
-// });
+onMounted(() => {
+  screenWidth.value = window.innerWidth;
+});
 
 const hightestMonthRevenue = computed(() => {
   const {lst_revenue_sale_monthly} = props.data.data_analytic.by_overview;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted, onUnmounted, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import 'vue3-carousel/dist/carousel.css';
 import {NAVIGATIONS} from "~/constant/constains";
 import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper";
@@ -23,24 +23,11 @@ const handleItemClick = (report: any) => {
 
 const windowWidth = ref(1024);
 
-const onResize = () => {
+onMounted(() => {
   if (typeof window !== 'undefined') {
-    windowWidth.value = window?.innerWidth;
+    windowWidth.value = window.innerWidth;
   }
-};
-
-// onMounted(() => {
-//   if (typeof window !== 'undefined') {
-//     windowWidth.value = window?.innerWidth;
-//     window.addEventListener('resize', onResize);
-//   }
-// });
-//
-// onUnmounted(() => {
-//   if (typeof window !== 'undefined') {
-//     window.removeEventListener('resize', onResize);
-//   }
-// });
+});
 
 const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
   return moment(value, inputFormat).format(format);
@@ -230,9 +217,11 @@ const itemsToShow = computed(() => {
             align-items: center;
             color: #716b95;
             display: flex;
-            flex-wrap: wrap;
             gap: 4px;
             font-size: 16px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             span {
               font-weight: bold;

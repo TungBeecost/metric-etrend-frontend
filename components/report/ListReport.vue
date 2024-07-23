@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {defineProps, ref} from 'vue'
+import {defineProps, onMounted, ref} from 'vue'
 import {NAVIGATIONS} from "~/constant/constains";
 import BlurContent from "~/components/BlurContent.vue";
 import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper";
@@ -12,23 +12,16 @@ const props = defineProps({
   },
 });
 
-const windowWidth = ref(window?.innerWidth);
 
 const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFormat: string = "YYYY-MM-DD[T]HH:mm:ss"): string => {
   return moment(value, inputFormat).format(format);
 }
 
-const onResize = () => {
-  windowWidth.value = window?.innerWidth;
-};
+const windowWidth = ref(window.innerWidth);
 
-// onMounted(() => {
-//   window.addEventListener('resize', onResize);
-// });
-//
-// onUnmounted(() => {
-//   window.removeEventListener('resize', onResize);
-// });
+onMounted(() => {
+  windowWidth.value = window.innerWidth;
+});
 
 const getDisplayedCategories = (item: any) => {
   if (windowWidth.value < 768) {

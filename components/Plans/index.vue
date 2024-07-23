@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted, onUnmounted, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import {NAVIGATIONS, PLANS} from '~/constant/constains';
 import {formatSortTextCurrencyPlan} from "~/helpers/utils";
 
@@ -15,39 +15,13 @@ const navigateToPayment = (planCode: string) => {
   navigateTo(`${NAVIGATIONS.payment}?plan_code=${planCode}`);
 };
 
-const windowWidth = ref(window?.innerWidth);
-
 const isMobile = computed(() => windowWidth?.value < 768);
 
-const onResize = () => {
-  windowWidth.value = window?.innerWidth;
-};
+const windowWidth = ref(window.innerWidth);
 
-// onMounted(() => {
-//   window.addEventListener('resize', onResize);
-// });
-//
-// onUnmounted(() => {
-//   window.removeEventListener('resize', onResize);
-// });
-
-// const activatePlan = async (planCode: string) => {
-//   try {
-//     if (planCode === 'e_community') {
-//       const response = await axios.get('http://127.0.0.1:8080/api/plan/enable_package_community', {
-//         headers: {
-//           'accept': 'application/json',
-//         },
-//       });
-//       console.log('Activation response:', response.data);
-//     } else {
-//       // Handle other plan codes as needed
-//     }
-//     await currentUserStore.fetchCurrentUser();
-//   } catch (error) {
-//     console.error('Error activating plan:', error);
-//   }
-
+onMounted(() => {
+  windowWidth.value = window.innerWidth;
+});
 const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
   console.log('getIsShowActiveButton', user_plan_code, plan_code)
 

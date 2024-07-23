@@ -21,33 +21,22 @@ const props = defineProps({
   }
 });
 
-const windowWidth = ref(window?.innerWidth);
+// Initialize windowWidth with a default value
+const windowWidth = ref(1024);
 
-const updateWindowWidth = () => {
-  console.log('updateWindowWidth', window?.innerWidth);
-  windowWidth.value = window?.innerWidth;
-};
-
-// Step 3: Use a computed property for chart width
-const chartWidth = computed(() => {
-  if (windowWidth?.value < 1500) {
-    return 400
-  }
-
-  if (windowWidth?.value < 1200) {
-    return 300
-  }
-
-  return 500
+onMounted(() => {
+  windowWidth.value = window.innerWidth;
 });
 
-// onMounted(() => {
-//   window.addEventListener('resize', updateWindowWidth);
-// });
-//
-// onUnmounted(() => {
-//   window.removeEventListener('resize', updateWindowWidth);
-// });
+const chartWidth = computed(() => {
+  if (windowWidth.value < 1200) {
+    return 300;
+  } else if (windowWidth.value < 1500) {
+    return 400;
+  } else {
+    return 500;
+  }
+});
 
 const chartOptions = ref(null);
 
