@@ -84,8 +84,9 @@ const onChange = async (page: number) => {
   .detailed_reports_viewed_header{
     flex-direction: row;
   }
-  .detailed_reports_viewed_content {
-    padding-top: 40px;
+
+  .page{
+    padding-bottom: 0;
   }
 }
 
