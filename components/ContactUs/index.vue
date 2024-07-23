@@ -10,7 +10,6 @@ const currentUserStore = useCurrentUser();
 
 const {userInfo} = storeToRefs(currentUserStore);
 
-const runtimeConfig = useRuntimeConfig()
 
 const rules = {
   fullName: [{required: true, message: 'Vui lòng nhập họ và tên', trigger: ['blur', 'change']}],
@@ -55,7 +54,7 @@ const formData = useState('LandingPage.formData', () => ({
   email: '',
   phone: undefined,
   company: '',
-  mktLeadSource: '',
+  mktLeadSource: undefined,
   mktUserDemand: undefined,
   mktCompanyType: undefined
 }))
