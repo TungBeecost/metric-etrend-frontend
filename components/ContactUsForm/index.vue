@@ -201,7 +201,7 @@ const validateForm = async () => {
   const utm_term = variables?.utm_term || ''
   const utm_content = variables?.utm_content || ''
   const url_referrer = variables?.url_referrer || ''
-  const is_mobile = variables?.is_mobile || ''
+  const is_mobile = !!variables?.is_mobile
   const pub = variables?.pub || ''
   const emailProfile = formData.email || userInfo.value?.email || ''
   const first_visit = localStorage.getItem('first_visit') || ''
@@ -210,7 +210,7 @@ const validateForm = async () => {
   const mkCompanyType = formData.companyType || ''
   let note = `From: ${window.location.href}\n`
   note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
-  note += `lead_source: ${mkLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\nis_mobile=${is_mobile}`
+  note += `lead_source: ${mkLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\ndevice: ${is_mobile ? 'mobile' : 'desktop'}`
   console.log('note', formData.name)
 
   const payload = {
