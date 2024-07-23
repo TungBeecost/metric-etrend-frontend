@@ -45,9 +45,9 @@ useSeoMeta({
         <div class="title">
           <div class="content">
             <div class="report_title">Báo cáo</div>
-            <div class="description">Cung cấp thông tin chi tiết về doanh số và số sản phẩm đã bán hàng của các sản
-              phẩm theo từng ngành hàng trên các sàn, Cung cấp thông tin chi tiết về doanh số và số sản phẩm đã bán
-              hàng của các sản phẩm theo từng ngành hàng trên các sàn.
+            <div class="description">Cung cấp thông tin tổng quan và chi tiết về số liệu thị trường như doanh số, sản
+              lượng bán, số lượng sản phẩm, số lượng gian hàng, tỷ trọng theo các tiêu chí, xu hướng tăng trưởng... theo
+              ngành hàng, nhóm hàng trên các sàn thương mại điện tử tại Việt Nam.
             </div>
           </div>
           <div class="new_report">
