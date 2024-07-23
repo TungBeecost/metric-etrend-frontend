@@ -20,7 +20,7 @@ const initTracking = () => {
     if (shouldTrack()) {
         let variables = getGlobalVariable()
         if (variables?.user_id) {
-            gtag('set', {'user_id': variables.user_id});
+            // gtag('set', {'user_id': variables.user_id});
             mixpanel?.identify?.(variables.user_id);
             window?.clarity?.("identify", variables.user_id)
         }
@@ -41,7 +41,7 @@ const initTracking = () => {
             is_mobile: variables?.is_mobile,
             // first_visit: variables?.first_visit,
         }
-        gtag('set', 'user_properties', optionsDefault)
+        // gtag('set', 'user_properties', optionsDefault)
         mixpanel?.people?.set?.(optionsDefault)
         mixpanel?.people?.set_once?.({first_visit: variables?.first_visit})
     }
