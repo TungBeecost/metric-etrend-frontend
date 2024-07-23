@@ -39,6 +39,12 @@ import {ERRORS} from "~/constant/errors";
 import {EMAIL_REGEX, PHONE_REGEX} from "~/helpers/regexs";
 import type {TypeModal} from "~/components/modal/status/index.vue";
 import axios from "axios";
+import {getGlobalVariable} from "~/services/GlobalVariableService";
+import {useCurrentUser} from "~/stores/current-user";
+
+const currentUserStore = useCurrentUser();
+
+const {userInfo}: any = storeToRefs(currentUserStore);
 
 const {handleSubmitSuccess} = defineProps<{
   submitLabel?: string;
@@ -140,56 +146,67 @@ const toggleModal = () => {
 const validateForm = async () => {
   errors.value = {};
 
-  const information = formValues;
+  const formData = formValues;
   const errorValues = errors.value;
 
-  if (!information.name) {
+  if (!formData.name) {
     errorValues.name = ERRORS.NOT_EMPTY("họ và tên");
   }
 
-  if (information.email && !information.email.match(EMAIL_REGEX)) {
+  if (formData.email && !formData.email.match(EMAIL_REGEX)) {
     errorValues.email = ERRORS.WRONG_TYPE_INPUT("email");
   }
 
-  if (!information.phone) {
+  if (!formData.phone) {
     errorValues.phone = ERRORS.NOT_EMPTY("số điện thoại");
-  } else if (!PHONE_REGEX.test(information.phone)) {
+  } else if (!PHONE_REGEX.test(formData.phone)) {
     errorValues.phone = ERRORS.WRONG_TYPE_INPUT("số điện thoại");
   }
 
-  if (!information.category) {
+  if (!formData.category) {
     errorValues.category = ERRORS.NEED_CHOOSE_ONE("ngành hàng");
   }
 
   if (Object.keys(errorValues).length > 0) return;
+  const variables: any = await getGlobalVariable();
 
+  const utm_source = variables?.utm_source || ''
+  const utm_medium = variables?.utm_medium || ''
+  const utm_campaign = variables?.utm_campaign || ''
+  const utm_term = variables?.utm_term || ''
+  const utm_content = variables?.utm_content || ''
+  const url_referrer = variables?.url_referrer || ''
+  const pub = variables?.pub || ''
+  const emailProfile = formData.email || userInfo.value?.email || ''
+  const first_visit = localStorage.getItem('first_visit') || ''
+  const mkLeadSource = [formData.socialMediaType]
+  const mkUserDemand = formData.category || ''
+  const mkCompanyType = formData.companyType || ''
+  let note = `From: ${window.location.href}\n`
+  note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
+  note += `lead_source: ${mkLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}`
+  console.log('note', formData.name)
+
+  const payload = {
+    name: formData.name,
+    phone: formData.phone,
+    email: formData.email,
+    organization_name: formData.organization_name,
+    note,
+    label_init: 'Nóng',
+    source_name: 'Website',
+    campaign: 'Đăng ký dùng thử',
+    additional_info: {
+      ...variables,
+      mkLeadSource,
+      mkUserDemand,
+      mkCompanyType
+    },
+  }
   try {
     const response = await axios.post(
         "https://api-crm.metric.vn/crm/create/lead_form",
-        {
-          name: information.name,
-          email: information.email,
-          phone: information.phone,
-          organization_name: information.organization_name,
-          note: `from: ${information.additional_info.url}\nfirst_visit: ${information.additional_info.firstVisit}\npub: ${information.additional_info.routeName}\nutm_medium: ${information.additional_info.utmMedium}\nutm_campaign: ${information.additional_info.utmCampaign}\nurl_referrer: ${information.additional_info.urlReferrer}\nnlead_source: ${information.socialMediaType}\nuser_demand: ${information.category}\ncompany_type: ${information.companyType}`,
-          label_init: information.label_init,
-          source_name: information.source_name,
-          campaign: information.campaign,
-          additional_info: {
-            urlReferrer: information.additional_info.urlReferrer,
-            url: information.additional_info.url,
-            routeName: information.additional_info.routeName,
-            utmMedium: information.additional_info.utmMedium,
-            utmCampaign: information.additional_info.utmCampaign,
-            isMobile: information.additional_info.isMobile,
-            firstVisit: information.additional_info.firstVisit,
-            mkLeadSource: [
-              information.socialMediaType,
-            ],
-            mkUserDemand: information.category,
-            mkUserDemandmkUserDemand: information.companyType,
-          },
-        },
+        payload,
         {
           headers: {
             "Content-Type": "application/json",
