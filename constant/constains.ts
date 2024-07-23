@@ -129,7 +129,7 @@ export const LABEL_PERMISSION_PLAN = {
     }
   },
   viewReportBasic: {
-    label: "Xem báo cáo chi tiết",
+    label: "Xem chi tiết số liệu báo cáo:",
     icon: "Docs",
     sub: {
       summary: "Số liệu tổng quan",

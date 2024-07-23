@@ -27,11 +27,6 @@ const updateWindowWidth = () => {
   windowWidth.value = window?.innerWidth;
 };
 
-// Step 3: Use a computed property for chart width
-const chartWidth = computed(() => {
-  return windowWidth?.value < 768 ? 300 : 600;
-});
-
 onMounted(() => {
   window.addEventListener('resize', updateWindowWidth);
 });
