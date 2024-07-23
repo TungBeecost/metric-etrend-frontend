@@ -48,22 +48,6 @@ export default defineNuxtConfig({
                     defer: true,
                 },
                 {
-                    src: "https://www.googletagmanager.com/gtag/js?id=G-ZKB4FV08G9",
-                    async: true,
-                },
-                {
-                    hid: "gtag",
-                    innerHTML: `
-                        window.dataLayer = window.dataLayer || [];
-                        function gtag(){dataLayer.push(arguments);}
-                        gtag('js', new Date());
-            
-                        gtag('config', 'G-ZKB4FV08G9');
-                    `,
-                    type: "text/javascript",
-                    // charset: "utf-8",
-                },
-                {
                     src: "https://accounts.google.com/gsi/client",
                 }
             ],
