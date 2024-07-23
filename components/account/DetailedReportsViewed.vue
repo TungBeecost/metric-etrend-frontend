@@ -35,7 +35,7 @@ const onChange = async (page: number) => {
       <div class="detailed_reports_viewed_header_title">Báo cáo chi tiết đã xem</div>
     </div>
     <div class="detailed_reports_viewed_content default_section">
-      <div v-if="props.data?.length" style="display: flex; flex-direction: column; gap: 24px">
+      <div v-if="props.data?.length" style="display: flex; flex-direction: column; gap: 24px; margin: 24px">
         <list-report :data="props.data"/>
         <div class="page">
           <a-pagination v-model:current="current" :total="props.total" show-less-items @change="onChange" />
