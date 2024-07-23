@@ -66,9 +66,9 @@ const toggleUnlock = () => {
           <div class="header">Xác nhận xem báo cáo</div>
           <div class="description">
             Bạn có chắc chắn muốn sử dụng
-            <span class="highlight">01 lượt xem</span>
+            <span class="highlight" style="font-size: 16px">01 lượt xem</span>
             trong vòng 24 giờ cho
-            <span class="report-name">
+            <span class="report-name" style="font-size: 16px">
               {{ report.name }} - Báo cáo xu hướng thị trường sàn TMĐT
             </span>
             không?
