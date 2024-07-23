@@ -215,7 +215,7 @@ useSeoMeta({
       <div class="list_report_industry">
         <div class="general">
           <div v-if="data?.total" class="count_result">
-              {{ (data?.total > 2000 ? 2000 : data?.total || 0).toLocaleString() }} kết quả
+              {{ (data?.total > 200 ? 190 : data?.total || 0).toLocaleString() }} kết quả
           </div>
           <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect" />
           <a-button v-else style="border: 1px solid #9D97BF" @click="clickButtonFilter">
@@ -250,7 +250,7 @@ useSeoMeta({
         </template>
         <list-report v-else :class="{ 'hidden-list': isLoading, 'visible-list': !isLoading }" :data="data?.lst_report"/>
         <div class="page">
-          <a-pagination v-if="data?.total" v-model:current="current" :total="data?.total > 200 ? 200 : data?.total" show-less-items @change="onChange" />
+          <a-pagination v-if="data?.total" v-model:current="current" :total="data?.total > 200 ? 190 : data?.total" show-less-items @change="onChange" />
         </div>
       </div>
       <div class="relate_functions">
