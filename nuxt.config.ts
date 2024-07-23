@@ -49,7 +49,7 @@ export default defineNuxtConfig({
                     defer: true,
                 },
                 {
-                    src: "https://www.googletagmanager.com/gtag/js?id=G-J9J8G873G4",
+                    src: "https://www.googletagmanager.com/gtag/js?id=G-ZKB4FV08G9",
                     async: true,
                 },
                 {
@@ -59,7 +59,7 @@ export default defineNuxtConfig({
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
             
-                        gtag('config', 'G-J9J8G873G4');
+                        gtag('config', 'G-ZKB4FV08G9');
                     `,
                     type: "text/javascript",
                     // charset: "utf-8",
