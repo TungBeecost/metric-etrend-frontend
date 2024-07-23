@@ -89,6 +89,11 @@ export default defineNuxtConfig({
             BASE_URL: process.env.BASE_URL,
             MODE: process.env.MODE,
             SSR: process.env.SSR,
+            public: {
+                gtm: {
+                    id: 'GTM-MLBXG49P'
+                }
+            }
         }
     },
     typescript: {
@@ -128,6 +133,7 @@ export default defineNuxtConfig({
         "@nuxtjs/device",
         "@nuxt/image",
         "vue3-carousel-nuxt",
+        '@zadigetvoltaire/nuxt-gtm',
         ["nuxt-highcharts", {}],
         async function () {
             for (const key in AntD) {
@@ -146,5 +152,8 @@ export default defineNuxtConfig({
     ],
     antd: {
         extractStyle: true
+    },
+    gtm: {
+        id: 'GTM-MLBXG49P'
     }
 });
