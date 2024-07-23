@@ -18,6 +18,10 @@ const {reports, loading} = defineProps({
 });
 
 const handleItemClick = (report: any) => {
+  if (report.source === 'marketing') {
+    navigateTo(`${NAVIGATIONS.home}/insight/${report.slug}`);
+    return
+  }
   navigateTo(`${NAVIGATIONS.home}${report.slug}`);
 };
 
