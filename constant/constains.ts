@@ -177,7 +177,7 @@ export const PLANS: Array<IPLAN> = [
     type: "Basic",
     plan_code: "e_basic",
     description: "Xem số liệu tổng quan về thị trường",
-    price: "5000000",
+    price: "6000000",
     unit: "năm",
     isHighlight: true,
     permissions: [
@@ -197,7 +197,7 @@ export const PLANS: Array<IPLAN> = [
     type: "Pro",
     plan_code: "e_pro",
     description: "Phù hợp nhu cầu phân tích chuyên sâu",
-    price: "8000000",
+    price: "9000000",
     unit: "năm",
     isHighlight: true,
     permissions: [
