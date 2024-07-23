@@ -29,7 +29,15 @@ const updateWindowWidth = () => {
 
 // Step 3: Use a computed property for chart width
 const chartWidth = computed(() => {
-  return windowWidth?.value < 1500 ? 300 : 600;
+  if (windowWidth?.value < 1500) {
+    return 400
+  }
+
+  if (windowWidth?.value < 1200) {
+    return 300
+  }
+
+  return 500
 });
 
 onMounted(() => {
