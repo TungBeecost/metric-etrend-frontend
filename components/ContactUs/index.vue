@@ -4,6 +4,11 @@ import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue"
 import ErrorNotification from "~/components/ContactUs/ErrorNotification.vue";
 import axios from "axios";
 import {getGlobalVariable} from "~/services/GlobalVariableService.js";
+import {useCurrentUser} from "~/stores/current-user";
+
+const currentUserStore = useCurrentUser();
+
+const {userInfo} = storeToRefs(currentUserStore);
 
 const runtimeConfig = useRuntimeConfig()
 
@@ -61,26 +66,28 @@ const isSubmitFormLoading = useState('LandingPage.isSubmitFormLoading', () => fa
 
 const handleSubmitLeadForm = async () => {
   isSubmitFormLoading.value = true
-  const urlCreateLead = `${runtimeConfig.public.baseMetricCrmUrl}/crm/create/lead_form`
-  const userProfile = {}
   // const userProfile = authStore.userProfile
-  const variables = getGlobalVariable();
-  const utm_source = variables?.utmSource || ''
-  const utm_medium = variables?.utmMedium || ''
-  const utm_campaign = variables?.utmCampaign || ''
-  const utm_term = variables?.utmTerm || ''
-  const utm_content = variables?.utmContent || ''
-  const url_referrer = variables?.urlReferrer || ''
+  const variables = await getGlobalVariable();
+
+  console.log('variables', variables);
+
+  const utm_source = variables?.utm_source || ''
+  const utm_medium = variables?.utm_medium || ''
+  const utm_campaign = variables?.utm_campaign || ''
+  const utm_term = variables?.utm_term || ''
+  const utm_content = variables?.utm_content || ''
+  const url_referrer = variables?.url_referrer || ''
   const pub = variables?.pub || ''
-  const emailProfile = userProfile?.email || ''
+  const emailProfile = formData.email || userInfo.value?.email || ''
   const first_visit = localStorage.getItem('first_visit') || ''
-  const mkLeadSource = formData.value.mktLeadSource || '[]'
-  const mkUserDemand = formData.value.mktUserDemand || ''
-  const mkCompanyType = formData.value.mktCompanyType || ''
+  const mkLeadSource = [formData.socialMediaType]
+  const mkUserDemand = formData.category || ''
+  const mkCompanyType = formData.companyType || ''
   let note = `From: ${window.location.href}\n`
   note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
   note += `lead_source: ${mkLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}`
-  console.log('note', formData.value.fullName)
+  console.log('note', formData.name)
+
   const payload = {
     name: formData.value.fullName,
     phone: formData.value.phone,

@@ -1,26 +1,53 @@
 <template>
   <div class="wrapperLeadForm">
     <div class="information">
-      <CustomInput v-model:input="formValues.name" label="Họ và tên" :error-message="errors.name" :is-required="true"
-                   :input-props="{ placeholder: 'Nhập họ và tên' }" class="infoBlock"/>
+      <CustomInput
+          v-model:input="formValues.name"
+          label="Họ và tên"
+          :error-message="errors.name"
+          :is-required="true"
+          :input-props="{ placeholder: 'Nhập họ và tên' }"
+          class="infoBlock"
+      />
       <div class="infoBlock contactInfo">
-        <CustomInput v-model:input="formValues.email" class="contactItem" :error-message="errors.email" label="Email"
-                     :input-props="{ placeholder: 'example@gmail.com', type: 'email' }"/>
-        <CustomInput v-model:input="formValues.phone" class="contactItem" :error-message="errors.phone"
-                     label="Số điện thoại" :is-required="true" :input-props="{ placeholder: 'Nhập SĐT' }"/>
+        <CustomInput
+            v-model:input="formValues.email"
+            class="contactItem"
+            :error-message="errors.email"
+            label="Email"
+            :is-required="true"
+            :input-props="{ placeholder: 'example@gmail.com', type: 'email' }"
+        />
+        <CustomInput
+            v-model:input="formValues.phone"
+            class="contactItem"
+            :error-message="errors.phone"
+            label="Số điện thoại"
+            :is-required="true"
+            :input-props="{ placeholder: 'Nhập SĐT' }"
+        />
       </div>
-      <CustomSelect v-model:select="formValues.category" :error-message="errors.category" label="Ngành hàng quan tâm"
-                    :is-required="true"
-                    :select-props="{ placeholder: 'Chọn ngành hàng', showSearch: true, options: CATEGORIES, filterOption: filterSelectOption as any }"
-                    class="infoBlock"/>
-      <CustomSelect v-model:select="formValues.companyType" label="Mô hình doanh nghiệp"
-                    :error-message="errors.companyType"
-                    :select-props="{ placeholder: 'Chọn mô hình doanh nghiệp', showSearch: true, options: COMPANY_TYPES, filterOption: filterSelectOption as any }"
-                    class="infoBlock"/>
-      <CustomSelect v-model:select="formValues.socialMediaType" label="Bạn biết tới Metric từ kênh nào?"
-                    :error-message="errors.socialMediaType"
-                    :select-props="{ placeholder: 'Chọn kênh', showSearch: true, options: SOCIAL_MEDIA_TYPES, filterOption: filterSelectOption as any }"
-                    class="infoBlock"/>
+      <CustomSelect
+          v-model:select="formValues.category"
+          :error-message="errors.category"
+          label="Ngành hàng quan tâm"
+          :select-props="{ placeholder: 'Chọn ngành hàng', showSearch: true, options: CATEGORIES, filterOption: filterSelectOption as any }"
+          class="infoBlock"
+      />
+      <CustomSelect
+          v-model:select="formValues.companyType"
+          label="Mô hình doanh nghiệp"
+          :error-message="errors.companyType"
+          :select-props="{ placeholder: 'Chọn mô hình doanh nghiệp', showSearch: true, options: COMPANY_TYPES, filterOption: filterSelectOption as any }"
+          class="infoBlock"
+      />
+      <CustomSelect
+          v-model:select="formValues.socialMediaType"
+          label="Bạn biết tới Metric từ kênh nào?"
+          :error-message="errors.socialMediaType"
+          :select-props="{ placeholder: 'Chọn kênh', showSearch: true, options: SOCIAL_MEDIA_TYPES, filterOption: filterSelectOption as any }"
+          class="infoBlock"
+      />
     </div>
     <AButton style="height: 40px" type="primary" :class="submitClass" @click="validateForm">{{
         submitLabel || "Gửi"
@@ -153,7 +180,9 @@ const validateForm = async () => {
     errorValues.name = ERRORS.NOT_EMPTY("họ và tên");
   }
 
-  if (formData.email && !formData.email.match(EMAIL_REGEX)) {
+  if (!formData.email) {
+    errorValues.email = ERRORS.NOT_EMPTY("email");
+  } else if (formData.email && !formData.email.match(EMAIL_REGEX)) {
     errorValues.email = ERRORS.WRONG_TYPE_INPUT("email");
   }
 
@@ -161,10 +190,6 @@ const validateForm = async () => {
     errorValues.phone = ERRORS.NOT_EMPTY("số điện thoại");
   } else if (!PHONE_REGEX.test(formData.phone)) {
     errorValues.phone = ERRORS.WRONG_TYPE_INPUT("số điện thoại");
-  }
-
-  if (!formData.category) {
-    errorValues.category = ERRORS.NEED_CHOOSE_ONE("ngành hàng");
   }
 
   if (Object.keys(errorValues).length > 0) return;
