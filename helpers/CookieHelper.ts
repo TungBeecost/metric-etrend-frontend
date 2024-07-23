@@ -29,7 +29,7 @@ const getCookie = (name: string, defaultValue = null) => {
 const setCookie = (name: string, value: string, days = 30, path = '/') => {
   // @ts-ignore
   if (process.env.SSR !== 'true') {
-    const domain = '.' + (process.env.BASE_URL || '.ereport.metric.vn').replace('http://', '').replace('https://', '')
+    const domain = '.ereport.metric.vn';
 
     const expires = new Date(Date.now() + days * 864e5).toUTCString()
     console.log(`prepare setCookie `, name, ': ', value, '; day = ', days)
