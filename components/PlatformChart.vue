@@ -24,6 +24,7 @@ const props = defineProps({
 const windowWidth = ref(window?.innerWidth);
 
 const updateWindowWidth = () => {
+  console.log('updateWindowWidth', window?.innerWidth);
   windowWidth.value = window?.innerWidth;
 };
 
@@ -40,13 +41,13 @@ const chartWidth = computed(() => {
   return 500
 });
 
-onMounted(() => {
-  window.addEventListener('resize', updateWindowWidth);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateWindowWidth);
-});
+// onMounted(() => {
+//   window.addEventListener('resize', updateWindowWidth);
+// });
+//
+// onUnmounted(() => {
+//   window.removeEventListener('resize', updateWindowWidth);
+// });
 
 const chartOptions = ref(null);
 
