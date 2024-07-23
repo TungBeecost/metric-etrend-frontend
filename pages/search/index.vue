@@ -166,7 +166,10 @@ const handleSearch = async (searchValue: string, lstCategoryReportId: string[] =
 
 const current = ref(1);
 const onChange = async (page: number) => {
-  current.value = page;
+  current.value = page
+  if(route.query.category_report_id && typeof route.query.category_report_id === 'string') {
+    selectedCategory.value = route.query.category_report_id;
+  }
   const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page);
 };
@@ -212,7 +215,7 @@ useSeoMeta({
       <div class="list_report_industry">
         <div class="general">
           <div v-if="data?.total" class="count_result">
-            {{ (data?.total > 200 ? 200 : data?.total || 0).toLocaleString() }} kết quả
+              {{ (data?.total > 200 ? 200 : data?.total || 0).toLocaleString() }} kết quả
           </div>
           <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect" />
           <a-button v-else style="border: 1px solid #9D97BF" @click="clickButtonFilter">
