@@ -50,7 +50,7 @@ const getDisplayedCategories = (item: any) => {
             <span style="color: #EEEBFF"> | </span>
             {{ formatDate(item.start_date) }}
           </div>
-          <div class="name">{{ item.name.startsWith('Báo cáo') ? item.name : 'Báo cáo ' + item.name }}</div>
+          <div class="name">{{ item.slug.startsWith('bao-cao') ? item.name : 'Báo cáo ' + item.name }}</div>
           <div v-if="item.revenue_monthly" class="summary-info">
             <div class="info_item">
               <svg data-v-f4382b3b="" width="16" height="22" viewBox="0 0 16 22" fill="none"
