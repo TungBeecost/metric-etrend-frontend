@@ -33,6 +33,6 @@ export const fetchUserProfile = async () => {
     return result;
   } catch (error) {
     console.error("fetchUserProfile error: ", error);
-    return;
+    return {}
   }
 };

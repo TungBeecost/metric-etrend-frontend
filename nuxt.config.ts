@@ -85,10 +85,9 @@ export default defineNuxtConfig({
         public: {
             // apiBase: "http://localhost:8000",
             // API_ENDPOINT: "http://localhost:8000",
-            // apiBase: "https://api-ereport.staging.muadee.vn",
             apiBase: process.env.API_ENDPOINT,
-            BASE_URL: process.env.BASE_URL,
             API_ENDPOINT: process.env.API_ENDPOINT,
+            BASE_URL: process.env.BASE_URL,
             MODE: process.env.MODE,
             SSR: process.env.SSR,
         }
@@ -96,7 +95,14 @@ export default defineNuxtConfig({
     typescript: {
         typeCheck: true
     },
-    plugins: ["~/plugins/antd.ts", "~/plugins/vue3-carousel.client.ts"],
+    plugins: [
+        "~/plugins/antd.ts",
+        {
+            src: "~/plugins/analytics.js",
+            ssr: false
+        },
+        "~/plugins/vue3-carousel.client.ts"
+    ],
     css: [
         "~/assets/reset.css",
         "~/assets/antd.css",
