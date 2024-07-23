@@ -27,6 +27,19 @@ const updateWindowWidth = () => {
   windowWidth.value = window?.innerWidth;
 };
 
+// Step 3: Use a computed property for chart width
+const chartWidth = computed(() => {
+  if (windowWidth?.value < 1500) {
+    return 400
+  }
+
+  if (windowWidth?.value < 1200) {
+    return 300
+  }
+
+  return 500
+});
+
 onMounted(() => {
   window.addEventListener('resize', updateWindowWidth);
 });
@@ -77,7 +90,7 @@ const $t = (text) => text;
 chartOptions.value = {
   chart: {
     type: "pie",
-    width: 600,
+    width: chartWidth,
     style: {
       fontFamily: "Inter",
     },
