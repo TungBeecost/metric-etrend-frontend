@@ -145,26 +145,7 @@ chartOptions.value = {
       }
     },
     series: {
-      point: {
-        events: {
-          mouseOver: (event) => {
-            innerName.value = event.target.name;
-            innerPercent.value = `${Number(event.target.percentage).toFixed(1)}%`;
-            innerValue.value = event.target.y;
-            innerColor.value = event.target.color;
-          }
-        }
-      },
-      events: {
-        mouseOut: (_event) => {
-          const PLATFORM_TOTAL = props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL;
-          const total = PLATFORM_TOTAL.platforms.reduce((acc, item) => acc + item.revenue, 0);
-          innerName.value = PLATFORM_TOTAL.platforms[0] ? getPlatformById(PLATFORM_TOTAL.platforms[0].platform_id).name : '';
-          innerPercent.value = PLATFORM_TOTAL.platforms[0] ? parseFloat(PLATFORM_TOTAL.platforms[0].revenue / total * 100).toFixed(1) + '%' : '';
-          innerValue.value = PLATFORM_TOTAL.platforms[0] ? PLATFORM_TOTAL.platforms[0].revenue : '';
-          innerColor.value = PLATFORM_TOTAL.platforms[0] ? platformColors[getPlatformById(PLATFORM_TOTAL.platforms[0].platform_id).name] : '';
-        }
-      }
+      enableMouseTracking: false
     }
   },
   series: [
@@ -209,7 +190,7 @@ watch(() => props.analyticType, () => {
 <template>
   <div id="platform_chart" class="PlatformChart">
     <div style="">
-      <div style="position: relative">
+      <div style="position: relative;">
         <highchart :options="chartOptions"/>
         <!--        <div class="platform-chart-inner-box">-->
         <!--          <div class="platform-chart-inner-value">-->
