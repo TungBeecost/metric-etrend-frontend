@@ -55,7 +55,7 @@ const formData = useState('LandingPage.formData', () => ({
   email: '',
   phone: undefined,
   company: '',
-  mktLeadSource: [],
+  mktLeadSource: '',
   mktUserDemand: undefined,
   mktCompanyType: undefined
 }))
@@ -69,7 +69,11 @@ const handleSubmitLeadForm = async () => {
   // const userProfile = authStore.userProfile
   const variables = await getGlobalVariable();
 
-  console.log('variables', variables);
+  // console.log('variables', variables);
+  // console.log('formData', formData.value);
+  //
+  // isSubmitFormLoading.value = false
+  // return
 
   const utm_source = variables?.utm_source || ''
   const utm_medium = variables?.utm_medium || ''
@@ -77,13 +81,13 @@ const handleSubmitLeadForm = async () => {
   const utm_term = variables?.utm_term || ''
   const utm_content = variables?.utm_content || ''
   const url_referrer = variables?.url_referrer || ''
-  const is_mobile = variables?.is_mobile || ''
+  const is_mobile = variables?.is_mobile ? 'true' : 'false'
   const pub = variables?.pub || ''
   const emailProfile = formData.value.email || userInfo.value?.email || ''
   const first_visit = localStorage.getItem('first_visit') || ''
-  const mkLeadSource = [formData.value.socialMediaType]
-  const mkUserDemand = formData.value.category || ''
-  const mkCompanyType = formData.value.companyType || ''
+  const mkLeadSource = [formData.value.mkLeadSource]
+  const mkUserDemand = formData.value.mktUserDemand || ''
+  const mkCompanyType = formData.value.mktCompanyType || ''
   let note = `From: ${window.location.href}\n`
   note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
   note += `lead_source: ${mkLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\nis_mobile=${is_mobile}`
@@ -177,7 +181,6 @@ const handleSubmitLeadForm = async () => {
           <a-select
               v-model:value="formData.mktLeadSource"
               class="multiple-select-form"
-              mode="multiple"
               size="large"
               :max-tag-count="3"
               :max-tag-text-length="6"
