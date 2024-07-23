@@ -38,7 +38,7 @@ const handleClickPlan = () => {
         <div class="account_detail_info">
           <div class="account_detail_item">
             <div class="detail_info_title">Gói dịch vụ</div>
-            <div class="detail_info_value">{{ props.userInfo.current_plan.plan_name || 'Chưa kích hoạt' }}</div>
+            <div class="detail_info_value">{{ props.userInfo.current_plan.plan_name || 'Miễn phí' }}</div>
           </div>
           <div v-if="props.userInfo.current_plan.expired_at" class="account_detail_item">
             <div class="detail_info_title">Ngày hết hạn</div>
@@ -50,7 +50,7 @@ const handleClickPlan = () => {
           </div>
         </div>
         <div class="service_info">
-          <div v-if="!props.userInfo.current_plan.plan_id" style="background: #FFF" class="paid-plan plan-card">
+          <div v-if="props.userInfo.current_plan.plan_code == 'free'" style="background: #FFF" class="paid-plan plan-card">
             <div class="plan-card-info">
               <div class="plan-info">
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
