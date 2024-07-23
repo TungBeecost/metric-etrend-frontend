@@ -4,7 +4,6 @@ import {isClient} from "~/helpers/BrowserHelper";
 import mixpanel from 'mixpanel-browser'
 
 const shouldTrack = () => {
-    return true
     if (isClient) {
         // return true
         let domain = extractDomain(document.location.href)
