@@ -95,14 +95,14 @@ watch(() => route.path, () => {
   recheckHeader()
 }, {immediate: true})
 
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-  handleScroll(); // Initialize on mount in case the page is already scrolled
-});
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
+// onMounted(() => {
+//   window.addEventListener('scroll', handleScroll);
+//   handleScroll(); // Initialize on mount in case the page is already scrolled
+// });
+//
+// onUnmounted(() => {
+//   window.removeEventListener('scroll', handleScroll);
+// });
 
 </script>
 
