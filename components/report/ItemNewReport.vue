@@ -58,13 +58,19 @@ const itemsToShow = computed(() => {
             <img :src="report.url_thumbnail" alt="" style="width: 100%; object-fit: cover">
           </div>
           <div class="content" style="text-align: left;">
-            <div class="category_date line-clamp__2" style="text-align: left;">
+            <div v-if="report.lst_category" class="category_date line-clamp__2" style="text-align: left;">
               {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span>
               {{ formatDate(report.start_date, 'DD/MM/YYYY') }}
             </div>
-            <div class="title line-clamp__2" style="text-align: left;">
-              Báo cáo nhóm hàng {{ report.name }}
+            <div v-else class="category_date line-clamp__2" style="text-align: left;">
+              {{ report.report_type }} <span style="color: #EEEBFF">|</span>
+              {{ formatDate(report.start_date, 'DD/MM/YYYY') }}
             </div>
+            <nuxt-link :to="report.source === 'marketing' ? `/insight/${report.slug}` : `/${report.slug}`"
+                       class="title line-clamp__2" style="text-align: left;text-decoration: none;">
+              {{ report.source === 'marketing' ? '' : 'Báo cáo' }}
+              {{ report.name }}
+            </nuxt-link>
             <div v-if="report.revenue_monthly" class="summary-info">
               <div class="info_item">
                 <svg data-v-f4382b3b="" width="16" height="22" viewBox="0 0 16 22" fill="none"

@@ -13,12 +13,13 @@ const fetchReport = async () => {
   console.log('fetchReport')
   try {
     const body: SearchReportPayload = {
-      limit: 10,
+      limit: 6,
       lst_field: ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop", "created_at"],
       lst_query: [],
       lst_category_report_id: [],
       offset: 0,
-      sort: "popularity",
+      sort: "created_at",
+      // sort: "popularity",
       order: "desc",
     };
     const {lst_report}: any = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
