@@ -27,18 +27,18 @@ const onResize = () => {
   windowWidth.value = window?.innerWidth;
 };
 
-onMounted(() => {
-  if (typeof window !== 'undefined') {
-    windowWidth.value = window?.innerWidth;
-    window.addEventListener('resize', onResize);
-  }
-});
-
-onUnmounted(() => {
-  if (typeof window !== 'undefined') {
-    window.removeEventListener('resize', onResize);
-  }
-});
+// onMounted(() => {
+//   if (typeof window !== 'undefined') {
+//     windowWidth.value = window?.innerWidth;
+//     window.addEventListener('resize', onResize);
+//   }
+// });
+//
+// onUnmounted(() => {
+//   if (typeof window !== 'undefined') {
+//     window.removeEventListener('resize', onResize);
+//   }
+// });
 
 const itemsToShow = computed(() => {
   return windowWidth.value < 768 ? 1 : 4;

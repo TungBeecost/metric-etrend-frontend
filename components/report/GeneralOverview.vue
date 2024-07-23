@@ -27,13 +27,13 @@ const updateScreenWidth = () => {
   screenWidth.value = window?.innerWidth;
 };
 
-onMounted(() => {
-  window.addEventListener('resize', updateScreenWidth);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateScreenWidth);
-});
+// onMounted(() => {
+//   window.addEventListener('resize', updateScreenWidth);
+// });
+//
+// onUnmounted(() => {
+//   window.removeEventListener('resize', updateScreenWidth);
+// });
 
 const hightestMonthRevenue = computed(() => {
   const {lst_revenue_sale_monthly} = props.data.data_analytic.by_overview;

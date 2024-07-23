@@ -22,13 +22,13 @@ const onResize = () => {
   windowWidth.value = window?.innerWidth;
 };
 
-onMounted(() => {
-  window.addEventListener('resize', onResize);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', onResize);
-});
+// onMounted(() => {
+//   window.addEventListener('resize', onResize);
+// });
+//
+// onUnmounted(() => {
+//   window.removeEventListener('resize', onResize);
+// });
 
 const getDisplayedCategories = (item: any) => {
   if (windowWidth.value < 768) {

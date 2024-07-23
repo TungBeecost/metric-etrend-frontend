@@ -65,7 +65,8 @@ const handleItemClick = (item: LstRecommed) => {
         <div v-if="item.category_report_name" class="breadcrumb">{{ item.category_report_name }}
           | {{ formatDate(item.start_date, 'DD/MM/YYYY') }}
         </div>
-        <nuxt-link :to="item.source === 'marketing' ? `/insight/${item.slug}` : `/${item.slug}`" class="name">Báo cáo
+        <nuxt-link :to="item.source === 'marketing' ? `/insight/${item.slug}` : `/${item.slug}`" class="name">
+          {{ item.source === 'marketing' ? '' : 'Báo cáo' }}
           {{ item.name }}
         </nuxt-link>
       </div>
@@ -120,7 +121,7 @@ const handleItemClick = (item: LstRecommed) => {
       flex-direction: column;
       align-items: flex-start;
       padding: 8px 0;
-      gap:8px;
+      gap: 8px;
       flex: 1 0 0;
 
       .breadcrumb {

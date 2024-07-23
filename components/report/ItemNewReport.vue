@@ -29,18 +29,18 @@ const onResize = () => {
   }
 };
 
-onMounted(() => {
-  if (typeof window !== 'undefined') {
-    windowWidth.value = window?.innerWidth;
-    window.addEventListener('resize', onResize);
-  }
-});
-
-onUnmounted(() => {
-  if (typeof window !== 'undefined') {
-    window.removeEventListener('resize', onResize);
-  }
-});
+// onMounted(() => {
+//   if (typeof window !== 'undefined') {
+//     windowWidth.value = window?.innerWidth;
+//     window.addEventListener('resize', onResize);
+//   }
+// });
+//
+// onUnmounted(() => {
+//   if (typeof window !== 'undefined') {
+//     window.removeEventListener('resize', onResize);
+//   }
+// });
 
 const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
   return moment(value, inputFormat).format(format);
