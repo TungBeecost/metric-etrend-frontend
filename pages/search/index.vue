@@ -103,7 +103,7 @@ const fetchData = async (searchValue: string = '', list_category_report_id: Arra
       'lst_year': [],
       'lst_category_report_id': list_category_report_id,
       'lst_field': ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop"],
-      'offset': newpage * 10,
+      'offset': (newpage * 10 >= 200) ? 199 : newpage * 10,
       'limit': 10,
       'sort': sortSelect,
     });
@@ -250,7 +250,7 @@ useSeoMeta({
         </template>
         <list-report v-else :class="{ 'hidden-list': isLoading, 'visible-list': !isLoading }" :data="data?.lst_report"/>
         <div class="page">
-          <a-pagination v-if="data?.total" v-model:current="current" :total="data?.total > 2000 ? 2000 : data?.total" show-less-items @change="onChange" />
+          <a-pagination v-if="data?.total" v-model:current="current" :total="data?.total > 200 ? 199 : data?.total" show-less-items @change="onChange" />
         </div>
       </div>
       <div class="relate_functions">
