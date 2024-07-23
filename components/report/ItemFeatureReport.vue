@@ -194,6 +194,10 @@ const itemsToShow = computed(() => {
         }
 
         .title {
+          white-space: nowrap; /* Prevents the text from wrapping to a new line */
+          overflow: hidden; /* Hides the overflow text */
+          text-overflow: ellipsis; /* Adds "..." to overflow text */
+          text-align: left;
           color: var(--Dark-blue-dark-blue-8, #241E46);
           font-size: 20px;
           font-weight: 700;

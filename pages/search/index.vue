@@ -211,8 +211,8 @@ useSeoMeta({
     <div class="container default_section">
       <div class="list_report_industry">
         <div class="general">
-          <div class="count_result">
-            {{ (data?.total || 0).toLocaleString() }} kết quả
+          <div v-if="data?.total" class="count_result">
+            {{ (data?.total > 200 ? 200 : data?.total || 0).toLocaleString() }} kết quả
           </div>
           <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect" />
           <a-button v-else style="border: 1px solid #9D97BF" @click="clickButtonFilter">
