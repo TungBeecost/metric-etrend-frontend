@@ -12,7 +12,7 @@ console.log(props.breadcrumbs);
   <div class="breadcrumb">
     <a-breadcrumb>
       <a-breadcrumb-item
-          v-for="breadcrumb in breadcrumbs"
+          v-for="(breadcrumb, index) in breadcrumbs"
           :key="breadcrumb.value"
           itemprop="name"
       >
@@ -23,7 +23,9 @@ console.log(props.breadcrumbs);
         >
           {{ breadcrumb.name }}
         </nuxt-link>
-        <span v-else style="color: #E85912">{{ breadcrumb.name }}</span>
+        <span v-else
+              :style="{'color': index === breadcrumbs.length - 1 ? '#E85912' : 'unset'}"
+        >{{ breadcrumb.name }}</span>
       </a-breadcrumb-item>
     </a-breadcrumb>
   </div>
