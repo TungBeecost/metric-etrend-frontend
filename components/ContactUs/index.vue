@@ -85,12 +85,12 @@ const handleSubmitLeadForm = async () => {
   const pub = variables?.pub || ''
   const emailProfile = formData.value.email || userInfo.value?.email || ''
   const first_visit = localStorage.getItem('first_visit') || ''
-  const mkLeadSource = [formData.value.mkLeadSource]
+  const mktLeadSource = [formData.value.mktLeadSource]
   const mkUserDemand = formData.value.mktUserDemand || ''
   const mkCompanyType = formData.value.mktCompanyType || ''
   let note = `From: ${window.location.href}\n`
   note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
-  note += `lead_source: ${mkLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\nis_mobile=${is_mobile}`
+  note += `lead_source: ${mktLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\nis_mobile=${is_mobile}`
   console.log('note', formData.value.name)
 
   const payload = {
@@ -104,7 +104,8 @@ const handleSubmitLeadForm = async () => {
     campaign: 'Đăng ký dùng thử',
     additional_info: {
       ...variables,
-      mkLeadSource,
+      mkLeadSource: mktLeadSource,
+      mktLeadSource,
       mkUserDemand,
       mkCompanyType
     },
