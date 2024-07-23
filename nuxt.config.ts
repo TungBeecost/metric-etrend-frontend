@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     ssr: false,
     app: {
         head: {
-            title: "Metric - Nền tảng Số liệu E-commerce",
+            title: "eReport - Kho báo cáo Ecommerce toàn diện",
             htmlAttrs: {
                 lang: "vi",
             },
