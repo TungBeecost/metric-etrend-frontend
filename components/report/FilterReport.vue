@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import type {DefaultOptionType} from "ant-design-vue/es/vc-cascader";
-import type {SelectValue} from "ant-design-vue/es/select";
+import { ref, computed, onMounted, defineProps, defineEmits } from 'vue';
 import allReports from '@/public/file_json/list_category.json';
-import {defineProps} from "vue";
-import {TreeSelect} from 'ant-design-vue';
+import { TreeSelect } from 'ant-design-vue';
+import type {SelectValue} from "ant-design-vue/es/select";
+import type {CheckboxChangeEvent} from "ant-design-vue/es/checkbox/interface";
 
 const emit = defineEmits(['categorySelect']);
 const route = useRoute();
 
 const selectedOption = ref('');
+const selectedReportType = ref<string[]>([]);
 const showSelectIndustry = ref(true);
 
 const props = defineProps({
@@ -18,12 +19,7 @@ const props = defineProps({
   },
 });
 
-if (props.selectedCategory == '') {
-  selectedOption.value = "c0000000000";
-} else {
-  selectedOption.value = props.selectedCategory;
-}
-
+selectedOption.value = props.selectedCategory || "c0000000000";
 
 interface ReportItem {
   value: string;
@@ -36,47 +32,33 @@ interface ReportItem {
 }
 
 const transformToTreeData = (data: ReportItem[]): ReportItem[] => {
-
   const treeData: ReportItem[] = [];
-  const map = new Map(data.map((item: ReportItem) => [item.value, {...item, children: [] as ReportItem[]}]));
-
+  const map = new Map(data.map((item: ReportItem) => [item.value, { ...item, children: [] as ReportItem[] }]));
 
   data.forEach((item: ReportItem) => {
     if (item.parent) {
       const parent = map.get(item.parent);
-      if (parent && item.value) {
-        const child = map.get(item.value);
-        if (child) {
-          parent.children.push(child);
-        }
+      if (parent) {
+        parent.children.push(map.get(item.value)!);
       }
-    } else if (item.value) {
-      const child = map.get(item.value);
-      if (child) {
-        treeData.push(child);
-      }
+    } else {
+      treeData.push(map.get(item.value)!);
     }
   });
 
   return treeData;
 };
 
+const state = reactive({
+  checkAll: false,
+  indeterminate: false,
+});
+
 const treeData = transformToTreeData(allReports);
 
-const toggleSelectIndustry = () => {
-  showSelectIndustry.value = !showSelectIndustry.value;
-};
-
-
-const handleChange = (value: SelectValue, option: DefaultOptionType | DefaultOptionType[]) => {
-  if (typeof value === "string") {
-    selectedOption.value = value;
-  }
-  if (selectedOption.value == "c0000000000")
-    emit('categorySelect', '');
-  else {
-    emit('categorySelect', selectedOption.value);
-  }
+const handleChange = (value: SelectValue) => {
+  selectedOption.value = value as string;
+  emit('categorySelect', selectedOption.value === "c0000000000" ? '' : selectedOption.value);
 };
 
 onMounted(() => {
@@ -85,12 +67,34 @@ onMounted(() => {
   }
 });
 
-const reportTypes = [
-  {label: 'Tất cả', value: ''},
-  {label: 'Báo cáo ngành hàng', value: 'report_category'},
-  {label: 'Báo cáo nhóm hàng', value: 'report_product_line'},
-  {label: 'Báo cáo khác', value: 'other'},
-];
+const reportTypes = ref([
+  { label: 'Tất cả', value: 'all' },
+  { label: 'Báo cáo ngành hàng', value: 'report_category' },
+  { label: 'Báo cáo nhóm hàng', value: 'report_product_line' },
+  { label: 'Báo cáo khác', value: 'other' },
+]);
+
+const checkAll = computed({
+  get: () => selectedReportType.value.length === reportTypes.value.length - 1,
+  set: (value: boolean) => {
+    selectedReportType.value = value ? reportTypes.value.slice(1).map(type => type.value) : [];
+  },
+});
+
+const indeterminate = computed(() => {
+  return selectedReportType.value.length > 0 && selectedReportType.value.length < reportTypes.value.length;
+});
+
+watch(selectedReportType, (newVal) => {
+  state.checkAll = newVal.length === reportTypes.value.length;
+  state.indeterminate = newVal.length > 0 && newVal.length < reportTypes.value.length;
+});
+
+
+const onCheckAllChange = (e: CheckboxChangeEvent) => {
+  const isChecked = e.target.checked;
+  checkAll.value = isChecked; // This will trigger the setter of `checkAll`
+};
 
 </script>
 
@@ -129,20 +133,27 @@ const reportTypes = [
       <div class="title_word">Bộ lọc</div>
     </div>
     <div class="container" style="padding: 8px;">
-      <a-collapse :bordered="false" style="background: rgb(255, 255, 255); padding: 0;" :active-key="[1,2, 3]">
-        <a-collapse-panel :key="1" header="Loại báo cáo">
-          <a-checkbox-group v-model:selectedOption="selectedOption">
+      <a-collapse :bordered="false" style="background: rgb(255, 255, 255); padding: 0;" :active-key="[1, 2, 3]">
+          <a-collapse-panel :key="1" header="Loại báo cáo">
             <a-checkbox
-                v-for="(reportType, index) in reportTypes"
-                :key="reportType.value"
-                :value="reportType.value"
-                style="width: 100%;"
-                :style="index < reportTypes.length - 1 ? {marginBottom: '8px'} : {}"
+                :checked="checkAll"
+                :indeterminate="indeterminate"
+                @change="onCheckAllChange"
             >
-              {{ reportType.label }}
+              Tất cả
             </a-checkbox>
-          </a-checkbox-group>
-        </a-collapse-panel>
+            <a-checkbox-group v-model:value="selectedReportType">
+              <a-checkbox
+                  v-for="(reportType, index) in reportTypes.slice(1)"
+                  :key="reportType.value"
+                  :value="reportType.value"
+                  style="width: 100%;"
+                  :style="index < reportTypes.length - 2 ? {marginBottom: '8px'} : {}"
+              >
+                {{ reportType.label }}
+              </a-checkbox>
+            </a-checkbox-group>
+          </a-collapse-panel>
         <a-collapse-panel :key="2" header="Ngành hàng">
           <TreeSelect
               v-if="showSelectIndustry"
@@ -155,7 +166,7 @@ const reportTypes = [
         <a-collapse-panel :key="3" header="Phân loại">
           <a-checkbox-group v-model:selectedOption="selectedOption">
             <a-checkbox
-                v-for="(reportType, index) in [{label: 'Tất cả', value: ''}, {label: 'Miễn phí', value: 'free'}, {label: 'Trả phí', value: 'paid'}]"
+                v-for="(reportType, index) in [{label: 'Miễn phí', value: 'free'}, {label: 'Trả phí', value: 'paid'}]"
                 :key="reportType.value"
                 :value="reportType.value"
                 style="width: 100%;"
