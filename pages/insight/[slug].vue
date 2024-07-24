@@ -19,7 +19,7 @@ const loading = ref(true)
 const isHideContent = ref(true)
 const listRecommend = ref([])
 
-const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => true)
+const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => false)
 
 
 const fetchDataRecommend = async (report_type) => {
