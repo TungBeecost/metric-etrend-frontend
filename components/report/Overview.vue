@@ -91,7 +91,7 @@ const top5Shops = (): string[] => {
           . Những thương hiệu {{ props.data.name }} được phân phối và
         bán chạy nhất là
         <BlurContent :is-hide-content="isHideContent">
-          <span>{{ top5Shops().join(',q ') }}</span>
+          <span>{{ top5Shops().join(', ') }}</span>
         </BlurContent>
         v.v...
       </div>
