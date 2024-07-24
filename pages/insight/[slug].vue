@@ -19,7 +19,7 @@ const loading = ref(true)
 const isHideContent = ref(true)
 const listRecommend = ref([])
 
-const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => false)
+const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => true)
 
 
 const fetchDataRecommend = async (report_type) => {
@@ -344,7 +344,7 @@ onMounted(() => {
       <ContactUsForm :handle-submit-success="handleSubmitSuccess"/>
     </a-modal>
     <div v-if="isShowSuccessNotification" class="submit-form-marketing-success">
-      <SuccessNotification v-model:visible="isShowSuccessNotification"/>
+      <SuccessNotification v-model:visible="isShowSuccessNotification" description=""/>
     </div>
   </div>
 </template>
