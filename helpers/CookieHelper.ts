@@ -32,12 +32,9 @@ const setCookie = (name: string, value: string, days = 30, path = '/') => {
     const domain = '.ereport.metric.vn';
 
     const expires = new Date(Date.now() + days * 864e5).toUTCString()
-    console.log(`prepare setCookie `, name, ': ', value, '; day = ', days)
     // document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=' + path
     // document.cookie = name + '=' + value + '; expires=' + expires + '; path=' + path
     document.cookie = name + '=' + value + '; expires=' + expires + '; path=' + path + '; domain=' + domain;
-
-    console.log('getCookie: ', getCookie(name))
   }
 }
 

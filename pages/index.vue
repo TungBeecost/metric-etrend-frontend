@@ -137,7 +137,6 @@ const handdleUpdate = () => {
 onMounted(() => {
   const urlParams = new URLSearchParams(window.location.search);
   transactionId.value = urlParams.get('transaction_id');
-  console.log('paymentStatus', transactionId.value);
   if (transactionId.value) {
     showModal.value = true;
   }
