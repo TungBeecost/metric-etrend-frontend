@@ -22,6 +22,8 @@ const isModalVisible = ref(false);
 const selectedCategory = ref<string>();
 const selectedCategoryName = ref<string>();
 const searchValueSearch = ref<string>();
+const selecteReportType = ref<string[]>([]);
+const selecteReportTypeBuy = ref<string[]>([]);
 const page = ref(0);
 const isLoading = ref(true);
 const sortSelect = ref('popularity');
@@ -191,6 +193,14 @@ const onClickViewPrice = () => {
   navigateTo(NAVIGATIONS.pricing);
 };
 
+const handleReportTypeChange = (selectedReportType: string[]) => {
+  selecteReportType.value = selectedReportType;
+};
+
+const handleReportTypeBuyChange = (selectedReportTypeBuy: string[]) => {
+  selecteReportTypeBuy.value = selectedReportTypeBuy;
+};
+
 useSeoMeta({
   title: PAGE_TITLES.search
 })
@@ -275,6 +285,8 @@ useSeoMeta({
             class="filter_report"
             :select-category="selectedCategory"
             @category-select="handleCategorySelect"
+            @selected-report-type-change="handleReportTypeChange"
+            @selectedReportTypeBuyChange="handleReportTypeBuyChange"
         />
         <popular-relate-keywords
             v-if="listTagSuggestions?.length"
