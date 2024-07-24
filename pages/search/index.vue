@@ -217,6 +217,7 @@ useSeoMeta({
           <div v-if="data?.total" class="count_result">
               {{ (data?.total > 200 ? 'Hơn 200' : data?.total || 0).toLocaleString() }} kết quả
           </div>
+          <div v-else />
           <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect" />
           <a-button v-else style="border: 1px solid #9D97BF" @click="clickButtonFilter">
             <div style="display: flex; gap: 8px; justify-content: center; align-items: center">
@@ -246,7 +247,12 @@ useSeoMeta({
           </a-button>
         </div>
         <template v-if="isLoading">
-          <a-skeleton :paragraph="{ rows: 40 }" style="padding-top: 40px; padding-bottom: 40px"/>
+          <a-card v-for="i in Array.from({ length: 6 })">
+            <div  style="display: flex; gap: 16px; margin-bottom: 24px;">
+              <div style="width: 180px; height: 160px; background: #efefef; border-radius: 8px;"/>
+              <a-skeleton :paragraph="{ rows: 2 }" active style="flex: 1;"/>
+            </div>
+          </a-card>
         </template>
         <list-report v-else :class="{ 'hidden-list': isLoading, 'visible-list': !isLoading }" :data="data?.lst_report"/>
         <div class="page">
