@@ -218,7 +218,7 @@ const charts = computed(() => {
     </div>
     <InsightBlock>
       <li>
-        Trong {{ diffMonths }}, nhóm hàng {{ data.name }}:
+        Trong {{ diffMonths }}, {{ data.report_type === 'report_product_line' ? 'nhóm hàng' : ''}} {{ data.name }}:
         đạt tổng doanh số
         <BlurContent :is-hide-content="props.isHideContent">
         <span>
@@ -268,7 +268,7 @@ const charts = computed(() => {
         <BlurContent :is-hide-content="props.isHideContent">
           {{ formatDateFunc(hightestMonthRevenue.begin, "MM/YYYY") }}
         </BlurContent>
-        ghi nhận doanh số cao nhất trong 12 tháng
+        ghi nhận doanh số cao nhất trong 12 tháng.
       </li>
     </InsightBlock>
   </div>

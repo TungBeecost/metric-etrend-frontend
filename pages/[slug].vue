@@ -75,10 +75,31 @@ const fetchReportData = async () => {
       fetchRecommend(response.category_report_id)
     ]);
 
+    let breadcrumbs = [
+      {
+        name: "Báo cáo",
+        value: "search",
+      },
+      ...(response.lst_category || []).map((item) => {
+        const url = `search?category_report_id=${item.id}`;
+        return {
+          name: item.name,
+          value: url,
+        };
+      }),
+    ]
+    if (response?.report_type === 'report_product_line') {
+      breadcrumbs = [...breadcrumbs, {
+        name: response.name,
+        value: null,
+      }]
+    }
+
     return {
       reportDetail: response,
       listRecommend,
       isHideContent,
+      breadcrumbs
     }
   } catch (error) {
     console.log(error)
@@ -95,28 +116,6 @@ const {data: tagSuggestions} = await useAsyncData(
       return await fetchSuggest(data?.reportDetail?.name, {limit: 5});
     }
 );
-
-const breadcrumbs = computed(() => {
-  if (data?.reportDetail) {
-    return [
-      {
-        name: "Báo cáo",
-        value: "search",
-      },
-      ...(data.reportDetail.lst_category || []).map((item) => {
-        const url = `search?category_report_id=${item.id}`;
-        return {
-          name: item.name,
-          value: url,
-        };
-      }),
-      {
-        name: data.reportDetail.name,
-        value: null,
-      },
-    ];
-  }
-});
 
 const isMobile = ref(window?.innerWidth <= 768);
 
@@ -164,7 +163,7 @@ onUnmounted(() => {
   <div class="container_content">
     <div class="title default_section">
       <div class="breadcrumbs">
-        <Breadcrumb :breadcrumbs="breadcrumbs"/>
+        <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
       </div>
       <h1 class="report-title">
         {{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT
