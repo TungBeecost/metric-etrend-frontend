@@ -4,6 +4,7 @@ import axios from "~/services/axios-wrapper";
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import {useSearchReport} from "#imports";
 import UnlockReportMarketing from "~/components/report/UnlockReportMarketing.vue";
+import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
 
 const route = useRoute()
 const {fetchListRecommendMarketing} = useSearchReport()
@@ -17,6 +18,8 @@ const openContactForm = ref(false)
 const loading = ref(true)
 const isHideContent = ref(true)
 const listRecommend = ref([])
+
+const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => false)
 
 
 const fetchDataRecommend = async (report_type) => {
@@ -61,9 +64,11 @@ const fetchReportData = async () => {
 };
 
 const handleSubmitSuccess = () => {
-  message.success('Đăng ký nhận báo cáo thành công');
+  // message.success('Đăng ký nhận báo cáo thành công');
 
   localStorage.setItem('report_mkt_unlocked', 'true');
+
+  isShowSuccessNotification.value = true;
 
   openContactForm.value = false;
   isHideContent.value = false;
@@ -333,11 +338,14 @@ onMounted(() => {
         <div class="description" style="font-size: 16px">
           Vui lòng điền biểu mẫu bên dưới để nhận ngay báo cáo chi tiết
           <br>
-          <span>"{{data.name}}"</span>
+          <span>"{{ data.name }}"</span>
         </div>
       </div>
       <ContactUsForm :handle-submit-success="handleSubmitSuccess"/>
     </a-modal>
+    <div v-if="isShowSuccessNotification" class="submit-form-marketing-success">
+      <SuccessNotification v-model:visible="isShowSuccessNotification"/>
+    </div>
   </div>
 </template>
 
