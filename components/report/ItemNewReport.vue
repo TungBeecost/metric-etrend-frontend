@@ -64,11 +64,11 @@ const itemsToShow = computed(() => {
           <div class="content" style="text-align: left;">
             <div v-if="report.lst_category" class="category_date line-clamp__2" style="text-align: left;">
               {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span>
-              {{ formatDate(report.start_date, 'DD/MM/YYYY') }}
+              {{ formatDate(report.end_date, 'DD/MM/YYYY') }}
             </div>
             <div v-else class="category_date line-clamp__2" style="text-align: left;">
               {{ report.report_type }} <span style="color: #EEEBFF">|</span>
-              {{ formatDate(report.start_date, 'DD/MM/YYYY') }}
+              {{ formatDate(report.end_date, 'DD/MM/YYYY') }}
             </div>
             <nuxt-link :to="report.source === 'marketing' ? `/insight/${report.slug}` : `/${report.slug}`"
                        class="title line-clamp__2" style="text-align: left;text-decoration: none;">
@@ -136,6 +136,9 @@ const itemsToShow = computed(() => {
                 </BlurContent>
               </span> - nhà bán
               </div>
+            </div>
+            <div v-else-if="report.introduction" class="summary-info line-clamp__2">
+              {{ report.introduction }}
             </div>
           </div>
         </div>
