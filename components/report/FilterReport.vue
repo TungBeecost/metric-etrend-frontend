@@ -5,11 +5,12 @@ import { TreeSelect } from 'ant-design-vue';
 import type {SelectValue} from "ant-design-vue/es/select";
 import type {CheckboxChangeEvent} from "ant-design-vue/es/checkbox/interface";
 
-const emit = defineEmits(['categorySelect']);
+const emit = defineEmits(['categorySelect', 'selectedReportTypeChange', 'selectedReportTypeBuyChange']);
 const route = useRoute();
 
 const selectedOption = ref('');
 const selectedReportType = ref<string[]>([]);
+const selectedReportTypeBuy = ref<string[]>([]);
 const showSelectIndustry = ref(true);
 
 const props = defineProps({
@@ -96,6 +97,14 @@ const onCheckAllChange = (e: CheckboxChangeEvent) => {
   checkAll.value = isChecked; // This will trigger the setter of `checkAll`
 };
 
+watch(selectedReportType, (newVal) => {
+  emit('selectedReportTypeChange', newVal);
+});
+
+watch(selectedReportTypeBuy, (newVal) => {
+  emit('selectedReportTypeBuyChange', newVal);
+});
+
 </script>
 
 <template>
@@ -164,7 +173,7 @@ const onCheckAllChange = (e: CheckboxChangeEvent) => {
           />
         </a-collapse-panel>
         <a-collapse-panel :key="3" header="Phân loại">
-          <a-checkbox-group v-model:selectedOption="selectedOption">
+          <a-checkbox-group v-model:value="selectedReportTypeBuy">
             <a-checkbox
                 v-for="(reportType, index) in [{label: 'Miễn phí', value: 'free'}, {label: 'Trả phí', value: 'paid'}]"
                 :key="reportType.value"
