@@ -4,6 +4,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  className: {
+    type: String,
+    default: undefined
+  },
   title: {
     type: String,
     default: 'Đăng ký thành công'
@@ -24,7 +28,7 @@ const isVisible = computed({
 
 <template>
   <a-modal v-model:visible="isVisible"
-           wrap-class-name="popup-success-notification"
+           :wrap-class-name="'popup-success-notification ' + className"
            :footer="false"
            centered
            style="width: 663px;"

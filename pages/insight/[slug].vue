@@ -343,9 +343,11 @@ onMounted(() => {
       </div>
       <ContactUsForm :handle-submit-success="handleSubmitSuccess"/>
     </a-modal>
-    <div v-if="isShowSuccessNotification" class="submit-form-marketing-success">
-      <SuccessNotification v-model:visible="isShowSuccessNotification" description=""/>
-    </div>
+    <SuccessNotification
+        v-if="isShowSuccessNotification"
+        v-model:visible="isShowSuccessNotification"
+        description=""
+        class-name="submit-form-marketing-success"/>
   </div>
 </template>
 
