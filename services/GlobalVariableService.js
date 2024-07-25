@@ -9,6 +9,7 @@ const getGlobalVariable = async () => {
     let user_email = null
     let role = null
     let url_referrer = null
+    let _fbc = null
     let url = null
     let is_mobile = null
     let route_name = null
@@ -34,6 +35,7 @@ const getGlobalVariable = async () => {
         source_traffic = getCookie('source_traffic')
         pub = getCookie('pub')
         url_referrer = getCookie('url_referrer')
+        _fbc = getCookie('_fbc')
         is_mobile = isMobileDevice()
         // url_referrer = document.referrer
         url = document.location.href
@@ -41,22 +43,23 @@ const getGlobalVariable = async () => {
         // console.log('role', role)
     }
     return removeEmpty({
-        visitor_id: visitor_id,
-        user_id: user_id,
-        user_email: user_email,
-        role: role,
-        url_referrer: url_referrer,
-        url: url,
-        route_name: route_name,
-        utm_source: utm_source,
-        utm_medium: utm_medium,
-        utm_campaign: utm_campaign,
-        utm_term: utm_term,
-        source_traffic: source_traffic,
-        pub: pub,
-        utm_content: utm_content,
-        is_mobile: is_mobile,
-        first_visit: first_visit
+        visitor_id,
+        user_id,
+        user_email,
+        role,
+        url_referrer,
+        url,
+        route_name,
+        utm_source,
+        utm_medium,
+        utm_campaign,
+        utm_term,
+        source_traffic,
+        pub,
+        _fbc,
+        utm_content,
+        is_mobile,
+        first_visit,
     })
 }
 export {

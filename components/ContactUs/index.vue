@@ -68,7 +68,7 @@ const handleSubmitLeadForm = async () => {
   // const userProfile = authStore.userProfile
   const variables = await getGlobalVariable();
 
-  // console.log('variables', variables);
+  console.log('variables', variables);
   // console.log('formData', formData.value);
   //
   // isSubmitFormLoading.value = false
@@ -92,6 +92,15 @@ const handleSubmitLeadForm = async () => {
   note += `lead_source: ${mktLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\ndevice: ${is_mobile ? 'mobile' : 'desktop'}`
   console.log('note', formData.value.name)
 
+  console.log('fbq', fbq)
+
+  if (fbq && typeof fbq === 'function') {
+    fbq('track', 'Lead', {
+      em: emailProfile,
+      fn: formData.value.fullName,
+      ph: formData.value.phone,
+    });
+  }
   const payload = {
     name: formData.value.fullName,
     phone: formData.value.phone,
