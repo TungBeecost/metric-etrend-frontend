@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {defineProps} from 'vue'
 import moment from "moment/moment";
+import allReports from "public/file_json/list_category.json";
 
 const props = defineProps({
   data: {
@@ -9,14 +10,31 @@ const props = defineProps({
   },
 })
 
-const reportFilterDisplayFields = [
-  'lst_platform_id',
-  'lst_keyword',
-  'is_smart_queries',
-  'is_remove_fake_sale',
-  'date_range',
-  'lst_keyword_exclude',
-]
+const reportFilterDisplayFields = computed(() => {
+  if (!props.data) {
+    return []
+  }
+
+  if (props.data.report_type === 'report_category') {
+    return [
+      'lst_platform_id',
+      'date_range',
+      'lst_bee_category_base_id',
+      'is_smart_queries',
+      'is_remove_fake_sale',
+      'lst_keyword_exclude',
+    ]
+  }
+
+  return [
+    'lst_platform_id',
+    'date_range',
+    'lst_keyword',
+    'is_smart_queries',
+    'is_remove_fake_sale',
+    'lst_keyword_exclude',
+  ]
+})
 
 type FieldLabels = {
   [key: string]: string;
@@ -58,7 +76,8 @@ const fieldValueParse: FieldValueParsers = {
     }
     return value.map((platformId: number) => PLATFORMS[platformId]).join(', ')
   },
-  lst_keyword: (value: string[]) => value ? value.join(', ') : '',
+  lst_bee_category_base_id: (lst_bee_category: string[]) => lst_bee_category ? (lst_bee_category.map(bee_category => allReports.find(cat => cat.value === bee_category)?.label)).join(', ') : '',
+  lst_keyword: (value: string[]) => value ? (value).join(', ') : '',
   is_smart_queries: (value: boolean) => value ? 'Có' : 'Không',
   is_remove_fake_sale: (value: boolean) => value ? 'Loại trừ sản phẩm có tỉ lệ đánh giá / lượt bán thấp hơn 5%' : 'Không',
   date_range: () => {
@@ -92,6 +111,7 @@ const fieldValueParse: FieldValueParsers = {
             {{ fieldLabel[field] }}
           </div>
           <div class="report-filter-field-value">
+<!--            {{ props.data.data_filter_report[field] }}-->
             {{ fieldValueParse[field](props.data.data_filter_report[field]) }}
           </div>
         </div>
@@ -127,7 +147,7 @@ const fieldValueParse: FieldValueParsers = {
     display: flex;
     gap: 8px;
 
-    .title{
+    .title {
       font-family: 'Inter', sans-serif;
       font-weight: 700;
       font-size: 20px;
