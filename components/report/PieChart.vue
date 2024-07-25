@@ -64,7 +64,7 @@ watchEffect(() => {
       : {
         enabled: !isMobile.value,
         formatter: function () {
-          return '<span>' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          return '<span>' + this.point.name + '</span>:<br/> ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
         },
       };
 });

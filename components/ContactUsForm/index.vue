@@ -49,7 +49,7 @@
           class="infoBlock"
       />
     </div>
-    <AButton style="height: 40px" type="primary" :class="submitClass" @click="validateForm">{{
+    <AButton style="height: 40px" type="primary" :class="submitClass" @click="validateForm" :loading="loading">{{
         submitLabel || "Gửi"
       }}
     </AButton>
@@ -157,6 +157,7 @@ const formValues = reactive<IFormValue>({
 const errors = useState<Partial<IFormValue>>(() => ({}));
 
 const isOpenModal = useState<boolean>(() => false);
+const loading = useState<boolean>(() => false);
 const typeModal = useState<{
   type: TypeModal;
   header: string;
@@ -230,6 +231,7 @@ const validateForm = async () => {
     },
   }
   try {
+    loading.value = true
     const response = await axios.post(
         "https://api-crm.metric.vn/crm/create/lead_form",
         payload,
@@ -239,7 +241,7 @@ const validateForm = async () => {
           },
         }
     );
-
+    loading.value = false
     if (handleSubmitSuccess) {
       return handleSubmitSuccess()
     }
@@ -247,6 +249,7 @@ const validateForm = async () => {
     console.log("Response from server:", response.data);
     isOpenModal.value = true;
   } catch (error) {
+    loading.value = false
     console.error("Error submitting form:", error);
   }
 };

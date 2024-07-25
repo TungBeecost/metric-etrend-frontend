@@ -3,7 +3,11 @@ const props = defineProps({
   visible: {
     type: Boolean,
     default: false
-  }
+  },
+  className: {
+    type: String,
+    default: undefined
+  },
 })
 
 const emit = defineEmits(['update:visible'])
@@ -16,7 +20,7 @@ const isVisible = computed({
 
 <template>
   <a-modal v-model:visible="isVisible"
-           wrap-class-name="popup-success-notification"
+           :wrap-class-name="'popup-success-notification ' + props.className"
            :footer="false"
            centered
            style="width: 663px;"
