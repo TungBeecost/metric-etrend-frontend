@@ -204,6 +204,8 @@ const validateForm = async () => {
   const url_referrer = variables?.url_referrer || ''
   const is_mobile = !!variables?.is_mobile
   const pub = variables?.pub || ''
+  const _fbc = variables?._fbc || ''
+  const _fbp = variables?._fbp || ''
   const emailProfile = formData.email || userInfo.value?.email || ''
   const first_visit = localStorage.getItem('first_visit') || ''
   const mkLeadSource = [formData.socialMediaType]
@@ -213,6 +215,16 @@ const validateForm = async () => {
   note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
   note += `lead_source: ${mkLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\ndevice: ${is_mobile ? 'mobile' : 'desktop'}`
   console.log('note', formData.name)
+
+  if (fbq && typeof fbq === 'function') {
+    fbq('track', 'Lead', {
+      em: emailProfile,
+      fn: formData.name,
+      ph: formData.phone,
+      fbc: _fbc,
+      fbp: _fbp
+    });
+  }
 
   const payload = {
     name: formData.name,

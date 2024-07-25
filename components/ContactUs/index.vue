@@ -91,7 +91,7 @@ const handleSubmitLeadForm = async () => {
   const mkCompanyType = formData.value.mktCompanyType || ''
   let note = `From: ${window.location.href}\n`
   note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
-  note += `lead_source: ${mktLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\ndevice: ${is_mobile ? 'mobile' : 'desktop'}\n _fbc: ${_fbc}\n _fbp: ${_fbp}`
+  note += `lead_source: ${mktLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\ndevice: ${is_mobile ? 'mobile' : 'desktop'}`
   console.log('note', formData.value.name)
 
   console.log('fbq', fbq)
@@ -101,8 +101,11 @@ const handleSubmitLeadForm = async () => {
       em: emailProfile,
       fn: formData.value.fullName,
       ph: formData.value.phone,
+      fbc: _fbc,
+      fbp: _fbp
     });
   }
+
   const payload = {
     name: formData.value.fullName,
     phone: formData.value.phone,
