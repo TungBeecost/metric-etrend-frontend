@@ -34,7 +34,8 @@ const getDisplayedCategories = (item: any) => {
 
 <template>
   <div id="lst_report_id">
-    <nuxt-link v-for="item in props.data" :key="item.id" class="lst_item" :to="`${NAVIGATIONS.home}${item.source ==='marketing' ? 'insight/' + item.slug : item.slug}`">
+    <nuxt-link v-for="item in props.data" :key="item.id" class="lst_item"
+               :to="`${NAVIGATIONS.home}${item.source ==='marketing' ? 'insight/' + item.slug : item.slug}`">
       <div class="item">
         <div class="image">
           <img :src="item.url_thumbnail" alt="">
@@ -48,7 +49,7 @@ const getDisplayedCategories = (item: any) => {
               {{ item.report_type }}
             </span>
             <span style="color: #EEEBFF"> | </span>
-            {{ formatDate(item.start_date) }}
+            {{ formatDate(item.end_date) }}
           </div>
           <div class="name">{{ item.slug.startsWith('bao-cao') ? item.name : 'Báo cáo ' + item.name }}</div>
           <div v-if="item.revenue_monthly" class="summary-info">
@@ -113,7 +114,10 @@ const getDisplayedCategories = (item: any) => {
               </span> - nhà bán
             </div>
           </div>
-          <div v-if="item?.lst_brand?.length" class="description">Báo cáo thị phần thương hiệu hàng đầu như
+          <div v-if="item.introduction" class="description line-clamp__3">
+            {{ item.introduction }}
+          </div>
+          <div v-else-if="item?.lst_brand?.length" class="description line-clamp__3">Báo cáo thị phần thương hiệu hàng đầu như
             {{ item.lst_brand ? item.lst_brand.join(', ') : '' }} v.v
           </div>
         </div>
@@ -209,8 +213,8 @@ const getDisplayedCategories = (item: any) => {
 
         .description {
           display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 2;
+          //-webkit-box-orient: vertical;
+          //-webkit-line-clamp: 2;
           color: #716B95;
           text-overflow: ellipsis;
           font-size: 16px;
@@ -245,7 +249,8 @@ const getDisplayedCategories = (item: any) => {
 
           .breadcrumb {
             font-size: 10px;
-            span{
+
+            span {
               font-size: 10px;
             }
           }
@@ -257,11 +262,12 @@ const getDisplayedCategories = (item: any) => {
 
           .summary-info {
             margin-bottom: 0;
+
             .info_item {
               font-size: 10px;
 
-              span{
-                span{
+              span {
+                span {
                   font-size: 10px;
                 }
               }

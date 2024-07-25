@@ -66,7 +66,7 @@ import {ERRORS} from "~/constant/errors";
 import {EMAIL_REGEX, PHONE_REGEX} from "~/helpers/regexs";
 import type {TypeModal} from "~/components/modal/status/index.vue";
 import axios from "axios";
-import {getGlobalVariable} from "~/services/GlobalVariableService";
+import {generateHash, getGlobalVariable} from "~/services/GlobalVariableService";
 import {useCurrentUser} from "~/stores/current-user";
 
 const currentUserStore = useCurrentUser();
@@ -204,6 +204,8 @@ const validateForm = async () => {
   const url_referrer = variables?.url_referrer || ''
   const is_mobile = !!variables?.is_mobile
   const pub = variables?.pub || ''
+  const _fbc = variables?._fbc || ''
+  const _fbp = variables?._fbp || ''
   const emailProfile = formData.email || userInfo.value?.email || ''
   const first_visit = localStorage.getItem('first_visit') || ''
   const mkLeadSource = [formData.socialMediaType]
@@ -213,6 +215,18 @@ const validateForm = async () => {
   note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
   note += `lead_source: ${mkLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\ndevice: ${is_mobile ? 'mobile' : 'desktop'}`
   console.log('note', formData.name)
+
+  // @ts-ignore
+  if (fbq && typeof fbq === 'function') {
+    // @ts-ignore
+    fbq('track', 'Lead', {
+      em: await generateHash(emailProfile),
+      fn: await generateHash(formData.name),
+      ph: await generateHash(formData.phone),
+      fbc: _fbc,
+      fbp: _fbp
+    });
+  }
 
   const payload = {
     name: formData.name,

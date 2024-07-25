@@ -56,7 +56,6 @@ export const useCurrentUser = defineStore("currentUserStore", {
 
             const access_token = typeof window !== 'undefined' ? localStorage?.getItem("access_token") : "";
             if (!access_token) {
-                console.log("No access token");
                 this.fetchedUser = true;
                 return
             }

@@ -17,14 +17,14 @@ console.log(props.breadcrumbs);
           itemprop="name"
       >
         <nuxt-link
-            v-if="breadcrumb.value"
+            v-if="index < breadcrumbs.length - 1"
             :to="`/${breadcrumb.value}`"
             itemprop="url"
         >
           {{ breadcrumb.name }}
         </nuxt-link>
         <span v-else
-              :style="{'color': index === breadcrumbs.length - 1 ? '#E85912' : 'unset'}"
+              :style="{'color': '#E85912'}"
         >{{ breadcrumb.name }}</span>
       </a-breadcrumb-item>
     </a-breadcrumb>

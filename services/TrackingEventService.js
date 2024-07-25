@@ -16,7 +16,6 @@ const shouldTrack = () => {
 }
 
 const initTracking = () => {
-    console.log('initTracking')
     if (shouldTrack()) {
         let variables = getGlobalVariable()
         if (variables?.user_id) {

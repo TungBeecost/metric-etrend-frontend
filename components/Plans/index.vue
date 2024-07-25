@@ -23,7 +23,6 @@ onMounted(() => {
   windowWidth.value = window.innerWidth;
 });
 const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
-  console.log('getIsShowActiveButton', user_plan_code, plan_code)
 
   if (user_plan_code === plan_code) {
     return 'Đang sử dụng'
