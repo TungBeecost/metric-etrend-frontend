@@ -47,7 +47,7 @@ const handleCategorySelect = (newSelectedCategory: string) => {
   searchValueSearch.value = '';
   listTagSuggestions.value = [];
   const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
-  navigateTo(`${NAVIGATIONS.search}?category_report_id=${newSelectedCategory}`);
+  // navigateTo(`${NAVIGATIONS.search}?category_report_id=${newSelectedCategory}`);
   const category = allReports.find(cat => cat.value === newSelectedCategory);
   selectedCategoryName.value = category ? category.label : '';
   handleSearch(searchValueSearch.value, lstCategoryReportId);
@@ -108,6 +108,8 @@ const fetchData = async (searchValue: string = '', list_category_report_id: Arra
       'offset': (newpage * 10 >= 200) ? 199 : newpage * 10,
       'limit': 10,
       'sort': sortSelect,
+      'source': selecteReportTypeBuy.value.length > 0 ? selecteReportTypeBuy.value : [],
+      'lst_report_type': selecteReportType.value.length > 0 ? selecteReportType.value : []
     });
 
     if (Array.isArray(result) && result.length === 0) {
@@ -286,7 +288,7 @@ useSeoMeta({
             :select-category="selectedCategory"
             @category-select="handleCategorySelect"
             @selected-report-type-change="handleReportTypeChange"
-            @selectedReportTypeBuyChange="handleReportTypeBuyChange"
+            @selected-report-type-buy-change="handleReportTypeBuyChange"
         />
         <popular-relate-keywords
             v-if="listTagSuggestions?.length"
