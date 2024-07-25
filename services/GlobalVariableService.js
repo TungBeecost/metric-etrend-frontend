@@ -10,6 +10,7 @@ const getGlobalVariable = async () => {
     let role = null
     let url_referrer = null
     let _fbc = null
+    let _fbp = null
     let url = null
     let is_mobile = null
     let route_name = null
@@ -36,6 +37,7 @@ const getGlobalVariable = async () => {
         pub = getCookie('pub')
         url_referrer = getCookie('url_referrer')
         _fbc = getCookie('_fbc')
+        _fbp = getCookie('_fbp')
         is_mobile = isMobileDevice()
         // url_referrer = document.referrer
         url = document.location.href
@@ -57,6 +59,7 @@ const getGlobalVariable = async () => {
         source_traffic,
         pub,
         _fbc,
+        _fbp,
         utm_content,
         is_mobile,
         first_visit,
