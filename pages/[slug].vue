@@ -99,7 +99,7 @@ const fetchReportData = async () => {
     return {
       reportDetail: response,
       listRecommend,
-      isHideContent: true,
+      isHideContent,
       breadcrumbs
     }
   } catch (error) {

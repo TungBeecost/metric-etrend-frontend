@@ -3,12 +3,23 @@ import {removeEmpty} from "~/helpers/ObjectHelper";
 import {isMobileDevice} from "~/helpers/DeviceHelper";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper";
 
+export async function generateHash(data) {
+    const encoder = new TextEncoder();
+    const dataBuffer = encoder.encode(data);
+
+    const hashBuffer = await crypto.subtle.digest('SHA-256', dataBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
 const getGlobalVariable = async () => {
     let visitor_id = null
     let user_id = null
     let user_email = null
     let role = null
     let url_referrer = null
+    let _fbc = null
+    let _fbp = null
     let url = null
     let is_mobile = null
     let route_name = null
@@ -34,6 +45,8 @@ const getGlobalVariable = async () => {
         source_traffic = getCookie('source_traffic')
         pub = getCookie('pub')
         url_referrer = getCookie('url_referrer')
+        _fbc = getCookie('_fbc')
+        _fbp = getCookie('_fbp')
         is_mobile = isMobileDevice()
         // url_referrer = document.referrer
         url = document.location.href
@@ -41,22 +54,24 @@ const getGlobalVariable = async () => {
         // console.log('role', role)
     }
     return removeEmpty({
-        visitor_id: visitor_id,
-        user_id: user_id,
-        user_email: user_email,
-        role: role,
-        url_referrer: url_referrer,
-        url: url,
-        route_name: route_name,
-        utm_source: utm_source,
-        utm_medium: utm_medium,
-        utm_campaign: utm_campaign,
-        utm_term: utm_term,
-        source_traffic: source_traffic,
-        pub: pub,
-        utm_content: utm_content,
-        is_mobile: is_mobile,
-        first_visit: first_visit
+        visitor_id,
+        user_id,
+        user_email,
+        role,
+        url_referrer,
+        url,
+        route_name,
+        utm_source,
+        utm_medium,
+        utm_campaign,
+        utm_term,
+        source_traffic,
+        pub,
+        _fbc,
+        _fbp,
+        utm_content,
+        is_mobile,
+        first_visit,
     })
 }
 export {

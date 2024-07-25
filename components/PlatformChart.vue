@@ -1,19 +1,14 @@
 <script setup>
-import {computed, ref, watch} from 'vue';
+import {computed, ref} from 'vue';
 import {getPlatformById} from "~/helpers/PermissionPlatformHelper";
-import {formatNumberHuman} from "~/helpers/FormatHelper.js";
 import {formatSortTextCurrency} from "~/helpers/utils.js";
 import Highcharts from "highcharts";
 
 
-const props = defineProps({
-  classifiedAnalyticResponse: {
+const {data, isHideContent} = defineProps({
+  data: {
     type: Object,
     default: () => ({})
-  },
-  analyticType: {
-    type: String,
-    default: () => 'revenue'
   },
   isHideContent: {
     type: Boolean,
@@ -21,24 +16,16 @@ const props = defineProps({
   }
 });
 
+const renderChart = ref(false)
+
 // Initialize windowWidth with a default value
 const windowWidth = ref(1024);
 
 onMounted(() => {
   windowWidth.value = window.innerWidth;
+  renderChart.value = true
 });
 
-const chartWidth = computed(() => {
-  if (windowWidth.value < 1200) {
-    return 300;
-  } else if (windowWidth.value < 1500) {
-    return 400;
-  } else {
-    return 500;
-  }
-});
-
-const chartOptions = ref(null);
 
 const platformColors = {
   Shopee: ['#FCA14E', '#FF733F'],
@@ -48,13 +35,8 @@ const platformColors = {
   Tiktok: ['#000', '#000'],
 };
 
-const PLATFORM_TOTAL = computed(() => props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL);
-const total = computed(() => PLATFORM_TOTAL.value.platforms.reduce((acc, item) => acc + item.revenue, 0));
-
-const innerName = ref(PLATFORM_TOTAL.value.platforms[0] ? getPlatformById(PLATFORM_TOTAL.value.platforms[0].platform_id).name : '');
-const innerPercent = ref(PLATFORM_TOTAL.value.platforms[0] ? parseFloat(PLATFORM_TOTAL.value.platforms[0].revenue / total.value * 100).toFixed(1) + '%' : '');
-const innerValue = ref(PLATFORM_TOTAL.value.platforms[0] ? PLATFORM_TOTAL.value.platforms[0].revenue : '');
-const innerColor = ref(PLATFORM_TOTAL.value.platforms[0] ? platformColors[getPlatformById(PLATFORM_TOTAL.value.platforms[0].platform_id).name] : '');
+// const PLATFORM_TOTAL = computed(() => props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL);
+// const total = computed(() => PLATFORM_TOTAL.value.platforms.reduce((acc, item) => acc + item.revenue, 0));
 
 const columns = computed(() => [
   {
@@ -66,7 +48,7 @@ const columns = computed(() => [
     scopedSlots: {customRender: 'platform'},
   },
   {
-    title: props.analyticType === 'revenue' ? $t('Doanh số (Đồng)') : $t('Số sản phẩm đã bán (Sản phẩm)'),
+    title: 'Doanh số (Đồng)',
     dataIndex: 'revenue',
     scopedSlots: {customRender: 'revenue'},
     key: 'revenue',
@@ -77,110 +59,109 @@ const columns = computed(() => [
 
 const $t = (text) => text;
 
-chartOptions.value = {
-  chart: {
-    type: "pie",
-    width: chartWidth,
-    style: {
-      fontFamily: "Inter",
+const chartWidth = computed(() => {
+  if (windowWidth.value < 1200) {
+    return 300;
+  } else if (windowWidth.value < 1500) {
+    return 400;
+  } else {
+    return 500;
+  }
+});
+const chartOptions = computed(() => ({
+    chart: {
+      type: "pie",
+      width: chartWidth.value || 500,
+      style: {
+        fontFamily: "Inter",
+      },
     },
-  },
-  title: {
-    text: "Tỷ trọng doanh số theo sàn",
-    style: {
-      fontSize: '14px',
-      color: '#241E46',
-      fontWeight: 700,
-      fontFamily: 'Inter'
-    }
-  },
-  legend: {
-    enabled: true,
-    symbolHeight: 10,
-    symbolWidth: 10,
-    itemStyle: {
-      fontSize: '12px',
-      color: '#241E46',
-      fontWeight: 400,
-      fontFamily: 'Inter'
-    }
-  },
-  tooltip: {
-    enabled: false,
-  },
-  plotOptions: {
-    pie: {
-      cursor: "pointer",
-      showInLegend: true,
-      innerSize: '60%',
-      borderWidth: 1,
-      borderColor: null,
-      dataLabels: {
-        enabled: true,
-        connectorShape: 'crookedLine',
-        style: {
-          fontSize: '12px',
-          color: '#241E46',
-          fontWeight: 400,
-          fontFamily: 'Inter'
-        },
-        formatter: function () {
-          if (props.isHideContent) {
-            return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
-          }
-
-          return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
-        },
+    title: {
+      text: "Tỷ trọng doanh số theo sàn",
+      style: {
+        fontSize: '14px',
+        color: '#241E46',
+        fontWeight: 700,
+        fontFamily: 'Inter'
       }
     },
-    series: {
-      enableMouseTracking: false
-    }
-  },
-  series: [
-    {
-      name: props.analyticType === 'revenue' ? $t('Doanh số (Đồng)') : $t('Số sản phẩm đã bán (Sản phẩm)'),
-      data: PLATFORM_TOTAL.value.platforms.map(({platform_id, revenue, ratio_revenue}) => ({
-        name: getPlatformById(platform_id).name,
-        y: revenue || ratio_revenue,
-        // color: platformColors[getPlatformById(platform_id).name],
-        color: {
-          linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
-          stops: [
-            [0, platformColors[getPlatformById(platform_id).name][0]],
-            [1, platformColors[getPlatformById(platform_id).name][1]]
-          ]
+    legend: {
+      enabled: true,
+      symbolHeight: 10,
+      symbolWidth: 10,
+      itemStyle: {
+        fontSize: '12px',
+        color: '#241E46',
+        fontWeight: 400,
+        fontFamily: 'Inter'
+      }
+    },
+    tooltip: {
+      enabled: false,
+    },
+    plotOptions: {
+      pie: {
+        cursor: "pointer",
+        showInLegend: true,
+        innerSize: '60%',
+        borderWidth: 1,
+        borderColor: null,
+        dataLabels: {
+          enabled: true,
+          connectorShape: 'crookedLine',
+          style: {
+            fontSize: '12px',
+            color: '#241E46',
+            fontWeight: 400,
+            fontFamily: 'Inter'
+          },
+          formatter: function () {
+            if (isHideContent) {
+              return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
+            }
+
+            return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          },
         }
-      })).sort((a, b) => b.y - a.y),
-    }
-  ]
-};
+      },
+      series: {
+        enableMouseTracking: false
+      }
+    },
+    series: [
+      {
+        name: 'Doanh số (Đồng)',
+        data: data.data_analytic.by_marketplace.lst_marketplace.map(({platform_id, revenue, ratio_revenue}) => ({
+          name: getPlatformById(platform_id).name,
+          y: revenue || ratio_revenue,
+          // color: platformColors[getPlatformById(platform_id).name],
+          color: {
+            linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
+            stops: [
+              [0, platformColors[getPlatformById(platform_id).name][0]],
+              [1, platformColors[getPlatformById(platform_id).name][1]]
+            ]
+          }
+        })).sort((a, b) => b.y - a.y),
+      }
+    ]
+}));
 
 const dataSource = computed(() => {
-  const PLATFORM_TOTAL = props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL;
-  return PLATFORM_TOTAL.platforms.map(({platform_id, revenue, ratio_revenue} = {}) => ({
+  return data.data_analytic.by_marketplace.lst_marketplace.map(({platform_id, revenue, ratio_revenue} = {}) => ({
     platform: getPlatformById(platform_id).name,
     platformIcon: getPlatformById(platform_id).urlLogo,
-    revenue: props.isHideContent ? ratio_revenue.toFixed(2) : (props.analyticType === 'revenue' ? formatSortTextCurrency(revenue) : formatNumberHuman(revenue)),
+    revenue: isHideContent ? ratio_revenue.toFixed(2) : formatSortTextCurrency(revenue),
   })).sort((a, b) => b.revenue - a.revenue);
-});
-
-watch(() => props.analyticType, () => {
-  const PLATFORM_TOTAL = props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL;
-  const total = PLATFORM_TOTAL.platforms.reduce((acc, item) => acc + item.revenue, 0);
-  innerName.value = PLATFORM_TOTAL.platforms[0] ? getPlatformById(PLATFORM_TOTAL.platforms[0].platform_id).name : '';
-  innerPercent.value = PLATFORM_TOTAL.platforms[0] ? parseFloat(PLATFORM_TOTAL.platforms[0].revenue / total * 100).toFixed(1) + '%' : '';
-  innerValue.value = PLATFORM_TOTAL.platforms[0] ? PLATFORM_TOTAL.platforms[0].revenue : '';
-  innerColor.value = PLATFORM_TOTAL.platforms[0] ? platformColors[getPlatformById(PLATFORM_TOTAL.platforms[0].platform_id).name] : '';
 });
 
 </script>
 
 <template>
   <div id="platform_chart" class="PlatformChart">
-    <div style="">
-      <div style="position: relative;">
-        <highchart :options="chartOptions"/>
+    <div>
+      <div style="position: relative; pointer-events: none">
+        <highchart v-if="renderChart" :options="chartOptions"/>
         <!--        <div class="platform-chart-inner-box">-->
         <!--          <div class="platform-chart-inner-value">-->
         <!--            <div class="percent" style="color: #241E46; font-size: 24px;font-weight: bold; line-height: 32px; ">{{ innerPercent }}</div>-->
@@ -206,7 +187,7 @@ watch(() => props.analyticType, () => {
             </div>
           </template>
           <template v-if="column.key === 'revenue'">
-            <BlurContent :is-hide-content="props.isHideContent">
+            <BlurContent :is-hide-content="isHideContent">
               {{ record.revenue }}
             </BlurContent>
           </template>

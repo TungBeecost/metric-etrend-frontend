@@ -212,8 +212,8 @@ const charts = computed(() => {
     <div id="thi-phan-cac-san-thuong-mai-dien-tu" class="items-center">
       <platform-chart
           v-if="props.data"
-          :classified-analytic-response="{REVENUE_TOTAL: {platforms: data.data_analytic.by_marketplace.lst_marketplace}}"
           :is-hide-content="props.isHideContent"
+          :data="props.data"
       />
     </div>
     <InsightBlock>

@@ -3,7 +3,7 @@
 import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
 import ErrorNotification from "~/components/ContactUs/ErrorNotification.vue";
 import axios from "axios";
-import {getGlobalVariable} from "~/services/GlobalVariableService.js";
+import {generateHash, getGlobalVariable} from "~/services/GlobalVariableService.js";
 import {useCurrentUser} from "~/stores/current-user";
 
 const currentUserStore = useCurrentUser();
@@ -68,7 +68,7 @@ const handleSubmitLeadForm = async () => {
   // const userProfile = authStore.userProfile
   const variables = await getGlobalVariable();
 
-  // console.log('variables', variables);
+  console.log('variables', variables);
   // console.log('formData', formData.value);
   //
   // isSubmitFormLoading.value = false
@@ -82,6 +82,8 @@ const handleSubmitLeadForm = async () => {
   const url_referrer = variables?.url_referrer || ''
   const is_mobile = !!variables?.is_mobile
   const pub = variables?.pub || ''
+  const _fbc = variables?._fbc || ''
+  const _fbp = variables?._fbp || ''
   const emailProfile = formData.value.email || userInfo.value?.email || ''
   const first_visit = localStorage.getItem('first_visit') || ''
   const mktLeadSource = [formData.value.mktLeadSource]
@@ -91,6 +93,18 @@ const handleSubmitLeadForm = async () => {
   note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
   note += `lead_source: ${mktLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\ndevice: ${is_mobile ? 'mobile' : 'desktop'}`
   console.log('note', formData.value.name)
+
+  console.log('fbq', fbq)
+
+  if (fbq && typeof fbq === 'function') {
+    fbq('track', 'Lead', {
+      em: await generateHash(emailProfile),
+      fn: await generateHash(formData.value.fullName),
+      ph: await generateHash(formData.value.phone),
+      fbc: _fbc,
+      fbp: _fbp
+    });
+  }
 
   const payload = {
     name: formData.value.fullName,
