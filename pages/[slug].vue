@@ -13,6 +13,7 @@ import {useCurrentUser} from "~/stores/current-user";
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import {REPORT_ENDPOINTS} from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
+import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 
 const currentUserStore = useCurrentUser();
 const route = useRoute()
@@ -172,6 +173,7 @@ onUnmounted(() => {
     <div class="container default_section">
       <div class="general_overview_container">
         <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+        <keyword-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
