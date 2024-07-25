@@ -47,7 +47,7 @@ const handleCategorySelect = (newSelectedCategory: string) => {
   searchValueSearch.value = '';
   listTagSuggestions.value = [];
   const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
-  // navigateTo(`${NAVIGATIONS.search}?category_report_id=${newSelectedCategory}`);
+  navigateTo(`${NAVIGATIONS.search}?category_report_id=${newSelectedCategory}`);
   const category = allReports.find(cat => cat.value === newSelectedCategory);
   selectedCategoryName.value = category ? category.label : '';
   handleSearch(searchValueSearch.value, lstCategoryReportId);
@@ -195,14 +195,33 @@ const onClickViewPrice = () => {
   navigateTo(NAVIGATIONS.pricing);
 };
 
-const handleReportTypeChange = (selectedReportType: string[]) => {
+const handleReportTypeChange = async (selectedReportType: string[]) => {
   selecteReportType.value = selectedReportType;
+  const list_category_report_id = [];
+  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
+    list_category_report_id.push(route.query.category_report_id);
+    selectedCategory.value = route.query.category_report_id;
+  }
+  await fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
 };
 
-const handleReportTypeBuyChange = (selectedReportTypeBuy: string[]) => {
+const handleReportTypeBuyChange = async (selectedReportTypeBuy: string[]) => {
+  if(selectedReportTypeBuy.includes('other')) {
+    selectedReportTypeBuy = [];
+  }
+  const index = selectedReportTypeBuy.indexOf('other');
+  if (index !== -1) {
+    selectedReportTypeBuy.splice(index, 1);
+    selectedReportTypeBuy.push('marketing');
+  }
+  const list_category_report_id = [];
+  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
+    list_category_report_id.push(route.query.category_report_id);
+    selectedCategory.value = route.query.category_report_id;
+  }
   selecteReportTypeBuy.value = selectedReportTypeBuy;
+  await fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
 };
-
 useSeoMeta({
   title: PAGE_TITLES.search
 })
