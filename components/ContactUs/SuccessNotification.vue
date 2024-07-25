@@ -28,7 +28,7 @@ const isVisible = computed({
 
 <template>
   <a-modal v-model:visible="isVisible"
-           :wrap-class-name="'popup-success-notification ' + className"
+           :wrap-class-name="'popup-success-notification ' + props.className"
            :footer="false"
            centered
            style="width: 663px;"
