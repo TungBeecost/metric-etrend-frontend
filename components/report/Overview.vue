@@ -43,8 +43,8 @@ interface Shop {
 }
 
 const top5Shops = (): string[] => {
-  const shops: Shop[] = props.data.data_analytic.by_shop.lst_top_shop;
-  return shops.slice(0, 5).map(shop => shop.name);
+  const shops: Shop[] = props.data.data_analytic.by_brand.lst_top_brand_revenue;
+  return shops.slice(0, 5).map(brand => brand.name);
 };
 </script>
 
@@ -91,7 +91,7 @@ const top5Shops = (): string[] => {
           . Những thương hiệu {{ props.data.name }} được phân phối và
         bán chạy nhất là
         <BlurContent :is-hide-content="isHideContent">
-          <span>{{ top5Shops().join(',q ') }}</span>
+          <span>{{ top5Shops().join(', ') }}</span>
         </BlurContent>
         v.v...
       </div>

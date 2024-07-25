@@ -218,8 +218,8 @@ const handleSubmitLeadForm = async () => {
     </div>
   </div>
 
-  <SuccessNotification v-model:visible="isShowSuccessNotification"/>
-  <ErrorNotification v-model:visible="isShowErrorNotification"/>
+  <SuccessNotification v-model:visible="isShowSuccessNotification" class-name="submit-form-marketing-success"/>
+  <ErrorNotification v-model:visible="isShowErrorNotification" class-name="submit-form-marketing-success"/>
 </template>
 
 
