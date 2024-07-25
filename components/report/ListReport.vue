@@ -131,7 +131,7 @@ const getDisplayedCategories = (item: any) => {
                   </defs>
                 </svg>
                 <div style="color: #E85912">Xem chi tiết</div>
-                <div>doanh số</div>
+                <div>sản lượng bán</div>
               </div>
             </div>
           </div>
