@@ -66,7 +66,7 @@ import {ERRORS} from "~/constant/errors";
 import {EMAIL_REGEX, PHONE_REGEX} from "~/helpers/regexs";
 import type {TypeModal} from "~/components/modal/status/index.vue";
 import axios from "axios";
-import {getGlobalVariable, generateHash} from "~/services/GlobalVariableService";
+import {generateHash, getGlobalVariable} from "~/services/GlobalVariableService";
 import {useCurrentUser} from "~/stores/current-user";
 
 const currentUserStore = useCurrentUser();
@@ -216,7 +216,9 @@ const validateForm = async () => {
   note += `lead_source: ${mkLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\ndevice: ${is_mobile ? 'mobile' : 'desktop'}`
   console.log('note', formData.name)
 
+  // @ts-ignore
   if (fbq && typeof fbq === 'function') {
+    // @ts-ignore
     fbq('track', 'Lead', {
       em: await generateHash(emailProfile),
       fn: await generateHash(formData.name),

@@ -3,7 +3,7 @@
 import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
 import ErrorNotification from "~/components/ContactUs/ErrorNotification.vue";
 import axios from "axios";
-import {getGlobalVariable, generateHash} from "~/services/GlobalVariableService.js";
+import {generateHash, getGlobalVariable} from "~/services/GlobalVariableService.js";
 import {useCurrentUser} from "~/stores/current-user";
 
 const currentUserStore = useCurrentUser();
