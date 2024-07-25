@@ -175,7 +175,7 @@ watch(selectedReportTypeBuy, (newVal) => {
         <a-collapse-panel :key="3" header="Phân loại">
           <a-checkbox-group v-model:value="selectedReportTypeBuy">
             <a-checkbox
-                v-for="(reportType, index) in [{label: 'Miễn phí', value: 'free'}, {label: 'Trả phí', value: 'paid'}]"
+                v-for="(reportType, index) in [{label: 'Miễn phí', value: 'marketing'}, {label: 'Trả phí', value: 'auto'}]"
                 :key="reportType.value"
                 :value="reportType.value"
                 style="width: 100%;"

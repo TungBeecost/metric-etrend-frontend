@@ -153,6 +153,8 @@ export interface SearchReportPayload {
   offset?: number;
   sort?: string;
   order?: string;
+  source?: Array<string>;
+  lst_report_type?: Array<string>;
 }
 
 export interface SearchReportRes {
