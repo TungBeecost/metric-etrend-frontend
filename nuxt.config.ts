@@ -66,10 +66,10 @@ export default defineNuxtConfig({
 
         // Keys exposed client-side too
         public: {
-            apiBase: "http://localhost:8000",
-            API_ENDPOINT: "http://localhost:8000",
-            // apiBase: process.env.API_ENDPOINT,
-            // API_ENDPOINT: process.env.API_ENDPOINT,
+            // apiBase: "http://localhost:8000",
+            // API_ENDPOINT: "http://localhost:8000",
+            apiBase: process.env.API_ENDPOINT,
+            API_ENDPOINT: process.env.API_ENDPOINT,
             BASE_URL: process.env.BASE_URL,
             MODE: process.env.MODE,
             SSR: process.env.SSR,
