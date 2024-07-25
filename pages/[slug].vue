@@ -99,7 +99,7 @@ const fetchReportData = async () => {
     return {
       reportDetail: response,
       listRecommend,
-      isHideContent,
+      isHideContent: true,
       breadcrumbs
     }
   } catch (error) {
@@ -173,7 +173,7 @@ onUnmounted(() => {
     <div class="container default_section">
       <div class="general_overview_container">
         <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-        <keyword-statistic v-if="data?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+        <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>

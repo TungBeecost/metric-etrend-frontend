@@ -13,19 +13,58 @@ const {data, isHideContent} = defineProps({
   },
 });
 
-const formatNumber = (value = 0) => {
-  const formatWithLocale = (val) => val.toLocaleString("vi-VN");
-  return formatWithLocale(value);
-};
+const top5KeywordsByRevenue = computed(() => {
+  if (!data.data_analytic.by_keyword || !data.data_analytic.by_keyword.lst_keyword) {
+    return [];
+  }
+
+  return [
+    ...data.data_analytic.by_keyword.lst_keyword
+  ].sort((a, b) => b.revenue - a.revenue)
+      .slice(5)
+      .map(({name, ...rest}) => ({
+        // upper case first letter
+        name: name.charAt(0).toUpperCase() + name.slice(1),
+        ...rest,
+      }));
+});
+
+const top5KeywordsBySale = computed(() => {
+  if (!data.data_analytic.by_keyword || !data.data_analytic.by_keyword.lst_keyword) {
+    return [];
+  }
+
+  return [
+    ...data.data_analytic.by_keyword.lst_keyword
+  ].sort((a, b) => b.sale - a.sale)
+      .slice(5)
+      .map(({name, ...rest}) => ({
+        // upper case first letter
+        name: name.charAt(0).toUpperCase() + name.slice(1),
+        ...rest,
+      }));
+});
+
+const totalRevenue = computed(() => {
+  if (!top5KeywordsByRevenue.value.length) {
+    return 0;
+  }
+
+  return top5KeywordsByRevenue.value.reduce((acc, item) => acc + item.revenue, 0);
+});
+
+const totalSale = computed(() => {
+  if (!top5KeywordsBySale.value.length) {
+    return 0;
+  }
+
+  return top5KeywordsBySale.value.reduce((acc, item) => acc + item.sale, 0);
+});
 </script>
 
 <template>
   <div
-      v-if="
-      data.data_analytic.by_keyword &&
-      data.data_analytic.by_keyword.lst_keyword &&
-      data.data_analytic.by_keyword.lst_keyword.length > 1
-    "
+      v-if="top5KeywordsByRevenue.length > 0"
       id="thong-ke-thuong-hieu"
       class="border statistic-block"
   >
@@ -39,15 +78,15 @@ const formatNumber = (value = 0) => {
         <div class="statistic-item__subtitle">Top 5 nhóm hàng bán chạy trong 365 ngày qua</div>
       </div>
     </div>
-    <div class="pie_chart">
+    <div class="pie_chart" style="position: relative;">
       <div class="pie_chart_item">
         <PieChart
             title="Tỷ trọng doanh số theo top 5 nhóm hàng"
             :is-hide-content="isHideContent"
             :series="[
             {
-              name: 'Tỷ trọng doanh số theo top 5 nhóm hàng',
-              data: [...data.data_analytic.by_keyword.lst_keyword].sort((a,b) => b.revenue - a.revenue).slice(5).map(({ name, revenue = 0 } = {}) => ({name, y: revenue})),
+              name: 'Doanh số',
+              data: top5KeywordsByRevenue.map(({ name, revenue = 0 } = {}) => ({name, y: revenue})),
             },
           ]"
         />
@@ -58,49 +97,78 @@ const formatNumber = (value = 0) => {
             :is-hide-content="isHideContent"
             :series="[
             {
-              name: 'Tỷ trọng doanh số theo top 5 nhóm hàng',
-              data: [...data.data_analytic.by_keyword.lst_keyword].sort((a,b) => b.sale - a.sale).slice(5).map(({ name, sale = 0 } = {}) => ({name, y: sale})),
+              name: 'Sản lượng',
+              data: top5KeywordsBySale.map(({ name, sale = 0 } = {}) => ({name, y: sale})),
             },
           ]"
         />
       </div>
+      <ChartMask v-if="isHideContent" :report="data"/>
     </div>
-    <!--    <InsightBlock-->
-    <!--        v-if="-->
-    <!--        data.data_analytic.by_keyword &&-->
-    <!--        data.data_analytic.by_keyword.lst_top_brand_revenue &&-->
-    <!--        data.data_analytic.by_keyword.lst_top_brand_revenue.length > 1-->
-    <!--      "-->
-    <!--    >-->
-    <!--      <li>-->
-    <!--        Về doanh số,-->
-    <!--        <BlurContent :is-blurred="props.isHideContent">-->
-    <!--          {{ data.data_analytic.by_keyword.lst_top_brand_revenue[0].name }}-->
-    <!--        </BlurContent>-->
-    <!--        là từ khóa chiếm thị phần cao nhất,-->
-    <!--        theo sau lần lượt là-->
-    <!--        <BlurContent v-for="(brand, index) in data.data_analytic.by_keyword.lst_top_brand_revenue.slice(1)"-->
-    <!--                     :key="brand.name"-->
-    <!--                     :is-blurred="props.isHideContent">-->
-    <!--          {{ brand.name }}<span v-if="index !== data.data_analytic.by_keyword.lst_top_brand_revenue.length - 2">,-->
-    <!--          </span>-->
-    <!--        </BlurContent>.-->
-    <!--      </li>-->
-    <!--      <li>-->
-    <!--        Về số sản phẩm đã bán, thương hiệu dẫn đầu là-->
-    <!--        <BlurContent :is-blurred="props.isHideContent">-->
-    <!--          {{ data.data_analytic.by_keyword.lst_top_brand_revenue[0].name }}-->
-    <!--        </BlurContent>-->
-    <!--        các thương hiệu-->
-    <!--        <BlurContent v-for="(brand, index) in data.data_analytic.by_keyword.lst_top_brand_revenue.slice(1)"-->
-    <!--                     :key="brand.name"-->
-    <!--                     :is-blurred="props.isHideContent">-->
-    <!--          {{ brand.name }}<span v-if="index !== data.data_analytic.by_keyword.lst_top_brand_revenue.length - 2">,-->
-    <!--          </span>-->
-    <!--        </BlurContent>-->
-    <!--        lần lượt giữ vị trí tiếp theo.-->
-    <!--      </li>-->
-    <!--    </InsightBlock>-->
+    <InsightBlock v-if="top5KeywordsByRevenue.length > 0">
+      <li>
+        Trong {{ data.name }},
+        nhóm hàng đạt doanh số cao nhất là
+        <BlurContent :is-blurred="isHideContent">
+          {{ top5KeywordsByRevenue[0].name }}
+        </BlurContent>
+        với thị phần trong top 5 là
+        <BlurContent :is-blurred="isHideContent">
+          {{ ((top5KeywordsByRevenue[0].revenue / totalRevenue) * 100).toFixed(2) }}%
+        </BlurContent>
+        ,
+        nhóm hàng
+        <BlurContent :is-blurred="isHideContent">
+          {{ top5KeywordsByRevenue[1].name }}
+        </BlurContent>
+        đứng vị trí thứ 2 với
+        <BlurContent :is-blurred="isHideContent">
+          {{ ((top5KeywordsByRevenue[1].revenue / totalRevenue) * 100).toFixed(2) }}%
+        </BlurContent>
+        ,
+        theo sau lần lượt là các nhóm hàng
+        <BlurContent :is-blurred="isHideContent">
+          {{ top5KeywordsByRevenue[2].name }}
+        </BlurContent>
+        ,
+        <BlurContent :is-blurred="isHideContent">
+          {{ top5KeywordsByRevenue[3].name }}
+        </BlurContent>
+        và
+        <BlurContent :is-blurred="isHideContent">
+          {{ top5KeywordsByRevenue[4].name }}
+        </BlurContent>
+        .
+      </li>
+      <li>
+        Về sản lượng bán, nhóm hàng bán chạy nhất là
+        <BlurContent :is-blurred="isHideContent">
+          {{ top5KeywordsBySale[0].name }}
+        </BlurContent>
+        với
+        <BlurContent :is-blurred="isHideContent">
+          {{ ((top5KeywordsBySale[0].sale / totalSale) * 100).toFixed(2) }}%
+        </BlurContent>
+        thị phần trong top 5,
+        các nhóm hàng bán chạy tiếp theo lần lượt là
+        <BlurContent :is-blurred="isHideContent">
+          {{ top5KeywordsBySale[1].name }}
+        </BlurContent>
+        ,
+        <BlurContent :is-blurred="isHideContent">
+          {{ top5KeywordsBySale[2].name }}
+        </BlurContent>
+        ,
+        <BlurContent :is-blurred="isHideContent">
+          {{ top5KeywordsBySale[3].name }}
+        </BlurContent>
+        và
+        <BlurContent :is-blurred="isHideContent">
+          {{ top5KeywordsBySale[4].name }}
+        </BlurContent>
+        .
+      </li>
+    </InsightBlock>
   </div>
 </template>
 
