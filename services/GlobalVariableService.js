@@ -3,6 +3,15 @@ import {removeEmpty} from "~/helpers/ObjectHelper";
 import {isMobileDevice} from "~/helpers/DeviceHelper";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper";
 
+export async function generateHash(data) {
+    const encoder = new TextEncoder();
+    const dataBuffer = encoder.encode(data);
+
+    const hashBuffer = await crypto.subtle.digest('SHA-256', dataBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
 const getGlobalVariable = async () => {
     let visitor_id = null
     let user_id = null

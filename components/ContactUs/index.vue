@@ -3,7 +3,7 @@
 import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
 import ErrorNotification from "~/components/ContactUs/ErrorNotification.vue";
 import axios from "axios";
-import {getGlobalVariable} from "~/services/GlobalVariableService.js";
+import {getGlobalVariable, generateHash} from "~/services/GlobalVariableService.js";
 import {useCurrentUser} from "~/stores/current-user";
 
 const currentUserStore = useCurrentUser();
@@ -98,9 +98,9 @@ const handleSubmitLeadForm = async () => {
 
   if (fbq && typeof fbq === 'function') {
     fbq('track', 'Lead', {
-      em: emailProfile,
-      fn: formData.value.fullName,
-      ph: formData.value.phone,
+      em: await generateHash(emailProfile),
+      fn: await generateHash(formData.value.fullName),
+      ph: await generateHash(formData.value.phone),
       fbc: _fbc,
       fbp: _fbp
     });
