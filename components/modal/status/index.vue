@@ -1,7 +1,7 @@
 <template>
   <Modal :is-open="isOpen" :on-close="onClose" :class="classNameModal">
     <template #content>
-      <div class="contentModal">
+      <div class="contentModal submit-form-marketing-success">
         <CustomIcon :type="type === 'success' ? 'SuccessTick' : 'SuccessTick'" :is-custom-size="true" class="statusIcon" />
         <div class="content">
           <p class="header">{{ header }}</p>
