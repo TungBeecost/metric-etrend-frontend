@@ -82,6 +82,7 @@ const handleSubmitLeadForm = async () => {
   const url_referrer = variables?.url_referrer || ''
   const is_mobile = !!variables?.is_mobile
   const pub = variables?.pub || ''
+  const _fbc = variables?._fbc || ''
   const emailProfile = formData.value.email || userInfo.value?.email || ''
   const first_visit = localStorage.getItem('first_visit') || ''
   const mktLeadSource = [formData.value.mktLeadSource]
@@ -89,7 +90,7 @@ const handleSubmitLeadForm = async () => {
   const mkCompanyType = formData.value.mktCompanyType || ''
   let note = `From: ${window.location.href}\n`
   note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
-  note += `lead_source: ${mktLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\ndevice: ${is_mobile ? 'mobile' : 'desktop'}`
+  note += `lead_source: ${mktLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\ndevice: ${is_mobile ? 'mobile' : 'desktop'}\n _fbc: _fbc: ${_fbc}`
   console.log('note', formData.value.name)
 
   console.log('fbq', fbq)
