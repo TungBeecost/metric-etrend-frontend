@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, defineProps, defineEmits } from 'vue';
+import {computed, defineEmits, defineProps, onMounted, ref} from 'vue';
 import allReports from '@/public/file_json/list_category.json';
-import { TreeSelect } from 'ant-design-vue';
+import {TreeSelect} from 'ant-design-vue';
 import type {SelectValue} from "ant-design-vue/es/select";
 import type {CheckboxChangeEvent} from "ant-design-vue/es/checkbox/interface";
 
@@ -34,7 +34,7 @@ interface ReportItem {
 
 const transformToTreeData = (data: ReportItem[]): ReportItem[] => {
   const treeData: ReportItem[] = [];
-  const map = new Map(data.map((item: ReportItem) => [item.value, { ...item, children: [] as ReportItem[] }]));
+  const map = new Map(data.map((item: ReportItem) => [item.value, {...item, children: [] as ReportItem[]}]));
 
   data.forEach((item: ReportItem) => {
     if (item.parent) {
@@ -69,10 +69,10 @@ onMounted(() => {
 });
 
 const reportTypes = ref([
-  { label: 'Tất cả', value: 'all' },
-  { label: 'Báo cáo ngành hàng', value: 'report_category' },
-  { label: 'Báo cáo nhóm hàng', value: 'report_product_line' },
-  { label: 'Báo cáo khác', value: 'other' },
+  {label: 'Tất cả', value: 'all'},
+  {label: 'Báo cáo ngành hàng', value: 'report_category'},
+  {label: 'Báo cáo nhóm hàng', value: 'report_product_line'},
+  {label: 'Báo cáo khác', value: 'other'},
 ]);
 
 const checkAll = computed({
@@ -147,6 +147,7 @@ watch(selectedReportTypeBuy, (newVal) => {
             <a-checkbox
                 :checked="checkAll"
                 :indeterminate="indeterminate"
+                style="margin-bottom: 8px;"
                 @change="onCheckAllChange"
             >
               Tất cả
