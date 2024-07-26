@@ -20,8 +20,8 @@
       <!-- contact -->
       <div class="info contact" style="font-size: 16px">
         <div class="title">Liên hệ</div>
-        <div v-for="(item, index) in CONTACTS" :key="index" class="contactItem">
-          <CustomIcon :type="item.icon as any" />
+        <div v-for="(item, index) in CONTACTS"  :key="index" class="contactItem">
+          <CustomIcon :type="item.icon as any" :is-custom-size="true" />
           <p style="font-size: 16px">{{ item.label }}</p>
         </div>
       </div>

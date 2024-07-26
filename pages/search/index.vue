@@ -188,6 +188,9 @@ onMounted(() => {
   } else {
     searchValueSearch.value = '';
   }
+  if(route.query.report_type && typeof route.query.report_type === 'string') {
+    selecteReportType.value = [route.query.report_type];
+  }
   fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
 });
 
@@ -305,6 +308,7 @@ useSeoMeta({
             v-if="displaySortReport"
             class="filter_report"
             :select-category="selectedCategory"
+            :selecte-report-type="selecteReportType"
             @category-select="handleCategorySelect"
             @selected-report-type-change="handleReportTypeChange"
             @selected-report-type-buy-change="handleReportTypeBuyChange"
@@ -339,8 +343,14 @@ useSeoMeta({
     </div>
     <a-modal v-model:visible="isModalVisible" style="position: absolute;" title="Filter and Sort" @ok="handleOk"
              @cancel="handleCancel">
-      <sort-report class="sort_report" @sort-select="handleSortSelect"/>
-      <filter-report class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect"/>
+      <sort-report class="sort_report"
+                   @sort-select="handleSortSelect"/>
+      <filter-report class="filter_report"
+                     :select-category="selectedCategory"
+                     @categoryselect="handleCategorySelect"
+                     @selected-report-type-change="handleReportTypeChange"
+                     @selected-report-type-buy-change="handleReportTypeBuyChange"
+      />
     </a-modal>
   </div>
 </template>

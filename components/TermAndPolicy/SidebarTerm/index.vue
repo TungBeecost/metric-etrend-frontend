@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <div v-for="item in TERM_AND_POLICIES" class="menuItem" :class="{ active: path.includes(item.link) }" @click="navigateTo(item.link)">
-      <CustomIcon type="Docs" class="menuIcon" />
+      <CustomIcon type="Docs" class="menuIcon" :is-custom-size="true" />
       <p class="menuLabel">{{ item.label }}</p>
     </div>
   </div>

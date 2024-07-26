@@ -6,6 +6,7 @@ import ItemNewReport from "~/components/report/ItemNewReport.vue";
 import {type SearchReportPayload} from "~/services/reports";
 import {PAGE_TITLES} from "~/constant/constains";
 import {REPORT_ENDPOINTS} from "~/constant/endpoints";
+import ExploreByReportType from "~/components/report/ExploreByReportType.vue";
 
 const config = useRuntimeConfig();
 
@@ -65,6 +66,8 @@ useSeoMeta({
         </div>
       </div>
     </div>
+    <explore-by-report-type/>
+    <report-free/>
     <discover/>
     <featured-report/>
     <ContactUs/>

@@ -11,7 +11,7 @@
         @focus="isShowSuggestions = true"
     >
       <template #enterButton>
-        <CustomIcon type="Search"/>
+        <CustomIcon type="Search" :is-custom-size="true"/>
       </template>
     </AInputSearch>
 

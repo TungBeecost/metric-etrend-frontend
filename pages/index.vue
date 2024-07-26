@@ -29,6 +29,8 @@
 
     <ReportFeaturedReport/>
 
+    <ReportFree />
+
     <div class="section">
       <Testimonials/>
     </div>
@@ -81,6 +83,7 @@ import {NAVIGATIONS} from '~/constant/constains';
 import {searchReport, type SearchReportPayload} from "~/services/reports";
 import {ref} from "vue";
 import PaymentSuccessForm from "~/components/payment-service/PaymentSuccessForm.vue";
+import ReportFree from "~/components/ReportFree.vue";
 
 const transactionId = ref<string | null>(null);
 console.log(`This is gg tag:`, process.env.NUXT_PUBLIC_GTAG_ID);
