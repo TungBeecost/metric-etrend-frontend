@@ -161,6 +161,10 @@
 
 /* Text overflow after 1 line */
 .line-clamp__1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

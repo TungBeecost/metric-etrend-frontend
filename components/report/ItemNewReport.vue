@@ -71,7 +71,7 @@ const itemsToShow = computed(() => {
               {{ formatDate(report.end_date, 'DD/MM/YYYY') }}
             </div>
             <nuxt-link :to="report.source === 'marketing' ? `/insight/${report.slug}` : `/${report.slug}`"
-                       class="title line-clamp__2" style="text-align: left;text-decoration: none;">
+                       class="title line-clamp__1" style="text-align: left;text-decoration: none;">
               {{ report.source === 'marketing' ? '' : 'Báo cáo' }}
               {{ report.name }}
             </nuxt-link>
