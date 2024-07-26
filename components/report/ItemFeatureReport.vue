@@ -137,11 +137,18 @@ const itemsToShow = computed(() => {
   </div>
 </template>
 
-<style lang="scss">
-.featured_report {
-  .ant-skeleton-image {
-    width: 100% !important;
-    height: 300px !important;
+<style scoped lang="scss">
+.report-slide {
+  .carousel__slide {
+    .slide-item {
+      .content {
+        .title {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
   }
 }
 </style>
@@ -183,9 +190,6 @@ const itemsToShow = computed(() => {
         }
 
         .title {
-          white-space: nowrap; /* Prevents the text from wrapping to a new line */
-          overflow: hidden; /* Hides the overflow text */
-          text-overflow: ellipsis; /* Adds "..." to overflow text */
           text-align: left;
           color: var(--Dark-blue-dark-blue-8, #241E46);
           font-size: 20px;
@@ -264,6 +268,13 @@ const itemsToShow = computed(() => {
     background-color: #FFF;
     cursor: pointer;
     position: absolute;
+  }
+}
+
+.featured_report {
+  .ant-skeleton-image {
+    width: 100% !important;
+    height: 300px !important;
   }
 }
 
