@@ -16,7 +16,7 @@
     <div class="divider"/>
     <NuxtLink v-for="item in MENUS" :key="item.label" :to="item.to" class="menu">
       <AButton size="large" type="text" class="menuItem" @click="setShowMenu(false)">
-        <CustomIcon :type="item.icon as any" class="menuIcon"/>
+        <CustomIcon :type="item.icon as any" class="menuIcon" :is-custom-size="true"/>
         {{ item.label }}
       </AButton>
     </NuxtLink>
@@ -25,7 +25,7 @@
 
     <NuxtLink :to="NAVIGATIONS.contactUs" class="menu">
       <AButton size="large" type="text" class="menuItem" @click="setShowMenu(false)">
-        <CustomIcon type="ContactUs" class="menuIcon"/>
+        <CustomIcon type="ContactUs" class="menuIcon" :is-custom-size="true"/>
         Liên hệ tư vấn
       </AButton>
     </NuxtLink>
@@ -34,7 +34,7 @@
 
     <NuxtLink v-if="userInfo.id" :to="NAVIGATIONS.home" class="menu">
       <AButton size="large" type="text" class="menuItem" @click="setLogOut">
-        <CustomIcon type="Logout" class="menuIcon"/>
+        <CustomIcon type="Logout" class="menuIcon" :is-custom-size="true"/>
         Đăng xuất
       </AButton>
     </NuxtLink>

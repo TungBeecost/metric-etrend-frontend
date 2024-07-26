@@ -22,8 +22,8 @@
           />
 
           <div @click="setShowMenu(!isShowMenu)">
-            <CustomIcon v-if="device.isMobile && !isShowMenu" :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'"/>
-            <CustomIcon v-else-if="isShowMenu" type="Close"/>
+            <CustomIcon v-if="device.isMobile && !isShowMenu" :is-custom-size="true" :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'"/>
+            <CustomIcon v-else-if="isShowMenu" :is-custom-size="true" type="Close"/>
           </div>
 
           <HeaderNavbar v-if="!device.isMobile" :is-dark-blue-header="isDarkBlueHeader"/>
