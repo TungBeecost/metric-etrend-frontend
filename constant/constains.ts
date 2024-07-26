@@ -341,16 +341,19 @@ export const PAGE_TITLES = {
 export const LIST_REPORT_TYPES = [
   {
     icon: "Industry",
+    value: "report_category",
     title: 'Báo cáo ngành hàng',
     content: 'Cung cấp thông tin chi tiết về doanh số và sản lượng bán hàng của các sản phẩm theo từng ngành hàng trên các sàn'
   },
   {
-    icon: "Commondity",
+    icon: "Commodity",
+    value: "report_product_line",
     title: 'Báo cáo nhóm hàng',
     content: 'Cung cấp thông tin chi tiết về doanh số và sản lượng bán hàng của các sản phẩm theo từng ngành hàng trên các sàn'
   },
   {
     icon: "Other",
+    value: "other",
     title: 'Báo cáo khác',
     content: 'Cung cấp thông tin biến động giá cả theo thời gian, so sánh giá giữa các nhà bán lẻ và phân tích xu hướng giá của các sản phẩm'
   }

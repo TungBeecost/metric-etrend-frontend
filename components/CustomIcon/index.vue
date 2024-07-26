@@ -1,5 +1,5 @@
 <template>
-  <component :is="iconMappings[type]" :class="{ 'size-24': !isCustomSize }" :filled="true" />
+  <component :is="iconMappings[type]" :class="{ 'size-24': !isCustomSize, 'size-60': isCustomSize }" :filled="true" />
 </template>
 
 <script setup lang="ts">
@@ -131,5 +131,12 @@ const iconMappings = {
   min-width: 24px;
   height: 24px;
   min-height: 24px;
+}
+
+.size-60 {
+  width: 60px;
+  min-width: 60px;
+  height: 60px;
+  min-height: 60px;
 }
 </style>
