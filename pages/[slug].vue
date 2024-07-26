@@ -148,13 +148,13 @@ onUnmounted(() => {
             "@type": "ListItem",
             position: 1,
             name: "Metric",
-            item: "https://metric.vn",
+            item: "https://ereport.metric.vn",
           },
           ...(data.reportDetail.lst_category || []).map((item, index) => ({
             "@type": "ListItem",
             position: index + 2,
             name: item.name,
-            item: `https://metric.vn/${toSeoName(item.name)}-c.${item.id}`,
+            item: `https://ereport.metric.vn/${item.slug}`,
           })),
         ]
       })
@@ -182,7 +182,7 @@ onUnmounted(() => {
       <div class="different_info">
         <unlock-report v-if="!currentUserStore.authenticated"/>
         <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
-        <report-content/>
+        <report-content :data="data?.reportDetail"/>
         <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>
         <maybe-interested v-if="!isMobile" :recomends="data.listRecommend"/>
       </div>

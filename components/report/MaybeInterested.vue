@@ -85,6 +85,8 @@ const handleItemClick = (item: LstRecommed) => {
   background: #FFF;
   gap: 24px;
 
+  margin-bottom: 16px;
+
   .title {
     display: flex;
     align-items: center;

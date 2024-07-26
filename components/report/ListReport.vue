@@ -43,19 +43,32 @@ const getDisplayedCategories = (item: any) => {
         <div class="info">
           <div class="breadcrumb">
             <span class="report_type">
-                {{ item.report_type === 'report_product_line' ? 'Báo cáo nhóm hàng | ' : item.report_type ===
-            'report_category' ? 'Báo cáo ngành hàng | ' : '' }}
-            </span>
-            <span v-if="item.lst_category">
-              {{ getDisplayedCategories(item) }}
-            </span>
-            <span v-else>
-              {{ item.report_type }}
+              {{
+                item.report_type === 'report_product_line' ? 'Báo cáo nhóm hàng' : item.report_type ===
+                'report_category' ? 'Báo cáo ngành hàng' : ''
+              }}
             </span>
             <span style="color: #EEEBFF"> | </span>
+            <span v-if="item.report_type !== 'report_category'">
+              <span v-if="item.lst_category">
+                {{ getDisplayedCategories(item) }}
+              </span>
+              <span v-else>
+                {{ item.report_type }}
+              </span>
+              <span style="color: #EEEBFF"> | </span>
+            </span>
             {{ formatDate(item.end_date) }}
           </div>
-          <div class="name">{{ item.slug.startsWith('bao-cao') ? item.name : 'Báo cáo ' + item.name }}</div>
+          <div v-if="item.slug.startsWith('bao-cao')" class="name">
+            {{ item.name }}
+          </div>
+          <div v-else-if="item.report_type === 'report_category'" class="name">
+            {{ 'Báo cáo Ngành hàng ' + item.name }}
+          </div>
+          <div v-else class="name">
+            {{ 'Báo cáo ' + item.name[0].toUpperCase() + item.name.slice(1) }}
+          </div>
           <div v-if="item.revenue_monthly" class="summary-info">
             <div class="info_item">
               <div style="display: flex; align-items: center; gap: 8px">
@@ -211,7 +224,7 @@ const getDisplayedCategories = (item: any) => {
             gap: 40px;
             font-size: 16px;
 
-            .detail_item{
+            .detail_item {
               display: flex;
               gap: 4px;
               align-items: center;

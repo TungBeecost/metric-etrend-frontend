@@ -1,15 +1,36 @@
 <script setup>
 
-const {tableOfContent} = defineProps({
+const {tableOfContent, data} = defineProps({
+  data: {
+    type: Object,
+    default: () => ({})
+  },
   tableOfContent: {
-    type: Array[Object],
-    default: () => [
+    type: Array,
+    default: () => []
+  }
+});
+
+const displayTableOfContent = computed(() => {
+  if (!data) {
+    return []
+  }
+
+  if (data?.report_type === 'report_category') {
+    return [
       {
         title: 'Tổng quan',
         children: [
           {title: 'Quy mô thị trường'},
           {title: 'Doanh số, sản phẩm đã bán theo tháng'},
           {title: 'Tỷ trọng doanh số theo sàn'},
+        ],
+      },
+      {
+        title: 'Nhóm hàng',
+        children: [
+          {title: 'Tỷ trọng doanh số theo top 5 nhóm hàng'},
+          {title: 'Tỷ trọng sản lượng bán theo top 5 nhóm hàng'}
         ],
       },
       {
@@ -39,8 +60,47 @@ const {tableOfContent} = defineProps({
         ],
       },
     ]
+
   }
-});
+
+  return [
+    {
+      title: 'Tổng quan',
+      children: [
+        {title: 'Quy mô thị trường'},
+        {title: 'Doanh số, sản phẩm đã bán theo tháng'},
+        {title: 'Tỷ trọng doanh số theo sàn'},
+      ],
+    },
+    {
+      title: 'Phân khúc giá',
+      children: [
+        {title: 'Doanh số, sản phẩm đã bán theo phân khúc giá'}
+      ],
+    },
+    {
+      title: 'Thương hiệu',
+      children: [
+        {title: 'Top thương hiệu theo doanh số'},
+        {title: 'Top thương hiệu theo sản lượng bán'},
+      ],
+    },
+    {
+      title: 'Gian hàng hàng đầu',
+      children: [
+        {title: 'Tỷ trọng doanh số theo loại gian hàng'},
+        {title: 'Thống kê top gian hàng hàng đầu'},
+      ],
+    },
+    {
+      title: 'Sản phẩm bán chạy',
+      children: [
+        {title: 'Top sản phẩm bán chạy'},
+      ],
+    },
+  ]
+
+})
 
 </script>
 
@@ -56,7 +116,7 @@ const {tableOfContent} = defineProps({
       </div>
     </div>
     <div class="content">
-      <div v-for="(item, index) in tableOfContent">
+      <div v-for="(item, index) in displayTableOfContent">
         <div class="title">
           {{ item?.title || item }}
         </div>
