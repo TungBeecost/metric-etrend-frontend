@@ -67,13 +67,31 @@ const itemsToShow = computed(() => {
               {{ formatDate(report.end_date, 'DD/MM/YYYY') }}
             </div>
             <div v-else class="category_date line-clamp__2" style="text-align: left;">
-              {{ report.report_type }} <span style="color: #EEEBFF">|</span>
+              {{
+                report.report_type === 'report_category' ? 'Báo cáo ngành hàng' : report.report_type
+              }}  <span style="color: #EEEBFF">|</span>
               {{ formatDate(report.end_date, 'DD/MM/YYYY') }}
             </div>
-            <nuxt-link :to="report.source === 'marketing' ? `/insight/${report.slug}` : `/${report.slug}`"
-                       class="title line-clamp__1" style="text-align: left;text-decoration: none;">
-              {{ report.source === 'marketing' ? '' : 'Báo cáo' }}
+            <nuxt-link
+                v-if="report.source === 'marketing'"
+                :to="`/insight/${report.slug}`"
+                class="title line-clamp__1" style="text-align: left;text-decoration: none;"
+            >
               {{ report.name }}
+            </nuxt-link>
+            <nuxt-link
+                v-else-if="report.report_type === 'report_category'"
+                :to="`/${report.slug}`"
+                class="title line-clamp__1" style="text-align: left;text-decoration: none;"
+            >
+              {{ 'Báo cáo Ngành hàng ' + report.name }}
+            </nuxt-link>
+            <nuxt-link
+                v-else
+                :to="`/${report.slug}`"
+                class="title line-clamp__1" style="text-align: left;text-decoration: none;"
+            >
+              {{ 'Báo cáo ' + report.name[0].toUpperCase() + report.name.slice(1) }}
             </nuxt-link>
             <div v-if="report.revenue_monthly" class="summary-info">
               <div class="info_item">
