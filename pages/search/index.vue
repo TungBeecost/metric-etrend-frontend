@@ -339,8 +339,14 @@ useSeoMeta({
     </div>
     <a-modal v-model:visible="isModalVisible" style="position: absolute;" title="Filter and Sort" @ok="handleOk"
              @cancel="handleCancel">
-      <sort-report class="sort_report" @sort-select="handleSortSelect"/>
-      <filter-report class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect"/>
+      <sort-report class="sort_report"
+                   @sort-select="handleSortSelect"/>
+      <filter-report class="filter_report"
+                     :select-category="selectedCategory"
+                     @categoryselect="handleCategorySelect"
+                     @selected-report-type-change="handleReportTypeChange"
+                     @selected-report-type-buy-change="handleReportTypeBuyChange"
+      />
     </a-modal>
   </div>
 </template>

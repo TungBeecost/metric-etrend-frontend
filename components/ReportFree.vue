@@ -99,4 +99,24 @@ const {data: lstReport} = await useAsyncData(fetchReport)
     z-index: 1;
   }
 }
+
+@media (max-width: 768px) {
+  .report_free{
+    padding: 40px 0;
+    gap: 24px;
+
+    .tile_report_free{
+      .title{
+        font-size: 24px;
+        line-height: 36px;
+      }
+
+      .content{
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+
+  }
+}
 </style>
