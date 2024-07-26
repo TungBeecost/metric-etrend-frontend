@@ -126,7 +126,7 @@ const itemsToShow = computed(() => {
     .slide-item {
       height: 600px;
       .thumbnail {
-        height: 350px;
+        height: 300px;
         display: flex;
         align-items: center;
       }
