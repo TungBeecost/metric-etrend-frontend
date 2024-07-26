@@ -628,6 +628,8 @@ const totalSale = computed(() => {
     width: 100%;
     max-width: 400px;
     margin: auto;
+    display: flex;
+    justify-content: center;
 
     .chart-title {
       color: var(--Dark-blue-dark-blue-8, #241E46);
