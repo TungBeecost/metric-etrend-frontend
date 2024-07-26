@@ -86,13 +86,13 @@ const {data: lstReport} = await useAsyncData(fetchReport)
   }
 
   .background{
+    width: 100%;
     opacity: 0.2;
-    transform: rotate(-15deg) scale(1.1);
+    //transform: rotate(-15deg) scale(1.1);
     position: absolute;
     object-fit: fill;
     top: 0;
     left: 0;
-    width: 100%;
     height: 100%;
     background-size: cover;
     background-position: center;
