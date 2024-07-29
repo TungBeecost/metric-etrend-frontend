@@ -21,7 +21,7 @@ const { reports, loading } = defineProps({
 const router = useRouter();
 
 const handleItemClick = (report: any) => {
-  router.push(`${NAVIGATIONS.home}${report.slug}`);
+  router.push(`${NAVIGATIONS.home}/insight${report.slug}`);
 };
 
 const windowWidth = ref(1024);
