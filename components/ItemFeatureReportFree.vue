@@ -2,7 +2,6 @@
 import { computed, onMounted, ref } from 'vue';
 import 'vue3-carousel/dist/carousel.css';
 import dayjs from "dayjs";
-import { NAVIGATIONS } from "~/constant/constains";
 import { formatAndRoundSortTextCurrencyWithMinValue } from "~/helpers/FormatHelper";
 import BlurContent from "~/components/BlurContent.vue";
 import { useRouter } from 'vue-router';
