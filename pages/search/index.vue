@@ -100,6 +100,7 @@ const fetchTagSuggest = async (value: string) => {
 
 const fetchData = async (searchValue: string = '', list_category_report_id: Array<string> = [], sortSelect: string, newpage: number = 1) => {
   try {
+    current.value = newpage;
     isLoading.value = true;
     const result = await fetchSearch(searchValue, {
       'lst_year': [],
