@@ -24,7 +24,7 @@ const selectedCategoryName = ref<string>();
 const searchValueSearch = ref<string>();
 const selecteReportType = ref<string[]>([]);
 const selecteReportTypeBuy = ref<string[]>([]);
-const page = ref(0);
+const page = ref(1);
 const isLoading = ref(true);
 const sortSelect = ref('popularity');
 const mostFrequentCategoryReportId = ref<string>();
@@ -98,14 +98,14 @@ const fetchTagSuggest = async (value: string) => {
   }
 };
 
-const fetchData = async (searchValue: string = '', list_category_report_id: Array<string> = [], sortSelect: string, newpage: number = 0) => {
+const fetchData = async (searchValue: string = '', list_category_report_id: Array<string> = [], sortSelect: string, newpage: number = 1) => {
   try {
     isLoading.value = true;
     const result = await fetchSearch(searchValue, {
       'lst_year': [],
       'lst_category_report_id': list_category_report_id,
       'lst_field': ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop"],
-      'offset': (newpage * 10 >= 200) ? 199 : newpage * 10,
+      'offset': ((newpage-1) * 10 >= 200) ? 199 : (newpage-1) * 10,
       'limit': 10,
       'sort': sortSelect,
       'source': selecteReportTypeBuy.value.length > 0 ? selecteReportTypeBuy.value : [],
@@ -169,6 +169,7 @@ const handleSearch = async (searchValue: string, lstCategoryReportId: string[] =
 
 const current = ref(1);
 const onChange = async (page: number) => {
+  console.log('onChange', page);
   current.value = page
   if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
     selectedCategory.value = route.query.category_report_id;

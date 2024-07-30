@@ -12,6 +12,7 @@ const props = defineProps({
   },
 });
 
+console.log('props.data', props.data);
 
 const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFormat: string = "YYYY-MM-DD[T]HH:mm:ss"): string => {
   return moment(value, inputFormat).format(format);
@@ -45,11 +46,11 @@ const getDisplayedCategories = (item: any) => {
             <span class="report_type">
               {{
                 item.report_type === 'report_product_line' ? 'Báo cáo nhóm hàng' : item.report_type ===
-                'report_category' ? 'Báo cáo ngành hàng' : ''
+                'report_category' ? 'Báo cáo ngành hàng' : 'Báo cáo khác'
               }}
             </span>
             <span style="color: #EEEBFF"> | </span>
-            <span v-if="item.report_type !== 'report_category'">
+            <span v-if="item.report_type === 'report_product_line'">
               <span v-if="item.lst_category">
                 {{ getDisplayedCategories(item) }}
               </span>

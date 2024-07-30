@@ -77,27 +77,11 @@ const reportTypes = ref([
   {label: 'Báo cáo khác', value: 'other'},
 ]);
 
-const checkAll = computed({
-  get: () => selectedReportType.value.length === reportTypes.value.length - 1,
-  set: (value: boolean) => {
-    selectedReportType.value = value ? reportTypes.value.slice(1).map(type => type.value) : [];
-  },
-});
-
-const indeterminate = computed(() => {
-  return selectedReportType.value.length > 0 && selectedReportType.value.length < reportTypes.value.length;
-});
-
 watch(selectedReportType, (newVal) => {
   state.checkAll = newVal.length === reportTypes.value.length;
   state.indeterminate = newVal.length > 0 && newVal.length < reportTypes.value.length;
 });
 
-
-const onCheckAllChange = (e: CheckboxChangeEvent) => {
-  const isChecked = e.target.checked;
-  checkAll.value = isChecked; // This will trigger the setter of `checkAll`
-};
 
 watch(selectedReportType, (newVal) => {
   emit('selectedReportTypeChange', newVal);
