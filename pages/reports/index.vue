@@ -27,6 +27,7 @@ const fetchReport = async () => {
       method: 'POST',
       body
     })
+    console.log('lst_report', lst_report)
     return lst_report
   } catch (e) {
     console.log(e)

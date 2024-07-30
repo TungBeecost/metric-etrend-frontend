@@ -128,6 +128,7 @@ export const fetchClaimedListReport = async (page: number = 0, limit: number = 1
       status: item.status,
       search_volume_shopee: item.search_volume_shopee,
       start_date: item.start_date,
+      end_date: item.end_date,
       category_report_id: item.category_report_id,
       category_report_name: item.category_report_name,
       url_thumbnail: item.url_thumbnail,
@@ -210,11 +211,6 @@ export interface ListCategory {
   parent_name?: string;
 }
 
-export interface ResponseListClaimed {
-    total: number,
-    reports: Array<ListClaimed>
-
-}
 
 export interface ListClaimed {
   "id": number,
@@ -225,6 +221,7 @@ export interface ListClaimed {
   "status": string,
   "search_volume_shopee": string,
   "start_date": string,
+  "end_date": string,
   "category_report_id": string,
   "category_report_name": string,
   "url_thumbnail": string,
