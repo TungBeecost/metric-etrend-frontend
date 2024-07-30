@@ -70,7 +70,7 @@ const getDisplayedCategories = (item: any) => {
           <div v-else class="name">
             {{ 'Báo cáo ' + item.name[0].toUpperCase() + item.name.slice(1) }}
           </div>
-          <div v-if="item.revenue_monthly" class="summary-info">
+          <div class="summary-info">
             <div class="info_item">
               <div style="display: flex; align-items: center; gap: 8px">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
