@@ -90,6 +90,7 @@ const openNotification = () => {
                   height: '107px',
                   boxShadow: '0px 0px 6px 0px rgba(0, 0, 0, 0.25)',
                   objectFit: 'cover',
+                  borderRadius: '8px', // Add border radius
                 }
               }),
               h('img', {
@@ -100,6 +101,7 @@ const openNotification = () => {
                   height: '107px',
                   boxShadow: '0px 0px 6px 0px rgba(0, 0, 0, 0.25)',
                   objectFit: 'cover',
+                  borderRadius: '8px', // Add border radius
                 }
               }),
             ]),
@@ -117,7 +119,7 @@ const openNotification = () => {
                 color: '#fff',
                 border: 'none',
                 cursor: 'pointer',
-                fontSize: '16px',
+                fontSize: '14px',
                 fontWeight: '600',
                 textAlign: 'center',
                 marginTop: '36px',

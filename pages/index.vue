@@ -82,7 +82,7 @@
       <div class="modal-contact-us">
         <div class="title">Đăng ký nhận báo cáo</div>
         <div class="description" style="font-size: 16px">
-          Vui lòng điền biểu mẫu bên dưới để nhận ngay báo cáo chi tiết
+          Vui lòng điền biểu mẫu dưới đây để khám phá ngay kho báo cáo miễn phí về thị trường thương mại điện tử:
           <br>
         </div>
       </div>
@@ -286,5 +286,15 @@ const handleAdvertisement = () => {
   z-index: 2;
 }
 
+.description {
+  color: #475467;
+
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  letter-spacing: -0.48px;
+  margin: 24px 0;
+}
 
 </style>
