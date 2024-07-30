@@ -28,7 +28,7 @@
         <div class="title">Liên hệ với chúng tôi</div>
         <div class="description" style="font-size: 16px">Liên hệ với chúng tôi để thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến ngay bây giờ!</div>
 
-        <ContactUsForm />
+        <ContactUsForm :source-name="'eReport'" />
 
       </div>
     </div>

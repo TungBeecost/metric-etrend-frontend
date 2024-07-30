@@ -341,7 +341,7 @@ onMounted(() => {
           <span>"{{ data.name }}"</span>
         </div>
       </div>
-      <ContactUsForm :handle-submit-success="handleSubmitSuccess"/>
+      <ContactUsForm :source-name="'free_report'" :handle-submit-success="handleSubmitSuccess"/>
     </a-modal>
     <SuccessNotification
         v-if="isShowSuccessNotification"

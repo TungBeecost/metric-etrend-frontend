@@ -86,12 +86,12 @@ const handleSubmitLeadForm = async () => {
   const _fbp = variables?._fbp || ''
   const emailProfile = formData.value.email || userInfo.value?.email || ''
   const first_visit = localStorage.getItem('first_visit') || ''
-  const mktLeadSource = [formData.value.mktLeadSource]
+  const mktLeadSource = 'eReport'
   const mkUserDemand = formData.value.mktUserDemand || ''
   const mkCompanyType = formData.value.mktCompanyType || ''
   let note = `From: ${window.location.href}\n`
   note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
-  note += `lead_source: ${mktLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\ndevice: ${is_mobile ? 'mobile' : 'desktop'}`
+  note += `lead_source: ${mktLeadSource}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\ndevice: ${is_mobile ? 'mobile' : 'desktop'}`
   console.log('note', formData.value.name)
 
   console.log('fbq', fbq)
