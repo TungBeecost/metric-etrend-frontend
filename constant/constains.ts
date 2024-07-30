@@ -355,6 +355,6 @@ export const LIST_REPORT_TYPES = [
     icon: "Other",
     value: "other",
     title: 'Báo cáo khác',
-    content: 'Cung cấp thông tin biến động giá cả theo thời gian, so sánh giá giữa các nhà bán lẻ và phân tích xu hướng giá của các sản phẩm'
+    content: 'Cung cấp số liệu và xu hướng thị trường sàn thương mại điện tử được thực hiện định kỳ theo các tiêu chí khác'
   }
 ]

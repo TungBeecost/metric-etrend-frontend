@@ -146,14 +146,6 @@ watch(selectedReportTypeBuy, (newVal) => {
     <div class="container" style="padding: 8px;">
       <a-collapse :bordered="false" style="background: rgb(255, 255, 255); padding: 0;" :active-key="[1, 2, 3]">
           <a-collapse-panel :key="1" header="Loại báo cáo">
-            <a-checkbox
-                :checked="checkAll"
-                :indeterminate="indeterminate"
-                style="margin-bottom: 8px;"
-                @change="onCheckAllChange"
-            >
-              Tất cả
-            </a-checkbox>
             <a-checkbox-group v-model:value="selectedReportType">
               <a-checkbox
                   v-for="(reportType, index) in reportTypes.slice(1)"
