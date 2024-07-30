@@ -119,7 +119,7 @@ const openNotification = () => {
                 border: 'none',
                 cursor: 'pointer',
                 fontSize: '14px',
-                fontWeight: '600',
+                fontWeight: '400',
                 textAlign: 'center',
                 marginTop: '36px',
               },

@@ -86,12 +86,12 @@
           <br>
         </div>
       </div>
-      <ContactUsForm :source-name="'eReport'" :handle-submit-success="handleSubmitSuccess"/>
+      <ContactUsForm :source-name="'eReport'" :popup="true" :handle-submit-success="handleSubmitSuccess"/>
     </a-modal>
     <SuccessNotification
         v-if="isShowSuccessNotification"
         v-model:visible="isShowSuccessNotification"
-        description=""
+        description="Tiếp tục Xem báo cáo hoặc Khám phá ngay kho báo cáo về thị trường thương mại điện tử."
         class-name="submit-form-marketing-success"/>
     <div class="advertisement">
       <advertisement @handle-advertisement="handleAdvertisement"/>

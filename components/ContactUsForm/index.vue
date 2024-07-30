@@ -49,7 +49,7 @@
           class="infoBlock"
       />
     </div>
-    <AButton style="height: 40px" type="primary" :class="submitClass" @click="validateForm" :loading="loading">{{
+    <AButton style="height: 40px" type="primary" :class="submitClass" :loading="loading" @click="validateForm">{{
         submitLabel || "Gửi"
       }}
     </AButton>
@@ -73,11 +73,12 @@ const currentUserStore = useCurrentUser();
 
 const {userInfo}: any = storeToRefs(currentUserStore);
 
-const {handleSubmitSuccess, sourceName} = defineProps<{
+const {handleSubmitSuccess, sourceName, popup} = defineProps<{
   submitLabel?: string;
   submitClass?: string;
   handleSubmitSuccess?: any;
   sourceName?: string;
+  popup?: boolean;
 }>();
 
 interface IAdditionalInfo {
