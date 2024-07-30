@@ -74,6 +74,28 @@
         </div>
       </div>
     </a-modal>
+    <a-modal
+        :visible="openContactForm"
+        :footer="false"
+        @cancel="openContactForm = false"
+    >
+      <div class="modal-contact-us">
+        <div class="title">Đăng ký nhận báo cáo</div>
+        <div class="description" style="font-size: 16px">
+          Vui lòng điền biểu mẫu dưới đây để khám phá ngay kho báo cáo miễn phí về thị trường thương mại điện tử:
+          <br>
+        </div>
+      </div>
+      <ContactUsForm :source-name="'eReport'" :handle-submit-success="handleSubmitSuccess"/>
+    </a-modal>
+    <SuccessNotification
+        v-if="isShowSuccessNotification"
+        v-model:visible="isShowSuccessNotification"
+        description=""
+        class-name="submit-form-marketing-success"/>
+    <div class="advertisement">
+      <advertisement @handle-advertisement="handleAdvertisement"/>
+    </div>
   </div>
 </template>
 
@@ -84,12 +106,16 @@ import {searchReport, type SearchReportPayload} from "~/services/reports";
 import {ref} from "vue";
 import PaymentSuccessForm from "~/components/payment-service/PaymentSuccessForm.vue";
 import ReportFree from "~/components/ReportFree.vue";
+import Advertisement from "~/components/Advertisement.vue";
+import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
 
 const transactionId = ref<string | null>(null);
 console.log(`This is gg tag:`, process.env.NUXT_PUBLIC_GTAG_ID);
-
+const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => false);
+const openContactForm = ref(false)
 const listTagSuggestions = ref<string[]>([]);
 const showModal = ref(false);
+const isHideContent = ref(true)
 
 const fetchTagSuggest = async (value: string) => {
   console.log('fetchTagSuggest', value);
@@ -129,6 +155,18 @@ const fetchSuggest = async (value: string | null, options?: SearchReportPayload)
   }
 };
 
+const handleSubmitSuccess = () => {
+  localStorage.setItem('report_mkt_unlocked', 'true');
+
+  isShowSuccessNotification.value = true;
+
+  openContactForm.value = false;
+  isHideContent.value = false;
+
+  const event = new Event('close-advertisement');
+  window.dispatchEvent(event);
+};
+
 const handleOk = () => {
   showModal.value = false;
 };
@@ -143,11 +181,19 @@ onMounted(() => {
   if (transactionId.value) {
     showModal.value = true;
   }
+  const unlockedMktReports = localStorage.getItem('report_mkt_unlocked');
+  if (unlockedMktReports === 'true') {
+    isHideContent.value = false;
+  }
   fetchTagSuggest('');
 });
 
 const onClickSuggestion = (suggestion: string) => {
   navigateTo(`${NAVIGATIONS.search}?search=${suggestion}`);
+}
+
+const handleAdvertisement = () => {
+  openContactForm.value = true;
 }
 
 </script>
@@ -226,5 +272,29 @@ const onClickSuggestion = (suggestion: string) => {
   }
 }
 
+.title {
+  color: var(--Dark-blue-dark-blue-8, #241E46);
+  text-align: center;
+
+  font-family: Inter, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px; /* 133.333% */
+
+  position: relative;
+  z-index: 2;
+}
+
+.description {
+  color: #475467;
+
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  letter-spacing: -0.48px;
+  margin: 24px 0;
+}
 
 </style>

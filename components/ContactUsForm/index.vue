@@ -141,8 +141,8 @@ const formValues = reactive<IFormValue>({
   category: "",
   note: "",
   label_init: "nóng",
-  source_name: "e-report",
-  campaign: 'Đăng ký dùng thử',
+  source_name: sourceName === 'free_report' ? 'Free Report' : 'eReport',
+  campaign: sourceName === 'free_report' ? 'Free Report' : 'eReport',
   companyType: "",
   socialMediaType: "",
   additional_info: {
@@ -236,8 +236,8 @@ const validateForm = async () => {
     organization_name: formData.organization_name,
     note,
     label_init: 'Nóng',
-    source_name: 'Report Free',
-    campaign: 'Đăng ký dùng thử',
+    source_name: sourceName === 'free_report' ? 'Free Report' : 'eReport',
+    campaign: sourceName === 'free_report' ? 'Free Report' : 'eReport',
     additional_info: {
       ...variables,
       mkLeadSource,
