@@ -12,6 +12,11 @@
     <div
         class="container"
     >
+      <div class="top-bar">
+        <div class="text">
+          <b>Ưu đãi giảm 30%</b> áp dụng với tất cả các gói dịch vụ đến hết ngày 22/08/2024
+        </div>
+      </div>
       <!-- header section -->
       <header ref="headerRef" :class="{ darkBlueHeader: isDarkBlueHeader, 'shadow': isScrolled }">
         <div class="header default_section">
@@ -96,6 +101,24 @@ watch(() => route.path, () => {
 }, {immediate: true})
 
 onMounted(() => {
+  let lastScrollTop = 0;
+  const topBar = document.querySelector('.top-bar') as HTMLElement;
+  const header = document.querySelector('header') as HTMLElement;
+
+  const handleScroll = () => {
+    const scrollTop = window.scrollY;
+    if (scrollTop > lastScrollTop) {
+      // Scroll down
+      if (topBar) topBar.style.top = '-30px';
+      if (header) header.style.top = '0';
+    } else {
+      // Scroll up
+      if (topBar) topBar.style.top = '0';
+      if (header) header.style.top = '30px';
+    }
+    lastScrollTop = scrollTop;
+  };
+
   window.addEventListener('scroll', handleScroll);
   handleScroll(); // Initialize on mount in case the page is already scrolled
 });
@@ -103,6 +126,7 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
+
 
 </script>
 
