@@ -142,7 +142,7 @@ const formValues = reactive<IFormValue>({
   category: "",
   note: "",
   label_init: "nóng",
-  source_name: sourceName === 'free_report' ? 'Free Report' : 'eReport',
+  source_name: sourceName === 'free_report' ? 'Report Free' : 'eReport',
   campaign: sourceName === 'free_report' ? 'Free Report' : 'eReport',
   companyType: "",
   socialMediaType: "",
@@ -210,7 +210,7 @@ const validateForm = async () => {
   const _fbp = variables?._fbp || ''
   const emailProfile = formData.email || userInfo.value?.email || ''
   const first_visit = localStorage.getItem('first_visit') || ''
-  const mkLeadSource = sourceName === 'free_report' ? 'Free Report' : (sourceName || '');
+  const mkLeadSource = sourceName === 'free_report' ? 'Report Free' : (sourceName || '');
   const mkUserDemand = formData.category || ''
   const mkCompanyType = formData.companyType || ''
   let note = `From: ${window.location.href}\n`
@@ -237,7 +237,7 @@ const validateForm = async () => {
     organization_name: formData.organization_name,
     note,
     label_init: 'Nóng',
-    source_name: sourceName === 'free_report' ? 'Free Report' : 'eReport',
+    source_name: sourceName === 'free_report' ? 'Report Free' : 'eReport',
     campaign: sourceName === 'free_report' ? 'Free Report' : 'eReport',
     additional_info: {
       ...variables,
