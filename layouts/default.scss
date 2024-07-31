@@ -47,7 +47,7 @@ header {
     margin-right: 64px;
 
     @include mobile {
-      margin-right: 0px;
+      margin-right: 0;
     }
   }
 }
