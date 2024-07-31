@@ -115,7 +115,7 @@ onMounted(() => {
     } else {
       // Scroll up
       if (topBar) topBar.style.top = '0';
-      if (header) header.style.top = '30px';
+      if (header) header.style.top = '28px';
     }
     lastScrollTop = scrollTop;
   };
