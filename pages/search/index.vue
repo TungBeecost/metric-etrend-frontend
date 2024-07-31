@@ -138,6 +138,10 @@ const fetchData = async (searchValue: string = '', list_category_report_id: Arra
 
 const fetchDataRecommend = async (category_report_id: string) => {
   try {
+    if (category_report_id == 'null') {
+      category_report_id = 'c1191689230';
+    }
+    console.log('fetchDataRecommend', category_report_id);
     const result = await fetchListRecommend(category_report_id);
     if (result !== null) {
       listRecommend.value = result;

@@ -1,5 +1,4 @@
 <script setup>
-import {toSeoName} from "~/helpers/StringHelper";
 import GeneralOverview from "~/components/report/GeneralOverview.vue";
 import Overview from "~/components/report/Overview.vue";
 import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
@@ -14,6 +13,8 @@ import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import {REPORT_ENDPOINTS} from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
+import listCategory from '~/public/file_json/list_category.json';
+
 
 const currentUserStore = useCurrentUser();
 const route = useRoute()
@@ -65,14 +66,21 @@ const fetchReportData = async () => {
           }
         }
     );
+
+    // Check if category_report_id has level 1 and get its children with level 2
+    const category = listCategory.find(cat => cat.value === response.category_report_id);
+    if (category && category.level === 1) {
+      const children = listCategory.filter(cat => cat.parent === category.value && cat.level === 2);
+      if (children.length > 0) {
+        response.category_report_id = children[0].value;
+      }
+    }
+
     const {tier_report} = response;
-    // console.log('tier_report', tier_report)
-    // console.log('SSR', config.public.SSR)
     if (tier_report !== 'free' || config.public.SSR === 'true') {
       isHideContent = false;
     }
     const [listRecommend] = await Promise.all([
-      // fetchSuggest(response.name),
       fetchRecommend(response.category_report_id)
     ]);
 
