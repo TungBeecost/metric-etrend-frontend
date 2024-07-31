@@ -153,6 +153,8 @@ interface IPLAN {
   description: string;
   plan_code: string;
   price: string;
+  priceDiscount?: string;
+  discountPercent?: string;
   unit?: string;
   isHighlight?: boolean;
   permissions: Array<{
@@ -177,7 +179,9 @@ export const PLANS: Array<IPLAN> = [
     type: "Basic",
     plan_code: "e_basic",
     description: "Xem số liệu tổng quan về thị trường",
-    price: "6000000",
+    price: "4200000",
+    priceDiscount: "6000000",
+    discountPercent: "-30%",
     unit: "năm",
     isHighlight: true,
     permissions: [
@@ -197,7 +201,9 @@ export const PLANS: Array<IPLAN> = [
     type: "Pro",
     plan_code: "e_pro",
     description: "Xem số liệu chi tiết về thị trường",
-    price: "9000000",
+    price: "6300000",
+    priceDiscount: "9000000",
+    discountPercent: "30%",
     unit: "năm",
     isHighlight: true,
     permissions: [

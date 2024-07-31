@@ -56,6 +56,7 @@ const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
           <div class="summary">
             <p class="planType">{{ plan.type }}</p>
             <p class="planDesc">{{ plan.description }}</p>
+            <div class="planDiscountPrice">{{ formatSortTextCurrencyPlan(plan.priceDiscount) }}</div>
             <div class="planPrice">{{ formatSortTextCurrencyPlan(plan.price) }}<span v-if="plan.unit" class="priceUnit">/{{
                 plan.unit
               }}</span>
@@ -88,6 +89,12 @@ const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
             >
               {{ getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code) }}
             </AButton>
+        </div>
+
+        <div v-if="plan.discountPercent" class="discount_percent">
+          <div class="text">
+            {{ plan.discountPercent }}
+          </div>
         </div>
       </div>
     </div>

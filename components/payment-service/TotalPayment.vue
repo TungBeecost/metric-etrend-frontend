@@ -7,25 +7,21 @@ const {plan} = defineProps({
     required: true
   }
 });
-
-function formatPrice(price: any) {
-  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
 </script>
 
 <template>
   <div class="calculate">
     <div class="calculate_item">
       <div class="money">Số tiền</div>
-      <div class="money">{{formatCurrency(plan.price)}}</div>
+      <div class="money">{{formatCurrency(plan.priceDiscount)}}</div>
     </div>
     <div class="calculate_item">
       <div class="money">Chiết khấu</div>
-      <div class="money">0₫</div>
+      <div class="money">-{{formatCurrency(plan.priceDiscount - plan.price)}}</div>
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Chương trình khuyến mại</div>
-      <div class="promotional_program">0₫</div>
+      <div class="promotional_program">-{{formatCurrency(plan.priceDiscount - plan.price)}}</div>
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Áp dụng mã giảm giá</div>

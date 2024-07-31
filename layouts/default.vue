@@ -14,7 +14,8 @@
     >
       <div class="top-bar">
         <div class="text">
-          <b>Ưu đãi giảm 30%</b> áp dụng với tất cả các gói dịch vụ đến hết ngày 22/08/2024
+          <b>Ưu đãi giảm 30%</b>
+          <span> áp dụng với tất cả các gói dịch vụ đến hết ngày 22/08/2024</span>
         </div>
       </div>
       <!-- header section -->
