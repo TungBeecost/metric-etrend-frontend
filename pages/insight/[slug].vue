@@ -322,6 +322,8 @@ onMounted(() => {
         <report-content
             v-if="data?.data_analytic?.table_of_content.filter(item => item !== 'Không có').length"
             :table-of-content="data?.data_analytic?.table_of_content.filter(item => item !== 'Không có')"
+            :data="data"
+
         />
         <maybe-interested v-if="listRecommend" :recomends="listRecommend"/>
       </div>
