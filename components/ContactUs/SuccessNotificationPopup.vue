@@ -1,4 +1,6 @@
 <script setup>
+import {NAVIGATIONS} from "~/constant/constains";
+
 const props = defineProps({
   visible: {
     type: Boolean,
@@ -12,20 +14,18 @@ const props = defineProps({
     type: String,
     default: 'Đăng ký thành công'
   },
-  description: {
-    type: String,
-    default: ''
-  }
 })
-
-console.log('props', props.description)
-
 const emit = defineEmits(['update:visible'])
 
 const isVisible = computed({
   get: () => props.visible,
   set: (value) => emit('update:visible', value)
 })
+
+const handleButtonClick = () => {
+  navigateTo(`${NAVIGATIONS.search}?report_type=other`);
+}
+
 </script>
 
 <template>
@@ -58,9 +58,8 @@ const isVisible = computed({
         <path d="M7.06289 113.525C7.06289 115.174 5.61055 116.508 3.82402 116.508C2.03749 116.508 0.582031 115.174 0.582031 113.525C0.582031 111.876 2.03437 110.539 3.82402 110.539C5.61368 110.539 7.06289 111.876 7.06289 113.525Z" fill="#50BFA5"/>
       </svg>
       <h3>{{ props.title }}</h3>
-      <p v-if="props.description">{{ props.description }}</p>
-      <p v-else>Cảm ơn bạn!<br>Chuyên viên sẽ liên hệ với bạn trong vòng ít phút tới. <br>Hãy lưu ý điện thoại nhé !</p>
-      <a-button type="primary" size="large" @click="isVisible = false">Tôi đã hiểu</a-button>
+      <p>Khám phá ngay kho báo cáo về thị trường thương mại điện tử</p>
+      <a-button type="primary" size="large" @click="handleButtonClick">Khám phá ngay</a-button>
     </div>
   </a-modal>
 </template>

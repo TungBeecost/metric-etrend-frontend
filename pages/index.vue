@@ -88,11 +88,6 @@
       </div>
       <ContactUsForm :source-name="'eReport'" :popup="true" :handle-submit-success="handleSubmitSuccess"/>
     </a-modal>
-    <SuccessNotification
-        v-if="isShowSuccessNotification"
-        v-model:visible="isShowSuccessNotification"
-        description="Tiếp tục Xem báo cáo hoặc Khám phá ngay kho báo cáo về thị trường thương mại điện tử."
-        class-name="submit-form-marketing-success"/>
     <div class="advertisement">
       <advertisement @handle-advertisement="handleAdvertisement"/>
     </div>
@@ -107,11 +102,10 @@ import {ref} from "vue";
 import PaymentSuccessForm from "~/components/payment-service/PaymentSuccessForm.vue";
 import ReportFree from "~/components/ReportFree.vue";
 import Advertisement from "~/components/Advertisement.vue";
-import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
 
 const transactionId = ref<string | null>(null);
 console.log(`This is gg tag:`, process.env.NUXT_PUBLIC_GTAG_ID);
-const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => false);
+const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotificationPopup', () => false);
 const openContactForm = ref(false)
 const listTagSuggestions = ref<string[]>([]);
 const showModal = ref(false);

@@ -5,6 +5,7 @@ import ErrorNotification from "~/components/ContactUs/ErrorNotification.vue";
 import axios from "axios";
 import {generateHash, getGlobalVariable} from "~/services/GlobalVariableService.js";
 import {useCurrentUser} from "~/stores/current-user";
+import SuccessNotificationPopup from "~/components/ContactUs/SuccessNotificationPopup.vue";
 
 const currentUserStore = useCurrentUser();
 
@@ -60,6 +61,7 @@ const formData = useState('LandingPage.formData', () => ({
 }))
 
 const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => false)
+const isShowSuccessNotificationPopup = useState('LandingPage.isShowSuccessNotificationPopup', () => false)
 const isShowErrorNotification = useState('LandingPage.isShowErrorNotification', () => false)
 const isSubmitFormLoading = useState('LandingPage.isSubmitFormLoading', () => false)
 
@@ -233,6 +235,7 @@ const handleSubmitLeadForm = async () => {
   </div>
 
   <SuccessNotification v-model:visible="isShowSuccessNotification" class-name="submit-form-marketing-success"/>
+  <SuccessNotificationPopup v-model:visible="isShowSuccessNotificationPopup" class-name="submit-form-marketing-success"/>
   <ErrorNotification v-model:visible="isShowErrorNotification" class-name="submit-form-marketing-success"/>
 </template>
 
