@@ -203,7 +203,7 @@ export const PLANS: Array<IPLAN> = [
     description: "Xem số liệu chi tiết về thị trường",
     price: "4900000",
     priceDiscount: "7000000",
-    discountPercent: "30%",
+    discountPercent: "-30%",
     unit: "năm",
     isHighlight: true,
     permissions: [
