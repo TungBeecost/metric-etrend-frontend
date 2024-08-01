@@ -11,7 +11,7 @@ import {PLANS} from "~/constant/constains";
 const currentUserStore = useCurrentUser();
 const {userInfo} = storeToRefs(currentUserStore);
 const redirectUrl = ref('');
-
+const discountValue = ref<any>({});
 const { createPaymentTransaction, verifyTransaction } = usePayment()
 const selectedWalletOption = ref('')
 const qrCodeData = ref('');
@@ -27,19 +27,25 @@ interface ErrorResponse {
   };
 }
 
+interface DiscountInfo {
+  discount_code: string;
+  [key: string]: any;
+}
+
 const handleSelectedOption = (selectedOption: string) => {
   selectedWalletOption.value = selectedOption
 };
 
-const handlePayment = async () => {
-  if(!userInfo.value.id)
+const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string; discountInfo: DiscountInfo }) => {
+  discountValue.value = discountInfo;
+  if (!userInfo.value.id) {
     message.error('Vui lòng đăng nhập trước khi thanh toán');
-  else{
+  } else {
     if (selectedWalletOption.value) {
       const paymentMethod = selectedWalletOption.value;
       const itemCode = `${plan.value?.plan_code}__12m`;
       try {
-        const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value);
+        const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount_code);
         if (transactionResult.response.payment_url) {
           window.location.href = transactionResult.response.payment_url;
         } else {
@@ -55,7 +61,6 @@ const handlePayment = async () => {
         if (typedError.response && typedError.response.data && typedError.response.data.detail === "User already has a subscription" && typedError.response.data.status_code === 400) {
           message.error('Bạn đã có một đăng ký. Không thể thực hiện thêm.');
         } else {
-          // Handle other errors
           message.error('Đã xảy ra lỗi khi tạo giao dịch. Vui lòng thử lại.');
         }
       }
@@ -64,7 +69,6 @@ const handlePayment = async () => {
     }
   }
 };
-
 const checkTransactionStatus = async (transactionId: string) => {
   try {
     const response = await verifyTransaction(transactionId)
@@ -147,7 +151,7 @@ const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an unders
           <QRCode :value="qrCodeData" :size="250" />
         </div>
         <div style="padding: 16px; width: 100%">
-          <total-payment v-if="plan" :plan="plan"/>
+          <total-payment v-if="plan" :plan="plan" :discount-info="discountValue"/>
         </div>
       </div>
     </a-modal>

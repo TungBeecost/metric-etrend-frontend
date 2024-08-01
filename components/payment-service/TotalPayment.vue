@@ -1,11 +1,45 @@
 <script setup lang="ts">
-import {formatCurrency} from "../../helpers/FormatHelper";
+import {formatCurrency} from "~/helpers/FormatHelper";
+import { toRefs, computed, watch } from 'vue';
 
-const {plan} = defineProps({
+const props = defineProps({
   plan: {
     type: Object,
     required: true
+  },
+  discountInfo: {
+    type: Object,
+    default: () => ({})
   }
+});
+
+const { plan, discountInfo } = toRefs(props);
+const emit = defineEmits(['finalPrice']);
+
+const calculateDiscountAmount = (planPrice: number, discount: any) => {
+  if (!discount || !discount.discount) return 0;
+
+  const { discount_type, discount_value, maximum_discount } = discount.discount;
+  let discountAmount = 0;
+
+  if (discount_type === 'percentage') {
+    discountAmount = (planPrice * discount_value) / 100;
+  } else if (discount_type === 'amount') {
+    discountAmount = discount_value;
+  }
+
+  if (maximum_discount && discountAmount > maximum_discount) {
+    discountAmount = maximum_discount;
+  }
+
+  return discountAmount;
+};
+
+const discountAmount = computed(() => calculateDiscountAmount(plan.value.price, discountInfo.value));
+const finalPrice = computed(() => plan.value.price - discountAmount.value);
+
+watch(finalPrice, (newValue) => {
+  emit('finalPrice', newValue);
 });
 </script>
 
@@ -25,11 +59,11 @@ const {plan} = defineProps({
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Áp dụng mã giảm giá</div>
-      <div class="promotional_program">0₫</div>
+      <div v-if="discountAmount" class="promotional_program">-{{ formatCurrency(discountAmount) }}</div>
     </div>
     <div class="calculate_item">
       <div class="total">Thành tiền</div>
-      <div class="total_price">{{formatCurrency(plan.price)}}</div>
+      <div class="total_price">{{formatCurrency(finalPrice)}}</div>
     </div>
   </div>
 </template>

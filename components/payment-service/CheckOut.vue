@@ -1,34 +1,57 @@
 <script setup lang="ts">
 import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import CustomInputDiscount from "~/components/CustomInputDiscount.vue";
+import useDiscount from "~/composables/useDiscount";
+import { ref, watch } from 'vue';
+
 const discountValue = ref<string>('');
 const errors = useState<Partial<IFormValue>>(() => ({}));
+const discountInfo = ref<any>({});
+const finalPrice = ref<number>(0);
 const emit = defineEmits(['payment']);
+const { getVoucher } = useDiscount();
+
 interface IFormValue {
   discount: string;
 }
 
-const {plan} = defineProps({
+const { plan } = defineProps({
   plan: {
     type: Object,
     required: true
   }
 });
 
-console.log(plan);
+watch(plan, (newPlan) => {
+  if (newPlan && newPlan.price) {
+    finalPrice.value = newPlan.price;
+  }
+}, { immediate: true });
+
+const handleFinalPrice = (price: number) => {
+  finalPrice.value = price;
+};
 
 const handlePayment = () => {
-  emit('payment', "payment");
+  if (!finalPrice.value) {
+    finalPrice.value = plan.price;
+  }
+  emit('payment', { finalPrice: finalPrice.value, discountInfo: discountInfo.value });
 };
 
 const handleDiscount = () => {
-  if (!discountValue.value) {
-    errors.value.discount = 'Vui lòng nhập mã giảm giá';
+  fetchDiscount();
+};
+
+const fetchDiscount = async () => {
+  const response = await getVoucher(discountValue.value);
+  if (response) {
+    discountInfo.value = response;
+    errors.value.discount = '';
   } else {
     errors.value.discount = 'Mã giảm giá không tồn tại';
   }
 };
-
 </script>
 
 <template>
@@ -45,12 +68,11 @@ const handleDiscount = () => {
       <div class="discount_code">
         <div class="input_discount">
           <CustomInputDiscount v-model:input="discountValue" style="display: flex" :error-message="errors.discount"
-                       label="Nhập mã giảm giá" :is-required="true" :input-props="{ placeholder: 'Nhập mã giảm giá' }" @apply-discount="handleDiscount"/>
+                               label="Nhập mã giảm giá" :is-required="true" :input-props="{ placeholder: 'Nhập mã giảm giá' }" @apply-discount="handleDiscount"/>
         </div>
-
       </div>
       <div class="total">
-        <total-payment v-if="plan" :plan="plan"/>
+        <total-payment v-if="plan" :plan="plan" :discount-info="discountInfo" @final-price="handleFinalPrice"/>
         <a-button style="width: 100%; height: 40px; margin-top: 16px" type="primary" @click="handlePayment">Thanh toán</a-button>
       </div>
     </div>

@@ -1,9 +1,26 @@
 import {PAYMENT_ENDPOINTS} from "~/constant/endpoints";
 import axios from "./axios-wrapper";
 
-export const createTransaction = async (paymentMethod: string, itemCode: string, redirectUrl: string) => {
+export const createTransaction = async (
+    paymentMethod: string,
+    itemCode: string,
+    redirectUrl: string,
+    totalPrice: string,
+    discountCode?: string
+) => {
     try {
-        const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment.endpoint)}?payment_method=${paymentMethod}&item_code=${itemCode}&redirect_url=${redirectUrl}`, {}, {
+        const params = new URLSearchParams({
+            payment_method: paymentMethod,
+            item_code: itemCode,
+            redirect_url: redirectUrl,
+            total_price: totalPrice
+        });
+
+        if (discountCode) {
+            params.append('discount_code', discountCode);
+        }
+
+        const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment.endpoint)}?${params.toString()}`, {}, {
             headers: {
                 'accept': 'application/json',
             }
