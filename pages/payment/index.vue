@@ -38,6 +38,7 @@ const handleSelectedOption = (selectedOption: string) => {
 
 const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string; discountInfo: DiscountInfo }) => {
   discountValue.value = discountInfo;
+  console.log()
   if (!userInfo.value.id) {
     message.error('Vui lòng đăng nhập trước khi thanh toán');
   } else {
@@ -45,7 +46,7 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
       const paymentMethod = selectedWalletOption.value;
       const itemCode = `${plan.value?.plan_code}__12m`;
       try {
-        const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount_code);
+        const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount.code);
         if (transactionResult.response.payment_url) {
           window.location.href = transactionResult.response.payment_url;
         } else {

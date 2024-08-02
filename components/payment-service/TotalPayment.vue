@@ -7,6 +7,10 @@ const props = defineProps({
     type: Object,
     required: true
   },
+  statusApplyCode: {
+    type: Boolean,
+    default: false
+  },
   discountInfo: {
     type: Object,
     default: () => ({})
@@ -59,7 +63,7 @@ watch(finalPrice, (newValue) => {
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Áp dụng mã giảm giá</div>
-      <div v-if="discountAmount" class="promotional_program">-{{ formatCurrency(discountAmount) }}</div>
+      <div v-if="discountAmount && statusApplyCode" class="promotional_program">-{{ formatCurrency(discountAmount) }}</div>
     </div>
     <div class="calculate_item">
       <div class="total">Thành tiền</div>

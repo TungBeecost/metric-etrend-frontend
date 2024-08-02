@@ -1,7 +1,7 @@
 import {checkTransactionStatus, createTransaction, sendLeadInformation} from "~/services/payment";
 
 export default function usePayment() {
-    const createPaymentTransaction = async (paymentMethod: string, itemCode: string, redirectUrl: string, totalPrice: string, discountCode?: string)=> {
+    const createPaymentTransaction = async (paymentMethod: string, itemCode: string, redirectUrl: string, totalPrice: string, discountCode: string)=> {
         try {
             return await createTransaction(paymentMethod, itemCode, redirectUrl, totalPrice, discountCode);
         } catch (error) {

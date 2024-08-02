@@ -6,19 +6,16 @@ export const createTransaction = async (
     itemCode: string,
     redirectUrl: string,
     totalPrice: string,
-    discountCode?: string
+    discountCode: string
 ) => {
     try {
         const params = new URLSearchParams({
             payment_method: paymentMethod,
             item_code: itemCode,
             redirect_url: redirectUrl,
-            total_price: totalPrice
+            total_price: totalPrice,
+            discount_code: discountCode
         });
-
-        if (discountCode) {
-            params.append('discount_code', discountCode);
-        }
 
         const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment.endpoint)}?${params.toString()}`, {}, {
             headers: {
