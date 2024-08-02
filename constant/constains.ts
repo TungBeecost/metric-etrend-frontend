@@ -355,7 +355,7 @@ export const LIST_REPORT_TYPES = [
     icon: "Commodity",
     value: "report_product_line",
     title: 'Báo cáo nhóm hàng',
-    content: 'Cung cấp thông tin chi tiết về doanh số và sản lượng bán hàng của các sản phẩm theo từng ngành hàng trên các sàn'
+    content: 'Cung cấp thông tin chi tiết về doanh số và sản lượng bán hàng của các sản phẩm theo từng nhóm hàng trên các sàn'
   },
   {
     icon: "Other",

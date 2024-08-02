@@ -17,7 +17,7 @@ const props = defineProps({
   }
 });
 
-const { plan, discountInfo } = toRefs(props);
+const { plan, discountInfo, statusApplyCode } = toRefs(props);
 const emit = defineEmits(['finalPrice']);
 
 const calculateDiscountAmount = (planPrice: number, discount: any) => {
@@ -39,7 +39,14 @@ const calculateDiscountAmount = (planPrice: number, discount: any) => {
   return discountAmount;
 };
 
-const discountAmount = computed(() => calculateDiscountAmount(plan.value.price, discountInfo.value));
+const discountAmount = computed(() => {
+  if (statusApplyCode.value) {
+    return calculateDiscountAmount(plan.value.price, discountInfo.value);
+  } else {
+    return 0;
+  }
+});
+
 const finalPrice = computed(() => plan.value.price - discountAmount.value);
 
 watch(finalPrice, (newValue) => {
@@ -63,7 +70,7 @@ watch(finalPrice, (newValue) => {
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Áp dụng mã giảm giá</div>
-      <div v-if="discountAmount && statusApplyCode" class="promotional_program">-{{ formatCurrency(discountAmount) }}</div>
+      <div v-if="statusApplyCode" class="promotional_program">-{{ formatCurrency(discountAmount) }}</div>
     </div>
     <div class="calculate_item">
       <div class="total">Thành tiền</div>
@@ -94,7 +101,6 @@ watch(finalPrice, (newValue) => {
   .promotional_program{
     font-size: 12px;
     line-height: 22px;
-
   }
 
   .total{

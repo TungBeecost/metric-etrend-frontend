@@ -49,15 +49,24 @@ const fetchDiscount = async () => {
     const response = await getVoucher(discountValue.value);
 
     if (response) {
-      console.log(response.discount);
+      const { discount } = response;
+      console.log(discount);
       console.log(plan.price);
 
       discountInfo.value = response;
-      if (response.discount.minimum_order_value !== null && plan.price < response.discount.minimum_order_value) {
+
+      const now = new Date();
+      const isExpired = now > new Date(discount.end_date);
+
+      if (isExpired) {
         statusApplyCode.value = false;
-        errors.value.discount = `Mã giảm giá chỉ áp dụng với đơn hàng từ ${formatCurrency(response.discount.minimum_order_value)}`;
+        errors.value.discount = 'Mã giảm giá đã hết hạn';
       }
-      else if (response.discount.usage_count >= response.discount.max_usage) {
+      else if (discount.minimum_order_value !== null && plan.price < discount.minimum_order_value) {
+        statusApplyCode.value = false;
+        errors.value.discount = `Mã giảm giá chỉ áp dụng với đơn hàng từ ${formatCurrency(discount.minimum_order_value)}`;
+      }
+      else if (discount.usage_count >= discount.max_usage) {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá đã hết lượt sử dụng';
       }
@@ -72,9 +81,10 @@ const fetchDiscount = async () => {
   } catch (error) {
     console.error(error);
     statusApplyCode.value = false;
-    errors.value.discount = 'Mã giảm giá không tồn tại';
+    errors.value.discount = 'Lỗi khi kiểm tra mã giảm giá';
   }
 };
+
 
 </script>
 
