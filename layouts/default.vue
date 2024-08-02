@@ -108,27 +108,37 @@ onMounted(() => {
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;
-    if (scrollTop > lastScrollTop) {
-      // Scroll down
-      if (topBar) topBar.style.top = '-30px';
-      if (header) header.style.top = '0';
+
+    if (device.isMobile) {
+      // Các giá trị cho thiết bị di động
+      if (scrollTop > lastScrollTop) {
+        if (topBar) topBar.style.top = '-65px'; // Ẩn thanh điều hướng khi cuộn xuống
+        if (header) header.style.top = '0'; // Giữ tiêu đề cố định
+      } else {
+        if (topBar) topBar.style.top = '0'; // Hiển thị lại thanh điều hướng khi cuộn lên
+        if (header) header.style.top = '60px'; // Điều chỉnh tiêu đề khi cuộn lên
+      }
     } else {
-      // Scroll up
-      if (topBar) topBar.style.top = '0';
-      if (header) header.style.top = '28px';
+      // Các giá trị cho màn hình lớn hơn
+      if (scrollTop > lastScrollTop) {
+        if (topBar) topBar.style.top = '-30px'; // Ẩn thanh điều hướng khi cuộn xuống
+        if (header) header.style.top = '0'; // Giữ tiêu đề cố định
+      } else {
+        if (topBar) topBar.style.top = '0'; // Hiển thị lại thanh điều hướng khi cuộn lên
+        if (header) header.style.top = '28px'; // Điều chỉnh tiêu đề khi cuộn lên
+      }
     }
+
     lastScrollTop = scrollTop;
   };
 
   window.addEventListener('scroll', handleScroll);
-  handleScroll(); // Initialize on mount in case the page is already scrolled
+  handleScroll();
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
-
-
 </script>
 
 <style lang="scss" scoped>

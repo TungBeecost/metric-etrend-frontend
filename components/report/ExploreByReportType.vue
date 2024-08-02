@@ -18,11 +18,11 @@ import ListReportType from "~/components/report/ListReportType.vue";
 </template>
 
 <style scoped lang="scss">
-.report_type{
+.report_type {
   padding-top: 200px;
   padding-bottom: 100px;
 
-  .title_report_type{
+  .title_report_type {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -30,15 +30,37 @@ import ListReportType from "~/components/report/ListReportType.vue";
     justify-content: center;
     text-align: center;
     padding-bottom: 40px;
-    .title{
+
+    .title {
       font-size: 36px;
       font-weight: 700;
       line-height: 48px;
       color: #241E46;
     }
-    .content{
+
+    .content {
       font-size: 20px;
       color: #716B95;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .report_type {
+    padding-top: 100px;
+    padding-bottom: 50px;
+
+    .title_report_type {
+      padding-bottom: 20px;
+
+      .title {
+        font-size: 24px;
+        line-height: 32px;
+      }
+
+      .content {
+        font-size: 16px;
+      }
     }
   }
 }

@@ -54,9 +54,6 @@ useSeoMeta({
             </div>
           </div>
           <div class="new_report">
-            <!--            <template v-if="isLoading">-->
-            <!--              <a-skeleton active :paragraph="{ rows: 6 }"/>-->
-            <!--            </template>-->
             <div class="new_report">
               <div class="title_new_report">
                 Báo cáo mới nhất

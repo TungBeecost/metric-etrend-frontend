@@ -20,9 +20,13 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 1001;
   background-color: #fff;
   transition: top 0.3s;
+
+  @include mobile {
+    padding: 10px 16px;
+  }
 }
 
 .shadow {
@@ -40,14 +44,14 @@ header {
   position: relative;
 
   @include mobile {
-    padding: 20px 16px;
+    padding: 10px 0;
   }
-
   .logo {
     margin-right: 64px;
 
     @include mobile {
       margin-right: 0;
+
     }
   }
 }
@@ -75,17 +79,27 @@ main {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1001;
-  padding: 3px;
+  z-index: 9999;
+  padding: 10px 16px;
   background: linear-gradient(109.46deg, #FF9839 17.1%, #FF6931 78.86%);
   transition: top 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  @include mobile {
+    padding: 8px 12px;
+  }
 
   .text {
-    align-items: center;
-    display: flex;
     color: #FFF;
-    font-size: 12px;
-    gap: 4px;
-    justify-content: center;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.5;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: visible;
+    width: 100%;
   }
 }
