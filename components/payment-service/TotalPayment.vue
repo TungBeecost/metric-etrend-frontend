@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {formatCurrency} from "~/helpers/FormatHelper";
-import { toRefs, computed, watch } from 'vue';
+import { formatCurrency } from "~/helpers/FormatHelper";
+import { toRefs, computed, watch, onMounted, ref, nextTick } from 'vue';
 
 const props = defineProps({
   plan: {
@@ -21,9 +21,14 @@ const { plan, discountInfo, statusApplyCode } = toRefs(props);
 const emit = defineEmits(['finalPrice']);
 
 const calculateDiscountAmount = (planPrice: number, discount: any) => {
-  if (!discount || !discount.discount) return 0;
+  if (!discount || !discount.discount) {
+    console.log('No discount info available.');
+    return 0;
+  }
 
   const { discount_type, discount_value, maximum_discount } = discount.discount;
+  console.log('Discount Details:', { discount_type, discount_value, maximum_discount });
+
   let discountAmount = 0;
 
   if (discount_type === 'percentage') {
@@ -35,82 +40,95 @@ const calculateDiscountAmount = (planPrice: number, discount: any) => {
   if (maximum_discount && discountAmount > maximum_discount) {
     discountAmount = maximum_discount;
   }
-
   return discountAmount;
 };
 
-const discountAmount = computed(() => {
+const discountAmount = ref(0);
+
+const updateValues = async () => {
+  await nextTick();
   if (statusApplyCode.value) {
-    return calculateDiscountAmount(plan.value.price, discountInfo.value);
+    discountAmount.value = calculateDiscountAmount(plan.value.price, discountInfo.value);
   } else {
-    return 0;
+    discountAmount.value = 0;
   }
-});
+};
 
 const finalPrice = computed(() => plan.value.price - discountAmount.value);
+
+watch([discountInfo, statusApplyCode], updateValues);
 
 watch(finalPrice, (newValue) => {
   emit('finalPrice', newValue);
 });
+
+onMounted(() => {
+  updateValues();
+});
+
 </script>
 
 <template>
   <div class="calculate">
     <div class="calculate_item">
       <div class="money">Số tiền</div>
-      <div class="money">{{formatCurrency(plan.priceDiscount)}}</div>
+      <div class="money">{{ formatCurrency(plan.priceDiscount) }}</div>
     </div>
     <div class="calculate_item">
       <div class="money">Chiết khấu</div>
-      <div class="money">-{{formatCurrency(plan.priceDiscount - plan.price)}}</div>
+      <div class="money">-{{ formatCurrency(plan.priceDiscount - plan.price) }}</div>
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Chương trình khuyến mại</div>
-      <div class="promotional_program">-{{formatCurrency(plan.priceDiscount - plan.price)}}</div>
+      <div class="promotional_program">-{{ formatCurrency(plan.priceDiscount - plan.price) }}</div>
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Áp dụng mã giảm giá</div>
-      <div v-if="statusApplyCode" class="promotional_program">-{{ formatCurrency(discountAmount) }}</div>
+      <div v-if="statusApplyCode" class="promotional_program">
+        -{{ formatCurrency(discountAmount) }}
+        <span v-if="discountInfo.discount.discount_typee = 'percentage'" class="promotional_program">({{discountInfo.discount.discount_value}}%)</span>
+      </div>
+      <div v-else class="promotional_program">0đ</div>
     </div>
     <div class="calculate_item">
       <div class="total">Thành tiền</div>
-      <div class="total_price">{{formatCurrency(finalPrice)}}</div>
+      <div class="total_price">{{ formatCurrency(finalPrice) }}</div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.calculate{
+.calculate {
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding-top: 16px;
   width: 100%;
 
-  .calculate_item{
+  .calculate_item {
     display: flex;
     justify-content: space-between;
     line-height: 22px;
   }
 
-  .money{
+  .money {
     font-weight: bold;
     font-size: 16px;
   }
 
-  .promotional_program{
+  .promotional_program {
     font-size: 12px;
     line-height: 22px;
   }
 
-  .total{
+  .total {
     font-weight: bold;
     font-size: 16px;
     line-height: 24px;
     color: #241E46;
   }
 
-  .total_price{
+  .total_price {
     font-weight: bold;
     font-size: 16px;
     line-height: 24px;

@@ -2,19 +2,20 @@
 import CheckOut from "~/components/payment-service/CheckOut.vue";
 import OptionPayment from "~/components/payment-service/OptionPayment.vue";
 import PackService from "~/components/payment-service/PackService.vue";
-import {ref} from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import TotalPayment from "~/components/payment-service/TotalPayment.vue";
-import {usePayment} from "#imports";
+import { usePayment } from "#imports";
 import QRCode from "qrcode.vue";
 import { message } from 'ant-design-vue';
-import {PLANS} from "~/constant/constains";
+import { PLANS } from "~/constant/constains";
 const currentUserStore = useCurrentUser();
-const {userInfo} = storeToRefs(currentUserStore);
+const { userInfo } = storeToRefs(currentUserStore);
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
 const { createPaymentTransaction, verifyTransaction } = usePayment()
-const selectedWalletOption = ref('')
+const selectedWalletOption = ref('');
 const qrCodeData = ref('');
+const statusApplyCode = ref<boolean>(false);
 const openModal = ref<boolean>(false);
 const planCode = ref('');
 
@@ -38,42 +39,76 @@ const handleSelectedOption = (selectedOption: string) => {
 
 const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string; discountInfo: DiscountInfo }) => {
   discountValue.value = discountInfo;
-  console.log()
+  const now = new Date();
+  let isExpired = false;
+  let isValid = false;
+
+  if (discountInfo.discount) {
+    const discount = discountInfo.discount;
+
+    isExpired = now > new Date(discount.end_date);
+
+    if (isExpired) {
+      statusApplyCode.value = false;
+    } else {
+      const currentPlan = plan.value;
+
+      if (!currentPlan) {
+        statusApplyCode.value = false;
+      } else if (discount.minimum_order_value !== null && currentPlan.price < discount.minimum_order_value) {
+        statusApplyCode.value = false;
+      } else if (discount.usage_count >= discount.max_usage) {
+        statusApplyCode.value = false;
+      } else {
+        statusApplyCode.value = true;
+      }
+    }
+  } else {
+    statusApplyCode.value = false;
+  }
   if (!userInfo.value.id) {
     message.error('Vui lòng đăng nhập trước khi thanh toán');
   } else {
     if (selectedWalletOption.value) {
       const paymentMethod = selectedWalletOption.value;
-      const itemCode = `${plan.value?.plan_code}__12m`;
-      try {
-        const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount.code);
-        if (transactionResult.response.payment_url) {
-          window.location.href = transactionResult.response.payment_url;
-        } else {
-          qrCodeData.value = transactionResult.response.qrcode;
-          openModal.value = true;
+      const currentPlan = plan.value; // Lấy giá trị của plan.value vào một biến tạm
 
-          const { isCompleted } = useCheckTransactionCompletion(transactionResult.response.transaction_id);
-          isCompleted.value && (window.location.href = '/');
+      if (currentPlan) {
+        const itemCode = `${currentPlan.plan_code}__12m`; // Sử dụng giá trị của currentPlan
+        try {
+          const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount.code);
+          if (transactionResult.response.payment_url) {
+            window.location.href = transactionResult.response.payment_url;
+          } else {
+            qrCodeData.value = transactionResult.response.qrcode;
+            openModal.value = true;
+
+            const { isCompleted } = useCheckTransactionCompletion(transactionResult.response.transaction_id);
+            isCompleted.value && (window.location.href = '/');
+          }
+        } catch (error) {
+          console.error("Error creating transaction:", error);
+          const typedError = error as ErrorResponse;
+          if (typedError.response && typedError.response.data && typedError.response.data.detail === "User already has a subscription" && typedError.response.data.status_code === 400) {
+            message.error('Bạn đã có một đăng ký. Không thể thực hiện thêm.');
+          } else {
+            message.error('Đã xảy ra lỗi khi tạo giao dịch. Vui lòng thử lại.');
+          }
         }
-      } catch (error) {
-        console.error("Error creating transaction:", error);
-        const typedError = error as ErrorResponse;
-        if (typedError.response && typedError.response.data && typedError.response.data.detail === "User already has a subscription" && typedError.response.data.status_code === 400) {
-          message.error('Bạn đã có một đăng ký. Không thể thực hiện thêm.');
-        } else {
-          message.error('Đã xảy ra lỗi khi tạo giao dịch. Vui lòng thử lại.');
-        }
+      } else {
+        message.error('Kế hoạch không tồn tại');
       }
     } else {
       message.error('Vui lòng chọn phương thức thanh toán trước khi thanh toán');
     }
   }
 };
+
+
 const checkTransactionStatus = async (transactionId: string) => {
   try {
-    const response = await verifyTransaction(transactionId)
-    return  response;
+    const response = await verifyTransaction(transactionId);
+    return response;
   } catch (error) {
     console.error("Error checking transaction status:", error);
     return null;
@@ -86,11 +121,8 @@ const useCheckTransactionCompletion = (transactionId: string) => {
 
   const checkCompletion = async () => {
     const result = await checkTransactionStatus(transactionId);
-    // const result = {
-    //   is_completed: true
-    // }
     if (result && result.is_completed) {
-      console.log("Transaction", isCompleted.value);
+      console.log("Transaction completed");
       isCompleted.value = true;
       if (intervalId) clearInterval(intervalId);
       window.location.href = `/?transaction_id=${transactionId}`;
@@ -120,14 +152,14 @@ onMounted(() => {
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}`;
 });
 
-const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an underscore or remove it if not needed
+const handleOk = (_e: MouseEvent) => {
   openModal.value = false;
 };
 </script>
 
 <template>
   <div id="payment" class="payment_service">
-    <div class="default_section" style=" display: flex; padding: 40px 0; gap: 24px;">
+    <div class="default_section" style="display: flex; padding: 40px 0; gap: 24px;">
       <div class="payment_service_option">
         <pack-service v-if="plan" :plan="plan" />
       </div>
@@ -152,7 +184,7 @@ const handleOk = (_e: MouseEvent) => { // Prefix unused parameter with an unders
           <QRCode :value="qrCodeData" :size="250" />
         </div>
         <div style="padding: 16px; width: 100%">
-          <total-payment v-if="plan" :plan="plan" :discount-info="discountValue"/>
+          <total-payment v-if="plan" :plan="plan" :status-apply-code="statusApplyCode" :discount-info="discountValue"/>
         </div>
       </div>
     </a-modal>
