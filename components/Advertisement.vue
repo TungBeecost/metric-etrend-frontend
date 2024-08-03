@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { notification } from 'ant-design-vue';
 import { onMounted, h, defineEmits, onUnmounted } from 'vue';
-import { useRouter, onBeforeRouteLeave } from 'vue-router';
+import { onBeforeRouteLeave } from 'vue-router';
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
 
 // Define emits
 const emit = defineEmits(['handle-advertisement']);
-const router = useRouter();
 
 const svgIcon = () => (
     h('svg', {
@@ -125,6 +124,7 @@ const openNotification = () => {
               },
               onClick: () => {
                 emit('handle-advertisement');
+                notification.destroy();
               }
             }, 'Đăng ký ngay')
           ])
