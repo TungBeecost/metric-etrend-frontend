@@ -86,7 +86,6 @@ onMounted(() => {
       <div class="promotional_program">Áp dụng mã giảm giá</div>
       <div v-if="statusApplyCode" class="promotional_program">
         -{{ formatCurrency(discountAmount) }}
-        {{discountInfo.discount.discount_type}}
         <span v-if="discountInfo.discount.discount_type === 'percentage'" class="promotional_program">({{discountInfo.discount.discount_value}}%)</span>
       </div>
       <div v-else class="promotional_program">0đ</div>
