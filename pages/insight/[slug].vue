@@ -5,6 +5,7 @@ import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import {useSearchReport} from "#imports";
 import UnlockReportMarketing from "~/components/report/UnlockReportMarketing.vue";
 import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
+import useBEEndpoint from "~/composables/useBEEndpoint";
 
 const route = useRoute()
 const {fetchListRecommendMarketing} = useSearchReport()
@@ -40,7 +41,7 @@ const fetchReportData = async () => {
   try {
     loading.value = true;
     const response = await axios.get(
-        `https://api-ereport.staging.muadee.vn/api/report/report_insight_detail`,
+        useBEEndpoint('/api/report/report_insight_detail'),
         {
           params: {
             slug,
