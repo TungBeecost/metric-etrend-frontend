@@ -20,11 +20,11 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1001;
   background-color: #fff;
   transition: top 0.3s;
-
+  z-index: 9999;
   @include mobile {
+    z-index: 9999;
     padding: 10px 16px;
   }
 }
@@ -42,9 +42,11 @@ header {
   justify-content: space-between;
   align-items: center;
   position: relative;
+  z-index: 9999;
 
   @include mobile {
     padding: 10px 0;
+    z-index: 9999;
   }
   .logo {
     margin-right: 64px;
