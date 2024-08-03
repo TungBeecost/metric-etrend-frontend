@@ -24,64 +24,52 @@ function handleClick(report: any) {
 <style scoped lang="scss">
 .report-list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px 0;
+  gap: 40px;
+  padding: 40px 0;
 
   .report-item {
     display: flex;
+    padding: 32px;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 16px;
-    border-radius: 12px;
+    border-radius: 16px;
     border: 1px solid #EEEBFF;
     background: #FFF;
-    gap: 20px;
+    gap: 40px;
     cursor: pointer;
-    width: 100%;
 
     .title {
-      font-size: 18px;
+      font-size: 24px;
       font-weight: 700;
       color: #241E46;
     }
 
     .content {
-      font-size: 12px;
+      font-size: 14px;
       color: #716B95;
-    }
-
-    .image {
-      width: 40px;
-      height: 40px;
     }
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .report-list {
-    gap: 16px;
-    padding: 16px 0;
-  }
-
-  .report-item {
     flex-direction: column;
-    padding: 12px;
-    border-radius: 8px;
-  }
+    gap: 20px;
+    padding: 20px 0;
 
-  .title {
-    font-size: 16px;
-  }
+    .report-item {
+      padding: 16px;
+      gap: 20px;
 
-  .content {
-    font-size: 12px;
-  }
+      .title {
+        font-size: 18px;
+      }
 
-  .image {
-    width: 32px;
-    height: 32px;
+      .content {
+        font-size: 12px;
+      }
+    }
   }
 }
 </style>
