@@ -41,7 +41,6 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
   discountValue.value = discountInfo;
   const now = new Date();
   let isExpired = false;
-  let isValid = false;
 
   if (discountInfo.discount) {
     const discount = discountInfo.discount;
