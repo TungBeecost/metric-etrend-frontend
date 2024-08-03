@@ -108,6 +108,7 @@ const openNotification = () => {
               style: {
                 display: 'flex',
                 width: '100%',
+                height: '40px',
                 padding: '9px 16px',
                 flexDirection: 'column',
                 justifyContent: 'center',
