@@ -65,6 +65,7 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
   } else {
     statusApplyCode.value = false;
   }
+
   if (!userInfo.value.id) {
     message.error('Vui lòng đăng nhập trước khi thanh toán');
   } else {
@@ -75,8 +76,8 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
       if (currentPlan) {
         const itemCode = `${currentPlan.plan_code}__12m`; // Sử dụng giá trị của currentPlan
         try {
-          const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount.code);
-          if (transactionResult.response.payment_url) {
+          const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null);
+          if (transactionResult?.response?.payment_url) {
             window.location.href = transactionResult.response.payment_url;
           } else {
             qrCodeData.value = transactionResult.response.qrcode;

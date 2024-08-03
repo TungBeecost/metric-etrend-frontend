@@ -6,28 +6,33 @@ export const createTransaction = async (
     itemCode: string,
     redirectUrl: string,
     totalPrice: string,
-    discountCode: string
+    discountCode: string | null
 ) => {
     try {
         const params = new URLSearchParams({
             payment_method: paymentMethod,
             item_code: itemCode,
             redirect_url: redirectUrl,
-            total_price: totalPrice,
-            discount_code: discountCode
+            total_price: totalPrice
         });
+
+        if (discountCode) {
+            params.append('discount_code', discountCode);
+        }
 
         const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment.endpoint)}?${params.toString()}`, {}, {
             headers: {
                 'accept': 'application/json',
             }
         });
+
         return response.data;
     } catch (error) {
         console.error("createTransaction error: ", error);
         return null;
     }
 };
+
 
 
 export const checkTransactionStatus = async (transactionId: string) => {

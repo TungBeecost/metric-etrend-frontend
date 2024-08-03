@@ -77,6 +77,7 @@
     <a-modal
         :visible="openContactForm"
         :footer="false"
+        :style="modalStyle"
         @cancel="openContactForm = false"
     >
       <div class="modal-contact-us">
@@ -109,6 +110,7 @@ const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotificatio
 const openContactForm = ref(false)
 const listTagSuggestions = ref<string[]>([]);
 const showModal = ref(false);
+const isMobile = ref(false);
 const isHideContent = ref(true)
 
 const fetchTagSuggest = async (value: string) => {
@@ -161,6 +163,8 @@ const handleSubmitSuccess = () => {
   window.dispatchEvent(event);
 };
 
+const modalStyle = computed(() => (isMobile.value ? 'padding-top: 30px' : 'padding-top: 30px'));
+
 const handleOk = () => {
   showModal.value = false;
 };
@@ -179,6 +183,7 @@ onMounted(() => {
   if (unlockedMktReports === 'true') {
     isHideContent.value = false;
   }
+  isMobile.value = window.innerWidth <= 767;
   fetchTagSuggest('');
 });
 

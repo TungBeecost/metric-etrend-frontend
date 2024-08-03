@@ -12,10 +12,10 @@
     <div
         class="container"
     >
-      <div class="top-bar">
+      <div class="top-bar" @click="navigateToPricing">
         <div class="text">
           <b style="font-size: 14px">Ưu đãi giảm 30%</b>
-          <span style="font-size: 14px"> áp dụng với tất cả các gói dịch vụ đến hết ngày 22/08/2024</span>
+          <span style="font-size: 14px"> áp dụng với tất cả các gói dịch vụ đến hết ngày 30/09/2024</span>
         </div>
       </div>
       <!-- header section -->
@@ -110,22 +110,20 @@ onMounted(() => {
     const scrollTop = window.scrollY;
 
     if (device.isMobile) {
-      // Các giá trị cho thiết bị di động
       if (scrollTop > lastScrollTop) {
-        if (topBar) topBar.style.top = '-65px'; // Ẩn thanh điều hướng khi cuộn xuống
-        if (header) header.style.top = '0'; // Giữ tiêu đề cố định
+        if (topBar) topBar.style.top = '-65px';
+        if (header) header.style.top = '0';
       } else {
-        if (topBar) topBar.style.top = '0'; // Hiển thị lại thanh điều hướng khi cuộn lên
-        if (header) header.style.top = '60px'; // Điều chỉnh tiêu đề khi cuộn lên
+        if (topBar) topBar.style.top = '0';
+        if (header) header.style.top = '60px';
       }
     } else {
-      // Các giá trị cho màn hình lớn hơn
       if (scrollTop > lastScrollTop) {
-        if (topBar) topBar.style.top = '-30px'; // Ẩn thanh điều hướng khi cuộn xuống
-        if (header) header.style.top = '0'; // Giữ tiêu đề cố định
+        if (topBar) topBar.style.top = '-32px';
+        if (header) header.style.top = '0';
       } else {
-        if (topBar) topBar.style.top = '0'; // Hiển thị lại thanh điều hướng khi cuộn lên
-        if (header) header.style.top = '28px'; // Điều chỉnh tiêu đề khi cuộn lên
+        if (topBar) topBar.style.top = '0';
+        if (header) header.style.top = '25px';
       }
     }
 
@@ -139,6 +137,12 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
+
+const navigateToPricing = () => {
+  navigateTo(NAVIGATIONS.pricing);
+}
+
+
 </script>
 
 <style lang="scss" scoped>
