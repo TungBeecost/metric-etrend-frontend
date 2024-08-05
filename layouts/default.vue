@@ -20,8 +20,8 @@
       </div>
       <!-- header section -->
       <header ref="headerRef" :class="{ darkBlueHeader: isDarkBlueHeader, 'shadow': isScrolled }">
-        <div class="header">
-          <NuxtImg
+        <div :class="['header', { 'default_section': !device.isMobile }]">
+        <NuxtImg
               :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'" class="logo"
               :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" style="cursor: pointer; padding-left: 24px"
               @click="navigateToHome"
