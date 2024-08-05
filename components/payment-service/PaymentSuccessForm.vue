@@ -74,8 +74,8 @@ const validateForm = async () => {
     <div class="information">
       <CustomInput v-model:input="formValues.name" label="Họ và tên" :error-message="errors.name" :is-required="true"
                    :input-props="{ placeholder: 'Nhập họ và tên' }" class="contactItem"/>
-      <CustomInput v-model:input="formValues.email" class="contactItem" :error-message="errors.email" label="Email"
-                   :input-props="{ placeholder: 'example@gmail.com', type: 'email' }"/>
+      <CustomInput v-model:input="formValues.email" class="contactItem" :error-message="errors.email" :is-required="true"
+                   label="Email" :input-props="{ placeholder: 'example@gmail.com', type: 'email' }"/>
       <CustomInput v-model:input="formValues.phone" class="contactItem" :error-message="errors.phone"
                    label="Số điện thoại" :is-required="true" :input-props="{ placeholder: 'Nhập SĐT' }"/>
       <CustomInput v-model:input="formValues.companyName" class="contactItem" :error-message="errors.companyName"

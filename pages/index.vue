@@ -66,7 +66,7 @@
           </div>
           <div class="title_content_sucess">
             <div class="title_success">Thanh toán thành công</div>
-            <div class="content_success"><span style="color: #E85912; font-size: 16px">Để được bảo vệ và hỗ trợ</span>
+            <div class="content_success" style="font-size: 16px"><span style="color: #E85912; font-size: 16px">Để được bảo vệ và hỗ trợ</span>
               trong quá trình xử lý thanh toán và sử dụng dịch vụ, xin vui lòng cập nhật thông tin:
             </div>
             <payment-success-form v-if="transactionId" :transaction-id="transactionId" @form-submitted="handdleUpdate"/>

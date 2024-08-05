@@ -62,7 +62,7 @@ const itemsToShow = computed(() => {
               </svg>
             </div>
             <div class="title line-clamp__2" style="text-align: left;">
-              Báo cáo nhóm hàng {{ report.name }}
+              Báo cáo {{ report.name }}
             </div>
             <div v-if="report.revenue_monthly" class="summary-info">
               <div class="info_item">

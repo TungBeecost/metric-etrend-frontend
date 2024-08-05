@@ -42,17 +42,6 @@ const {data: lstReport} = await useAsyncData(fetchReport)
           </div>
         </div>
       </div>
-      <!--      <div v-if="isLoading">-->
-      <!--        <Carousel :items-to-show="4" :items-to-scroll="4" :wrap-around="true" style="width: 100%;"-->
-      <!--                  :snap-align="'start'">-->
-      <!--          <Slide v-for="item in [1,2,3,4]" :key="item">-->
-      <!--            <div style="width: 100%; display: flex; flex-direction: column; padding: 16px;">-->
-      <!--              <a-skeleton-image style="margin-bottom: 24px;"/>-->
-      <!--              <a-skeleton/>-->
-      <!--            </div>-->
-      <!--          </Slide>-->
-      <!--        </Carousel>-->
-      <!--      </div>-->
       <div class="new_report">
         <item-feature-report :reports="(lstReport || []).slice(0, 10)"/>
       </div>
