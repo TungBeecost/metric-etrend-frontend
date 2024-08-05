@@ -115,7 +115,7 @@ onMounted(() => {
         if (header) header.style.top = '0';
       } else {
         if (topBar) topBar.style.top = '0';
-        if (header) header.style.top = '60px';
+        if (header) header.style.top = '64px';
       }
     } else {
       if (scrollTop > lastScrollTop) {
@@ -123,7 +123,7 @@ onMounted(() => {
         if (header) header.style.top = '0';
       } else {
         if (topBar) topBar.style.top = '0';
-        if (header) header.style.top = '25px';
+        if (header) header.style.top = '32px';
       }
     }
 

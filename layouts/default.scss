@@ -4,10 +4,10 @@
   flex-direction: column;
   justify-content: space-evenly;
   position: relative;
-  padding-top: 88px;
+  padding-top: 120px;
 
   @include mobile {
-    padding-top: 65px;
+    padding-top: 110px;
   }
 
   .darkBlueHeader {
