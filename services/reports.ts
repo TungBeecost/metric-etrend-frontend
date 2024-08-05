@@ -132,6 +132,7 @@ export const fetchClaimedListReport = async (page: number = 0, limit: number = 1
       category_report_id: item.category_report_id,
       category_report_name: item.category_report_name,
       url_thumbnail: item.url_thumbnail,
+      report_type: item.report_type,
       lst_brand: item.lst_brand,
       lst_category: item.lst_category
     }));
@@ -225,6 +226,7 @@ export interface ListClaimed {
   "category_report_id": string,
   "category_report_name": string,
   "url_thumbnail": string,
+  "report_type": string,
   "lst_brand": Array<string>
   "lst_category": Array<string>
 }

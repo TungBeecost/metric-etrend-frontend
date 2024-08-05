@@ -304,6 +304,9 @@ const handleSubmitLeadForm = async () => {
   gap: 16px;
 }
 
+.contact-us .ant-input {
+  font-size: 14px;
+}
 
 .wrapper {
   .background-image {

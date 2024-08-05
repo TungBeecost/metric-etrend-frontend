@@ -12,7 +12,6 @@ const props = defineProps({
   },
 });
 
-console.log('props.data', props.data);
 
 const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFormat: string = "YYYY-MM-DD[T]HH:mm:ss"): string => {
   return moment(value, inputFormat).format(format);
@@ -56,9 +55,10 @@ const getDisplayedCategories = (item: any) => {
               <span v-else>
                 {{ item.report_type }}
               </span>
-              <span style="color: #EEEBFF"> | </span>
+              <span class="bf_date" style="color: #EEEBFF"> | </span>
             </span>
-            {{ formatDate(item.end_date) }}
+            <span class="date_time">{{ formatDate(item.end_date) }}</span>
+
           </div>
           <div v-if="item.slug.startsWith('bao-cao')" class="name">
             {{ item.name }}
@@ -199,7 +199,7 @@ const getDisplayedCategories = (item: any) => {
       .info {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 16px;
 
         .breadcrumb {
           font-size: 14px;
@@ -294,12 +294,16 @@ const getDisplayedCategories = (item: any) => {
           .breadcrumb {
             font-size: 8px;
 
-            .report_type {
+            .date_time{
               display: none;
             }
 
             span {
               font-size: 8px;
+
+              .bf_date {
+                display: none;
+              }
             }
           }
 
