@@ -31,6 +31,10 @@ const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
     return '';
   }
 
+  if (user_plan_code === 'e_community') {
+    return 'Mua ngay';
+  }
+
   if (user_plan_code === 'e_trial') {
     return 'Mua ngay';
   }
