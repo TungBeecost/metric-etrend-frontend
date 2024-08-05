@@ -42,6 +42,7 @@
     <!-- Login Modal -->
     <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"
              :footer="false"
+             style="padding-top: 24px"
              @ok="currentUserStore.setShowPopupLogin(false)"
              @cancel="currentUserStore.setShowPopupLogin(false)">
       <login-button/>

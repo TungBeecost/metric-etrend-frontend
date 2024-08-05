@@ -20,14 +20,14 @@
       </div>
       <!-- header section -->
       <header ref="headerRef" :class="{ darkBlueHeader: isDarkBlueHeader, 'shadow': isScrolled }">
-        <div class="header default_section">
+        <div class="header">
           <NuxtImg
               :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'" class="logo"
-              :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" style="cursor: pointer"
+              :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" style="cursor: pointer; padding-left: 24px"
               @click="navigateToHome"
           />
 
-          <div @click="setShowMenu(!isShowMenu)">
+          <div style="padding-right: 24px" @click="setShowMenu(!isShowMenu)">
             <CustomIcon v-if="device.isMobile && !isShowMenu" :is-custom-size="true" :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'"/>
             <CustomIcon v-else-if="isShowMenu" :is-custom-size="true" type="Close"/>
           </div>
