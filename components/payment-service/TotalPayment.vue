@@ -44,6 +44,7 @@ const calculateDiscountAmount = (planPrice: number, discount: any) => {
 };
 
 const discountAmount = ref(0);
+const promotionalDiscount = ref(plan.value.priceDiscount - plan.value.price);
 
 const updateValues = async () => {
   await nextTick();
@@ -54,7 +55,7 @@ const updateValues = async () => {
   }
 };
 
-const finalPrice = computed(() => plan.value.price - discountAmount.value);
+const finalPrice = computed(() => plan.value.priceDiscount - (promotionalDiscount.value + discountAmount.value));
 
 watch([discountInfo, statusApplyCode], updateValues);
 
@@ -65,7 +66,6 @@ watch(finalPrice, (newValue) => {
 onMounted(() => {
   updateValues();
 });
-
 </script>
 
 <template>
@@ -76,11 +76,11 @@ onMounted(() => {
     </div>
     <div class="calculate_item">
       <div class="money">Chiết khấu</div>
-      <div class="money">-{{ formatCurrency(plan.priceDiscount - plan.price) }}</div>
+      <div class="money">-{{ formatCurrency(promotionalDiscount + discountAmount) }}</div>
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Chương trình khuyến mại</div>
-      <div class="promotional_program">-{{ formatCurrency(plan.priceDiscount - plan.price) }}</div>
+      <div class="promotional_program">-{{ formatCurrency(promotionalDiscount) }}</div>
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Áp dụng mã giảm giá</div>
@@ -96,7 +96,6 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
 <style scoped lang="scss">
 .calculate {
   display: flex;

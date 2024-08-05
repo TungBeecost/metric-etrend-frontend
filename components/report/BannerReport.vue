@@ -15,7 +15,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  //height: 217px;
+  padding-top: 24px;
 
   .title {
     padding: 80px 0;

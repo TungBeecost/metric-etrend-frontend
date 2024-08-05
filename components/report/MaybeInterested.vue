@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type {LstRecommed} from "~/services/reports";
 import {NAVIGATIONS} from "~/constant/constains";
-import moment from "moment";
 
 const props = defineProps({
   recomends: {
@@ -9,10 +8,6 @@ const props = defineProps({
     required: true
   }
 });
-
-const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
-  return moment(value, inputFormat).format(format);
-}
 
 
 const handleItemClick = (item: LstRecommed) => {
@@ -62,8 +57,13 @@ const handleItemClick = (item: LstRecommed) => {
         <img :src="item.url_thumbnail" alt="">
       </div>
       <div class="info">
-        <div v-if="item.category_report_name" class="breadcrumb">{{ item.category_report_name }}
-          | {{ formatDate(item.start_date, 'DD/MM/YYYY') }}
+        <div>
+        <span class="report_type">
+          <span v-if="item.category_report_name === null">Báo cáo khác</span>
+          <span v-else>{{ item.source === 'marketing'? '' : 'Báo cáo nhóm hàng | ' }}</span>
+        </span>
+        <span v-if="item.category_report_name" class="breadcrumb">{{ item.category_report_name }}
+        </span>
         </div>
         <nuxt-link :to="item.source === 'marketing' ? `/insight/${item.slug}` : `/${item.slug}`" class="name">
           {{ item.source === 'marketing' ? '' : 'Báo cáo' }}
@@ -102,7 +102,8 @@ const handleItemClick = (item: LstRecommed) => {
 
   .item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
     align-content: flex-start;
     gap: 16px;
     flex-wrap: wrap;
@@ -123,8 +124,14 @@ const handleItemClick = (item: LstRecommed) => {
       flex-direction: column;
       align-items: flex-start;
       padding: 8px 0;
-      gap: 8px;
       flex: 1 0 0;
+
+      .report_type{
+        font-size: 14px;
+        color: #716B95;
+        font-weight: 400;
+        line-height: 14px;
+      }
 
       .breadcrumb {
         font-size: 14px;
