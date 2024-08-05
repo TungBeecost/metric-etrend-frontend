@@ -23,21 +23,24 @@ onMounted(() => {
   windowWidth.value = window.innerWidth;
 });
 const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
-
   if (user_plan_code === plan_code) {
-    return 'Đang sử dụng'
+    return 'Đang sử dụng';
   }
 
-  if (user_plan_code === 'free') {
-    return 'Mua ngay'
+  if (plan_code === 'e_community') {
+    return '';
   }
 
-  if(!user_plan_code){
-    return 'Mua ngay'
+  if (user_plan_code === 'e_trial') {
+    return 'Mua ngay';
   }
 
-  return ''
-}
+  if (!user_plan_code) {
+    return 'Mua ngay';
+  }
+
+  return '';
+};
 </script>
 
 <template>

@@ -50,7 +50,7 @@ const handleClickPlan = () => {
           </div>
         </div>
         <div class="service_info">
-          <div v-if="props.userInfo.current_plan.plan_code == 'free'" style="background: #FFF" class="paid-plan plan-card">
+          <div v-if="props.userInfo.current_plan.plan_code === 'e_trial'" style="background: #FFF" class="paid-plan plan-card">
             <div class="plan-card-info">
               <div class="plan-info">
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,7 +60,7 @@ const handleClickPlan = () => {
                   <path d="M13.9988 33.1678C16.0167 29.6809 19.6818 27.3337 24 27.3337C28.3183 27.3337 31.9833 29.6809 34.0013 33.1678" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <div class="title_plan" style="flex: 1">
-                  <div class="plan_info_name">Gói miễn phí</div>
+                  <div class="plan_info_name">Gói Trial</div>
                   <div class="plan_info_description">Nâng cấp gói ngay để khám phá số liệu thị trường với hàng trăm báo cáo mới nhất ngay hôm nay</div>
                 </div>
               </div>
