@@ -47,9 +47,8 @@ const getDisplayedCategories = (item: any) => {
               {{
                 item.report_type === 'report_product_line' ? 'Báo cáo nhóm hàng' : item.report_type ===
                 'report_category' ? 'Báo cáo ngành hàng' : 'Báo cáo khác'
-              }}
+              }} |
             </span>
-            <span style="color: #EEEBFF"> | </span>
             <span v-if="item.report_type === 'report_product_line'">
               <span v-if="item.lst_category">
                 {{ getDisplayedCategories(item) }}
@@ -91,7 +90,10 @@ const getDisplayedCategories = (item: any) => {
                 <BlurContent>
                   {{ formatAndRoundSortTextCurrencyWithMinValue(item.shop) }}
                 </BlurContent>
-              </span> - nhà bán
+              </span>
+              <div class="info_item_detail">
+                - nhà bán
+              </div>
               </div>
               <div class="detail_item">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -129,7 +131,10 @@ const getDisplayedCategories = (item: any) => {
                 <BlurContent>
                   {{ formatAndRoundSortTextCurrencyWithMinValue(item.product) }}
                 </BlurContent>
-              </span> - sản phẩm
+              </span>
+                <div class="info_item_detail">
+                  - sản phẩm
+                </div>
               </div>
               <div class="detail_item">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -162,7 +167,6 @@ const getDisplayedCategories = (item: any) => {
 </template>
 
 <style scoped lang="scss">
-
 #lst_report_id {
   display: flex;
   flex-direction: column;
@@ -256,14 +260,11 @@ const getDisplayedCategories = (item: any) => {
 
         .description {
           display: -webkit-box;
-          //-webkit-box-orient: vertical;
-          //-webkit-line-clamp: 2;
           color: #716B95;
           text-overflow: ellipsis;
           font-size: 16px;
           line-height: 24px;
           overflow: hidden;
-
         }
       }
     }
@@ -291,10 +292,14 @@ const getDisplayedCategories = (item: any) => {
           gap: 4px;
 
           .breadcrumb {
-            font-size: 10px;
+            font-size: 8px;
+
+            .report_type {
+              display: none;
+            }
 
             span {
-              font-size: 10px;
+              font-size: 8px;
             }
           }
 
@@ -308,6 +313,10 @@ const getDisplayedCategories = (item: any) => {
 
             .info_item {
               font-size: 10px;
+
+              .detail_item {
+                display: none;
+              }
 
               span {
                 span {
@@ -323,9 +332,18 @@ const getDisplayedCategories = (item: any) => {
 
           .description {
             font-size: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
       }
+    }
+
+    .info_item_detail {
+      font-size: 10px;
     }
   }
 }
