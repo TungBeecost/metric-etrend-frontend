@@ -32,6 +32,10 @@ const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
     return 'Mua ngay'
   }
 
+  if (user_plan_code === 'e_trial') {
+    return 'Mua ngay'
+  }
+
   if(!user_plan_code){
     return 'Mua ngay'
   }
