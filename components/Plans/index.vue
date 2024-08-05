@@ -28,7 +28,7 @@ const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
     return 'Đang sử dụng'
   }
 
-  if (user_plan_code === 'e_community') {
+  if (user_plan_code === 'free') {
     return 'Mua ngay'
   }
 

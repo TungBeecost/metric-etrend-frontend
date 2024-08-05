@@ -165,8 +165,8 @@ interface IPLAN {
 }
 export const PLANS: Array<IPLAN> = [
   {
-    type: "Community",
-    plan_code: 'e_community',
+    type: "Free",
+    plan_code: 'free',
     description: "Truy cập kho báo cáo và cập nhật xu hướng",
     price: "Miễn phí",
     unit: undefined,

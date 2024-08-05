@@ -77,7 +77,7 @@ const fetchReportData = async () => {
     }
 
     const {tier_report} = response;
-    if (tier_report !== 'e_community' || config.public.SSR === 'true') {
+    if (tier_report !== 'free' || config.public.SSR === 'true') {
       isHideContent = false;
     }
     const [listRecommend] = await Promise.all([
