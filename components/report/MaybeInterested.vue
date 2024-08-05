@@ -60,7 +60,7 @@ const handleItemClick = (item: LstRecommed) => {
         <div>
         <span class="report_type">
           <span v-if="item.category_report_name === null">Báo cáo khác</span>
-          <span v-else>{{ item.source === 'marketing'? '' : 'Báo cáo nhóm hàng | ' }}</span>
+          <span v-else>{{ item.source === 'marketing'? 'Báo cáo khác | ' : 'Báo cáo nhóm hàng | ' }}</span>
         </span>
         <span v-if="item.category_report_name" class="breadcrumb">{{ item.category_report_name }}
         </span>
