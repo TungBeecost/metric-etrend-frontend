@@ -22,24 +22,17 @@ const windowWidth = ref(window.innerWidth);
 onMounted(() => {
   windowWidth.value = window.innerWidth;
 });
-const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
-  if (user_plan_code === plan_code) {
-    return 'Đang sử dụng';
-  }
 
+const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
   if (plan_code === 'e_community') {
     return '';
   }
 
-  if (user_plan_code === 'e_community') {
-    return 'Mua ngay';
+  if (user_plan_code === plan_code) {
+    return 'Đang sử dụng';
   }
 
-  if (user_plan_code === 'e_trial') {
-    return 'Mua ngay';
-  }
-
-  if (!user_plan_code) {
+  if (user_plan_code === 'e_community' || user_plan_code === 'e_trial' || !user_plan_code) {
     return 'Mua ngay';
   }
 
@@ -87,15 +80,15 @@ const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
               </div>
             </div>
           </div>
-            <AButton
-                v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code)"
-                :class="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code) === 'Đang sử dụng' ? 'user_plan' : 'not_user_plan'"
-                :disabled="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code) !== 'Mua ngay'"
-                style="height: 40px"
-                @click="userInfo.id ? (userInfo.current_plan?.plan_code !== plan.plan_code ? navigateToPayment(plan.plan_code) : null) : currentUserStore.setShowPopupLogin(true)"
-            >
-              {{ getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code) }}
-            </AButton>
+          <AButton
+              v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code)"
+              :class="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code) === 'Đang sử dụng' ? 'user_plan' : 'not_user_plan'"
+              :disabled="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code) !== 'Mua ngay'"
+              style="height: 40px"
+              @click="userInfo.id ? (userInfo.current_plan?.plan_code !== plan.plan_code ? navigateToPayment(plan.plan_code) : null) : currentUserStore.setShowPopupLogin(true)"
+          >
+            {{ getIsShowActiveButton(userInfo.current_plan?.plan_code, plan.plan_code) }}
+          </AButton>
         </div>
 
         <div v-if="plan.discountPercent" class="discount_percent">
