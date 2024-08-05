@@ -25,7 +25,7 @@ const isHideContentBasic = computed(() => {
   if (config.public.SSR === 'true') {
     return false
   }
-  return props.data?.tier_report !== 'e_pro';
+  return props.data?.tier_report !== 'e_pro' || 'e_trial';
 });
 
 const formatNumber = (value = "") => value.toLocaleString("vi-VN");
