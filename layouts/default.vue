@@ -110,7 +110,7 @@ onMounted(() => {
     const scrollTop = window.scrollY;
 
     if (device.isMobile) {
-      if (scrollTop > lastScrollTop) {
+      if (scrollTop > lastScrollTop && scrollTop > 64) {
         if (topBar) topBar.style.top = '-65px';
         if (header) header.style.top = '0';
       } else {
@@ -118,7 +118,7 @@ onMounted(() => {
         if (header) header.style.top = '64px';
       }
     } else {
-      if (scrollTop > lastScrollTop) {
+      if (scrollTop > lastScrollTop && scrollTop > 33) {
         if (topBar) topBar.style.top = '-32px';
         if (header) header.style.top = '0';
       } else {
@@ -137,6 +137,7 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
+
 
 const navigateToPricing = () => {
   navigateTo(NAVIGATIONS.pricing);
