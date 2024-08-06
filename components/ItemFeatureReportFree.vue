@@ -51,7 +51,7 @@ const itemsToShow = computed(() => {
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
-            <img :src="report.url_thumbnail" alt="" style="width: 100%; object-fit: cover">
+            <img :src="report.url_thumbnail" alt="" style="width: 100%; object-fit: contain;">
           </div>
           <div class="content" style="text-align: left;">
             <div class="category_date" style="text-align: left; display: flex; align-items: center; gap: 4px">
@@ -169,10 +169,14 @@ const itemsToShow = computed(() => {
 
       .thumbnail {
         border-bottom: 1px solid #f0f0f0;
+        img{
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
       }
 
       .content {
-        padding: 16px;
         display: flex;
         flex-direction: column;
 
@@ -180,8 +184,7 @@ const itemsToShow = computed(() => {
           color: var(--Dark-blue-dark-blue-6, #716B95);
           font-size: 14px;
           font-weight: 400;
-          line-height: 22px; /* 157.143% */
-          margin-bottom: 16px;
+          line-height: 22px;
           flex: 1;
         }
 

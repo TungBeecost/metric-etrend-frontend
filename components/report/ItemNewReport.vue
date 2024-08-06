@@ -225,12 +225,16 @@ const itemsToShow = computed(() => {
       overflow: hidden;
 
       .thumbnail {
-        width: 170px;
-        height: 170px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-bottom: 1px solid #f0f0f0;
+        width: 180px;
+        height: 180px;
+        img {
+          width: 180px;
+          object-fit: contain;
+        }
       }
 
       .content {
@@ -275,7 +279,6 @@ const itemsToShow = computed(() => {
 
         .category_date {
           color: var(--Dark-blue-dark-blue-6, #716B95);
-
           font-size: 17px;
           font-weight: 400;
           line-height: 22px;
@@ -288,13 +291,10 @@ const itemsToShow = computed(() => {
           color: var(--Dark-blue-dark-blue-8, #241E46);
           font-size: 20px;
           font-weight: 700;
-          line-height: 28px; /* 140% */
-
+          line-height: 28px;
           margin-bottom: 8px;
-
           text-transform: capitalize;
         }
-
       }
     }
   }
@@ -319,18 +319,22 @@ const itemsToShow = computed(() => {
     cursor: pointer;
     position: absolute;
   }
-
 }
 
 @media (max-width: 767px) {
   .new-report-slide {
     .carousel__slide {
       .slide-item {
+        flex-direction: column;
+
         .thumbnail {
-          padding-left: 12px;
-          width: 120px;
+          width: 100%;
           height: auto;
           border-bottom: none;
+          img {
+            width: 100%;
+            height: auto;
+          }
         }
 
         .content {
@@ -355,9 +359,7 @@ const itemsToShow = computed(() => {
               font-size: 12px;
 
               span {
-                span {
-                  font-size: 12px;
-                }
+                font-size: 12px;
               }
             }
           }
@@ -382,13 +384,11 @@ const itemsToShow = computed(() => {
     }
 
     .carousel__prev {
-      bottom: auto;
       left: 40%;
       transform: translateX(-60px);
     }
 
     .carousel__next {
-      bottom: auto;
       left: 50%;
       transform: translateX(20px);
     }
