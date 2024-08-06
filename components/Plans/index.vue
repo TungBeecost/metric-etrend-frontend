@@ -24,7 +24,7 @@ onMounted(() => {
 });
 
 const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
-  if (plan_code === 'e_community') {
+  if (plan_code === 'e_community' && (user_plan_code === 'e_community' || user_plan_code === 'e_trial')) {
     return '';
   }
 

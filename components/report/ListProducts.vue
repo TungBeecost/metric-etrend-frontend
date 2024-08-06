@@ -1,6 +1,5 @@
 <script setup>
-import {defineProps, ref} from 'vue';
-import {useCurrentUser} from "~/stores/current-user.js";
+import {computed, defineProps, ref} from 'vue';
 
 const props = defineProps({
   isHideContent: {
@@ -20,10 +19,11 @@ const props = defineProps({
 const config = useRuntimeConfig();
 
 const isHideContentBasic = computed(() => {
+  console.log('isHideContentBasic', config.public.SSR);
   if (config.public.SSR === 'true') {
-    return false
+    return false;
   }
-  return props.data?.tier_report !== 'e_pro' || 'e_trial';
+  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_trial');
 });
 
 </script>
@@ -511,8 +511,6 @@ const isHideContentBasic = computed(() => {
     display: flex;
     justify-content: center;
     padding: 24px;
-
-
   }
 }
 

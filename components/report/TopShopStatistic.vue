@@ -1,5 +1,5 @@
 <script setup>
-import {defineProps} from 'vue';
+import {defineProps, computed} from 'vue';
 import PieChart from "~/components/report/PieChart.vue";
 import {formatSortTextCurrency, getUrlImageOption, goToUrl} from "~/helpers/utils.js";
 import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
@@ -21,11 +21,14 @@ const props = defineProps({
   },
 });
 
+console.log('TopShopStatistic', props.data);
+
 const isHideContentBasic = computed(() => {
+  console.log('isHideContentBasic', config.public.SSR);
   if (config.public.SSR === 'true') {
-    return false
+    return false;
   }
-  return props.data?.tier_report !== 'e_pro' || 'e_trial';
+  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_trial');
 });
 
 const formatNumber = (value = "") => value.toLocaleString("vi-VN");
@@ -184,6 +187,7 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
           </div>
         </template>
       </a-table>
+
       <ChartMask
           v-if="isHideContentBasic"
           :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
