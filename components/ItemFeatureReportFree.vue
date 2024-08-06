@@ -34,6 +34,7 @@ onMounted(() => {
 const itemsToShow = computed(() => {
   return windowWidth.value < 768 ? 1 : 3;
 });
+
 </script>
 
 <template>
@@ -62,7 +63,7 @@ const itemsToShow = computed(() => {
               </svg>
             </div>
             <div class="title line-clamp__2" style="text-align: left;">
-              Báo cáo {{ report.name }}
+             Báo cáo {{ report.name.replace('báo cáo', '') }}
             </div>
             <div v-if="report.revenue_monthly" class="summary-info">
               <div class="info_item">
@@ -119,6 +120,8 @@ const itemsToShow = computed(() => {
     </Carousel>
   </div>
 </template>
+
+
 <style scoped lang="scss">
 .report-slide {
   .carousel__slide {

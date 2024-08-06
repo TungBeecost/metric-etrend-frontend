@@ -67,7 +67,7 @@ const handleItemClick = (item: LstRecommed) => {
         </div>
         <nuxt-link :to="item.source === 'marketing' ? `/insight/${item.slug}` : `/${item.slug}`" class="name">
           {{ item.source === 'marketing' ? '' : 'Báo cáo' }}
-          {{ item.name }}
+          {{ item.name.replace('Báo cáo', '') }}
         </nuxt-link>
       </div>
     </div>
