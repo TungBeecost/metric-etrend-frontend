@@ -210,7 +210,7 @@ const validateForm = async () => {
   const _fbp = variables?._fbp || ''
   const emailProfile = formData.email || userInfo.value?.email || ''
   const first_visit = localStorage.getItem('first_visit') || ''
-  const mkLeadSource = sourceName === 'free_report' ? 'Free Report' : 'eReport',
+  const mkLeadSource = sourceName === 'free_report' ? 'Free Report' : 'eReport'
   const mkUserDemand = formData.category || ''
   const mkCompanyType = formData.companyType || ''
   let note = `From: ${window.location.href}\n`
