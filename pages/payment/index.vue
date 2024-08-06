@@ -17,6 +17,7 @@ const selectedWalletOption = ref('');
 const qrCodeData = ref('');
 const statusApplyCode = ref<boolean>(false);
 const openModal = ref<boolean>(false);
+const openModalWaiting = ref<boolean>(false);
 const planCode = ref('');
 
 interface ErrorResponse {
@@ -123,6 +124,7 @@ const useCheckTransactionCompletion = (transactionId: string) => {
     const result = await checkTransactionStatus(transactionId);
     if (result && result.is_completed) {
       console.log("Transaction completed");
+      openModal.value = false;
       isCompleted.value = true;
       if (intervalId) clearInterval(intervalId);
       window.location.href = `/?transaction_id=${transactionId}`;
@@ -149,7 +151,13 @@ const plan = computed(() => PLANS.find(p => p.plan_code === planCode.value));
 onMounted(() => {
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
-  redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}`;
+  redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/payment`;
+
+  const orderId = route.query.orderId as string;
+  if (orderId) {
+    openModalWaiting.value = true;
+    useCheckTransactionCompletion(orderId);
+  }
 });
 
 const handleOk = (_e: MouseEvent) => {
@@ -185,6 +193,15 @@ const handleOk = (_e: MouseEvent) => {
         </div>
         <div style="padding: 16px; width: 100%">
           <total-payment v-if="plan" :plan="plan" :status-apply-code="statusApplyCode" :discount-info="discountValue"/>
+        </div>
+      </div>
+    </a-modal>
+    <a-modal v-model:open="openModalWaiting" width="400px" destroy-on-close :footer="null" @ok="handleOk">
+      <div style="display: flex; flex-direction: column; align-items: center; padding-top: 16px">
+        <a-spin size="large" />
+        <div class="title_content" style="font-size: 24px; font-weight: 700; line-height: 38px; padding-top: 24px">Vui lòng chờ giây lát</div>
+        <div class="payment_info">
+          <p style="font-size: 16px; font-weight: 400; text-align: center">Đang kiểm tra trạng thái giao dịch. Vui lòng không đóng trang này.</p>
         </div>
       </div>
     </a-modal>
