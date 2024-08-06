@@ -197,6 +197,9 @@ onMounted(() => {
   if(route.query.report_type && typeof route.query.report_type === 'string') {
     selecteReportType.value = [route.query.report_type];
   }
+  if(route.query.price_type && typeof route.query.price_type === 'string') {
+    selecteReportTypeBuy.value = [route.query.price_type];
+  }
   fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
 });
 
@@ -314,7 +317,6 @@ useSeoMeta({
             v-if="displaySortReport"
             class="filter_report"
             :select-category="selectedCategory"
-            :selecte-report-type="selecteReportType"
             @category-select="handleCategorySelect"
             @selected-report-type-change="handleReportTypeChange"
             @selected-report-type-buy-change="handleReportTypeBuyChange"

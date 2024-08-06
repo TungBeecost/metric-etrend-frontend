@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import {computed, defineEmits, defineProps, onMounted, ref} from 'vue';
+import {defineEmits, defineProps, onMounted, ref} from 'vue';
 import allReports from '@/public/file_json/list_category.json';
 import {TreeSelect} from 'ant-design-vue';
 import type {SelectValue} from "ant-design-vue/es/select";
-import type {CheckboxChangeEvent} from "ant-design-vue/es/checkbox/interface";
 
 const emit = defineEmits(['categorySelect', 'selectedReportTypeChange', 'selectedReportTypeBuyChange']);
 const route = useRoute();
@@ -17,7 +16,7 @@ const props = defineProps({
   selectedCategory: {
     type: String,
     default: '',
-  }
+  },
 });
 selectedOption.value = props.selectedCategory || "c0000000000";
 
@@ -67,6 +66,9 @@ onMounted(() => {
   }
   if(route.query.report_type && typeof route.query.report_type === 'string') {
     selectedReportType.value = [route.query.report_type];
+  }
+  if(route.query.price_type && typeof route.query.price_type === 'string') {
+    selectedReportTypeBuy.value = [route.query.price_type];
   }
 });
 

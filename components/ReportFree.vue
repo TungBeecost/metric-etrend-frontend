@@ -31,7 +31,7 @@ const fetchReport = async () => {
 }
 
 const handleButtonFree = () => {
-  navigateTo(`${NAVIGATIONS.search}?report_type=other`);
+  navigateTo(`${NAVIGATIONS.search}?price_type=marketing`);
 }
 
 const {data: lstReport} = await useAsyncData(fetchReport)
