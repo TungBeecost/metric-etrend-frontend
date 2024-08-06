@@ -59,37 +59,35 @@ const itemsToShow = computed(() => {
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
-            <img :src="report.url_thumbnail" alt="" style="width: 100%; object-fit: cover">
+            <img :src="report.url_thumbnail" alt="" >
           </div>
           <div class="content" style="text-align: left;">
-            <div v-if="report.lst_category" class="category_date line-clamp__2" style="text-align: left;">
-              {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span>
-              {{ formatDate(report.end_date, 'DD/MM/YYYY') }}
+            <div v-if="report.lst_category" class="category_date line-clamp__1" style="text-align: left;">
+              {{ report.lst_category?.[0]?.name }}
             </div>
-            <div v-else class="category_date line-clamp__2" style="text-align: left;">
+            <div v-else class="category_date line-clamp__1" style="text-align: left;">
               {{
                 report.report_type === 'report_category' ? 'Báo cáo ngành hàng' : report.report_type
-              }}  <span style="color: #EEEBFF">|</span>
-              {{ formatDate(report.end_date, 'DD/MM/YYYY') }}
+              }}
             </div>
             <nuxt-link
                 v-if="report.source === 'marketing'"
                 :to="`/insight/${report.slug}`"
-                class="title line-clamp__1" style="text-align: left;text-decoration: none;"
+                class="title" style="text-align: left;text-decoration: none;"
             >
               {{ report.name }}
             </nuxt-link>
             <nuxt-link
                 v-else-if="report.report_type === 'report_category'"
                 :to="`/${report.slug}`"
-                class="title line-clamp__1" style="text-align: left;text-decoration: none;"
+                class="title" style="text-align: left;text-decoration: none;"
             >
               {{ 'Báo cáo Ngành hàng ' + report.name }}
             </nuxt-link>
             <nuxt-link
                 v-else
                 :to="`/${report.slug}`"
-                class="title line-clamp__1" style="text-align: left;text-decoration: none;"
+                class="title" style="text-align: left;text-decoration: none;"
             >
               {{ 'Báo cáo ' + report.name[0].toUpperCase() + report.name.slice(1) }}
             </nuxt-link>
@@ -325,30 +323,37 @@ const itemsToShow = computed(() => {
   .new-report-slide {
     .carousel__slide {
       .slide-item {
-        flex-direction: column;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        overflow: hidden;
 
         .thumbnail {
-          width: 100%;
-          height: auto;
+          padding-left: 16px;
+          width: 120px;
+          height: 120px;
           border-bottom: none;
           img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: contain;
           }
         }
 
         .content {
-          padding: 8px;
+          padding: 16px;
+          flex: 1;
+          overflow: hidden;
 
           .category_date {
-            text-align: center;
-            font-size: 10px;
-            margin-bottom: 0;
+            text-align: left;
+            font-size: 14px;
+            margin-bottom: 8px;
           }
 
           .title {
-            font-size: 14px;
-            margin-bottom: 4px;
+            font-size: 18px;
+            margin-bottom: 8px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -356,10 +361,10 @@ const itemsToShow = computed(() => {
 
           .summary-info {
             .info_item {
-              font-size: 12px;
+              font-size: 14px;
 
               span {
-                font-size: 12px;
+                font-size: 14px;
               }
             }
           }
