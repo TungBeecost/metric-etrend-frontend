@@ -62,13 +62,15 @@ const itemsToShow = computed(() => {
             <img :src="report.url_thumbnail" alt="" >
           </div>
           <div class="content" style="text-align: left;">
-            <div v-if="report.lst_category" class="category_date line-clamp__1" style="text-align: left;">
-              {{ report.lst_category?.[0]?.name }}
+            <div v-if="report.lst_category" class="category_date" style="text-align: left;">
+              {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span>
+              {{ formatDate(report.end_date, 'DD/MM/YYYY') }}
             </div>
-            <div v-else class="category_date line-clamp__1" style="text-align: left;">
+            <div v-else class="category_date" style="text-align: left;">
               {{
                 report.report_type === 'report_category' ? 'Báo cáo ngành hàng' : report.report_type
-              }}
+              }}  <span style="color: #EEEBFF">|</span>
+              {{ formatDate(report.end_date, 'DD/MM/YYYY') }}
             </div>
             <nuxt-link
                 v-if="report.source === 'marketing'"
@@ -282,7 +284,7 @@ const itemsToShow = computed(() => {
           line-height: 22px;
           overflow: hidden;
           text-overflow: ellipsis;
-          margin-bottom: 16px;
+          margin-bottom: 4px;
         }
 
         .title {
