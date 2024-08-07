@@ -20,7 +20,7 @@ const props = defineProps({
 const { plan, discountInfo, statusApplyCode } = toRefs(props);
 const emit = defineEmits(['finalPrice']);
 
-const calculateDiscountAmount = (planPrice: number, discount: any) => {
+const calculateDiscountAmount = (planPriceDiscount: number, discount: any) => {
   if (!discount || !discount.discount) {
     console.log('No discount info available.');
     return 0;
@@ -32,7 +32,7 @@ const calculateDiscountAmount = (planPrice: number, discount: any) => {
   let discountAmount = 0;
 
   if (discount_type === 'percentage') {
-    discountAmount = (planPrice * discount_value) / 100;
+    discountAmount = (planPriceDiscount * discount_value) / 100;
   } else if (discount_type === 'amount') {
     discountAmount = discount_value;
   }
@@ -49,13 +49,15 @@ const promotionalDiscount = ref(plan.value.priceDiscount - plan.value.price);
 const updateValues = async () => {
   await nextTick();
   if (statusApplyCode.value) {
-    discountAmount.value = calculateDiscountAmount(plan.value.price, discountInfo.value);
+    discountAmount.value = calculateDiscountAmount(plan.value.priceDiscount, discountInfo.value);
+    promotionalDiscount.value = 0;
   } else {
     discountAmount.value = 0;
+    promotionalDiscount.value = plan.value.priceDiscount - plan.value.price;
   }
 };
 
-const finalPrice = computed(() => plan.value.priceDiscount - (promotionalDiscount.value + discountAmount.value));
+const finalPrice = computed(() => plan.value.priceDiscount - discountAmount.value);
 
 watch([discountInfo, statusApplyCode], updateValues);
 
@@ -67,7 +69,6 @@ onMounted(() => {
   updateValues();
 });
 </script>
-
 <template>
   <div class="calculate">
     <div class="calculate_item">
@@ -80,7 +81,8 @@ onMounted(() => {
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Chương trình khuyến mại</div>
-      <div class="promotional_program">-{{ formatCurrency(promotionalDiscount) }}</div>
+      <div v-if="promotionalDiscount" class="promotional_program">-{{ formatCurrency(promotionalDiscount) }}</div>
+      <div v-else class="promotional_program">0đ</div>
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Áp dụng mã giảm giá</div>
