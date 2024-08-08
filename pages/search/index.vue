@@ -426,7 +426,7 @@ useSeoMeta({
       gap: 24px;
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: 1380px) {
       padding-top: 20px;
       padding-bottom: 40px;
     }
@@ -481,21 +481,46 @@ useSeoMeta({
         top: 70px;
       }
 
-      @media (max-width: 1023px) {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-
+      @media (max-width: 1380px) {
         .info {
-          width: 100%;
+          width: 400px;
 
           .content {
-            font-size: 24px;
+            font-size: 32px;
+            line-height: 48px;
+          }
+        }
+
+        .big_logo_metric {
+          top: 0;
+          left: 0;
+          width: 300px;
+          img {
+            width: 300px;
+          }
+        }
+
+        .chart_image {
+          top: 70px;
+          right: -130px;
+
+          img {
+            width: 500px;
+          }
+
+        }
+
+        .line_styling_image {
+          top: 120px;
+          right: 220px;
+
+          img {
+            width: 250px;
           }
         }
       }
 
-      @media (max-width: 767px) {
+      @media (max-width: 768px) {
         height: 384px;
         padding: 32px 16px;
 
@@ -533,7 +558,7 @@ useSeoMeta({
 
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1380px) {
   #search_report {
     .sectionTitle {
       padding-top: 16px;

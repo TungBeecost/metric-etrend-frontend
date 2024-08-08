@@ -183,25 +183,24 @@ useSeoMeta({
   }
 }
 
-@media (max-width: 1439px) {
+@media (max-width: 1380px) {
   .title_report {
     .image {
       .title {
         .content {
           .report_title {
-            font-size: 32px;
+            font-size: 34px;
           }
 
           .description {
-            font-size: 14px;
-            //width: 350px;
+            font-size: 13px;
+            width: 600px;
           }
         }
       }
     }
   }
 }
-
 @media (max-width: 1023px) {
   .title_report {
     .image {

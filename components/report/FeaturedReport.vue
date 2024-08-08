@@ -42,9 +42,9 @@ const {data: lstReport} = await useAsyncData(fetchReport)
           </div>
         </div>
       </div>
-      <div class="new_report">
-        <item-feature-report :reports="(lstReport || []).slice(0, 10)"/>
-      </div>
+        <div class="new_report">
+          <item-feature-report :reports="(lstReport || []).slice(0, 10)"/>
+        </div>
     </div>
   </div>
 </template>
@@ -56,7 +56,7 @@ const {data: lstReport} = await useAsyncData(fetchReport)
   align-items: center;
   gap: 64px;
   padding-top: 60px;
-  //width: 100%;
+  //width: 100vh;
   height: 100%;
   //background-color: #FBFAFC;
   padding-bottom: 100px;
@@ -125,5 +125,46 @@ const {data: lstReport} = await useAsyncData(fetchReport)
   }
 }
 
+@media (max-width: 1919px) {
+  .featured_report {
+    padding-top: 50px;
+    gap: 50px;
+  }
+
+  .title_content {
+    gap: 12px;
+    margin-bottom: 50px;
+  }
+
+  .tittle {
+    font-size: 32px;
+  }
+
+  .content {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
+
+@media (max-width: 1550px) {
+  .featured_report {
+    padding-top: 45px;
+    gap: 45px;
+  }
+
+  .title_content {
+    gap: 10px;
+    margin-bottom: 45px;
+  }
+
+  .tittle {
+    font-size: 30px;
+  }
+
+  .content {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
 
 </style>

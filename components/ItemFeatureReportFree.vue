@@ -32,7 +32,13 @@ onMounted(() => {
 });
 
 const itemsToShow = computed(() => {
-  return windowWidth.value < 768 ? 1 : 3;
+  if (windowWidth.value < 768) {
+    return 1;
+  } else if (windowWidth.value <= 1380) {
+    return 2;
+  } else {
+    return 4;
+  }
 });
 
 </script>
@@ -125,9 +131,9 @@ const itemsToShow = computed(() => {
 .report-slide {
   .carousel__slide {
     .slide-item {
-      height: 600px;
+      height: 500px;
       .thumbnail {
-        height: 300px;
+        height: 230px;
         display: flex;
         align-items: center;
       }
@@ -139,9 +145,11 @@ const itemsToShow = computed(() => {
   .report-slide {
     .carousel__slide {
       .slide-item {
-        height: auto;
+        height:450px;
         .thumbnail {
-          height: 200px;
+          height: 230px;
+          display: flex;
+          align-items: center;
         }
       }
     }
@@ -149,180 +157,3 @@ const itemsToShow = computed(() => {
 }
 </style>
 
-<style lang="scss">
-.carousel__pagination {
-  display: none;
-}
-
-.report-slide {
-  .carousel__slide {
-    padding: 8px;
-
-    .slide-item {
-      border-radius: 16px;
-      background: var(--Neutral-neutral-1, #FFF);
-      cursor: pointer;
-      border: 1px solid #f0f0f0;
-
-      overflow: hidden;
-
-      .thumbnail {
-        border-bottom: 1px solid #f0f0f0;
-        img{
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-        }
-      }
-
-      .content {
-        display: flex;
-        flex-direction: column;
-
-        .category_date {
-          color: var(--Dark-blue-dark-blue-6, #716B95);
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 22px;
-          flex: 1;
-        }
-
-        .title {
-          text-align: left;
-          color: var(--Dark-blue-dark-blue-8, #241E46);
-          font-size: 20px;
-          font-weight: 700;
-          line-height: 28px; /* 140% */
-          margin-bottom: 8px;
-          text-transform: capitalize;
-          flex: 1;
-        }
-
-        .summary-info {
-          margin-bottom: 8px;
-          flex: 1;
-
-          .info_item {
-            align-items: center;
-            color: #716b95;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            font-size: 16px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-
-            span {
-              font-weight: bold;
-              color: #241e46;
-              font-size: 16px;
-            }
-
-            .gr_quarter {
-              .gr_quarter_item {
-                display: flex;
-                gap: 4px;
-
-                span {
-                  display: flex;
-                  align-items: center;
-                  gap: 6px;
-                }
-              }
-            }
-          }
-        }
-
-        .description {
-          overflow: hidden;
-          color: var(--Dark-blue-dark-blue-6, #716B95);
-          text-overflow: ellipsis;
-          flex: 1;
-          font-size: 16px;
-          font-weight: 400;
-          line-height: 24px; /* 150% */
-        }
-      }
-    }
-  }
-
-  .carousel__prev {
-    left: -80px;
-  }
-
-  .carousel__next {
-    right: -80px;
-  }
-
-  .carousel__prev, .carousel__next {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 1px solid #EEEBFF;
-    background-color: #FFF;
-    cursor: pointer;
-    position: absolute;
-  }
-}
-
-@media (max-width: 767px) {
-  .report-slide {
-    .carousel__slide {
-      .slide-item {
-        height: auto;
-        flex-direction: column;
-
-        .thumbnail {
-          width: 100%;
-          height: auto;
-          border-bottom: none;
-        }
-
-        .content {
-          padding: 8px;
-
-          .category_date, .title, .description {
-            text-align: center;
-          }
-
-          .title {
-            font-size: 18px;
-            margin-bottom: 4px;
-          }
-
-          .description {
-            font-size: 14px;
-          }
-        }
-      }
-    }
-
-    .carousel__prev {
-      left: 40%;
-      top: 100%;
-      transform: translateX(-60px);
-    }
-
-    .carousel__next {
-      left: 50%;
-      top: 100%;
-      transform: translateX(20px);
-    }
-
-    .carousel__pagination {
-      display: none;
-    }
-  }
-}
-
-.featured_report {
-  .ant-skeleton-image {
-    width: 100% !important;
-    height: 300px !important;
-  }
-}
-</style>

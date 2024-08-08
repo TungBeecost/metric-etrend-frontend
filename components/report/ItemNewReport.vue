@@ -38,7 +38,7 @@ const formatDate = (value: string | Date, format: string, inputFormat: string = 
 }
 
 const itemsToShow = computed(() => {
-  return windowWidth.value < 768 ? 1 : 2;
+  return windowWidth.value < 1380 ? 1 : 2;
 });
 </script>
 
