@@ -2,7 +2,7 @@
 import CheckOut from "~/components/payment-service/CheckOut.vue";
 import OptionPayment from "~/components/payment-service/OptionPayment.vue";
 import PackService from "~/components/payment-service/PackService.vue";
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, watch, computed, onUnmounted } from "vue";
 import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import { usePayment } from "#imports";
 import QRCode from "qrcode.vue";
@@ -55,7 +55,7 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
 
       if (!currentPlan) {
         statusApplyCode.value = false;
-      } else if (discount.minimum_order_value !== null && currentPlan.price < discount.minimum_order_value) {
+      } else if (discount.minimum_order_value !== null && (currentPlan.priceDiscount === undefined || currentPlan.priceDiscount < discount.minimum_order_value)) {
         statusApplyCode.value = false;
       } else if (discount.usage_count >= discount.max_usage) {
         statusApplyCode.value = false;
@@ -191,6 +191,7 @@ const handleOk = (_e: MouseEvent) => {
         <div class="qr_code">
           <QRCode :value="qrCodeData" :size="250" />
         </div>
+        {{statusApplyCode}}
         <div style="padding: 16px; width: 100%">
           <total-payment v-if="plan" :plan="plan" :status-apply-code="statusApplyCode" :discount-info="discountValue"/>
         </div>

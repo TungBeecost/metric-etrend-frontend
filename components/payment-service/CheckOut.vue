@@ -35,7 +35,7 @@ const handleFinalPrice = (price: number) => {
 
 const handlePayment = () => {
   if (!finalPrice.value) {
-    finalPrice.value = plan.price;
+    finalPrice.value = plan.priceDiscount;
   }
   emit('payment', { finalPrice: finalPrice.value, discountInfo: discountInfo.value });
 };
@@ -50,9 +50,6 @@ const fetchDiscount = async () => {
 
     if (response) {
       const { discount } = response;
-      console.log(discount);
-      console.log(plan.price);
-
       discountInfo.value = response;
 
       const now = new Date();
