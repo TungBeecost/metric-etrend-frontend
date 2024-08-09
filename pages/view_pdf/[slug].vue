@@ -1,9 +1,10 @@
 <script setup>
 import axios from "axios";
 import { createLoadingTask, VuePdf } from "vue3-pdfjs";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import HeaderDeptReport from "~/components/report/HeaderDeptReport.vue";
 
+const isScrolled = ref(false);
 const isLoading = ref(false);
 const loadingPercentage = ref(0);
 const pdfSrc = ref('');
@@ -37,8 +38,52 @@ const scrollToPage = (pageIndex) => {
   }
 };
 
+const handleResize = () => {
+  isMobile.value = window.innerWidth <= 1380;
+};
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 0;
+};
+
 onMounted(() => {
+  let lastScrollTop = 0;
+  const header = document.querySelector('header');
+  const handleScroll = () => {
+    const scrollTop = window.scrollY;
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth <= 768) {
+      if (scrollTop > lastScrollTop && scrollTop > 64) {
+        if (header) header.style.top = '0';
+      } else {
+        if (header) header.style.top = '64px';
+      }
+    } else if (screenWidth <= 1380) {
+      if (scrollTop > lastScrollTop && scrollTop > 40) {
+        if (header) header.style.top = '0';
+      } else {
+        if (header) header.style.top = '40px';
+      }
+    } else {
+      if (scrollTop > lastScrollTop && scrollTop > 32) {
+        if (header) header.style.top = '0';
+      } else {
+        if (header) header.style.top = '32px';
+      }
+    }
+
+    lastScrollTop = scrollTop;
+  };
+  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('resize', handleResize);
+  handleScroll();
   fetchPdf('https://static.metric.vn/report/pdf/3962/ao-thun/ao-thun-655cdef60513f443e12fd0156ae5d022.pdf');
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('resize', handleResize);
 });
 </script>
 
