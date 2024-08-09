@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, defineProps } from 'vue';
+
+// Props
+const props = defineProps({
+  numOfPages: Number,
+  currentPage: Number
+});
 
 // State
 const remainingTime = ref('');
@@ -38,7 +44,7 @@ onMounted(() => {
     </div>
     <div class="container">
       <div class="title">Áo khoác nam</div>
-      <div class="page_content"><b>Trang</b>: 01/56</div>
+      <div class="page_content"><b>Trang</b>: {{ currentPage }}/{{ numOfPages }}</div>
       <div class="time">
         <div class="time_title">
           Thời gian truy cập còn lại
@@ -50,13 +56,13 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
 <style scoped lang="scss">
 .header-dept-report{
   display: flex;
   flex-direction: column;
   gap: 8px;
   background: #FFF;
+  padding-bottom: 24px;
 
   .category{
     display: flex;
@@ -81,6 +87,7 @@ onMounted(() => {
       display: flex;
       gap: 8px;
       align-items: center;
+      width: 400px;
 
       .time_title{
         font-size: 14px;
