@@ -341,8 +341,7 @@ export const PAGE_TITLES = {
   pricing: "Gói dịch vụ",
   reports: "Báo cáo",
   reportDetail: "Chi tiết báo cáo",
-  search: "Tìm kiếm",
-  payment: "Thanh toán"
+  search: "Tìm kiếm"
 };
 
 export const LIST_REPORT_TYPES = [
