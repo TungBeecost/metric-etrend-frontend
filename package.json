@@ -23,6 +23,7 @@
     "@ant-design/icons-vue": "^7.0.1",
     "@nuxt/eslint": "^0.3.13",
     "@nuxt/image": "^1.7.0",
+    "@nuxtjs/gtm": "^2.4.0",
     "@pinia/nuxt": "^0.5.1",
     "@vueuse/components": "^10.11.0",
     "ant-design-vue": "^4.2.3",
