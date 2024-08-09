@@ -14,6 +14,7 @@ import {REPORT_ENDPOINTS} from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 import listCategory from '~/public/file_json/list_category.json';
+import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
 
 
 const currentUserStore = useCurrentUser();
@@ -189,6 +190,7 @@ onUnmounted(() => {
       </div>
       <div class="different_info">
         <unlock-report v-if="!currentUserStore.authenticated"/>
+        <indept-report-link />
         <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
         <report-content :data="data?.reportDetail"/>
         <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>

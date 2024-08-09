@@ -520,7 +520,7 @@ useSeoMeta({
         }
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 1380px) {
         height: 384px;
         padding: 32px 16px;
 
