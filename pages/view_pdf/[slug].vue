@@ -155,10 +155,6 @@ onUnmounted(() => {
             </div>
           </div>
         </div>
-        <div class="navigation_buttons">
-          <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
-          <button @click="nextPage" :disabled="currentPage === numOfPages">Next</button>
-        </div>
       </div>
     </div>
   </div>
@@ -219,23 +215,6 @@ onUnmounted(() => {
 
     div {
       background: #EEEBFF;
-    }
-  }
-
-  .navigation_buttons {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px;
-    button {
-      padding: 8px 16px;
-      background: #241E46;
-      color: #FFF;
-      border: none;
-      cursor: pointer;
-      &:disabled {
-        background: #CCC;
-        cursor: not-allowed;
-      }
     }
   }
 }

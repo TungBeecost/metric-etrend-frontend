@@ -7,7 +7,7 @@ import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import { usePayment } from "#imports";
 import QRCode from "qrcode.vue";
 import { message } from 'ant-design-vue';
-import { PLANS } from "~/constant/constains";
+import {PAGE_TITLES, PLANS} from "~/constant/constains";
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
 const redirectUrl = ref('');
@@ -149,6 +149,7 @@ const useCheckTransactionCompletion = (transactionId: string) => {
 const plan = computed(() => PLANS.find(p => p.plan_code === planCode.value));
 
 onMounted(() => {
+
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/payment`;
@@ -163,6 +164,10 @@ onMounted(() => {
 const handleOk = (_e: MouseEvent) => {
   openModal.value = false;
 };
+
+useSeoMeta({
+  title: PAGE_TITLES.payment
+})
 </script>
 
 <template>
