@@ -62,7 +62,7 @@ const fetchDiscount = async () => {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá đã hết hạn';
       }
-      else if (discount.minimum_order_value !== null && plan.price < discount.minimum_order_value) {
+      else if (discount.minimum_order_value !== null && plan.priceDiscount < discount.minimum_order_value) {
         statusApplyCode.value = false;
         errors.value.discount = `Mã giảm giá chỉ áp dụng với đơn hàng từ ${formatCurrency(discount.minimum_order_value)}`;
       }
