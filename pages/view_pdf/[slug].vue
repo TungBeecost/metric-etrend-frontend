@@ -2,10 +2,6 @@
 import axios from "axios";
 import {createLoadingTask, VuePdf} from "vue3-pdfjs";
 
-const route = useRoute();
-
-const slug = route.params.slug;
-
 definePageMeta({
   layout: 'auth-layout'
 })
@@ -50,7 +46,7 @@ onMounted(() => {
     <div class="container_content" style="background: #525659">
       <div
           v-for="index in numOfPages"
-          style="width: 100%; position: relative; padding: 0px 24px 24px;"
+          style="width: 100%; position: relative; padding: 0 24px 24px;"
           :style="{'padding-top': index === 1 ? '24px' : 0}"
       >
         <div style="box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden;">
@@ -58,8 +54,8 @@ onMounted(() => {
               :src="pdfSrc"
               :page="index"
               :num-pages="numOfPages"
-              :enableTextSelection="true"
-              :enableAnnotations="true"
+              :enable-text-selection="true"
+              :enable-annotations="true"
               style="width: 100%;"
           />
         </div>

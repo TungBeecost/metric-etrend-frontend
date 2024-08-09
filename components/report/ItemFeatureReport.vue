@@ -30,7 +30,13 @@ onMounted(() => {
 });
 
 const itemsToShow = computed(() => {
-  return windowWidth.value < 768 ? 1 : 4;
+  if (windowWidth.value < 768) {
+    return 1;
+  } else if (windowWidth.value <= 1380) {
+    return 2;
+  } else {
+    return 4;
+  }
 });
 </script>
 
@@ -322,6 +328,28 @@ const itemsToShow = computed(() => {
 
     .carousel__pagination {
       display: none;
+    }
+  }
+}
+
+@media (max-width: 1380px) {
+  .report-slide {
+    .carousel__slide {
+      .slide-item {
+        height: 630px;
+      }
+    }
+
+    .carousel__prev {
+      left: 45%;
+      top: 100%;
+      transform: translateX(-60px);
+    }
+
+    .carousel__next {
+      left: 50%;
+      top: 100%;
+      transform: translateX(20px);
     }
   }
 }

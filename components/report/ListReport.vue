@@ -24,7 +24,7 @@ onMounted(() => {
 });
 
 const getDisplayedCategories = (item: any) => {
-  if (windowWidth.value < 768) {
+  if (windowWidth.value < 1380) {
     return item.lst_category?.length ? item.lst_category[item.lst_category.length - 1].name : '';
   } else {
     return item.lst_category?.map((item: any) => item.name).join(' > ') || '';
@@ -275,6 +275,82 @@ const getDisplayedCategories = (item: any) => {
     justify-content: center;
     padding-bottom: 40px;
   }
+
+  @media (max-width: 1380px) {
+    .lst_item {
+      .item {
+        padding: 16px;
+
+        .image {
+          img {
+            width: 120px;
+            height: 120px;
+          }
+        }
+
+        .info {
+          gap: 8px;
+
+          .breadcrumb {
+            font-size: 12px;
+
+            .date_time{
+              display: none;
+            }
+
+            span {
+              font-size: 12px;
+
+              .bf_date {
+                display: none;
+              }
+            }
+          }
+
+          .name {
+            font-size: 18px;
+            -webkit-line-clamp: 1;
+          }
+
+          .summary-info {
+            margin-bottom: 0;
+
+            .info_item {
+              font-size: 14px;
+
+              .detail_item {
+                display: none;
+              }
+
+              span {
+                span {
+                  font-size: 14px;
+                }
+              }
+            }
+
+            .gr_quarter {
+              display: none;
+            }
+          }
+
+          .description {
+            font-size: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    .info_item_detail {
+      font-size: 14px;
+    }
+  }
+
 
   @media (max-width: 767px) {
     .lst_item {

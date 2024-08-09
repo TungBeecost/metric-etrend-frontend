@@ -2,16 +2,14 @@
   <a-config-provider
       v-if="fetchedUser"
       :theme="{
-        token: {
-          colorPrimary: '#E85912',
-          colorText: '#241E46',
-          fontFamily: 'Inter'
-        },
-      }"
+      token: {
+        colorPrimary: '#E85912',
+        colorText: '#241E46',
+        fontFamily: 'Inter'
+      },
+    }"
   >
-    <div
-        class="container"
-    >
+    <div class="container">
       <div class="top-bar" @click="navigateToPricing">
         <div class="text">
           <b style="font-size: 14px">Ưu đãi giảm 30%</b>
@@ -20,32 +18,35 @@
       </div>
       <!-- header section -->
       <header ref="headerRef" :class="{ darkBlueHeader: isDarkBlueHeader, 'shadow': isScrolled }">
-        <div :class="['header', { 'default_section': !device.isMobile }]">
-        <NuxtImg
-              :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'" class="logo"
-              :width="device.isMobile ? 113 : 166" :height="device.isMobile ? 21 : 32" style="cursor: pointer; padding-left: 24px"
+        <div :class="['header', { 'default_section': !isMobile }]">
+          <NuxtImg
+              :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'"
+              class="logo"
+              :width="isMobile ? 113 : 166"
+              :height="isMobile ? 21 : 32"
+              style="cursor: pointer; padding-left: 24px"
               @click="navigateToHome"
           />
 
-          <div style="padding-right: 24px" @click="setShowMenu(!isShowMenu)">
-            <CustomIcon v-if="device.isMobile && !isShowMenu" :is-custom-size="true" :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'"/>
-            <CustomIcon v-else-if="isShowMenu" :is-custom-size="true" type="Close"/>
+          <div style="padding-right: 24px" @click="toggleMenu">
+            <CustomIcon v-if="isMobile && !isShowMenu" :is-custom-size="true" :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'" />
+            <CustomIcon v-else-if="isShowMenu" :is-custom-size="true" type="Close" />
           </div>
 
-          <HeaderNavbar v-if="!device.isMobile" :is-dark-blue-header="isDarkBlueHeader"/>
-          <HeaderMobileMenu v-else :active="isShowMenu"/>
+          <HeaderNavbar v-if="!isMobile" :is-dark-blue-header="isDarkBlueHeader" />
+          <HeaderMobileMenu v-else :active="isShowMenu" />
         </div>
       </header>
 
       <!-- content section -->
       <main>
-        <slot/>
+        <slot />
       </main>
 
       <!-- footer section -->
       <footer>
         <div class="default_section footer">
-          <Footer/>
+          <Footer />
         </div>
       </footer>
     </div>
@@ -53,9 +54,9 @@
   <div
       v-else
       class="loading"
-      style="display: flex; align-items: center; justify-content: center;width: 100%; height: 100%; position: fixed;"
+      style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; position: fixed;"
   >
-    <a-spin size="large"/>
+    <a-spin size="large" />
   </div>
 </template>
 
@@ -67,19 +68,25 @@ const {userInfo, fetchedUser} = storeToRefs(useCurrentUser());
 const route = useRoute();
 const headerRef = ref(null);
 const isScrolled = ref(false);
+const isMobile = ref(false);
 
 if (!userInfo.value.id) {
   fetchCurrentUser();
 }
 
+const handleResize = () => {
+  isMobile.value = window.innerWidth <= 1380;
+};
+
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 0;
 };
 
-// side bar handler
-const device = useDevice();
+const {isShowMenu} = useShowMainMenu();
 
-const {isShowMenu, setShowMenu} = useShowMainMenu();
+const toggleMenu = () => {
+  isShowMenu.value = !isShowMenu.value;
+};
 
 // mobile menu always using white header
 watch(isShowMenu, () => {
@@ -102,20 +109,33 @@ watch(() => route.path, () => {
 }, {immediate: true})
 
 onMounted(() => {
+  // Initial check for mobile
+  handleResize();
+
   let lastScrollTop = 0;
   const topBar = document.querySelector('.top-bar') as HTMLElement;
   const header = document.querySelector('header') as HTMLElement;
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;
+    const screenWidth = window.innerWidth;
 
-    if (device.isMobile) {
+    if (screenWidth <= 768) {
+      // Mobile-specific behavior
       if (scrollTop > lastScrollTop && scrollTop > 64) {
         if (topBar) topBar.style.top = '-65px';
         if (header) header.style.top = '0';
       } else {
         if (topBar) topBar.style.top = '0';
         if (header) header.style.top = '64px';
+      }
+    } else if (screenWidth <= 1380) {
+      if (scrollTop > lastScrollTop && scrollTop > 40) {
+        if (topBar) topBar.style.top = '-40px';
+        if (header) header.style.top = '0';
+      } else {
+        if (topBar) topBar.style.top = '0';
+        if (header) header.style.top = '40px';
       }
     } else {
       if (scrollTop > lastScrollTop && scrollTop > 33) {
@@ -131,13 +151,14 @@ onMounted(() => {
   };
 
   window.addEventListener('scroll', handleScroll);
+  window.addEventListener('resize', handleResize); // Add resize listener
   handleScroll();
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('resize', handleResize); // Remove resize listener
 });
-
 
 const navigateToPricing = () => {
   navigateTo(NAVIGATIONS.pricing);

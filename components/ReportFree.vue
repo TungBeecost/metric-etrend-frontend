@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type {SearchReportPayload} from "~/services/reports";
 import {REPORT_ENDPOINTS} from "~/constant/endpoints";
-import ItemFeatureReport from "~/components/report/ItemFeatureReport.vue";
 import ItemFeatureReportFree from "~/components/ItemFeatureReportFree.vue";
 import {NAVIGATIONS} from "~/constant/constains";
 
@@ -47,7 +46,7 @@ const {data: lstReport} = await useAsyncData(fetchReport)
     <item-feature-report-free :reports="(lstReport || []).slice(0, 10)"/>
   </div>
   <img src="/images/background-search.png" class="background">
-  <a-button style="height: 40px;  z-index: 2; padding: 9px 16px; font-weight: 500;" @click="handleButtonFree">Xem thêm</a-button>
+  <a-button style="height: 40px;  z-index: 2; padding: 9px 16px; font-weight: 500; margin-top: 24px" @click="handleButtonFree">Xem thêm</a-button>
 </div>
 </template>
 

@@ -31,7 +31,6 @@ function handleClick(report: any) {
     display: flex;
     padding: 32px;
     flex-direction: column;
-    justify-content: space-between;
     align-items: flex-start;
     border-radius: 16px;
     border: 1px solid #EEEBFF;
