@@ -57,7 +57,7 @@ const updateValues = async () => {
   }
 };
 
-const finalPrice = computed(() => plan.value.priceDiscount - discountAmount.value);
+const finalPrice = computed(() => plan.value.priceDiscount - discountAmount.value - promotionalDiscount.value);
 
 watch([discountInfo, statusApplyCode], updateValues);
 
