@@ -55,7 +55,7 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
 
       if (!currentPlan) {
         statusApplyCode.value = false;
-      } else if (discount.minimum_order_value !== null && currentPlan.price < discount.minimum_order_value) {
+      } else if (discount.minimum_order_value !== null && currentPlan?.priceDiscount !== undefined && currentPlan.priceDiscount < discount.minimum_order_value) {
         statusApplyCode.value = false;
       } else if (discount.usage_count >= discount.max_usage) {
         statusApplyCode.value = false;
