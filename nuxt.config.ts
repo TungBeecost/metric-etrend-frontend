@@ -1,8 +1,5 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
-
 import * as AntD from "ant-design-vue";
 import {addComponent} from "@nuxt/kit";
-
 
 export default defineNuxtConfig({
     // ssr: process.env.SSR === 'false',
@@ -78,6 +75,11 @@ export default defineNuxtConfig({
                     id: 'GTM-MLBXG49P'
                 }
             }
+        },
+        publicRuntimeConfig: {
+            gtm: {
+                id: process.env.GTM_ID
+            }
         }
     },
     typescript: {
@@ -89,7 +91,7 @@ export default defineNuxtConfig({
             src: "~/plugins/analytics.js",
             ssr: false
         },
-        "~/plugins/vue3-carousel.client.ts"
+        "~/plugins/vue3-carousel.client.ts",
     ],
     css: [
         "~/assets/reset.css",
@@ -117,6 +119,7 @@ export default defineNuxtConfig({
         "@nuxtjs/device",
         "@nuxt/image",
         "vue3-carousel-nuxt",
+        '@nuxtjs/gtm',
         '@zadigetvoltaire/nuxt-gtm',
         ["nuxt-highcharts", {}],
         async function () {
