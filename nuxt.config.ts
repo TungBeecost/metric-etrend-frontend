@@ -92,6 +92,7 @@ export default defineNuxtConfig({
             ssr: false
         },
         "~/plugins/vue3-carousel.client.ts",
+        "~/plugins/nuxt-gtm.js",
     ],
     css: [
         "~/assets/reset.css",
@@ -119,7 +120,6 @@ export default defineNuxtConfig({
         "@nuxtjs/device",
         "@nuxt/image",
         "vue3-carousel-nuxt",
-        '@nuxtjs/gtm',
         '@zadigetvoltaire/nuxt-gtm',
         ["nuxt-highcharts", {}],
         async function () {
