@@ -14,7 +14,7 @@
         <div class="title">Thông tin liên hệ</div>
         <div class="information">
           <div v-for="(item, index) in CONTACTS" :key="index" class="contactItem">
-            <CustomIcon :type="item.icon as any" />
+            <CustomIcon :type="item.icon as any" :is-custom-size="true" />
             <div class="inforDetail">{{ item.label }}</div>
           </div>
 
@@ -28,7 +28,7 @@
         <div class="title">Liên hệ với chúng tôi</div>
         <div class="description" style="font-size: 16px">Liên hệ với chúng tôi để thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến ngay bây giờ!</div>
 
-        <ContactUsForm />
+        <ContactUsForm :source-name="'eReport'" />
 
       </div>
     </div>

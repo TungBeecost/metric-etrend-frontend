@@ -1,33 +1,90 @@
 <script setup lang="ts">
 import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import CustomInputDiscount from "~/components/CustomInputDiscount.vue";
+import useDiscount from "~/composables/useDiscount";
+import { ref, watch } from 'vue';
+import {formatCurrency} from "~/helpers/FormatHelper";
+
 const discountValue = ref<string>('');
 const errors = useState<Partial<IFormValue>>(() => ({}));
+const discountInfo = ref<any>({});
+const finalPrice = ref<number>(0);
 const emit = defineEmits(['payment']);
+const { getVoucher } = useDiscount();
+const statusApplyCode= ref<boolean>(false)
 interface IFormValue {
   discount: string;
 }
 
-const {plan} = defineProps({
+const { plan } = defineProps({
   plan: {
     type: Object,
     required: true
   }
 });
 
-console.log(plan);
+watch(plan, (newPlan) => {
+  if (newPlan && newPlan.price) {
+    finalPrice.value = newPlan.price;
+  }
+}, { immediate: true });
+
+const handleFinalPrice = (price: number) => {
+  finalPrice.value = price;
+};
 
 const handlePayment = () => {
-  emit('payment', "payment");
+  if (!finalPrice.value) {
+    finalPrice.value = plan.price;
+  }
+  emit('payment', { finalPrice: finalPrice.value, discountInfo: discountInfo.value });
 };
 
 const handleDiscount = () => {
-  if (!discountValue.value) {
-    errors.value.discount = 'Vui lòng nhập mã giảm giá';
-  } else {
-    errors.value.discount = 'Mã giảm giá không tồn tại';
+  fetchDiscount();
+};
+
+const fetchDiscount = async () => {
+  try {
+    const response = await getVoucher(discountValue.value);
+
+    if (response) {
+      const { discount } = response;
+      console.log(discount);
+      console.log(plan.price);
+
+      discountInfo.value = response;
+
+      const now = new Date();
+      const isExpired = now > new Date(discount.end_date);
+
+      if (isExpired) {
+        statusApplyCode.value = false;
+        errors.value.discount = 'Mã giảm giá đã hết hạn';
+      }
+      else if (discount.minimum_order_value !== null && plan.priceDiscount < discount.minimum_order_value) {
+        statusApplyCode.value = false;
+        errors.value.discount = `Mã giảm giá chỉ áp dụng với đơn hàng từ ${formatCurrency(discount.minimum_order_value)}`;
+      }
+      else if (discount.usage_count >= discount.max_usage) {
+        statusApplyCode.value = false;
+        errors.value.discount = 'Mã giảm giá đã hết lượt sử dụng';
+      }
+      else {
+        statusApplyCode.value = true;
+        errors.value.discount = 'Đã áp dụng mã giảm giá';
+      }
+    } else {
+      statusApplyCode.value = false;
+      errors.value.discount = 'Mã giảm giá không tồn tại';
+    }
+  } catch (error) {
+    console.error(error);
+    statusApplyCode.value = false;
+    errors.value.discount = 'Lỗi khi kiểm tra mã giảm giá';
   }
 };
+
 
 </script>
 
@@ -44,18 +101,18 @@ const handleDiscount = () => {
     <div class="statistic-item__content">
       <div class="discount_code">
         <div class="input_discount">
-          <CustomInputDiscount v-model:input="discountValue" style="display: flex" :error-message="errors.discount"
-                       label="Nhập mã giảm giá" :is-required="true" :input-props="{ placeholder: 'Nhập mã giảm giá' }" @apply-discount="handleDiscount"/>
+          <CustomInputDiscount v-model:input="discountValue" :status-apply-code="statusApplyCode" style="display: flex" :error-message="errors.discount"
+                               label="Nhập mã giảm giá" :is-required="true" :input-props="{ placeholder: 'Nhập mã giảm giá' }" @apply-discount="handleDiscount"/>
         </div>
-
       </div>
       <div class="total">
-        <total-payment v-if="plan" :plan="plan"/>
+        <total-payment v-if="plan" :plan="plan" :status-apply-code="statusApplyCode" :discount-info="discountInfo" @final-price="handleFinalPrice"/>
         <a-button style="width: 100%; height: 40px; margin-top: 16px" type="primary" @click="handlePayment">Thanh toán</a-button>
       </div>
     </div>
   </div>
 </template>
+
 
 <style scoped lang="scss">
 #option_payment{

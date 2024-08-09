@@ -26,6 +26,9 @@ const formValues = reactive<IFormPaymentValue>({
 
 const errors = useState<Partial<IFormPaymentValue>>(() => ({}));
 
+const emit = defineEmits(['formSubmitted']);
+
+
 const validateForm = async () => {
   errors.value = {};
 
@@ -52,11 +55,15 @@ const validateForm = async () => {
     errorValues.companyName = ERRORS.NOT_EMPTY("tên công ty");
   }
 
-  try {
-    const response =  await submitLeadInformation(information.name, information.email, information.phone, information.companyName, props.transactionId);
-    console.log('response', response);
-  } catch (error) {
-    console.error('error', error);
+  if (Object.keys(errorValues).length === 0) {
+    try {
+      const response = await submitLeadInformation(information.name, information.email, information.phone, information.companyName, props.transactionId);
+      console.log('response', response);
+      // Emit formSubmitted event only if submission is successful
+      emit('formSubmitted', "formSubmitted");
+    } catch (error) {
+      console.error('error', error);
+    }
   }
 };
 
@@ -67,8 +74,8 @@ const validateForm = async () => {
     <div class="information">
       <CustomInput v-model:input="formValues.name" label="Họ và tên" :error-message="errors.name" :is-required="true"
                    :input-props="{ placeholder: 'Nhập họ và tên' }" class="contactItem"/>
-      <CustomInput v-model:input="formValues.email" class="contactItem" :error-message="errors.email" label="Email"
-                   :input-props="{ placeholder: 'example@gmail.com', type: 'email' }"/>
+      <CustomInput v-model:input="formValues.email" class="contactItem" :error-message="errors.email" :is-required="true"
+                   label="Email" :input-props="{ placeholder: 'example@gmail.com', type: 'email' }"/>
       <CustomInput v-model:input="formValues.phone" class="contactItem" :error-message="errors.phone"
                    label="Số điện thoại" :is-required="true" :input-props="{ placeholder: 'Nhập SĐT' }"/>
       <CustomInput v-model:input="formValues.companyName" class="contactItem" :error-message="errors.companyName"

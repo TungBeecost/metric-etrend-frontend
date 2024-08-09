@@ -22,3 +22,7 @@ export const PAYMENT_ENDPOINTS: { [key: string]: { endpoint: string; method: MET
     checkTransaction: {endpoint: `/api/payment/transaction/check`, method: "GET"},
     leadInformation: {endpoint: `/api/payment/lead_information`, method: "POST"}
 }
+
+export const DISCOUNT_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {
+    discountInfo: {endpoint: `/api/discount/get_voucher_info`, method: "GET"}
+}

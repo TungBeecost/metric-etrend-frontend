@@ -1,14 +1,10 @@
 <script setup>
-import {defineProps} from 'vue';
+import {defineProps, computed} from 'vue';
 import PieChart from "~/components/report/PieChart.vue";
 import {formatSortTextCurrency, getUrlImageOption, goToUrl} from "~/helpers/utils.js";
 import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
-import {useCurrentUser} from "~/stores/current-user.js";
 
-const currentUserStore = useCurrentUser();
 const config = useRuntimeConfig();
-
-const {userInfo} = storeToRefs(currentUserStore);
 
 const props = defineProps({
   data: {
@@ -25,11 +21,14 @@ const props = defineProps({
   },
 });
 
+console.log('TopShopStatistic', props.data);
+
 const isHideContentBasic = computed(() => {
+  console.log('isHideContentBasic', config.public.SSR);
   if (config.public.SSR === 'true') {
-    return false
+    return false;
   }
-  return userInfo.value?.current_plan?.plan_code !== 'e_pro';
+  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_trial');
 });
 
 const formatNumber = (value = "") => value.toLocaleString("vi-VN");
@@ -188,9 +187,13 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
           </div>
         </template>
       </a-table>
-      <ChartMask v-if="isHideContentBasic"
-                 :subtitle="!props.isHide ? 'Nâng cấp để xem chi tiết' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
-                 :ok-button="!props.isHide ? 'Nâng cấp ngay' :'Xem báo cáo'" :report="data"/>
+
+      <ChartMask
+          v-if="isHideContentBasic"
+          :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
+          :ok-button="isHideContentBasic ? '' :'Xem báo cáo'"
+          :report="data"
+      />
     </div>
     <InsightBlock
         v-if="

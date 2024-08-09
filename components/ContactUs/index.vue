@@ -3,8 +3,14 @@
 import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
 import ErrorNotification from "~/components/ContactUs/ErrorNotification.vue";
 import axios from "axios";
+import {generateHash, getGlobalVariable} from "~/services/GlobalVariableService.js";
+import {useCurrentUser} from "~/stores/current-user";
+import SuccessNotificationPopup from "~/components/ContactUs/SuccessNotificationPopup.vue";
 
-const runtimeConfig = useRuntimeConfig()
+const currentUserStore = useCurrentUser();
+
+const {userInfo} = storeToRefs(currentUserStore);
+
 
 const rules = {
   fullName: [{required: true, message: 'Vui lòng nhập họ và tên', trigger: ['blur', 'change']}],
@@ -49,36 +55,58 @@ const formData = useState('LandingPage.formData', () => ({
   email: '',
   phone: undefined,
   company: '',
-  mktLeadSource: [],
+  mktLeadSource: undefined,
   mktUserDemand: undefined,
   mktCompanyType: undefined
 }))
 
 const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => false)
+const isShowSuccessNotificationPopup = useState('LandingPage.isShowSuccessNotificationPopup', () => false)
 const isShowErrorNotification = useState('LandingPage.isShowErrorNotification', () => false)
 const isSubmitFormLoading = useState('LandingPage.isSubmitFormLoading', () => false)
 
 const handleSubmitLeadForm = async () => {
   isSubmitFormLoading.value = true
-  const urlCreateLead = `${runtimeConfig.public.baseMetricCrmUrl}/crm/create/lead_form`
-  const userProfile = {}
   // const userProfile = authStore.userProfile
-  const variables = {}
-  const utm_source = variables?.utmSource || ''
-  const utm_medium = variables?.utmMedium || ''
-  const utm_campaign = variables?.utmCampaign || ''
-  const utm_term = variables?.utmTerm || ''
-  const utm_content = variables?.utmContent || ''
-  const url_referrer = variables?.urlReferrer || ''
+  const variables = await getGlobalVariable();
+
+  console.log('variables', variables);
+  // console.log('formData', formData.value);
+  //
+  // isSubmitFormLoading.value = false
+  // return
+
+  const utm_source = variables?.utm_source || ''
+  const utm_medium = variables?.utm_medium || ''
+  const utm_campaign = variables?.utm_campaign || ''
+  const utm_term = variables?.utm_term || ''
+  const utm_content = variables?.utm_content || ''
+  const url_referrer = variables?.url_referrer || ''
+  const is_mobile = !!variables?.is_mobile
   const pub = variables?.pub || ''
-  const emailProfile = userProfile?.email || ''
+  const _fbc = variables?._fbc || ''
+  const _fbp = variables?._fbp || ''
+  const emailProfile = formData.value.email || userInfo.value?.email || ''
   const first_visit = localStorage.getItem('first_visit') || ''
-  const mkLeadSource = formData.value.mktLeadSource || '[]'
+  const mktLeadSource = 'eReport'
   const mkUserDemand = formData.value.mktUserDemand || ''
   const mkCompanyType = formData.value.mktCompanyType || ''
   let note = `From: ${window.location.href}\n`
   note += `\nfirst_visit: ${first_visit}\npub: ${pub}\nutm_source: ${utm_source} utm_medium: ${utm_medium} utm_campaign: ${utm_campaign} utm_term: ${utm_term} utm_content: ${utm_content} url_referrer: ${url_referrer}\nemailProfile: ${emailProfile}\n`
-  note += `lead_source: ${mkLeadSource.join(',')}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}`
+  note += `lead_source: ${mktLeadSource}\nuser_demand: ${mkUserDemand}\ncompany_type: ${mkCompanyType}\ndevice: ${is_mobile ? 'mobile' : 'desktop'}`
+  console.log('note', formData.value.name)
+
+  console.log('fbq', fbq)
+
+  if (fbq && typeof fbq === 'function') {
+    fbq('track', 'Lead', {
+      em: await generateHash(emailProfile),
+      fn: await generateHash(formData.value.fullName),
+      ph: await generateHash(formData.value.phone),
+      fbc: _fbc,
+      fbp: _fbp
+    });
+  }
 
   const payload = {
     name: formData.value.fullName,
@@ -87,11 +115,12 @@ const handleSubmitLeadForm = async () => {
     organization_name: formData.value.company,
     note,
     label_init: 'Nóng',
-    source_name: 'Website',
-    campaign: 'Đăng ký dùng thử',
+    source_name: 'eReport',
+    campaign: 'eReport',
     additional_info: {
       ...variables,
-      mkLeadSource,
+      mkLeadSource: mktLeadSource,
+      mktLeadSource,
       mkUserDemand,
       mkCompanyType
     },
@@ -130,7 +159,7 @@ const handleSubmitLeadForm = async () => {
     <div class="content default_section">
       <div class="info">
         <h2 class="header">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</h2>
-        <p class="desc">Thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến thông minh hơn.Ngay
+        <p class="desc">Thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến thông minh hơn. Ngay
           bây giờ!</p>
       </div>
 
@@ -168,7 +197,6 @@ const handleSubmitLeadForm = async () => {
           <a-select
               v-model:value="formData.mktLeadSource"
               class="multiple-select-form"
-              mode="multiple"
               size="large"
               :max-tag-count="3"
               :max-tag-text-length="6"
@@ -206,8 +234,9 @@ const handleSubmitLeadForm = async () => {
     </div>
   </div>
 
-  <SuccessNotification v-model:visible="isShowSuccessNotification"/>
-  <ErrorNotification v-model:visible="isShowErrorNotification"/>
+  <SuccessNotification v-model:visible="isShowSuccessNotification" class-name="submit-form-marketing-success"/>
+  <SuccessNotificationPopup v-model:visible="isShowSuccessNotificationPopup" class-name="submit-form-marketing-success"/>
+  <ErrorNotification v-model:visible="isShowErrorNotification" class-name="submit-form-marketing-success"/>
 </template>
 
 
@@ -275,6 +304,9 @@ const handleSubmitLeadForm = async () => {
   gap: 16px;
 }
 
+.contact-us .ant-input {
+  font-size: 14px;
+}
 
 .wrapper {
   .background-image {

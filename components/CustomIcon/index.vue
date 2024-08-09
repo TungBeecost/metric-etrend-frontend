@@ -1,5 +1,5 @@
 <template>
-  <component :is="iconMappings[type]" :class="{ 'size-24': !isCustomSize }" :filled="true" />
+  <component :is="iconMappings[type]" :class="isCustomSize ? 'size-24' : 'size-60'" :filled="true" />
 </template>
 
 <script setup lang="ts">
@@ -7,6 +7,7 @@ import Building from "~/public/icons/Buildings.svg";
 import Close from "~/public/icons/Close.svg";
 import Envelope from "~/public/icons/Envelope.svg";
 import MapPin from "~/public/icons/MapPin.svg";
+import House from "~/public/icons/House.svg";
 import Menu from "~/public/icons/Menu.svg";
 import MenuBlack from "~/public/icons/Menu-Black.svg";
 import Phone from "~/public/icons/Phone.svg";
@@ -22,6 +23,7 @@ import ContactUs from "~/public/icons/Contact-Us.svg";
 import SuccessTick from "~/public/icons/Success-Tick.svg";
 import Chart from "~/public/icons/Chart.svg";
 import Docs from "~/public/icons/Docs.svg";
+import ProjectorScreenChart from "~/public/icons/ProjectorScreenChart.svg"
 import Tick from "~/public/icons/Tick.svg";
 import Unlock from "~/public/icons/Unlock.svg";
 import UnlockDocumentFailure from "~/public/icons/Unlock-Document-Failure.svg";
@@ -31,37 +33,45 @@ import PaymentMethod from "~/public/icons/Payment-Method.svg";
 import RefundDocument from "~/public/icons/Refund-Document.svg";
 import TransactionDocument from "~/public/icons/Transaction-Document.svg";
 import Logout from "~/public/icons/Logout.svg";
+import Industry from "~/public/icons/Industry.svg";
+import Commodity from "~/public/icons/Commodity.svg";
+import Other from "~/public/icons/Other.svg";
+
 
 export type TypeIcon =
-  | "Building"
-  | "Close"
-  | "Envelope"
-  | "MapPin"
-  | "Menu"
-  | "MenuBlack"
-  | "Phone"
-  | "Search"
-  | "SearchFilled"
-  | "SocialFB"
-  | "SocialLinkedIn"
-  | "SocialYoutube"
-  | "Homepage"
-  | "Report"
-  | "Store"
-  | "ContactUs"
-  | "SuccessTick"
-  | "Chart"
-  | "Docs"
-  | "Tick"
-  | "Unlock"
-  | "UnlockDocumentFailure"
-  | "BuyDocument"
-  | "GuardDocument"
-  | "PaymentMethod"
-  | "RefundDocument"
-  | "TransactionDocument"
-  | "Logout"
-
+    | "Building"
+    | "Close"
+    | "Envelope"
+    | "MapPin"
+    | "Menu"
+    | "MenuBlack"
+    | "Phone"
+    | "Search"
+    | "SearchFilled"
+    | "SocialFB"
+    | "SocialLinkedIn"
+    | "SocialYoutube"
+    | "Homepage"
+    | "Report"
+    | "Store"
+    | "ContactUs"
+    | "SuccessTick"
+    | "Chart"
+    | "Docs"
+    | "ProjectorScreenChart"
+    | "House"
+    | "Tick"
+    | "Unlock"
+    | "UnlockDocumentFailure"
+    | "BuyDocument"
+    | "GuardDocument"
+    | "PaymentMethod"
+    | "RefundDocument"
+    | "TransactionDocument"
+    | "Logout"
+    | "Industry"
+    | "Commodity"
+    | "Other"
 
 defineProps<{
   type: TypeIcon,
@@ -73,6 +83,7 @@ const iconMappings = {
   "Close": Close,
   "Envelope": Envelope,
   "MapPin": MapPin,
+  "House": House,
   "Menu": Menu,
   "MenuBlack": MenuBlack,
   "Phone": Phone,
@@ -88,6 +99,7 @@ const iconMappings = {
   "SuccessTick": SuccessTick,
   "Chart": Chart,
   "Docs": Docs,
+  "ProjectorScreenChart": ProjectorScreenChart,
   "Tick": Tick,
   "Unlock": Unlock,
   "UnlockDocumentFailure": UnlockDocumentFailure,
@@ -97,6 +109,9 @@ const iconMappings = {
   "RefundDocument": RefundDocument,
   "TransactionDocument": TransactionDocument,
   "Logout": Logout,
+  "Industry": Industry,
+  "Commodity": Commodity,
+  "Other": Other
 }
 
 // Something wrong with lazy import in Nuxt, this below code made page unable to re-load when redirect
@@ -116,5 +131,12 @@ const iconMappings = {
   min-width: 24px;
   height: 24px;
   min-height: 24px;
+}
+
+.size-60 {
+  width: 60px;
+  min-width: 60px;
+  height: 60px;
+  min-height: 60px;
 }
 </style>

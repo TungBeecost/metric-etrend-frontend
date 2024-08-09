@@ -33,7 +33,7 @@ const colors = [
 
 
 const isMobile = ref(window?.innerWidth < 768);
-const chartWidth = ref(!isMobile.value ? 450 : 250);
+const chartWidth = ref(!isMobile.value ? 450 : 280);
 
 const tooltip = ref({});
 const dataLabels = ref({});
@@ -56,15 +56,21 @@ watchEffect(() => {
 
   dataLabels.value = props.isHideContent
       ? {
-        enabled: !isMobile.value,
+        enabled: true,
         formatter: function () {
+          if (isMobile.value) {
+            return '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
+          }
           return '<span>' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
         },
       }
       : {
-        enabled: !isMobile.value,
+        enabled: true,
         formatter: function () {
-          return '<span>' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          if (isMobile.value) {
+            return '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          }
+          return '<span>' + this.point.name + '</span>:<br/> ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
         },
       };
 });
@@ -95,6 +101,7 @@ watchEffect(() => {
         colors: colors,
         dataLabels: {
           ...dataLabels.value,
+          distance: isMobile.value ? 10 : 20,
           style: {
             fontFamily: "Inter",
             fontSize: '12px',

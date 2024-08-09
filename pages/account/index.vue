@@ -15,6 +15,7 @@ const fetchTableData = async (page: number = 0, limit: number = 10) => {
     const response = await fetchClaimedList(page, limit);
     if (response) {
       data.value = response;
+      console.log("data", data.value);
     } else {
       console.error("No data received from fetchClaimedList");
     }

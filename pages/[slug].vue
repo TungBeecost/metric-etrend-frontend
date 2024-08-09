@@ -1,5 +1,4 @@
 <script setup>
-import {toSeoName} from "~/helpers/StringHelper";
 import GeneralOverview from "~/components/report/GeneralOverview.vue";
 import Overview from "~/components/report/Overview.vue";
 import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
@@ -13,6 +12,9 @@ import {useCurrentUser} from "~/stores/current-user";
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import {REPORT_ENDPOINTS} from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
+import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
+import listCategory from '~/public/file_json/list_category.json';
+
 
 const currentUserStore = useCurrentUser();
 const route = useRoute()
@@ -64,21 +66,49 @@ const fetchReportData = async () => {
           }
         }
     );
+
+    // Check if category_report_id has level 1 and get its children with level 2
+    const category = listCategory.find(cat => cat.value === response.category_report_id);
+    if (category && category.level === 1) {
+      const children = listCategory.filter(cat => cat.parent === category.value && cat.level === 2);
+      if (children.length > 0) {
+        response.category_report_id = children[0].value;
+      }
+    }
+
     const {tier_report} = response;
-    // console.log('tier_report', tier_report)
-    // console.log('SSR', config.public.SSR)
-    if (tier_report !== 'free' || config.public.SSR === 'true') {
+    if (tier_report !== 'e_community' || config.public.SSR === 'true') {
       isHideContent = false;
     }
     const [listRecommend] = await Promise.all([
-      // fetchSuggest(response.name),
       fetchRecommend(response.category_report_id)
     ]);
+
+    let breadcrumbs = [
+      {
+        name: "Báo cáo",
+        value: "search",
+      },
+      ...(response.lst_category || []).map((item) => {
+        const url = `search?category_report_id=${item.id}`;
+        return {
+          name: item.name,
+          value: url,
+        };
+      }),
+    ]
+    if (response?.report_type === 'report_product_line') {
+      breadcrumbs = [...breadcrumbs, {
+        name: response.name,
+        value: null,
+      }]
+    }
 
     return {
       reportDetail: response,
       listRecommend,
       isHideContent,
+      breadcrumbs
     }
   } catch (error) {
     console.log(error)
@@ -95,28 +125,6 @@ const {data: tagSuggestions} = await useAsyncData(
       return await fetchSuggest(data?.reportDetail?.name, {limit: 5});
     }
 );
-
-const breadcrumbs = computed(() => {
-  if (data?.reportDetail) {
-    return [
-      {
-        name: "Báo cáo",
-        value: "search",
-      },
-      ...(data.reportDetail.lst_category || []).map((item) => {
-        const url = `search?category_report_id=${item.id}`;
-        return {
-          name: item.name,
-          value: url,
-        };
-      }),
-      {
-        name: data.reportDetail.name,
-        value: null,
-      },
-    ];
-  }
-});
 
 const isMobile = ref(window?.innerWidth <= 768);
 
@@ -148,13 +156,13 @@ onUnmounted(() => {
             "@type": "ListItem",
             position: 1,
             name: "Metric",
-            item: "https://metric.vn",
+            item: "https://ereport.metric.vn",
           },
           ...(data.reportDetail.lst_category || []).map((item, index) => ({
             "@type": "ListItem",
             position: index + 2,
             name: item.name,
-            item: `https://metric.vn/${toSeoName(item.name)}-c.${item.id}`,
+            item: `https://ereport.metric.vn/${item.slug}`,
           })),
         ]
       })
@@ -164,7 +172,7 @@ onUnmounted(() => {
   <div class="container_content">
     <div class="title default_section">
       <div class="breadcrumbs">
-        <Breadcrumb :breadcrumbs="breadcrumbs"/>
+        <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
       </div>
       <h1 class="report-title">
         {{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT
@@ -173,6 +181,7 @@ onUnmounted(() => {
     <div class="container default_section">
       <div class="general_overview_container">
         <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+        <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
@@ -181,7 +190,7 @@ onUnmounted(() => {
       <div class="different_info">
         <unlock-report v-if="!currentUserStore.authenticated"/>
         <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
-        <report-content/>
+        <report-content :data="data?.reportDetail"/>
         <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>
         <maybe-interested v-if="!isMobile" :recomends="data.listRecommend"/>
       </div>

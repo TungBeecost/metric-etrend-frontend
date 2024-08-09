@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import BannerReport from "~/components/report/BannerReport.vue";
-import { onUnmounted, ref, watchEffect } from 'vue';
+import {onUnmounted, ref, watchEffect} from 'vue';
 import SortReport from "~/components/report/SortReport.vue";
 import ListReport from "~/components/report/ListReport.vue";
 import FilterReport from "~/components/report/FilterReport.vue";
 import PopularRelateKeywords from "~/components/report/PopularRelateKeywords.vue";
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import type SearchReport from "~/components/search/search-report.vue";
-import type { LstRecommed, SearchReportRes } from "~/services/reports";
-import { NAVIGATIONS, PAGE_TITLES } from "~/constant/constains";
+import type {LstRecommed, SearchReportRes} from "~/services/reports";
+import {NAVIGATIONS, PAGE_TITLES} from "~/constant/constains";
 import allReports from '@/public/file_json/list_category.json';
-import { useSearchReport } from "#imports";
-const { fetchSearch, fetchListRecommend, fetchSuggest } = useSearchReport()
+import {useSearchReport} from "#imports";
+
+const {fetchSearch, fetchListRecommend, fetchSuggest} = useSearchReport()
 const route = useRoute();
 const data = ref<SearchReportRes | null>(null);
 const listRecommend = ref<LstRecommed[] | null>(null);
@@ -21,7 +22,9 @@ const isModalVisible = ref(false);
 const selectedCategory = ref<string>();
 const selectedCategoryName = ref<string>();
 const searchValueSearch = ref<string>();
-const page = ref(0);
+const selecteReportType = ref<string[]>([]);
+const selecteReportTypeBuy = ref<string[]>([]);
+const page = ref(1);
 const isLoading = ref(true);
 const sortSelect = ref('popularity');
 const mostFrequentCategoryReportId = ref<string>();
@@ -90,22 +93,24 @@ const fetchTagSuggest = async (value: string) => {
     } else {
       listTagSuggestions.value = [];
     }
-  }
-  catch (e) {
+  } catch (e) {
     console.error(e);
   }
 };
 
-const fetchData = async (searchValue: string = '', list_category_report_id: Array<string> = [], sortSelect: string, newpage: number = 0) => {
+const fetchData = async (searchValue: string = '', list_category_report_id: Array<string> = [], sortSelect: string, newpage: number = 1) => {
   try {
+    current.value = newpage;
     isLoading.value = true;
     const result = await fetchSearch(searchValue, {
       'lst_year': [],
       'lst_category_report_id': list_category_report_id,
       'lst_field': ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop"],
-      'offset': newpage * 10,
+      'offset': ((newpage-1) * 10 >= 200) ? 199 : (newpage-1) * 10,
       'limit': 10,
       'sort': sortSelect,
+      'source': selecteReportTypeBuy.value.length > 0 ? selecteReportTypeBuy.value : [],
+      'lst_report_type': selecteReportType.value.length > 0 ? selecteReportType.value : []
     });
 
     if (Array.isArray(result) && result.length === 0) {
@@ -126,21 +131,24 @@ const fetchData = async (searchValue: string = '', list_category_report_id: Arra
       mostFrequentCategoryReportId.value = Object.keys(count).reduce((a, b) => count[a] > count[b] ? a : b);
     }
   } catch (e) {
-      isLoading.value = false;
+    isLoading.value = false;
     console.error(e);
   }
 };
 
 const fetchDataRecommend = async (category_report_id: string) => {
   try {
+    if (category_report_id == 'null') {
+      category_report_id = 'c1191689230';
+    }
+    console.log('fetchDataRecommend', category_report_id);
     const result = await fetchListRecommend(category_report_id);
     if (result !== null) {
       listRecommend.value = result;
     } else {
       listRecommend.value = [];
     }
-  }
-  catch (e) {
+  } catch (e) {
     console.error(e);
   }
 }
@@ -159,13 +167,18 @@ const handleCancel = () => {
 
 const handleSearch = async (searchValue: string, lstCategoryReportId: string[] = []) => {
   searchValueSearch.value = searchValue;
+  selectedCategory.value = '';
   current.value = 1;
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page.value);
 };
 
 const current = ref(1);
 const onChange = async (page: number) => {
-  current.value = page;
+  console.log('onChange', page);
+  current.value = page
+  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
+    selectedCategory.value = route.query.category_report_id;
+  }
   const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page);
 };
@@ -181,6 +194,12 @@ onMounted(() => {
   } else {
     searchValueSearch.value = '';
   }
+  if(route.query.report_type && typeof route.query.report_type === 'string') {
+    selecteReportType.value = [route.query.report_type];
+  }
+  if(route.query.price_type && typeof route.query.price_type === 'string') {
+    selecteReportTypeBuy.value = [route.query.price_type];
+  }
   fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
 });
 
@@ -188,6 +207,33 @@ const onClickViewPrice = () => {
   navigateTo(NAVIGATIONS.pricing);
 };
 
+const handleReportTypeChange = async (selectedReportType: string[]) => {
+  selecteReportType.value = selectedReportType;
+  const list_category_report_id = [];
+  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
+    list_category_report_id.push(route.query.category_report_id);
+    selectedCategory.value = route.query.category_report_id;
+  }
+  await fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
+};
+
+const handleReportTypeBuyChange = async (selectedReportTypeBuy: string[]) => {
+  if(selectedReportTypeBuy.includes('other')) {
+    selectedReportTypeBuy = [];
+  }
+  const index = selectedReportTypeBuy.indexOf('other');
+  if (index !== -1) {
+    selectedReportTypeBuy.splice(index, 1);
+    selectedReportTypeBuy.push('marketing');
+  }
+  const list_category_report_id = [];
+  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
+    list_category_report_id.push(route.query.category_report_id);
+    selectedCategory.value = route.query.category_report_id;
+  }
+  selecteReportTypeBuy.value = selectedReportTypeBuy;
+  await fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
+};
 useSeoMeta({
   title: PAGE_TITLES.search
 })
@@ -197,43 +243,54 @@ useSeoMeta({
   <banner-report/>
   <div id="search_report">
     <div class="sectionTitle default_section">
-      <div v-if="route.query.category_report_id && selectedCategoryName" class="sectionTitle_content" >
-        Kết quả tìm kiếm cho ngành hàng <b>"{{selectedCategoryName}}"</b>
+      <div v-if="route.query.category_report_id && selectedCategoryName" class="sectionTitle_content">
+        Kết quả tìm kiếm cho ngành hàng <b>"{{ selectedCategoryName }}"</b>
       </div>
       <div v-if="route.query.search && searchValueSearch" class="sectionTitle_content">
-        Kết quả tìm kiếm cho từ khoá <b>"{{searchValueSearch}}"</b>
+        Kết quả tìm kiếm cho từ khoá <b>"{{ searchValueSearch }}"</b>
       </div>
       <div class="sectionContent searchContent">
-        <SearchReport class="default_section" :handle-search="handleSearch" />
+        <SearchReport class="default_section" :handle-search="handleSearch"/>
       </div>
     </div>
     <div class="container default_section">
       <div class="list_report_industry">
         <div class="general">
-          <div class="count_result">
-            {{ (data?.total || 0).toLocaleString() }} kết quả
+          <div v-if="data?.total" class="count_result">
+            {{ (data?.total > 200 ? 'Hơn 200' : data?.total || 0).toLocaleString() }} kết quả
           </div>
-          <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect" />
+          <div v-else/>
+          <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect"/>
           <a-button v-else style="border: 1px solid #9D97BF" @click="clickButtonFilter">
             <div style="display: flex; gap: 8px; justify-content: center; align-items: center">
               <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_4202_14089)">
-                  <path d="M8 4.375C8 5.41053 8.83947 6.25 9.875 6.25C10.9105 6.25 11.75 5.41053 11.75 4.375C11.75 3.33947 10.9105 2.5 9.875 2.5C8.83947 2.5 8 3.33947 8 4.375Z" stroke="#241E46"
-                    stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M11.75 10C11.75 11.0355 12.5895 11.875 13.625 11.875C14.6605 11.875 15.5 11.0355 15.5 10C15.5 8.96447 14.6605 8.125 13.625 8.125C12.5895 8.125 11.75 8.96447 11.75 10Z"
-                    stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M5.5 15.625C5.5 16.6605 6.33947 17.5 7.375 17.5C8.41053 17.5 9.25 16.6605 9.25 15.625C9.25 14.5895 8.41053 13.75 7.375 13.75C6.33947 13.75 5.5 14.5895 5.5 15.625Z"
-                    stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M17.375 4.375L11.75 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M17.375 15.625L9.25 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M17.375 10L15.5 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M8 4.375L3.625 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M5.5 15.625L3.625 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M11.75 10L3.625 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                      d="M8 4.375C8 5.41053 8.83947 6.25 9.875 6.25C10.9105 6.25 11.75 5.41053 11.75 4.375C11.75 3.33947 10.9105 2.5 9.875 2.5C8.83947 2.5 8 3.33947 8 4.375Z"
+                      stroke="#241E46"
+                      stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path
+                      d="M11.75 10C11.75 11.0355 12.5895 11.875 13.625 11.875C14.6605 11.875 15.5 11.0355 15.5 10C15.5 8.96447 14.6605 8.125 13.625 8.125C12.5895 8.125 11.75 8.96447 11.75 10Z"
+                      stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path
+                      d="M5.5 15.625C5.5 16.6605 6.33947 17.5 7.375 17.5C8.41053 17.5 9.25 16.6605 9.25 15.625C9.25 14.5895 8.41053 13.75 7.375 13.75C6.33947 13.75 5.5 14.5895 5.5 15.625Z"
+                      stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M17.375 4.375L11.75 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M17.375 15.625L9.25 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M17.375 10L15.5 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M8 4.375L3.625 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M5.5 15.625L3.625 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M11.75 10L3.625 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
                 </g>
                 <defs>
                   <clipPath id="clip0_4202_14089">
-                    <rect width="20" height="20" fill="white" transform="translate(0.5)" />
+                    <rect width="20" height="20" fill="white" transform="translate(0.5)"/>
                   </clipPath>
                 </defs>
               </svg>
@@ -242,17 +299,37 @@ useSeoMeta({
           </a-button>
         </div>
         <template v-if="isLoading">
-          <a-skeleton :paragraph="{ rows: 40 }" style="padding-top: 40px; padding-bottom: 40px"/>
+          <a-card v-for="i in Array.from({ length: 6 })">
+            <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+              <div style="width: 180px; height: 160px; background: #efefef; border-radius: 8px;"/>
+              <a-skeleton :paragraph="{ rows: 2 }" active style="flex: 1;"/>
+            </div>
+          </a-card>
         </template>
         <list-report v-else :class="{ 'hidden-list': isLoading, 'visible-list': !isLoading }" :data="data?.lst_report"/>
         <div class="page">
-          <a-pagination v-model:current="current" :total="data?.total" show-less-items @change="onChange" />
+          <a-pagination v-if="data?.total" v-model:current="current" :total="data?.total > 200 ? 199 : data?.total"
+                        show-less-items @change="onChange"/>
         </div>
       </div>
       <div class="relate_functions">
-        <filter-report v-if="displaySortReport" class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect" />
-        <popular-relate-keywords v-if="listTagSuggestions?.length" :tags="listTagSuggestions" @tag-clicked="handleTagClick" />
-        <maybe-interested v-if="listRecommend" :recomends="listRecommend" />
+        <filter-report
+            v-if="displaySortReport"
+            class="filter_report"
+            :select-category="selectedCategory"
+            @category-select="handleCategorySelect"
+            @selected-report-type-change="handleReportTypeChange"
+            @selected-report-type-buy-change="handleReportTypeBuyChange"
+        />
+        <popular-relate-keywords
+            v-if="listTagSuggestions?.length"
+            :tags="listTagSuggestions"
+            @tag-clicked="handleTagClick"
+        />
+        <maybe-interested
+            v-if="listRecommend"
+            :recomends="listRecommend"
+        />
       </div>
     </div>
     <div class="background_poster">
@@ -272,9 +349,16 @@ useSeoMeta({
         </div>
       </div>
     </div>
-    <a-modal v-model:visible="isModalVisible" style="position: absolute; left: 15px" title="Filter and Sort" @ok="handleOk" @cancel="handleCancel">
-      <sort-report class="sort_report" @sort-select="handleSortSelect" />
-      <filter-report class="filter_report" :select-category="selectedCategory" @categoryselect="handleCategorySelect"/>
+    <a-modal v-model:visible="isModalVisible" style="position: absolute;" title="Filter and Sort" @ok="handleOk"
+             @cancel="handleCancel">
+      <sort-report class="sort_report"
+                   @sort-select="handleSortSelect"/>
+      <filter-report class="filter_report"
+                     :select-category="selectedCategory"
+                     @categoryselect="handleCategorySelect"
+                     @selected-report-type-change="handleReportTypeChange"
+                     @selected-report-type-buy-change="handleReportTypeBuyChange"
+      />
     </a-modal>
   </div>
 </template>
@@ -284,13 +368,13 @@ useSeoMeta({
   background-color: #FBFAFC;
   //overflow: auto;
 
-  .sectionTitle{
+  .sectionTitle {
     display: flex;
     flex-direction: column;
     gap: 36px;
     padding-top: 36px;
 
-    .sectionTitle_content{
+    .sectionTitle_content {
       color: #241E46;
       font-size: 20px;
     }
@@ -342,13 +426,15 @@ useSeoMeta({
       gap: 24px;
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: 1380px) {
       padding-top: 20px;
       padding-bottom: 40px;
     }
   }
-  .background_poster{
+
+  .background_poster {
     background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 49.34%);
+
     .poster {
       display: flex;
       height: 335px;
@@ -395,21 +481,46 @@ useSeoMeta({
         top: 70px;
       }
 
-      @media (max-width: 1023px) {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-
+      @media (max-width: 1380px) {
         .info {
-          width: 100%;
+          width: 400px;
 
           .content {
-            font-size: 24px;
+            font-size: 32px;
+            line-height: 48px;
+          }
+        }
+
+        .big_logo_metric {
+          top: 0;
+          left: 0;
+          width: 300px;
+          img {
+            width: 300px;
+          }
+        }
+
+        .chart_image {
+          top: 70px;
+          right: -130px;
+
+          img {
+            width: 500px;
+          }
+
+        }
+
+        .line_styling_image {
+          top: 120px;
+          right: 220px;
+
+          img {
+            width: 250px;
           }
         }
       }
 
-      @media (max-width: 767px) {
+      @media (max-width: 768px) {
         height: 384px;
         padding: 32px 16px;
 
@@ -446,11 +557,13 @@ useSeoMeta({
 
 
 }
-@media (max-width: 767px) {
-  #search_report{
-    .sectionTitle{
+
+@media (max-width: 1380px) {
+  #search_report {
+    .sectionTitle {
       padding-top: 16px;
-      .sectionTitle_content{
+
+      .sectionTitle_content {
         font-size: 14px;
       }
     }

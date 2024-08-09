@@ -3,36 +3,38 @@
 import Discover from "~/components/report/Discover.vue";
 import FeaturedReport from "~/components/report/FeaturedReport.vue";
 import ItemNewReport from "~/components/report/ItemNewReport.vue";
-import { searchReport, type SearchReportPayload } from "~/services/reports";
-import { PAGE_TITLES } from "~/constant/constains";
+import {type SearchReportPayload} from "~/services/reports";
+import {PAGE_TITLES} from "~/constant/constains";
+import {REPORT_ENDPOINTS} from "~/constant/endpoints";
+import ExploreByReportType from "~/components/report/ExploreByReportType.vue";
 
-const isLoading = ref(true);
-const lstReportNew = ref([])
+const config = useRuntimeConfig();
 
 const fetchReport = async () => {
-  isLoading.value = true;
+  console.log('fetchReport')
   try {
     const body: SearchReportPayload = {
-      limit: 10,
+      limit: 6,
       lst_field: ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop", "created_at"],
       lst_query: [],
       lst_category_report_id: [],
       offset: 0,
-      sort: "popularity",
+      sort: "created_at",
+      // sort: "popularity",
       order: "desc",
     };
-    const response: any = await searchReport(body)
-
-    lstReportNew.value = response.lst_report;
-    isLoading.value = false;
+    const {lst_report}: any = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
+      method: 'POST',
+      body
+    })
+    console.log('lst_report', lst_report)
+    return lst_report
   } catch (e) {
     console.log(e)
   }
 }
+const {data: lstReport} = await useAsyncData(fetchReport)
 
-onMounted(() => {
-  fetchReport()
-})
 
 useSeoMeta({
   title: PAGE_TITLES.reports
@@ -46,28 +48,27 @@ useSeoMeta({
         <div class="title">
           <div class="content">
             <div class="report_title">Báo cáo</div>
-            <div class="description">Cung cấp thông tin chi tiết về doanh số và số sản phẩm đã bán bán hàng của các sản
-              phẩm theo từng ngành hàng trên các sàn, Cung cấp thông tin chi tiết về doanh số và số sản phẩm đã bán bán
-              hàng của các sản phẩm theo từng ngành hàng trên các sàn.
+            <div class="description">Cung cấp thông tin tổng quan và chi tiết về số liệu thị trường như doanh số, sản
+              lượng bán, số lượng sản phẩm, số lượng gian hàng, tỷ trọng theo các tiêu chí, xu hướng tăng trưởng... theo
+              ngành hàng, nhóm hàng trên các sàn thương mại điện tử tại Việt Nam.
             </div>
           </div>
           <div class="new_report">
-<!--            <template v-if="isLoading">-->
-<!--              <a-skeleton active :paragraph="{ rows: 6 }"/>-->
-<!--            </template>-->
             <div class="new_report">
               <div class="title_new_report">
                 Báo cáo mới nhất
               </div>
-              <item-new-report :reports="lstReportNew" :loading="isLoading" />
+              <item-new-report :reports="lstReport"/>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <discover />
-    <featured-report />
-    <ContactUs />
+    <explore-by-report-type/>
+    <report-free/>
+    <discover/>
+    <featured-report/>
+    <ContactUs/>
   </div>
 </template>
 
@@ -107,7 +108,7 @@ useSeoMeta({
 
         .description {
           font-size: 16px;
-          max-width: 500px;
+          max-width: 650px;
           color: #FFF;
         }
       }
@@ -174,7 +175,7 @@ useSeoMeta({
 
           .description {
             font-size: 14px;
-            width: 400px;
+            width: 650px;
           }
         }
       }
@@ -182,25 +183,24 @@ useSeoMeta({
   }
 }
 
-@media (max-width: 1439px) {
+@media (max-width: 1380px) {
   .title_report {
     .image {
       .title {
         .content {
           .report_title {
-            font-size: 32px;
+            font-size: 34px;
           }
 
           .description {
-            font-size: 14px;
-            //width: 350px;
+            font-size: 13px;
+            width: 600px;
           }
         }
       }
     }
   }
 }
-
 @media (max-width: 1023px) {
   .title_report {
     .image {
@@ -212,7 +212,7 @@ useSeoMeta({
 
           .description {
             font-size: 12px;
-            width: 300px;
+            width: 550px;
           }
         }
       }

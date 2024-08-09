@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted, onUnmounted, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import 'vue3-carousel/dist/carousel.css';
 import dayjs from "dayjs";
 import {NAVIGATIONS} from "~/constant/constains";
@@ -23,25 +23,20 @@ const handleItemClick = (report: any) => {
 
 const windowWidth = ref(1024);
 
-const onResize = () => {
-  windowWidth.value = window?.innerWidth;
-};
-
 onMounted(() => {
   if (typeof window !== 'undefined') {
-    windowWidth.value = window?.innerWidth;
-    window.addEventListener('resize', onResize);
-  }
-});
-
-onUnmounted(() => {
-  if (typeof window !== 'undefined') {
-    window.removeEventListener('resize', onResize);
+    windowWidth.value = window.innerWidth;
   }
 });
 
 const itemsToShow = computed(() => {
-  return windowWidth.value < 768 ? 1 : 4;
+  if (windowWidth.value < 768) {
+    return 1;
+  } else if (windowWidth.value <= 1380) {
+    return 2;
+  } else {
+    return 4;
+  }
 });
 </script>
 
@@ -71,30 +66,7 @@ const itemsToShow = computed(() => {
             <div class="title" style="text-align: left;">
               Báo cáo nhóm hàng {{ report.name }}
             </div>
-            <div v-if="report.revenue_monthly" class="summary-info">
-              <div class="info_item">
-                <svg data-v-f4382b3b="" width="16" height="22" viewBox="0 0 16 22" fill="none"
-                     xmlns="http://www.w3.org/2000/svg" style="transform: translateY(0px); margin-right: 4px;">
-                  <g clip-path="url(#clip0_1518_34097)" data-v-f4382b3b="">
-                    <path d="M14 16H2V6" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"
-                          stroke-linejoin="round" data-v-f4382b3b=""></path>
-                    <path d="M12.5 7.5L8 12L6 10L2 14" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"
-                          stroke-linejoin="round" data-v-f4382b3b=""></path>
-                    <path d="M12.5 10V7.5H10" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"
-                          stroke-linejoin="round" data-v-f4382b3b=""></path>
-                  </g>
-                  <defs data-v-f4382b3b="">
-                    <clipPath id="clip0_1518_34097" data-v-f4382b3b="">
-                      <rect width="16" height="16" fill="white" transform="translate(0 3)" data-v-f4382b3b=""></rect>
-                    </clipPath>
-                  </defs>
-                </svg>
-                <span>
-                <BlurContent>
-                  {{ formatAndRoundSortTextCurrencyWithMinValue(report.revenue_monthly) }}
-                </BlurContent>
-              </span> - doanh số trung bình tháng
-              </div>
+            <div v-if="report.shop" class="summary-info">
               <div class="info_item">
                 <svg data-v-f4382b3b="" width="16" height="16" viewBox="0 0 16 16" fill="none"
                      xmlns="http://www.w3.org/2000/svg" style="transform: translateY(0px); margin-right: 4px;">
@@ -132,6 +104,27 @@ const itemsToShow = computed(() => {
                 </BlurContent>
               </span> - nhà bán
               </div>
+              <div class="info_item">
+                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_5418_146435)">
+                    <path d="M2.04297 5.30762L7.99922 8.56762L13.9555 5.30762" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 8.56836V14.9984" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M13.74 11.9273L8.24 14.9386C8.16641 14.9789 8.08388 15 8 15C7.91612 15 7.83359 14.9789 7.76 14.9386L2.26 11.9273C2.18147 11.8844 2.11591 11.8211 2.07017 11.7441C2.02444 11.6672 2.0002 11.5794 2 11.4898V5.51109C2.0002 5.42157 2.02444 5.33375 2.07017 5.25679C2.11591 5.17983 2.18147 5.11656 2.26 5.07359L7.76 2.06234C7.83359 2.02208 7.91612 2.00098 8 2.00098C8.08388 2.00098 8.16641 2.02208 8.24 2.06234L13.74 5.07359C13.8185 5.11656 13.8841 5.17983 13.9298 5.25679C13.9756 5.33375 13.9998 5.42157 14 5.51109V11.4886C14 11.5783 13.9759 11.6664 13.9301 11.7436C13.8844 11.8208 13.8187 11.8843 13.74 11.9273Z" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5.09766 3.51953L11.0002 6.75016V10.0002" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_5418_146435">
+                      <rect width="16" height="16" fill="white" transform="translate(0 0.5)"/>
+                    </clipPath>
+                  </defs>
+                </svg>
+
+                <span>
+                <BlurContent>
+                  {{ formatAndRoundSortTextCurrencyWithMinValue(report.product) }}
+                </BlurContent>
+              </span> - sản phẩm
+              </div>
             </div>
             <div class="description line-clamp__2" style="text-align: left;">
               Thương hiệu bán chạy:
@@ -148,11 +141,18 @@ const itemsToShow = computed(() => {
   </div>
 </template>
 
-<style lang="scss">
-.featured_report {
-  .ant-skeleton-image {
-    width: 100% !important;
-    height: 300px !important;
+<style scoped lang="scss">
+.report-slide {
+  .carousel__slide {
+    .slide-item {
+      .content {
+        .title {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
   }
 }
 </style>
@@ -194,6 +194,7 @@ const itemsToShow = computed(() => {
         }
 
         .title {
+          text-align: left;
           color: var(--Dark-blue-dark-blue-8, #241E46);
           font-size: 20px;
           font-weight: 700;
@@ -214,6 +215,9 @@ const itemsToShow = computed(() => {
             flex-wrap: wrap;
             gap: 4px;
             font-size: 16px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             span {
               font-weight: bold;
@@ -271,6 +275,13 @@ const itemsToShow = computed(() => {
   }
 }
 
+.featured_report {
+  .ant-skeleton-image {
+    width: 100% !important;
+    height: 300px !important;
+  }
+}
+
 @media (max-width: 767px) {
   .report-slide {
     .carousel__slide {
@@ -317,6 +328,28 @@ const itemsToShow = computed(() => {
 
     .carousel__pagination {
       display: none;
+    }
+  }
+}
+
+@media (max-width: 1380px) {
+  .report-slide {
+    .carousel__slide {
+      .slide-item {
+        height: 630px;
+      }
+    }
+
+    .carousel__prev {
+      left: 45%;
+      top: 100%;
+      transform: translateX(-60px);
+    }
+
+    .carousel__next {
+      left: 50%;
+      top: 100%;
+      transform: translateX(20px);
     }
   }
 }

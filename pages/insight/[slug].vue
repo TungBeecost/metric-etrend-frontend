@@ -4,6 +4,8 @@ import axios from "~/services/axios-wrapper";
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import {useSearchReport} from "#imports";
 import UnlockReportMarketing from "~/components/report/UnlockReportMarketing.vue";
+import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
+import useBEEndpoint from "~/composables/useBEEndpoint";
 
 const route = useRoute()
 const {fetchListRecommendMarketing} = useSearchReport()
@@ -17,6 +19,8 @@ const openContactForm = ref(false)
 const loading = ref(true)
 const isHideContent = ref(true)
 const listRecommend = ref([])
+
+const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => false)
 
 
 const fetchDataRecommend = async (report_type) => {
@@ -37,7 +41,7 @@ const fetchReportData = async () => {
   try {
     loading.value = true;
     const response = await axios.get(
-        `https://api-ereport.staging.muadee.vn/api/report/report_insight_detail`,
+        useBEEndpoint('/api/report/report_insight_detail'),
         {
           params: {
             slug,
@@ -46,7 +50,7 @@ const fetchReportData = async () => {
     );
     console.log(response.data);
     const {tier_report} = response.data;
-    if (tier_report !== 'free') {
+    if (tier_report !== 'e_community') {
       isHideContent.value = false;
     }
     data.value = response.data;
@@ -61,9 +65,11 @@ const fetchReportData = async () => {
 };
 
 const handleSubmitSuccess = () => {
-  message.success('Đăng ký nhận báo cáo thành công');
+  // message.success('Đăng ký nhận báo cáo thành công');
 
   localStorage.setItem('report_mkt_unlocked', 'true');
+
+  isShowSuccessNotification.value = true;
 
   openContactForm.value = false;
   isHideContent.value = false;
@@ -116,7 +122,7 @@ onMounted(() => {
   <div v-else class="container_content">
     <div class="title default_section">
       <div v-if="data" class="breadcrumbs">
-        <Breadcrumb :breadcrumbs="[{name: 'Báo cáo miễn phí', value: 'free'}, {name: 'Báo cáo thị trường'}]"/>
+        <Breadcrumb :breadcrumbs="[{name: 'Báo cáo miễn phí', value: ''}, {name: 'Báo cáo thị trường'}]"/>
       </div>
       <h1 v-if="data" class="report-title">
         {{ data.name }} - Báo cáo xu hướng thị trường sàn TMĐT
@@ -317,6 +323,8 @@ onMounted(() => {
         <report-content
             v-if="data?.data_analytic?.table_of_content.filter(item => item !== 'Không có').length"
             :table-of-content="data?.data_analytic?.table_of_content.filter(item => item !== 'Không có')"
+            :data="data"
+
         />
         <maybe-interested v-if="listRecommend" :recomends="listRecommend"/>
       </div>
@@ -333,11 +341,16 @@ onMounted(() => {
         <div class="description" style="font-size: 16px">
           Vui lòng điền biểu mẫu bên dưới để nhận ngay báo cáo chi tiết
           <br>
-          <span>"{{data.name}}"</span>
+          <span>"{{ data.name }}"</span>
         </div>
       </div>
-      <ContactUsForm :handle-submit-success="handleSubmitSuccess"/>
+      <ContactUsForm :source-name="'free_report'" :handle-submit-success="handleSubmitSuccess"/>
     </a-modal>
+    <SuccessNotification
+        v-if="isShowSuccessNotification"
+        v-model:visible="isShowSuccessNotification"
+        description=""
+        class-name="submit-form-marketing-success"/>
   </div>
 </template>
 

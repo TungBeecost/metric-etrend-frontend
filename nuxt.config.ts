@@ -5,10 +5,11 @@ import {addComponent} from "@nuxt/kit";
 
 
 export default defineNuxtConfig({
-    ssr: process.env.SSR === 'true',
+    // ssr: process.env.SSR === 'false',
+    ssr: false,
     app: {
         head: {
-            title: "Metric - Nền tảng Số liệu E-commerce",
+            title: "eReport - Kho báo cáo Ecommerce toàn diện",
             htmlAttrs: {
                 lang: "vi",
             },
@@ -19,9 +20,8 @@ export default defineNuxtConfig({
                     hid: "description",
                     name: "description",
                     content:
-                        "Metric là Nền tảng Số liệu Thương mại Điện tử dành cho Doanh nghiệp, Thương hiệu và Nhà bán. Metric tạo ra báo cáo phân tích dữ liệu thị trường chỉ trong 30 giây, giúp việc thực thi và ra quyết định kinh doanh nhanh hơn 5 lần",
+                        "eReport là Kho báo cáo thị trường Ecommerce toàn diện giúp Doanh nghiệp, Thương hiệu và Nhà bán tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu chính xác nhất.",
                 },
-                //  og:image
                 {
                     hid: "og:image",
                     property: "og:image",
@@ -48,22 +48,6 @@ export default defineNuxtConfig({
                     defer: true,
                 },
                 {
-                    src: "https://www.googletagmanager.com/gtag/js?id=G-GC4KKGMFXN",
-                    async: true,
-                },
-                {
-                    hid: "gtag",
-                    innerHTML: `
-                        window.dataLayer = window.dataLayer || [];
-                        function gtag(){dataLayer.push(arguments);}
-                        gtag('js', new Date());
-            
-                        gtag('config', 'G-GC4KKGMFXN');
-                    `,
-                    type: "text/javascript",
-                    // charset: "utf-8",
-                },
-                {
                     src: "https://accounts.google.com/gsi/client",
                 }
             ],
@@ -82,19 +66,36 @@ export default defineNuxtConfig({
 
         // Keys exposed client-side too
         public: {
-            // apiBase: "http://localhost:8000"
-            // apiBase: "https://api-ereport.staging.muadee.vn"
+            // apiBase: "http://localhost:8000",
+            // API_ENDPOINT: "http://localhost:8000",
             apiBase: process.env.API_ENDPOINT,
-            BASE_URL: process.env.BASE_URL,
             API_ENDPOINT: process.env.API_ENDPOINT,
+            BASE_URL: process.env.BASE_URL,
             MODE: process.env.MODE,
             SSR: process.env.SSR,
+            public: {
+                gtm: {
+                    id: 'GTM-MLBXG49P'
+                }
+            }
+        },
+        publicRuntimeConfig: {
+            gtm: {
+                id: process.env.GTM_ID
+            }
         }
     },
     typescript: {
         typeCheck: true
     },
-    plugins: ["~/plugins/antd.ts", "~/plugins/vue3-carousel.client.ts"],
+    plugins: [
+        "~/plugins/antd.ts",
+        {
+            src: "~/plugins/analytics.js",
+            ssr: false
+        },
+        "~/plugins/vue3-carousel.client.ts",
+    ],
     css: [
         "~/assets/reset.css",
         "~/assets/antd.css",
@@ -121,6 +122,8 @@ export default defineNuxtConfig({
         "@nuxtjs/device",
         "@nuxt/image",
         "vue3-carousel-nuxt",
+        '@nuxtjs/gtm',
+        '@zadigetvoltaire/nuxt-gtm',
         ["nuxt-highcharts", {}],
         async function () {
             for (const key in AntD) {
@@ -139,5 +142,8 @@ export default defineNuxtConfig({
     ],
     antd: {
         extractStyle: true
+    },
+    gtm: {
+        id: 'GTM-MLBXG49P'
     }
 });

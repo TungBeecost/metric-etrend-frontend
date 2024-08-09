@@ -1,6 +1,5 @@
 <script setup>
-import {defineProps, ref} from 'vue';
-import {useCurrentUser} from "~/stores/current-user.js";
+import {computed, defineProps, ref} from 'vue';
 
 const props = defineProps({
   isHideContent: {
@@ -17,12 +16,16 @@ const props = defineProps({
   },
 });
 
-const currentUserStore = useCurrentUser();
-const {userInfo} = storeToRefs(currentUserStore);
-const isHideContentBasic = ref(true);
-if (userInfo.current_plan?.plan_code === 'e_pro' && !props.isHide) {
-  isHideContentBasic.value = false;
-}
+const config = useRuntimeConfig();
+
+const isHideContentBasic = computed(() => {
+  console.log('isHideContentBasic', config.public.SSR);
+  if (config.public.SSR === 'true') {
+    return false;
+  }
+  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_trial');
+});
+
 </script>
 
 <template>
@@ -64,7 +67,12 @@ if (userInfo.current_plan?.plan_code === 'e_pro' && !props.isHide) {
           :product="product"
           :is-hide-content="isHideContent"
       />
-      <ChartMask v-if="isHideContent" :subtitle="!props.isHide ? 'Nâng cấp để xem chi tiết' :'Bạn cần mở khoá để xem số liệu đầy đủ'" :ok-button="!props.isHideContent ? 'Nâng cấp ngay' :'Xem báo cáo'" :report="data"/>
+      <ChartMask
+          v-if="isHideContentBasic"
+          :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
+          :ok-button="isHideContentBasic ? '' :'Xem báo cáo'"
+          :report="data"
+      />
     </div>
   </div>
 </template>
@@ -503,8 +511,6 @@ if (userInfo.current_plan?.plan_code === 'e_pro' && !props.isHide) {
     display: flex;
     justify-content: center;
     padding: 24px;
-
-
   }
 }
 

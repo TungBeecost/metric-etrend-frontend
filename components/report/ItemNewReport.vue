@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted, onUnmounted, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import 'vue3-carousel/dist/carousel.css';
 import {NAVIGATIONS} from "~/constant/constains";
 import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper";
@@ -18,27 +18,18 @@ const {reports, loading} = defineProps({
 });
 
 const handleItemClick = (report: any) => {
+  if (report.source === 'marketing') {
+    navigateTo(`${NAVIGATIONS.home}/insight/${report.slug}`);
+    return
+  }
   navigateTo(`${NAVIGATIONS.home}${report.slug}`);
 };
 
 const windowWidth = ref(1024);
 
-const onResize = () => {
-  if (typeof window !== 'undefined') {
-    windowWidth.value = window?.innerWidth;
-  }
-};
-
 onMounted(() => {
   if (typeof window !== 'undefined') {
-    windowWidth.value = window?.innerWidth;
-    window.addEventListener('resize', onResize);
-  }
-});
-
-onUnmounted(() => {
-  if (typeof window !== 'undefined') {
-    window.removeEventListener('resize', onResize);
+    windowWidth.value = window.innerWidth;
   }
 });
 
@@ -47,7 +38,7 @@ const formatDate = (value: string | Date, format: string, inputFormat: string = 
 }
 
 const itemsToShow = computed(() => {
-  return windowWidth.value < 768 ? 1 : 2;
+  return windowWidth.value < 1380 ? 1 : 2;
 });
 </script>
 
@@ -68,40 +59,41 @@ const itemsToShow = computed(() => {
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
-            <img :src="report.url_thumbnail" alt="" style="width: 100%; object-fit: cover">
+            <img :src="report.url_thumbnail" alt="" >
           </div>
           <div class="content" style="text-align: left;">
-            <div class="category_date line-clamp__2" style="text-align: left;">
+            <div v-if="report.lst_category" class="category_date" style="text-align: left;">
               {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span>
-              {{ formatDate(report.start_date, 'DD/MM/YYYY') }}
+              {{ formatDate(report.end_date, 'DD/MM/YYYY') }}
             </div>
-            <div class="title line-clamp__2" style="text-align: left;">
-              Báo cáo nhóm hàng {{ report.name }}
+            <div v-else class="category_date" style="text-align: left;">
+              {{
+                report.report_type === 'report_category' ? 'Báo cáo ngành hàng' : report.report_type
+              }}  <span style="color: #EEEBFF">|</span>
+              {{ formatDate(report.end_date, 'DD/MM/YYYY') }}
             </div>
+            <nuxt-link
+                v-if="report.source === 'marketing'"
+                :to="`/insight/${report.slug}`"
+                class="title" style="text-align: left;text-decoration: none;"
+            >
+              {{ report.name }}
+            </nuxt-link>
+            <nuxt-link
+                v-else-if="report.report_type === 'report_category'"
+                :to="`/${report.slug}`"
+                class="title" style="text-align: left;text-decoration: none;"
+            >
+              {{ 'Báo cáo Ngành hàng ' + report.name }}
+            </nuxt-link>
+            <nuxt-link
+                v-else
+                :to="`/${report.slug}`"
+                class="title" style="text-align: left;text-decoration: none;"
+            >
+              {{ 'Báo cáo ' + report.name[0].toUpperCase() + report.name.slice(1) }}
+            </nuxt-link>
             <div v-if="report.revenue_monthly" class="summary-info">
-              <div class="info_item">
-                <svg data-v-f4382b3b="" width="16" height="22" viewBox="0 0 16 22" fill="none"
-                     xmlns="http://www.w3.org/2000/svg" style="transform: translateY(0px); margin-right: 4px;">
-                  <g clip-path="url(#clip0_1518_34097)" data-v-f4382b3b="">
-                    <path d="M14 16H2V6" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"
-                          stroke-linejoin="round" data-v-f4382b3b=""></path>
-                    <path d="M12.5 7.5L8 12L6 10L2 14" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"
-                          stroke-linejoin="round" data-v-f4382b3b=""></path>
-                    <path d="M12.5 10V7.5H10" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"
-                          stroke-linejoin="round" data-v-f4382b3b=""></path>
-                  </g>
-                  <defs data-v-f4382b3b="">
-                    <clipPath id="clip0_1518_34097" data-v-f4382b3b="">
-                      <rect width="16" height="16" fill="white" transform="translate(0 3)" data-v-f4382b3b=""></rect>
-                    </clipPath>
-                  </defs>
-                </svg>
-                <span>
-                <BlurContent>
-                  {{ formatAndRoundSortTextCurrencyWithMinValue(report.revenue_monthly) }}
-                </BlurContent>
-              </span> - doanh số trung bình tháng
-              </div>
               <div class="info_item">
                 <svg data-v-f4382b3b="" width="16" height="16" viewBox="0 0 16 16" fill="none"
                      xmlns="http://www.w3.org/2000/svg" style="transform: translateY(0px); margin-right: 4px;">
@@ -139,6 +131,30 @@ const itemsToShow = computed(() => {
                 </BlurContent>
               </span> - nhà bán
               </div>
+              <div class="info_item">
+                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_5418_146435)">
+                    <path d="M2.04297 5.30762L7.99922 8.56762L13.9555 5.30762" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 8.56836V14.9984" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M13.74 11.9273L8.24 14.9386C8.16641 14.9789 8.08388 15 8 15C7.91612 15 7.83359 14.9789 7.76 14.9386L2.26 11.9273C2.18147 11.8844 2.11591 11.8211 2.07017 11.7441C2.02444 11.6672 2.0002 11.5794 2 11.4898V5.51109C2.0002 5.42157 2.02444 5.33375 2.07017 5.25679C2.11591 5.17983 2.18147 5.11656 2.26 5.07359L7.76 2.06234C7.83359 2.02208 7.91612 2.00098 8 2.00098C8.08388 2.00098 8.16641 2.02208 8.24 2.06234L13.74 5.07359C13.8185 5.11656 13.8841 5.17983 13.9298 5.25679C13.9756 5.33375 13.9998 5.42157 14 5.51109V11.4886C14 11.5783 13.9759 11.6664 13.9301 11.7436C13.8844 11.8208 13.8187 11.8843 13.74 11.9273Z" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5.09766 3.51953L11.0002 6.75016V10.0002" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_5418_146435">
+                      <rect width="16" height="16" fill="white" transform="translate(0 0.5)"/>
+                    </clipPath>
+                  </defs>
+                </svg>
+
+                <span>
+                <BlurContent>
+                  {{ formatAndRoundSortTextCurrencyWithMinValue(report.product) }}
+                </BlurContent>
+              </span> - sản phẩm
+              </div>
+            </div>
+            <div v-else-if="report.introduction" class="summary-info line-clamp__2">
+              {{ report.introduction }}
             </div>
           </div>
         </div>
@@ -209,12 +225,16 @@ const itemsToShow = computed(() => {
       overflow: hidden;
 
       .thumbnail {
-        width: 170px;
-        height: 170px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-bottom: 1px solid #f0f0f0;
+        width: 180px;
+        height: 180px;
+        img {
+          width: 180px;
+          object-fit: contain;
+        }
       }
 
       .content {
@@ -230,9 +250,11 @@ const itemsToShow = computed(() => {
             align-items: center;
             color: #716b95;
             display: flex;
-            flex-wrap: wrap;
             gap: 4px;
             font-size: 16px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             span {
               font-weight: bold;
@@ -257,26 +279,22 @@ const itemsToShow = computed(() => {
 
         .category_date {
           color: var(--Dark-blue-dark-blue-6, #716B95);
-
           font-size: 17px;
           font-weight: 400;
           line-height: 22px;
           overflow: hidden;
           text-overflow: ellipsis;
-          margin-bottom: 16px;
+          margin-bottom: 4px;
         }
 
         .title {
           color: var(--Dark-blue-dark-blue-8, #241E46);
           font-size: 20px;
           font-weight: 700;
-          line-height: 28px; /* 140% */
-
+          line-height: 28px;
           margin-bottom: 8px;
-
           text-transform: capitalize;
         }
-
       }
     }
   }
@@ -301,32 +319,43 @@ const itemsToShow = computed(() => {
     cursor: pointer;
     position: absolute;
   }
-
 }
 
 @media (max-width: 767px) {
   .new-report-slide {
     .carousel__slide {
       .slide-item {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        overflow: hidden;
+
         .thumbnail {
-          padding-left: 12px;
+          padding-left: 16px;
           width: 120px;
-          height: auto;
+          height: 120px;
           border-bottom: none;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
         }
 
         .content {
-          padding: 8px;
+          padding: 16px;
+          flex: 1;
+          overflow: hidden;
 
           .category_date {
-            text-align: center;
-            font-size: 10px;
-            margin-bottom: 0;
+            text-align: left;
+            font-size: 14px;
+            margin-bottom: 8px;
           }
 
           .title {
-            font-size: 14px;
-            margin-bottom: 4px;
+            font-size: 18px;
+            margin-bottom: 8px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -334,12 +363,10 @@ const itemsToShow = computed(() => {
 
           .summary-info {
             .info_item {
-              font-size: 12px;
+              font-size: 14px;
 
               span {
-                span {
-                  font-size: 12px;
-                }
+                font-size: 14px;
               }
             }
           }
@@ -364,13 +391,11 @@ const itemsToShow = computed(() => {
     }
 
     .carousel__prev {
-      bottom: auto;
       left: 40%;
       transform: translateX(-60px);
     }
 
     .carousel__next {
-      bottom: auto;
       left: 50%;
       transform: translateX(20px);
     }

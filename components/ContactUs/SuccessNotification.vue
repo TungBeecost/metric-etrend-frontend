@@ -3,8 +3,22 @@ const props = defineProps({
   visible: {
     type: Boolean,
     default: false
+  },
+  className: {
+    type: String,
+    default: undefined
+  },
+  title: {
+    type: String,
+    default: 'Đăng ký thành công'
+  },
+  description: {
+    type: String,
+    default: ''
   }
 })
+
+console.log('props', props.description)
 
 const emit = defineEmits(['update:visible'])
 
@@ -16,7 +30,7 @@ const isVisible = computed({
 
 <template>
   <a-modal v-model:visible="isVisible"
-           wrap-class-name="popup-success-notification"
+           :wrap-class-name="'popup-success-notification ' + props.className"
            :footer="false"
            centered
            style="width: 663px;"
@@ -43,8 +57,9 @@ const isVisible = computed({
         <path d="M384.656 232.424C384.656 233.015 384.481 233.592 384.152 234.083C383.823 234.574 383.355 234.957 382.808 235.183C382.261 235.409 381.66 235.468 381.079 235.352C380.499 235.237 379.965 234.952 379.547 234.534C379.129 234.116 378.844 233.584 378.729 233.004C378.614 232.425 378.674 231.824 378.901 231.279C379.127 230.733 379.511 230.267 380.004 229.939C380.496 229.611 381.075 229.437 381.667 229.438C382.06 229.438 382.449 229.515 382.812 229.665C383.175 229.815 383.504 230.035 383.782 230.312C384.059 230.59 384.279 230.919 384.429 231.281C384.58 231.643 384.657 232.032 384.656 232.424Z" fill="#50BFA5"/>
         <path d="M7.06289 113.525C7.06289 115.174 5.61055 116.508 3.82402 116.508C2.03749 116.508 0.582031 115.174 0.582031 113.525C0.582031 111.876 2.03437 110.539 3.82402 110.539C5.61368 110.539 7.06289 111.876 7.06289 113.525Z" fill="#50BFA5"/>
       </svg>
-      <h3>Đăng ký thành công</h3>
-      <p>Cảm ơn bạn!<br>Chuyên viên sẽ liên hệ với bạn trong vòng ít phút tới. <br>Hãy lưu ý điện thoại nhé !</p>
+      <h3>{{ props.title }}</h3>
+      <p v-if="props.description">{{ props.description }}</p>
+      <p v-else>Cảm ơn bạn!<br>Chuyên viên sẽ liên hệ với bạn trong vòng ít phút tới. <br>Hãy lưu ý điện thoại nhé !</p>
       <a-button type="primary" size="large" @click="isVisible = false">Tôi đã hiểu</a-button>
     </div>
   </a-modal>

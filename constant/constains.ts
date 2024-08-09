@@ -112,8 +112,12 @@ export const LABEL_PERMISSION_PLAN = {
     label: "Tìm kiếm báo cáo không giới hạn",
     icon: "SearchFilled"
   },
+  viewReportDetailFree: {
+    label: "Truy cập kho báo cáo miễn phí không giới hạn",
+    icon: "ProjectorScreenChart"
+  },
   viewReportPro: {
-    label: "Xem báo cáo chi tiết",
+    label: "Xem chi tiết số liệu báo cáo:",
     icon: "Docs",
     sub: {
       summary: "Số liệu tổng quan",
@@ -125,7 +129,7 @@ export const LABEL_PERMISSION_PLAN = {
     }
   },
   viewReportBasic: {
-    label: "Xem báo cáo chi tiết",
+    label: "Xem chi tiết số liệu báo cáo:",
     icon: "Docs",
     sub: {
       summary: "Số liệu tổng quan",
@@ -149,6 +153,8 @@ interface IPLAN {
   description: string;
   plan_code: string;
   price: string;
+  priceDiscount?: string;
+  discountPercent?: string;
   unit?: string;
   isHighlight?: boolean;
   permissions: Array<{
@@ -159,26 +165,28 @@ interface IPLAN {
 }
 export const PLANS: Array<IPLAN> = [
   {
-    type: "Free",
-    plan_code: 'free',
+    type: "Community",
+    plan_code: 'e_community',
     description: "Truy cập kho báo cáo và cập nhật xu hướng",
     price: "Miễn phí",
     unit: undefined,
     permissions: [
-      {
-        ...LABEL_PERMISSION_PLAN.searchReport
-      }
+        LABEL_PERMISSION_PLAN.searchReport,
+        LABEL_PERMISSION_PLAN.viewReportDetailFree,
     ]
   },
   {
     type: "Basic",
     plan_code: "e_basic",
-    description: "Phù hợp nhu cầu phân tích chuyên sâu",
-    price: "5000000",
+    description: "Xem số liệu tổng quan về thị trường",
+    price: "3500000",
+    priceDiscount: "5000000",
+    discountPercent: "-30%",
     unit: "năm",
     isHighlight: true,
     permissions: [
       LABEL_PERMISSION_PLAN.searchReport,
+      LABEL_PERMISSION_PLAN.viewReportDetailFree,
       {
         ...LABEL_PERMISSION_PLAN.viewReportBasic,
         sub: Object.values(LABEL_PERMISSION_PLAN.viewReportBasic.sub)
@@ -192,12 +200,15 @@ export const PLANS: Array<IPLAN> = [
   {
     type: "Pro",
     plan_code: "e_pro",
-    description: "Phù hợp nhu cầu phân tích chuyên sâu",
-    price: "7900000",
+    description: "Xem số liệu chi tiết về thị trường",
+    price: "4900000",
+    priceDiscount: "7000000",
+    discountPercent: "-30%",
     unit: "năm",
     isHighlight: true,
     permissions: [
       LABEL_PERMISSION_PLAN.searchReport,
+      LABEL_PERMISSION_PLAN.viewReportDetailFree,
       {
         ...LABEL_PERMISSION_PLAN.viewReportPro,
         sub: Object.values(LABEL_PERMISSION_PLAN.viewReportPro.sub)
@@ -291,7 +302,8 @@ export const TERM_AND_POLICIES = [
 
 export const COMPANY_INFOS = {
   name: "CÔNG TY CỔ PHẦN KHOA HỌC DỮ LIỆU",
-  address: "Tầng 6 Tòa nhà AZ Lâm Viên, 107A Nguyễn Phong Sắc, phường Dịch Vọng Hậu, quận Cầu Giấy, thành phố Hà Nội, Việt Nam",
+  address: "Địa điểm kinh doanh: Tầng 4 Tòa nhà HH2, Dương Đình Nghệ, phường Yên Hoà, quận Cầu Giấy, thành phố Hà Nội",
+  base: "Trụ sở ĐKKD: Tầng 6 Tòa nhà AZ Lâm Viên, 107A Nguyễn Phong Sắc, phường Dịch Vọng Hậu, quận Cầu Giấy, thành phố Hà Nội, Việt Nam",
   phoneNumber: "033.806.2221",
   email: "info@metric.vn"
 };
@@ -302,6 +314,14 @@ export const CONTACTS = [
     icon: "Building"
   },
   {
+    label: COMPANY_INFOS.address,
+    icon: "MapPin"
+  },
+  {
+    label: COMPANY_INFOS.base,
+    icon: "House"
+  },
+  {
     label: COMPANY_INFOS.phoneNumber,
     icon: "Phone"
   },
@@ -309,10 +329,6 @@ export const CONTACTS = [
     label: COMPANY_INFOS.email,
     icon: "Envelope"
   },
-  {
-    label: COMPANY_INFOS.address,
-    icon: "MapPin"
-  }
 ];
 
 export const PAGE_TITLES = {
@@ -325,5 +341,27 @@ export const PAGE_TITLES = {
   pricing: "Gói dịch vụ",
   reports: "Báo cáo",
   reportDetail: "Chi tiết báo cáo",
-  search: "Tìm kiếm"
+  search: "Tìm kiếm",
+  payment: "Thanh toán"
 };
+
+export const LIST_REPORT_TYPES = [
+  {
+    icon: "Industry",
+    value: "report_category",
+    title: 'Báo cáo ngành hàng',
+    content: 'Cung cấp thông tin chi tiết về doanh số và sản lượng bán hàng của các sản phẩm theo từng ngành hàng trên các sàn'
+  },
+  {
+    icon: "Commodity",
+    value: "report_product_line",
+    title: 'Báo cáo nhóm hàng',
+    content: 'Cung cấp thông tin chi tiết về doanh số và sản lượng bán hàng của các sản phẩm theo từng nhóm hàng trên các sàn'
+  },
+  {
+    icon: "Other",
+    value: "other",
+    title: 'Báo cáo khác',
+    content: 'Cung cấp số liệu và xu hướng thị trường sàn thương mại điện tử được thực hiện định kỳ theo các tiêu chí khác'
+  }
+]

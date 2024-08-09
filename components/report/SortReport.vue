@@ -24,8 +24,8 @@ const handleChange = (value: any, _option: any) => {
   justify-content: flex-end;
   align-items: center;
   gap: 8px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  //margin-top: 20px;
+  //margin-bottom: 20px;
   font-size: 16px;
   font-weight: 500;
   color: #333;

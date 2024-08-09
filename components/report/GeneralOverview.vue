@@ -21,16 +21,8 @@ const props = defineProps({
 
 const screenWidth = ref(window?.innerWidth);
 
-const updateScreenWidth = () => {
-  screenWidth.value = window?.innerWidth;
-};
-
 onMounted(() => {
-  window.addEventListener('resize', updateScreenWidth);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateScreenWidth);
+  screenWidth.value = window.innerWidth;
 });
 
 const hightestMonthRevenue = computed(() => {
@@ -197,6 +189,7 @@ const charts = computed(() => {
 </script>
 
 <template>
+
   <div class="general_overview">
     <div class="statistic-item__title">
       <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
@@ -219,13 +212,13 @@ const charts = computed(() => {
     <div id="thi-phan-cac-san-thuong-mai-dien-tu" class="items-center">
       <platform-chart
           v-if="props.data"
-          :classified-analytic-response="{REVENUE_TOTAL: {platforms: data.data_analytic.by_marketplace.lst_marketplace}}"
           :is-hide-content="props.isHideContent"
+          :data="props.data"
       />
     </div>
     <InsightBlock>
       <li>
-        Trong {{ diffMonths }}, nhóm hàng {{ data.name }}:
+        Trong {{ diffMonths }}, {{ data.report_type === 'report_product_line' ? 'nhóm hàng' : ''}} {{ data.name }}:
         đạt tổng doanh số
         <BlurContent :is-hide-content="props.isHideContent">
         <span>
@@ -275,7 +268,7 @@ const charts = computed(() => {
         <BlurContent :is-hide-content="props.isHideContent">
           {{ formatDateFunc(hightestMonthRevenue.begin, "MM/YYYY") }}
         </BlurContent>
-        ghi nhận doanh số cao nhất trong 12 tháng
+        ghi nhận doanh số cao nhất trong 12 tháng.
       </li>
     </InsightBlock>
   </div>

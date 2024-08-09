@@ -44,11 +44,34 @@
       border-radius: 16px;
       overflow: hidden;
       background: white;
+      position: relative;
 
       transition: background-color 0.3s ease, transform 0.3s ease;
       flex: 1 0 0;
-      position: relative;
       will-change: transform, background-color;
+
+      .discount_percent{
+        display: flex;
+        width: 60px;
+        padding: 9px 16px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        border-radius: 0px 16px;
+        background: linear-gradient(6deg, #FF6931 4.62%, #FF9839 90.17%);
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        .text{
+          color: #FFF;
+          text-align: center;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 22px;
+        }
+      }
 
       &:hover {
         transform: translateY(0px) scale(1.05);
@@ -95,6 +118,15 @@
             font-weight: 400;
             line-height: 22px;
             margin-bottom: 24px;
+          }
+
+          .planDiscountPrice{
+            color: #716B95;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 24px;
+            text-decoration-line: line-through;
+            padding-bottom: 6px;
           }
 
           .planPrice {

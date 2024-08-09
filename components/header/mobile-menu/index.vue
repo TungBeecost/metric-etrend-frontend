@@ -2,7 +2,7 @@
   <div :class="{ headerNavbar: 1, active: active }">
     <div v-if="!userInfo.id" class="login">
       <p style="font-weight: 500; font-size: 16px">Đăng nhập ngay để không bỏ lỡ hàng trăm báo cáo và xu hướng mới nhất!</p>
-      <AButton style="font-weight: 500 " type="primary" size="large" @click="currentUserStore.setShowPopupLogin(true)">Đăng nhập</AButton>
+      <AButton style="font-weight: 500 " type="primary" size="large" @click="handleLoginClick">Đăng nhập</AButton>
     </div>
     <div v-if="userInfo.id" style="display: flex; gap: 16px" @click="handleClickInfo">
       <div class="ava">
@@ -16,7 +16,7 @@
     <div class="divider"/>
     <NuxtLink v-for="item in MENUS" :key="item.label" :to="item.to" class="menu">
       <AButton size="large" type="text" class="menuItem" @click="setShowMenu(false)">
-        <CustomIcon :type="item.icon as any" class="menuIcon"/>
+        <CustomIcon :type="item.icon as any" class="menuIcon" :is-custom-size="true"/>
         {{ item.label }}
       </AButton>
     </NuxtLink>
@@ -25,7 +25,7 @@
 
     <NuxtLink :to="NAVIGATIONS.contactUs" class="menu">
       <AButton size="large" type="text" class="menuItem" @click="setShowMenu(false)">
-        <CustomIcon type="ContactUs" class="menuIcon"/>
+        <CustomIcon type="ContactUs" class="menuIcon" :is-custom-size="true"/>
         Liên hệ tư vấn
       </AButton>
     </NuxtLink>
@@ -34,7 +34,7 @@
 
     <NuxtLink v-if="userInfo.id" :to="NAVIGATIONS.home" class="menu">
       <AButton size="large" type="text" class="menuItem" @click="setLogOut">
-        <CustomIcon type="Logout" class="menuIcon"/>
+        <CustomIcon type="Logout" class="menuIcon" :is-custom-size="true"/>
         Đăng xuất
       </AButton>
     </NuxtLink>
@@ -42,6 +42,7 @@
     <!-- Login Modal -->
     <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"
              :footer="false"
+             style="padding-top: 24px"
              @ok="currentUserStore.setShowPopupLogin(false)"
              @cancel="currentUserStore.setShowPopupLogin(false)">
       <login-button/>
@@ -50,25 +51,29 @@
 </template>
 
 <script setup lang="ts">
-
-import {MENUS, NAVIGATIONS} from '~/constant/constains';
+import { MENUS, NAVIGATIONS } from '~/constant/constains';
 import LoginButton from "~/components/google/LoginButton.vue";
 defineProps<{
   active: boolean;
 }>()
 
-const {setShowMenu} = useShowMainMenu();
+const { setShowMenu } = useShowMainMenu();
 const currentUserStore = useCurrentUser();
-const {userInfo} = storeToRefs(currentUserStore);
+const { userInfo } = storeToRefs(currentUserStore);
 
 const setLogOut = () => {
   currentUserStore.logOut();
   setShowMenu(false);
 }
 
-const handleClickInfo=()=>{
+const handleClickInfo = () => {
   setShowMenu(false);
   navigateTo(NAVIGATIONS.account);
+}
+
+const handleLoginClick = () => {
+  currentUserStore.setShowPopupLogin(true);
+  setShowMenu(false);
 }
 </script>
 

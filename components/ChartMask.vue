@@ -37,6 +37,10 @@ onMounted(() => {
 const showUnlock = ref(false);
 
 const handleButtonClick = () => {
+  if (handleUnlockReport) {
+    return handleUnlockReport();
+  }
+
   console.log('userInfo', userInfo.value);
   if (userInfo.value.id) {
     if(okButton === 'Nâng cấp ngay'){
@@ -95,7 +99,7 @@ const toggleUnlock = () => {
 
       <div class="title">{{ title }}</div>
       <div class="subtitle">{{ subtitle }}</div>
-      <div>
+      <div v-if="okButton">
         <a-button class="register-btn" :size="isDesktop ? 'large' : 'default'" type="primary" @click="handleButtonClick">
           {{ okButton }}
         </a-button>
