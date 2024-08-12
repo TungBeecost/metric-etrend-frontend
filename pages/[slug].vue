@@ -8,19 +8,19 @@ import ListProducts from "~/components/report/ListProducts.vue";
 import {ref} from "vue";
 import moment from "moment";
 import UnlockReport from "~/components/report/UnlockReport.vue";
-import {useCurrentUser} from "~/stores/current-user";
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import {REPORT_ENDPOINTS} from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
+import {useCurrentUser} from "~/stores/current-user.js";
 
 
-const currentUserStore = useCurrentUser();
 const route = useRoute()
 const config = useRuntimeConfig();
-
+const currentUserStore = useCurrentUser();
+const {userInfo} = storeToRefs(currentUserStore);
 const fetchSuggest = async (value = '', options = {}) => {
   try {
     const body = {
@@ -189,8 +189,8 @@ onUnmounted(() => {
         <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
       </div>
       <div class="different_info">
-        <unlock-report v-if="!currentUserStore.authenticated"/>
-<!--        <indept-report-link :slug="route.params.slug" />-->
+        <unlock-report v-if="!userInfo.current_plan.plan_code || userInfo.current_plan.plan_code === 'e_community'"/>
+        <indept-report-link v-if="userInfo.current_plan.remain_claim_pdf" :slug="route.params.slug" />
         <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
         <report-content :data="data?.reportDetail"/>
         <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const {plan} = defineProps({
-  plan: {
-    type: Object,
-    required: true
-  }
-});
+// const {plan} = defineProps({
+//   plan: {
+//     type: Object,
+//     required: true
+//   }
+// });
 </script>
 
 <template>
@@ -18,7 +18,7 @@ const {plan} = defineProps({
           <rect width="16" height="32" rx="4" fill="#EEEBFF"/>
         </svg>
         <div>
-          <div class="title_content">Dịch vụ</div>
+          <div class="title_content">Chi tiết đơn hàng</div>
         </div>
       </div>
       <div class="title_link">
@@ -28,25 +28,23 @@ const {plan} = defineProps({
     <div class="statistic-item__content">
       <div class="content">
         <div class="summary">
-          <div class="planType"> Gói {{ plan.type }}</div>
-          <div class="planDesc">{{ plan.description }}</div>
+          <div class="report_type">
+            <p>Loại báo cáo</p>
+            <p style="font-size: 16px; color: #E85912; font-weight: 700;">Báo cáo chuyên sâu</p>
+          </div>
+          <div class="report_group">
+            <p>Nhóm hàng</p>
+            <p style="font-size: 16px; color: #241E46; font-weight: 700;">Thời trang nam</p>
+          </div>
         </div>
 
         <div class="divider"/>
 
         <div class="permission">
-          <p class="includeLabel">Bao gồm:</p>
+          <p class="includeLabel">Thông tin chi tiết</p>
           <div class="permissionList">
-            <div v-for="permission in plan.permissions" class="permissionItem">
-              <div class="perm">
-                <CustomIcon :type="permission.icon as any" :is-custom-size="true" class="permissionIcon"/>
-                <div>{{ permission.label }}</div>
-              </div>
-              <div v-for="subPerm in permission.sub" class="perm subPerm">
-                <CustomIcon type="Tick" :is-custom-size="true" class="permissionIcon"/>
-                <div>{{ subPerm }}</div>
-              </div>
-            </div>
+            <p>• Số liệu sàn: Shopee, Tiki, Lazada</p>
+            <p>• Từ 01-07-2023 đến 30-06-2024</p>
           </div>
         </div>
       </div>
@@ -111,20 +109,16 @@ const {plan} = defineProps({
       .summary {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        gap: 16px;
 
-        .planType {
-          font-size: 20px;
-          font-weight: 700;
-          line-height: 28px;
-          margin-bottom: 8px;
+        .report_type {
+          display: flex;
+          justify-content: space-between;
         }
 
-        .planDesc {
-          color: $lighter_text_color;
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 22px;
+        .report_group {
+          display: flex;
+          justify-content: space-between;
         }
 
         .planPrice {
