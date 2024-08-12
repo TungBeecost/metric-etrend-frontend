@@ -190,7 +190,7 @@ onUnmounted(() => {
       </div>
       <div class="different_info">
         <unlock-report v-if="!currentUserStore.authenticated"/>
-        <indept-report-link :slug="route.params.slug" />
+<!--        <indept-report-link :slug="route.params.slug" />-->
         <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
         <report-content :data="data?.reportDetail"/>
         <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>
