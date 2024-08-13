@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { NAVIGATIONS, WALLET } from "~/constant/constains";
-import { defineEmits, defineProps, toRefs, computed } from 'vue';
+import {defineEmits, defineProps, toRefs, computed, ref} from 'vue';
 import { useCurrentUser } from "~/stores/current-user";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
+import ViewPdfModal from "~/components/ViewPdfModal.vue";
 
-const router = useRouter();
 const route = useRoute();
+const showAlert = ref(false);
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
 
@@ -36,8 +37,13 @@ const handleDownload = () => {
   navigateTo(`${NAVIGATIONS.payment}/${slug}`);
 };
 
-const handleView = () => {
-  router.push(`${NAVIGATIONS.home}/view_pdf/${route.params.slug}`);
+const handleView = async () => {
+  if (!currentUserStore.authenticated) {
+    currentUserStore.setShowPopupLogin(true);
+    return;
+  }
+  emits('update:open', false);
+  showAlert.value = true;
 };
 
 const toggleUnlock = () => {
@@ -102,6 +108,7 @@ const canViewReport = computed(() => {
       </div>
     </div>
   </a-modal>
+  <view-pdf-modal v-model:showAlert="showAlert"/>
 </template>
 <style scoped lang="scss">
 .noti_view_dept_report {

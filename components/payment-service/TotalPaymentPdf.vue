@@ -3,6 +3,10 @@ import { formatCurrency } from "~/helpers/FormatHelper";
 import { toRefs, computed, watch, onMounted, ref, nextTick } from 'vue';
 
 const props = defineProps({
+  report: {
+    type: Object,
+    required: true
+  },
   statusApplyCode: {
     type: Boolean,
     default: false
@@ -11,11 +15,6 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   }
-});
-
-const report = ref({
-  price: 2500000,
-  priceDiscount: 2000000
 });
 
 const {
@@ -48,20 +47,20 @@ const calculateDiscountAmount = (planPriceDiscount: number, discount: any) => {
 };
 
 const discountAmount = ref(0);
-const promotionalDiscount = ref(report.value.priceDiscount - report.value.price);
+const promotionalDiscount = ref(props.report.price - props.report.price);
 
 const updateValues = async () => {
   await nextTick();
   if (statusApplyCode.value) {
-    discountAmount.value = calculateDiscountAmount(report.value.priceDiscount, discountInfo.value);
+    discountAmount.value = calculateDiscountAmount(props.report.price, discountInfo.value);
     promotionalDiscount.value = 0;
   } else {
     discountAmount.value = 0;
-    promotionalDiscount.value = report.value.priceDiscount - report.value.price;
+    promotionalDiscount.value = props.report.price - props.report.price;
   }
 };
 
-const finalPrice = computed(() => report.value.priceDiscount - discountAmount.value - promotionalDiscount.value);
+const finalPrice = computed(() => props.report.price - discountAmount.value - promotionalDiscount.value);
 
 watch([discountInfo, statusApplyCode], updateValues);
 
@@ -77,7 +76,7 @@ onMounted(() => {
   <div class="calculate">
     <div class="calculate_item">
       <div class="money">Số tiền</div>
-      <div class="money">2.500.000đ</div>
+      <div class="money">{{ formatCurrency(props.report.price) }}</div>
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Chương trình khuyến mại</div>

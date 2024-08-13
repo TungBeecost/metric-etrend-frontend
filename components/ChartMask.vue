@@ -40,8 +40,6 @@ const handleButtonClick = () => {
   if (handleUnlockReport) {
     return handleUnlockReport();
   }
-
-  console.log('userInfo', userInfo.value);
   if (userInfo.value.id) {
     if(okButton === 'Nâng cấp ngay'){
       navigateTo(`${NAVIGATIONS.pricing}`);

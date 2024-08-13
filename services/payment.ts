@@ -33,7 +33,36 @@ export const createTransaction = async (
     }
 };
 
+export const createTransactionPdf = async (
+    paymentMethod: string,
+    report_id: string,
+    redirectUrl: string,
+    totalPrice: string,
+    discountCode: string | null
+) => {
+    try {
+        const params = new URLSearchParams({
+            payment_method: paymentMethod,
+            report_id: report_id,
+            redirect_url: redirectUrl,
+            total_price: totalPrice
+        });
 
+        if (discountCode) {
+            params.append('discount_code', discountCode);
+        }
+
+        const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment_pdf.endpoint)}?${params.toString()}`, {}, {
+            headers: {
+                'accept': 'application/json',
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("createTransaction error: ", error);
+        return null;
+    }
+};
 
 export const checkTransactionStatus = async (transactionId: string) => {
     try {

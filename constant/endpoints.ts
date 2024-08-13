@@ -5,6 +5,7 @@ export const REPORT_ENDPOINTS: { [key: string]: { endpoint: string; method: METH
     list_recomend: {endpoint: `/api/report/recommend`, method: "GET"},
     marketing_report_recommend: {endpoint: `/api/report/marketing_report_recommend`, method: "GET"},
     claim: {endpoint: `/api/report/claim`, method: "GET"},
+    claim_pdf: {endpoint: `/api/report/claim_pdf`, method: "GET"},
     list_claimed: {endpoint: `/api/report/claimed-list`, method: "GET"}
 };
 
@@ -19,6 +20,7 @@ export const USER_ENDPOINTS: { [key: string]: { endpoint: string; method: METHOD
 
 export const PAYMENT_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {
     payment: {endpoint: `/api/payment/create-transaction`, method: "POST"},
+    payment_pdf: {endpoint: `/api/payment/create-transaction_pdf`, method: "POST"},
     checkTransaction: {endpoint: `/api/payment/transaction/check`, method: "GET"},
     leadInformation: {endpoint: `/api/payment/lead_information`, method: "POST"}
 }

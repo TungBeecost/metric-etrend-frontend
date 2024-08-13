@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import CustomInputDiscount from "~/components/CustomInputDiscount.vue";
 import useDiscount from "~/composables/useDiscount";
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import {formatCurrency} from "~/helpers/FormatHelper";
 import TotalPaymentPdf from "~/components/payment-service/TotalPaymentPdf.vue";
 
@@ -21,27 +20,39 @@ interface IFormValue {
   phone: string;
 }
 
-// const { plan } = defineProps({
-//   plan: {
-//     type: Object,
-//     required: true
-//   }
-// });
+const { report } = defineProps({
+  report: {
+    type: Object,
+    required: true
+  }
+});
 
-// watch(plan, (newPlan) => {
-//   if (newPlan && newPlan.price) {
-//     finalPrice.value = newPlan.price;
-//   }
-// }, { immediate: true });
-//
+
 const handleFinalPrice = (price: number) => {
   finalPrice.value = price;
 };
 
 const handlePayment = () => {
-  // if (!finalPrice.value) {
-  //   finalPrice.value = plan.price;
+  // if (!nameValue.value) {
+  //   errors.value.name = 'Bạn cần nhập tên của mình để thanh toán';
+  // } else {
+  //   errors.value.name = '';
   // }
+  //
+  // if (!phoneValue.value) {
+  //   errors.value.phone = 'Bạn cần nhập số điện thoại của mình để thanh toán';
+  // } else {
+  //   errors.value.phone = '';
+  // }
+  //
+  // if (!nameValue.value || !phoneValue.value) {
+  //   return;
+  // }
+
+  if (!finalPrice.value) {
+    finalPrice.value = report.price;
+  }
+  console.log('finalPrice', finalPrice.value);
   emit('payment', { finalPrice: finalPrice.value, discountInfo: discountInfo.value });
 };
 
@@ -126,7 +137,7 @@ const fetchDiscount = async () => {
         </div>
       </div>
       <div class="total">
-        <total-payment-pdf :status-apply-code="statusApplyCode" :discount-info="discountInfo" @final-price="handleFinalPrice"/>
+        <total-payment-pdf v-if="report" :report="report" :status-apply-code="statusApplyCode" :discount-info="discountInfo" @final-price="handleFinalPrice"/>
         <a-button style="width: 100%; height: 40px; margin-top: 16px" type="primary" @click="handlePayment">Thanh toán</a-button>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {fetchUnlockReport} from "~/services/reports";
+import {fetchPdfReport, fetchUnlockReport} from "~/services/reports";
 import useBEEndpoint from "~/composables/useBEEndpoint";
 import {AUTH_ENDPOINTS} from "~/constant/endpoints";
 import jwt_decode from "jwt-decode";
@@ -87,6 +87,10 @@ export const useCurrentUser = defineStore("currentUserStore", {
         async unlockReport(slug) {
             // call BE to verify & update state
             await fetchUnlockReport(slug);
+        },
+        async viewPdfReport(slug) {
+            // call BE to verify & update state
+            await fetchPdfReport(slug);
         },
         logOut() {
             console.log("Logging out");
