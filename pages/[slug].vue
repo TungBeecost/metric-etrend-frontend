@@ -15,11 +15,13 @@ import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
 import {useCurrentUser} from "~/stores/current-user.js";
+import { useGTM } from '~/composables/useGTM';
 
 
 const route = useRoute()
 const config = useRuntimeConfig();
 const currentUserStore = useCurrentUser();
+const gtm = useGTM();
 const {userInfo} = storeToRefs(currentUserStore);
 const fetchSuggest = async (value = '', options = {}) => {
   try {
@@ -38,6 +40,12 @@ const fetchSuggest = async (value = '', options = {}) => {
     return lst_report
   } catch (error) {
     return [];
+  }
+};
+
+const trackEvent = (event, data) => {
+  if (gtm) {
+    gtm.push({ event, ...data });  // Change this line according to your library's API
   }
 };
 
@@ -132,6 +140,10 @@ const isMobile = ref(window?.innerWidth <= 768);
 const updateWindowSize = () => {
   isMobile.value = window?.innerWidth <= 768;
 };
+
+onMounted(() => {
+  trackEvent('page_view', { page: route.path });
+});
 
 onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);

@@ -62,9 +62,11 @@
 
 <script setup lang="ts">
 import {NAVIGATIONS} from '~/constant/constains';
+import { useGTM } from '~/composables/useGTM';
 
 const {fetchCurrentUser} = useCurrentUser();
 const {userInfo, fetchedUser} = storeToRefs(useCurrentUser());
+const gtm = useGTM();
 const route = useRoute();
 const headerRef = ref(null);
 const isScrolled = ref(false);
@@ -82,7 +84,7 @@ const handleScroll = () => {
   isScrolled.value = window.scrollY > 0;
 };
 
-const {isShowMenu} = useShowMainMenu();
+const { isShowMenu } = useShowMainMenu();
 
 const toggleMenu = () => {
   isShowMenu.value = !isShowMenu.value;
@@ -92,25 +94,37 @@ const toggleMenu = () => {
 watch(isShowMenu, () => {
   if (isShowMenu.value) isDarkBlueHeader.value = false;
   else recheckHeader();
-})
+});
 
 const menuDarkBlue = [NAVIGATIONS.home, NAVIGATIONS.pricing];
-const isDarkBlueHeader = useState(() => false);
+const isDarkBlueHeader = ref(false);
 const recheckHeader = () => {
-  if (isDarkBlueHeader.value !== !!menuDarkBlue.includes(route.path)) isDarkBlueHeader.value = !isDarkBlueHeader.value;
+  if (isDarkBlueHeader.value !== !!menuDarkBlue.includes(route.path)) {
+    isDarkBlueHeader.value = !isDarkBlueHeader.value;
+  }
 }
 
 const navigateToHome = () => {
   navigateTo(NAVIGATIONS.home);
-}
-// recheck header color when change route
-watch(() => route.path, () => {
-  recheckHeader()
-}, {immediate: true})
+};
+
+const navigateToPricing = () => {
+  navigateTo(NAVIGATIONS.pricing);
+};
+
+// Track GTM events
+const trackEvent = (event: string, data: any) => {
+  if (gtm) {
+    gtm.push({ event, ...data });
+  }
+};
 
 onMounted(() => {
   // Initial check for mobile
   handleResize();
+
+  // Track page view
+  trackEvent('page_view', { page: route.path });
 
   let lastScrollTop = 0;
   const topBar = document.querySelector('.top-bar') as HTMLElement;
@@ -159,11 +173,6 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
   window.removeEventListener('resize', handleResize); // Remove resize listener
 });
-
-const navigateToPricing = () => {
-  navigateTo(NAVIGATIONS.pricing);
-}
-
 
 </script>
 
