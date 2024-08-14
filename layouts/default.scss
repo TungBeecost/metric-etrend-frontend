@@ -109,3 +109,10 @@ main {
     width: 100%;
   }
 }
+
+@media (max-width: 1380px) {
+  .logo {
+    width: 150px !important; /* Adjust the width as needed */
+    height: 40px !important; /* Adjust the height as needed */
+  }
+}

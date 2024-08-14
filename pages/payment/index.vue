@@ -7,7 +7,7 @@ import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import { usePayment } from "#imports";
 import QRCode from "qrcode.vue";
 import { message } from 'ant-design-vue';
-import { PLANS } from "~/constant/constains";
+import {PAGE_TITLES, PLANS} from "~/constant/constains";
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
 const redirectUrl = ref('');
@@ -163,6 +163,10 @@ onMounted(() => {
 const handleOk = (_e: MouseEvent) => {
   openModal.value = false;
 };
+
+useSeoMeta({
+  title: PAGE_TITLES.payment,
+})
 </script>
 
 <template>
