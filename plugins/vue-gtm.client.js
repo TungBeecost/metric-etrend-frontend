@@ -1,10 +1,6 @@
 import { createGtm } from '@gtm-support/vue-gtm'
 
 export default  defineNuxtPlugin(nuxtApp => {
-    const { $cookies } = useNuxtApp();
-    const gtmCookieGroupName = 'Marketing';
-
-
     nuxtApp.vueApp.use(createGtm({
         id: 'GTM-MLBXG49P',
         defer: false,

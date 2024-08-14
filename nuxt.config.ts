@@ -93,6 +93,7 @@ export default defineNuxtConfig({
         "~/plugins/vue3-carousel.client.ts",
         "~/plugins/nuxt-gtm.js",
         "~/plugins/gtm-tracking.js",
+        "~/plugins/vue-gtm.client.js",
     ],
     css: [
         "~/assets/reset.css",
