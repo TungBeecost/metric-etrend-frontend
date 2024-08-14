@@ -5,24 +5,24 @@ import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
 import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
-import {ref} from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import moment from "moment";
 import UnlockReport from "~/components/report/UnlockReport.vue";
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
-import {REPORT_ENDPOINTS} from "~/constant/endpoints";
+import { REPORT_ENDPOINTS } from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
-import {useCurrentUser} from "~/stores/current-user.js";
+import { useCurrentUser } from "~/stores/current-user.js";
 import { useGTM } from '~/composables/useGTM';
 
-
-const route = useRoute()
+const route = useRoute();
 const config = useRuntimeConfig();
 const currentUserStore = useCurrentUser();
 const gtm = useGTM();
-const {userInfo} = storeToRefs(currentUserStore);
+const { userInfo } = storeToRefs(currentUserStore);
+
 const fetchSuggest = async (value = '', options = {}) => {
   try {
     const body = {
@@ -33,25 +33,25 @@ const fetchSuggest = async (value = '', options = {}) => {
       lst_query: value ? [value] : [],
       ...options
     };
-    const {lst_report} = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
+    const { lst_report } = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
       method: 'POST',
       body
-    })
-    return lst_report
+    });
+    return lst_report;
   } catch (error) {
     return [];
   }
 };
 
-const trackEvent = (_event, data) => {
+const trackEvent = (event, data) => {
   if (gtm) {
-    gtm.push({ _event, ...data });
+    gtm.push({ event, ...data });
   }
 };
 
 const fetchRecommend = async (categoryReportId) => {
   try {
-    return await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.list_recomend.endpoint}?category_report_id=${categoryReportId}`)
+    return await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.list_recomend.endpoint}?category_report_id=${categoryReportId}`);
   } catch (error) {
     return [];
   }
@@ -76,7 +76,6 @@ const fetchReportData = async () => {
         }
     );
 
-    // Check if category_report_id has level 1 and get its children with level 2
     const category = listCategory.find(cat => cat.value === response.category_report_id);
     if (category && category.level === 1) {
       const children = listCategory.filter(cat => cat.parent === category.value && cat.level === 2);
@@ -85,7 +84,7 @@ const fetchReportData = async () => {
       }
     }
 
-    const {tier_report} = response;
+    const { tier_report } = response;
     if (tier_report !== 'e_community' || config.public.SSR === 'true') {
       isHideContent = false;
     }
@@ -105,12 +104,12 @@ const fetchReportData = async () => {
           value: url,
         };
       }),
-    ]
+    ];
     if (response?.report_type === 'report_product_line') {
       breadcrumbs = [...breadcrumbs, {
         name: response.name,
         value: null,
-      }]
+      }];
     }
 
     return {
@@ -118,20 +117,19 @@ const fetchReportData = async () => {
       listRecommend,
       isHideContent,
       breadcrumbs
-    }
+    };
   } catch (error) {
-    console.log(error)
-
-    return {}
+    console.log(error);
+    return {};
   }
 };
 
-const {data} = await useAsyncData(fetchReportData);
+const { data } = await useAsyncData(fetchReportData);
 
-const {data: tagSuggestions} = await useAsyncData(
+const { data: tagSuggestions } = await useAsyncData(
     'fetchSuggest',
     async () => {
-      return await fetchSuggest(data?.reportDetail?.name, {limit: 5});
+      return await fetchSuggest(data?.reportDetail?.name, { limit: 5 });
     }
 );
 
@@ -143,6 +141,7 @@ const updateWindowSize = () => {
 
 onMounted(() => {
   trackEvent('page_view', { page: route.path });
+  window.addEventListener('resize', updateWindowSize);
 });
 
 onUnmounted(() => {
