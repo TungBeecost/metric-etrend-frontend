@@ -43,9 +43,9 @@ const fetchSuggest = async (value = '', options = {}) => {
   }
 };
 
-const trackEvent = (event, data) => {
+const trackEvent = (_event, data) => {
   if (gtm) {
-    gtm.push({ event, ...data });
+    gtm.push({ _event, ...data });
   }
 };
 

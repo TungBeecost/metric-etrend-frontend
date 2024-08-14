@@ -1,16 +1,22 @@
-// plugins/gtm-tracking.js
-import { defineNuxtPlugin } from '#app'
-import { useGtm } from '~/composables/useGTM'
-import { useRouter } from 'vue-router'
-
-export default defineNuxtPlugin(() => {
-    const gtm = useGtm()
-    const router = useRouter()
-
-    if (gtm) {
-        router.afterEach((to, from) => {
-            // Track page view event with page path
-            gtm.pushEvent('page_view', { page: to.path })
-        })
+export default ({ app }) => {
+    if (import.meta.client) {
+        if (app && app.router) {
+            app.router.afterEach((to, from) => {
+                if (window && window.dataLayer) {
+                    window.dataLayer.push({
+                        event: 'pageview',
+                        page: {
+                            path: to.fullPath,
+                            name: to.name,
+                            title: document.title,
+                        },
+                    });
+                }
+            });
+        } else {
+            console.error('Router is not defined');
+        }
+    } else {
+        console.error('Not running on the client side');
     }
-})
+};
