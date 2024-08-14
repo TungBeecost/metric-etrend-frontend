@@ -155,7 +155,6 @@ const useCheckTransactionCompletion = (transactionId: string) => {
 const plan = computed(() => PLANS.find(p => p.plan_code === planCode.value));
 
 onMounted(() => {
-
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/payment`;
@@ -172,7 +171,7 @@ const handleOk = (_e: MouseEvent) => {
 };
 
 useSeoMeta({
-  title: PAGE_TITLES.payment
+  title: PAGE_TITLES.payment,
 })
 </script>
 
