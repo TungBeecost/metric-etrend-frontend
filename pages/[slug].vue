@@ -45,7 +45,7 @@ const fetchSuggest = async (value = '', options = {}) => {
 
 const trackEvent = (event, data) => {
   if (gtm) {
-    gtm.push({ event, ...data });  // Change this line according to your library's API
+    gtm.push({ event, ...data });
   }
 };
 
