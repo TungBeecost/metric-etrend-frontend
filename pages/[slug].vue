@@ -201,7 +201,7 @@ onUnmounted(() => {
       </div>
       <div class="different_info">
         <unlock-report v-if="!userInfo.current_plan.plan_code || userInfo.current_plan.plan_code === 'e_community'"/>
-        <indept-report-link v-if="userInfo.current_plan.remain_claim_pdf" :slug="route.params.slug" />
+        <indept-report-link v-if="userInfo.current_plan.remain_claim_pdf && data.reportDetail" :slug="route.params.slug" :data="data.reportDetail"/>
         <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
         <report-content :data="data?.reportDetail"/>
         <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>

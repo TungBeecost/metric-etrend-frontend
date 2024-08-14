@@ -4,6 +4,7 @@ import {defineEmits, defineProps, toRefs, computed, ref} from 'vue';
 import { useCurrentUser } from "~/stores/current-user";
 import { useRoute } from "vue-router";
 import ViewPdfModal from "~/components/ViewPdfModal.vue";
+import ReportPreviewSlide from "~/components/PreviewSlide/ReportPreviewSlide.vue";
 
 const route = useRoute();
 const showAlert = ref(false);
@@ -15,18 +16,14 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  data: {
+    type: Object,
+    default: () => ({})
+  }
 });
 
 const { open } = toRefs(props);
 const emits = defineEmits(["update:open"]);
-
-const reports = [
-  {
-    name: 'Báo cáo 1',
-    url_thumbnail: '/images/dept_report_thumbnail/image 6.png',
-  },
-  // Additional reports can be added here
-];
 
 const handleDownload = () => {
   if (!currentUserStore.authenticated) {
@@ -56,22 +53,10 @@ const canViewReport = computed(() => {
 </script>
 
 <template>
-  <a-modal :visible="open" width="1000px" :footer="null" @cancel="toggleUnlock" @ok="toggleUnlock">
+  <a-modal :visible="open" :width="1000" :footer="null" @cancel="toggleUnlock" @ok="toggleUnlock">
     <div class="noti_view_dept_report">
       <div class="slide_thumbnail">
-        <Carousel :items-to-show="1" :items-to-scroll="1" :wrap-around="true" style="width: 100%;" :snap-align="'start'">
-          <Slide v-for="report in reports" v-bind="report" :key="report.name">
-            <div class="slide-item">
-              <div class="thumbnail">
-                <img :src="report.url_thumbnail" alt="" style="width: 100%; object-fit: cover">
-              </div>
-            </div>
-          </Slide>
-          <template #addons>
-            <navigation/>
-            <pagination/>
-          </template>
-        </Carousel>
+        <ReportPreviewSlide :data="props.data"/>
       </div>
       <div class="summary">
         <div class="title_container">
@@ -113,18 +98,17 @@ const canViewReport = computed(() => {
 <style scoped lang="scss">
 .noti_view_dept_report {
   display: flex;
-  align-items: center;
 
   .slide_thumbnail {
-    padding: 0 40px;
+    display: flex;
     flex: 0.6;
+    justify-content: center;
   }
 
   .summary {
     display: flex;
     flex: 0.4;
     flex-direction: column;
-    justify-content: space-between;
     gap: 64px;
 
     .title_container {

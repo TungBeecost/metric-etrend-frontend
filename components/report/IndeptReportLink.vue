@@ -1,11 +1,26 @@
 <script setup lang="ts">
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
-import {ref} from "vue";
-const open = ref(false);
+import { defineProps, ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
+const open = ref(false);
+const route = useRoute();
 const handleClick = () => {
   open.value = true;
-}
+};
+
+const props = defineProps({
+  data: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+
+onMounted(() => {
+  if (route.query.download === "1") {
+    open.value = true;
+  }
+});
 </script>
 
 <template>
@@ -73,7 +88,7 @@ const handleClick = () => {
    </div>
     <a-button style="width: 100%; height: 40px" type="primary" class="btn" @click="handleClick">Xem chi tiết</a-button>
   </div>
-  <modal-download-pdf v-model:open="open"/>
+  <modal-download-pdf v-model:open="open" :data="props.data"/>
 </template>
 
 <style scoped lang="scss">
