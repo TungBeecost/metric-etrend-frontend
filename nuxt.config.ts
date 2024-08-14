@@ -54,6 +54,12 @@ export default defineNuxtConfig({
                     type: 'text/javascript'
                 }
             ],
+            noscript: [
+                {
+                    children: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MLBXG49P"
+                    height="0" width="0" style="display:none;visibility:hidden"></iframe>`
+                }
+            ],
         },
     },
     $production: {
@@ -66,6 +72,7 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
+            gtagId: 'GTM-MLBXG49P',
             apiBase: process.env.API_ENDPOINT,
             API_ENDPOINT: process.env.API_ENDPOINT,
             BASE_URL: process.env.BASE_URL,
@@ -77,7 +84,7 @@ export default defineNuxtConfig({
         },
         publicRuntimeConfig: {
             gtm: {
-                id: process.env.GTM_ID,
+                id: 'GTM-MLBXG49P',
             },
         },
     },
