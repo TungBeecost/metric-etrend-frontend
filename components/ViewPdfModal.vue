@@ -35,7 +35,7 @@ const handleView = async () => {
     await currentUser.viewPdfReport(route.params.slug);
     loading.value = false;
     emits('update:showAlert', false);
-    message.success('Link báo cáo đã được gửi qua email');
+    message.success('Link báo cáo sẽ được gửi qua email trong 5 phút');
   } catch (e) {
     loading.value = false;
     console.log(e);

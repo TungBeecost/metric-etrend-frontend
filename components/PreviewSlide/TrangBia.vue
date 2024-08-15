@@ -13,9 +13,9 @@
           </div>
           <div class="date">
             Số liệu thống kê từ <br/>
-            {{ formatDate(props.data.filter_custom?.start_date, "DD/MM/YYYY") }}
+            {{ formatDate(props.data.start_date, "DD/MM/YYYY") }}
             -
-            {{ formatDate(props.data.filter_custom?.end_date, "DD/MM/YYYY") }}
+            {{ formatDate(props.data.end_date, "DD/MM/YYYY") }}
           </div>
         </div>
         <div class="report-thumbnail">

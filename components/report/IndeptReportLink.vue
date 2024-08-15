@@ -5,6 +5,7 @@ import { useRoute } from "vue-router";
 
 const open = ref(false);
 const route = useRoute();
+const router = useRouter();
 const handleClick = () => {
   open.value = true;
 };
@@ -19,6 +20,13 @@ const props = defineProps({
 onMounted(() => {
   if (route.query.download === "1") {
     open.value = true;
+
+    router.replace({
+      query: {
+        ...route.query,
+        download: undefined,
+      },
+    });
   }
 });
 </script>
