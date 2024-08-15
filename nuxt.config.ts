@@ -24,6 +24,7 @@ export default defineNuxtConfig({
                     content:
                         "https://lh3.googleusercontent.com/pw/AJFCJaUn5ypN4E-22nDvTNWPlPwnJwI806mq9CkQ7S_GqMWLzgGGJdegi3w1jIxImAj6hgzgQGdkF9BsNXvvOMAmpX3umQmuOAsG3k_4U3WwIQBIlH_ymqVTpu1DkvESjZeqrC4ac6KnMgF4Wy5BSi1NOY8u=w1920-h1080-no",
                 },
+                { name: "google-site-verification", content: "-A5h4Bx3cBpC9vnJxfRvxvegNFZgMorMQlE6M76uLbc" },
             ],
             link: [
                 {
