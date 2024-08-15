@@ -83,23 +83,20 @@ watch(currentPage, (newPage) => {
 
 const downloading = ref(false);
 
-const getReportPdfUrl = async slug => {
+const getReportPdfUrl = async (slug) => {
   const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${slug}`;
 
   const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
   try {
     downloading.value = true;
-    const response = await $fetch(
-        url,
-        {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        }
-    );
+    const response = await $fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      }
+    });
     console.log('response', response);
     remainingTime.value = response.remaining_time;
-    url_download.value = response;
+    url_download.value = response.url_download; // Ensure this is a string
     downloading.value = false;
     if (url_download.value) {
       await fetchPdf(url_download.value);
@@ -113,7 +110,7 @@ const getReportPdfUrl = async slug => {
       router.push(`/${slug}`).then();
     }
   }
-}
+};
 
 const calculateTargetDate = (seconds) => {
   const now = new Date();
