@@ -33,21 +33,21 @@ const handleFinalPrice = (price: number) => {
 };
 
 const handlePayment = () => {
-  // if (!nameValue.value) {
-  //   errors.value.name = 'Bạn cần nhập tên của mình để thanh toán';
-  // } else {
-  //   errors.value.name = '';
-  // }
-  //
-  // if (!phoneValue.value) {
-  //   errors.value.phone = 'Bạn cần nhập số điện thoại của mình để thanh toán';
-  // } else {
-  //   errors.value.phone = '';
-  // }
-  //
-  // if (!nameValue.value || !phoneValue.value) {
-  //   return;
-  // }
+  if (!nameValue.value) {
+    errors.value.name = 'Bạn cần nhập tên của mình để thanh toán';
+  } else {
+    errors.value.name = '';
+  }
+
+  if (!phoneValue.value) {
+    errors.value.phone = 'Bạn cần nhập số điện thoại của mình để thanh toán';
+  } else {
+    errors.value.phone = '';
+  }
+
+  if (!nameValue.value || !phoneValue.value) {
+    return;
+  }
 
   if (!finalPrice.value) {
     finalPrice.value = report.price;
@@ -69,6 +69,7 @@ const fetchDiscount = async () => {
       console.log(discount);
 
       discountInfo.value = response;
+      console.log('discountInfo', discountInfo.value);
 
       const now = new Date();
       const isExpired = now > new Date(discount.end_date);
@@ -77,7 +78,11 @@ const fetchDiscount = async () => {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá đã hết hạn';
       }
-      else if (discount.minimum_order_value !== null) {
+      else if (discount.applicable_to != 'pdf_report') {
+        statusApplyCode.value = false;
+        errors.value.discount = 'Mã giảm giá không áp dụng cho sản phẩm này';
+      }
+      else if (discount.minimum_order_value !== null && report.price < discount.minimum_order_value) {
         statusApplyCode.value = false;
         errors.value.discount = `Mã giảm giá chỉ áp dụng với đơn hàng từ ${formatCurrency(discount.minimum_order_value)}`;
       }
@@ -96,7 +101,7 @@ const fetchDiscount = async () => {
   } catch (error) {
     console.error(error);
     statusApplyCode.value = false;
-    errors.value.discount = 'Lỗi khi kiểm tra mã giảm giá';
+    errors.value.discount = 'Mã giảm giá không tồn tại';
   }
 };
 
