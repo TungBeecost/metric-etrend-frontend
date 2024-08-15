@@ -3,9 +3,9 @@ import axios from "axios";
 import {createLoadingTask, VuePdf} from "vue3-pdfjs";
 import {onMounted, onUnmounted, ref, watch} from "vue";
 import HeaderDeptReport from "~/components/report/HeaderDeptReport.vue";
-
+import {useCurrentUser} from "~/stores/current-user.js";
 const config = useRuntimeConfig();
-
+const url_download = ref({});
 const route = useRoute();
 const router = useRouter();
 
@@ -15,6 +15,7 @@ const loadingPercentage = ref(0);
 const pdfSrc = ref('');
 const numOfPages = ref(0);
 const currentPage = ref(1);
+const currentUserStore = useCurrentUser();
 
 const fetchPdf = async (newValue) => {
   isLoading.value = true;
@@ -42,18 +43,6 @@ const handleResize = () => {
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 0;
-};
-
-const nextPage = () => {
-  if (currentPage.value < numOfPages.value) {
-    currentPage.value++;
-  }
-};
-
-const prevPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--;
-  }
 };
 
 const scrollToPage = (pageIndex) => {
@@ -106,25 +95,28 @@ const getReportPdfUrl = async slug => {
           }
         }
     );
-
-    console.log('response', response)
-    const {url_download} = response;
+    console.log('response', response);
+    url_download.value = response;
     downloading.value = false;
-    if (url_download) {
-      await fetchPdf(url_download);
+    if (url_download.value) {
+      await fetchPdf(url_download.value);
     }
   } catch (e) {
     console.log(e);
     const status = e.response?.status;
 
     console.log('status', status);
-    // if (status === 404) {
-    //   router.push(`/${slug}`).then();
-    // }
+    if (status === 404) {
+      router.push(`/${slug}`).then();
+    }
   }
 }
 
 onMounted(() => {
+  if (!currentUserStore.authenticated) {
+    currentUserStore.setShowPopupLogin(true);
+    return;
+  }
   const slug = route.params.slug;
   getReportPdfUrl(slug);
   let lastScrollTop = 0;
@@ -154,7 +146,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="view_pdf">
+  <div v-if="url_download" class="view_pdf">
     <div class="header_pdf">
       <HeaderDeptReport :num-of-pages="numOfPages" :current-page="currentPage"/>
     </div>

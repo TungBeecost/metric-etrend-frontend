@@ -134,19 +134,19 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
         <div class="title_container">
           <div class="title_report">Báo cáo chuyên sâu</div>
           <div>
-            <p>Nhóm hàng {{ data.name }}</p>
+            <p>Nhóm hàng {{ props.data.name }}</p>
             <ul>
               <li>• Số liệu sàn: Shopee, Tiki, Lazada</li>
-              <li>• Từ {{ formatDate(data.start_date, "DD-MM-YYYY") }}
-                đến {{ formatDate(data.end_date, "DD-MM-YYYY") }}
+              <li>• Từ {{ formatDate(props.data.start_date, "DD-MM-YYYY") }}
+                đến {{ formatDate(props.data.end_date, "DD-MM-YYYY") }}
               </li>
             </ul>
           </div>
         </div>
         <div class="payment_container">
           <div class="price">
-            <p class="price_real">{{formatCurrency(data.price)}}</p>
-          <!-- TODO: price_discount -->
+            <p class="price_real">{{ formatCurrency(props.data.price) }}</p>
+            <!-- TODO: price_discount -->
             <p class="price_discount">2.500.000đ</p>
           </div>
           <div class="note">
@@ -158,7 +158,6 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
                       class="download_report_button" :loading="downloading"
                       @click="handleDownload">Tải báo cáo
             </a-button>
-          <!--  TODO: hiển thị trạng thái khi báo cáo đang được gen -->
             <a-button v-if="userInfo.current_plan.remain_claim_pdf && !props.data.can_download"
                       :disabled="!canViewReport"
                       style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center"

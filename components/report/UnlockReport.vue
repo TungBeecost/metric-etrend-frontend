@@ -2,10 +2,18 @@
 import {useCurrentUser} from "~/stores/current-user"
 import {ref} from "vue";
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
+import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
 
 const currentUserStore = useCurrentUser();
 const open = ref(false);
 const showUnlock = ref(false);
+
+const prosp = defineProps({
+  data: {
+    type: Object,
+    default: () => ({}),
+  },
+});
 
 const openModal = () => {
   open.value = true;
@@ -85,7 +93,7 @@ const openModal = () => {
       </div>
     </div>
   </div>
-  <modal-download-pdf v-model:open="open" slug=""/>
+  <modal-download-pdf v-model:open="open" slug="" :data="data"/>
 
   <ModalUnlock v-model:showUnlock="showUnlock"/>
 </template>
