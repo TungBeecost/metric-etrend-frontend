@@ -17,6 +17,7 @@ const numOfPages = ref(0);
 const currentPage = ref(1);
 const isMobile = ref(false);
 const remainingTime = ref(0); // New state for remaining t
+const reportName = ref('');
 const currentUserStore = useCurrentUser();
 
 const fetchPdf = async (newValue) => {
@@ -97,6 +98,7 @@ const getReportPdfUrl = async (slug) => {
     console.log('response', response);
     remainingTime.value = response.remaining_time;
     url_download.value = response.url_download; // Ensure this is a string
+    reportName.value = response.name;
     downloading.value = false;
     if (url_download.value) {
       await fetchPdf(url_download.value);
@@ -154,7 +156,7 @@ onUnmounted(() => {
 <template>
   <div v-if="url_download" class="view_pdf">
     <div class="header_pdf">
-      <HeaderDeptReport v-if="remainingTime" :num-of-pages="numOfPages" :current-page="currentPage" :remaining-time="calculateTargetDate(remainingTime)"/>
+      <HeaderDeptReport v-if="remainingTime" :num-of-pages="numOfPages" :current-page="currentPage" :remaining-time="calculateTargetDate(remainingTime)" :report-name="reportName"/>
     </div>
     <div class="container default_section">
       <div class="mini_map">

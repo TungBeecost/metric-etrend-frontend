@@ -95,14 +95,18 @@ watch(isShowMenu, () => {
   if (isShowMenu.value) isDarkBlueHeader.value = false;
   else recheckHeader();
 });
+const isDarkBlueHeader = ref(false);
 
 const menuDarkBlue = [NAVIGATIONS.home, NAVIGATIONS.pricing];
-const isDarkBlueHeader = ref(false);
 const recheckHeader = () => {
-  if (isDarkBlueHeader.value !== !!menuDarkBlue.includes(route.path)) {
-    isDarkBlueHeader.value = !isDarkBlueHeader.value;
-  }
-}
+  isDarkBlueHeader.value = menuDarkBlue.includes(route.path);
+};
+
+watch(route, () => {
+  recheckHeader();
+});
+
+recheckHeader();
 
 const navigateToHome = () => {
   navigateTo(NAVIGATIONS.home);
