@@ -118,7 +118,6 @@ const totalBrandSale = computed(() => {
 });
 
 const charts = computed(() => {
-  console.log('props.data.data_analytic?.by_brand?.lst_top_brand_revenue', props.data.data_analytic?.by_brand?.lst_top_brand_revenue);
 
   const revenueData = props.data.data_analytic?.by_brand?.lst_top_brand_revenue || [];
   const saleData = props.data.data_analytic?.by_brand?.lst_top_brand_sale || [];

@@ -15,6 +15,8 @@ const loadingPercentage = ref(0);
 const pdfSrc = ref('');
 const numOfPages = ref(0);
 const currentPage = ref(1);
+const isMobile = ref(false);
+const remainingTime = ref(0); // New state for remaining t
 const currentUserStore = useCurrentUser();
 
 const fetchPdf = async (newValue) => {
@@ -96,6 +98,7 @@ const getReportPdfUrl = async slug => {
         }
     );
     console.log('response', response);
+    remainingTime.value = response.remaining_time;
     url_download.value = response;
     downloading.value = false;
     if (url_download.value) {
@@ -111,6 +114,12 @@ const getReportPdfUrl = async slug => {
     }
   }
 }
+
+const calculateTargetDate = (seconds) => {
+  const now = new Date();
+  const targetDate = new Date(now.getTime() + seconds * 1000);
+  return targetDate.toISOString();
+};
 
 onMounted(() => {
   if (!currentUserStore.authenticated) {
@@ -148,7 +157,7 @@ onUnmounted(() => {
 <template>
   <div v-if="url_download" class="view_pdf">
     <div class="header_pdf">
-      <HeaderDeptReport :num-of-pages="numOfPages" :current-page="currentPage"/>
+      <HeaderDeptReport v-if="remainingTime" :num-of-pages="numOfPages" :current-page="currentPage" :remaining-time="calculateTargetDate(remainingTime)"/>
     </div>
     <div class="container default_section">
       <div class="mini_map">

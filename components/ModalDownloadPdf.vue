@@ -158,7 +158,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
                       class="download_report_button" :loading="downloading"
                       @click="handleDownload">Tải báo cáo
             </a-button>
-            <a-button v-if="userInfo.current_plan.remain_claim_pdf && !props.data.can_download"
+            <a-button v-if="userInfo.current_plan.remain_claim_pdf"
                       :disabled="!canViewReport"
                       style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center"
                       class="download_report_button" @click="handleView">Xem báo cáo
@@ -176,7 +176,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
       </div>
     </div>
   </a-modal>
-  <view-pdf-modal v-model:showAlert="showAlert"/>
+  <view-pdf-modal v-model:showAlert="showAlert" :is-report-pdf-valid="props.data.is_report_pdf_valid"/>
 </template>
 <style scoped lang="scss">
 .noti_view_dept_report {

@@ -4,21 +4,17 @@ import { ref, onMounted, onUnmounted, defineProps } from 'vue';
 // Props
 const props = defineProps({
   numOfPages: Number,
-  currentPage: Number
+  currentPage: Number,
+  remainingTime: String
 });
 
 // State
-const remainingTime = ref('');
+const remainingTimeState = ref('');
 
-// Helper function to calculate remaining time
-const calculateRemainingTime = () => {
-  const targetDate = new Date('2024-08-30T00:00:00');
-  const now = new Date();
-  const diff = targetDate.getTime() - now.getTime();
-
+// Helper function to format remaining time
+const formatRemainingTime = (diff: number) => {
   if (diff <= 0) {
-    remainingTime.value = '00 ngày 00:00:00';
-    return;
+    return '00 ngày 00:00:00';
   }
 
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -26,13 +22,26 @@ const calculateRemainingTime = () => {
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-  remainingTime.value = `${String(days).padStart(2, '0')} ngày ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  return `${String(days).padStart(2, '0')} ngày ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 };
 
+// Helper function to calculate remaining time
+const calculateRemainingTime = () => {
+  const targetDate = new Date(props.remainingTime as string);
+  if (isNaN(targetDate.getTime())) {
+    console.error('Invalid date format:', props.remainingTime);
+    return 'Invalid date';
+  }
+  const now = new Date();
+  const diff = targetDate.getTime() - now.getTime();
+  return formatRemainingTime(diff);
+};
 // Lifecycle hooks
 onMounted(() => {
-  calculateRemainingTime();
-  const interval = setInterval(calculateRemainingTime, 1000);
+  remainingTimeState.value = calculateRemainingTime();
+  const interval = setInterval(() => {
+    remainingTimeState.value = calculateRemainingTime();
+  }, 1000);
   onUnmounted(() => clearInterval(interval));
 });
 </script>
@@ -50,12 +59,13 @@ onMounted(() => {
           Thời gian truy cập còn lại
         </div>
         <div class="countdown_time">
-          {{ remainingTime }}
+          {{ remainingTimeState }}
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <style scoped lang="scss">
 .header-dept-report{
   display: flex;

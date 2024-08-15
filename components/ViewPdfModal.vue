@@ -6,11 +6,15 @@ import {useRoute} from "vue-router";
 
 const isDesktop = ref(true);
 const route = useRoute();
-const {showAlert} = defineProps({
+const {showAlert, isReportPdfValid} = defineProps({
   showAlert: {
     type: Boolean,
     default: false
   },
+  isReportPdfValid: {
+    type: Boolean,
+    default: false
+  }
 });
 onMounted(() => {
   isDesktop.value = window?.innerWidth >= 768;
@@ -34,8 +38,13 @@ const handleView = async () => {
     loading.value = true;
     await currentUser.viewPdfReport(route.params.slug);
     loading.value = false;
-    emits('update:showAlert', false);
-    message.success('Link báo cáo sẽ được gửi qua email trong 5 phút');
+    if(isReportPdfValid) {
+      navigateTo(`${NAVIGATIONS.home}view_pdf/${route.params.slug}`);
+    }
+    else{
+      emits('update:showAlert', false);
+      message.success('Link báo cáo sẽ được gửi qua email trong 5 phút');
+    }
   } catch (e) {
     loading.value = false;
     console.log(e);
