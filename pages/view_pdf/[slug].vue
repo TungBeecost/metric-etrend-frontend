@@ -1,8 +1,12 @@
 <script setup>
 import axios from "axios";
-import { createLoadingTask, VuePdf } from "vue3-pdfjs";
-import { ref, onMounted, onUnmounted, watch } from "vue";
+import {createLoadingTask, VuePdf} from "vue3-pdfjs";
+import {onMounted, onUnmounted, ref, watch} from "vue";
 import HeaderDeptReport from "~/components/report/HeaderDeptReport.vue";
+
+const config = useRuntimeConfig();
+
+const route = useRoute();
 
 const isScrolled = ref(false);
 const isLoading = ref(false);
@@ -85,7 +89,36 @@ watch(currentPage, (newPage) => {
   });
 });
 
+const downloading = ref(false);
+
+const getReportPdfUrl = async slug => {
+  const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${slug}`;
+
+  const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
+  try {
+    downloading.value = true;
+    const response = await $fetch(
+        url,
+        {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        }
+    );
+
+    console.log('response', response)
+    const {url_download} = response;
+    downloading.value = false;
+    if (url_download) {
+      await fetchPdf(url_download);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 onMounted(() => {
+  const slug = route.params.slug;
   let lastScrollTop = 0;
   const header_pdf = document.querySelector('.header_pdf');
   const handleScroll = () => {
@@ -103,7 +136,7 @@ onMounted(() => {
   window.addEventListener('resize', handleResize);
   document.querySelector('.main_content').addEventListener('scroll', updateCurrentPageOnScroll);
   handleScroll();
-  fetchPdf('https://static.metric.vn/report/pdf/3962/ao-thun/ao-thun-655cdef60513f443e12fd0156ae5d022.pdf');
+  getReportPdfUrl(slug);
 });
 
 onUnmounted(() => {
@@ -116,7 +149,7 @@ onUnmounted(() => {
 <template>
   <div class="view_pdf">
     <div class="header_pdf">
-      <HeaderDeptReport :num-of-pages="numOfPages" :current-page="currentPage" />
+      <HeaderDeptReport :num-of-pages="numOfPages" :current-page="currentPage"/>
     </div>
     <div class="container default_section">
       <div class="mini_map">
@@ -197,7 +230,7 @@ onUnmounted(() => {
       }
 
 
-      div{
+      div {
         cursor: pointer;
         padding: 8px 0;
       }
@@ -210,6 +243,7 @@ onUnmounted(() => {
 
     }
   }
+
   .container_content {
     background: #EEEBFF;
 
@@ -221,10 +255,11 @@ onUnmounted(() => {
 </style>
 
 <style>
-.vue-pdf__wrapper{
+.vue-pdf__wrapper {
   border: 1px solid #EEEBFF;
   border-radius: 4px;
-  canvas{
+
+  canvas {
     width: 100% !important;
     border-radius: 4px;
   }

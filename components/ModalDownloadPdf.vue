@@ -7,7 +7,7 @@ import ViewPdfModal from "~/components/ViewPdfModal.vue";
 import ReportPreviewSlide from "~/components/PreviewSlide/ReportPreviewSlide.vue";
 import moment from "moment";
 import {message} from "ant-design-vue";
-import {formatCurrency} from "../helpers/FormatHelper";
+import {formatCurrency} from "~/helpers/FormatHelper";
 
 const config = useRuntimeConfig();
 const route = useRoute();
