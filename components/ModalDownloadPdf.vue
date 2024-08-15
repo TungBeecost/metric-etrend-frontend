@@ -7,6 +7,7 @@ import ViewPdfModal from "~/components/ViewPdfModal.vue";
 import ReportPreviewSlide from "~/components/PreviewSlide/ReportPreviewSlide.vue";
 import moment from "moment";
 import {message} from "ant-design-vue";
+import {formatCurrency} from "../helpers/FormatHelper";
 
 const config = useRuntimeConfig();
 const route = useRoute();
@@ -144,7 +145,8 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
         </div>
         <div class="payment_container">
           <div class="price">
-            <p class="price_real">1.600.000đ</p>
+            <p class="price_real">{{formatCurrency(data.price)}}</p>
+          <!-- TODO: price_discount -->
             <p class="price_discount">2.500.000đ</p>
           </div>
           <div class="note">
