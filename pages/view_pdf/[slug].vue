@@ -7,6 +7,7 @@ import HeaderDeptReport from "~/components/report/HeaderDeptReport.vue";
 const config = useRuntimeConfig();
 
 const route = useRoute();
+const router = useRouter();
 
 const isScrolled = ref(false);
 const isLoading = ref(false);
@@ -114,11 +115,18 @@ const getReportPdfUrl = async slug => {
     }
   } catch (e) {
     console.log(e);
+    const status = e.response?.status;
+
+    console.log('status', status);
+    // if (status === 404) {
+    //   router.push(`/${slug}`).then();
+    // }
   }
 }
 
 onMounted(() => {
   const slug = route.params.slug;
+  getReportPdfUrl(slug);
   let lastScrollTop = 0;
   const header_pdf = document.querySelector('.header_pdf');
   const handleScroll = () => {
@@ -136,7 +144,6 @@ onMounted(() => {
   window.addEventListener('resize', handleResize);
   document.querySelector('.main_content').addEventListener('scroll', updateCurrentPageOnScroll);
   handleScroll();
-  getReportPdfUrl(slug);
 });
 
 onUnmounted(() => {
