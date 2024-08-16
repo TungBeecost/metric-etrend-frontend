@@ -3,7 +3,6 @@ import CheckOut from "~/components/payment-service/CheckOut.vue";
 import OptionPayment from "~/components/payment-service/OptionPayment.vue";
 import PackService from "~/components/payment-service/PackService.vue";
 import { ref, onMounted, watch, computed } from "vue";
-import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import { usePayment } from "#imports";
 import QRCode from "qrcode.vue";
 import { message } from 'ant-design-vue';

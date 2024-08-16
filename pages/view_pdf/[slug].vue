@@ -126,7 +126,6 @@ const observeMiniMapPages = () => {
   });
 };
 
-// observe when mini map pages are in view
 watch(numOfPages, () => {
   setTimeout(() => {
     observeMiniMapPages();
