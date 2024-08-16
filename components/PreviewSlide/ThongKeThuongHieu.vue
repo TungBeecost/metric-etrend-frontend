@@ -4,7 +4,7 @@
       <div class="title"><span>THỐNG KÊ THƯƠNG HIỆU TOÀN SÀN</span></div>
       <div class="relative">
         <div style="font-size: 16px; margin-bottom: 16px; color: #241E46">
-          Ngành hàng "{{ data.name }}" có
+          Nhóm hàng "{{ data.name }}" có
           <BlurContent :is-blurred="isCovered" style="font-size: 20px; font-weight: 700; color: #000">
             {{
               formatNumber(data.data_analytic.by_brand.ratio?.brand.brand || 0)

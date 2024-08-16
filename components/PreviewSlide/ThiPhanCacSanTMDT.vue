@@ -52,7 +52,7 @@
           </div>
           <div class="descriptions">
             <ul>
-              <li>Trung mình mỗi tháng, sản phẩm “{{ data.name }}” đạt doanh thu
+              <li>Trung bình mỗi tháng, sản phẩm “{{ data.name }}” đạt doanh thu
                 <BlurContent :is-blurred="isCovered" style="font-weight: 700">
                   {{ formatSortTextCurrencyFunc(averageMonthRevenue) }} đồng
                 </BlurContent>
