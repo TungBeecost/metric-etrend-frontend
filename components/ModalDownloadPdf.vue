@@ -104,7 +104,13 @@ const handleView = async () => {
     return;
   }
   emits('update:open', false);
-  showAlert.value = true;
+  if(props.data.is_report_pdf_valid) {
+    navigateTo(`${NAVIGATIONS.home}view_pdf/${route.params.slug}`);
+  }
+  else{
+    showAlert.value = true;
+  }
+
 };
 
 const toggleUnlock = () => {
@@ -176,7 +182,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
       </div>
     </div>
   </a-modal>
-  <view-pdf-modal v-model:showAlert="showAlert" :is-report-pdf-valid="props.data.is_report_pdf_valid"/>
+  <view-pdf-modal v-model:showAlert="showAlert"/>
 </template>
 <style scoped lang="scss">
 .noti_view_dept_report {
