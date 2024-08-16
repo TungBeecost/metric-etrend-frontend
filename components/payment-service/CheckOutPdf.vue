@@ -33,26 +33,32 @@ const handleFinalPrice = (price: number) => {
 };
 
 const handlePayment = () => {
+  const nameRegex = /^[a-zA-Z\s]+$/;
   if (!nameValue.value) {
     errors.value.name = 'Bạn cần nhập tên của mình để thanh toán';
+  } else if (!nameRegex.test(nameValue.value)) {
+    errors.value.name = 'Tên chỉ được chứa chữ cái và khoảng trắng';
   } else {
     errors.value.name = '';
   }
 
+  const phoneRegex = /^\d{10}$/;
   if (!phoneValue.value) {
     errors.value.phone = 'Bạn cần nhập số điện thoại của mình để thanh toán';
+  } else if (!phoneRegex.test(phoneValue.value)) {
+    errors.value.phone = 'Số điện thoại phải có 10 chữ số';
   } else {
     errors.value.phone = '';
   }
 
-  if (!nameValue.value || !phoneValue.value) {
+  if (!nameValue.value || !phoneValue.value || errors.value.name || errors.value.phone) {
     return;
   }
 
   if (!finalPrice.value) {
     finalPrice.value = report.price;
   }
-  console.log('finalPrice', finalPrice.value);
+
   emit('payment', { finalPrice: finalPrice.value, discountInfo: discountInfo.value });
 };
 
@@ -104,8 +110,6 @@ const fetchDiscount = async () => {
     errors.value.discount = 'Mã giảm giá không tồn tại';
   }
 };
-
-
 </script>
 
 <template>
