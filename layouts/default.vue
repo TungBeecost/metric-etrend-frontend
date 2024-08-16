@@ -61,11 +61,11 @@
 </template>
 
 <script setup lang="ts">
-import {NAVIGATIONS} from '~/constant/constains';
+import { NAVIGATIONS } from '~/constant/constains';
 import { useGTM } from '~/composables/useGTM';
 
-const {fetchCurrentUser} = useCurrentUser();
-const {userInfo, fetchedUser} = storeToRefs(useCurrentUser());
+const { fetchCurrentUser } = useCurrentUser();
+const { userInfo, fetchedUser } = storeToRefs(useCurrentUser());
 const gtm = useGTM();
 const route = useRoute();
 const headerRef = ref(null);
@@ -99,11 +99,8 @@ watch(isShowMenu, () => {
 const menuDarkBlue = [NAVIGATIONS.home, NAVIGATIONS.pricing];
 const isDarkBlueHeader = ref(false);
 const recheckHeader = () => {
-  console.log('recheckHeader', route.path, menuDarkBlue.includes(route.path));
-  if (isDarkBlueHeader.value !== !menuDarkBlue.includes(route.path)) {
-    isDarkBlueHeader.value = !isDarkBlueHeader.value;
-  }
-}
+  isDarkBlueHeader.value = menuDarkBlue.includes(route.path);
+};
 
 const navigateToHome = () => {
   navigateTo(NAVIGATIONS.home);
@@ -176,6 +173,10 @@ onUnmounted(() => {
   window.removeEventListener('resize', handleResize); // Remove resize listener
 });
 
+// Watch for route changes to update header color
+watch(() => route.path, () => {
+  recheckHeader();
+});
 </script>
 
 <style lang="scss" scoped>
