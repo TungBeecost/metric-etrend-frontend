@@ -99,6 +99,7 @@ watch(isShowMenu, () => {
 const menuDarkBlue = [NAVIGATIONS.home, NAVIGATIONS.pricing];
 const isDarkBlueHeader = ref(false);
 const recheckHeader = () => {
+  console.log('recheckHeader', route.path, menuDarkBlue.includes(route.path));
   if (isDarkBlueHeader.value !== !menuDarkBlue.includes(route.path)) {
     isDarkBlueHeader.value = !isDarkBlueHeader.value;
   }
@@ -122,6 +123,7 @@ const trackEvent = (event: string, data: any) => {
 onMounted(() => {
   // Initial check for mobile
   handleResize();
+  recheckHeader();
 
   // Track page view
   trackEvent('page_view', { page: route.path });

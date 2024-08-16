@@ -53,7 +53,7 @@ onMounted(() => {
       Báo cáo chuyên sâu
     </div>
     <div class="container">
-      <div class="title">{{reportName}}</div>
+      <div class="title">Nhóm hàng {{reportName}}</div>
       <div class="page_content"><b>Trang</b>: {{ currentPage }}/{{ numOfPages }}</div>
       <div class="time">
         <div class="time_title">

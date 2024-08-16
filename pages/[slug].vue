@@ -22,6 +22,7 @@ const config = useRuntimeConfig();
 const currentUserStore = useCurrentUser();
 const gtm = useGTM();
 const { userInfo } = storeToRefs(currentUserStore);
+const checkLevelCategory = ref(false);
 
 const fetchSuggest = async (value = '', options = {}) => {
   try {
@@ -78,6 +79,7 @@ const fetchReportData = async () => {
 
     const category = listCategory.find(cat => cat.value === response.category_report_id);
     if (category && category.level === 1) {
+      checkLevelCategory.value = true;
       const children = listCategory.filter(cat => cat.parent === category.value && cat.level === 2);
       if (children.length > 0) {
         response.category_report_id = children[0].value;
@@ -192,6 +194,8 @@ onUnmounted(() => {
     </div>
     <div class="container default_section">
       <div class="general_overview_container">
+        {{data.reportDetail.category_report_id}}
+
         <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
@@ -200,8 +204,8 @@ onUnmounted(() => {
         <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
       </div>
       <div class="different_info">
-        <unlock-report v-if="!userInfo.current_plan.plan_code || userInfo.current_plan.plan_code === 'e_community'" :data="data.reportDetail"/>
-        <indept-report-link v-if="userInfo.current_plan.remain_claim_pdf && data.reportDetail" :slug="route.params.slug" :data="data.reportDetail"/>
+        <unlock-report v-if="!userInfo.current_plan.plan_code || userInfo.current_plan.plan_code === 'e_community'" :data="data.reportDetail" :check-level-category="checkLevelCategory"/>
+        <indept-report-link v-if="userInfo.current_plan.remain_claim_pdf && data.reportDetail && !checkLevelCategory" :slug="route.params.slug" :data="data.reportDetail"/>
         <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
         <report-content :data="data?.reportDetail"/>
         <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>

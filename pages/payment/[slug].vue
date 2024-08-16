@@ -126,7 +126,7 @@ const useCheckTransactionCompletion = (transactionId: string) => {
       openModal.value = false;
       isCompleted.value = true;
       if (intervalId) clearInterval(intervalId);
-      window.location.href = `/?transaction_id=${transactionId}`;
+      window.location.href = `  /${route.params.slug}?transaction_id=${transactionId}`;
     }
   };
 
