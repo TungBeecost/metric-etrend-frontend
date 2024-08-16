@@ -35,7 +35,7 @@
         </div>
         <div class="links">
           <div>
-            https://metric.vn/{{ props.data.slug }}
+            https://ereport.vn/{{ props.data.slug }}
           </div>
         </div>
       </div>
