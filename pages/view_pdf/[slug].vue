@@ -1,9 +1,9 @@
 <script setup>
-import axios from "axios";
-import {createLoadingTask, VuePdf} from "vue3-pdfjs";
-import {onMounted, ref, watch} from "vue";
-import HeaderDeptReport from "~/components/report/HeaderDeptReport.vue";
-import {useCurrentUser} from "~/stores/current-user.js";
+import {onMounted, ref} from 'vue';
+import {createLoadingTask, VuePdf} from 'vue3-pdfjs';
+import axios from 'axios';
+import HeaderDeptReport from '~/components/report/HeaderDeptReport.vue';
+import {useCurrentUser} from '~/stores/current-user.js';
 
 const config = useRuntimeConfig();
 const url_download = ref({});
@@ -17,10 +17,10 @@ const pdfSrc = ref('');
 const numOfPages = ref(0);
 const currentPage = ref(1);
 const isMobile = ref(false);
-const remainingTime = ref(0); // New state for remaining t
+const remainingTime = ref(0);
 const reportName = ref('');
 const currentUserStore = useCurrentUser();
-
+const miniMapPagesInView = ref(new Set());
 
 const fetchPdf = async (newValue) => {
   isLoading.value = true;
@@ -38,7 +38,6 @@ const fetchPdf = async (newValue) => {
   const pdf = await createLoadingTask(response.data).promise;
   pdfSrc.value = response.data;
   numOfPages.value = pdf.numPages;
-  console.log(response, pdf);
   isLoading.value = false;
 };
 
@@ -52,14 +51,6 @@ const handleScroll = () => {
 
 const scrollToPage = (pageIndex) => {
   currentPage.value = pageIndex;
-  // const mainContent = document.querySelector('.main_content');
-  // const pageElement = mainContent.querySelectorAll('.container_content > div')[pageIndex - 1];
-  // if (pageElement) {
-  //   mainContent.scrollTo({
-  //     top: pageElement.offsetTop - mainContent.offsetTop,
-  //     behavior: 'smooth'
-  //   });
-  // }
 };
 
 const updateCurrentPageOnScroll = () => {
@@ -73,16 +64,16 @@ const updateCurrentPageOnScroll = () => {
   });
 };
 
-watch(currentPage, (newPage) => {
-  const miniMapPages = document.querySelectorAll('.mini_map_page');
-  miniMapPages.forEach((page, index) => {
-    if (index + 1 === newPage) {
-      page.classList.add('active');
-    } else {
-      page.classList.remove('active');
-    }
-  });
-});
+// watch(currentPage, (newPage) => {
+//   const miniMapPages = document.querySelectorAll('.mini_map_page');
+//   miniMapPages.forEach((page, index) => {
+//     if (index + 1 === newPage) {
+//       page.classList.add('active');
+//     } else {
+//       page.classList.remove('active');
+//     }
+//   });
+// });
 
 const downloading = ref(false);
 
@@ -97,19 +88,15 @@ const getReportPdfUrl = async (slug) => {
         'Authorization': `Bearer ${accessToken}`
       }
     });
-    console.log('response', response);
     remainingTime.value = response.remaining_time;
-    url_download.value = response.url_download; // Ensure this is a string
+    url_download.value = response.url_download;
     reportName.value = response.name;
     downloading.value = false;
     if (url_download.value) {
       await fetchPdf(url_download.value);
     }
   } catch (e) {
-    console.log(e);
     const status = e.response?.status;
-
-    console.log('status', status);
     if (status === 404) {
       router.push(`/${slug}`).then();
     }
@@ -122,6 +109,30 @@ const calculateTargetDate = (seconds) => {
   return targetDate.toISOString();
 };
 
+const observeMiniMapPages = () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        miniMapPagesInView.value.add(entry.target.dataset.index);
+      } else {
+        miniMapPagesInView.value.delete(entry.target.dataset.index);
+      }
+    });
+  });
+  const miniMapPages = document.querySelectorAll('.mini_map_page');
+  miniMapPages.forEach((page, index) => {
+    page.dataset.index = index + 1;
+    observer.observe(page);
+  });
+};
+
+// observe when mini map pages are in view
+watch(numOfPages, () => {
+  setTimeout(() => {
+    observeMiniMapPages();
+  }, 100);
+});
+
 onMounted(() => {
   if (!currentUserStore.authenticated) {
     currentUserStore.setShowPopupLogin(true);
@@ -129,30 +140,7 @@ onMounted(() => {
   }
   const slug = route.params.slug;
   getReportPdfUrl(slug);
-  let lastScrollTop = 0;
-  const header_pdf = document.querySelector('.header_pdf');
-  const handleScroll = () => {
-    const scrollTop = window.scrollY;
-
-    if (scrollTop > lastScrollTop && scrollTop > 32) {
-      if (header_pdf) header_pdf.style.top = '88px';
-    } else {
-      if (header_pdf) header_pdf.style.top = '120px';
-    }
-
-    lastScrollTop = scrollTop;
-  };
-  // window.addEventListener('scroll', handleScroll);
-  // window.addEventListener('resize', handleResize);
-  // document.querySelector('.main_content').addEventListener('scroll', updateCurrentPageOnScroll);
-  // handleScroll();
 });
-
-// onUnmounted(() => {
-//   window.removeEventListener('scroll', handleScroll);
-//   window.removeEventListener('resize', handleResize);
-//   document.querySelector('.main_content').removeEventListener('scroll', updateCurrentPageOnScroll);
-// });
 </script>
 
 <template>
@@ -163,14 +151,20 @@ onMounted(() => {
     </div>
     <div class="container default_section">
       <div class="mini_map">
-        <div v-for="index in numOfPages" :key="index" class="mini_map_page" @click="scrollToPage(index)">
+        <div
+            v-for="index in numOfPages"
+            :key="index"
+            class="mini_map_page"
+            style="width: 100%; height: 150px;"
+            @click="scrollToPage(index)"
+        >
           <VuePdf
+              v-if="miniMapPagesInView.has(`${index}`)"
               :src="pdfSrc"
               :page="index"
               :num-pages="numOfPages"
               :enable-text-selection="false"
               :enable-annotations="false"
-              style="width: 100%;"
           />
         </div>
       </div>
@@ -222,7 +216,7 @@ onMounted(() => {
     display: flex;
 
     .mini_map {
-      flex: 0.1;
+      width: 200px;
       max-height: calc(100vh - 80px);
       height: fit-content;
       overflow-y: auto;
@@ -230,8 +224,8 @@ onMounted(() => {
       padding-right: 24px;
       padding-top: 24px;
 
-      display: flex;
-      flex-direction: column;
+      //display: flex;
+      //flex-direction: column;
       //gap: 16px;
 
       .mini_map_page {
@@ -239,6 +233,7 @@ onMounted(() => {
         border: 1px solid #FFF;
         cursor: pointer;
         padding: 0;
+
 
         &.active {
           border: 2px solid #E85912;
@@ -253,7 +248,7 @@ onMounted(() => {
     }
 
     .main_content {
-      flex: 0.9;
+      flex: 1;
       max-height: calc(100vh - 80px);
       //overflow-y: auto;
       height: fit-content;
