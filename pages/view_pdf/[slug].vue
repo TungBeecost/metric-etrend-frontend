@@ -1,9 +1,10 @@
 <script setup>
 import axios from "axios";
 import {createLoadingTask, VuePdf} from "vue3-pdfjs";
-import {onMounted, onUnmounted, ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 import HeaderDeptReport from "~/components/report/HeaderDeptReport.vue";
 import {useCurrentUser} from "~/stores/current-user.js";
+
 const config = useRuntimeConfig();
 const url_download = ref({});
 const route = useRoute();
@@ -19,6 +20,7 @@ const isMobile = ref(false);
 const remainingTime = ref(0); // New state for remaining t
 const reportName = ref('');
 const currentUserStore = useCurrentUser();
+
 
 const fetchPdf = async (newValue) => {
   isLoading.value = true;
@@ -50,14 +52,14 @@ const handleScroll = () => {
 
 const scrollToPage = (pageIndex) => {
   currentPage.value = pageIndex;
-  const mainContent = document.querySelector('.main_content');
-  const pageElement = mainContent.querySelectorAll('.container_content > div')[pageIndex - 1];
-  if (pageElement) {
-    mainContent.scrollTo({
-      top: pageElement.offsetTop - mainContent.offsetTop,
-      behavior: 'smooth'
-    });
-  }
+  // const mainContent = document.querySelector('.main_content');
+  // const pageElement = mainContent.querySelectorAll('.container_content > div')[pageIndex - 1];
+  // if (pageElement) {
+  //   mainContent.scrollTo({
+  //     top: pageElement.offsetTop - mainContent.offsetTop,
+  //     behavior: 'smooth'
+  //   });
+  // }
 };
 
 const updateCurrentPageOnScroll = () => {
@@ -140,23 +142,24 @@ onMounted(() => {
 
     lastScrollTop = scrollTop;
   };
-  window.addEventListener('scroll', handleScroll);
-  window.addEventListener('resize', handleResize);
-  document.querySelector('.main_content').addEventListener('scroll', updateCurrentPageOnScroll);
-  handleScroll();
+  // window.addEventListener('scroll', handleScroll);
+  // window.addEventListener('resize', handleResize);
+  // document.querySelector('.main_content').addEventListener('scroll', updateCurrentPageOnScroll);
+  // handleScroll();
 });
 
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-  window.removeEventListener('resize', handleResize);
-  document.querySelector('.main_content').removeEventListener('scroll', updateCurrentPageOnScroll);
-});
+// onUnmounted(() => {
+//   window.removeEventListener('scroll', handleScroll);
+//   window.removeEventListener('resize', handleResize);
+//   document.querySelector('.main_content').removeEventListener('scroll', updateCurrentPageOnScroll);
+// });
 </script>
 
 <template>
   <div v-if="url_download" class="view_pdf">
     <div class="header_pdf">
-      <HeaderDeptReport v-if="remainingTime" :num-of-pages="numOfPages" :current-page="currentPage" :remaining-time="calculateTargetDate(remainingTime)" :report-name="reportName"/>
+      <HeaderDeptReport v-if="remainingTime" :num-of-pages="numOfPages" :current-page="currentPage"
+                        :remaining-time="calculateTargetDate(remainingTime)" :report-name="reportName"/>
     </div>
     <div class="container default_section">
       <div class="mini_map">
@@ -180,13 +183,14 @@ onUnmounted(() => {
           <div
               v-for="index in numOfPages"
               :key="index"
-              style="width: 100%; position: relative; padding: 24px;"
-              :style="{'padding-top': index === 1 ? '24px' : 0}"
           >
-            <div style="box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+            <div
+                v-if="index === currentPage"
+                style="width: 100%; position: relative; padding: 24px;box-shadow: 0 0 10px rgba(0,0,0,0.1);"
+            >
               <VuePdf
                   :src="pdfSrc"
-                  :page="index"
+                  :page="currentPage"
                   :num-pages="numOfPages"
                   :enable-text-selection="true"
                   :enable-annotations="true"
@@ -214,16 +218,21 @@ onUnmounted(() => {
 
   .container {
     margin-top: 94px;
-    background: #EEEBFF;
+    //background: #EEEBFF;
     display: flex;
 
     .mini_map {
       flex: 0.1;
       max-height: calc(100vh - 80px);
+      height: fit-content;
       overflow-y: auto;
       background: #FFF;
       padding-right: 24px;
       padding-top: 24px;
+
+      display: flex;
+      flex-direction: column;
+      //gap: 16px;
 
       .mini_map_page {
         position: relative;
@@ -246,7 +255,8 @@ onUnmounted(() => {
     .main_content {
       flex: 0.9;
       max-height: calc(100vh - 80px);
-      overflow-y: auto;
+      //overflow-y: auto;
+      height: fit-content;
 
     }
   }
