@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const {report} = defineProps({
+import { defineEmits, defineProps } from 'vue';
+
+const emit = defineEmits(['updateContact']);
+
+const { report } = defineProps({
   report: {
     type: Object,
     required: true
@@ -22,6 +26,8 @@ function formatDate(dateStr: string): string {
 
 const formattedStartDate = formatDate(report.start_date);
 const formattedEndDate = formatDate(report.end_date);
+
+emit('updateContact', { name: report.name, phone: report.phone });
 </script>
 
 <template>

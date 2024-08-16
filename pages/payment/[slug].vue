@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import OptionPayment from "~/components/payment-service/OptionPayment.vue";
-import {onMounted, ref, watch} from "vue";
-// import TotalPayment from "~/components/payment-service/TotalPayment.vue";
-import {usePayment} from "#imports";
+import { onMounted, ref, watch } from "vue";
+import { usePayment } from "#imports";
 import QRCode from "qrcode.vue";
-import {message} from 'ant-design-vue';
-import {PAGE_TITLES} from "~/constant/constains";
+import { message } from 'ant-design-vue';
+import { PAGE_TITLES } from "~/constant/constains";
 import PackServicePdf from "~/components/payment-service/PackServicePdf.vue";
 import CheckOutPdf from "~/components/payment-service/CheckOutPdf.vue";
 
@@ -13,16 +12,16 @@ const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
-const { createPaymentTransactionPdf, verifyTransaction } = usePayment()
+const { createPaymentTransactionPdf, verifyTransaction, submitLeadInformation } = usePayment();
 const selectedWalletOption = ref('');
 const qrCodeData = ref('');
-// const statusApplyCode = ref<boolean>(false);
 const openModal = ref<boolean>(false);
 const openModalWaiting = ref<boolean>(false);
 const planCode = ref('');
-const route = useRoute()
+const route = useRoute();
 const config = useRuntimeConfig();
 const reportDetail = ref<any>(null);
+const information = ref({ name: '', phone: '', companyName: '' });
 
 interface ErrorResponse {
   response: {
@@ -39,7 +38,7 @@ interface DiscountInfo {
 }
 
 const handleSelectedOption = (selectedOption: string) => {
-  selectedWalletOption.value = selectedOption
+  selectedWalletOption.value = selectedOption;
 };
 
 const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string; discountInfo: DiscountInfo }) => {
@@ -105,6 +104,7 @@ const fetchReportData = async () => {
     return {}
   }
 }
+
 const checkTransactionStatus = async (transactionId: string) => {
   try {
     const response = await verifyTransaction(transactionId);
@@ -125,6 +125,21 @@ const useCheckTransactionCompletion = (transactionId: string) => {
       console.log("Transaction completed");
       openModal.value = false;
       isCompleted.value = true;
+      try {
+        if (userInfo.value.email) {
+          await submitLeadInformation(
+              information.value.name,
+              userInfo.value.email,
+              information.value.phone,
+              information.value.companyName,
+              transactionId
+          );
+        } else {
+          console.error('User email is undefined');
+        }
+      } catch (error) {
+        console.error('error', error);
+      }
       if (intervalId) clearInterval(intervalId);
       window.location.href = `/${route.params.slug}?transaction_id=${transactionId}`;
     }
@@ -145,9 +160,14 @@ const useCheckTransactionCompletion = (transactionId: string) => {
   return { isCompleted };
 };
 
+const handleUpdateContact = (contact: { name: string, phone: string }) => {
+  information.value.name = contact.name;
+  information.value.phone = contact.phone;
+};
+
 onMounted(async() => {
-  await fetchReportData()
-  console.log('reportDetail', reportDetail.value)
+  await fetchReportData();
+  console.log('reportDetail', reportDetail.value);
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/payment/${route.params.slug}`;
@@ -164,14 +184,14 @@ const handleOk = (_e: MouseEvent) => {
 
 useSeoMeta({
   title: PAGE_TITLES.payment
-})
+});
 </script>
 
 <template>
   <div id="payment" class="payment_service">
     <div class="default_section" style="display: flex; padding: 40px 0; gap: 24px;">
       <div class="payment_service_option">
-        <pack-service-pdf v-if="reportDetail" :report="reportDetail"/>
+        <pack-service-pdf v-if="reportDetail" :report="reportDetail" @update-contact="handleUpdateContact"/>
         <option-payment @selected-option="handleSelectedOption" />
       </div>
       <div class="check-out">
