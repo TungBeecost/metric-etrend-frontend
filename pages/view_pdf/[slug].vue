@@ -142,8 +142,6 @@ const handleScroll = () => {
   const scrollTop = window.scrollY;
   const screenWidth = window.innerWidth;
 
-  console.log('headerPdf', headerPdf)
-
   if (screenWidth <= 768) {
     // Mobile-specific behavior
     if (scrollTop > lastScrollTop && scrollTop > 64) {
@@ -296,7 +294,7 @@ onUnmounted(() => {
 
     .main_content {
       flex: 1;
-      max-height: calc(100vh - 80px);
+      //max-height: calc(100vh - 80px);
       //overflow-y: auto;
       height: fit-content;
 

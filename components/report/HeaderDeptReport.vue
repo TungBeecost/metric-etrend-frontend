@@ -54,7 +54,7 @@ onMounted(() => {
     </div>
     <div class="container">
       <div class="title">Nhóm hàng {{reportName}}</div>
-      <div class="page_content" v-if="numOfPages"><b>Trang</b>: {{ currentPage }}/{{ numOfPages }}</div>
+      <div v-if="numOfPages" class="page_content"><b>Trang</b>: {{ currentPage }}/{{ numOfPages }}</div>
       <div class="time">
         <div class="time_title">
           Thời gian truy cập còn lại
