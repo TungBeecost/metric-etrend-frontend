@@ -128,6 +128,7 @@ export default defineNuxtConfig({
         "@nuxt/image",
         "vue3-carousel-nuxt",
         '@zadigetvoltaire/nuxt-gtm',
+        '@nuxtjs/sitemap',
         ["nuxt-highcharts", {}],
         async function () {
             for (const key in AntD) {
@@ -149,5 +150,9 @@ export default defineNuxtConfig({
     },
     gtm: {
         id: 'GTM-MLBXG49P',
+    },
+    site: {
+        url: 'https://ereport.staging.muadee.vn',
+        name: 'eReport',
     },
 });
