@@ -122,9 +122,10 @@ const checkTransactionStatus = async (transactionId: string) => {
   }
 };
 
-const useCheckTransactionCompletion = (transactionId: string) => {
+const useCheckTransactionCompletion = (transactionId: string, timeout: number = 300000) => {
   const isCompleted = ref(false);
   let intervalId: number | undefined = undefined;
+  let timeoutId: number | undefined = undefined;
 
   const checkCompletion = async () => {
     const result = await checkTransactionStatus(transactionId);
@@ -133,11 +134,20 @@ const useCheckTransactionCompletion = (transactionId: string) => {
       openModal.value = false;
       isCompleted.value = true;
       if (intervalId) clearInterval(intervalId);
+      if (timeoutId) clearTimeout(timeoutId);
       window.location.href = `/?transaction_id=${transactionId}`;
     }
   };
 
   intervalId = window.setInterval(checkCompletion, 2000);
+
+  timeoutId = window.setTimeout(() => {
+    if (!isCompleted.value) {
+      console.log("Transaction not completed within the timeout period, redirecting to homepage");
+      if (intervalId) clearInterval(intervalId);
+      window.location.href = '/';
+    }
+  }, timeout);
 
   watch(openModal, (newValue) => {
     if (!newValue && intervalId) {
@@ -147,6 +157,7 @@ const useCheckTransactionCompletion = (transactionId: string) => {
 
   onUnmounted(() => {
     if (intervalId) clearInterval(intervalId);
+    if (timeoutId) clearTimeout(timeoutId);
   });
 
   return { isCompleted };
@@ -162,7 +173,7 @@ onMounted(() => {
   const orderId = route.query.orderId as string;
   if (orderId) {
     openModalWaiting.value = true;
-    useCheckTransactionCompletion(orderId);
+    useCheckTransactionCompletion(orderId, 5000); // 5 seconds timeout
   }
 });
 
