@@ -26,7 +26,7 @@
 
       <div class="block contactForm">
         <div class="title">Liên hệ với chúng tôi</div>
-        <div class="description" style="font-size: 16px">Liên hệ với chúng tôi để thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến ngay bây giờ!</div>
+        <div class="description" style="font-size: 16px">Nắm bắt nhanh nhạy, toàn diện thị trường bán lẻ trực tuyến để xây dựng chiến lược kinh doanh thông minh hơn.</div>
 
         <ContactUsForm :source-name="'eReport'" />
 

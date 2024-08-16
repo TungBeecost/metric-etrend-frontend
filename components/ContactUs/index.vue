@@ -158,9 +158,8 @@ const handleSubmitLeadForm = async () => {
 
     <div class="content default_section">
       <div class="info">
-        <h2 class="header">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</h2>
-        <p class="desc">Thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến thông minh hơn. Ngay
-          bây giờ!</p>
+        <h2 class="header">Truy cập kho dữ liệu với hàng triệu báo cáo TMĐT ngay bây giờ</h2>
+        <p class="desc">Nắm bắt nhanh nhạy, toàn diện thị trường bán lẻ trực tuyến để xây dựng chiến lược kinh doanh thông minh hơn.</p>
       </div>
 
       <a-form ref="leadForm" style="flex: 1; max-width: 450px; margin: auto;" :model="formData" :rules="rules"

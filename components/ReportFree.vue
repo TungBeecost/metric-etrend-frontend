@@ -39,8 +39,8 @@ const {data: lstReport} = await useAsyncData(fetchReport)
 <template>
 <div class="report_free">
   <div class="tile_report_free default_section">
-    <div class="title">Báo cáo miễn phí</div>
-    <div class="content">Truy cập không giới hạn kho báo cáo thị trường Thương mại điện tử miễn phí</div>
+    <div class="title">Báo Cáo Miễn Phí</div>
+    <div class="content">Truy cập ngay lập tức và không giới hạn kho báo cáo thị trường Thương mại điện tử.</div>
   </div>
   <div v-if="lstReport" class="detail_report_free default_section">
     <item-feature-report-free :reports="(lstReport || []).slice(0, 10)"/>

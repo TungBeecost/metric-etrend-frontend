@@ -18,7 +18,7 @@ const props = defineProps({
 <template>
   <div class="poster_detail_report">
     <div class="title">
-      Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất
+      Truy cập kho dữ liệu với hàng triệu báo cáo TMĐT ngay bây giờ
     </div>
     <div class="searchContent">
       <SearchReport class="searchBox"/>

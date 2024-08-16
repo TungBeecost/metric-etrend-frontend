@@ -34,11 +34,10 @@ const {data: lstReport} = await useAsyncData(fetchReport)
   <div class="featured_report">
     <div class="default_section">
       <div class="title_content">
-        <div class="tittle">Báo cáo nổi bật nhất</div>
+        <div class="tittle">Báo Cáo Nổi Bật</div>
         <div class="content">
           <div>
-            Cập nhật ngay những báo cáo xu hướng mới nhất giúp bạn nắm bắt kịp thời biến động thị trường và đưa ra quyết
-            định đầu tư chính xác.
+            Khám phá ngay các báo cáo đón đầu xu hướng bán hàng hiện nay giúp bạn nắm bắt kịp thời biến động thị trường và đưa ra quyết định đầu tư chính xác.
           </div>
         </div>
       </div>

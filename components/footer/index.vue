@@ -4,8 +4,7 @@
       <!-- introduce -->
       <div class="info introduce">
         <NuxtImg src="/images/Logo-black.svg" width="186" height="36" />
-        <p style="font-size: 16px">Metric là Nền tảng Số liệu Thương mại Điện tử dành cho Doanh nghiệp, Thương hiệu và Nhà bán. Metric tạo ra báo cáo phân tích dữ liệu thị trường chỉ trong 30 giây, giúp việc thực thi và ra
-          quyết định kinh doanh nhanh hơn 5 lần.</p>
+        <p style="font-size: 16px">Hơn 1.000.000 báo cáo thị trường sàn eCommerce sử dụng nguồn cơ sở dữ liệu Big Data ứng dụng AI của Metric, được thiết kế dành riêng cho cá nhân, nhà bán và doanh nghiệp nhỏ. Chỉ mất 5 giây nhấp chuột để nắm được tổng quan tình hình thị trường, giúp việc đưa ra quyết định kinh doanh chính xác và nhanh hơn 5 lần.</p>
         <NuxtImg src="/images/gov-mark.png" width="176" height="67" />
       </div>
 

@@ -350,18 +350,18 @@ export const LIST_REPORT_TYPES = [
     icon: "Industry",
     value: "report_category",
     title: 'Báo cáo ngành hàng',
-    content: 'Cung cấp thông tin chi tiết về doanh số và sản lượng bán hàng của các sản phẩm theo từng ngành hàng trên các sàn'
+    content: 'Cung cấp các thông tin về ngành hàng lớn trên sàn TMĐT như Làm đẹp, Thời trang,... Giúp doanh nghiệp xác định dung lượng và tiềm năng thị trường để xây dựng và thực thi kế hoạch kinh doanh.'
   },
   {
     icon: "Commodity",
     value: "report_product_line",
     title: 'Báo cáo nhóm hàng',
-    content: 'Cung cấp thông tin chi tiết về doanh số và sản lượng bán hàng của các sản phẩm theo từng nhóm hàng trên các sàn'
+    content: 'Phân tích thông tin thị trường theo nhóm hàng. Là nguồn dữ liệu (insights) giá trị giúp nhà bán thấu hiểu hành vi khách hàng đối với từng nhóm sản phẩm cụ thể.'
   },
   {
     icon: "Other",
     value: "other",
     title: 'Báo cáo khác',
-    content: 'Cung cấp số liệu và xu hướng thị trường sàn thương mại điện tử được thực hiện định kỳ theo các tiêu chí khác'
+    content: 'Báo cáo định kỳ phân tích về hành vi khách hàng, các xu hướng thị trường mới và cơ hội tiềm năng, giúp doanh nghiệp mở rộng góc nhìn và tận dụng cơ hội kinh doanh.'
   }
 ]

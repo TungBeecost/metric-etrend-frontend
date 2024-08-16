@@ -164,16 +164,15 @@ onMounted(() => {
   };
 
   window.addEventListener('scroll', handleScroll);
-  window.addEventListener('resize', handleResize); // Add resize listener
+  window.addEventListener('resize', handleResize);
   handleScroll();
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
-  window.removeEventListener('resize', handleResize); // Remove resize listener
+  window.removeEventListener('resize', handleResize);
 });
 
-// Watch for route changes to update header color
 watch(() => route.path, () => {
   recheckHeader();
 });

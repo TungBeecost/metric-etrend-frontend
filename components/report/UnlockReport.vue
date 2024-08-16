@@ -34,7 +34,7 @@ onMounted(() => {
 <template>
   <div class="unlock-report">
     <div class="unlock-report-title">
-      Truy cập kho dữ liệu với hàng trăm báo cáo mới nhất
+      Truy cập kho dữ liệu với hơn 1.000.000 báo cáo thị trường
     </div>
     <div class="advantages">
       <div class="advantage-item">
@@ -69,7 +69,7 @@ onMounted(() => {
             </defs>
           </svg>
         </div>
-        Thông tin trực quan, dễ theo dõi
+        Đa dạng ngành hàng, nhóm hàng
       </div>
       <div class="advantage-item">
         <div class="icon">
@@ -86,7 +86,7 @@ onMounted(() => {
             </defs>
           </svg>
         </div>
-        Dễ dàng lưu trữ
+        Thông tin trực quan, dễ theo dõi
       </div>
     </div>
     <div class="action-btns">
