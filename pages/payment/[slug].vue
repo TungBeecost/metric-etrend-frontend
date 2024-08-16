@@ -246,6 +246,9 @@ useSeoMeta({
   background-color: #FBFAFC;
 
   .payment_service_option{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
     flex: 0.7;
   }
 
@@ -254,6 +257,7 @@ useSeoMeta({
     flex-direction: column;
     gap: 24px;
     flex: 0.3;
+    height: 100%;
   }
 }
 
