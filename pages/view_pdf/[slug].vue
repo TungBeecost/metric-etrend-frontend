@@ -45,9 +45,9 @@ const handleResize = () => {
   isMobile.value = window.innerWidth <= 1380;
 };
 
-const handleScroll = () => {
-  isScrolled.value = window.scrollY > 0;
-};
+// const handleScroll = () => {
+//   isScrolled.value = window.scrollY > 0;
+// };
 
 const scrollToPage = (pageIndex) => {
   currentPage.value = pageIndex;
@@ -133,6 +133,42 @@ watch(numOfPages, () => {
   }, 100);
 });
 
+
+let lastScrollTop = 0;
+
+const handleScroll = () => {
+  const headerPdf = document.querySelector('.header_pdf');
+
+  const scrollTop = window.scrollY;
+  const screenWidth = window.innerWidth;
+
+  console.log('headerPdf', headerPdf)
+
+  if (screenWidth <= 768) {
+    // Mobile-specific behavior
+    if (scrollTop > lastScrollTop && scrollTop > 64) {
+      if (headerPdf) headerPdf.style.top = '88px';
+    } else {
+      if (headerPdf) headerPdf.style.top = '120px';
+    }
+  } else if (screenWidth <= 1380) {
+    if (scrollTop > lastScrollTop && scrollTop > 40) {
+      if (headerPdf) headerPdf.style.top = '88px';
+    } else {
+      if (headerPdf) headerPdf.style.top = '120px';
+    }
+  } else {
+    if (scrollTop > lastScrollTop && scrollTop > 33) {
+      if (headerPdf) headerPdf.style.top = '88px';
+    } else {
+      if (headerPdf) headerPdf.style.top = '120px';
+    }
+  }
+
+  lastScrollTop = scrollTop;
+};
+
+
 onMounted(() => {
   if (!currentUserStore.authenticated) {
     currentUserStore.setShowPopupLogin(true);
@@ -140,7 +176,17 @@ onMounted(() => {
   }
   const slug = route.params.slug;
   getReportPdfUrl(slug);
+
+  window.addEventListener('scroll', handleScroll);
+//   window.addEventListener('resize', handleResize); // Add resize listener
+  handleScroll();
 });
+//
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+//   window.removeEventListener('resize', handleResize); // Remove resize listener
+});
+
 </script>
 
 <template>
@@ -203,7 +249,8 @@ onMounted(() => {
 .view_pdf {
   .header_pdf {
     position: fixed;
-    top: 120px;
+    background: #FFF;
+    padding-top: 8px;
     z-index: 20;
     transition: top 0.3s;
     border-bottom: 1px solid #EEEBFF;
