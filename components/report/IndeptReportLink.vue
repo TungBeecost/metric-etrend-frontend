@@ -36,7 +36,7 @@ onMounted(() => {
    <div class="container">
     <div class="title_container">
       <p style="text-align: center; color: #E85812; font-size: 24px; font-weight: 700; line-height: 32px">Báo cáo chuyên sâu</p>
-      <p style="text-align: center; color: #050038; font-size: 14px; font-weight: 600; line-height: 20px">Nhóm hàng Dép Nam</p>
+      <p style="text-align: center; color: #050038; font-size: 14px; font-weight: 600; line-height: 20px">Nhóm hàng {{data.name}}</p>
     </div>
      <div class="content_container">
        <div class="content_item">
@@ -50,7 +50,7 @@ onMounted(() => {
              </clipPath>
            </defs>
          </svg>
-         <span>Số liệu chi tiết về thị trường Dép Nam trên Shopee, Lazada, Tiki</span>
+         <span>Số liệu chi tiết về thị trường {{data.name}} trên Shopee, Lazada, Tiki</span>
        </div>
        <div class="content_item">
          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
