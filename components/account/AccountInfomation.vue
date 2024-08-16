@@ -49,7 +49,7 @@ const handleClickPlan = () => {
             <div class="detail_info_value">{{ props.userInfo.current_plan.remain_claim || 0 }} lượt</div>
           </div>
           <div class="account_detail_item">
-            <div class="detail_info_title">Số lượt xem báo cáo chuyện sâu</div>
+            <div class="detail_info_title">Số lượt xem báo cáo chuyên sâu</div>
             <div class="detail_info_value">{{ props.userInfo.current_plan.remain_claim_pdf || 0 }} lượt</div>
           </div>
         </div>

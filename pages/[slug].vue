@@ -194,8 +194,6 @@ onUnmounted(() => {
     </div>
     <div class="container default_section">
       <div class="general_overview_container">
-        {{data.reportDetail.category_report_id}}
-
         <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
@@ -205,7 +203,7 @@ onUnmounted(() => {
       </div>
       <div class="different_info">
         <unlock-report v-if="!userInfo.current_plan.plan_code || userInfo.current_plan.plan_code === 'e_community'" :data="data.reportDetail" :check-level-category="checkLevelCategory"/>
-        <indept-report-link v-if="userInfo.current_plan.remain_claim_pdf && data.reportDetail && !checkLevelCategory" :slug="route.params.slug" :data="data.reportDetail"/>
+        <indept-report-link v-if="userInfo.current_plan.remain_claim_pdf !== null && data.reportDetail && !checkLevelCategory" :slug="route.params.slug" :data="data.reportDetail"/>
         <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
         <report-content :data="data?.reportDetail"/>
         <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>
