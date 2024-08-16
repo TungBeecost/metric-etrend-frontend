@@ -11,7 +11,7 @@ export const NAVIGATIONS = {
   signIn: "/sign-in",
   informationPolicy: "/chinh-sach-bao-mat-thong-tin",
   paymentMethod: "/hinh-thuc-thanh-toan",
-  refundPolicy: "/chinh-sach-doi-tra-san-pham",
+  // refundPolicy: "/chinh-sach-doi-tra-san-pham",
   placeOrderPolicy: "/chinh-sach-dat-hang",
   commonTerm: "/dieu-kien-giao-dich-chung"
 };
@@ -286,10 +286,10 @@ export const TERM_AND_POLICIES = [
   //   label: "Hình thức thanh toán",
   //   link: NAVIGATIONS.paymentMethod
   // },
-  {
-    label: "Chính sách đổi trả sản phẩm",
-    link: NAVIGATIONS.refundPolicy
-  },
+  // {
+  //   label: "Chính sách đổi trả sản phẩm",
+  //   link: NAVIGATIONS.refundPolicy
+  // },
   {
     label: "Chính sách đặt hàng",
     link: NAVIGATIONS.placeOrderPolicy
