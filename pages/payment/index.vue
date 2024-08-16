@@ -143,9 +143,9 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
 
   timeoutId = window.setTimeout(() => {
     if (!isCompleted.value) {
-      console.log("Transaction not completed within the timeout period, redirecting to homepage");
+      console.log("Transaction not completed within the timeout period, redirecting to payment page");
       if (intervalId) clearInterval(intervalId);
-      window.location.href = '/';
+      window.location.href = `/payment/${planCode.value}`;
     }
   }, timeout);
 
@@ -173,7 +173,7 @@ onMounted(() => {
   const orderId = route.query.orderId as string;
   if (orderId) {
     openModalWaiting.value = true;
-    useCheckTransactionCompletion(orderId, 5000); // 5 seconds timeout
+    useCheckTransactionCompletion(orderId, 3000); // 5 seconds timeout
   }
 });
 

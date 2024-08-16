@@ -151,9 +151,9 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
 
   timeoutId = window.setTimeout(() => {
     if (!isCompleted.value) {
-      console.log("Transaction not completed within 10 minutes, redirecting to homepage");
+      console.log("Transaction not completed within 10 minutes, redirecting to payment page");
       if (intervalId) clearInterval(intervalId);
-      window.location.href = '/';
+      window.location.href = `/payment/${route.params.slug}`;
     }
   }, timeout);
 
@@ -170,6 +170,7 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
 
   return { isCompleted };
 };
+
 const handleUpdateContact = (contact: { name: string, phone: string }) => {
   information.value.name = contact.name;
   information.value.phone = contact.phone;
@@ -184,7 +185,7 @@ onMounted(async () => {
   const orderId = route.query.orderId as string;
   if (orderId) {
     openModalWaiting.value = true;
-    useCheckTransactionCompletion(orderId, 5000);
+    useCheckTransactionCompletion(orderId, 3000);
   }
 });
 
@@ -257,7 +258,6 @@ useSeoMeta({
     flex-direction: column;
     gap: 24px;
     flex: 0.3;
-    height: 100%;
   }
 }
 
