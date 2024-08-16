@@ -9,8 +9,14 @@
 
 <script setup lang="ts">
 import { TERM_AND_POLICIES } from '~/constant/constains';
+import { useRouter, useRoute } from 'vue-router';
 
 const { path } = useRoute();
+const router = useRouter();
+
+function navigateTo(link: string) {
+  router.push(link);
+}
 </script>
 
 <style lang="scss" scoped>
