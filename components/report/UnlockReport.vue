@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import {useCurrentUser} from "~/stores/current-user"
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
-import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
+import {useRoute} from "#vue-router";
 
 const currentUserStore = useCurrentUser();
 const open = ref(false);
 const showUnlock = ref(false);
-
-const prosp = defineProps({
+const route = useRoute();
+const props = defineProps({
   data: {
     type: Object,
     default: () => ({}),
@@ -22,6 +22,13 @@ const prosp = defineProps({
 const openModal = () => {
   open.value = true;
 };
+
+onMounted(() => {
+  if (route.query.download === "1") {
+    open.value = true;
+  }
+});
+
 </script>
 
 <template>
