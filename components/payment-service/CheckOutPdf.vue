@@ -33,11 +33,8 @@ const handleFinalPrice = (price: number) => {
 };
 
 const handlePayment = () => {
-  const nameRegex = /^[a-zA-Z\s]+$/;
   if (!nameValue.value) {
     errors.value.name = 'Bạn cần nhập tên của mình để thanh toán';
-  } else if (!nameRegex.test(nameValue.value)) {
-    errors.value.name = 'Tên chỉ được chứa chữ cái và khoảng trắng';
   } else {
     errors.value.name = '';
   }

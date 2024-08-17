@@ -104,7 +104,7 @@ const handleView = async () => {
     return;
   }
   emits('update:open', false);
-  if(props.data.is_report_pdf_valid && !props.data.can_download) {
+  if(props.data.is_report_pdf_valid && props.data.can_view) {
     navigateTo(`${NAVIGATIONS.home}view_pdf/${route.params.slug}`);
   }
   else{
