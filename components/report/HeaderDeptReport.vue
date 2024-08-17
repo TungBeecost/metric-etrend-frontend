@@ -115,6 +115,36 @@ onMounted(() => {
       }
     }
   }
+}
+@media (max-width: 768px) {
+  .header-dept-report{
+    .container{
+      .title{
+        font-size: 20px;
+        line-height: 28px;
+        flex: 0.5;
+      }
 
+      .page_content{
+        display: none;
+      }
+
+      .time{
+        flex-direction: column;
+        flex: 0.5;
+
+        .time_title{
+          font-size: 10px;
+          line-height: 14px;
+          font-weight: bold;
+        }
+
+        .countdown_time{
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+    }
+  }
 }
 </style>

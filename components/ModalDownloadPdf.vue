@@ -183,10 +183,11 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
   </a-modal>
   <view-pdf-modal v-model:showAlert="showAlert"/>
 </template>
+
+
 <style scoped lang="scss">
 .noti_view_dept_report {
   display: flex;
-
   padding: 16px;
 
   .slide_thumbnail {
@@ -200,14 +201,12 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
     display: flex;
     flex: 0.4;
     flex-direction: column;
-
     justify-content: center;
 
     .title_container {
       display: flex;
       flex-direction: column;
       gap: 20px;
-
       margin-bottom: 50px;
 
       .title_report {
@@ -274,7 +273,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
 
       .note {
         color: #716B95;
-        font-size: 14px;
+        font-size: 12px;
         font-weight: 400;
         text-align: center;
       }
@@ -298,6 +297,83 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
         text-align: center;
       }
     }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+
+    .slide_thumbnail, .summary {
+      flex: 1;
+      width: 100%;
+    }
+
+    .summary {
+      .title_container{
+        margin-bottom: 32px;
+      }
+    }
+
+    .title_container {
+      gap: 10px;
+      margin-bottom: 20px;
+
+      .title_report {
+        font-size: 24px;
+      }
+
+      div {
+        gap: 8px;
+
+        p {
+          font-size: 18px;
+        }
+
+        ul {
+          li {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+    .payment_container {
+      gap: 8px;
+
+      .price {
+        gap: 4px;
+
+        .price_real {
+          font-size: 28px;
+        }
+
+        .price_discount {
+          font-size: 12px;
+        }
+      }
+
+      .note {
+        font-size: 12px;
+      }
+    }
+
+    .button_group {
+      width: 100%;
+      gap: 4px;
+    }
+
+    .wallet_info {
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .noti_view_dept_report{
+    margin-top: 16px;
+    gap: 24px;
   }
 }
 </style>

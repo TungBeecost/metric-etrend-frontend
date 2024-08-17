@@ -254,6 +254,7 @@ const charts = computed(() => {
 #thong-ke-thuong-hieu {
   font-family: "Montserrat", sans-serif;
   color: #333;
+  height: 100%;
 
   .main-slide {
     width: 100%;

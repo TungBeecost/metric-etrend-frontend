@@ -1,9 +1,9 @@
 <script setup>
-import {onMounted, ref} from 'vue';
-import {createLoadingTask, VuePdf} from 'vue3-pdfjs';
+import { onMounted, ref } from 'vue';
+import { createLoadingTask, VuePdf } from 'vue3-pdfjs';
 import axios from 'axios';
 import HeaderDeptReport from '~/components/report/HeaderDeptReport.vue';
-import {useCurrentUser} from '~/stores/current-user.js';
+import { useCurrentUser } from '~/stores/current-user.js';
 
 const config = useRuntimeConfig();
 const url_download = ref({});
@@ -112,8 +112,8 @@ const handleScroll = () => {
 
   if (screenWidth <= 768) {
     // Mobile-specific behavior
-    if (scrollTop > lastScrollTop && scrollTop > 64) {
-      if (headerPdf) headerPdf.style.top = '88px';
+    if (scrollTop > lastScrollTop && scrollTop > 88) {
+      if (headerPdf) headerPdf.style.top = '58px';
     } else {
       if (headerPdf) headerPdf.style.top = '120px';
     }
@@ -152,7 +152,6 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 //   window.removeEventListener('resize', handleResize); // Remove resize listener
 });
-
 </script>
 
 <template>
@@ -210,7 +209,6 @@ onUnmounted(() => {
   </div>
 </template>
 
-
 <style scoped lang="scss">
 .view_pdf {
   .header_pdf {
@@ -225,7 +223,6 @@ onUnmounted(() => {
 
   .container {
     margin-top: 94px;
-    //background: #EEEBFF;
     display: flex;
 
     .mini_map {
@@ -237,22 +234,16 @@ onUnmounted(() => {
       padding-right: 24px;
       padding-top: 24px;
 
-      //display: flex;
-      //flex-direction: column;
-      //gap: 16px;
-
       .mini_map_page {
         position: relative;
         border: 1px solid #FFF;
         cursor: pointer;
         padding: 0;
 
-
         &.active {
           border: 2px solid #E85912;
         }
       }
-
 
       div {
         cursor: pointer;
@@ -262,10 +253,7 @@ onUnmounted(() => {
 
     .main_content {
       flex: 1;
-      //max-height: calc(100vh - 80px);
-      //overflow-y: auto;
       height: fit-content;
-
     }
   }
 
@@ -274,6 +262,28 @@ onUnmounted(() => {
 
     div {
       background: #EEEBFF;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .view_pdf {
+    .container {
+      flex-direction: column;
+
+      .mini_map {
+        width: 100%;
+        height: 100%;
+        padding-right: 0;
+
+        .mini_map_page{
+          height: 100% !important;
+        }
+      }
+
+      .main_content {
+        display: none;
+      }
     }
   }
 }
@@ -289,5 +299,16 @@ onUnmounted(() => {
     border-radius: 4px;
   }
 
+  @media (max-width: 768px) {
+    .vue-pdf__wrapper {
+      border: 1px solid #EEEBFF;
+      border-radius: 4px;
+
+      canvas {
+        height: auto !important; /* Change height to auto to prevent overlapping */
+        border-radius: 4px;
+      }
+    }
+  }
 }
 </style>
