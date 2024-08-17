@@ -10,7 +10,6 @@ const url_download = ref({});
 const route = useRoute();
 const router = useRouter();
 
-const isScrolled = ref(false);
 const isLoading = ref(false);
 const loadingPercentage = ref(0);
 const pdfSrc = ref('');
@@ -41,44 +40,14 @@ const fetchPdf = async (newValue) => {
   isLoading.value = false;
 };
 
-const handleResize = () => {
-  isMobile.value = window.innerWidth <= 1380;
-};
-
-// const handleScroll = () => {
-//   isScrolled.value = window.scrollY > 0;
-// };
-
 const scrollToPage = (pageIndex) => {
   currentPage.value = pageIndex;
 };
 
-const updateCurrentPageOnScroll = () => {
-  const mainContent = document.querySelector('.main_content');
-  const pageElements = mainContent.querySelectorAll('.container_content > div');
-  pageElements.forEach((pageElement, index) => {
-    const rect = pageElement.getBoundingClientRect();
-    if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-      currentPage.value = index + 1;
-    }
-  });
-};
-
-// watch(currentPage, (newPage) => {
-//   const miniMapPages = document.querySelectorAll('.mini_map_page');
-//   miniMapPages.forEach((page, index) => {
-//     if (index + 1 === newPage) {
-//       page.classList.add('active');
-//     } else {
-//       page.classList.remove('active');
-//     }
-//   });
-// });
-
 const downloading = ref(false);
 
 const getReportPdfUrl = async (slug) => {
-  const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${slug}`;
+  const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${slug}&type=view`;
 
   const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
   try {

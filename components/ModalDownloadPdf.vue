@@ -38,7 +38,7 @@ const handleDownload = async () => {
   }
 
   if (props.data.can_download) {
-    const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${props.data.slug}`;
+    const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${props.data.slug}&type=download`;
 
     const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
     try {
@@ -97,7 +97,6 @@ const handleDownload = async () => {
   const slug = route.params.slug;
   navigateTo(`${NAVIGATIONS.payment}/${slug}`);
 };
-
 const handleView = async () => {
   if (!currentUserStore.authenticated) {
     currentUserStore.setShowPopupLogin(true);
