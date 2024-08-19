@@ -24,7 +24,12 @@ const getPlatformIdFromProductBaseId = (productBaseId: string) => {
   return parseInt(productBaseId.split('__')[0], 10);
 }
 
-// const emits = defineEmits(['showProductHistory']);
+const displayPrice = computed(() => {
+  if (props.product.price_min === null && props.product.price_max === null) {
+    return formatCurrency(props.product.price);
+  }
+  return `${formatCurrency(props.product.price_min)} - ${formatCurrency(props.product.price_max)}`;
+});
 
 const $t = (text: string) => text;
 const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
@@ -122,12 +127,7 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
 
           <div>
             <span class="statistic-name">{{ $t('Giá trong phân loại hàng') }}: </span>
-            <span v-if="props.product.price_min !== props.product.price_max" class="value">
-              {{ formatCurrency(props.product.price_min) }} - {{ formatCurrency(props.product.price_max) }}
-            </span>
-            <span v-else class="value">
-            {{ formatCurrency(props.product.price_min) }}
-            </span>
+            <span class="value">{{ displayPrice }}</span>
           </div>
         </div>
         <div class="product-statistic-info-item">

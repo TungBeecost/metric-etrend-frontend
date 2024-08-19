@@ -1,5 +1,5 @@
 <script setup>
-import {defineProps} from 'vue';
+import { defineProps } from 'vue';
 
 const props = defineProps({
   data: {
@@ -11,11 +11,6 @@ const props = defineProps({
     default: true,
   },
 });
-
-const formatNumber = (value = 0) => {
-  const formatWithLocale = (val) => val.toLocaleString("vi-VN");
-  return formatWithLocale(value);
-};
 </script>
 
 <template>
@@ -137,13 +132,13 @@ const formatNumber = (value = 0) => {
       <li>
         Về số sản phẩm đã bán, thương hiệu dẫn đầu là
         <BlurContent :is-blurred="props.isHideContent">
-          {{ props.data.data_analytic.by_brand.lst_top_brand_revenue[0].name }}
+          {{ props.data.data_analytic.by_brand.lst_top_brand_sale[0].name }}
         </BlurContent>
         các thương hiệu
-        <BlurContent v-for="(brand, index) in props.data.data_analytic.by_brand.lst_top_brand_revenue.slice(1)"
+        <BlurContent v-for="(brand, index) in props.data.data_analytic.by_brand.lst_top_brand_sale.slice(1)"
                      :key="brand.name"
                      :is-blurred="props.isHideContent">
-          {{ brand.name }}<span v-if="index !== props.data.data_analytic.by_brand.lst_top_brand_revenue.length - 2">,
+          {{ brand.name }}<span v-if="index !== props.data.data_analytic.by_brand.lst_top_brand_sale.length - 2">,
           </span>
         </BlurContent>
         lần lượt giữ vị trí tiếp theo.
@@ -151,7 +146,6 @@ const formatNumber = (value = 0) => {
     </InsightBlock>
   </div>
 </template>
-
 <style lang="scss">
 #thong-ke-thuong-hieu {
   .ant-table {

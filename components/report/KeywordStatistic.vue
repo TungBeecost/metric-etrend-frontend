@@ -21,7 +21,7 @@ const top5KeywordsByRevenue = computed(() => {
   return [
     ...data.data_analytic.by_keyword.lst_keyword
   ].sort((a, b) => b.revenue - a.revenue)
-      .slice(5)
+      .slice(0, 5)
       .map(({name, ...rest}) => ({
         // upper case first letter
         name: name.charAt(0).toUpperCase() + name.slice(1),
@@ -37,7 +37,7 @@ const top5KeywordsBySale = computed(() => {
   return [
     ...data.data_analytic.by_keyword.lst_keyword
   ].sort((a, b) => b.sale - a.sale)
-      .slice(5)
+      .slice(0, 5)
       .map(({name, ...rest}) => ({
         // upper case first letter
         name: name.charAt(0).toUpperCase() + name.slice(1),

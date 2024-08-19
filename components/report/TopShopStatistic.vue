@@ -163,12 +163,11 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
         },
       ]"
           :pagination="false"
-          :data-source="props.data.data_analytic.by_shop.lst_shop.slice(10).map((shop, index) => ({...shop, stt: index + 1}))"
+          :data-source="props.data.data_analytic.by_shop.lst_shop.slice(0, 10).map((shop, index) => ({...shop, stt: index + 1}))"
       >
         <template #platform="{record}">
           <div class="platform-column">
             <img :src="getPlatformById(record.platform_id).urlLogo" class="platform-icon"/>
-            <!--          <span>{{ getPlatformById(record.platform_id).name }}</span>-->
           </div>
         </template>
         <template #shop="{record}">

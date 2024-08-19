@@ -128,7 +128,7 @@ const itemsToShow = computed(() => {
             </div>
             <div class="description line-clamp__2" style="text-align: left;">
               Thương hiệu bán chạy:
-              {{ report.lst_brand?.slice(5)?.join(', ') }}.
+              {{ report.lst_brand?.slice(0, 5)?.join(', ') }}.
             </div>
           </div>
         </div>
