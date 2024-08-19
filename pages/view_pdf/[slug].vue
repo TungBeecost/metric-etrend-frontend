@@ -161,7 +161,13 @@ onUnmounted(() => {
 <template>
   <div v-if="url_download">
     <div v-if="isMobileDevice">
-      <div v-if="isLoading"></div>
+      <div class="header_pdf">
+        <HeaderDeptReport v-if="remainingTime" :num-of-pages="numOfPages" :current-page="currentPage"
+                          :remaining-time="calculateTargetDate(remainingTime)" :report-name="reportName"/>
+      </div>
+      <div v-if="isLoading">
+        <a-spin size="large"/>
+      </div>
       <div v-else style="width: 100%;">
         <div style="width:100%;" class="pdf-wrapper">
           <div v-for="index in numOfPages" style="width: 100%;position: relative;">
@@ -329,6 +335,7 @@ onUnmounted(() => {
 }
 
 .pdf-wrapper {
+
   position: relative;
 
   padding: 16px;
@@ -374,7 +381,15 @@ onUnmounted(() => {
     transform: translateY(-50%);
   }
 }
-
+.header_pdf {
+  position: fixed;
+  background: #FFF;
+  padding-top: 8px;
+  z-index: 20;
+  transition: top 0.3s;
+  border-bottom: 1px solid #EEEBFF;
+  width: 100%;
+}
 @media (max-width: 768px) {
   .view_pdf {
     .container {
