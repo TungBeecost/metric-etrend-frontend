@@ -165,10 +165,10 @@ onUnmounted(() => {
         <HeaderDeptReport v-if="remainingTime" :num-of-pages="numOfPages" :current-page="currentPage"
                           :remaining-time="calculateTargetDate(remainingTime)" :report-name="reportName"/>
       </div>
-      <div v-if="isLoading">
+      <div v-if="isLoading" style="margin-top: 125px; display: flex; justify-content: center">
         <a-spin size="large"/>
       </div>
-      <div v-else style="width: 100%;">
+      <div v-else style="width: 100%; margin-top: 125px">
         <div style="width:100%;" class="pdf-wrapper">
           <div v-for="index in numOfPages" style="width: 100%;position: relative;">
             <VuePdf
