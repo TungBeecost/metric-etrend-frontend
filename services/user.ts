@@ -1,4 +1,4 @@
-import { USER_ENDPOINTS } from "../constant/endpoints";
+import { USER_ENDPOINTS } from "~/constant/endpoints";
 import axios from "./axios-wrapper";
 
 interface ProfileRes {
@@ -16,9 +16,7 @@ interface CurrentPlan {
   plan_name: string;
   plan_code: string;
   remain_claim: number;
-  remain_claim_basic: number;
-  remain_claim_pro: number;
-  remain_claim_expert: number;
+  remain_claim_pdf: number;
 }
 
 export const fetchUserProfile = async () => {

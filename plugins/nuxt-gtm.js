@@ -1,15 +1,23 @@
-import {createGtm} from '@gtm-support/vue-gtm'
+import { defineNuxtPlugin } from '#app'
+import { createGtm } from '@gtm-support/vue-gtm'
 
-export default defineNuxtPlugin((nuxtApp) => {
-    if (useRuntimeConfig().public.appEnv !== 'production') return
-    nuxtApp.vueApp.use(createGtm({
+export default defineNuxtPlugin(nuxtApp => {
+    const gtmConfig = {
         id: 'GTM-MLBXG49P',
+        queryParams: {
+            gtm_auth: process.env.GTM_AUTH,
+            gtm_preview: process.env.GTM_PREVIEW,
+            gtm_cookies_win: 'x',
+        },
+        source: 'https://www.googletagmanager.com/gtm.js',
         defer: false,
         compatibility: false,
+        nonce: '2726c7f26c',
         enabled: true,
         debug: true,
         loadScript: true,
-        vueRouter: useRouter(),
-        trackOnNextTick: false,
-    }))
+        vueRouter: nuxtApp.$router,
+    }
+
+    nuxtApp.vueApp.use(createGtm(gtmConfig))
 })

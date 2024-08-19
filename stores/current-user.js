@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {fetchUnlockReport} from "~/services/reports";
+import {fetchPdfReport, fetchUnlockReport} from "~/services/reports";
 import useBEEndpoint from "~/composables/useBEEndpoint";
 import {AUTH_ENDPOINTS} from "~/constant/endpoints";
 import jwt_decode from "jwt-decode";
@@ -33,9 +33,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
                     plan_name: undefined,
                     plan_code: undefined,
                     remain_claim: undefined,
-                    remain_claim_basic: undefined,
-                    remain_claim_pro: undefined,
-                    remain_claim_expert: undefined
+                    remain_claim_pdf: undefined,
                 },
             },
         }
@@ -43,6 +41,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
     getters: {
         isShowPopupLogin: (state) => state.showPopupLogin,
         remainingUnlock: (state) => state.userInfo.current_plan.remain_claim,
+        remainingUnlockPdf: (state) => state.userInfo.current_plan.remain_claim_pdf,
         authenticated: (state) => state.userInfo.id !== undefined,
     },
     actions: {
@@ -88,6 +87,10 @@ export const useCurrentUser = defineStore("currentUserStore", {
         async unlockReport(slug) {
             // call BE to verify & update state
             await fetchUnlockReport(slug);
+        },
+        async viewPdfReport(slug) {
+            // call BE to verify & update state
+            await fetchPdfReport(slug);
         },
         logOut() {
             console.log("Logging out");

@@ -2,52 +2,59 @@
 import {onMounted, ref} from 'vue';
 import {NAVIGATIONS} from "~/constant/constains";
 import {useCurrentUser} from "~/stores/current-user.js"
+import {useRoute} from "vue-router";
 
 const isDesktop = ref(true);
-
-const {showUnlock, report} = defineProps({
-  showUnlock: {
+const route = useRoute();
+const {showAlert} = defineProps({
+  showAlert: {
     type: Boolean,
     default: false
   },
-  report: {
-    type: Object,
-    required: true
+  isReportPdfValid: {
+    type: Boolean,
+    default: false
   }
 });
 onMounted(() => {
   isDesktop.value = window?.innerWidth >= 768;
 });
 
-const emits = defineEmits(["update:showUnlock"]);
+const emits = defineEmits(["update:showAlert"]);
 
 
 const currentUser = useCurrentUser();
 
 const loading = ref(false);
 
-const unlockReport = async () => {
+message.config({
+  top: '100px',
+  duration: 2,
+  maxCount: 3,
+});
+
+const handleView = async () => {
   try {
     loading.value = true;
-
-    await currentUser.unlockReport(report.slug);
+    await currentUser.viewPdfReport(route.params.slug);
     loading.value = false;
-    reloadNuxtApp();
+    emits('update:showAlert', false);
+    message.success('Link báo cáo sẽ được gửi qua email trong 5 phút');
   } catch (e) {
     loading.value = false;
-    console.log(e)
+    console.log(e);
   }
-}
+};
 
 const toggleUnlock = () => {
-  emits('update:showUnlock', false);
+  emits('update:showAlert', false);
 }
 
 </script>
 
 <template>
   <a-modal
-      :visible="showUnlock"
+      :visible="showAlert"
       :footer="null"
       @cancel="toggleUnlock"
       @ok="toggleUnlock"
@@ -55,44 +62,20 @@ const toggleUnlock = () => {
     <div class="unlock-report-modal">
       <div v-if="currentUser.remainingUnlock">
         <div style="text-align: center;">
-          <NuxtImg src="/images/Unlock-Document.png" class="unlock-icon"/>
+          <NuxtImg src="/icons/DeptReportAlert.svg" class="unlock-icon"/>
         </div>
 
         <div class="content">
-          <div class="remaining-unlock">
-            Số lượt xem hiện tại: {{ currentUser.remainingUnlock }}
-          </div>
           <div class="header">Xác nhận xem báo cáo</div>
           <div class="description">
-            Bạn có chắc chắn muốn sử dụng
-            <span class="highlight" style="font-size: 16px">01 lượt xem</span>
-            trong vòng 24 giờ cho
-            <span class="report-name" style="font-size: 16px">
-              {{ report.name }} - Báo cáo xu hướng thị trường sàn TMĐT
-            </span>
-            không?
-          </div>
-        </div>
-      </div>
-      <div v-else>
-        <div style="text-align: center;">
-          <NuxtImg src="/images/Unlock-Document-faded.svg" class="unlock-icon"/>
-        </div>
-
-        <div class="content">
-          <div class="remaining-unlock">
-            Số lượt xem hiện tại: {{ currentUser.remainingUnlock }}
-          </div>
-          <div class="header">Hết lượt xem báo cáo</div>
-          <div class="description">
-            Mua thêm gói dịch vụ để tiếp tục xem báo cáo chi tiết
+            Bạn có chắc chắn muốn sử dụng xem Báo cáo chuyên sâu <b>trong vòng 7 ngày </b> không?
           </div>
         </div>
       </div>
       <div class="unlock-report-modal-footer">
         <AButton style="width: 100%;" size="large" class="optionBtn" @click="toggleUnlock">Huỷ</AButton>
         <AButton v-if="currentUser.remainingUnlock" style="width: 100%;" size="large" type="primary" class="optionBtn"
-                 @click="unlockReport">
+                 @click="handleView">
           Xem báo cáo
         </AButton>
         <AButton v-else style="width: 100%;" size="large" type="primary" class="optionBtn"
@@ -102,6 +85,7 @@ const toggleUnlock = () => {
       </div>
     </div>
   </a-modal>
+
 </template>
 
 <style scoped lang="scss">

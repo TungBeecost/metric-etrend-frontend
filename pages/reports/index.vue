@@ -47,10 +47,11 @@ useSeoMeta({
       <div class="default_section">
         <div class="title">
           <div class="content">
-            <div class="report_title">Báo cáo</div>
-            <div class="description">Cung cấp thông tin tổng quan và chi tiết về số liệu thị trường như doanh số, sản
-              lượng bán, số lượng sản phẩm, số lượng gian hàng, tỷ trọng theo các tiêu chí, xu hướng tăng trưởng... theo
-              ngành hàng, nhóm hàng trên các sàn thương mại điện tử tại Việt Nam.
+            <div class="report_title">Số liệu thị trường chính xác</div>
+            <div class="description">Báo cáo cung cấp thông tin tổng quan về các sàn TMĐT hàng đầu Việt Nam, từ doanh số,
+              sản lượng bán, số lượng sản phẩm, số lượng gian hàng, top thương hiệu và nhà bán, tỷ trọng theo các tiêu
+              chí tới xu hướng tăng trưởng... theo ngành hàng, nhóm hàng. eReport giúp doanh nghiệp nắm bắt thị trường
+              và ra quyết định kinh doanh ngay lập tức với chi phí tối ưu nhất.
             </div>
           </div>
           <div class="new_report">

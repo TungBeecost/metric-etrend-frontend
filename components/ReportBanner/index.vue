@@ -16,9 +16,14 @@
 </template>
 
 <script lang="ts" setup>
+import { useRouter } from 'vue-router';
 import { NAVIGATIONS } from '~/constant/constains';
 
+const router = useRouter();
 
+function navigateTo(path: string) {
+  router.push(path);
+}
 </script>
 
 <style lang="scss" scoped>

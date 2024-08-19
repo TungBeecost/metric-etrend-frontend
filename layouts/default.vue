@@ -61,10 +61,12 @@
 </template>
 
 <script setup lang="ts">
-import {NAVIGATIONS} from '~/constant/constains';
+import { NAVIGATIONS } from '~/constant/constains';
+import { useGTM } from '~/composables/useGTM';
 
-const {fetchCurrentUser} = useCurrentUser();
-const {userInfo, fetchedUser} = storeToRefs(useCurrentUser());
+const { fetchCurrentUser } = useCurrentUser();
+const { userInfo, fetchedUser } = storeToRefs(useCurrentUser());
+const gtm = useGTM();
 const route = useRoute();
 const headerRef = ref(null);
 const isScrolled = ref(false);
@@ -82,7 +84,7 @@ const handleScroll = () => {
   isScrolled.value = window.scrollY > 0;
 };
 
-const {isShowMenu} = useShowMainMenu();
+const { isShowMenu } = useShowMainMenu();
 
 const toggleMenu = () => {
   isShowMenu.value = !isShowMenu.value;
@@ -92,25 +94,36 @@ const toggleMenu = () => {
 watch(isShowMenu, () => {
   if (isShowMenu.value) isDarkBlueHeader.value = false;
   else recheckHeader();
-})
+});
 
 const menuDarkBlue = [NAVIGATIONS.home, NAVIGATIONS.pricing];
-const isDarkBlueHeader = useState(() => false);
+const isDarkBlueHeader = ref(false);
 const recheckHeader = () => {
-  if (isDarkBlueHeader.value !== !!menuDarkBlue.includes(route.path)) isDarkBlueHeader.value = !isDarkBlueHeader.value;
-}
+  isDarkBlueHeader.value = menuDarkBlue.includes(route.path);
+};
 
 const navigateToHome = () => {
   navigateTo(NAVIGATIONS.home);
-}
-// recheck header color when change route
-watch(() => route.path, () => {
-  recheckHeader()
-}, {immediate: true})
+};
+
+const navigateToPricing = () => {
+  navigateTo(NAVIGATIONS.pricing);
+};
+
+// Track GTM events
+const trackEvent = (event: string, data: any) => {
+  if (gtm) {
+    gtm.push({ event, ...data });
+  }
+};
 
 onMounted(() => {
   // Initial check for mobile
   handleResize();
+  recheckHeader();
+
+  // Track page view
+  trackEvent('page_view', { page: route.path });
 
   let lastScrollTop = 0;
   const topBar = document.querySelector('.top-bar') as HTMLElement;
@@ -151,20 +164,18 @@ onMounted(() => {
   };
 
   window.addEventListener('scroll', handleScroll);
-  window.addEventListener('resize', handleResize); // Add resize listener
+  window.addEventListener('resize', handleResize);
   handleScroll();
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
-  window.removeEventListener('resize', handleResize); // Remove resize listener
+  window.removeEventListener('resize', handleResize);
 });
 
-const navigateToPricing = () => {
-  navigateTo(NAVIGATIONS.pricing);
-}
-
-
+watch(() => route.path, () => {
+  recheckHeader();
+});
 </script>
 
 <style lang="scss" scoped>

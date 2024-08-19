@@ -4,7 +4,7 @@ export default ({ app }) => {
             app.router.afterEach((to, from) => {
                 if (window && window.dataLayer) {
                     window.dataLayer.push({
-                        event: 'pageview',
+                        event: 'Pageview',
                         page: {
                             path: to.fullPath,
                             name: to.name,

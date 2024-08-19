@@ -4,8 +4,7 @@
       <div class="sectionHeader searchHeader">
         <h1 class="sectionTitle">Kho Báo Cáo <br> Ecommerce Toàn Diện</h1>
         <p class="sectionDescription">
-          Tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu
-          chính xác nhất
+          Tối ưu chi phí, Tiết kiệm thời gian và Giảm thiểu rủi ro kinh doanh với dữ liệu chính xác nhất được thu thập và xử lý bằng Big Data ứng dụng AI.
         </p>
         <img src="/images/background-search.png" class="background">
       </div>
@@ -295,5 +294,7 @@ const handleAdvertisement = () => {
   letter-spacing: -0.48px;
   margin: 24px 0;
 }
+
+
 
 </style>

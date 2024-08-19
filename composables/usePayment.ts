@@ -1,9 +1,18 @@
-import {checkTransactionStatus, createTransaction, sendLeadInformation} from "~/services/payment";
+import {checkTransactionStatus, createTransaction, createTransactionPdf, sendLeadInformation} from "~/services/payment";
 
 export default function usePayment() {
     const createPaymentTransaction = async (paymentMethod: string, itemCode: string, redirectUrl: string, totalPrice: string, discountCode: string | null) => {
         try {
             return await createTransaction(paymentMethod, itemCode, redirectUrl, totalPrice, discountCode);
+        } catch (error) {
+            console.error("createPaymentTransaction error: ", error);
+            return null;
+        }
+    };
+
+    const createPaymentTransactionPdf = async (paymentMethod: string, report_id: string, redirectUrl: string, totalPrice: string, discountCode: string | null) => {
+        try {
+            return await createTransactionPdf(paymentMethod, report_id, redirectUrl, totalPrice, discountCode);
         } catch (error) {
             console.error("createPaymentTransaction error: ", error);
             return null;
@@ -28,5 +37,5 @@ export default function usePayment() {
         }
     };
 
-    return { createPaymentTransaction, verifyTransaction, submitLeadInformation };
+    return { createPaymentTransaction, verifyTransaction, submitLeadInformation, createPaymentTransactionPdf };
 }

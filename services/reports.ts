@@ -31,6 +31,21 @@ export const fetchUnlockReport = async (slug: string) => {
   return true;
 };
 
+
+export const fetchPdfReport = async (slug: string) => {
+  const { statusText, status } = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.claim_pdf.endpoint), {
+    method: REPORT_ENDPOINTS.claim_pdf.method,
+    params: { slug: slug }
+  });
+
+  if (status !== 200) {
+    throw new Error(`Something went wrong: ${statusText}`);
+  }
+
+  return true;
+};
+
+
 export const fetchListRecommendReport = async (categoryReportId: string, numberOfReports: number) => {
   try {
     const response = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.list_recomend.endpoint), {

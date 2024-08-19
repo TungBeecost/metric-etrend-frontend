@@ -48,6 +48,10 @@ const handleClickPlan = () => {
             <div class="detail_info_title">Số lượt xem báo cáo chi tiết</div>
             <div class="detail_info_value">{{ props.userInfo.current_plan.remain_claim || 0 }} lượt</div>
           </div>
+          <div class="account_detail_item">
+            <div class="detail_info_title">Số lượt xem báo cáo chuyên sâu</div>
+            <div class="detail_info_value">{{ props.userInfo.current_plan.remain_claim_pdf || 0 }} lượt</div>
+          </div>
         </div>
         <div class="service_info">
           <div v-if="props.userInfo.current_plan.plan_code === 'e_trial'" style="background: #FFF" class="paid-plan plan-card">

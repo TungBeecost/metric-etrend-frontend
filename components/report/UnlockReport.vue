@@ -1,21 +1,40 @@
 <script setup lang="ts">
 import {useCurrentUser} from "~/stores/current-user"
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
+import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
+import {useRoute} from "#vue-router";
 
 const currentUserStore = useCurrentUser();
-
+const open = ref(false);
 const showUnlock = ref(false);
+const route = useRoute();
+const props = defineProps({
+  data: {
+    type: Object,
+    default: () => ({}),
+  },
+  checkLevelCategory: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-const toggleUnlock = () => {
-  showUnlock.value = !showUnlock.value;
-}
+const openModal = () => {
+  open.value = true;
+};
+
+onMounted(() => {
+  if (route.query.download === "1") {
+    open.value = true;
+  }
+});
 
 </script>
 
 <template>
   <div class="unlock-report">
     <div class="unlock-report-title">
-      Truy cập kho dữ liệu với hàng trăm báo cáo mới nhất
+      Truy cập kho dữ liệu với hơn 1.000.000 báo cáo thị trường
     </div>
     <div class="advantages">
       <div class="advantage-item">
@@ -50,7 +69,7 @@ const toggleUnlock = () => {
             </defs>
           </svg>
         </div>
-        Thông tin trực quan, dễ theo dõi
+        Đa dạng ngành hàng, nhóm hàng
       </div>
       <div class="advantage-item">
         <div class="icon">
@@ -67,14 +86,17 @@ const toggleUnlock = () => {
             </defs>
           </svg>
         </div>
-        Dễ dàng lưu trữ
+        Thông tin trực quan, dễ theo dõi
       </div>
     </div>
     <div class="action-btns">
-      <NuxtLink to="/pricing" style="width: 100%;">
-        <a-button style="width: 100%;" type="primary" size="large">Xem báo cáo</a-button>
-      </NuxtLink>
-      <div>
+      <div class="button" style="display: flex; gap: 12px; width: 100%">
+        <NuxtLink to="/pricing" style="width: 100%;">
+          <a-button style="width: 100%;" type="primary" size="large">Xem báo cáo</a-button>
+        </NuxtLink>
+        <a-button v-if="!checkLevelCategory" style="width: 100%;" size="large" @click="openModal">Báo cáo chuyên sâu</a-button>
+      </div>
+      <div v-if="!currentUserStore.authenticated">
         Đã có tài khoản?
         <a @click="currentUserStore.setShowPopupLogin(true)">
           Đăng nhập ngay
@@ -82,6 +104,7 @@ const toggleUnlock = () => {
       </div>
     </div>
   </div>
+  <modal-download-pdf v-model:open="open" slug="" :data="data"/>
 
   <ModalUnlock v-model:showUnlock="showUnlock"/>
 </template>

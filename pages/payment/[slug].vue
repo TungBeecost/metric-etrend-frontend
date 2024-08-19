@@ -1,23 +1,27 @@
 <script setup lang="ts">
-import CheckOut from "~/components/payment-service/CheckOut.vue";
 import OptionPayment from "~/components/payment-service/OptionPayment.vue";
-import PackService from "~/components/payment-service/PackService.vue";
-import { ref, onMounted, watch, computed } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { usePayment } from "#imports";
 import QRCode from "qrcode.vue";
 import { message } from 'ant-design-vue';
-import {PAGE_TITLES, PLANS} from "~/constant/constains";
+import { PAGE_TITLES } from "~/constant/constains";
+import PackServicePdf from "~/components/payment-service/PackServicePdf.vue";
+import CheckOutPdf from "~/components/payment-service/CheckOutPdf.vue";
+
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
-const { createPaymentTransaction, verifyTransaction } = usePayment()
+const { createPaymentTransactionPdf, verifyTransaction, submitLeadInformation } = usePayment();
 const selectedWalletOption = ref('');
 const qrCodeData = ref('');
-const statusApplyCode = ref<boolean>(false);
 const openModal = ref<boolean>(false);
 const openModalWaiting = ref<boolean>(false);
 const planCode = ref('');
+const route = useRoute();
+const config = useRuntimeConfig();
+const reportDetail = ref<any>(null);
+const information = ref({ name: '', phone: '', companyName: '' });
 
 interface ErrorResponse {
   response: {
@@ -33,56 +37,23 @@ interface DiscountInfo {
   [key: string]: any;
 }
 
-message.config({
-  top: '100px',
-  duration: 2,
-  maxCount: 3,
-});
-
 const handleSelectedOption = (selectedOption: string) => {
-  selectedWalletOption.value = selectedOption
+  selectedWalletOption.value = selectedOption;
 };
 
 const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string; discountInfo: DiscountInfo }) => {
+  console.log('finalPrice', finalPrice);
+  console.log('discountInfo', discountInfo);
   discountValue.value = discountInfo;
-  const now = new Date();
-  let isExpired = false;
-
-  if (discountInfo.discount) {
-    const discount = discountInfo.discount;
-
-    isExpired = now > new Date(discount.end_date);
-
-    if (isExpired) {
-      statusApplyCode.value = false;
-    } else {
-      const currentPlan = plan.value;
-
-      if (!currentPlan) {
-        statusApplyCode.value = false;
-      } else if (discount.minimum_order_value !== null && currentPlan?.priceDiscount !== undefined && currentPlan.priceDiscount < discount.minimum_order_value) {
-        statusApplyCode.value = false;
-      } else if (discount.usage_count >= discount.max_usage) {
-        statusApplyCode.value = false;
-      } else {
-        statusApplyCode.value = true;
-      }
-    }
-  } else {
-    statusApplyCode.value = false;
-  }
 
   if (!userInfo.value.id) {
     message.error('Vui lòng đăng nhập trước khi thanh toán');
   } else {
     if (selectedWalletOption.value) {
       const paymentMethod = selectedWalletOption.value;
-      const currentPlan = plan.value; // Lấy giá trị của plan.value vào một biến tạm
-
-      if (currentPlan) {
-        const itemCode = `${currentPlan.plan_code}__12m`; // Sử dụng giá trị của currentPlan
+      if (reportDetail.value && reportDetail.value.id) {
         try {
-          const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null);
+          const transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null);
           if (transactionResult?.response?.payment_url) {
             window.location.href = transactionResult.response.payment_url;
           } else {
@@ -110,6 +81,29 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
   }
 };
 
+const fetchReportData = async () => {
+  const slug = route.params.slug;
+  try {
+    const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
+    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
+    if (config.public.SSR === 'true') {
+      url += `&is_bot=true`;
+    }
+    reportDetail.value = await $fetch(
+        url,
+        {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        }
+    );
+    console.log('reportDetail', reportDetail.value)
+  } catch (error) {
+    console.log(error)
+
+    return {}
+  }
+}
 
 const checkTransactionStatus = async (transactionId: string) => {
   try {
@@ -132,9 +126,24 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
       console.log("Transaction completed");
       openModal.value = false;
       isCompleted.value = true;
+      try {
+        if (userInfo.value.email) {
+          await submitLeadInformation(
+              information.value.name,
+              userInfo.value.email,
+              information.value.phone,
+              information.value.companyName,
+              transactionId
+          );
+        } else {
+          console.error('User email is undefined');
+        }
+      } catch (error) {
+        console.error('error', error);
+      }
       if (intervalId) clearInterval(intervalId);
       if (timeoutId) clearTimeout(timeoutId);
-      window.location.href = `/?transaction_id=${transactionId}`;
+      window.location.href = `/${route.params.slug}?transaction_id=${transactionId}`;
     }
   };
 
@@ -142,9 +151,9 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
 
   timeoutId = window.setTimeout(() => {
     if (!isCompleted.value) {
-      console.log("Transaction not completed within the timeout period, redirecting to payment page");
+      console.log("Transaction not completed within 10 minutes, redirecting to payment page");
       if (intervalId) clearInterval(intervalId);
-      window.location.href = `/payment/${planCode.value}`;
+      window.location.href = `/payment/${route.params.slug}`;
     }
   }, timeout);
 
@@ -162,17 +171,21 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
   return { isCompleted };
 };
 
-const plan = computed(() => PLANS.find(p => p.plan_code === planCode.value));
+const handleUpdateContact = (contact: { name: string, phone: string }) => {
+  information.value.name = contact.name;
+  information.value.phone = contact.phone;
+};
 
-onMounted(() => {
+onMounted(async () => {
+  await fetchReportData();
+  console.log('reportDetail', reportDetail.value);
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
-  redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/payment`;
-
+  redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/payment/${route.params.slug}`;
   const orderId = route.query.orderId as string;
   if (orderId) {
     openModalWaiting.value = true;
-    useCheckTransactionCompletion(orderId, 3000); // 5 seconds timeout
+    useCheckTransactionCompletion(orderId, 3000);
   }
 });
 
@@ -181,19 +194,19 @@ const handleOk = (_e: MouseEvent) => {
 };
 
 useSeoMeta({
-  title: PAGE_TITLES.payment,
-})
+  title: PAGE_TITLES.payment
+});
 </script>
 
 <template>
   <div id="payment" class="payment_service">
     <div class="default_section" style="display: flex; padding: 40px 0; gap: 24px;">
       <div class="payment_service_option">
-        <pack-service v-if="plan" :plan="plan" />
+        <pack-service-pdf v-if="reportDetail" :report="reportDetail" @update-contact="handleUpdateContact"/>
+        <option-payment @selected-option="handleSelectedOption" />
       </div>
       <div class="check-out">
-        <option-payment @selected-option="handleSelectedOption" />
-        <check-out v-if="plan" :plan="plan" @payment="handlePayment"/>
+        <check-out-pdf v-if="reportDetail" :report="reportDetail" @payment="handlePayment"/>
       </div>
     </div>
     <a-modal v-model:open="openModal" width="500px" destroy-on-close :footer="null" @ok="handleOk">
@@ -234,6 +247,9 @@ useSeoMeta({
   background-color: #FBFAFC;
 
   .payment_service_option{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
     flex: 0.7;
   }
 
@@ -242,6 +258,29 @@ useSeoMeta({
     flex-direction: column;
     gap: 24px;
     flex: 0.3;
+  }
+}
+
+.payment_info{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 16px;
+}
+
+.statistic-item__title{
+  display: flex;
+  border-bottom: 1px solid #EEEBFF;
+  .title{
+    display: flex;
+    gap: 16px;
+    align-items: center;
+
+    .title_content{
+      font-size: 24px;
+      line-height: 38px;
+      font-weight: bold;
+    }
   }
 }
 
@@ -285,21 +324,6 @@ useSeoMeta({
   }
 }
 
-.statistic-item__title{
-  display: flex;
-  border-bottom: 1px solid #EEEBFF;
-  .title{
-    display: flex;
-    gap: 16px;
-    align-items: center;
-
-    .title_content{
-      font-size: 24px;
-      line-height: 38px;
-      font-weight: bold;
-    }
-  }
-}
 </style>
 <style lang="scss">
 @media (max-width: 768px) {

@@ -3,7 +3,7 @@ import {defineProps} from 'vue';
 import {formatCurrency, formatNumberHuman} from "~/helpers/FormatHelper";
 import moment from "moment/moment";
 import {openProductUrl, openShopProductUrl} from "~/helpers/DataNormalize";
-import {getPlatformByUrl} from "~/helpers/utils";
+import {getPlatformById} from "~/helpers/PermissionPlatformHelper";
 
 const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
   return moment(value, inputFormat).format(format);
@@ -19,6 +19,10 @@ const props = defineProps({
     default: () => true
   }
 });
+
+const getPlatformIdFromProductBaseId = (productBaseId: string) => {
+  return parseInt(productBaseId.split('__')[0], 10);
+}
 
 // const emits = defineEmits(['showProductHistory']);
 
@@ -85,9 +89,11 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
         </div>
         <div class="product-info-item shop-info">
           <div class="shop-icon">
-            <img v-if="props.product.shop_url" :src="getPlatformByUrl(props.product.shop_url)?.urlLogo"
-                 class="img-platform"
-                 alt=""/>
+            <img
+                :src="getPlatformById(getPlatformIdFromProductBaseId(props.product.product_base_id))?.urlLogo"
+                class="img-platform"
+                alt=""
+            />
           </div>
           <span class="shop-name" @click="openShopProductUrl(props.product)">
             {{ product.shop_platform_name }}
