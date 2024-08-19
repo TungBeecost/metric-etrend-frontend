@@ -202,11 +202,11 @@ useSeoMeta({
   <div id="payment" class="payment_service">
     <div class="default_section" style="display: flex; padding: 40px 0; gap: 24px;">
       <div class="payment_service_option">
-        <pack-service-pdf v-if="reportDetail" :report="reportDetail" @update-contact="handleUpdateContact"/>
+        <pack-service-pdf v-if="reportDetail" :report="reportDetail"/>
         <option-payment @selected-option="handleSelectedOption" />
       </div>
       <div class="check-out">
-        <check-out-pdf v-if="reportDetail" :report="reportDetail" @payment="handlePayment"/>
+        <check-out-pdf v-if="reportDetail" :report="reportDetail" @payment="handlePayment" @update-contact="handleUpdateContact"/>
       </div>
     </div>
     <a-modal v-model:open="openModal" width="500px" destroy-on-close :footer="null" @ok="handleOk">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CustomInputDiscount from "~/components/CustomInputDiscount.vue";
 import useDiscount from "~/composables/useDiscount";
-import { ref } from 'vue';
+import {defineEmits, ref} from 'vue';
 import {formatCurrency} from "~/helpers/FormatHelper";
 import TotalPaymentPdf from "~/components/payment-service/TotalPaymentPdf.vue";
 
@@ -11,7 +11,7 @@ const phoneValue = ref<string>('');
 const errors = useState<Partial<IFormValue>>(() => ({}));
 const discountInfo = ref<any>({});
 const finalPrice = ref<number>(0);
-const emit = defineEmits(['payment']);
+const emit = defineEmits(['payment', 'updateContact']);
 const { getVoucher } = useDiscount();
 const statusApplyCode= ref<boolean>(false)
 interface IFormValue {
@@ -107,6 +107,9 @@ const fetchDiscount = async () => {
     errors.value.discount = 'Mã giảm giá không tồn tại';
   }
 };
+
+emit('updateContact', { name: nameValue.value, phone: phoneValue.value });
+
 </script>
 
 <template>
