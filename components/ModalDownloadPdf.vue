@@ -103,10 +103,9 @@ const handleView = async () => {
     return;
   }
   emits('update:open', false);
-  if(props.data.is_report_pdf_valid && props.data.can_view) {
+  if (props.data.is_report_pdf_valid && props.data.can_view) {
     navigateTo(`${NAVIGATIONS.home}view_pdf/${route.params.slug}`);
-  }
-  else{
+  } else {
     showAlert.value = true;
   }
 
@@ -151,8 +150,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
         <div class="payment_container">
           <div class="price">
             <p class="price_real">{{ formatCurrency(props.data.price) }}</p>
-            <!-- TODO: price_discount -->
-            <p class="price_discount">2.500.000đ</p>
+            <p class="price_discount">{{ formatCurrency(props.data.price_before_discount) }}</p>
           </div>
           <div class="note">
             Nhận báo cáo qua email trong vòng 05 phút
@@ -309,7 +307,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
     }
 
     .summary {
-      .title_container{
+      .title_container {
         margin-bottom: 32px;
       }
     }
@@ -371,7 +369,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
 }
 
 @media (max-width: 768px) {
-  .noti_view_dept_report{
+  .noti_view_dept_report {
     margin-top: 16px;
     gap: 24px;
   }
