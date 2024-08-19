@@ -61,7 +61,7 @@ const itemsToShow = computed(() => {
           <div class="content" style="text-align: left;">
             <div class="category_date" style="text-align: left;">
               {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span>
-              {{ dayjs(report.start_date).format('DD/MM/YYYY') }}
+              {{ dayjs(report.end_date).format('DD/MM/YYYY') }}
             </div>
             <div class="title" style="text-align: left;">
               Báo cáo nhóm hàng {{ report.name }}
@@ -286,7 +286,7 @@ const itemsToShow = computed(() => {
   .report-slide {
     .carousel__slide {
       .slide-item {
-        height: auto;
+        height: 600px !important;
         flex-direction: column;
 
         .thumbnail {
