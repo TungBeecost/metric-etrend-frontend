@@ -16,7 +16,7 @@ import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
 import { useCurrentUser } from "~/stores/current-user.js";
 import { useGTM } from '~/composables/useGTM';
-import {NAVIGATIONS} from "~/constant/constains.js";
+import {NAVIGATIONS} from "~/constant/constains";
 
 const route = useRoute();
 const config = useRuntimeConfig();
