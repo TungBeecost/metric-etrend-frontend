@@ -301,6 +301,7 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
         cursor: pointer;
 
         word-wrap: break-word;
+        word-break: break-word;
 
         &:hover {
           text-decoration: underline;
