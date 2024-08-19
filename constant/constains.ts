@@ -108,13 +108,21 @@ export const SOCIAL_MEDIA_TYPES: Array<CommonOptionItem> = [
 ];
 
 export const LABEL_PERMISSION_PLAN = {
-  searchReport: {
-    label: "Tìm kiếm báo cáo không giới hạn",
-    icon: "SearchFilled"
-  },
   viewReportDetailFree: {
     label: "Truy cập kho báo cáo miễn phí không giới hạn",
     icon: "ProjectorScreenChart"
+  },
+  downloadDeptReport: {
+    label: "Tải báo cáo chuyên sâu (Tính phí theo lượt tải)",
+    icon: "Download"
+  },
+  viewCountBasic: {
+    label: "10 lượt xem báo cáo chuyên sâu",
+    icon: "ViewCount"
+  },
+  viewCountPro: {
+    label: "15 lượt xem báo cáo chuyên sâu",
+    icon: "ViewCount"
   },
   viewReportPro: {
     label: "Xem chi tiết số liệu báo cáo:",
@@ -171,8 +179,8 @@ export const PLANS: Array<IPLAN> = [
     price: "Miễn phí",
     unit: undefined,
     permissions: [
-        LABEL_PERMISSION_PLAN.searchReport,
         LABEL_PERMISSION_PLAN.viewReportDetailFree,
+        LABEL_PERMISSION_PLAN.downloadDeptReport,
     ]
   },
   {
@@ -185,7 +193,6 @@ export const PLANS: Array<IPLAN> = [
     unit: "năm",
     isHighlight: true,
     permissions: [
-      LABEL_PERMISSION_PLAN.searchReport,
       LABEL_PERMISSION_PLAN.viewReportDetailFree,
       {
         ...LABEL_PERMISSION_PLAN.viewReportBasic,
@@ -195,6 +202,8 @@ export const PLANS: Array<IPLAN> = [
         label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(200),
         icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
       },
+      LABEL_PERMISSION_PLAN.viewCountBasic,
+      LABEL_PERMISSION_PLAN.downloadDeptReport,
     ]
   },
   {
@@ -207,7 +216,6 @@ export const PLANS: Array<IPLAN> = [
     unit: "năm",
     isHighlight: true,
     permissions: [
-      LABEL_PERMISSION_PLAN.searchReport,
       LABEL_PERMISSION_PLAN.viewReportDetailFree,
       {
         ...LABEL_PERMISSION_PLAN.viewReportPro,
@@ -217,6 +225,8 @@ export const PLANS: Array<IPLAN> = [
         label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(200),
         icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
       },
+      LABEL_PERMISSION_PLAN.viewCountPro,
+      LABEL_PERMISSION_PLAN.downloadDeptReport,
     ]
   }
 ];
