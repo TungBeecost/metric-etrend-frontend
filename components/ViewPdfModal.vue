@@ -1,12 +1,12 @@
 <script setup>
-import {onMounted, ref} from 'vue';
-import {NAVIGATIONS} from "~/constant/constains";
-import {useCurrentUser} from "~/stores/current-user.js"
-import {useRoute} from "vue-router";
+import { onMounted, ref, computed } from 'vue';
+import { NAVIGATIONS } from "~/constant/constains";
+import { useCurrentUser } from "~/stores/current-user.js";
+import { useRoute } from "vue-router";
 
 const isDesktop = ref(true);
 const route = useRoute();
-const {showAlert} = defineProps({
+const { showAlert } = defineProps({
   showAlert: {
     type: Boolean,
     default: false
@@ -22,9 +22,8 @@ onMounted(() => {
 
 const emits = defineEmits(["update:showAlert"]);
 
-
 const currentUser = useCurrentUser();
-
+const { userInfo } = storeToRefs(currentUser);
 const loading = ref(false);
 
 message.config({
@@ -48,7 +47,9 @@ const handleView = async () => {
 
 const toggleUnlock = () => {
   emits('update:showAlert', false);
-}
+};
+
+const isViewReportDisabled = computed(() => userInfo.value.current_plan.remain_claim_pdf === 0);
 
 </script>
 
@@ -66,6 +67,9 @@ const toggleUnlock = () => {
         </div>
 
         <div class="content">
+          <div class="view_count">
+            Số lượt xem hiện tại: <b>{{ userInfo.current_plan.remain_claim_pdf }}</b>
+          </div>
           <div class="header">Xác nhận xem báo cáo</div>
           <div class="description">
             Bạn có chắc chắn muốn sử dụng xem Báo cáo chuyên sâu <b>trong vòng 7 ngày </b> không?
@@ -74,8 +78,15 @@ const toggleUnlock = () => {
       </div>
       <div class="unlock-report-modal-footer">
         <AButton style="width: 100%;" size="large" class="optionBtn" @click="toggleUnlock">Huỷ</AButton>
-        <AButton v-if="currentUser.remainingUnlock" style="width: 100%;" size="large" type="primary" class="optionBtn"
-                 @click="handleView">
+        <AButton
+            v-if="currentUser.remainingUnlock"
+            :disabled="isViewReportDisabled"
+            style="width: 100%;"
+            size="large"
+            type="primary"
+            class="optionBtn"
+            @click="handleView"
+        >
           Xem báo cáo
         </AButton>
         <AButton v-else style="width: 100%;" size="large" type="primary" class="optionBtn"
@@ -85,7 +96,6 @@ const toggleUnlock = () => {
       </div>
     </div>
   </a-modal>
-
 </template>
 
 <style scoped lang="scss">
