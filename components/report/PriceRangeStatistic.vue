@@ -207,7 +207,7 @@ const chartOptions = computed(() => {
       >
         Về sản phẩm đã bán, phân khúc giá phổ biến là
         <BlurContent :is-hide-content="props.isHideContent">
-          {{ priceRangesSortBy("sale")[0].begin ? formatCurrency(priceRangesSortBy("sale")[0].begin) + ' - ' : '' }}
+          {{ priceRangesSortBy("sale")[0].begin ? formatCurrency(priceRangesSortBy("sale")[0].begin) + ' - ' : '< ' }}
           {{ formatCurrency(priceRangesSortBy("sale")[0].end) }}
         </BlurContent>
         .
