@@ -100,6 +100,16 @@ watch(numOfPages, () => {
   }, 100);
 });
 
+const marginTopValue = computed(() => {
+  const screenWidth = window.innerWidth;
+  if (screenWidth <= 768) {
+    return '125px';
+  } else if (screenWidth <= 1380) {
+    return '190px';
+  }
+  return '0px';
+});
+
 let lastScrollTop = 0;
 
 const handleScroll = () => {
@@ -117,9 +127,9 @@ const handleScroll = () => {
     }
   } else if (screenWidth <= 1380) {
     if (scrollTop > lastScrollTop && scrollTop > 40) {
-      if (headerPdf) headerPdf.style.top = '88px';
+      if (headerPdf) headerPdf.style.top = '58px';
     } else {
-      if (headerPdf) headerPdf.style.top = '120px';
+      if (headerPdf) headerPdf.style.top = '100px';
     }
   } else {
     if (scrollTop > lastScrollTop && scrollTop > 33) {
@@ -132,7 +142,7 @@ const handleScroll = () => {
   lastScrollTop = scrollTop;
 };
 
-const isMobileDevice = computed(() => window.innerWidth <= 768);
+const isMobileDevice = computed(() => window.innerWidth <= 1380);
 
 const onChangePage = (direction) => {
   const newPage = currentPage.value + direction;
@@ -165,7 +175,7 @@ onUnmounted(() => {
         <HeaderDeptReport v-if="remainingTime" :num-of-pages="numOfPages" :current-page="currentPage"
                           :remaining-time="calculateTargetDate(remainingTime)" :report-name="reportName"/>
       </div>
-      <div v-if="isLoading" style="margin-top: 125px; display: flex; justify-content: center">
+      <div v-if="isLoading" :style="{ marginTop: marginTopValue, display: 'flex', justifyContent: 'center' }">
         <a-spin size="large"/>
       </div>
       <div v-else style="width: 100%; margin-top: 125px">
