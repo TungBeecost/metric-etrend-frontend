@@ -170,6 +170,7 @@ const handleOk = () => {
 
 const handdleUpdate = () => {
   showModal.value = false;
+  navigateTo(`${NAVIGATIONS.home}`);
 };
 
 onMounted(() => {

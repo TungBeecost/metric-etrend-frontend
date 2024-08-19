@@ -53,10 +53,6 @@ const isDarkBlueHeader = useState(() => false);
 const recheckHeader = () => {
   if (isDarkBlueHeader.value !== !!menuDarkBlue.includes(route.path)) isDarkBlueHeader.value = !isDarkBlueHeader.value;
 }
-
-const navigateToHome = () => {
-  navigateTo(NAVIGATIONS.home);
-}
 // recheck header color when change route
 watch(() => route.path, () => {
   recheckHeader()

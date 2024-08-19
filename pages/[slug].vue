@@ -16,6 +16,7 @@ import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
 import { useCurrentUser } from "~/stores/current-user.js";
 import { useGTM } from '~/composables/useGTM';
+import {NAVIGATIONS} from "~/constant/constains.js";
 
 const route = useRoute();
 const config = useRuntimeConfig();
@@ -154,6 +155,7 @@ onMounted(() => {
 
 const handleOk = () => {
   showModal.value = false;
+  navigateTo(`${NAVIGATIONS.home}${route.params.slug}`);
 };
 
 onUnmounted(() => {
