@@ -2,7 +2,6 @@
 import {computed} from 'vue';
 import InsightBlock from "@/components/InsightBlock";
 import {formatSortTextCurrencyWithMinValue} from "~/helpers/utils.js";
-import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
 import {formatCurrency} from "~/helpers/FormatHelper.js";
 import moment from 'moment';
 
@@ -16,13 +15,6 @@ const props = defineProps({
     default: () => true,
   },
 });
-const platformColors = {
-  Shopee: ['#FCA14E', '#FF733F'],
-  Lazada: ['#4745A5', '#241E46'],
-  Tiki: ['#5BAFFE', '#366998'],
-  Sendo: ['#FF6060', '#993A3A'],
-  Tiktok: ['#000', '#000'],
-};
 
 const formatPriceRange = (priceRange, prefix = ['trên', 'dưới']) => {
   if (!priceRange.begin) {
@@ -53,7 +45,6 @@ const chartOptions = computed(() => {
     }
     return a.begin - b.end;
   });
-  const lstPlatform = BY__PRICE_RANGE[0].lst_platform.map((item) => item.platform_id).reverse()
 
   return {
     chart: {
