@@ -13,7 +13,7 @@ const props = defineProps({
 });
 
 
-const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFormat: string = "YYYY-MM-DD[T]HH:mm:ss"): string => {
+const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFormat: string = "YYYY-MM-DD HH:mm:ss"): string => {
   return moment(value, inputFormat).format(format);
 }
 
@@ -57,8 +57,7 @@ const getDisplayedCategories = (item: any) => {
               </span>
               <span class="bf_date" style="color: #EEEBFF"> | </span>
             </span>
-            <span class="date_time">{{ formatDate(item.end_date) }}</span>
-
+            <span :class="(item.report_type === 'report_product_line' || item.report_type === 'report_category') ? 'display_none' : 'display'">{{ formatDate(item.end_date) }}</span>
           </div>
           <div v-if="item.slug.startsWith('bao-cao')" class="name">
             {{ item.name }}
@@ -294,7 +293,8 @@ const getDisplayedCategories = (item: any) => {
           .breadcrumb {
             font-size: 12px;
 
-            .date_time{
+
+            .display_none{
               display: none;
             }
 
@@ -375,7 +375,7 @@ const getDisplayedCategories = (item: any) => {
             }
 
             span {
-              font-size: 8px;
+              font-size: 10px;
 
               .bf_date {
                 display: none;
