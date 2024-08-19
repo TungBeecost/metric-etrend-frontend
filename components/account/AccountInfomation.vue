@@ -38,7 +38,7 @@ const handleClickPlan = () => {
         <div class="account_detail_info">
           <div class="account_detail_item">
             <div class="detail_info_title">Gói dịch vụ</div>
-            <div class="detail_info_value">{{ props.userInfo.current_plan.plan_name || 'Miễn phí' }}</div>
+            <div class="detail_info_value">{{ props.userInfo.current_plan.plan_name || 'Community' }}</div>
           </div>
           <div v-if="props.userInfo.current_plan.expired_at && props.userInfo.current_plan.plan_code != 'e_community'" class="account_detail_item">
             <div class="detail_info_title">Ngày hết hạn</div>
