@@ -336,7 +336,7 @@ const itemsToShow = computed(() => {
   .report-slide {
     .carousel__slide {
       .slide-item {
-        height: 630px;
+        height: 750px;
       }
     }
 

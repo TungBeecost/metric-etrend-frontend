@@ -155,5 +155,20 @@ const itemsToShow = computed(() => {
     }
   }
 }
+
+@media (max-width: 1380px) {
+  .report-slide {
+    .carousel__slide {
+      .slide-item {
+        height: 600px;
+        .thumbnail {
+          height: 350px;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
 </style>
 

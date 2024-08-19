@@ -55,9 +55,7 @@ const {data: lstReport} = await useAsyncData(fetchReport)
   align-items: center;
   gap: 64px;
   padding-top: 60px;
-  //width: 100vh;
   height: 100%;
-  //background-color: #FBFAFC;
   padding-bottom: 100px;
 }
 
@@ -165,5 +163,6 @@ const {data: lstReport} = await useAsyncData(fetchReport)
     line-height: 28px;
   }
 }
+
 
 </style>
