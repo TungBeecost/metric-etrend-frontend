@@ -103,7 +103,7 @@ useSeoMeta({
           font-size: 44px;
           font-weight: bold;
           color: #FFF;
-
+          line-height: 56px;
           margin-bottom: 16px;
         }
 
@@ -224,6 +224,7 @@ useSeoMeta({
 @media (max-width: 767px) {
   .title_report {
     .image {
+      height: 565px;
       .title {
         gap: 40px;
 
