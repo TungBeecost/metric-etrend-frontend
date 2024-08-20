@@ -16,7 +16,7 @@
           </div>
 
           <ul class="statement">
-            ereport.metric.vn thu thập các thông tin sau của người sử dụng dịch vụ:
+            ereport.vn thu thập các thông tin sau của người sử dụng dịch vụ:
             <li>
               <b>Thông tin và nội dung bạn cung cấp:</b> Chúng tôi thu thập nội dung, thông tin liên lạc và các thông tin khác mà bạn cung cấp khi sử dụng sản phẩm của
               chúng tôi, bao gồm cả khi bạn đăng ký một tài khoản, tạo hoặc chia sẻ nội dung và nhắn tin hay liên lạc với người khác bằng các nền tảng mà chúng tôi cung
@@ -29,8 +29,8 @@
             </li>
             <li>
               <b>Lưu trữ dữ liệu bạn hoặc khách hàng của bạn chia sẻ:</b> Trong một số trường hợp, nhằm cung cấp đầy đủ dịch vụ của mình, chúng tôi có thể cần lưu trữ dữ
-              liệu của bạn hoặc khách hàng của bạn đã cung cấp qua hệ thống ereport.metric.vn. Ví dụ như dữ liệu về số điện thoại khách hàng đã để lại trong tin nhắn trên
-              trang của bạn sẽ được lưu về hệ thống Quản lý khách hàng của bạn trên hệ thống ereport.metric.vn.
+              liệu của bạn hoặc khách hàng của bạn đã cung cấp qua hệ thống ereport.vn. Ví dụ như dữ liệu về số điện thoại khách hàng đã để lại trong tin nhắn trên
+              trang của bạn sẽ được lưu về hệ thống Quản lý khách hàng của bạn trên hệ thống ereport.vn.
             </li>
             <li>
               <b>Thông tin về thiết bị:</b> Như mô tả bên dưới, chúng tôi thu thập thông tin từ và về máy tính, điện thoại được kết nối cũng như các thiết bị kết nối web
@@ -59,23 +59,23 @@
             <li><b>Mạng và kết nối:</b> thông tin như tên của nhà mạng di động hoặc ISP, ngôn ngữ, múi giờ, số điện thoại di động, địa chỉ IP, tốc độ kết nối.</li>
             <li>
               <b>Dữ liệu cookie:</b> Dữ liệu từ các cookie được lưu trữ trên thiết bị của bạn, bao gồm cả cài đặt và ID cookie. Hãy tìm hiểu thêm về cách chúng tôi sử dụng
-              cookie trong Chính sách cookie của ereport.metric.vn.
+              cookie trong Chính sách cookie của ereport.vn.
             </li>
             <li>
               <b>Thông tin từ đối tác:</b> Nhà quảng cáo, nhà phát triển ứng dụng và nhà phát hành có thể gửi thông tin cho chúng tôi qua Công cụ kinh doanh trên
-              ereport.metric.vn mà họ sử dụng.
+              ereport.vn mà họ sử dụng.
             </li>
           </ul>
 
           <ul class="statement">
-            Đây là các thông tin mà ereport.metric.vn cần thành viên cung cấp bắt buộc khi đăng ký sử dụng dịch vụ và chúng tôi sử dụng thông tin mình có như mô tả bên
-            dưới. Đồng thời, chúng tôi sử dụng những thông tin này để cung cấp và hỗ trợ Sản phẩm của ereport.metric.vn và các dịch vụ có liên quan như mô tả trong Điều
-            khoản dịch vụ của ereport.metric.vn:
+            Đây là các thông tin mà ereport.vn cần thành viên cung cấp bắt buộc khi đăng ký sử dụng dịch vụ và chúng tôi sử dụng thông tin mình có như mô tả bên
+            dưới. Đồng thời, chúng tôi sử dụng những thông tin này để cung cấp và hỗ trợ Sản phẩm của ereport.vn và các dịch vụ có liên quan như mô tả trong Điều
+            khoản dịch vụ của ereport.vn:
             <li>
-              <b>Cung cấp, cá nhân hóa và cải tiến Sản phẩm:</b> Thông tin trên khắp các thiết bị và Sản phẩm của ereport.metric.vn: Chúng tôi kết nối thông tin về hoạt
-              động của bạn trên những thiết bị và Sản phẩm khác nhau của ereport.metric.vn để mang lại trải nghiệm nhất quán và phù hợp hơn trên tất cả các Sản phẩm của
-              ereport.metric.vn mà bạn sử dụng, bất kể nơi bạn sử dụng. Ví dụ: chúng tôi cố gắng mang lại cho bạn trải nghiệm liền mạch hơn, chẳng hạn như bằng cách tự động
-              điền thông tin đăng ký của bạn (như số điện thoại của bạn) từ một Sản phẩm của ereport.metric.vn khi bạn đăng ký tài khoản trên một Sản phẩm khác.
+              <b>Cung cấp, cá nhân hóa và cải tiến Sản phẩm:</b> Thông tin trên khắp các thiết bị và Sản phẩm của ereport.vn: Chúng tôi kết nối thông tin về hoạt
+              động của bạn trên những thiết bị và Sản phẩm khác nhau của ereport.vn để mang lại trải nghiệm nhất quán và phù hợp hơn trên tất cả các Sản phẩm của
+              ereport.vn mà bạn sử dụng, bất kể nơi bạn sử dụng. Ví dụ: chúng tôi cố gắng mang lại cho bạn trải nghiệm liền mạch hơn, chẳng hạn như bằng cách tự động
+              điền thông tin đăng ký của bạn (như số điện thoại của bạn) từ một Sản phẩm của ereport.vn khi bạn đăng ký tài khoản trên một Sản phẩm khác.
             </li>
             <li>
               <b>Nghiên cứu và phát triển sản phẩm:</b> Chúng tôi sử dụng thông tin mình có để phát triển, thử nghiệm và cải thiện Sản phẩm, chẳng hạn như bằng cách tiến
@@ -89,7 +89,7 @@
             <li>
               <b>Cải thiện độ an toàn, tính toàn vẹn và bảo mật:</b> Chúng tôi sử dụng thông tin mình có để xác minh tài khoản và hoạt động, chống hành vi có hại, phát hiện
               và ngăn chặn spam cũng như các trải nghiệm tiêu cực khác, duy trì tính toàn vẹn của Sản phẩm, đồng thời cải thiện độ an toàn và tính bảo mật trên và ngoài Sản
-              phẩm của ereport.metric.vn. Ví dụ: chúng tôi sử dụng dữ liệu mình có để điều tra hoạt động đáng ngờ hoặc các hành vi vi phạm chính sách hoặc điều khoản của
+              phẩm của ereport.vn. Ví dụ: chúng tôi sử dụng dữ liệu mình có để điều tra hoạt động đáng ngờ hoặc các hành vi vi phạm chính sách hoặc điều khoản của
               chúng tôi hoặc phát hiện khi một người nào đó cần trợ giúp.
             </li>
             <li>
@@ -98,13 +98,13 @@
             </li>
             <li>
               <b>Nghiên cứu và đổi mới vì cộng đồng:</b> Chúng tôi sử dụng thông tin mình có (bao gồm thông tin từ các đối tác nghiên cứu cộng tác với chúng tôi) để tiến
-              hành và hỗ trợ cho sự phát triển chung của cộng đồng, xã hội, đặc biệt là cộng đồng những người đang sử dụng sản phẩm của ereport.metric.vn.
+              hành và hỗ trợ cho sự phát triển chung của cộng đồng, xã hội, đặc biệt là cộng đồng những người đang sử dụng sản phẩm của ereport.vn.
             </li>
           </ul>
 
           <div style="font-size: 16px; margin-bottom: 0">
             Các thành viên sẽ tự chịu trách nhiệm về bảo mật và lưu giữ mọi hoạt động sử dụng dịch vụ dưới tên đăng ký, mật khẩu và hộp thư điện tử của mình. Ngoài ra,
-            thành viên có trách nhiệm thông báo kịp thời cho ereport.metric.vn về những hành vi sử dụng trái phép, lạm dụng, vi phạm bảo mật, lưu giữ tên đăng ký và mật
+            thành viên có trách nhiệm thông báo kịp thời cho ereport.vn về những hành vi sử dụng trái phép, lạm dụng, vi phạm bảo mật, lưu giữ tên đăng ký và mật
             khẩu của bên thứ ba để có biện pháp giải quyết phù hợp.
           </div>
 
@@ -115,7 +115,7 @@
 
           <ul class="statement">
             <li>
-              Khi bạn chia sẻ và liên lạc bằng Sản phẩm của chúng tôi, bạn chọn đối tượng cho nội dung mình chia sẻ. Ví dụ: khi bạn gửi tin nhắn bằng ereport.metric.vn, bạn
+              Khi bạn chia sẻ và liên lạc bằng Sản phẩm của chúng tôi, bạn chọn đối tượng cho nội dung mình chia sẻ. Ví dụ: khi bạn gửi tin nhắn bằng ereport.vn, bạn
               chọn người sẽ nhận được tin nhắn đó. Mạng của bạn cũng có thể thấy những hành động bạn đã thực hiện trên Sản phẩm của chúng tôi...
             </li>
             <li>Nội dung người khác chia sẻ hoặc chia sẻ lại về bạn;</li>
@@ -131,7 +131,7 @@
               Khi bạn chọn sử dụng các ứng dụng, trang web hoặc dịch vụ khác của bên thứ ba dùng hoặc được tích hợp với Sản phẩm của chúng tôi, thì các ứng dụng, trang web
               hoặc dịch vụ đó có thể nhận được thông tin về nội dung bạn đăng hoặc chia sẻ. Chúng tôi không có trách nhiệm đối với các dữ liệu bạn đã chọn để chia sẻ qua
               các đối tác của chúng tôi. Thông tin mà các dịch vụ của bên thứ ba này thu thập sẽ tuân thủ các điều khoản và chính sách của chính họ, chứ không phải của
-              ereport.metric.vn.
+              ereport.vn.
             </li>
             <li>
               Chủ sở hữu mới: Nếu quyền sở hữu hoặc quyền kiểm soát tất cả hoặc một phần Sản phẩm của chúng tôi hoặc thành phần trong Sản phẩm thay đổi, chúng tôi có thể
@@ -139,7 +139,7 @@
             </li>
             <li>
               Chia sẻ với các đối tác bên thứ ba: Chúng tôi hợp tác với các đối tác bên thứ ba là những người giúp chúng tôi cung cấp và cải thiện Sản phẩm của mình hoặc
-              những người sử dụng Công cụ kinh doanh trên ereport.metric.vn để phát triển doanh nghiệp của họ. Mục đích của chúng tôi là để vận hành các công ty của mình và
+              những người sử dụng Công cụ kinh doanh trên ereport.vn để phát triển doanh nghiệp của họ. Mục đích của chúng tôi là để vận hành các công ty của mình và
               cung cấp dịch vụ tốt nhất cho mọi người trên toàn thế giới. Chúng tôi không bán bất cứ thông tin nào của bạn cho bất kỳ ai và sẽ không bao giờ làm như vậy.
               Ngoài ra, chúng tôi còn áp dụng các hạn chế nghiêm ngặt đối với cách đối tác có thể sử dụng và tiết lộ dữ liệu chúng tôi cung cấp. Dưới đây là các loại bên
               thứ ba mà chúng tôi chia sẻ thông tin:
@@ -175,7 +175,7 @@
 
           <ul class="statement">
             <li>
-              Một số thông tin của bạn, khách hàng của bạn chia sẻ qua hệ thống ereport.metric.vn được coi là bảo mật tuyệt đối. Ví dụ như dữ liệu về thông tin khách hàng
+              Một số thông tin của bạn, khách hàng của bạn chia sẻ qua hệ thống ereport.vn được coi là bảo mật tuyệt đối. Ví dụ như dữ liệu về thông tin khách hàng
               để lại trên website của bạn. Chúng tôi cam kết thực hiện các điều khoản sau đối với các dữ liệu được coi là tuyệt đối này:
             </li>
             <li>
@@ -183,17 +183,17 @@
               chia sẻ trên sản phẩm của chúng tôi sẽ không được chia sẻ và khai thác bởi bất cứ bên thứ ba nào ngoại trừ các cá nhân, tổ chức đã được bạn chỉ định.
             </li>
             <li>
-              Không sử dụng dữ liệu của bạn để phục vụ cho việc kinh doanh, thương mại các sản phẩm của ereport.metric.vn hay bất kỳ bên thứ ba nào dù dưới bất kỳ hình thức
+              Không sử dụng dữ liệu của bạn để phục vụ cho việc kinh doanh, thương mại các sản phẩm của ereport.vn hay bất kỳ bên thứ ba nào dù dưới bất kỳ hình thức
               nào. Mọi dữ liệu chúng tôi thu thập (Nếu có) sẽ chỉ được sử dụng nhằm mục tiêu nâng cao chất lượng sản phẩm hay tăng trải nghiệm của bạn trên hệ thống mà
               không được sử dụng để phục vụ các mục tiêu thương mại.
             </li>
             <li>
-              Không sử dụng dữ liệu của bạn để chống lại bạn. Chúng tôi sẽ không sử dụng mọi dữ liệu của bạn trên hệ thống ereport.metric.vn để chống lại bạn dù vì bất kỳ
+              Không sử dụng dữ liệu của bạn để chống lại bạn. Chúng tôi sẽ không sử dụng mọi dữ liệu của bạn trên hệ thống ereport.vn để chống lại bạn dù vì bất kỳ
               lý do nào, trừ khi có yêu cầu của cơ quan pháp luật.
             </li>
             <li>
               Quy trình xử lý khi có yêu cầu đặc biệt từ cơ quan pháp luật: Trong trường hợp bị buộc cung cấp thông tin vì các vấn đề an ninh, xã hội theo quy định của pháp
-              luật và được yêu cầu bởi các cơ quan có thẩm quyền, ereport.metric.vn sẽ không có trách nhiệm thông báo cho bạn trừ khi các cơ quan có thẩm quyền cho phép
+              luật và được yêu cầu bởi các cơ quan có thẩm quyền, ereport.vn sẽ không có trách nhiệm thông báo cho bạn trừ khi các cơ quan có thẩm quyền cho phép
               chúng tôi làm việc đó. Việc cung cấp thông tin này không miễn trừ bất kỳ nội dung gì mà chúng tôi thu thập, lưu trữ được từ bạn theo chính sách dữ liệu và
               điều khoản sử dụng dịch vụ của chúng tôi.
             </li>
@@ -206,13 +206,13 @@
 
           <div style="font-size: 16px">Chúng tôi cung cấp cho bạn khả năng truy cập, sửa đổi, sao chép và xóa dữ liệu của mình.</div>
           <div style="font-size: 16px">
-            Chúng tôi lưu trữ dữ liệu cho đến khi không còn cần cung cấp dịch vụ và Sản phẩm của ereport.metric.vn nữa hoặc cho đến khi tài khoản của bạn bị xóa, tùy trường
+            Chúng tôi lưu trữ dữ liệu cho đến khi không còn cần cung cấp dịch vụ và Sản phẩm của ereport.vn nữa hoặc cho đến khi tài khoản của bạn bị xóa, tùy trường
             hợp nào xảy ra trước. Tùy theo từng trường hợp, chúng tôi sẽ quyết định dựa trên những yếu tố như bản chất của dữ liệu, lý do thu thập và xử lý dữ liệu, cũng
             như các nhu cầu lưu giữ vì mục đích hoạt động hoặc pháp lý có liên quan.
           </div>
           <div style="font-size: 16px">
             Khi bạn xóa tài khoản, chúng tôi sẽ xóa nội dung bạn đã đăng. Còn lại trong mọi trường hợp thông tin cá nhân thành viên sẽ được bảo mật trên máy chủ của
-            ereport.metric.vn.
+            ereport.vn.
           </div>
 
           <div class="header">
@@ -231,11 +231,11 @@
             <li>Phương tiện và công cụ để người dùng tiếp cận và chỉnh sửa dữ liệu cá nhân của mình.</li>
             <li>
               Thành viên có quyền tự kiểm tra, cập nhật, điều chỉnh hoặc hủy bỏ thông tin cá nhân của mình bằng cách đăng nhập vào tài khoản và chỉnh sửa thông tin cá nhân
-              hoặc yêu cầu ban quản trị website ereport.metric.vn thực hiện việc này.
+              hoặc yêu cầu ban quản trị website ereport.vn thực hiện việc này.
             </li>
             <li>
-              Thành viên có quyền gửi khiếu nại về việc lộ thông tin cá nhân cho bên thứ 3 đến Ban quản trị của website ereport.metric.vn. Khi tiếp nhận những phản hồi này,
-              ereport.metric.vn sẽ xác nhận lại thông tin, phải có trách nhiệm trả lời lý do và hướng dẫn thành viên khôi phục và bảo mật lại thông tin.
+              Thành viên có quyền gửi khiếu nại về việc lộ thông tin cá nhân cho bên thứ 3 đến Ban quản trị của website ereport.vn. Khi tiếp nhận những phản hồi này,
+              ereport.vn sẽ xác nhận lại thông tin, phải có trách nhiệm trả lời lý do và hướng dẫn thành viên khôi phục và bảo mật lại thông tin.
             </li>
           </ul>
 
@@ -246,24 +246,24 @@
 
           <ul class="statement">
             <li>
-              Thông tin cá nhân của thành viên trên website ereport.metric.vn được ereport.metric.vn cam kết bảo mật tuyệt đối theo chính sách bảo vệ thông tin cá nhân của
-              ereport.metric.vn. Việc thu thập và sử dụng thông tin của mỗi thành viên chỉ được thực hiện khi có sự đồng ý của khách hàng đó trừ những trường hợp pháp luật
+              Thông tin cá nhân của thành viên trên website ereport.vn được ereport.vn cam kết bảo mật tuyệt đối theo chính sách bảo vệ thông tin cá nhân của
+              ereport.vn. Việc thu thập và sử dụng thông tin của mỗi thành viên chỉ được thực hiện khi có sự đồng ý của khách hàng đó trừ những trường hợp pháp luật
               có quy định khác.
             </li>
             <li>
               Không sử dụng, không chuyển giao, cung cấp hay tiết lộ cho bên thứ 3 nào về thông tin cá nhân của thành viên khi không có sự cho phép đồng ý từ thành viên.
             </li>
             <li>
-              Trong trường hợp máy chủ lưu trữ thông tin bị hacker tấn công dẫn đến mất mát dữ liệu cá nhân thành viên, website ereport.metric.vn sẽ có trách nhiệm thông
+              Trong trường hợp máy chủ lưu trữ thông tin bị hacker tấn công dẫn đến mất mát dữ liệu cá nhân thành viên, website ereport.vn sẽ có trách nhiệm thông
               báo vụ việc cho cơ quan chức năng điều tra xử lý kịp thời và thông báo cho thành viên được biết.
             </li>
             <li>
               Bảo mật tuyệt đối mọi thông tin giao dịch trực tuyến của Thành viên bao gồm thông tin hóa đơn kế toán chứng từ số hóa tại khu vực dữ liệu trung tâm an toàn
-              cấp 1 của ereport.metric.vn.
+              cấp 1 của ereport.vn.
             </li>
             <li>
-              Ban quản lý website ereport.metric.vn yêu cầu các cá nhân khi đăng ký/mua hàng là thành viên, phải cung cấp đầy đủ thông tin cá nhân có liên quan như: Họ và
-              tên, địa chỉ liên lạc, email, điện thoại, … và chịu trách nhiệm về tính pháp lý của những thông tin trên. Ban quản lý website ereport.metric.vn không chịu
+              Ban quản lý website ereport.vn yêu cầu các cá nhân khi đăng ký/mua hàng là thành viên, phải cung cấp đầy đủ thông tin cá nhân có liên quan như: Họ và
+              tên, địa chỉ liên lạc, email, điện thoại, … và chịu trách nhiệm về tính pháp lý của những thông tin trên. Ban quản lý website ereport.vn không chịu
               trách nhiệm cũng như không giải quyết mọi khiếu nại có liên quan đến quyền lợi của Thành viên đó nếu xét thấy tất cả thông tin cá nhân của thành viên đó cung
               cấp khi đăng ký ban đầu là không chính xác.
             </li>
@@ -275,7 +275,7 @@
           </div>
           <div style="font-size: 16px">
             Khi phát hiện thông tin cá nhân của mình bị sử dụng sai mục đích hoặc phạm vi, khách hàng vui ̣ lòng gửi email khiếu nại đến email:
-            <b>info@ereport.metric.vn</b> hoặc gọi điện thoại tới <b>033.806.2221</b> để khiếu nại và cung cấp chứng cứ liên quan tới vụ việc cho Ban quản ̣ trị. Ban quản
+            <b>info@ereport.vn</b> hoặc gọi điện thoại tới <b>033.806.2221</b> để khiếu nại và cung cấp chứng cứ liên quan tới vụ việc cho Ban quản ̣ trị. Ban quản
             trị cam kết sẽ phản hồi ngay lập tức hoặc muộn nhất là trong vòng 48 giờ làm việc kể từ thời điểm nhận được khiếu nại.
           </div>
           <div style="font-size: 16px">
