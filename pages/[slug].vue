@@ -182,13 +182,13 @@ onUnmounted(() => {
             "@type": "ListItem",
             position: 1,
             name: "Metric",
-            item: "https://ereport.metric.vn",
+            item: "https://ereport.vn",
           },
           ...(data.reportDetail.lst_category || []).map((item, index) => ({
             "@type": "ListItem",
             position: index + 2,
             name: item.name,
-            item: `https://ereport.metric.vn/${item.slug}`,
+            item: `https://ereport.vn/${item.slug}`,
           })),
         ]
       })
