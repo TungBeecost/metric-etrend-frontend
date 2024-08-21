@@ -22,7 +22,7 @@ export default defineNuxtConfig({
                     hid: "og:image",
                     property: "og:image",
                     content:
-                        "https://lh3.googleusercontent.com/pw/AJFCJaUn5ypN4E-22nDvTNWPlPwnJwI806mq9CkQ7S_GqMWLzgGGJdegi3w1jIxImAj6hgzgQGdkF9BsNXvvOMAmpX3umQmuOAsG3k_4U3WwIQBIlH_ymqVTpu1DkvESjZeqrC4ac6KnMgF4Wy5BSi1NOY8u=w1920-h1080-no",
+                        "https://lh3.googleusercontent.com/pw/AP1GczMTZp0lf_VW7W_Y6n3qg602m-LlqfpCIeVX_i4D3pnqT6FiloK5hY86XfTsqVHd4xRRs9tSKppP6FZdEPWO_V8D_UEsfj8KEnChoiU7zyiwDlHzZaTeAePmGxcqzG98qDJ9bahok5MhwtDzp3EKTiI_=w1600-h900-s-no-gm",
                 },
                 { name: "google-site-verification", content: "-A5h4Bx3cBpC9vnJxfRvxvegNFZgMorMQlE6M76uLbc" },
             ],
