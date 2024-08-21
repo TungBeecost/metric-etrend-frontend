@@ -115,7 +115,7 @@ const handleSubmitLeadForm = async () => {
     organization_name: formData.value.company,
     note,
     label_init: 'Nóng',
-    source_name: 'eReport',
+    source_name: 'Website eReport',
     campaign: 'eReport',
     additional_info: {
       ...variables,
