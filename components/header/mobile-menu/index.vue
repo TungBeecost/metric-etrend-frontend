@@ -4,7 +4,7 @@
       <p style="font-weight: 500; font-size: 16px">Đăng nhập ngay để không bỏ lỡ hàng trăm báo cáo và xu hướng mới nhất!</p>
       <AButton style="font-weight: 500 " type="primary" size="large" @click="handleLoginClick">Đăng nhập</AButton>
     </div>
-    <div v-if="userInfo.id" style="display: flex; gap: 16px" @click="handleClickInfo">
+    <div v-if="userInfo.id" style="display: flex; gap: 16px; cursor: pointer" @click="handleClickInfo">
       <div class="ava">
         <a-avatar style="cursor: pointer" class="avatar-image" :src="userInfo?.avatar" size="large"/>
       </div>
