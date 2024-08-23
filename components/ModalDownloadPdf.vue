@@ -148,11 +148,11 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
           </div>
         </div>
         <div class="payment_container">
-          <div class="price">
+          <div v-if="!props.data.can_download" class="price">
             <p class="price_real">{{ formatCurrency(props.data.price) }}</p>
             <p class="price_discount">{{ formatCurrency(props.data.price_before_discount) }}</p>
           </div>
-          <div class="note">
+          <div v-if="!props.data.can_download" class="note">
             Nhận báo cáo qua email trong vòng 05 phút
           </div>
           <div class="button_group">
@@ -167,7 +167,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
                       class="download_report_button" @click="handleView">Xem báo cáo
             </a-button>
           </div>
-          <div class="wallet_info">
+          <div v-if="!props.data.can_download" class="wallet_info">
             <p>Hỗ trợ thanh toán trực tuyến</p>
             <div style="display: flex">
               <div v-for="wallet in WALLET" :key="wallet.code">
