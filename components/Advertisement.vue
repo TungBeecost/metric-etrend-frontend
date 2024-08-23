@@ -2,11 +2,12 @@
 import { notification } from 'ant-design-vue';
 import { onMounted, h, defineEmits, onUnmounted } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router';
-const currentUserStore = useCurrentUser();
-const { userInfo } = storeToRefs(currentUserStore);
 
 // Define emits
 const emit = defineEmits(['handle-advertisement']);
+
+// Set a variable to store the timeout ID
+let notificationTimeout: number | undefined;
 
 const svgIcon = () => (
     h('svg', {
@@ -35,108 +36,104 @@ const svgIcon = () => (
 );
 
 const openNotification = () => {
-  if (!userInfo.value.id) {
-    notification.open({
-      message: '',
-      description: () => (
+  notification.open({
+    message: '',
+    description: () => (
+        h('div', {
+          style: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            paddingTop: '16px',
+          }
+        }, [
+          h('div', { style: { display: 'flex', alignItems: 'center', marginBottom: '12px' } }, [
+            h('p', {
+              style: {
+                color: 'var(--Dark-blue-dark-blue-8, #241E46)',
+                fontSize: '24px',
+                fontWeight: '700',
+                lineHeight: '32px',
+              }
+            }, 'Đăng ký thông tin để nhận báo cáo thị trường miễn phí'),
+          ]),
+          h('div', { style: { display: 'flex', alignItems: 'center', marginBottom: '12px' } }, [
+            svgIcon(),
+            h('p', 'Truy cập tìm kiếm kho báo cáo không giới hạn'),
+          ]),
+          h('div', { style: { display: 'flex', alignItems: 'center', marginBottom: '12px' } }, [
+            svgIcon(),
+            h('p', 'Khám phá toàn bộ báo cáo thị trường miễn phí'),
+          ]),
+          h('div', { style: { display: 'flex', alignItems: 'center', marginBottom: '12px' } }, [
+            svgIcon(),
+            h('p', 'Dữ liệu đầy đủ và trực quan'),
+          ]),
           h('div', {
             style: {
               display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              paddingTop: '16px',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '16px',
+              marginTop: '36px',
             }
           }, [
-            h('div', { style: { display: 'flex', alignItems: 'center', marginBottom: '12px' } }, [
-              h('p', {
-                style: {
-                  color: 'var(--Dark-blue-dark-blue-8, #241E46)',
-                  fontSize: '24px',
-                  fontWeight: '700',
-                  lineHeight: '32px',
-                }
-              }, 'Đăng ký thông tin để nhận báo cáo thị trường miễn phí'),
-            ]),
-            h('div', { style: { display: 'flex', alignItems: 'center', marginBottom: '12px' } }, [
-              svgIcon(),
-              h('p', 'Truy cập tìm kiếm kho báo cáo không giới hạn'),
-            ]),
-            h('div', { style: { display: 'flex', alignItems: 'center', marginBottom: '12px' } }, [
-              svgIcon(),
-              h('p', 'Khám phá toàn bộ báo cáo thị trường miễn phí'),
-            ]),
-            h('div', { style: { display: 'flex', alignItems: 'center', marginBottom: '12px' } }, [
-              svgIcon(),
-              h('p', 'Dữ liệu đầy đủ và trực quan'),
-            ]),
-            // Add images with CSS
-            h('div', {
+            h('img', {
+              src: '/images/Thumbnail_popup_1.png',
+              alt: 'Thumbnail 1',
               style: {
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: '16px',
-                marginTop: '36px',
+                width: '148px',
+                height: '107px',
+                boxShadow: '0px 0px 6px 0px rgba(0, 0, 0, 0.25)',
+                objectFit: 'cover',
+                borderRadius: '8px', // Add border radius
               }
-            }, [
-              h('img', {
-                src: '/images/Thumbnail_popup_1.png',
-                alt: 'Thumbnail 1',
-                style: {
-                  width: '148px',
-                  height: '107px',
-                  boxShadow: '0px 0px 6px 0px rgba(0, 0, 0, 0.25)',
-                  objectFit: 'cover',
-                  borderRadius: '8px', // Add border radius
-                }
-              }),
-              h('img', {
-                src: '/images/Thumbnail_popup_2.png',
-                alt: 'Thumbnail 2',
-                style: {
-                  width: '148px',
-                  height: '107px',
-                  boxShadow: '0px 0px 6px 0px rgba(0, 0, 0, 0.25)',
-                  objectFit: 'cover',
-                  borderRadius: '8px', // Add border radius
-                }
-              }),
-            ]),
-            // Add button with CSS
-            h('button', {
+            }),
+            h('img', {
+              src: '/images/Thumbnail_popup_2.png',
+              alt: 'Thumbnail 2',
               style: {
-                display: 'flex',
-                width: '100%',
-                height: '40px',
-                padding: '9px 16px',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '8px',
-                background: 'var(--Volcano-volcano-6, #E85912)',
-                color: '#fff',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: '400',
-                textAlign: 'center',
-                marginTop: '36px',
-              },
-              onClick: () => {
-                emit('handle-advertisement');
-                notification.destroy();
+                width: '148px',
+                height: '107px',
+                boxShadow: '0px 0px 6px 0px rgba(0, 0, 0, 0.25)',
+                objectFit: 'cover',
+                borderRadius: '8px', // Add border radius
               }
-            }, 'Đăng ký ngay')
-          ])
-      ),
-      placement: 'bottomRight',
-      duration: 0,
-      onClick: () => {
-        console.log('Notification Clicked!');
-      },
-    });
-  }
+            }),
+          ]),
+          h('button', {
+            style: {
+              display: 'flex',
+              width: '100%',
+              height: '40px',
+              padding: '9px 16px',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: '8px',
+              background: 'var(--Volcano-volcano-6, #E85912)',
+              color: '#fff',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '400',
+              textAlign: 'center',
+              marginTop: '36px',
+            },
+            onClick: () => {
+              emit('handle-advertisement');
+              notification.destroy();
+            }
+          }, 'Đăng ký ngay')
+        ])
+    ),
+    placement: 'bottomRight',
+    duration: 0,
+    onClick: () => {
+      console.log('Notification Clicked!');
+    },
+  });
 };
 
 const closeNotification = () => {
@@ -144,11 +141,19 @@ const closeNotification = () => {
 };
 
 onMounted(() => {
-  openNotification();
+  // Set a timeout to open the notification after 30 seconds
+  notificationTimeout = window.setTimeout(() => {
+    openNotification();
+  }, 30000);
+
   window.addEventListener('close-advertisement', closeNotification);
 });
 
 onUnmounted(() => {
+  // Clear the timeout if the component is unmounted before the delay completes
+  if (notificationTimeout) {
+    window.clearTimeout(notificationTimeout);
+  }
   window.removeEventListener('close-advertisement', closeNotification);
 });
 
