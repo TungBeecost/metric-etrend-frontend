@@ -61,7 +61,7 @@ const toggleIcon = computed(() => showMore.value ? CaretUpOutlined : CaretDownOu
           </div>
         </div>
         <div style="display: flex; justify-content: center">
-          <a-button style="width: fit-content" @click="toggleShowMore">
+          <a-button style="width: fit-content; border: none; color: #716B95" @click="toggleShowMore">
             {{ showMore ? 'Ẩn bớt' : 'Xem thêm' }}
             <component :is="toggleIcon" />
           </a-button>
