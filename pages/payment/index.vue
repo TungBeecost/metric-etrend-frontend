@@ -11,13 +11,14 @@ const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
-const { createPaymentTransaction, verifyTransaction } = usePayment()
+const { createPaymentTransaction, verifyTransaction, submitLeadInformation } = usePayment()
 const selectedWalletOption = ref('');
 const qrCodeData = ref('');
 const statusApplyCode = ref<boolean>(false);
 const openModal = ref<boolean>(false);
 const openModalWaiting = ref<boolean>(false);
 const planCode = ref('');
+const information = ref({ name: '', phone: '', companyName: '' });
 
 interface ErrorResponse {
   response: {
@@ -132,6 +133,21 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
       console.log("Transaction completed");
       openModal.value = false;
       isCompleted.value = true;
+      try {
+        if (userInfo.value.email) {
+          await submitLeadInformation(
+              information.value.name,
+              userInfo.value.email,
+              information.value.phone,
+              information.value.companyName,
+              transactionId
+          );
+        } else {
+          console.error('User email is undefined');
+        }
+      } catch (error) {
+        console.error('error', error);
+      }
       if (intervalId) clearInterval(intervalId);
       if (timeoutId) clearTimeout(timeoutId);
       window.location.href = `/?transaction_id=${transactionId}`;
@@ -176,6 +192,12 @@ onMounted(() => {
   }
 });
 
+const handleUpdateContact = (contact: { name: string, phone: string }) => {
+  information.value.name = contact.name;
+  information.value.phone = contact.phone;
+};
+
+
 const handleOk = (_e: MouseEvent) => {
   openModal.value = false;
 };
@@ -190,10 +212,10 @@ useSeoMeta({
     <div class="default_section" style="display: flex; padding: 40px 0; gap: 24px;">
       <div class="payment_service_option">
         <pack-service v-if="plan" :plan="plan" />
+        <option-payment @selected-option="handleSelectedOption" />
       </div>
       <div class="check-out">
-        <option-payment @selected-option="handleSelectedOption" />
-        <check-out v-if="plan" :plan="plan" @payment="handlePayment"/>
+        <check-out v-if="plan" :plan="plan" @payment="handlePayment" @update-contact="handleUpdateContact"/>
       </div>
     </div>
     <a-modal v-model:open="openModal" width="500px" destroy-on-close :footer="null" @ok="handleOk">
@@ -234,7 +256,10 @@ useSeoMeta({
   background-color: #FBFAFC;
 
   .payment_service_option{
+    display: flex;
+    flex-direction: column;
     flex: 0.7;
+    gap: 24px;
   }
 
   .check-out{

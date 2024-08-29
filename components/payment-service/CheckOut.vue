@@ -2,19 +2,24 @@
 import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import CustomInputDiscount from "~/components/CustomInputDiscount.vue";
 import useDiscount from "~/composables/useDiscount";
-import { ref, watch } from 'vue';
+import {defineEmits, ref, watch} from 'vue';
 import {formatCurrency} from "~/helpers/FormatHelper";
 
 const discountValue = ref<string>('');
+const nameValue = ref<string>('');
+const phoneValue = ref<string>('');
 const errors = useState<Partial<IFormValue>>(() => ({}));
 const discountInfo = ref<any>({});
 const finalPrice = ref<number>(0);
-const emit = defineEmits(['payment']);
+const emit = defineEmits(['payment', 'updateContact']);
 const { getVoucher } = useDiscount();
 const statusApplyCode= ref<boolean>(false)
 interface IFormValue {
   discount: string;
+  name: string;
+  phone: string;
 }
+
 
 const { plan } = defineProps({
   plan: {
@@ -34,6 +39,25 @@ const handleFinalPrice = (price: number) => {
 };
 
 const handlePayment = () => {
+  if (!nameValue.value) {
+    errors.value.name = 'Bạn cần nhập tên của mình để thanh toán';
+  } else {
+    errors.value.name = '';
+  }
+
+  const phoneRegex = /^\d{10}$/;
+  if (!phoneValue.value) {
+    errors.value.phone = 'Bạn cần nhập số điện thoại của mình để thanh toán';
+  } else if (!phoneRegex.test(phoneValue.value)) {
+    errors.value.phone = 'Số điện thoại phải có 10 chữ số';
+  } else {
+    errors.value.phone = '';
+  }
+
+  if (!nameValue.value || !phoneValue.value || errors.value.name || errors.value.phone) {
+    return;
+  }
+
   if (!finalPrice.value) {
     finalPrice.value = plan.price;
   }
@@ -89,6 +113,7 @@ const fetchDiscount = async () => {
   }
 };
 
+emit('updateContact', { name: nameValue.value, phone: phoneValue.value });
 
 </script>
 
@@ -105,6 +130,22 @@ const fetchDiscount = async () => {
     <div class="statistic-item__content">
       <div class="discount_code">
         <div class="input_discount">
+          <CustomInput
+              v-model:input="nameValue"
+              label="Họ và tên"
+              :error-message="errors.name"
+              :is-required="true"
+              :input-props="{ placeholder: 'Nhập họ và tên' }"
+              class="infoBlock"
+          />
+          <CustomInput
+              v-model:input="phoneValue"
+              class="contactItem"
+              :error-message="errors.phone"
+              label="Số điện thoại"
+              :is-required="true"
+              :input-props="{ placeholder: 'Nhập SĐT' }"
+          />
           <CustomInputDiscount v-model:input="discountValue" :status-apply-code="statusApplyCode" style="display: flex" :error-message="errors.discount"
                                label="Nhập mã giảm giá" :is-required="true" :input-props="{ placeholder: 'Nhập mã giảm giá' }" @apply-discount="handleDiscount"/>
         </div>
@@ -171,7 +212,7 @@ const fetchDiscount = async () => {
 
       .input_discount{
         display: flex;
-        align-items: flex-end;
+        flex-direction: column;
         gap: 16px;
         width: 100%;
       }

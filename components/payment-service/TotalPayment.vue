@@ -75,10 +75,10 @@ onMounted(() => {
       <div class="money">Số tiền</div>
       <div class="money">{{ formatCurrency(plan.priceDiscount) }}</div>
     </div>
-    <div class="calculate_item">
-      <div class="money">Chiết khấu</div>
-      <div class="money">-{{ formatCurrency(promotionalDiscount + discountAmount) }}</div>
-    </div>
+<!--    <div class="calculate_item">-->
+<!--      <div class="money">Chiết khấu</div>-->
+<!--      <div class="money">-{{ formatCurrency(promotionalDiscount + discountAmount) }}</div>-->
+<!--    </div>-->
     <div class="calculate_item">
       <div class="promotional_program">Chương trình khuyến mại</div>
       <div v-if="promotionalDiscount" class="promotional_program">-{{ formatCurrency(promotionalDiscount) }}</div>
