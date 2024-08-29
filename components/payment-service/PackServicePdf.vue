@@ -38,7 +38,7 @@ const formattedEndDate = formatDate(report.end_date);
           <rect width="16" height="32" rx="4" fill="#EEEBFF"/>
         </svg>
         <div>
-          <div class="title_content">Chi tiết đơn hàng</div>
+          <div class="title_content">Thông tin đơn hàng</div>
         </div>
       </div>
     </div>

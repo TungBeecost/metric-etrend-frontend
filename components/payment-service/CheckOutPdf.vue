@@ -119,7 +119,7 @@ emit('updateContact', { name: nameValue.value, phone: phoneValue.value });
         <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="16" height="32" rx="4" fill="#EEEBFF"/>
         </svg>
-        <div class="title_content">Thành tiền đơn hàng</div>
+        <div class="title_content">Thông tin thanh toán</div>
       </div>
     </div>
     <div class="statistic-item__content">

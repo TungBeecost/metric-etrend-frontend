@@ -29,7 +29,7 @@ const toggleIcon = computed(() => showMore.value ? CaretUpOutlined : CaretDownOu
           <rect width="16" height="32" rx="4" fill="#EEEBFF"/>
         </svg>
         <div>
-          <div class="title_content">Dịch vụ</div>
+          <div class="title_content">Thông tin đơn hàng</div>
         </div>
       </div>
       <div class="title_link">
