@@ -53,6 +53,8 @@ const handlePayment = () => {
   } else {
     errors.value.phone = '';
   }
+  emit('updateContact', { name: nameValue.value, phone: phoneValue.value });
+
 
   if (!nameValue.value || !phoneValue.value || errors.value.name || errors.value.phone) {
     return;
@@ -112,9 +114,6 @@ const fetchDiscount = async () => {
     errors.value.discount = 'Mã giảm giá không tồn tại';
   }
 };
-
-emit('updateContact', { name: nameValue.value, phone: phoneValue.value });
-
 </script>
 
 <template>

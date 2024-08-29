@@ -48,6 +48,9 @@ const handlePayment = () => {
     errors.value.phone = '';
   }
 
+  emit('updateContact', { name: nameValue.value, phone: phoneValue.value });
+
+
   if (!nameValue.value || !phoneValue.value || errors.value.name || errors.value.phone) {
     return;
   }
@@ -108,7 +111,6 @@ const fetchDiscount = async () => {
   }
 };
 
-emit('updateContact', { name: nameValue.value, phone: phoneValue.value });
 
 </script>
 
