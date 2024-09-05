@@ -19,6 +19,7 @@ import { useGTM } from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
 
 const route = useRoute();
+const router = useRouter();
 const config = useRuntimeConfig();
 const currentUserStore = useCurrentUser();
 const gtm = useGTM();
@@ -79,6 +80,10 @@ const fetchReportData = async () => {
         }
     );
 
+    if (!response) {
+      await router.push('/search');
+    }
+
     const category = listCategory.find(cat => cat.value === response.category_report_id);
     if (category && category.level === 1) {
       checkLevelCategory.value = true;
@@ -124,6 +129,7 @@ const fetchReportData = async () => {
     };
   } catch (error) {
     console.log(error);
+    await router.push('/search');
     return {};
   }
 };
