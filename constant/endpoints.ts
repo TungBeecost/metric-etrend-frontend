@@ -9,7 +9,6 @@ export const REPORT_ENDPOINTS: { [key: string]: { endpoint: string; method: METH
     list_claimed: {endpoint: `/api/report/claimed-list`, method: "GET"}
 };
 
-
 export const AUTH_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {
     googleCallback: {endpoint: `/api/google/callback`, method: "POST"}
 }

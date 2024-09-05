@@ -1,0 +1,314 @@
+<script setup>
+import { FilterOutlined, SearchOutlined } from "@ant-design/icons-vue";
+import { priorityOptions, statusOptions, supportDepartmentOptions } from "../constants/common";
+import { getTickets } from "~/utils/ticket.js";
+
+definePageMeta({
+  title: "View Tickets",
+});
+
+const currentPage = useState('currentPage', () => 1);
+const totalRow = useState('totalRow', () => 0);
+const sorter = useState('internal.ticket.sorter', () => undefined);
+const filter = useState('internal.ticket.filter', () => {
+  return {
+    search: '',
+    createdAt: {
+      start: '',
+      end: ''
+    },
+    resolvedAt: {
+      start: '',
+      end: ''
+    },
+    priority: '',
+    status: '',
+    personIncharge: '',
+    owner: '',
+    supportDepartment: '',
+    reporter: '',
+    cc_user: '',
+    ticketType: '' // Add ticketType to the filter state
+  };
+});
+const priorityOpts = useState('myTicket.priorityOptions', () => [...priorityOptions]);
+const supportDepartmentOpts = useState('myTicket.supportDepartmentOptions', () => [...supportDepartmentOptions]);
+const statusOpts = useState('myTicket.statusOptions', () => [...statusOptions]);
+const ticketTypeOpts = useState('myTicket.ticketTypeOptions', () => [
+  { label: 'Metric', value: 'metric' },
+  { label: 'Ereport', value: 'ereport' },
+  { label: 'Unknown', value: 'unknown' }
+]); // Define ticketType options
+const isOpenFilterDrawer = useState('isOpenFilterDrawer', () => false);
+
+const filteredReporter = ref([]);
+
+const { pending: staffOptionsLoading, data: staffOptions } = useAsyncData('userOptions', async () => {
+  const listUserStaffOptions = await getListUserStaffOptions();
+  return listUserStaffOptions.map((user) => ({
+    label: user.email,
+    value: user.email
+  }));
+});
+
+const filterEmailOptions = (input, option) => {
+  return option.label.toLowerCase().startsWith(input.toLowerCase());
+};
+
+const handleOpenFilterDrawer = () => {
+  isOpenFilterDrawer.value = true;
+};
+
+const handleCloseFilterDrawer = () => {
+  isOpenFilterDrawer.value = false;
+};
+
+const handleSubmitAction = async () => {
+  currentPage.value = 1;
+  await refreshTickets();
+  isOpenFilterDrawer.value = false;
+};
+
+const onResetFilter = () => {
+  filter.value = {
+    search: '',
+    createdAt: {
+      start: '',
+      end: ''
+    },
+    resolvedAt: {
+      start: '',
+      end: ''
+    },
+    priority: '',
+    status: '',
+    personIncharge: '',
+    owner: '',
+    supportDepartment: '',
+    reporter: '',
+    cc_user: '',
+    ticketType: '' // Reset ticketType filter
+  };
+};
+
+const onReporterChange = (value) => {
+  filter.value.reporter = filteredReporter.value.length > 0 ? filteredReporter.value[filteredReporter.value.length - 1] : '';
+};
+
+const {
+  pending: ticketsLoading,
+  data: tickets = [],
+  refresh: refreshTickets,
+} = await useAsyncData("tickets", async () => {
+  const startCreatedAt = filter.value.createdAt.start ? filter.value.createdAt.start.format('YYYY-MM-DD') : '';
+  const endCreatedAt = filter.value.createdAt.end ? filter.value.createdAt.end.format('YYYY-MM-DD') : '';
+  const startResolvedAt = filter.value.resolvedAt.start ? filter.value.resolvedAt.start.format('YYYY-MM-DD') : '';
+  const endResolvedAt = filter.value.resolvedAt.end ? filter.value.resolvedAt.end.format('YYYY-MM-DD') : '';
+
+  const filterPayload = {
+    "created_at": {
+      "start": startCreatedAt,
+      "end": endCreatedAt
+    },
+    "resolved_at": {
+      "start": startResolvedAt,
+      "end": endResolvedAt
+    },
+    "priority": filter.value.priority,
+    "status": filter.value.status,
+    "incharge_by": filter.value.personIncharge,
+    "owned_by": filter.value.owner,
+    "report_by": filter.value.reporter,
+    "cc_user": filter.value.cc_user,
+    "support_department": filter.value.supportDepartment,
+    "ticket_type": filter.value.ticketType // Add ticketType to the filter payload
+  };
+  const [tickets, total] = await getTickets(currentPage.value - 1, 10, filter.value.search, filterPayload, sorter.value);
+  totalRow.value = total;
+  return tickets;
+});
+
+const handleTicketTableChange = async (pagination, filters, sorter, { currentDataSource }) => {
+  const { current } = pagination;
+  currentPage.value = current;
+  await refreshTickets();
+};
+</script>
+
+<template>
+  <div class="main-content">
+    <app-section>
+      <a-flex justify="space-between" class="header">
+        <app-title text="Tickets"/>
+        <a-button type="default" @click="handleOpenFilterDrawer" size="large">
+          <template #icon>
+            <filter-outlined/>
+          </template>
+          Filter
+        </a-button>
+      </a-flex>
+      <div class="content">
+        <app-ticket-list :tickets="tickets"
+                         :loading="ticketsLoading"
+                         :pagination="{
+                           pageSize: 10,
+                           current: currentPage,
+                           total: totalRow
+                         }"
+                         @change="handleTicketTableChange"
+        />
+      </div>
+    </app-section>
+    <app-drawer :open="isOpenFilterDrawer" @close="handleCloseFilterDrawer">
+      <a-form :model="filter" name="form-edit" layout="vertical" @finish="handleSubmitAction">
+        <a-form-item label="Search by title" name="search">
+          <a-input v-model:value="filter.search" placeholder="Search by title">
+            <template #prefix>
+              <search-outlined/>
+            </template>
+          </a-input>
+        </a-form-item>
+        <a-form-item label="Create date" name="createdAt">
+          <a-flex justify="space-between" gap="small" align="center">
+            <a-date-picker v-model:value="filter.createdAt.start"
+                           style="width: 100%"
+                           format="DD/MM/YYYY"
+                           placeholder="Chọn ngày tạo"/>
+            đến
+            <a-date-picker v-model:value="filter.createdAt.end"
+                           style="width: 100%"
+                           format="DD/MM/YYYY"
+                           placeholder="Chọn ngày tạo"/>
+          </a-flex>
+        </a-form-item>
+        <a-form-item label="Resolve date" name="resolvedAt">
+          <a-flex justify="space-between" gap="small" align="center">
+            <a-date-picker v-model:value="filter.resolvedAt.start"
+                           style="width: 100%"
+                           format="DD/MM/YYYY"
+                           placeholder="Chọn ngày hết hạn"/>
+            đến
+            <a-date-picker v-model:value="filter.resolvedAt.end"
+                           style="width: 100%"
+                           format="DD/MM/YYYY"
+                           placeholder="Chọn ngày hết hạn"/>
+          </a-flex>
+        </a-form-item>
+        <a-flex justify="space-between" gap="small">
+          <a-form-item label="Priority" name="priority">
+            <a-select v-model:value="filter.priority"
+                      :options="priorityOpts"
+                      :allow-clear="true"
+            >
+            </a-select>
+          </a-form-item>
+          <a-form-item label="Status" name="status">
+            <a-select v-model:value="filter.status"
+                      :options="statusOpts"
+                      :allow-clear="true"
+            >
+            </a-select>
+          </a-form-item>
+          <a-form-item label="Support Department" name="supportDepartment">
+            <a-select v-model:value="filter.supportDepartment"
+                      :options="supportDepartmentOpts"
+                      :allow-clear="true"
+            >
+            </a-select>
+          </a-form-item>
+        </a-flex>
+        <a-form-item label="Ticket Type" name="ticketType"> <!-- Add ticketType select option -->
+          <a-select v-model:value="filter.ticketType"
+                    :options="ticketTypeOpts"
+                    :allow-clear="true"
+          >
+          </a-select>
+        </a-form-item>
+        <a-form-item label="Owned by" name="owner">
+          <a-select v-model:value="filter.owner"
+                    :options="staffOptions"
+                    :show-search="true"
+                    :show-arrow="false"
+                    :filter-option="filterEmailOptions"
+                    :loading="staffOptionsLoading"
+                    :allow-clear="true"
+          >
+          </a-select>
+        </a-form-item>
+        <a-form-item label="In charged by" name="personIncharge">
+          <a-select v-model:value="filter.personIncharge"
+                    :options="staffOptions"
+                    :show-arrow="false"
+                    :show-search="true"
+                    :filter-option="filterEmailOptions"
+                    :loading="staffOptionsLoading"
+                    :allow-clear="true"
+          >
+          </a-select>
+        </a-form-item>
+        <a-form-item label="Reporter" name="reporter">
+          <a-select v-model:value="filteredReporter"
+                    :options="staffOptions"
+                    :show-search="true"
+                    :show-arrow="false"
+                    :filter-option="filterEmailOptions"
+                    :loading="staffOptionsLoading"
+                    :allow-clear="true"
+                    mode="tags"
+                    @change="onReporterChange"
+          >
+          </a-select>
+        </a-form-item>
+        <a-form-item label="CC Emails" name="cc_user">
+          <a-select v-model:value="filter.cc_user"
+                    :options="staffOptions"
+                    :show-search="true"
+                    :show-arrow="false"
+                    :filter-option="filterEmailOptions"
+                    :loading="staffOptionsLoading"
+                    :allow-clear="true"
+                    :remove-icon="true"
+          >
+          </a-select>
+        </a-form-item>
+
+        <a-flex gap="small">
+          <a-spin :spinning="ticketsLoading">
+            <a-form-item>
+              <a-button type="primary" html-type="submit">Lọc</a-button>
+            </a-form-item>
+          </a-spin>
+          <a-form-item>
+            <a-button @click="onResetFilter">Reset</a-button>
+          </a-form-item>
+        </a-flex>
+      </a-form>
+    </app-drawer>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.main-content {
+  .header {
+    padding: 1rem 1.5rem;
+
+    .list-filter-desktop {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+  }
+}
+
+.ant-form-item {
+  width: 100%;
+}
+
+a-spin {
+  width: fit-content;
+}
+
+.ant-pagination-options {
+  display: none;
+}
+</style>
