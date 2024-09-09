@@ -1,11 +1,12 @@
 import axios from 'axios';
-const API_ENDPOINT = 'http://localhost:8000';
+// const API_ENDPOINT = 'http://localhost:8000';
+const config = useRuntimeConfig();
 const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
 
 
 export const createNewTicket = async ({ title, customerEmail, supportDepartment, description, assignedEmails, ticketType }) => {
     try {
-        const response = await axios.post(`${API_ENDPOINT}/api/ticket/ticket`, {
+        const response = await axios.post(`${config.public.API_ENDPOINT}/api/ticket/ticket`, {
             title,
             customer_email: customerEmail,
             support_department: supportDepartment,
@@ -43,7 +44,7 @@ export const getMyTickets = async (page = 0, limit = 10, filter = undefined, sor
             payload.sort_field = sorter.field;
             payload.sort_order = sorter.order;
         }
-        const response = await axios.get(`${API_ENDPOINT}/api/ticket/my-ticket`, {
+        const response = await axios.get(`${config.public.API_ENDPOINT}/api/ticket/my-ticket`, {
             params: payload,
             headers: {
                 'Accept': 'application/json',
@@ -59,7 +60,7 @@ export const getMyTickets = async (page = 0, limit = 10, filter = undefined, sor
 
 export const getTicketDetail = async (ticketId, isInternal = false) => {
     try {
-        const response = await axios.get(`${API_ENDPOINT}/api/ticket/ticket/${ticketId}`, {
+        const response = await axios.get(`${config.public.API_ENDPOINT}/api/ticket/ticket/${ticketId}`, {
             params: { internal: isInternal },
             headers: {
                 'Accept': 'application/json',
@@ -76,7 +77,7 @@ export const getTicketDetail = async (ticketId, isInternal = false) => {
 
 export const getTicketDetailByCode = async (ticketCode, isInternal = false) => {
     try {
-        const response = await axios.get(`${API_ENDPOINT}/api/ticket/ticket/detail/${ticketCode}`, {
+        const response = await axios.get(`${config.public.API_ENDPOINT}/api/ticket/ticket/detail/${ticketCode}`, {
             params: { isInternal },
             headers: {
                 'Accept': 'application/json',
@@ -118,7 +119,7 @@ export const getTickets = async (page = 0, limit = 10, search = '', filter = {},
             payload.sort_order = sorter.order;
         }
 
-        const response = await axios.get(`${API_ENDPOINT}/api/ticket/tickets`, {
+        const response = await axios.get(`${config.public.API_ENDPOINT}/api/ticket/tickets`, {
             params: payload,
             headers: {
                 'Accept': '*/*',

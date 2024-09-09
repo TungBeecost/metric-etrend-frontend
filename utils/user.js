@@ -1,11 +1,12 @@
 import axios from 'axios';
-const API_ENDPOINT = 'http://localhost:8000';
+// const API_ENDPOINT = 'http://localhost:8000';
+const config = useRuntimeConfig();
 const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
 
 
 export const getListUserStaffOptions = async () => {
     try {
-        const response = await axios.get(`${API_ENDPOINT}/api/user/staff_options`, {
+        const response = await axios.get(`${config.public.API_ENDPOINT}/api/user/staff_options`, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${accessToken}`

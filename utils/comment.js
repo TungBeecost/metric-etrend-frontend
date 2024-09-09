@@ -1,10 +1,11 @@
 import axios from 'axios';
-const API_ENDPOINT = 'http://localhost:8000';
+// const API_ENDPOINT = 'http://localhost:8000';
+const config = useRuntimeConfig();
 const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
 
 export const getCommentsByTicketId = async (ticketId) => {
     try {
-        const response = await axios.get(`${API_ENDPOINT}/api/comment/comment/ticket/${ticketId}`, {
+        const response = await axios.get(`${config.public.API_ENDPOINT}/api/comment/comment/ticket/${ticketId}`, {
             params: { internal: 0 },
             headers: {
                 'Accept': 'application/json',
@@ -20,7 +21,7 @@ export const getCommentsByTicketId = async (ticketId) => {
 
 export const getCommentsByTicketIdInternal = async (ticketId) => {
     try {
-        const response = await axios.get(`${API_ENDPOINT}/api/comment/comment/ticket/${ticketId}`, {
+        const response = await axios.get(`${config.public.API_ENDPOINT}/api/comment/comment/ticket/${ticketId}`, {
             params: { internal: 1 },
             headers: {
                 'Accept': 'application/json',
@@ -36,7 +37,7 @@ export const getCommentsByTicketIdInternal = async (ticketId) => {
 
 export const addNewComment = async (ticketId, content) => {
     try {
-        const response = await axios.post(`${API_ENDPOINT}/api/comment/comment`, {
+        const response = await axios.post(`${config.public.API_ENDPOINT}/api/comment/comment`, {
             ticket_id: ticketId,
             content,
         }, {
@@ -56,7 +57,7 @@ export const addNewComment = async (ticketId, content) => {
 
 export const addNewInternalComment = async (ticketId, content) => {
     try {
-        const response = await axios.post(`${API_ENDPOINT}/api/comment/comment`, {
+        const response = await axios.post(`${config.public.API_ENDPOINT}/api/comment/comment`, {
             ticket_id: ticketId,
             content,
         }, {
@@ -76,7 +77,7 @@ export const addNewInternalComment = async (ticketId, content) => {
 
 export const removeComment = async (commentId) => {
     try {
-        const response = await axios.delete(`${API_ENDPOINT}/api/comment/comment/${commentId}`, {
+        const response = await axios.delete(`${config.public.API_ENDPOINT}/api/comment/comment/${commentId}`, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
@@ -91,7 +92,7 @@ export const removeComment = async (commentId) => {
 
 export const editComment = async (commentId, content) => {
     try {
-        const response = await axios.put(`${API_ENDPOINT}/api/comment/comment/${commentId}`, {
+        const response = await axios.put(`${config.public.API_ENDPOINT}/api/comment/comment/${commentId}`, {
             content,
         }, {
             headers: {
