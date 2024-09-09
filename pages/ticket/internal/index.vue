@@ -125,7 +125,6 @@ const {
     "report_by": filter.value.reporter,
     "cc_user": filter.value.cc_user,
     "support_department": filter.value.supportDepartment,
-    "ticket_type": filter.value.ticketType // Add ticketType to the filter payload
   };
   const [tickets, total] = await getTickets(currentPage.value - 1, 10, filter.value.search, filterPayload, sorter.value);
   totalRow.value = total;

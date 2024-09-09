@@ -4,7 +4,7 @@ const config = useRuntimeConfig();
 const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
 
 
-export const createNewTicket = async ({ title, customerEmail, supportDepartment, description, assignedEmails, ticketType }) => {
+export const createNewTicket = async ({ title, customerEmail, supportDepartment, description, assignedEmails }) => {
     try {
         const response = await axios.post(`${config.public.API_ENDPOINT}/api/ticket/ticket`, {
             title,
@@ -12,7 +12,6 @@ export const createNewTicket = async ({ title, customerEmail, supportDepartment,
             support_department: supportDepartment,
             description,
             assigned_emails: assignedEmails,
-            ticket_type: ticketType,
         }, {
             headers: {
                 'Content-Type': 'application/json',
@@ -29,11 +28,9 @@ export const createNewTicket = async ({ title, customerEmail, supportDepartment,
 
 export const getMyTickets = async (page = 0, limit = 10, filter = undefined, sorter = undefined) => {
     try {
-        const ticketType = window.location.href.includes('https://ereport.vn') ? 'ereport' : 'metric';
         const payload = {
             page,
             limit,
-            ticket_type: ticketType,
         };
         if (filter) {
             payload.filter_field = filter.field;
