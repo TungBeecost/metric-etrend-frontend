@@ -23,6 +23,7 @@ const supportDepartmentOptions = [
 ];
 
 const formTitle = useState('ticketForm.title', () => '');
+const linkReport = useState('ticketForm.linkReport', () => '');
 const formCustomerEmail = useState('ticketForm.customerEmail', () => userInfo.value?.email || '');
 const formAssignedEmails = useState('ticketForm.formAssignedEmails', () => '');
 const formContent = useState('ticketForm.content', () => '');
@@ -43,7 +44,7 @@ const getTicketType = () => {
 };
 
 const submitForm = async () => {
-  if (!formTitle.value || !formContent.value || !formContent.value === '<p></p>' || !formSupportDepartment.value) {
+  if (!formTitle.value || !linkReport.value || !formContent.value || !formContent.value === '<p></p>' || !formSupportDepartment.value) {
     message.error('Vui lòng điền đầy đủ thông tin trước khi gửi.');
     return;
   }
@@ -51,6 +52,7 @@ const submitForm = async () => {
   const ticketType = getTicketType();
   const ticket = await createNewTicket({
     title: formTitle.value,
+    linkReport: linkReport.value,
     customerEmail: formCustomerEmail.value,
     description: formContent.value,
     supportDepartment: formSupportDepartment.value,
@@ -64,6 +66,7 @@ const submitForm = async () => {
   }
   message.success('Tạo yêu cầu mới thành công!');
   formTitle.value = '';
+  linkReport.value = '';
   formContent.value = '<p></p>';
   formSupportDepartment.value = 'service_support';
   sendLoading.value = false;
@@ -95,6 +98,11 @@ const assignedEmails = computed(() => {
       <a-form-item label="Tiêu đề" name="title">
         <a-input v-model:value="formTitle"
                  placeholder="Tiêu đề"
+                 size="large"/>
+      </a-form-item>
+      <a-form-item label="Link báo cáo" name="title">
+        <a-input v-model:value="linkReport"
+                 placeholder="https://ereport.metric.vn/tui-xach-nu"
                  size="large"/>
       </a-form-item>
       <a-form-item label="Email khách hàng" name="customerEmail">
@@ -129,7 +137,7 @@ const assignedEmails = computed(() => {
       </a-form-item>
       <a-flex align="center" justify="flex-end">
         <a-form-item>
-          <a-button type="primary" class="submit-button" @click="submitForm" :loading="sendLoading">
+          <a-button type="primary" class="submit-button" :loading="sendLoading" @click="submitForm">
             <template #icon>
               <icon-send />
             </template>

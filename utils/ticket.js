@@ -1,5 +1,7 @@
 import axios from 'axios';
 const API_ENDPOINT = 'http://localhost:8000';
+const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
+
 
 export const createNewTicket = async ({ title, customerEmail, supportDepartment, description, assignedEmails, ticketType }) => {
     try {
@@ -14,7 +16,7 @@ export const createNewTicket = async ({ title, customerEmail, supportDepartment,
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZGlzcGxheV9uYW1lIjoiRHV5IENcdTAxYjBcdTAxYTFuZyBMXHUwMGVhIiwiZmFtaWx5X25hbWUiOiIgTFx1MDBlYSIsImdpdmVuX25hbWUiOiJEdXkgQ1x1MDFiMFx1MDFhMW5nIiwidXJsX3RodW1ibmFpbCI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0lIa3JJcFk5WFRFYXZ5dXNvLW5nRkl3ajRacThQQUxGU09Fa2lpQ25qa0hrempzVzQ9czEwMCIsImVtYWlsIjoiY3VvbmdsZEBtZXRyaWMudm4iLCJleHAiOjE3MjYwNjM0NTN9.djjPIb9Ocb1BftjNvrMujWJwERaChODizs9I19ncW7o',
+                'Authorization': `Bearer ${accessToken}`
             }
         });
         return response?.data;
@@ -45,7 +47,7 @@ export const getMyTickets = async (page = 0, limit = 10, filter = undefined, sor
             params: payload,
             headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZGlzcGxheV9uYW1lIjoiRHV5IENcdTAxYjBcdTAxYTFuZyBMXHUwMGVhIiwiZmFtaWx5X25hbWUiOiIgTFx1MDBlYSIsImdpdmVuX25hbWUiOiJEdXkgQ1x1MDFiMFx1MDFhMW5nIiwidXJsX3RodW1ibmFpbCI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0lIa3JJcFk5WFRFYXZ5dXNvLW5nRkl3ajRacThQQUxGU09Fa2lpQ25qa0hrempzVzQ9czEwMCIsImVtYWlsIjoiY3VvbmdsZEBtZXRyaWMudm4iLCJleHAiOjE3MjYwNjM0NTN9.djjPIb9Ocb1BftjNvrMujWJwERaChODizs9I19ncW7o',
+                'Authorization': `Bearer ${accessToken}`
             }
         });
         return [response?.data || [], response?.data?.total || 0];
@@ -55,17 +57,22 @@ export const getMyTickets = async (page = 0, limit = 10, filter = undefined, sor
     }
 };
 
-// export const getTicketDetail = async (ticketId, isInternal = false) => {
-//     const {$api} = useNuxtApp();
-//     try {
-//         const response = await $api.ticket.detail(ticketId, isInternal);
-//         return response?.data;
-//     } catch (e) {
-//         console.error(`[ERROR] Fetch Ticket Detail, status=${e.response?.status}, message=${e.message}`)
-//         return undefined;
-//     }
-// }
-//
+export const getTicketDetail = async (ticketId, isInternal = false) => {
+    try {
+        const response = await axios.get(`${API_ENDPOINT}/api/ticket/ticket/${ticketId}`, {
+            params: { internal: isInternal },
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+        return response?.data;
+    } catch (e) {
+        console.error(`[ERROR] Fetch Ticket Detail, status=${e.response?.status}, message=${e.message}`);
+        return undefined;
+    }
+};
+
 
 export const getTicketDetailByCode = async (ticketCode, isInternal = false) => {
     try {
@@ -73,7 +80,7 @@ export const getTicketDetailByCode = async (ticketCode, isInternal = false) => {
             params: { isInternal },
             headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZGlzcGxheV9uYW1lIjoiRHV5IENcdTAxYjBcdTAxYTFuZyBMXHUwMGVhIiwiZmFtaWx5X25hbWUiOiIgTFx1MDBlYSIsImdpdmVuX25hbWUiOiJEdXkgQ1x1MDFiMFx1MDFhMW5nIiwidXJsX3RodW1ibmFpbCI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0lIa3JJcFk5WFRFYXZ5dXNvLW5nRkl3ajRacThQQUxGU09Fa2lpQ25qa0hrempzVzQ9czEwMCIsImVtYWlsIjoiY3VvbmdsZEBtZXRyaWMudm4iLCJleHAiOjE3MjYwNjM0NTN9.djjPIb9Ocb1BftjNvrMujWJwERaChODizs9I19ncW7o',
+                'Authorization': `Bearer ${accessToken}`
             }
         });
         return response?.data;
@@ -83,54 +90,74 @@ export const getTicketDetailByCode = async (ticketCode, isInternal = false) => {
     }
 };
 
-// export const getTickets = async (page = 0, limit = 10, search = '', filter = undefined, sorter = undefined) => {
-//     const {$api} = useNuxtApp();
-//     try {
-//         const payload = {limit, page}
-//         if (search) {
-//             payload.search = search;
-//         }
-//         if (filter) {
-//             payload.filter = filter;
-//         }
-//         if (sorter) { // not implemented yet
-//             payload.sort_field = sorter.field;
-//             payload.sort_order = sorter.order;
-//         }
-//         const response = await $api.ticket.listTickets(payload);
-//         return [response?.data, response.total];
-//     } catch (e) {
-//         console.error(`[ERROR] Fetch Tickets, status=${e.response?.status}, message=${e.message}`)
-//         return undefined;
-//     }
-// }
-//
-// export const getPriorityColor = (priority) => {
-//     switch (priority) {
-//         case 'low':
-//             return 'success'
-//         case 'normal':
-//             return 'warning'
-//         case 'high':
-//             return 'danger'
-//         default:
-//             return 'default'
-//     }
-// }
-//
-// export const getPriorityText = (priority) => {
-//     switch (priority) {
-//         case 'low':
-//             return 'Ưu tiên thấp'
-//         case 'normal':
-//             return 'Cần làm'
-//         case 'high':
-//             return 'Ưu tiên cao'
-//         default:
-//             return 'Không xác định'
-//     }
-// }
-//
+export const getTickets = async (page = 0, limit = 10, search = '', filter = {}, sorter = {}) => {
+    try {
+        const filterParams = {
+            created_at: filter.createdAt || { start: '', end: '' },
+            resolved_at: filter.resolvedAt || { start: '', end: '' },
+            priority: filter.priority || '',
+            status: filter.status || '',
+            incharge_by: filter.personIncharge || '',
+            owned_by: filter.owner || '',
+            report_by: filter.reporter || '',
+            cc_user: filter.cc_user || '',
+            support_department: filter.supportDepartment || ''
+        };
+
+        const payload = {
+            page,
+            limit,
+            filter_params: JSON.stringify(filterParams)
+        };
+
+        if (search) {
+            payload.search = search;
+        }
+        if (sorter.field && sorter.order) {
+            payload.sort_field = sorter.field;
+            payload.sort_order = sorter.order;
+        }
+
+        const response = await axios.get(`${API_ENDPOINT}/api/ticket/tickets`, {
+            params: payload,
+            headers: {
+                'Accept': '*/*',
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+        return [response?.data, response?.data?.total];
+    } catch (e) {
+        console.error(`[ERROR] Fetch Tickets, status=${e.response?.status}, message=${e.message}`);
+        return undefined;
+    }
+};
+
+export const getPriorityColor = (priority) => {
+    switch (priority) {
+        case 'low':
+            return 'success'
+        case 'normal':
+            return 'warning'
+        case 'high':
+            return 'danger'
+        default:
+            return 'default'
+    }
+}
+
+export const getPriorityText = (priority) => {
+    switch (priority) {
+        case 'low':
+            return 'Ưu tiên thấp'
+        case 'normal':
+            return 'Cần làm'
+        case 'high':
+            return 'Ưu tiên cao'
+        default:
+            return 'Không xác định'
+    }
+}
+
 // export const reassignTicket = async (ticketId, staffId) => {
 //     const {$api} = useNuxtApp();
 //     try {

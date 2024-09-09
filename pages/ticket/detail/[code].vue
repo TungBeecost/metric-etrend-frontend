@@ -8,7 +8,7 @@ import AppTag from "~/components/ticket/AppTag.vue";
 import AppListComment from "~/components/ticket/AppListComment.vue";
 import AppAddComment from "~/components/ticket/AppAddComment.vue";
 import AppSection from "~/components/ticket/AppSection.vue";
-import {addNewComment, editComment, getCommentsByTicketId} from "~/utils/comment.js";
+import {addNewComment, editComment, getCommentsByTicketId, removeComment} from "~/utils/comment.js";
 
 definePageMeta({
   title: "Metric Feedback",

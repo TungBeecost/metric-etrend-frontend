@@ -13,7 +13,9 @@ export const NAVIGATIONS = {
   paymentMethod: "/hinh-thuc-thanh-toan",
   // refundPolicy: "/chinh-sach-doi-tra-san-pham",
   placeOrderPolicy: "/chinh-sach-dat-hang",
-  commonTerm: "/dieu-kien-giao-dich-chung"
+  commonTerm: "/dieu-kien-giao-dich-chung",
+  requestSupport: "/ticket/my-ticket",
+  handingrequestSupport: "/ticket/internal",
 };
 
 export const MENUS = [

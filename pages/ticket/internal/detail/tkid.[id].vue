@@ -1,19 +1,34 @@
 <script setup>
 import {SwapOutlined} from "@ant-design/icons-vue";
 import {message} from "ant-design-vue";
-import {priorityOptions, resolveAsOptions, statusOptions, supportDepartmentOptions} from "../../constants/common";
-import {getTicketDetail, updateTicket} from "~/utils/ticket.js";
 import AppTag from "~/components/ticket/AppTag.vue";
+import {getTicketDetail} from "~/utils/ticket.js";
+import {addNewInternalComment, editComment, getCommentsByTicketIdInternal, removeComment} from "~/utils/comment.js";
+import {
+  priorityOptions,
+  resolveAsOptions,
+  statusOptions,
+  supportDepartmentOptions
+} from "~/constant/general/common_ticket.js";
+import AppDrawer from "~/components/ticket/AppDrawer.vue";
+import AppSection from "~/components/ticket/AppSection.vue";
+import AppTitle from "~/components/ticket/AppTitle.vue";
+import AppTicketList from "~/components/ticket/AppTicketList.vue";
+import IconEdit from "~/components/ticket/IconEdit.vue";
+import IconSend from "~/components/ticket/IconSend.vue";
+import AppListComment from "~/components/ticket/AppListComment.vue";
+import AppAddComment from "~/components/ticket/AppAddComment.vue";
+import {getListUserStaffOptions} from "~/utils/user.js";
+import dayjs from "dayjs";
 
-definePageMeta({
-  validate({params}) {
-    return typeof params.id === 'string' && /^\d+$/.test(params.id)
-  },
-  middleware: 'staff'
-});
+// definePageMeta({
+//   validate({params}) {
+//     return typeof params.id === 'string' && /^\d+$/.test(params.id)
+//   },
+//   middleware: 'staff'
+// });
 
 const route = useRoute();
-const dayjs = useDayjs();
 
 const {
   pending: ticketLoading,
@@ -29,6 +44,11 @@ if (!ticket.value) {
     statusMessage: "Ticket not found",
   });
 }
+
+const formatDateTime = (date) => {
+  if (!date) return '';
+  return dayjs(date).format('DD/MM/YYYY HH:mm:ss');
+};
 
 const setupPreviewImage = () => {
   document.querySelectorAll('.ticket-detail-section > .content > .description img').forEach((imgElement) => {
@@ -98,13 +118,13 @@ const {pending: staffOptionsLoading, data: staffOptions} = useAsyncData('userOpt
 });
 
 const formEditState = reactive({
-  status: ticket?.value?.status,
-  supportDepartment: ticket?.value?.support_department,
-  owner: ticket?.value?.owner,
-  personIncharge: ticket?.value?.person_incharge,
-  priority: ticket?.value?.priority,
-  dueDate: ticket?.value?.due_date ? dayjs(ticket?.value?.due_date) : null,
-  mktTagline: ticket?.value?.mkt_tagline,
+  status: ticket?.value?.data.status,
+  supportDepartment: ticket?.value?.data.support_department,
+  owner: ticket?.value?.data.owner,
+  personIncharge: ticket?.value?.data.person_incharge,
+  priority: ticket?.value?.data.priority,
+  dueDate: ticket?.value?.data.due_date ? dayjs(ticket?.value?.due_date) : null,
+  mktTagline: ticket?.value?.data.mkt_tagline,
   cc: [],
   resolveAs: null,
 })
@@ -125,6 +145,7 @@ const {data: ccOptions} = useAsyncData('ccOptions', async () => {
 
 const handleSubmitAction = async () => {
   console.log('formEditState', formEditState)
+  console.log('ticket', ticket)
   const filteredFormEditState = Object.entries(formEditState).filter(([key, value]) => {
     if (key === 'status' && value === ticket?.value?.status) return false;
     if (key === 'supportDepartment' && value === ticket?.value?.support_department) return false;
@@ -187,7 +208,7 @@ const filterDepartmentOptions = (input, option) => {
 </script>
 
 <template>
-  <div class="main-content">
+  <div class="main-content default_section">
     <div class="title-segment">
       <a-button type="link" @click="navigateTo('/ticket/internal')">
         <template #icon>
@@ -202,7 +223,7 @@ const filterDepartmentOptions = (input, option) => {
     <a-spin :spinning="ticketLoading">
       <app-section class="ticket-detail-section">
         <div class="header">
-          <app-title :text="`[Ticket #${ticket?.id}] ${ticket?.title}`"/>
+          <app-title :text="`[Ticket #${ticket.data?.id}] ${ticket.data?.title}`"/>
           <a-button class="modified-button" size="large" @click="handleClickEditButton">
             <template #icon>
               <icon-edit class="icon-edit"/>
@@ -214,17 +235,17 @@ const filterDepartmentOptions = (input, option) => {
           <table class="ticket-metadata">
             <tr class="ticket-metadata__item">
               <td class="ticket-metadata__item__label">Ngày gửi yêu cầu</td>
-              <td class="ticket-metadata__item__value">{{ formatDateTime(ticket?.created_at) }}</td>
+              <td class="ticket-metadata__item__value">{{ formatDateTime(ticket.data?.created_at) }}</td>
             </tr>
             <tr class="ticket-metadata__item">
               <td class="ticket-metadata__item__label">Trạng thái</td>
               <td class="ticket-metadata__item__value">
-                <app-tag :type="getStatusColor(ticket?.status)">{{ getStatusText(ticket?.status) }}</app-tag>
+                <app-tag :type="getStatusColor(ticket.data?.status)">{{ getStatusText(ticket.data?.status) }}</app-tag>
               </td>
             </tr>
             <tr class="ticket-metadata__item">
               <td class="ticket-metadata__item__label">Phân loại hỗ trợ</td>
-              <td class="ticket-metadata__item__value">{{ getSupportDepartmentName(ticket?.support_department) }}</td>
+              <td class="ticket-metadata__item__value">{{ getSupportDepartmentName(ticket.data?.support_department) }}</td>
             </tr>
           </table>
           <a-divider/>
@@ -233,55 +254,55 @@ const filterDepartmentOptions = (input, option) => {
               <tr class="ticket-metadata__item">
                 <td class="ticket-metadata__item__label">Priority</td>
                 <td class="ticket-metadata__item__value">
-                  <app-tag :type="getPriorityColor(ticket?.priority)">{{ getPriorityText(ticket?.priority) }}</app-tag>
+                  <app-tag :type="getPriorityColor(ticket.data?.priority)">{{ getPriorityText(ticket.data?.priority) }}</app-tag>
                 </td>
               </tr>
               <tr class="ticket-metadata__item">
                 <td class="ticket-metadata__item__label">Reporter</td>
-                <td class="ticket-metadata__item__value">{{ ticket?.reporter }}</td>
+                <td class="ticket-metadata__item__value">{{ ticket.data?.reporter }}</td>
               </tr>
               <tr class="ticket-metadata__item">
                 <td class="ticket-metadata__item__label">Customer</td>
-                <td class="ticket-metadata__item__value">{{ ticket?.customer_email }}</td>
+                <td class="ticket-metadata__item__value">{{ ticket.data?.customer_email }}</td>
               </tr>
               <tr class="ticket-metadata__item">
                 <td class="ticket-metadata__item__label">Owner</td>
-                <td class="ticket-metadata__item__value">{{ ticket?.owner }}</td>
+                <td class="ticket-metadata__item__value">{{ ticket.data?.owner }}</td>
               </tr>
             </table>
             <table class="ticket-metadata">
               <tr class="ticket-metadata__item">
                 <td class="ticket-metadata__item__label">In charge</td>
-                <td class="ticket-metadata__item__value">{{ ticket?.person_incharge }}</td>
+                <td class="ticket-metadata__item__value">{{ ticket.data?.person_incharge }}</td>
               </tr>
               <tr class="ticket-metadata__item">
                 <td class="ticket-metadata__item__label">Due date</td>
-                <td class="ticket-metadata__item__value">{{ formatDateTime(ticket?.due_date) }}</td>
+                <td class="ticket-metadata__item__value">{{ formatDateTime(ticket.data?.due_date) }}</td>
               </tr>
               <tr class="ticket-metadata__item">
                 <td class="ticket-metadata__item__label">MKT Tagline</td>
-                <td class="ticket-metadata__item__value">{{ ticket?.mkt_tagline }}</td>
+                <td class="ticket-metadata__item__value">{{ ticket.data?.mkt_tagline }}</td>
               </tr>
               <tr class="ticket-metadata__item">
                 <td class="ticket-metadata__item__label">Cc</td>
-                <td class="ticket-metadata__item__value">{{ ticket?.cc?.join(', ') }}</td>
+                <td class="ticket-metadata__item__value">{{ ticket.data?.cc?.join(', ') }}</td>
               </tr>
             </table>
           </a-flex>
           <a-divider/>
-          <div class="description" v-html="ticket?.description"></div>
+          <div class="description" v-html="ticket.data?.description"></div>
         </div>
       </app-section>
       <app-section v-if="true" class="child-tickets-section">
         <div class="header">
           <app-title text="Child Tickets"/>
         </div>
-        <app-ticket-list :tickets="ticket.child_tickets"
+        <app-ticket-list :tickets="ticket.data.child_tickets"
                          :loading="ticketLoading"
                          :pagination="{
-                           pageSize: ticket.child_tickets.length,
+                           pageSize: ticket.data.child_tickets.length,
                            current: 1,
-                           total: ticket.child_tickets.length
+                           total: ticket.data.child_tickets.length
                          }"
         />
       </app-section>
@@ -358,7 +379,7 @@ const filterDepartmentOptions = (input, option) => {
       <a-flex align="center" justify="space-between" class="comment-section__header">
         <app-title :text="'Phản hồi [Nội bộ]'"/>
         <a-button type="primary"
-                  @click="navigateTo(`/ticket/detail/${ticket.ticket_code}`)">
+                  @click="navigateTo(`/ticket/detail/${ticket.data.ticket_code}`)">
           <template #icon>
             <swap-outlined/>
           </template>

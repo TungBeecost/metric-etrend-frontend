@@ -75,14 +75,13 @@ const formatDateTime = (date) => {
       <a-flex align="center" justify="space-between" class="filter-section">
         <app-title :text="'Ticket của tôi'"/>
         <a-flex align="center">
-          <div class="list-filter-desktop">
-            <a-input v-model:value="textInputSearch" placeholder="Tìm kiếm theo tiêu đề hoặc id" style="width: 20rem">
+          <div class="list-filter-desktop" id="list-filter">
+            <a-input v-model:value="textInputSearch" placeholder="Tìm kiếm theo tiêu đề hoặc id" class="equal-height" style="width: 20rem">
               <template #prefix>
-                <search-outlined/>
+                <search-outlined style="height: fit-content"/>
               </template>
             </a-input>
-            <a-select v-model:value="supportDepartmentFilterValue" placeholder="Lọc theo phân loại hỗ trợ"
-                      style="width: 12rem">
+            <a-select v-model:value="supportDepartmentFilterValue" placeholder="Lọc theo phân loại hỗ trợ" style="width: 12rem; height: 40px">
               <a-select-option value="all">Tất cả</a-select-option>
               <a-select-option value="service_support">Hỗ trợ dịch vụ</a-select-option>
               <a-select-option value="technical_support">Hỗ trợ kỹ thuật</a-select-option>
@@ -224,5 +223,14 @@ const formatDateTime = (date) => {
   line-height: 1.5rem;
   margin-top: 0.75rem;
   margin-bottom: 2.5rem;
+}
+
+</style>
+
+<style scoped lang="scss">
+#list-filter{
+  .ant-input-affix-wrapper{
+    height: 40px;
+  }
 }
 </style>

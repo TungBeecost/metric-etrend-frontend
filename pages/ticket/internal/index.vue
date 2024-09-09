@@ -1,7 +1,11 @@
 <script setup>
 import { FilterOutlined, SearchOutlined } from "@ant-design/icons-vue";
-import { priorityOptions, statusOptions, supportDepartmentOptions } from "../constants/common";
 import { getTickets } from "~/utils/ticket.js";
+import AppTicketList from "~/components/ticket/AppTicketList.vue";
+import AppDrawer from "~/components/ticket/AppDrawer.vue";
+import AppTitle from "~/components/ticket/AppTitle.vue";
+import AppSection from "~/components/ticket/AppSection.vue";
+import {priorityOptions, statusOptions, supportDepartmentOptions} from "~/constant/general/common_ticket.js";
 
 definePageMeta({
   title: "View Tickets",
@@ -136,7 +140,7 @@ const handleTicketTableChange = async (pagination, filters, sorter, { currentDat
 </script>
 
 <template>
-  <div class="main-content">
+  <div class="main-content default_section">
     <app-section>
       <a-flex justify="space-between" class="header">
         <app-title text="Tickets"/>
@@ -148,7 +152,7 @@ const handleTicketTableChange = async (pagination, filters, sorter, { currentDat
         </a-button>
       </a-flex>
       <div class="content">
-        <app-ticket-list :tickets="tickets"
+        <app-ticket-list :tickets="tickets.data"
                          :loading="ticketsLoading"
                          :pagination="{
                            pageSize: 10,
