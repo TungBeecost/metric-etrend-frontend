@@ -2,7 +2,7 @@
 import {SwapOutlined} from "@ant-design/icons-vue";
 import {message} from "ant-design-vue";
 import AppTag from "~/components/ticket/AppTag.vue";
-import {getTicketDetail} from "~/utils/ticket.js";
+import {getTicketDetail, updateTicket} from "~/utils/ticket.js";
 import {addNewInternalComment, editComment, getCommentsByTicketIdInternal, removeComment} from "~/utils/comment.js";
 import {
   priorityOptions,
@@ -18,7 +18,7 @@ import IconEdit from "~/components/ticket/IconEdit.vue";
 import IconSend from "~/components/ticket/IconSend.vue";
 import AppListComment from "~/components/ticket/AppListComment.vue";
 import AppAddComment from "~/components/ticket/AppAddComment.vue";
-import {getListUserStaffOptions} from "~/utils/user.js";
+import {getListCCOptions, getListUserStaffOptions} from "~/utils/user.js";
 import dayjs from "dayjs";
 
 // definePageMeta({
@@ -131,13 +131,13 @@ const formEditState = reactive({
 
 const {data: ccOptions} = useAsyncData('ccOptions', async () => {
   const options = await getListCCOptions();
-  formEditState.cc = ticket.value?.cc?.map((item) => {
-    return options.find(o => {
+  formEditState.cc = ticket.value?.data.cc?.map((item) => {
+    return options.data.find(o => {
       if (item.includes('@')) return o.label === item
       else if (item.startsWith('group:')) return o.label === item.split(':')[1]
     })
   }).map(oCC => oCC.value) ?? [];
-  return options.map((option) => ({
+  return options.data.map((option) => ({
     label: option.label,
     value: option.value
   }))

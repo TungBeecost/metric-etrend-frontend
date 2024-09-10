@@ -170,18 +170,23 @@ export const getPriorityText = (priority) => {
 //     }
 // }
 //
-//
-// export const updateTicket = async (ticketId, payload) => {
-//     const {$api} = useNuxtApp();
-//     try {
-//         const response = await $api.ticket.updateByAction(ticketId, payload);
-//         return response?.data;
-//     } catch (e) {
-//         console.error(`[ERROR] Update Ticket, status=${e.response?.status}, message=${e.message}`)
-//         return null;
-//     }
-// }
-//
+
+export const updateTicket = async (ticketId, payload) => {
+    try {
+        const response = await axios.put(`${config.public.API_ENDPOINT}/api/ticket/ticket/${ticketId}`, payload, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+        return response?.data;
+    } catch (e) {
+        console.error(`[ERROR] Update Ticket, status=${e.response?.status}, message=${e.message}`);
+        return null;
+    }
+};
+
 // export const closeTicket = async (ticketId, subject) => {
 //     const {$api} = useNuxtApp();
 //     try {
