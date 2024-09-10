@@ -144,43 +144,47 @@ const {data: ccOptions} = useAsyncData('ccOptions', async () => {
 });
 
 const handleSubmitAction = async () => {
-  console.log('formEditState', formEditState)
-  console.log('ticket', ticket)
-  const filteredFormEditState = Object.entries(formEditState).filter(([key, value]) => {
-    if (key === 'status' && value === ticket?.value?.status) return false;
-    if (key === 'supportDepartment' && value === ticket?.value?.support_department) return false;
-    if (key === 'owner' && value === ticket?.value?.owner) return false;
-    if (key === 'personIncharge' && value === ticket?.value?.person_incharge) return false;
-    if (key === 'priority' && value === ticket?.value?.priority) return false;
-    if (key === 'dueDate') {
-      if (value === null && ticket?.value?.due_date === null) return false;
-      if (value === null && ticket?.value?.due_date !== null) return true;
-      if (value !== null && ticket?.value?.due_date === null) return true;
-      return !(dayjs(value).format('DD/MM/YYYY') === dayjs(ticket?.value?.due_date).format('DD/MM/YYYY'));
-    }
-    if (key === 'mktTagline' && value === ticket?.value?.mkt_tagline) return false;
-    if (key === 'cc') {
-      if (!value && !ticket?.value?.cc) return false;
-      if (!value && ticket?.value?.cc) return true;
-      if (value && !ticket?.value?.cc) return true;
-      const isSame = JSON.stringify(value) === JSON.stringify(ticket?.value?.cc.map(ccI => ccOptions.value.find(ccO => ccO.label === ccI)?.value));
-      if (isSame) return false;
-    }
-    if (key === 'resolveAs') {
-      return formEditState.status === 'done' && ticket?.value?.status !== 'done' && value !== undefined;
-    }
-    return true;
-  }).map(([mapKey, mapValue]) => {
-    if (mapKey === 'status') return {action_type: 'change_status', subject: mapValue};
-    if (mapKey === 'supportDepartment') return {action_type: 'change_support_department', subject: mapValue};
-    if (mapKey === 'owner') return {action_type: 'reassign', subject: mapValue};
-    if (mapKey === 'personIncharge') return {action_type: 'change_incharge', subject: mapValue};
-    if (mapKey === 'priority') return {action_type: 'change_priority', subject: mapValue};
-    if (mapKey === 'dueDate') return {action_type: 'change_due_date', subject: mapValue};
-    if (mapKey === 'mktTagline') return {action_type: 'change_mkt_tagline', subject: mapValue};
-    if (mapKey === 'cc') return {action_type: 'change_cc', subject: mapValue};
-    if (mapKey === 'resolveAs') return {action_type: 'resolve', subject: mapValue};
-  });
+  console.log('formEditState', formEditState);
+  console.log('ticket', ticket);
+
+  const filteredFormEditState = Object.entries(formEditState)
+      .filter(([key, value]) => {
+        if (key === 'status' && value === ticket?.value?.status) return false;
+        if (key === 'supportDepartment' && value === ticket?.value?.support_department) return false;
+        if (key === 'owner' && value === ticket?.value?.owner) return false;
+        if (key === 'personIncharge' && value === ticket?.value?.person_incharge) return false;
+        if (key === 'priority' && value === ticket?.value?.priority) return false;
+        if (key === 'dueDate') {
+          if (value === null && ticket?.value?.due_date === null) return false;
+          if (value === null && ticket?.value?.due_date !== null) return true;
+          if (value !== null && ticket?.value?.due_date === null) return true;
+          return !(dayjs(value).format('DD/MM/YYYY') === dayjs(ticket?.value?.due_date).format('DD/MM/YYYY'));
+        }
+        if (key === 'mktTagline' && value === ticket?.value?.mkt_tagline) return false;
+        if (key === 'cc') {
+          if (!value && !ticket?.value?.cc) return false;
+          if (!value && ticket?.value?.cc) return true;
+          if (value && !ticket?.value?.cc) return true;
+          const isSame = JSON.stringify(value) === JSON.stringify(ticket?.value?.cc.map(ccI => ccOptions.value.find(ccO => ccO.label === ccI)?.value));
+          if (isSame) return false;
+        }
+        if (key === 'resolveAs') {
+          return formEditState.status === 'done' && ticket?.value?.status !== 'done' && value !== undefined;
+        }
+        return true;
+      })
+      .map(([mapKey, mapValue]) => {
+        if (mapKey === 'status') return { action_type: 'change_status', subject: mapValue };
+        if (mapKey === 'supportDepartment') return { action_type: 'change_support_department', subject: mapValue };
+        if (mapKey === 'owner') return { action_type: 'reassign', subject: mapValue };
+        if (mapKey === 'personIncharge') return { action_type: 'change_incharge', subject: mapValue };
+        if (mapKey === 'priority') return { action_type: 'change_priority', subject: mapValue };
+        if (mapKey === 'dueDate') return { action_type: 'change_due_date', subject: mapValue };
+        if (mapKey === 'mktTagline') return { action_type: 'change_mkt_tagline', subject: mapValue };
+        if (mapKey === 'cc') return { action_type: 'change_cc', subject: mapValue };
+        if (mapKey === 'resolveAs') return { action_type: 'resolve', subject: mapValue };
+      });
+
   const updatedTicket = await updateTicket(route.params.id, filteredFormEditState);
   if (updatedTicket) {
     isOpenDrawer.value = false;
