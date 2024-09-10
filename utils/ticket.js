@@ -4,7 +4,7 @@ const config = useRuntimeConfig();
 const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
 
 
-export const createNewTicket = async ({ title, customerEmail, supportDepartment, description, assignedEmails }) => {
+export const createNewTicket = async ({ title, linkReport, customerEmail, supportDepartment, description, assignedEmails }) => {
     try {
         const response = await axios.post(`${config.public.API_ENDPOINT}/api/ticket/ticket`, {
             title,
@@ -12,6 +12,7 @@ export const createNewTicket = async ({ title, customerEmail, supportDepartment,
             support_department: supportDepartment,
             description,
             assigned_emails: assignedEmails,
+            report_link: linkReport
         }, {
             headers: {
                 'Content-Type': 'application/json',

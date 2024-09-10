@@ -1,17 +1,16 @@
 <script setup>
-import {QuillEditor} from "@vueup/vue-quill";
+import { QuillEditor } from "@vueup/vue-quill";
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import ImageUploader from 'quill-image-uploader';
-import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter'
+import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter';
 import 'quill-image-uploader/dist/quill.imageUploader.min.css';
 import DOMPurify from "dompurify";
+import FileModule from '~/utils/file';
 
 const customConfig = {
   ADD_TAGS: ['p', 'img', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'br', 'span'],
   ADD_ATTR: ['alt', 'height', 'width', 'style'],
 };
-
-const {$api} = useNuxtApp();
 
 const props = defineProps({
   content: {
@@ -29,14 +28,14 @@ const quillToolbar = [
   [{'list': 'ordered'}, {'list': 'bullet'}],
   [{'script': 'sub'}, {'script': 'super'}],
   ['clean']
-]
+];
 
 const emit = defineEmits(['update:content']);
 
 const editorContent = computed({
   get: () => DOMPurify.sanitize(props.content, customConfig),
   set: (value) => emit('update:content', DOMPurify.sanitize(value, customConfig))
-})
+});
 
 const modules = [
   {
@@ -51,14 +50,15 @@ const modules = [
           if (!['image/jpg', 'image/jpeg', 'image/png'].includes(file.type)) {
             reject('File is not an image');
           }
-          $api.file.uploadFile(file)
-            .then((response) => {
-              resolve(response.data.url);
-            })
-            .catch((error) => {
-              reject(error);
-            })
-        })
+          const fileModule = new FileModule();
+          fileModule.uploadFile(file)
+              .then((response) => {
+                resolve(response.url);
+              })
+              .catch((error) => {
+                reject(error);
+              });
+        });
       }
     }
   },
@@ -67,22 +67,21 @@ const modules = [
     module: BlotFormatter,
     options: {}
   }
-]
+];
 </script>
 
 <template>
   <div class="metric-editor">
     <quill-editor
-      v-model:content="editorContent"
-      content-type="html"
-      placeholder="Nội dung yêu cầu"
-      :toolbar="quillToolbar"
-      :modules="modules"
-      style="height: 16rem"
+        v-model:content="editorContent"
+        content-type="html"
+        placeholder="Nội dung yêu cầu"
+        :toolbar="quillToolbar"
+        :modules="modules"
+        style="height: 16rem"
     />
   </div>
 </template>
 
 <style scoped lang="scss">
-
 </style>

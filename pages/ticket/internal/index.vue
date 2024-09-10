@@ -32,17 +32,11 @@ const filter = useState('internal.ticket.filter', () => {
     supportDepartment: '',
     reporter: '',
     cc_user: '',
-    ticketType: '' // Add ticketType to the filter state
   };
 });
 const priorityOpts = useState('myTicket.priorityOptions', () => [...priorityOptions]);
 const supportDepartmentOpts = useState('myTicket.supportDepartmentOptions', () => [...supportDepartmentOptions]);
 const statusOpts = useState('myTicket.statusOptions', () => [...statusOptions]);
-const ticketTypeOpts = useState('myTicket.ticketTypeOptions', () => [
-  { label: 'Metric', value: 'metric' },
-  { label: 'Ereport', value: 'ereport' },
-  { label: 'Unknown', value: 'unknown' }
-]); // Define ticketType options
 const isOpenFilterDrawer = useState('isOpenFilterDrawer', () => false);
 
 const filteredReporter = ref([]);
@@ -91,7 +85,6 @@ const onResetFilter = () => {
     supportDepartment: '',
     reporter: '',
     cc_user: '',
-    ticketType: '' // Reset ticketType filter
   };
 };
 
@@ -220,13 +213,6 @@ const handleTicketTableChange = async (pagination, filters, sorter, { currentDat
             </a-select>
           </a-form-item>
         </a-flex>
-        <a-form-item label="Ticket Type" name="ticketType"> <!-- Add ticketType select option -->
-          <a-select v-model:value="filter.ticketType"
-                    :options="ticketTypeOpts"
-                    :allow-clear="true"
-          >
-          </a-select>
-        </a-form-item>
         <a-form-item label="Owned by" name="owner">
           <a-select v-model:value="filter.owner"
                     :options="staffOptions"

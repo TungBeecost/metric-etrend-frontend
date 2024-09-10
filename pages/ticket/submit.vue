@@ -33,23 +33,12 @@ const formSupportDepartment = useState('ticketForm.supportDepartment', () => {
 });
 const sendLoading = useState('ticketForm.sendLoading', () => false);
 
-const getTicketType = () => {
-  const url = window.location.href;
-  if (url.includes('http://localhost:3000')) {
-    return 'metric';
-  } else if (url.includes('https://ereport.vn')) {
-    return 'ereport';
-  }
-  return 'unknown';
-};
-
 const submitForm = async () => {
   if (!formTitle.value || !linkReport.value || !formContent.value || !formContent.value === '<p></p>' || !formSupportDepartment.value) {
     message.error('Vui lòng điền đầy đủ thông tin trước khi gửi.');
     return;
   }
   sendLoading.value = true;
-  const ticketType = getTicketType();
   const ticket = await createNewTicket({
     title: formTitle.value,
     linkReport: linkReport.value,
@@ -57,7 +46,6 @@ const submitForm = async () => {
     description: formContent.value,
     supportDepartment: formSupportDepartment.value,
     assignedEmails: assignedEmails.value,
-    ticketType: ticketType
   });
   if (ticket) {
     navigateTo('/ticket/my-ticket');
