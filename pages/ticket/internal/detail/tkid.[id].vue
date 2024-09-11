@@ -144,32 +144,29 @@ const {data: ccOptions} = useAsyncData('ccOptions', async () => {
 });
 
 const handleSubmitAction = async () => {
-  console.log('formEditState', formEditState);
-  console.log('ticket', ticket);
-
   const filteredFormEditState = Object.entries(formEditState)
       .filter(([key, value]) => {
-        if (key === 'status' && value === ticket?.value?.status) return false;
-        if (key === 'supportDepartment' && value === ticket?.value?.support_department) return false;
-        if (key === 'owner' && value === ticket?.value?.owner) return false;
-        if (key === 'personIncharge' && value === ticket?.value?.person_incharge) return false;
-        if (key === 'priority' && value === ticket?.value?.priority) return false;
+        if (key === 'status' && value === ticket?.value?.data.status) return false;
+        if (key === 'supportDepartment' && value === ticket?.value?.data.support_department) return false;
+        if (key === 'owner' && value === ticket?.value?.data.owner) return false;
+        if (key === 'personIncharge' && value === ticket?.value?.data.person_incharge) return false;
+        if (key === 'priority' && value === ticket?.value?.data.priority) return false;
         if (key === 'dueDate') {
-          if (value === null && ticket?.value?.due_date === null) return false;
-          if (value === null && ticket?.value?.due_date !== null) return true;
-          if (value !== null && ticket?.value?.due_date === null) return true;
-          return !(dayjs(value).format('DD/MM/YYYY') === dayjs(ticket?.value?.due_date).format('DD/MM/YYYY'));
+          if (value === null && ticket?.value?.data.due_date === null) return false;
+          if (value === null && ticket?.value?.data.due_date !== null) return true;
+          if (value !== null && ticket?.value?.data.due_date === null) return true;
+          return !(dayjs(value).format('DD/MM/YYYY') === dayjs(ticket?.value?.data.due_date).format('DD/MM/YYYY'));
         }
-        if (key === 'mktTagline' && value === ticket?.value?.mkt_tagline) return false;
+        if (key === 'mktTagline' && value === ticket?.value?.data.mkt_tagline) return false;
         if (key === 'cc') {
-          if (!value && !ticket?.value?.cc) return false;
-          if (!value && ticket?.value?.cc) return true;
-          if (value && !ticket?.value?.cc) return true;
-          const isSame = JSON.stringify(value) === JSON.stringify(ticket?.value?.cc.map(ccI => ccOptions.value.find(ccO => ccO.label === ccI)?.value));
+          if (!value && !ticket?.value?.data.cc) return false;
+          if (!value && ticket?.value?.data.cc) return true;
+          if (value && !ticket?.value?.data.cc) return true;
+          const isSame = JSON.stringify(value) === JSON.stringify(ticket?.value?.data.cc.map(ccI => ccOptions.value.find(ccO => ccO.label === ccI)?.value));
           if (isSame) return false;
         }
         if (key === 'resolveAs') {
-          return formEditState.status === 'done' && ticket?.value?.status !== 'done' && value !== undefined;
+          return formEditState.status === 'done' && ticket?.value?.data.status !== 'done' && value !== undefined;
         }
         return true;
       })
