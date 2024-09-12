@@ -1,3 +1,4 @@
+// utils/file.js
 import axios from 'axios';
 const config = useRuntimeConfig();
 const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
@@ -23,7 +24,8 @@ class FileModule {
                     }
                 }
             );
-            return response.data;
+            console.log(response.data.data.url);
+            return response.data.data.url; // Ensure the URL is returned correctly
         } catch (e) {
             console.error(`[ERROR] File upload failed, status=${e.response?.status}, message=${e.message}`);
             throw e;

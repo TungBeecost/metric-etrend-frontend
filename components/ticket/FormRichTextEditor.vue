@@ -52,8 +52,9 @@ const modules = [
           }
           const fileModule = new FileModule();
           fileModule.uploadFile(file)
-              .then((response) => {
-                resolve(response.url);
+              .then((url) => {
+                console.log('Uploaded file URL:', url); // Add this line
+                resolve(url);
               })
               .catch((error) => {
                 reject(error);

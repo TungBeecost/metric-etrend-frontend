@@ -142,7 +142,7 @@ const handleSubmitAction = async () => {
       .filter(([key, value]) => {
         if (key === 'status' && value === ticket?.value?.data.status) return false;
         if (key === 'supportDepartment' && value === ticket?.value?.data.support_department) return false;
-        if (key === 'owner' && value === ticket?.value?.data.owner) return false;
+        if (key === 'owner' && value === ticket?.value?.data.owner) return false; // Kiểm tra giá trị owner
         if (key === 'personIncharge' && value === ticket?.value?.data.person_incharge) return false;
         if (key === 'priority' && value === ticket?.value?.data.priority) return false;
         if (key === 'dueDate') {
@@ -167,7 +167,7 @@ const handleSubmitAction = async () => {
       .map(([mapKey, mapValue]) => {
         if (mapKey === 'status') return { action_type: 'change_status', subject: mapValue };
         if (mapKey === 'supportDepartment') return { action_type: 'change_support_department', subject: mapValue };
-        if (mapKey === 'owner') return { action_type: 'reassign', subject: mapValue };
+        if (mapKey === 'owner') return { action_type: 'reassign', subject: mapValue }; // Thêm action_type cho owner
         if (mapKey === 'personIncharge') return { action_type: 'change_incharge', subject: mapValue };
         if (mapKey === 'priority') return { action_type: 'change_priority', subject: mapValue };
         if (mapKey === 'dueDate') return { action_type: 'change_due_date', subject: mapValue };
@@ -188,7 +188,6 @@ const handleSubmitAction = async () => {
     message.error('Cập nhật thất bại');
   }
 };
-
 const filterEmailOptions = (input, option) => {
   return option.label.toLowerCase().startsWith(input.toLowerCase());
 }
