@@ -135,7 +135,7 @@ const handleTicketTableChange = async (pagination, filters, sorter, { currentDat
   <div class="main-content default_section">
     <app-section>
       <a-flex justify="space-between" class="header">
-        <app-title text="Tickets"/>
+        <app-title text="Yêu cầu hỗ trợ"/>
         <a-button type="default" @click="handleOpenFilterDrawer" size="large">
           <template #icon>
             <filter-outlined/>

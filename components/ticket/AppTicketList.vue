@@ -37,7 +37,8 @@ const columns = [
 </script>
 
 <template>
-  <a-table style="margin-bottom: 0.5rem"
+  <a-table id="id-ticket-list-table"
+            style="margin-bottom: 0.5rem"
            :columns="columns"
            :data-source="tickets"
            :loading="loading"
@@ -102,6 +103,9 @@ const columns = [
   .cell-info {
     font-size: 0.85rem;
     color: #241E46;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .text_center {
@@ -147,5 +151,23 @@ const columns = [
 
 :deep(.success-row) td {
   background-color: #f1fcff;
+}
+</style>
+
+<style lang="scss">
+#id-ticket-list-table{
+  .ant-table-container{
+    .ant-table-content{
+      table{
+        .ant-table-tbody{
+          .ant-table-row{
+            .ant-table-cell{
+            align-items: center
+            }
+          }
+        }
+      }
+    }
+  }
 }
 </style>
