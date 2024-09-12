@@ -241,6 +241,10 @@ const filterDepartmentOptions = (input, option) => {
               <td class="ticket-metadata__item__label">Phân loại hỗ trợ</td>
               <td class="ticket-metadata__item__value">{{ getSupportDepartmentName(ticket.data?.support_department) }}</td>
             </tr>
+            <tr class="ticket-metadata__item">
+              <td class="ticket-metadata__item__label">Link báo cáo</td>
+              <td class="ticket-metadata__item__value">{{ ticket.data?.report_link }}</td>
+            </tr>
           </table>
           <a-divider/>
           <a-flex gap="middle">

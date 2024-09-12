@@ -129,6 +129,10 @@ const handleDeleteComment = async ({commentId}) => {
             <td class="ticket-metadata__item__label">Phân loại hỗ trợ</td>
             <td class="ticket-metadata__item__value">{{ getSupportDepartmentName(ticket.data?.support_department) }}</td>
           </tr>
+          <tr class="ticket-metadata__item">
+            <td class="ticket-metadata__item__label">Link báo cáo</td>
+            <td class="ticket-metadata__item__value">{{ ticket.data?.report_link }}</td>
+          </tr>
         </table>
         <a-divider/>
         <div class="description" v-html="ticket.data?.description"></div>
@@ -201,7 +205,7 @@ const handleDeleteComment = async ({commentId}) => {
           }
 
           &__value {
-            width: 10rem;
+            width: 12rem;
             text-align: left;
             color: #241E46;
             font-family: Inter, Montserrat, sans-serif;
