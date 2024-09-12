@@ -47,7 +47,7 @@ const formattedEndDate = formatDate(report.end_date);
         <div class="summary">
           <div class="report_type">
             <p>Loại báo cáo</p>
-            <p style="font-size: 16px; color: #E85912; font-weight: 700;">Báo cáo chuyên sâu</p>
+            <p style="font-size: 16px; color: #E85912; font-weight: 700;">Báo cáo chi tiết</p>
           </div>
           <div class="report_group">
             <p>Nhóm hàng</p>

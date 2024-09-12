@@ -115,15 +115,15 @@ export const LABEL_PERMISSION_PLAN = {
     icon: "ProjectorScreenChart"
   },
   downloadDeptReport: {
-    label: "Tải báo cáo chuyên sâu (Tính phí theo lượt tải)",
+    label: "Tải báo cáo chi tiết (Tính phí theo lượt tải)",
     icon: "Download"
   },
   viewCountBasic: {
-    label: "10 lượt xem báo cáo chuyên sâu",
+    label: "10 lượt xem báo cáo chi tiết",
     icon: "ViewCount"
   },
   viewCountPro: {
-    label: "15 lượt xem báo cáo chuyên sâu",
+    label: "15 lượt xem báo cáo chi tiết",
     icon: "ViewCount"
   },
   viewReportPro: {
@@ -149,7 +149,7 @@ export const LABEL_PERMISSION_PLAN = {
     }
   },
   numberOfUnlockReport: {
-    label: (number: number) => `${number} lượt xem báo cáo`,
+    label: (number: number) => `${number} lượt xem báo cáo tổng quan`,
     icon: "Unlock"
   },
   customFilterAnalysis: {

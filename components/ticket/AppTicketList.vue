@@ -23,15 +23,15 @@ const formatDateTime = (date) => {
 
 const columns = [
   { index: 'id', title: 'ID', dataIndex: 'id', key: 'id' },
-  { index: 'title', title: 'Title', dataIndex: 'title', key: 'title' },
-  { index: 'owner', title: 'Owner', dataIndex: 'owner', key: 'owner' },
-  { index: 'reporter', title: 'Reporter', dataIndex: 'reporter', key: 'reporter' },
+  { index: 'title', title: 'Tiêu đề', dataIndex: 'title', key: 'title' },
+  { index: 'owner', title: 'Người sở hữu', dataIndex: 'owner', key: 'owner' },
+  { index: 'reporter', title: 'Người báo cáo', dataIndex: 'reporter', key: 'reporter' },
   { index: 'person_incharge', title: 'PIC', dataIndex: 'person_incharge', key: 'person_incharge' },
-  { index: 'created_at', title: 'Create date', dataIndex: 'created_at', key: 'created_at' },
-  { index: 'due_date', title: 'Resolve date', dataIndex: 'due_date', key: 'due_date' },
-  { index: 'priority', title: 'Priority', dataIndex: 'priority', key: 'priority' },
-  { index: 'status', title: 'Status', dataIndex: 'status', key: 'status' },
-  { index: 'mkt_tagline', title: 'MKT Tagline', dataIndex: 'mkt_tagline', key: 'mkt_tagline' },
+  { index: 'created_at', title: 'Ngày tạo', dataIndex: 'created_at', key: 'created_at' },
+  { index: 'due_date', title: 'Ngày giải quyết', dataIndex: 'due_date', key: 'due_date' },
+  { index: 'priority', title: 'Ưu tiên', dataIndex: 'priority', key: 'priority' },
+  { index: 'status', title: 'Trạng thái', dataIndex: 'status', key: 'status' },
+  { index: 'mkt_tagline', title: 'MKT Giới thiệu', dataIndex: 'mkt_tagline', key: 'mkt_tagline' },
 ];
 
 </script>

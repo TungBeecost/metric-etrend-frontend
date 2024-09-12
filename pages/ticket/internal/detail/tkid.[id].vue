@@ -18,15 +18,9 @@ import IconEdit from "~/components/ticket/IconEdit.vue";
 import IconSend from "~/components/ticket/IconSend.vue";
 import AppListComment from "~/components/ticket/AppListComment.vue";
 import AppAddComment from "~/components/ticket/AppAddComment.vue";
+
 import {getListCCOptions, getListUserStaffOptions} from "~/utils/user.js";
 import dayjs from "dayjs";
-
-// definePageMeta({
-//   validate({params}) {
-//     return typeof params.id === 'string' && /^\d+$/.test(params.id)
-//   },
-//   middleware: 'staff'
-// });
 
 const route = useRoute();
 
@@ -253,35 +247,35 @@ const filterDepartmentOptions = (input, option) => {
           <a-flex gap="middle">
             <table class="ticket-metadata">
               <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Priority</td>
+                <td class="ticket-metadata__item__label">Ưu tiên</td>
                 <td class="ticket-metadata__item__value">
                   <app-tag :type="getPriorityColor(ticket.data?.priority)">{{ getPriorityText(ticket.data?.priority) }}</app-tag>
                 </td>
               </tr>
               <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Reporter</td>
+                <td class="ticket-metadata__item__label">Người báo cáo</td>
                 <td class="ticket-metadata__item__value">{{ ticket.data?.reporter }}</td>
               </tr>
               <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Customer</td>
+                <td class="ticket-metadata__item__label">Khách hàng</td>
                 <td class="ticket-metadata__item__value">{{ ticket.data?.customer_email }}</td>
               </tr>
               <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Owner</td>
+                <td class="ticket-metadata__item__label">Người sở hữu</td>
                 <td class="ticket-metadata__item__value">{{ ticket.data?.owner }}</td>
               </tr>
             </table>
             <table class="ticket-metadata">
               <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">In charge</td>
+                <td class="ticket-metadata__item__label">Phụ trách</td>
                 <td class="ticket-metadata__item__value">{{ ticket.data?.person_incharge }}</td>
               </tr>
               <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Due date</td>
+                <td class="ticket-metadata__item__label">Ngày đến hạn</td>
                 <td class="ticket-metadata__item__value">{{ formatDateTime(ticket.data?.due_date) }}</td>
               </tr>
               <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">MKT Tagline</td>
+                <td class="ticket-metadata__item__label">MKT Giới thiệu</td>
                 <td class="ticket-metadata__item__value">{{ ticket.data?.mkt_tagline }}</td>
               </tr>
               <tr class="ticket-metadata__item">

@@ -72,7 +72,7 @@ const isViewReportDisabled = computed(() => userInfo.value.current_plan.remain_c
           </div>
           <div class="header">Xác nhận xem báo cáo</div>
           <div class="description">
-            Bạn có chắc chắn muốn sử dụng xem Báo cáo chuyên sâu <b>trong vòng 7 ngày </b> không?
+            Bạn có chắc chắn muốn sử dụng xem Báo cáo chi tiết <b>trong vòng 7 ngày </b> không?
           </div>
         </div>
       </div>

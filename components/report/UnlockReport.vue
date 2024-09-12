@@ -94,7 +94,7 @@ onMounted(() => {
         <NuxtLink to="/pricing" style="width: 100%;">
           <a-button style="width: 100%;" type="primary" size="large">Xem báo cáo</a-button>
         </NuxtLink>
-        <a-button v-if="!checkLevelCategory" style="width: 100%;" size="large" @click="openModal">Báo cáo chuyên sâu</a-button>
+        <a-button v-if="!checkLevelCategory" style="width: 100%;" size="large" @click="openModal">Báo cáo chi tiết</a-button>
       </div>
       <div v-if="!currentUserStore.authenticated">
         Đã có tài khoản?

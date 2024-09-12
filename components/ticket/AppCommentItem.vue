@@ -5,9 +5,11 @@ import IconSend from "~/components/ticket/IconSend.vue";
 import { useCurrentUser } from "~/stores/current-user.js";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/vi'; // Import Vietnamese locale
 import { ref } from 'vue';
 
 dayjs.extend(relativeTime);
+dayjs.locale('vi'); // Set Vietnamese locale
 
 const props = defineProps({
   comment: {
@@ -47,6 +49,7 @@ const formatDateTime = (date) => {
 
 const localContent = ref(props.comment.content);
 </script>
+
 
 <template>
   <template v-if="props.isEditing">

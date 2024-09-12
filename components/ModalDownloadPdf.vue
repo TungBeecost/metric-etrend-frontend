@@ -73,7 +73,7 @@ const handleDownload = async () => {
               );
               const link = document.createElement('a');
               link.href = url;
-              const fileName = `Báo cáo chuyên sâu nhóm hàng ${props.data.name} ${formatDate(props.data.start_date, "DDMMYYYY")}-${formatDate(props.data.end_date, "DDMMYYYY")}.pdf`;
+              const fileName = `Báo cáo chi tiết nhóm hàng ${props.data.name} ${formatDate(props.data.start_date, "DDMMYYYY")}-${formatDate(props.data.end_date, "DDMMYYYY")}.pdf`;
               link.setAttribute(
                   'download',
                   fileName,
@@ -136,7 +136,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
       </div>
       <div class="summary">
         <div class="title_container">
-          <div class="title_report">Báo cáo chuyên sâu</div>
+          <div class="title_report">Báo cáo chi tiết</div>
           <div>
             <p>Nhóm hàng {{ props.data.name }}</p>
             <ul>
