@@ -117,11 +117,11 @@ const formEditState = reactive({
   owner: ticket?.value?.data.owner,
   personIncharge: ticket?.value?.data.person_incharge,
   priority: ticket?.value?.data.priority,
-  dueDate: ticket?.value?.data.due_date ? dayjs(ticket?.value?.due_date) : null,
+  dueDate: ticket?.value?.data.due_date ? dayjs(ticket?.value?.data.due_date) : null, // Ensure dueDate is set correctly
   mktTagline: ticket?.value?.data.mkt_tagline,
   cc: [],
   resolveAs: null,
-})
+});
 
 const {data: ccOptions} = useAsyncData('ccOptions', async () => {
   const options = await getListCCOptions();
