@@ -33,7 +33,7 @@ export const MENUS = [
     label: "Bảng giá dịch vụ",
     icon: "Store",
     to: NAVIGATIONS.pricing
-  }
+  },
 ];
 
 export const CATEGORIES: Array<CommonOptionItem> = [
