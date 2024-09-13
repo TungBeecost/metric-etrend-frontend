@@ -73,7 +73,7 @@ const ALL_PLATFORM_BASE_OBJECT = {
         uniqueName: 'tiktok',
         sortDefault: 'order_revenue',
         color: '#000000',
-        urlLogo: 'https://lh3.googleusercontent.com/pw/AL9nZEX1ReXxRR_fultT5MugN_m3HlVtrL1KyL-dJ5oaU4UvIJeeKFLwRYWGkqSbjrluz0T8FnsgwIypLHmWwd1H-McCwsWDoW3jTz9JMxX8_1MGwGP1PhlA1Fbo02eKOz-6fs-I-B0f4Y_8wRRV_EoM21F2',
+        urlLogo: 'https://lh3.googleusercontent.com/pw/AP1GczP5YyL_j5ffCPbOHVQPyepUK9esU8PIKguUjrbbopd1_LfSNymt5ta9e3ArF6O4dEPlw7nFBiA08DISep8LNiRtjbeBOrTn9CsUCEF8gpMfavPBjipqiIWwCo3KGYBPIK0MwXZczXo60axCyE48tSdM=w32-h33-s-no-gm',
         country: ALL_COUNTRY_SUPPORTED.vietnam
     },
     /**

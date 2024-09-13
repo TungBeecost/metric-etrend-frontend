@@ -35,8 +35,6 @@ const platformColors = {
   Tiktok: ['#000', '#000'],
 };
 
-// const PLATFORM_TOTAL = computed(() => props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL);
-// const total = computed(() => PLATFORM_TOTAL.value.platforms.reduce((acc, item) => acc + item.revenue, 0));
 
 const columns = computed(() => [
   {
