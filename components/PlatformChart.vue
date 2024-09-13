@@ -32,7 +32,7 @@ const platformColors = {
   Lazada: ['#4745A5', '#241E46'],
   Tiki: ['#5BAFFE', '#366998'],
   Sendo: ['#FF6060', '#993A3A'],
-  Tiktok: ['#000', '#000'],
+  Tiktok: ['#7E7E7E', '#0C0C0C'],
 };
 
 
@@ -160,12 +160,6 @@ const dataSource = computed(() => {
     <div>
       <div style="position: relative; pointer-events: none">
         <highchart v-if="renderChart" :options="chartOptions"/>
-        <!--        <div class="platform-chart-inner-box">-->
-        <!--          <div class="platform-chart-inner-value">-->
-        <!--            <div class="percent" style="color: #241E46; font-size: 24px;font-weight: bold; line-height: 32px; ">{{ innerPercent }}</div>-->
-        <!--            <div class="name" style="color: #241E46; font-size: 12px;line-height: 20px;">{{ innerName }}</div>-->
-        <!--          </div>-->
-        <!--        </div>-->
       </div>
     </div>
     <div style="width: 100%">
