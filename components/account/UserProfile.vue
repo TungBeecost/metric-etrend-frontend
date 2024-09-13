@@ -24,14 +24,17 @@ const displayName = computed(() => {
 
 const handleClick = () => {
   navigateTo(NAVIGATIONS.account);
+  isDropdownOpen.value = false;
 };
 
 const handleClickRequestSupport = () => {
   navigateTo(NAVIGATIONS.requestSupport);
+  isDropdownOpen.value = false;
 };
 
 const handleHandClickRequestSupport = () => {
   navigateTo(NAVIGATIONS.handingrequestSupport);
+  isDropdownOpen.value = false;
 };
 
 // Change the getPopupContainer function to return a different element
@@ -41,7 +44,7 @@ const getPopupContainer = () => document.querySelector('.user-profile');
 <template>
   <a-dropdown placement="bottomLeft" trigger="click" :get-popup-container="getPopupContainer" @visible-change="handleVisibleChange">
     <div v-if="userData?.id" class="user-profile">
-        <a-avatar style="cursor: pointer" class="avatar-image" :src="userData?.avatar" size="small"/>
+      <a-avatar style="cursor: pointer" class="avatar-image" :src="userData?.avatar" size="small"/>
       <span :class="{ headerText: props.isDarkBlueHeader, headerTextDarkBlue: !props.isDarkBlueHeader }" class="user-name" style="cursor: pointer">
         {{ displayName }}
       </span>
