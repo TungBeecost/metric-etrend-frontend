@@ -45,6 +45,10 @@ const unlockReport = async () => {
   }
 }
 
+const handlePricing = () => {
+  navigateTo(NAVIGATIONS.pricing);
+};
+
 const openModalHandle = () => {
   openModal.value = true;
 };
@@ -113,7 +117,7 @@ const openModalHandle = () => {
         <div style="width: 100%;" @click="openModalHandle">
           <a-button style="width: 100%;" type="primary" size="large">Xem báo cáo</a-button>
         </div>
-        <a-button v-if="!checkLevelCategory" style="width: 100%;" size="large" @click="openModal">Báo cáo chi tiết</a-button>
+        <a-button v-if="!checkLevelCategory" style="width: 100%;" size="large" @click="openModalHandle">Báo cáo chi tiết</a-button>
       </div>
       <div v-if="!currentUserStore.authenticated">
         Đã có tài khoản?
@@ -174,7 +178,7 @@ const openModalHandle = () => {
           Xem báo cáo
         </AButton>
         <AButton v-else style="width: 100%;" size="large" type="primary" class="optionBtn"
-                 @click="navigateTo(NAVIGATIONS.pricing)">
+                 @click="handlePricing">
           Mua ngay
         </AButton>
       </div>
