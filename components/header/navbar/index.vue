@@ -87,7 +87,7 @@ const {fetchedUser, userInfo} = storeToRefs(currentUserStore);
   color: white;
 
   @include tablet {
-    gap: 0px;
+    gap: 0;
   }
 }
 

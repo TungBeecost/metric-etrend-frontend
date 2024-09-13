@@ -1,5 +1,5 @@
 <script setup>
-import {useCurrentUser} from "~/stores/current-user"
+import { useCurrentUser } from "~/stores/current-user";
 import { NAVIGATIONS } from "~/constant/constains";
 const props = defineProps({
   isDarkBlueHeader: {
@@ -9,7 +9,7 @@ const props = defineProps({
 });
 
 const currentUserStore = useCurrentUser();
-const {userInfo} = storeToRefs(currentUserStore);
+const { userInfo } = storeToRefs(currentUserStore);
 const userData = computed(() => currentUserStore.userInfo);
 const isDropdownOpen = ref(false);
 
@@ -33,10 +33,13 @@ const handleClickRequestSupport = () => {
 const handleHandClickRequestSupport = () => {
   navigateTo(NAVIGATIONS.handingrequestSupport);
 };
+
+// Change the getPopupContainer function to return a different element
+const getPopupContainer = () => document.querySelector('.user-profile');
 </script>
 
 <template>
-  <a-dropdown placement="bottomRight" trigger="click" @visible-change="handleVisibleChange">
+  <a-dropdown placement="bottomLeft" trigger="click" :get-popup-container="getPopupContainer" @visible-change="handleVisibleChange">
     <div v-if="userData?.id" class="user-profile">
         <a-avatar style="cursor: pointer" class="avatar-image" :src="userData?.avatar" size="small"/>
       <span :class="{ headerText: props.isDarkBlueHeader, headerTextDarkBlue: !props.isDarkBlueHeader }" class="user-name" style="cursor: pointer">
@@ -165,7 +168,6 @@ const handleHandClickRequestSupport = () => {
   width: 200px;
   padding: 8px 0;
   margin-top: 10px;
-
   .option_btn {
     display: flex;
     align-items: center;

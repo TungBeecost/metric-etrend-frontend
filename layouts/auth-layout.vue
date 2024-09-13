@@ -26,7 +26,6 @@ import {NAVIGATIONS} from '~/constant/constains';
 const {fetchCurrentUser} = useCurrentUser();
 const {userInfo, fetchedUser} = storeToRefs(useCurrentUser());
 const route = useRoute();
-const headerRef = ref(null);
 const isScrolled = ref(false);
 
 if (!userInfo.value.id) {
