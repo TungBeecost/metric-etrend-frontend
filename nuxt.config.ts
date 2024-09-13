@@ -29,7 +29,7 @@ export default defineNuxtConfig({
             link: [
                 {
                     rel: "icon",
-                    href: "https://lh3.googleusercontent.com/pw/AM-JKLVKUzx1GjapZkkkECUXYDk4Vaiguh_oem4OaXJ4pr5xICAgjbRPHZ7QXO4uZ4iHJc97ZnLoTW6sAjkjJr--D14mkA2lHsr4SmVX1d0vshEnjan0WvlOVEoLLrqnpGB_7ypmpyfcKXgm4X6tvRRUO-H_=w192-h164-no",
+                    href: "https://lh3.googleusercontent.com/pw/AP1GczPkZUEomYgWJzr7JaCALCuscVq41NLzjst1TQIhEKTwj8oFIe2X7zoaQO6M6utUHVgJVhkV0fzthEl9kKXnlx6Jx6eNmvsV7tdTo3ppWrjJldRefKHG5SvF7jKagtqc2LdyG1OBURFD781F1hllgJg=w52-h53-s-no-gm",
                 },
                 {
                     rel: "stylesheet",
