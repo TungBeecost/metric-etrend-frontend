@@ -272,21 +272,24 @@ export const TESTIMONIAL_BRANDS = [
 ];
 
 export const PARTERS = [
-  "/images/brand/Canifa.png",
-  "/images/brand/Coway.png",
-  "/images/brand/Dien-Quang.png",
-  "/images/brand/everon.png",
-  "/images/brand/Guardian.png",
-  "/images/brand/Idea.png",
-  "/images/brand/Lazada.png",
-  "/images/brand/Shisedo.png",
-  "/images/brand/Shopee.png",
-  "/images/brand/The-gioi-di-dong.png",
-  "/images/brand/Thien-long.png",
-  "/images/brand/tiki.png",
-  "/images/brand/unilever.png",
-  "/images/brand/vecom.png",
-  "/images/brand/VNlife.png"
+  "/images/brand/1.Logo_Bộ_Thông_tin_và_Truyền_thông.svg.png",
+  "/images/brand/2.Idea.png",
+  "/images/brand/3.Ecomviet.png",
+  "/images/brand/4vecom.png",
+  "/images/brand/5.Shopee.png",
+  "/images/brand/6.logo-lazada-1.png",
+  "/images/brand/7.Tiktok.png",
+  "/images/brand/8.tiki.png",
+  "/images/brand/9.unilever.png",
+  "/images/brand/10.AMOREPACIFIC_logo.svg.png",
+  "/images/brand/11.Coway.png",
+  "/images/brand/12.Novaon.png",
+  "/images/brand/13.DKSH.png",
+  "/images/brand/14.Thegioididong.png",
+  "/images/brand/15.Guardian.png",
+  "/images/brand/16.Shisedo.png",
+  "/images/brand/17.Canifa.png",
+  "/images/brand/18.Thiênlong.png",
 ];
 
 export const TERM_AND_POLICIES = [
