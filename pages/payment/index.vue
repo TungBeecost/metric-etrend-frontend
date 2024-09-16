@@ -11,14 +11,14 @@ const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
-const { createPaymentTransaction, verifyTransaction, submitLeadInformation } = usePayment()
+const { createPaymentTransaction, verifyTransaction } = usePayment()
 const selectedWalletOption = ref('');
 const qrCodeData = ref('');
 const statusApplyCode = ref<boolean>(false);
 const openModal = ref<boolean>(false);
 const openModalWaiting = ref<boolean>(false);
 const planCode = ref('');
-const information = ref({ name: '', phone: '', companyName: '' });
+const information = ref({ name: '', phone: '', companyName: '', taxCode: '', email: '', address: '' });
 
 interface ErrorResponse {
   response: {
@@ -78,12 +78,12 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
   } else {
     if (selectedWalletOption.value) {
       const paymentMethod = selectedWalletOption.value;
-      const currentPlan = plan.value; // Lấy giá trị của plan.value vào một biến tạm
+      const currentPlan = plan.value;
 
       if (currentPlan) {
-        const itemCode = `${currentPlan.plan_code}__12m`; // Sử dụng giá trị của currentPlan
+        const itemCode = `${currentPlan.plan_code}__12m`;
         try {
-          const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null);
+          const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
           if (transactionResult?.response?.payment_url) {
             window.location.href = transactionResult.response.payment_url;
           } else {
@@ -133,21 +133,21 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
       console.log("Transaction completed");
       openModal.value = false;
       isCompleted.value = true;
-      try {
-        if (userInfo.value.email) {
-          await submitLeadInformation(
-              information.value.name,
-              userInfo.value.email,
-              information.value.phone,
-              information.value.companyName,
-              transactionId
-          );
-        } else {
-          console.error('User email is undefined');
-        }
-      } catch (error) {
-        console.error('error', error);
-      }
+      // try {
+      //   if (userInfo.value.email) {
+      //     await submitLeadInformation(
+      //         information.value.name,
+      //         userInfo.value.email,
+      //         information.value.phone,
+      //         information.value.companyName,
+      //         transactionId
+      //     );
+      //   } else {
+      //     console.error('User email is undefined');
+      //   }
+      // } catch (error) {
+      //   console.error('error', error);
+      // }
       if (intervalId) clearInterval(intervalId);
       if (timeoutId) clearTimeout(timeoutId);
       window.location.href = `/?transaction_id=${transactionId}`;
@@ -192,9 +192,13 @@ onMounted(() => {
   }
 });
 
-const handleUpdateContact = (contact: { name: string, phone: string }) => {
+const handleUpdateContact = (contact: { name: string, phone: string, companyName: string, taxCode: string, email: string, address: string }) => {
   information.value.name = contact.name;
   information.value.phone = contact.phone;
+  information.value.companyName = contact.companyName;
+  information.value.taxCode = contact.taxCode;
+  information.value.email = contact.email;
+  information.value.address = contact.address;
   console.log('Updated contact information:', information.value);
 };
 

@@ -61,7 +61,16 @@ const handlePayment = () => {
   } else {
     errors.value.phone = '';
   }
-  emit('updateContact', { name: nameValue.value, phone: phoneValue.value });
+
+
+  emit('updateContact', {
+    name: nameValue.value,
+    phone: phoneValue.value,
+    companyName: formVatValues.value.companyName,
+    taxCode: formVatValues.value.taxCode,
+    email: formVatValues.value.email,
+    address: formVatValues.value.address
+  });
 
   if (checked.value && !isFormVatValid()) {
     return;
