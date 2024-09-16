@@ -34,10 +34,24 @@ const formSupportDepartment = useState('ticketForm.supportDepartment', () => {
 const sendLoading = useState('ticketForm.sendLoading', () => false);
 
 const submitForm = async () => {
-  if (!formTitle.value || !linkReport.value || !formContent.value || !formContent.value === '<p></p>' || !formSupportDepartment.value) {
-    message.error('Vui lòng điền đầy đủ thông tin trước khi gửi.');
+  const urlPattern = new RegExp('^(https?:\\/\\/)?'+
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+
+      '(\\?[;&a-z\\d%_.~+=-]*)?'+
+      '(\\#[-a-z\\d_]*)?$','i');
+
+  const errors = [];
+  if (!formTitle.value) errors.push('Tiêu đề');
+  if (!formContent.value || formContent.value === '<p></p>') errors.push('Nội dung');
+  if (!formSupportDepartment.value) errors.push('Bộ phận hỗ trợ');
+  if (linkReport.value && !urlPattern.test(linkReport.value)) errors.push('Link báo cáo không đúng định dạng');
+
+  if (errors.length > 0) {
+    message.error(`Vui lòng điền đầy đủ thông tin: ${errors.join(', ')}.`);
     return;
   }
+
   sendLoading.value = true;
   const ticket = await createNewTicket({
     title: formTitle.value,
@@ -83,23 +97,23 @@ const assignedEmails = computed(() => {
       <h2 class="title">Tạo yêu cầu mới</h2>
     </div>
     <a-form :layout="'vertical'" class="submit-form">
-      <a-form-item label="Tiêu đề" name="title">
+      <a-form-item label="Tiêu đề *" name="title">
         <a-input v-model:value="formTitle"
                  placeholder="Tiêu đề"
                  size="large"/>
       </a-form-item>
-      <a-form-item label="Link báo cáo" name="title">
+      <a-form-item label="Link báo cáo" name="linkReport">
         <a-input v-model:value="linkReport"
-                 placeholder="https://ereport.metric.vn/tui-xach-nu"
+                 placeholder="https://ereport.vn/tui-xach-nu"
                  size="large"/>
       </a-form-item>
-      <a-form-item label="Email khách hàng" name="customerEmail">
+      <a-form-item label="Email khách hàng *" name="customerEmail">
         <a-input v-model:value="formCustomerEmail"
                  placeholder="example@gmail.com"
                  :disabled="!isStaff"
                  size="large"/>
       </a-form-item>
-      <a-form-item label="Bộ phận hỗ trợ" name="supportDepartment">
+      <a-form-item label="Bộ phận hỗ trợ *" name="supportDepartment">
         <a-radio-group v-model:value="formSupportDepartment" style="display: flex; gap: 16px">
           <form-radio-card v-for="option in supportDepartmentOptions"
                            :key="option.value"
@@ -108,12 +122,6 @@ const assignedEmails = computed(() => {
                            :current-selected="formSupportDepartment"
                            :description="option.description"/>
         </a-radio-group>
-      </a-form-item>
-      <a-form-item v-if="isStaff" label="Email người phụ trách" name="assignedEmails">
-        <a-input v-model:value="formAssignedEmails"
-                 placeholder="example@metric.vn,example1@metric.vn,..."
-                 :disabled="!isStaff"
-                 size="large"/>
       </a-form-item>
       <a-form-item>
         <client-only>
@@ -173,6 +181,10 @@ const assignedEmails = computed(() => {
         line-height: 22px;
       }
     }
+  }
+
+  .required {
+    color: red;
   }
 }
 </style>
