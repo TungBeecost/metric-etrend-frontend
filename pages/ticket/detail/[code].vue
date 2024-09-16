@@ -203,7 +203,7 @@ const handleDeleteComment = async ({commentId}) => {
           }
 
           &__value {
-            width: 12rem;
+            width: 20rem;
             text-align: left;
             color: #241E46;
             font-family: Inter, Montserrat, sans-serif;
