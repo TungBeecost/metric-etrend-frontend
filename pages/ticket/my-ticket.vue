@@ -81,7 +81,7 @@ const formatDateTime = (date) => {
                 <search-outlined style="height: fit-content"/>
               </template>
             </a-input>
-            <a-select v-model:value="supportDepartmentFilterValue" placeholder="Lọc theo phân loại hỗ trợ" style="width: 12rem; height: 40px">
+            <a-select v-model:value="supportDepartmentFilterValue" placeholder="Lọc theo phân loại hỗ trợ" style="width: 12rem;">
               <a-select-option value="all">Tất cả</a-select-option>
               <a-select-option value="service_support">Hỗ trợ dịch vụ</a-select-option>
               <a-select-option value="technical_support">Hỗ trợ kỹ thuật</a-select-option>
@@ -228,9 +228,39 @@ const formatDateTime = (date) => {
 </style>
 
 <style scoped lang="scss">
-#list-filter{
-  .ant-input-affix-wrapper{
-    height: 40px;
+#list-filter {
+  height: 40px;
+  .ant-input-affix-wrapper {
+    height: 100% !important;
+  }
+
+  .ant-select{
+    height: 100% !important;
+
+    .ant-select-selector{
+      height: 100% !important;
+
+      .ant-select-selection-search{
+        height: 100% !important;
+
+        .ant-select-selection-search-input{
+          height: 100% !important;
+        }
+      }
+
+      .ant-select-selection-item{
+        height: 100% !important;
+      }
+    }
+
+    .ant-select-arrow{
+      height: 100% !important;
+    }
   }
 }
+
+.ant-select-selection-search-input{
+  height: 40px !important;
+}
 </style>
+

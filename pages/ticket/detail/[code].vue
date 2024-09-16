@@ -35,12 +35,10 @@ if (!ticket.value) {
   });
 }
 
-if ((ticket.value.customer_email !== userInfo.email
-        // && !user.isStaff
-    ) ||
-  (ticket.value.reporter !== userInfo.email
-      // && !user.isStaff
-  )) {
+if ((ticket.value.customer_email !== userInfo.email &&
+        !userInfo.email.endsWith('@metric.vn')) ||
+    (ticket.value.reporter !== userInfo.email &&
+        !userInfo.email.endsWith('@metric.vn'))) {
   showError({
     statusCode: 404,
     statusMessage: "Ticket Not Found",
@@ -142,7 +140,7 @@ const handleDeleteComment = async ({commentId}) => {
       <a-flex align="center" justify="space-between" class="comment-section__header">
         <app-title :text="'Phản hồi từ Metric'"/>
         <a-button
-            v-if="userInfo"
+            v-if="userInfo.email.endsWith('@metric.vn')"
             type="primary"
             @click="() => navigateTo(`/ticket/internal/detail/tkid.${ticket.data.id}`)">
           <template #icon>

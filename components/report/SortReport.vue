@@ -41,6 +41,7 @@ const handleChange = (value: any, _option: any) => {
     .ant-select-selector{
       display: flex;
       padding: 9px;
+      height: 40px;
       align-items: center;
       border-radius: 8px;
       border: 1px solid #9D97BF;
