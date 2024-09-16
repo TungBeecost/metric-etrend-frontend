@@ -142,7 +142,7 @@ const handleSubmitAction = async () => {
       .filter(([key, value]) => {
         if (key === 'status' && value === ticket?.value?.data.status) return false;
         if (key === 'supportDepartment' && value === ticket?.value?.data.support_department) return false;
-        if (key === 'owner' && value === ticket?.value?.data.owner) return false;
+        if (key === 'owner' && value === ticket?.value?.data.owner_id) return false;
         if (key === 'personIncharge' && value === ticket?.value?.data.person_incharge) return false; // Kiểm tra giá trị personIncharge
         if (key === 'priority' && value === ticket?.value?.data.priority) return false;
         if (key === 'dueDate') {
