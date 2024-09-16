@@ -94,7 +94,7 @@ const formatDateTime = (date) => {
               <a-select-option value="technical_support">Hỗ trợ kỹ thuật</a-select-option>
             </a-select>
           </div>
-          <a-button type="primary" @click="navigateTo('/ticket/submit')" size="large" style="margin-left: 1rem">
+          <a-button type="primary" size="large" @click="navigateTo('/ticket/submit')" style="margin-left: 1rem">
             <template #icon>
               <plus-outlined/>
             </template>
