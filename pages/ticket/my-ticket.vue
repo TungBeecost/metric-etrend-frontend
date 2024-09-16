@@ -1,12 +1,13 @@
 <script setup>
-import { PlusOutlined, CalendarOutlined, SearchOutlined } from "@ant-design/icons-vue";
-import { getMyTickets, getStatusColor, getStatusText, getSupportDepartmentName } from "~/utils/ticket.js";
+import {PlusOutlined, CalendarOutlined, SearchOutlined} from "@ant-design/icons-vue";
+import {getMyTickets, getStatusColor, getStatusText, getSupportDepartmentName} from "~/utils/ticket.js";
 import AppSection from "~/components/ticket/AppSection.vue";
 import AppTitle from "~/components/ticket/AppTitle.vue";
 import AppTag from "~/components/ticket/AppTag.vue";
-import { watchDebounced } from '@vueuse/core';
+import {watchDebounced} from '@vueuse/core';
 // import { useState, useAsyncData, navigateTo } from '#imports';
 import dayjs from "dayjs";
+
 const currentPage = useState('myTicket.currentPage', () => 1);
 const totalRow = useState('myTicket.totalRow', () => 0);
 const filter = useState('myTicket.filter', () => undefined);
@@ -46,7 +47,7 @@ const columns = [
 ];
 
 const handleMyTicketTableChange = async (pagination) => {
-  const { current } = pagination;
+  const {current} = pagination;
   currentPage.value = current;
   await refreshMyTickets();
 };
@@ -61,7 +62,7 @@ watchDebounced([textInputSearch, supportDepartmentFilterValue], async () => {
     search: textInputSearch.value
   };
   await refreshMyTickets();
-}, { debounce: 500 });
+}, {debounce: 500});
 
 const formatDateTime = (date) => {
   if (!date) return ''
@@ -76,12 +77,18 @@ const formatDateTime = (date) => {
         <app-title :text="'Ticket của tôi'"/>
         <a-flex align="center">
           <div class="list-filter-desktop" id="list-filter">
-            <a-input v-model:value="textInputSearch" placeholder="Tìm kiếm theo tiêu đề hoặc id" class="equal-height" style="width: 20rem">
+            <a-input v-model:value="textInputSearch" placeholder="Tìm kiếm theo tiêu đề hoặc id" class="equal-height"
+                     style="width: 20rem">
               <template #prefix>
                 <search-outlined style="height: fit-content"/>
               </template>
             </a-input>
-            <a-select v-model:value="supportDepartmentFilterValue" placeholder="Lọc theo phân loại hỗ trợ" style="width: 12rem;">
+            <a-select
+                v-model:value="supportDepartmentFilterValue"
+                placeholder="Lọc theo phân loại hỗ trợ"
+                style="width: 12rem;"
+                size="large"
+            >
               <a-select-option value="all">Tất cả</a-select-option>
               <a-select-option value="service_support">Hỗ trợ dịch vụ</a-select-option>
               <a-select-option value="technical_support">Hỗ trợ kỹ thuật</a-select-option>
@@ -187,11 +194,13 @@ const formatDateTime = (date) => {
       font-weight: 700;
       line-height: 1.5rem;
       text-decoration: none;
+
       &:hover {
         text-decoration: underline;
       }
 
     }
+
     .ticket-created-at {
       color: #716B95;
       font-size: 0.875rem;
@@ -230,36 +239,37 @@ const formatDateTime = (date) => {
 <style scoped lang="scss">
 #list-filter {
   height: 40px;
+
   .ant-input-affix-wrapper {
     height: 100% !important;
   }
 
-  .ant-select{
+  .ant-select {
     height: 100% !important;
 
-    .ant-select-selector{
+    .ant-select-selector {
       height: 100% !important;
 
-      .ant-select-selection-search{
+      .ant-select-selection-search {
         height: 100% !important;
 
-        .ant-select-selection-search-input{
+        .ant-select-selection-search-input {
           height: 100% !important;
         }
       }
 
-      .ant-select-selection-item{
+      .ant-select-selection-item {
         height: 100% !important;
       }
     }
 
-    .ant-select-arrow{
+    .ant-select-arrow {
       height: 100% !important;
     }
   }
 }
 
-.ant-select-selection-search-input{
+.ant-select-selection-search-input {
   height: 40px !important;
 }
 </style>
