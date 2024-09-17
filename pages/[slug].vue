@@ -170,71 +170,70 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div>
-    <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
-    <Meta name="og:title"
-          :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>
-    <Meta name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
-    <Meta name="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
-    <Meta name="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>
-    <Meta name="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>
-    <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>
-    <component v-bind:is="'script'" type="application/ld+json">
-      {{
-        JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'BreadcrumbList',
-          itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              name: "Metric",
-              item: "https://ereport.vn",
-            },
-            ...(data.reportDetail.lst_category || []).map((item, index) => ({
-              "@type": "ListItem",
-              position: index + 2,
-              name: item.name,
-              item: `https://ereport.vn/${item.slug}`,
-            })),
-          ]
-        })
-      }}
-    </component>
+  <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
+  <Meta name="og:title"
+        :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>
+  <Meta name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+  <Meta name="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+  <Meta name="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>
+  <Meta name="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>
+  <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>
+  <component is="script" type="application/ld+json">
+    {{
+      JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Metric",
+            item: "https://ereport.vn",
+          },
+          ...(data.reportDetail.lst_category || []).map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 2,
+            name: item.name,
+            item: `https://ereport.vn/${item.slug}`,
+          })),
+        ]
+      })
+    }}
+  </component>
 
-    <div class="container_content">
-      <div class="title default_section">
-        <div class="breadcrumbs">
-          <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
-        </div>
-        <h1 class="report-title">
-          {{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT
-        </h1>
+  <div class="container_content">
+    <div class="title default_section">
+      <div class="breadcrumbs">
+        <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
       </div>
-      <div class="container default_section">
-        <div class="general_overview_container">
-          <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-        </div>
-        <div class="different_info">
-          <unlock-report v-if="!userInfo.current_plan.plan_code || userInfo.current_plan.plan_code === 'e_community'" :data="data.reportDetail" :check-level-category="checkLevelCategory"/>
-          <indept-report-link v-if="userInfo.current_plan.plan_code && userInfo.current_plan.plan_code !== 'e_community'
-           && data.reportDetail && !checkLevelCategory" :slug="route.params.slug" :data="data.reportDetail"/>
-          <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
-          <report-content :data="data?.reportDetail"/>
-          <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>
-          <maybe-interested v-if="!isMobile" :recomends="data.listRecommend"/>
-        </div>
-      </div>
-      <maybe-interested v-if="isMobile" :recomends="data?.listRecommend"/>
-      <poster-detail-report :list-suggest="tagSuggestions"/>
+      <h1 class="report-title">
+        {{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT
+      </h1>
     </div>
-    <a-modal v-if="showModal" v-model:visible="showModal" width="600px" :footer="null" @ok="handleOk">
-      <div class="modal_content">
+    <div class="container default_section">
+      <div class="general_overview_container">
+        <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+        <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+        <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+        <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+        <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+        <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+      </div>
+      <div class="different_info">
+        <unlock-report v-if="!userInfo.current_plan.plan_code || userInfo.current_plan.plan_code === 'e_community'" :data="data.reportDetail" :check-level-category="checkLevelCategory"/>
+        <indept-report-link v-if="userInfo.current_plan.plan_code && userInfo.current_plan.plan_code !== 'e_community'
+         && data.reportDetail && !checkLevelCategory" :slug="route.params.slug" :data="data.reportDetail"/>
+        <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
+        <report-content :data="data?.reportDetail"/>
+        <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>
+        <maybe-interested v-if="!isMobile" :recomends="data.listRecommend"/>
+      </div>
+    </div>
+    <maybe-interested v-if="isMobile" :recomends="data?.listRecommend"/>
+    <poster-detail-report :list-suggest="tagSuggestions"/>
+  </div>
+  <a-modal v-if="showModal" v-model:visible="showModal" width="600px" :footer="null" @ok="handleOk">
+    <div class="modal_content">
       <div class="alert_success">
         <div class="icon_success">
           <svg width="105" height="104" viewBox="0 0 105 104" fill="none" xmlns="http://www.w3.org/2000/svg">
