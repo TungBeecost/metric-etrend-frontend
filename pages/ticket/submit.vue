@@ -1,5 +1,4 @@
 <script setup>
-import { message } from "ant-design-vue";
 import { createNewTicket } from "~/utils/ticket.js";
 import FormRadioCard from "~/components/ticket/FormRadioCard.vue";
 import IconSend from "~/components/ticket/IconSend.vue";
@@ -32,6 +31,12 @@ const formSupportDepartment = useState('ticketForm.supportDepartment', () => {
   return 'service_support';
 });
 const sendLoading = useState('ticketForm.sendLoading', () => false);
+const formErrors = reactive({
+  title: '',
+  content: '',
+  supportDepartment: '',
+  linkReport: ''
+});
 
 const submitForm = async () => {
   const urlPattern = new RegExp('^(https?:\\/\\/)?'+
@@ -42,14 +47,12 @@ const submitForm = async () => {
       '(\\#[-a-z\\d_]*)?$','i');
   const emptyHtmlPattern = /^<p>(<br>)?<\/p>$/;
 
-  const errors = [];
-  if (!formTitle.value) errors.push('Tiêu đề');
-  if (!formContent.value || formContent.value === '<p></p>' || emptyHtmlPattern.test(formContent.value)) errors.push('Nội dung');
-  if (!formSupportDepartment.value) errors.push('Bộ phận hỗ trợ');
-  if (linkReport.value && !urlPattern.test(linkReport.value)) errors.push('Link báo cáo không đúng định dạng');
+  formErrors.title = !formTitle.value ? 'Tiêu đề là bắt buộc' : '';
+  formErrors.content = (!formContent.value || formContent.value === '<p></p>' || emptyHtmlPattern.test(formContent.value)) ? 'Nội dung là bắt buộc' : '';
+  formErrors.supportDepartment = !formSupportDepartment.value ? 'Bộ phận hỗ trợ là bắt buộc' : '';
+  formErrors.linkReport = (linkReport.value && !urlPattern.test(linkReport.value)) ? 'Link báo cáo không đúng định dạng' : '';
 
-  if (errors.length > 0) {
-    message.error(`Vui lòng điền đầy đủ thông tin: ${errors.join(', ')}.`);
+  if (formErrors.title || formErrors.content || formErrors.supportDepartment || formErrors.linkReport) {
     return;
   }
 
@@ -65,9 +68,8 @@ const submitForm = async () => {
   if (ticket) {
     navigateTo('/ticket/my-ticket');
   } else {
-    message.error('Có lỗi xảy ra khi tạo yêu cầu mới.');
+    formErrors.general = 'Có lỗi xảy ra khi tạo yêu cầu mới.';
   }
-  message.success('Tạo yêu cầu mới thành công!');
   formTitle.value = '';
   linkReport.value = '';
   formContent.value = '<p></p>';
@@ -83,6 +85,7 @@ const assignedEmails = computed(() => {
   return formAssignedEmails.value.split(',').map(email => email.trim());
 });
 </script>
+
 <template>
   <div class="main-content default_section">
     <div class="title-segment">
@@ -97,12 +100,12 @@ const assignedEmails = computed(() => {
       <h2 class="title">Tạo yêu cầu mới</h2>
     </div>
     <a-form :layout="'vertical'" class="submit-form">
-      <a-form-item label="Tiêu đề *" name="title">
+      <a-form-item label="Tiêu đề *" name="title" :validate-status="formErrors.title ? 'error' : ''" :help="formErrors.title">
         <a-input v-model:value="formTitle"
                  placeholder="Tiêu đề"
                  size="large"/>
       </a-form-item>
-      <a-form-item label="Link báo cáo" name="linkReport">
+      <a-form-item label="Link báo cáo" name="linkReport" :validate-status="formErrors.linkReport ? 'error' : ''" :help="formErrors.linkReport">
         <a-input v-model:value="linkReport"
                  placeholder="https://ereport.vn/tui-xach-nu"
                  size="large"/>
@@ -113,7 +116,7 @@ const assignedEmails = computed(() => {
                  :disabled="!isStaff"
                  size="large"/>
       </a-form-item>
-      <a-form-item label="Bộ phận hỗ trợ *" name="supportDepartment">
+      <a-form-item label="Bộ phận hỗ trợ *" name="supportDepartment" :validate-status="formErrors.supportDepartment ? 'error' : ''" :help="formErrors.supportDepartment">
         <a-radio-group v-model:value="formSupportDepartment" style="display: flex; gap: 16px">
           <form-radio-card v-for="option in supportDepartmentOptions"
                            :key="option.value"
@@ -123,7 +126,7 @@ const assignedEmails = computed(() => {
                            :description="option.description"/>
         </a-radio-group>
       </a-form-item>
-      <a-form-item>
+      <a-form-item :validate-status="formErrors.content ? 'error' : ''" :help="formErrors.content">
         <client-only>
           <template #fallback>
             Loading Editor...
