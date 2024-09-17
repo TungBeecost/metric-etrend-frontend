@@ -20,8 +20,9 @@ import AppListComment from "~/components/ticket/AppListComment.vue";
 import AppAddComment from "~/components/ticket/AppAddComment.vue";
 
 import {getListCCOptions, getListUserStaffOptions} from "~/utils/user.js";
-import dayjs from "dayjs";
-
+import dayjs from 'dayjs';
+import 'dayjs/locale/vi';
+dayjs.locale('vi');
 const route = useRoute();
 
 const {
@@ -157,6 +158,7 @@ const handleSubmitAction = async () => {
           return !(dayjs(value).format('DD/MM/YYYY') === dayjs(ticket?.value?.data.due_date).format('DD/MM/YYYY'));
         }
         if (key === 'mktTagline' && value === ticket?.value?.data.mkt_tagline) return false;
+        console.log('CC:', value);
         if (key === 'cc') {
           if (!value && !ticket?.value?.data.cc) return false;
           if (!value && ticket?.value?.data.cc) return true;
@@ -176,7 +178,9 @@ const handleSubmitAction = async () => {
         if (mapKey === 'owner') return { action_type: 'reassign', subject: mapValue };
         if (mapKey === 'personIncharge') return { action_type: 'change_incharge', subject: mapValue };
         if (mapKey === 'priority') return { action_type: 'change_priority', subject: mapValue };
-        if (mapKey === 'dueDate') return { action_type: 'change_due_date', subject: mapValue };
+        if (mapKey === 'dueDate') {
+          return { action_type: 'change_due_date', subject: dayjs(mapValue).locale('vi').format() };
+        }
         if (mapKey === 'mktTagline') return { action_type: 'change_mkt_tagline', subject: mapValue };
         if (mapKey === 'cc') return { action_type: 'change_cc', subject: mapValue };
         if (mapKey === 'resolveAs') return { action_type: 'resolve', subject: mapValue };
