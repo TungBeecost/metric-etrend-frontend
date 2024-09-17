@@ -63,6 +63,7 @@ export const createTransactionPdf = async (
     redirectUrl: string,
     totalPrice: string,
     discountCode: string | null,
+    reportLink: string,
     name: string | null,
     phone: string | null,
     company: string | null,
@@ -75,7 +76,8 @@ export const createTransactionPdf = async (
             payment_method: paymentMethod,
             report_id: report_id,
             redirect_url: redirectUrl,
-            total_price: totalPrice
+            total_price: totalPrice,
+            report_link: reportLink
         });
 
         if (discountCode) {

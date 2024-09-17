@@ -22,7 +22,8 @@ const route = useRoute();
 const config = useRuntimeConfig();
 const reportDetail = ref<any>(null);
 const information = ref({ name: '', phone: '', companyName: '', taxCode: '', email: '', address: '' });
-
+const slug = route.params.slug;
+const reportLink = `https://ereport.vn/${slug}`;
 interface ErrorResponse {
   response: {
     data: {
@@ -51,7 +52,7 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
       const paymentMethod = selectedWalletOption.value;
       if (reportDetail.value && reportDetail.value.id) {
         try {
-          const transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+          const transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
           if (transactionResult?.response?.payment_url) {
             window.location.href = transactionResult.response.payment_url;
           } else {
