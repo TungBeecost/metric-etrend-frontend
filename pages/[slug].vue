@@ -341,7 +341,6 @@ onUnmounted(() => {
 
 }
 
-
 @media (max-width: 768px) {
   .container_content {
     .title {
