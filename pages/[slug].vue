@@ -9,57 +9,20 @@ import { ref, onMounted, onUnmounted } from "vue";
 import moment from "moment";
 import UnlockReport from "~/components/report/UnlockReport.vue";
 import MaybeInterested from "~/components/report/MaybeInterested.vue";
-import { REPORT_ENDPOINTS } from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
 import { useCurrentUser } from "~/stores/current-user.js";
-import { useGTM } from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
 
 const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
 const currentUserStore = useCurrentUser();
-const gtm = useGTM();
 const { userInfo } = storeToRefs(currentUserStore);
 const checkLevelCategory = ref(false);
 const showModal = ref(false);
-
-const fetchSuggest = async (value = '', options = {}) => {
-  try {
-    const body = {
-      limit: 5,
-      lst_field: ["name", "slug"],
-      offset: 0,
-      sort: "popularity",
-      lst_query: value ? [value] : [],
-      ...options
-    };
-    const { lst_report } = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
-      method: 'POST',
-      body
-    });
-    return lst_report;
-  } catch (error) {
-    return [];
-  }
-};
-
-const trackEvent = (event, data) => {
-  if (gtm) {
-    gtm.push({ event, ...data });
-  }
-};
-
-const fetchRecommend = async (categoryReportId) => {
-  try {
-    return await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.list_recomend.endpoint}?category_report_id=${categoryReportId}`);
-  } catch (error) {
-    return [];
-  }
-};
 
 const fetchReportData = async () => {
   const slug = route.params.slug;
@@ -136,12 +99,40 @@ const fetchReportData = async () => {
 
 const { data } = await useAsyncData(fetchReportData);
 
-const { data: tagSuggestions } = await useAsyncData(
-    'fetchSuggest',
-    async () => {
-      return await fetchSuggest(data?.reportDetail?.name, { limit: 5 });
+useMeta({
+  title: `${data?.reportDetail.name} - Báo cáo xu hướng thị trường sàn TMĐT`,
+  meta: [
+    { name: 'og:title', content: `Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}` },
+    { name: 'description', content: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}` },
+    { name: 'og:description', content: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}` },
+    { name: 'og:image', content: data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail },
+    { name: 'og:image:alt', content: `Báo cáo thị trường ${data?.reportDetail.name}` },
+    { name: 'canonical', content: config.public.BASE_URL + route.fullPath }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Metric",
+            item: "https://ereport.vn",
+          },
+          ...(data.reportDetail.lst_category || []).map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 2,
+            name: item.name,
+            item: `https://ereport.vn/${item.slug}`,
+          })),
+        ]
+      }
     }
-);
+  ]
+});
 
 const isMobile = ref(window?.innerWidth <= 768);
 
@@ -170,37 +161,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
-  <Meta name="og:title"
-        :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>
-  <Meta name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
-  <Meta name="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
-  <Meta name="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>
-  <Meta name="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>
-  <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>
-  <component is="script" type="application/ld+json">
-    {{
-      JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Metric",
-            item: "https://ereport.vn",
-          },
-          ...(data.reportDetail.lst_category || []).map((item, index) => ({
-            "@type": "ListItem",
-            position: index + 2,
-            name: item.name,
-            item: `https://ereport.vn/${item.slug}`,
-          })),
-        ]
-      })
-    }}
-  </component>
-
   <div class="container_content">
     <div class="title default_section">
       <div class="breadcrumbs">
