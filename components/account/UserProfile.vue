@@ -1,6 +1,7 @@
 <script setup>
 import { useCurrentUser } from "~/stores/current-user";
 import { NAVIGATIONS } from "~/constant/constains";
+
 const props = defineProps({
   isDarkBlueHeader: {
     type: Boolean,
@@ -24,31 +25,23 @@ const displayName = computed(() => {
 
 const handleClick = () => {
   navigateTo(NAVIGATIONS.account);
-  handleVisibleChange(false);
 };
 
 const handleClickRequestSupport = () => {
   navigateTo(NAVIGATIONS.requestSupport);
-  handleVisibleChange(false);
 };
 
 const handleHandClickRequestSupport = () => {
   navigateTo(NAVIGATIONS.handingrequestSupport);
-  handleVisibleChange(false);
 };
 
 const handleMenuItemClick = (callback) => {
   callback();
-  handleVisibleChange(false);
-};
-
-const getPopupContainer = () => {
-  return isDropdownOpen.value ? document.querySelector('.user-profile-btn-dropdown') : document.body;
 };
 </script>
 
 <template>
-  <a-dropdown v-model:visible="isDropdownOpen" placement="bottomLeft" trigger="click" :get-popup-container="getPopupContainer" @click="handleVisibleChange">
+  <a-dropdown v-model:visible="isDropdownOpen" placement="bottomLeft" trigger="click" @click="handleVisibleChange">
     <div v-if="userData?.id" class="user-profile">
       <a-avatar style="cursor: pointer" class="avatar-image" :src="userData?.avatar" size="small"/>
       <span :class="{ headerText: props.isDarkBlueHeader, headerTextDarkBlue: !props.isDarkBlueHeader }" class="user-name" style="cursor: pointer">
