@@ -88,6 +88,8 @@ const handlePayment = () => {
 
 const isFormVatValid = () => {
   let isValid = true;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const taxCodeRegex = /^\d{10}$/;
   if (!formVatValues.value.companyName) {
     errors.value.companyName = 'Bạn cần nhập tên công ty';
     isValid = false;
@@ -97,11 +99,17 @@ const isFormVatValid = () => {
   if (!formVatValues.value.taxCode) {
     errors.value.taxCode = 'Bạn cần nhập mã số thuế';
     isValid = false;
+  } else if (!taxCodeRegex.test(formVatValues.value.taxCode)) {
+    errors.value.taxCode = 'Mã số thuế phải có 10 chữ số';
+    isValid = false;
   } else {
     errors.value.taxCode = '';
   }
   if (!formVatValues.value.email) {
     errors.value.email = 'Bạn cần nhập email';
+    isValid = false;
+  } else if (!emailRegex.test(formVatValues.value.email)) {
+    errors.value.email = 'Email không hợp lệ';
     isValid = false;
   } else {
     errors.value.email = '';
@@ -166,7 +174,6 @@ const fetchDiscount = async () => {
 
 const handleFormVatUpdate = (formValues: IFormValue) => {
   formVatValues.value = formValues;
-  console.log('Received form values from FormVat:', formValues);
 };
 
 </script>

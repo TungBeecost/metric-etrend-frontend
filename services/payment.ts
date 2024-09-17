@@ -63,7 +63,12 @@ export const createTransactionPdf = async (
     redirectUrl: string,
     totalPrice: string,
     discountCode: string | null,
-
+    name: string | null,
+    phone: string | null,
+    company: string | null,
+    tax_code: string | null,
+    receive_email: string | null,
+    address: string | null
 ) => {
     try {
         const params = new URLSearchParams({
@@ -75,6 +80,24 @@ export const createTransactionPdf = async (
 
         if (discountCode) {
             params.append('discount_code', discountCode);
+        }
+        if (name) {
+            params.append('name', name);
+        }
+        if (phone) {
+            params.append('phone', phone);
+        }
+        if (company) {
+            params.append('company', company);
+        }
+        if (tax_code) {
+            params.append('tax_code', tax_code);
+        }
+        if (receive_email) {
+            params.append('receive_email', receive_email);
+        }
+        if (address) {
+            params.append('address', address);
         }
 
         const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment_pdf.endpoint)}?${params.toString()}`, {}, {

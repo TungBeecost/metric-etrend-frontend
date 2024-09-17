@@ -36,10 +36,24 @@ watch([companyNameValue, taxCodeValue, emailValue, addressValue], () => {
 });
 
 const validateForm = () => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const taxCodeRegex = /^\d{10}$/;
   const newErrors: Partial<IFormValue> = {};
+
   if (!companyNameValue.value) newErrors.companyName = 'Bạn cần nhập tên công ty';
-  if (!taxCodeValue.value) newErrors.taxCode = 'Bạn cần nhập mã số thuế';
-  if (!emailValue.value) newErrors.email = 'Bạn cần nhập email';
+
+  if (!taxCodeValue.value) {
+    newErrors.taxCode = 'Bạn cần nhập mã số thuế';
+  } else if (!taxCodeRegex.test(taxCodeValue.value)) {
+    newErrors.taxCode = 'Mã số thuế phải có 10 chữ số';
+  }
+
+  if (!emailValue.value) {
+    newErrors.email = 'Bạn cần nhập email';
+  } else if (!emailRegex.test(emailValue.value)) {
+    newErrors.email = 'Email không hợp lệ';
+  }
+
   if (!addressValue.value) newErrors.address = 'Bạn cần nhập địa chỉ';
   emit('updateErrors', newErrors);
 };

@@ -133,21 +133,6 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
       console.log("Transaction completed");
       openModal.value = false;
       isCompleted.value = true;
-      // try {
-      //   if (userInfo.value.email) {
-      //     await submitLeadInformation(
-      //         information.value.name,
-      //         userInfo.value.email,
-      //         information.value.phone,
-      //         information.value.companyName,
-      //         transactionId
-      //     );
-      //   } else {
-      //     console.error('User email is undefined');
-      //   }
-      // } catch (error) {
-      //   console.error('error', error);
-      // }
       if (intervalId) clearInterval(intervalId);
       if (timeoutId) clearTimeout(timeoutId);
       window.location.href = `/?transaction_id=${transactionId}`;
@@ -199,7 +184,6 @@ const handleUpdateContact = (contact: { name: string, phone: string, companyName
   information.value.taxCode = contact.taxCode;
   information.value.email = contact.email;
   information.value.address = contact.address;
-  console.log('Updated contact information:', information.value);
 };
 
 const handleOk = (_e: MouseEvent) => {
