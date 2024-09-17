@@ -29,6 +29,7 @@ const {
   data: ticket = undefined,
   refresh: refreshTicketDetail
 } = await useAsyncData("ticket.internal", async () => {
+
   return await getTicketDetail(route.params.id, true);
 });
 
@@ -114,10 +115,10 @@ const {pending: staffOptionsLoading, data: staffOptions} = useAsyncData('userOpt
 const formEditState = reactive({
   status: ticket?.value?.data.status,
   supportDepartment: ticket?.value?.data.support_department,
-  owner: ticket?.value?.data.owner,
-  personIncharge: ticket?.value?.data.person_incharge,
+  owner: ticket?.value?.data.owner_id,
+  personIncharge: ticket?.value?.data.person_incharge_id,
   priority: ticket?.value?.data.priority,
-  dueDate: ticket?.value?.data.due_date ? dayjs(ticket?.value?.data.due_date) : null, // Ensure dueDate is set correctly
+  dueDate: ticket?.value?.data.due_date ? dayjs(ticket?.value?.data.due_date) : null,
   mktTagline: ticket?.value?.data.mkt_tagline,
   cc: [],
   resolveAs: null,
@@ -137,13 +138,17 @@ const {data: ccOptions} = useAsyncData('ccOptions', async () => {
   }))
 });
 
+console.log('Initial formEditState:', formEditState);
+
 const handleSubmitAction = async () => {
+  console.log('Before submit formEditState:', formEditState);
+
   const filteredFormEditState = Object.entries(formEditState)
       .filter(([key, value]) => {
         if (key === 'status' && value === ticket?.value?.data.status) return false;
         if (key === 'supportDepartment' && value === ticket?.value?.data.support_department) return false;
         if (key === 'owner' && value === ticket?.value?.data.owner_id) return false;
-        if (key === 'personIncharge' && value === ticket?.value?.data.person_incharge_id) return false; // Kiểm tra giá trị personIncharge
+        if (key === 'personIncharge' && value === ticket?.value?.data.person_incharge_id) return false;
         if (key === 'priority' && value === ticket?.value?.data.priority) return false;
         if (key === 'dueDate') {
           if (value === null && ticket?.value?.data.due_date === null) return false;
@@ -165,16 +170,19 @@ const handleSubmitAction = async () => {
         return true;
       })
       .map(([mapKey, mapValue]) => {
+        console.log(`Mapping key: ${mapKey}, value: ${mapValue}`);
         if (mapKey === 'status') return { action_type: 'change_status', subject: mapValue };
         if (mapKey === 'supportDepartment') return { action_type: 'change_support_department', subject: mapValue };
         if (mapKey === 'owner') return { action_type: 'reassign', subject: mapValue };
-        if (mapKey === 'personIncharge') return { action_type: 'change_incharge', subject: mapValue }; // Thêm action_type cho personIncharge
+        if (mapKey === 'personIncharge') return { action_type: 'change_incharge', subject: mapValue };
         if (mapKey === 'priority') return { action_type: 'change_priority', subject: mapValue };
         if (mapKey === 'dueDate') return { action_type: 'change_due_date', subject: mapValue };
         if (mapKey === 'mktTagline') return { action_type: 'change_mkt_tagline', subject: mapValue };
         if (mapKey === 'cc') return { action_type: 'change_cc', subject: mapValue };
         if (mapKey === 'resolveAs') return { action_type: 'resolve', subject: mapValue };
       });
+
+  console.log('Filtered formEditState:', filteredFormEditState);
 
   const updatedTicket = await updateTicket(route.params.id, filteredFormEditState);
   if (updatedTicket) {

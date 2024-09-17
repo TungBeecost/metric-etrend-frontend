@@ -31,7 +31,7 @@ const columns = [
   { index: 'due_date', title: 'Ngày giải quyết', dataIndex: 'due_date', key: 'due_date' },
   { index: 'priority', title: 'Ưu tiên', dataIndex: 'priority', key: 'priority' },
   { index: 'status', title: 'Trạng thái', dataIndex: 'status', key: 'status' },
-  { index: 'mkt_tagline', title: 'MKT Giới thiệu', dataIndex: 'mkt_tagline', key: 'mkt_tagline' },
+  // { index: 'mkt_tagline', title: 'MKT Giới thiệu', dataIndex: 'mkt_tagline', key: 'mkt_tagline' },
 ];
 
 </script>
@@ -78,9 +78,9 @@ const columns = [
       <div v-if="column.key === 'status'" class="cell-info">
         <app-tag :type="getStatusColor(record.status)">{{ getStatusText(record.status) }}</app-tag>
       </div>
-      <div v-if="column.key === 'mkt_tagline'" class="cell-info">
-        {{ record.mkt_tagline }}
-      </div>
+<!--      <div v-if="column.key === 'mkt_tagline'" class="cell-info">-->
+<!--        {{ record.mkt_tagline }}-->
+<!--      </div>-->
     </template>
   </a-table>
 </template>

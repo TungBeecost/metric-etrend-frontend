@@ -40,10 +40,11 @@ const submitForm = async () => {
       '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+
       '(\\?[;&a-z\\d%_.~+=-]*)?'+
       '(\\#[-a-z\\d_]*)?$','i');
+  const emptyHtmlPattern = /^<p>(<br>)?<\/p>$/;
 
   const errors = [];
   if (!formTitle.value) errors.push('Tiêu đề');
-  if (!formContent.value || formContent.value === '<p></p>') errors.push('Nội dung');
+  if (!formContent.value || formContent.value === '<p></p>' || emptyHtmlPattern.test(formContent.value)) errors.push('Nội dung');
   if (!formSupportDepartment.value) errors.push('Bộ phận hỗ trợ');
   if (linkReport.value && !urlPattern.test(linkReport.value)) errors.push('Link báo cáo không đúng định dạng');
 
@@ -82,7 +83,6 @@ const assignedEmails = computed(() => {
   return formAssignedEmails.value.split(',').map(email => email.trim());
 });
 </script>
-
 <template>
   <div class="main-content default_section">
     <div class="title-segment">
