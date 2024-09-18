@@ -304,19 +304,19 @@ const filterDepartmentOptions = (input, option) => {
           <div class="description" v-html="ticket.data?.description"></div>
         </div>
       </app-section>
-      <app-section v-if="true" class="child-tickets-section">
-        <div class="header">
-          <app-title text="Child Tickets"/>
-        </div>
-        <app-ticket-list :tickets="ticket.data.child_tickets"
-                         :loading="ticketLoading"
-                         :pagination="{
-                           pageSize: ticket.data.child_tickets.length,
-                           current: 1,
-                           total: ticket.data.child_tickets.length
-                         }"
-        />
-      </app-section>
+<!--      <app-section v-if="true" class="child-tickets-section">-->
+<!--        <div class="header">-->
+<!--          <app-title text="Child Tickets"/>-->
+<!--        </div>-->
+<!--        <app-ticket-list :tickets="ticket.data.child_tickets"-->
+<!--                         :loading="ticketLoading"-->
+<!--                         :pagination="{-->
+<!--                           pageSize: ticket.data.child_tickets.length,-->
+<!--                           current: 1,-->
+<!--                           total: ticket.data.child_tickets.length-->
+<!--                         }"-->
+<!--        />-->
+<!--      </app-section>-->
     </a-spin>
     <app-drawer :open="isOpenDrawer" @close="handleCloseDrawer">
       <a-form :model="formEditState" name="form-edit" layout="vertical" @finish="handleSubmitAction">
