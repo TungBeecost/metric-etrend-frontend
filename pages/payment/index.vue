@@ -145,7 +145,7 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
     if (!isCompleted.value) {
       console.log("Transaction not completed within the timeout period, redirecting to payment page");
       if (intervalId) clearInterval(intervalId);
-      window.location.href = `/payment/${planCode.value}`;
+      window.location.href = `/`;
     }
   }, timeout);
 
