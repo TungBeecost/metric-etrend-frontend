@@ -27,18 +27,16 @@ const columns = [
   { index: 'owner', title: 'Người sở hữu', dataIndex: 'owner', key: 'owner' },
   { index: 'reporter', title: 'Người báo cáo', dataIndex: 'reporter', key: 'reporter' },
   { index: 'person_incharge', title: 'PIC', dataIndex: 'person_incharge', key: 'person_incharge' },
-  { index: 'created_at', title: 'Ngày tạo', dataIndex: 'created_at', key: 'created_at' },
   { index: 'due_date', title: 'Ngày giải quyết', dataIndex: 'due_date', key: 'due_date' },
   { index: 'priority', title: 'Ưu tiên', dataIndex: 'priority', key: 'priority' },
   { index: 'status', title: 'Trạng thái', dataIndex: 'status', key: 'status' },
-  // { index: 'mkt_tagline', title: 'MKT Giới thiệu', dataIndex: 'mkt_tagline', key: 'mkt_tagline' },
 ];
 
 </script>
 
 <template>
   <a-table id="id-ticket-list-table"
-            style="margin-bottom: 0.5rem"
+           style="margin-bottom: 0.5rem"
            :columns="columns"
            :data-source="tickets"
            :loading="loading"
@@ -66,9 +64,6 @@ const columns = [
       <div v-if="column.key === 'person_incharge'" class="cell-info">
         {{ record.person_incharge }}
       </div>
-      <div v-if="column.key === 'created_at'" class="cell-info">
-        {{ formatDateTime(record.created_at) }}
-      </div>
       <div v-if="column.key === 'due_date'" class="cell-info">
         {{ formatDateTime(record.resolved_at) }}
       </div>
@@ -78,9 +73,6 @@ const columns = [
       <div v-if="column.key === 'status'" class="cell-info">
         <app-tag :type="getStatusColor(record.status)">{{ getStatusText(record.status) }}</app-tag>
       </div>
-<!--      <div v-if="column.key === 'mkt_tagline'" class="cell-info">-->
-<!--        {{ record.mkt_tagline }}-->
-<!--      </div>-->
     </template>
   </a-table>
 </template>
@@ -151,6 +143,10 @@ const columns = [
 
 :deep(.success-row) td {
   background-color: #f1fcff;
+}
+
+:deep(.ant-table-thead > tr > th) {
+  text-align: center;
 }
 </style>
 
