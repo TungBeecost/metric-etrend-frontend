@@ -35,7 +35,8 @@ const formErrors = reactive({
   title: '',
   content: '',
   supportDepartment: '',
-  linkReport: ''
+  linkReport: '',
+  customerEmail: ''
 });
 
 const submitForm = async () => {
@@ -46,13 +47,15 @@ const submitForm = async () => {
       '(\\?[;&a-z\\d%_.~+=-]*)?'+
       '(\\#[-a-z\\d_]*)?$','i');
   const emptyHtmlPattern = /^<p>(<br>)?<\/p>$/;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   formErrors.title = !formTitle.value ? 'Tiêu đề là bắt buộc' : '';
   formErrors.content = (!formContent.value || formContent.value === '<p></p>' || emptyHtmlPattern.test(formContent.value)) ? 'Nội dung là bắt buộc' : '';
   formErrors.supportDepartment = !formSupportDepartment.value ? 'Bộ phận hỗ trợ là bắt buộc' : '';
   formErrors.linkReport = (linkReport.value && !urlPattern.test(linkReport.value)) ? 'Link báo cáo không đúng định dạng' : '';
+  formErrors.customerEmail = !emailPattern.test(formCustomerEmail.value) ? 'Email không đúng định dạng' : '';
 
-  if (formErrors.title || formErrors.content || formErrors.supportDepartment || formErrors.linkReport) {
+  if (formErrors.title || formErrors.content || formErrors.supportDepartment || formErrors.linkReport || formErrors.customerEmail) {
     return;
   }
 
@@ -110,7 +113,7 @@ const assignedEmails = computed(() => {
                  placeholder="https://ereport.vn/tui-xach-nu"
                  size="large"/>
       </a-form-item>
-      <a-form-item label="Email khách hàng *" name="customerEmail">
+      <a-form-item label="Email khách hàng *" name="customerEmail" :validate-status="formErrors.customerEmail ? 'error' : ''" :help="formErrors.customerEmail">
         <a-input v-model:value="formCustomerEmail"
                  placeholder="example@gmail.com"
                  :disabled="!isStaff"
