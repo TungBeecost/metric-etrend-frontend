@@ -250,6 +250,7 @@ const handleFormVatUpdate = (formValues: IFormValue) => {
   .statistic-item__content{
     padding: 24px;
     border: 1px solid #EEEBFF;
+    border-top: none;
     border-radius: 0 0 16px 16px;
     display: flex;
     flex-direction: column;
