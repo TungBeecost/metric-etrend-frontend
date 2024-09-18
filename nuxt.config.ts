@@ -5,9 +5,27 @@ export default defineNuxtConfig({
     ssr: false,
     app: {
         head: {
+            title: "eReport - Kho báo cáo Ecommerce toàn diện",
             htmlAttrs: {
                 lang: "vi",
             },
+            meta: [
+                { charset: "utf-8" },
+                { name: "viewport", content: "width=device-width, initial-scale=1" },
+                {
+                    hid: "description",
+                    name: "description",
+                    content:
+                        "eReport là Kho báo cáo thị trường Ecommerce toàn diện giúp Doanh nghiệp, Thương hiệu và Nhà bán tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu chính xác nhất.",
+                },
+                {
+                    hid: "og:image",
+                    property: "og:image",
+                    content:
+                        "https://lh3.googleusercontent.com/pw/AP1GczMTZp0lf_VW7W_Y6n3qg602m-LlqfpCIeVX_i4D3pnqT6FiloK5hY86XfTsqVHd4xRRs9tSKppP6FZdEPWO_V8D_UEsfj8KEnChoiU7zyiwDlHzZaTeAePmGxcqzG98qDJ9bahok5MhwtDzp3EKTiI_=w1600-h900-s-no-gm",
+                },
+                { name: "google-site-verification", content: "-A5h4Bx3cBpC9vnJxfRvxvegNFZgMorMQlE6M76uLbc" },
+            ],
             link: [
                 {
                     rel: "icon",
@@ -30,10 +48,10 @@ export default defineNuxtConfig({
                 {
                     hid: 'gtm',
                     children: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                                })(window,document,'script','dataLayer','GTM-MLBXG49P');`,
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                    })(window,document,'script','dataLayer','GTM-MLBXG49P');`,
                     type: 'text/javascript'
                 }
             ],
