@@ -67,7 +67,7 @@ const handleSubmitAction = async () => {
   isOpenFilterDrawer.value = false;
 };
 
-const onResetFilter = () => {
+const onResetFilter = async () => {
   filter.value = {
     search: '',
     createdAt: {
@@ -86,6 +86,8 @@ const onResetFilter = () => {
     reporter: '',
     cc_user: '',
   };
+  filteredReporter.value = [];
+  await refreshTickets();
 };
 
 const onReporterChange = (value) => {
