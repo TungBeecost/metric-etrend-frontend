@@ -109,7 +109,7 @@ const handleDeleteComment = async ({commentId}) => {
     </div>
     <app-section class="ticket-detail-section">
       <div class="header">
-        <app-title :text="`[Ticket #${ticket.data?.id}] ${ticket.data?.title}`"/>
+        <app-title :text="`[#${ticket.data?.id}] ${ticket.data?.title}`"/>
       </div>
       <div class="content">
         <table class="ticket-metadata">

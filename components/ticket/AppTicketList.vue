@@ -27,9 +27,9 @@ const columns = [
   { index: 'owner', title: 'Người sở hữu', dataIndex: 'owner', key: 'owner' },
   { index: 'reporter', title: 'Người báo cáo', dataIndex: 'reporter', key: 'reporter' },
   { index: 'person_incharge', title: 'PIC', dataIndex: 'person_incharge', key: 'person_incharge' },
-  { index: 'due_date', title: 'Ngày giải quyết', dataIndex: 'due_date', key: 'due_date' },
   { index: 'priority', title: 'Ưu tiên', dataIndex: 'priority', key: 'priority' },
   { index: 'status', title: 'Trạng thái', dataIndex: 'status', key: 'status' },
+  { index: 'due_date', title: 'Ngày giải quyết', dataIndex: 'due_date', key: 'due_date' },
 ];
 
 </script>

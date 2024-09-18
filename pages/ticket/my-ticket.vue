@@ -74,7 +74,7 @@ const formatDateTime = (date) => {
   <div class="main-content">
     <app-section class="ticket-list-section default_section">
       <a-flex align="center" justify="space-between" class="filter-section">
-        <app-title :text="'Ticket của tôi'"/>
+        <app-title :text="'Yêu cầu của tôi'"/>
         <a-flex align="center">
           <div class="list-filter-desktop" id="list-filter">
             <a-input v-model:value="textInputSearch" placeholder="Tìm kiếm theo tiêu đề hoặc id" class="equal-height"
@@ -104,7 +104,8 @@ const formatDateTime = (date) => {
       </a-flex>
       <a-table :columns="columns"
                :loading="listMyTicketsLoading"
-               :data-source="myTickets.data" :pagination="{
+               :data-source="myTickets.data"
+               :pagination="{
                   current: currentPage,
                   total: totalRow,
                   pageSize: 10

@@ -230,7 +230,7 @@ const filterDepartmentOptions = (input, option) => {
     <a-spin :spinning="ticketLoading">
       <app-section class="ticket-detail-section">
         <div class="header">
-          <app-title :text="`[Ticket #${ticket.data?.id}] ${ticket.data?.title}`"/>
+          <app-title :text="`[#${ticket.data?.id}] ${ticket.data?.title}`"/>
           <a-button class="modified-button" size="large" @click="handleClickEditButton">
             <template #icon>
               <icon-edit class="icon-edit"/>
@@ -334,7 +334,7 @@ const filterDepartmentOptions = (input, option) => {
                     :options="supportDepartmentOpts">
           </a-select>
         </a-form-item>
-        <a-form-item label="Reassign to" name="owner">
+        <a-form-item label="Phân công lại cho" name="owner">
           <a-select v-model:value="formEditState.owner"
                     :options="staffOptions"
                     :show-search="true"
@@ -343,7 +343,7 @@ const filterDepartmentOptions = (input, option) => {
                     :loading="staffOptionsLoading">
           </a-select>
         </a-form-item>
-        <a-form-item label="Change In Charge to" name="personIncharge">
+        <a-form-item label="Thay đổi phụ trách thành" name="personIncharge">
           <a-select v-model:value="formEditState.personIncharge"
                     :options="staffOptions"
                     :show-arrow="false"
@@ -373,9 +373,9 @@ const filterDepartmentOptions = (input, option) => {
                     :loading="staffOptionsLoading"
                     mode="multiple"></a-select>
         </a-form-item>
-        <a-form-item label="MKT Tagline" name="mktTagline">
-          <a-input v-model:value="formEditState.mktTagline"/>
-        </a-form-item>
+<!--        <a-form-item label="MKT Tagline" name="mktTagline">-->
+<!--          <a-input v-model:value="formEditState.mktTagline"/>-->
+<!--        </a-form-item>-->
         <a-form-item :wrapper-col="{span: 24, offset: 20}">
           <a-button type="primary" style="display: flex; gap: 0.25rem" html-type="submit">
             <template #icon>
