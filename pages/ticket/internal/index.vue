@@ -157,14 +157,14 @@ const handleTicketTableChange = async (pagination, filters, sorter, { currentDat
     </app-section>
     <app-drawer :open="isOpenFilterDrawer" @close="handleCloseFilterDrawer">
       <a-form :model="filter" name="form-edit" layout="vertical" @finish="handleSubmitAction">
-        <a-form-item label="Search by title" name="search">
-          <a-input v-model:value="filter.search" placeholder="Search by title">
+        <a-form-item label="Tìm kiếm theo tiêu đề" name="search">
+          <a-input v-model:value="filter.search" placeholder="Tìm kiếm theo tiêu đề">
             <template #prefix>
               <search-outlined/>
             </template>
           </a-input>
         </a-form-item>
-        <a-form-item label="Create date" name="createdAt">
+        <a-form-item label="Ngày tạo" name="createdAt">
           <a-flex justify="space-between" gap="small" align="center">
             <a-date-picker v-model:value="filter.createdAt.start"
                            style="width: 100%"
@@ -177,7 +177,7 @@ const handleTicketTableChange = async (pagination, filters, sorter, { currentDat
                            placeholder="Chọn ngày tạo"/>
           </a-flex>
         </a-form-item>
-        <a-form-item label="Resolve date" name="resolvedAt">
+        <a-form-item label="Ngày giải quyết" name="resolvedAt">
           <a-flex justify="space-between" gap="small" align="center">
             <a-date-picker v-model:value="filter.resolvedAt.start"
                            style="width: 100%"
@@ -191,21 +191,21 @@ const handleTicketTableChange = async (pagination, filters, sorter, { currentDat
           </a-flex>
         </a-form-item>
         <a-flex justify="space-between" gap="small">
-          <a-form-item label="Priority" name="priority">
+          <a-form-item label="Ưu tiên" name="priority">
             <a-select v-model:value="filter.priority"
                       :options="priorityOpts"
                       :allow-clear="true"
             >
             </a-select>
           </a-form-item>
-          <a-form-item label="Status" name="status">
+          <a-form-item label="Trạng thái" name="status">
             <a-select v-model:value="filter.status"
                       :options="statusOpts"
                       :allow-clear="true"
             >
             </a-select>
           </a-form-item>
-          <a-form-item label="Support Department" name="supportDepartment">
+          <a-form-item label="Phòng ban hỗ trợ" name="supportDepartment">
             <a-select v-model:value="filter.supportDepartment"
                       :options="supportDepartmentOpts"
                       :allow-clear="true"
@@ -213,7 +213,7 @@ const handleTicketTableChange = async (pagination, filters, sorter, { currentDat
             </a-select>
           </a-form-item>
         </a-flex>
-        <a-form-item label="Owned by" name="owner">
+        <a-form-item label="Người sở hữu" name="owner">
           <a-select v-model:value="filter.owner"
                     :options="staffOptions"
                     :show-search="true"
@@ -224,7 +224,7 @@ const handleTicketTableChange = async (pagination, filters, sorter, { currentDat
           >
           </a-select>
         </a-form-item>
-        <a-form-item label="In charged by" name="personIncharge">
+        <a-form-item label="PIC" name="personIncharge">
           <a-select v-model:value="filter.personIncharge"
                     :options="staffOptions"
                     :show-arrow="false"
@@ -235,7 +235,7 @@ const handleTicketTableChange = async (pagination, filters, sorter, { currentDat
           >
           </a-select>
         </a-form-item>
-        <a-form-item label="Reporter" name="reporter">
+        <a-form-item label="Người báo cáo" name="reporter">
           <a-select v-model:value="filteredReporter"
                     :options="staffOptions"
                     :show-search="true"

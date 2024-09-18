@@ -91,16 +91,17 @@ export const getTicketDetailByCode = async (ticketCode, isInternal = false) => {
 
 export const getTickets = async (page = 0, limit = 10, search = '', filter = {}, sorter = {}) => {
     try {
+        console.log('filter', filter.created_at);
         const filterParams = {
-            created_at: filter.createdAt || { start: '', end: '' },
-            resolved_at: filter.resolvedAt || { start: '', end: '' },
+            created_at: filter.created_at || { start: '', end: '' },
+            resolved_at: filter.resolved_at || { start: '', end: '' },
             priority: filter.priority || '',
             status: filter.status || '',
-            incharge_by: filter.personIncharge || '',
-            owned_by: filter.owner || '',
-            report_by: filter.reporter || '',
+            incharge_by: filter.incharge_by || '',
+            owned_by: filter.owned_by || '',
+            report_by: filter.report_by || '',
             cc_user: filter.cc_user || '',
-            support_department: filter.supportDepartment || ''
+            support_department: filter.support_department || ''
         };
 
         const payload = {
@@ -108,6 +109,8 @@ export const getTickets = async (page = 0, limit = 10, search = '', filter = {},
             limit,
             filter_params: JSON.stringify(filterParams)
         };
+
+        console.log('payload', payload);
 
         if (search) {
             payload.search = search;
