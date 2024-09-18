@@ -138,7 +138,7 @@ const handleDeleteComment = async ({commentId}) => {
     </app-section>
     <div class="comment-section">
       <a-flex align="center" justify="space-between" class="comment-section__header">
-        <app-title :text="'Phản hồi từ Metric'"/>
+        <app-title :text="'Phản hồi từ eReport'"/>
         <a-button
             v-if="userInfo.email.endsWith('@metric.vn')"
             type="primary"
