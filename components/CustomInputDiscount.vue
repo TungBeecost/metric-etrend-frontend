@@ -20,21 +20,31 @@
 
 <script lang="ts" setup>
 import { InfoCircleOutlined } from "@ant-design/icons-vue";
-import type { InputProps } from "ant-design-vue"
+import type { InputProps } from "ant-design-vue";
 
-defineProps<{
+const props = defineProps<{
   label?: string,
   inputProps?: InputProps,
   isRequired?: boolean,
   errorMessage?: string,
   statusApplyCode?: boolean,
-}>()
+  discountValueRouter?: string,
+}>();
+
+const { discountValueRouter } = props;
 
 const emit = defineEmits(["applyDiscount"]);
 
 const validateDiscount = () => {
   emit("applyDiscount", inputModel.value);
 };
+
+onMounted(() => {
+  if (discountValueRouter) {
+    inputModel.value = discountValueRouter;
+    validateDiscount();
+  }
+});
 
 const inputModel = defineModel<string>("input");
 </script>

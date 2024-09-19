@@ -27,10 +27,14 @@ const emit = defineEmits(['payment', 'updateContact']);
 const { getVoucher } = useDiscount();
 const statusApplyCode = ref<boolean>(false);
 
-const { plan } = defineProps({
+const { plan, discountValueRouter } = defineProps({
   plan: {
     type: Object,
     required: true
+  },
+  discountValueRouter: {
+    type: String,
+    default: ''
   }
 });
 
@@ -207,7 +211,7 @@ const handleFormVatUpdate = (formValues: IFormValue) => {
               :is-required="true"
               :input-props="{ placeholder: 'Nhập SĐT' }"
           />
-          <CustomInputDiscount v-model:input="discountValue" :status-apply-code="statusApplyCode" style="display: flex" :error-message="errors.discount"
+          <CustomInputDiscount v-model:input="discountValue" :discount-value-router="discountValueRouter" :status-apply-code="statusApplyCode" style="display: flex" :error-message="errors.discount"
                                label="Nhập mã giảm giá" :is-required="true" :input-props="{ placeholder: 'Nhập mã giảm giá' }" @apply-discount="handleDiscount"/>
         </div>
       </div>
