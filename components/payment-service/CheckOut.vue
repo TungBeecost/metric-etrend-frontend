@@ -2,24 +2,30 @@
 import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import CustomInputDiscount from "~/components/CustomInputDiscount.vue";
 import useDiscount from "~/composables/useDiscount";
-import {defineEmits, ref, watch} from 'vue';
-import {formatCurrency} from "~/helpers/FormatHelper";
+import { defineEmits, ref, watch, defineProps } from 'vue';
+import { formatCurrency } from "~/helpers/FormatHelper";
+import FormVat from "~/components/payment-service/FormVat.vue";
+
+export interface IFormValue {
+  companyName?: string;
+  taxCode?: string;
+  email?: string;
+  address?: string;
+  discount?: string;
+  name?: string;
+  phone?: string;
+}
 
 const discountValue = ref<string>('');
 const nameValue = ref<string>('');
 const phoneValue = ref<string>('');
-const errors = useState<Partial<IFormValue>>(() => ({}));
+const errors = ref<Partial<IFormValue>>({});
 const discountInfo = ref<any>({});
 const finalPrice = ref<number>(0);
+const checked = ref(false);
 const emit = defineEmits(['payment', 'updateContact']);
 const { getVoucher } = useDiscount();
-const statusApplyCode= ref<boolean>(false)
-interface IFormValue {
-  discount: string;
-  name: string;
-  phone: string;
-}
-
+const statusApplyCode = ref<boolean>(false);
 
 const { plan } = defineProps({
   plan: {
@@ -27,6 +33,8 @@ const { plan } = defineProps({
     required: true
   }
 });
+
+const formVatValues = ref<IFormValue>({});
 
 watch(plan, (newPlan) => {
   if (newPlan && newPlan.price) {
@@ -53,8 +61,20 @@ const handlePayment = () => {
   } else {
     errors.value.phone = '';
   }
-  emit('updateContact', { name: nameValue.value, phone: phoneValue.value });
 
+
+  emit('updateContact', {
+    name: nameValue.value,
+    phone: phoneValue.value,
+    companyName: formVatValues.value.companyName,
+    taxCode: formVatValues.value.taxCode,
+    email: formVatValues.value.email,
+    address: formVatValues.value.address
+  });
+
+  if (checked.value && !isFormVatValid()) {
+    return;
+  }
 
   if (!nameValue.value || !phoneValue.value || errors.value.name || errors.value.phone) {
     return;
@@ -64,6 +84,43 @@ const handlePayment = () => {
     finalPrice.value = plan.price;
   }
   emit('payment', { finalPrice: finalPrice.value, discountInfo: discountInfo.value });
+};
+
+const isFormVatValid = () => {
+  let isValid = true;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const taxCodeRegex = /^\d{10}$/;
+  if (!formVatValues.value.companyName) {
+    errors.value.companyName = 'Bạn cần nhập tên công ty';
+    isValid = false;
+  } else {
+    errors.value.companyName = '';
+  }
+  if (!formVatValues.value.taxCode) {
+    errors.value.taxCode = 'Bạn cần nhập mã số thuế';
+    isValid = false;
+  } else if (!taxCodeRegex.test(formVatValues.value.taxCode)) {
+    errors.value.taxCode = 'Mã số thuế phải có 10 chữ số';
+    isValid = false;
+  } else {
+    errors.value.taxCode = '';
+  }
+  if (!formVatValues.value.email) {
+    errors.value.email = 'Bạn cần nhập email';
+    isValid = false;
+  } else if (!emailRegex.test(formVatValues.value.email)) {
+    errors.value.email = 'Email không hợp lệ';
+    isValid = false;
+  } else {
+    errors.value.email = '';
+  }
+  if (!formVatValues.value.address) {
+    errors.value.address = 'Bạn cần nhập địa chỉ';
+    isValid = false;
+  } else {
+    errors.value.address = '';
+  }
+  return isValid;
 };
 
 const handleDiscount = () => {
@@ -114,6 +171,11 @@ const fetchDiscount = async () => {
     errors.value.discount = 'Mã giảm giá không tồn tại';
   }
 };
+
+const handleFormVatUpdate = (formValues: IFormValue) => {
+  formVatValues.value = formValues;
+};
+
 </script>
 
 <template>
@@ -151,6 +213,8 @@ const fetchDiscount = async () => {
       </div>
       <div class="total">
         <total-payment v-if="plan" :plan="plan" :status-apply-code="statusApplyCode" :discount-info="discountInfo" @final-price="handleFinalPrice"/>
+        <a-checkbox v-model:checked="checked" style="padding-top: 16px">Yêu cầu xuất VAT</a-checkbox>
+        <form-vat v-if="checked" :errors="errors" @form-values="handleFormVatUpdate"/>
         <a-button style="width: 100%; height: 40px; margin-top: 16px" type="primary" @click="handlePayment">Thanh toán</a-button>
       </div>
     </div>
@@ -186,6 +250,7 @@ const fetchDiscount = async () => {
   .statistic-item__content{
     padding: 24px;
     border: 1px solid #EEEBFF;
+    border-top: none;
     border-radius: 0 0 16px 16px;
     display: flex;
     flex-direction: column;

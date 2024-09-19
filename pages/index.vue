@@ -65,10 +65,12 @@
           </div>
           <div class="title_content_sucess">
             <div class="title_success">Thanh toán thành công</div>
-            <div class="content_success" style="font-size: 16px"><span style="color: #E85912; font-size: 16px">Để được bảo vệ và hỗ trợ</span>
-              trong quá trình xử lý thanh toán và sử dụng dịch vụ, xin vui lòng cập nhật thông tin:
-            </div>
-            <payment-success-form v-if="transactionId" :transaction-id="transactionId" @form-submitted="handdleUpdate"/>
+<!--            <div class="content_success" style="font-size: 16px"><span style="color: #E85912; font-size: 16px">Để được bảo vệ và hỗ trợ</span>-->
+<!--              trong quá trình xử lý thanh toán và sử dụng dịch vụ, xin vui lòng cập nhật thông tin:-->
+<!--            </div>-->
+<!--            <payment-success-form v-if="transactionId" :transaction-id="transactionId" @form-submitted="handdleUpdate"/>-->
+            <div style="text-align: center; padding-top: 12px; padding-bottom: 32px; font-size: 16px; font-weight: 400;">Cảm ơn bạn đã tin tưởng và sử dụng gói dịch vụ của eReport!</div>
+            <a-button type="primary" style="height: 40px" @click="handdleUpdate">Tôi đã hiểu</a-button>
           </div>
         </div>
       </div>

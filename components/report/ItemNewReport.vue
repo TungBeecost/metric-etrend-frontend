@@ -129,7 +129,7 @@ const itemsToShow = computed(() => {
                 <BlurContent>
                   {{ formatAndRoundSortTextCurrencyWithMinValue(report.shop) }}
                 </BlurContent>
-              </span> - nhà bán
+              </span> nhà bán
               </div>
               <div class="info_item">
                 <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -150,7 +150,7 @@ const itemsToShow = computed(() => {
                 <BlurContent>
                   {{ formatAndRoundSortTextCurrencyWithMinValue(report.product) }}
                 </BlurContent>
-              </span> - sản phẩm
+              </span> sản phẩm
               </div>
             </div>
             <div v-else-if="report.introduction" class="summary-info line-clamp__2">

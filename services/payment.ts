@@ -6,7 +6,13 @@ export const createTransaction = async (
     itemCode: string,
     redirectUrl: string,
     totalPrice: string,
-    discountCode: string | null
+    discountCode: string | null,
+    name: string | null,
+    phone: string | null,
+    company: string | null,
+    tax_code: string | null,
+    receive_email: string | null,
+    address: string | null
 ) => {
     try {
         const params = new URLSearchParams({
@@ -18,6 +24,24 @@ export const createTransaction = async (
 
         if (discountCode) {
             params.append('discount_code', discountCode);
+        }
+        if (name) {
+            params.append('name', name);
+        }
+        if (phone) {
+            params.append('phone', phone);
+        }
+        if (company) {
+            params.append('company', company);
+        }
+        if (tax_code) {
+            params.append('tax_code', tax_code);
+        }
+        if (receive_email) {
+            params.append('receive_email', receive_email);
+        }
+        if (address) {
+            params.append('address', address);
         }
 
         const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment.endpoint)}?${params.toString()}`, {}, {
@@ -38,18 +62,44 @@ export const createTransactionPdf = async (
     report_id: string,
     redirectUrl: string,
     totalPrice: string,
-    discountCode: string | null
+    discountCode: string | null,
+    reportLink: string,
+    name: string | null,
+    phone: string | null,
+    company: string | null,
+    tax_code: string | null,
+    receive_email: string | null,
+    address: string | null
 ) => {
     try {
         const params = new URLSearchParams({
             payment_method: paymentMethod,
             report_id: report_id,
             redirect_url: redirectUrl,
-            total_price: totalPrice
+            total_price: totalPrice,
+            report_link: reportLink
         });
 
         if (discountCode) {
             params.append('discount_code', discountCode);
+        }
+        if (name) {
+            params.append('name', name);
+        }
+        if (phone) {
+            params.append('phone', phone);
+        }
+        if (company) {
+            params.append('company', company);
+        }
+        if (tax_code) {
+            params.append('tax_code', tax_code);
+        }
+        if (receive_email) {
+            params.append('receive_email', receive_email);
+        }
+        if (address) {
+            params.append('address', address);
         }
 
         const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment_pdf.endpoint)}?${params.toString()}`, {}, {

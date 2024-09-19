@@ -66,6 +66,7 @@ watch(value, (newValue) => {
     flex-direction: column;
     border-radius: 0 0 16px 16px;
     border: 1px solid #EEEBFF;
+    border-top: none;
     padding: 24px;
 
     .content{

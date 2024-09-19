@@ -50,7 +50,7 @@ onMounted(() => {
 <template>
   <div class="header-dept-report default_section">
     <div class="category">
-      Báo cáo chuyên sâu
+      Báo cáo chi tiết
     </div>
     <div class="container">
       <div class="title">Nhóm hàng {{reportName}}</div>

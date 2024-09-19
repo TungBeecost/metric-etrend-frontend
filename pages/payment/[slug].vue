@@ -12,7 +12,7 @@ const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
-const { createPaymentTransactionPdf, verifyTransaction, submitLeadInformation } = usePayment();
+const { createPaymentTransactionPdf, verifyTransaction } = usePayment();
 const selectedWalletOption = ref('');
 const qrCodeData = ref('');
 const openModal = ref<boolean>(false);
@@ -21,8 +21,9 @@ const planCode = ref('');
 const route = useRoute();
 const config = useRuntimeConfig();
 const reportDetail = ref<any>(null);
-const information = ref({ name: '', phone: '', companyName: '' });
-
+const information = ref({ name: '', phone: '', companyName: '', taxCode: '', email: '', address: '' });
+const slug = route.params.slug;
+const reportLink = `https://ereport.vn/${slug}`;
 interface ErrorResponse {
   response: {
     data: {
@@ -42,8 +43,6 @@ const handleSelectedOption = (selectedOption: string) => {
 };
 
 const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string; discountInfo: DiscountInfo }) => {
-  console.log('finalPrice', finalPrice);
-  console.log('discountInfo', discountInfo);
   discountValue.value = discountInfo;
 
   if (!userInfo.value.id) {
@@ -53,7 +52,7 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
       const paymentMethod = selectedWalletOption.value;
       if (reportDetail.value && reportDetail.value.id) {
         try {
-          const transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null);
+          const transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
           if (transactionResult?.response?.payment_url) {
             window.location.href = transactionResult.response.payment_url;
           } else {
@@ -97,7 +96,6 @@ const fetchReportData = async () => {
           }
         }
     );
-    console.log('reportDetail', reportDetail.value)
   } catch (error) {
     console.log(error)
 
@@ -126,21 +124,6 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
       console.log("Transaction completed");
       openModal.value = false;
       isCompleted.value = true;
-      try {
-        if (userInfo.value.email) {
-          await submitLeadInformation(
-              information.value.name,
-              userInfo.value.email,
-              information.value.phone,
-              information.value.companyName,
-              transactionId
-          );
-        } else {
-          console.error('User email is undefined');
-        }
-      } catch (error) {
-        console.error('error', error);
-      }
       if (intervalId) clearInterval(intervalId);
       if (timeoutId) clearTimeout(timeoutId);
       window.location.href = `/${route.params.slug}?transaction_id=${transactionId}`;
@@ -171,14 +154,17 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
   return { isCompleted };
 };
 
-const handleUpdateContact = (contact: { name: string, phone: string }) => {
+const handleUpdateContact = (contact: { name: string, phone: string, companyName: string, taxCode: string, email: string, address: string }) => {
   information.value.name = contact.name;
   information.value.phone = contact.phone;
+  information.value.companyName = contact.companyName;
+  information.value.taxCode = contact.taxCode;
+  information.value.email = contact.email;
+  information.value.address = contact.address;
 };
 
 onMounted(async () => {
   await fetchReportData();
-  console.log('reportDetail', reportDetail.value);
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/payment/${route.params.slug}`;

@@ -3,6 +3,7 @@ import {useCurrentUser} from "~/stores/current-user"
 import {ref} from "vue";
 
 const currentUserStore = useCurrentUser();
+const {userInfo} = storeToRefs(currentUserStore);
 
 const showUnlock = ref(false);
 
@@ -70,9 +71,9 @@ const emit = defineEmits(['handle-unlock-report'])
     </div>
     <div class="action-btns">
       <a-button style="width: 100%;" type="primary" size="large" @click="emit('handle-unlock-report')">Đăng ký nhận báo cáo</a-button>
-      <div>
+      <div v-if="!userInfo">
         Đã có tài khoản?
-        <a @click="currentUserStore.setShowPopupLogin(true)" style="cursor: pointer">
+        <a style="cursor: pointer" @click="currentUserStore.setShowPopupLogin(true)">
           Đăng nhập ngay
         </a>
       </div>

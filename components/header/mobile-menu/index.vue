@@ -30,6 +30,20 @@
       </AButton>
     </NuxtLink>
 
+    <NuxtLink :to="NAVIGATIONS.requestSupport" class="menu">
+      <AButton size="large" type="text" class="menuItem" @click="setShowMenu(false)">
+        <CustomIcon type="Ticket" class="menuIcon" :is-custom-size="true"/>
+        Yêu cầu hỗ trợ
+      </AButton>
+    </NuxtLink>
+
+    <NuxtLink :to="NAVIGATIONS.handingrequestSupport" class="menu">
+      <AButton size="large" type="text" class="menuItem" @click="setShowMenu(false)">
+        <CustomIcon type="InternalTicket" class="menuIcon" :is-custom-size="true"/>
+        Xử lý yêu cầu hỗ trợ
+      </AButton>
+    </NuxtLink>
+
     <div v-if="userInfo.id" class="divider"/>
 
     <NuxtLink v-if="userInfo.id" :to="NAVIGATIONS.home" class="menu">

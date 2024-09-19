@@ -35,7 +35,7 @@ onMounted(() => {
   <div class="dept_report_link">
    <div class="container">
     <div class="title_container">
-      <p style="text-align: center; color: #E85812; font-size: 24px; font-weight: 700; line-height: 32px">Báo cáo chuyên sâu</p>
+      <p style="text-align: center; color: #E85812; font-size: 24px; font-weight: 700; line-height: 32px">Báo cáo chi tiết</p>
       <p style="text-align: center; color: #050038; font-size: 14px; font-weight: 600; line-height: 20px">Nhóm hàng {{data.name}}</p>
     </div>
      <div class="content_container">

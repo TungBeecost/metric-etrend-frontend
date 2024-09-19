@@ -32,11 +32,9 @@ const platformColors = {
   Lazada: ['#4745A5', '#241E46'],
   Tiki: ['#5BAFFE', '#366998'],
   Sendo: ['#FF6060', '#993A3A'],
-  Tiktok: ['#000', '#000'],
+  Tiktok: ['#7E7E7E', '#0C0C0C'],
 };
 
-// const PLATFORM_TOTAL = computed(() => props.analyticType === 'revenue' ? props.classifiedAnalyticResponse.REVENUE_TOTAL : props.classifiedAnalyticResponse.ORDER_TOTAL);
-// const total = computed(() => PLATFORM_TOTAL.value.platforms.reduce((acc, item) => acc + item.revenue, 0));
 
 const columns = computed(() => [
   {
@@ -134,7 +132,6 @@ const chartOptions = computed(() => ({
         data: data.data_analytic.by_marketplace.lst_marketplace.map(({platform_id, revenue, ratio_revenue}) => ({
           name: getPlatformById(platform_id).name,
           y: revenue || ratio_revenue,
-          // color: platformColors[getPlatformById(platform_id).name],
           color: {
             linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
             stops: [
@@ -162,12 +159,6 @@ const dataSource = computed(() => {
     <div>
       <div style="position: relative; pointer-events: none">
         <highchart v-if="renderChart" :options="chartOptions"/>
-        <!--        <div class="platform-chart-inner-box">-->
-        <!--          <div class="platform-chart-inner-value">-->
-        <!--            <div class="percent" style="color: #241E46; font-size: 24px;font-weight: bold; line-height: 32px; ">{{ innerPercent }}</div>-->
-        <!--            <div class="name" style="color: #241E46; font-size: 12px;line-height: 20px;">{{ innerName }}</div>-->
-        <!--          </div>-->
-        <!--        </div>-->
       </div>
     </div>
     <div style="width: 100%">

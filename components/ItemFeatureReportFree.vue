@@ -88,7 +88,7 @@ const itemsToShow = computed(() => {
                   <BlurContent>
                     {{ formatAndRoundSortTextCurrencyWithMinValue(report.revenue_monthly) }}
                   </BlurContent>
-                </span> - doanh số trung bình tháng
+                </span> doanh số trung bình tháng
               </div>
               <div class="info_item">
                 <svg data-v-f4382b3b="" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateY(0px); margin-right: 4px;">
@@ -109,7 +109,7 @@ const itemsToShow = computed(() => {
                   <BlurContent>
                     {{ formatAndRoundSortTextCurrencyWithMinValue(report.shop) }}
                   </BlurContent>
-                </span> - nhà bán
+                </span> nhà bán
               </div>
             </div>
             <div class="description line-clamp__4" style="text-align: left;">

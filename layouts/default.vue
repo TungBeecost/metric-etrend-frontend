@@ -32,7 +32,6 @@
             <CustomIcon v-if="isMobile && !isShowMenu" :is-custom-size="true" :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'" />
             <CustomIcon v-else-if="isShowMenu" :is-custom-size="true" type="Close" />
           </div>
-
           <HeaderNavbar v-if="!isMobile" :is-dark-blue-header="isDarkBlueHeader" />
           <HeaderMobileMenu v-else :active="isShowMenu" />
         </div>

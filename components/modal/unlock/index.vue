@@ -29,7 +29,6 @@ const loading = ref(false);
 const unlockReport = async () => {
   try {
     loading.value = true;
-
     await currentUser.unlockReport(report.slug);
     loading.value = false;
     reloadNuxtApp();
