@@ -18,6 +18,7 @@ const statusApplyCode = ref<boolean>(false);
 const openModal = ref<boolean>(false);
 const openModalWaiting = ref<boolean>(false);
 const planCode = ref('');
+const discountValueRouter = ref<string>('');
 const information = ref({ name: '', phone: '', companyName: '', taxCode: '', email: '', address: '' });
 
 interface ErrorResponse {
@@ -168,6 +169,7 @@ const plan = computed(() => PLANS.find(p => p.plan_code === planCode.value));
 onMounted(() => {
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
+
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/payment`;
 
   const orderId = route.query.orderId as string;
@@ -175,7 +177,13 @@ onMounted(() => {
     openModalWaiting.value = true;
     useCheckTransactionCompletion(orderId, 3000); // 5 seconds timeout
   }
+
+  const promotionCode = route.query.promotion_code as string;
+  if (promotionCode) {
+    discountValueRouter.value = promotionCode;
+  }
 });
+
 
 const handleUpdateContact = (contact: { name: string, phone: string, companyName: string, taxCode: string, email: string, address: string }) => {
   information.value.name = contact.name;
@@ -203,7 +211,7 @@ useSeoMeta({
         <option-payment @selected-option="handleSelectedOption" />
       </div>
       <div class="check-out">
-        <check-out v-if="plan" :plan="plan" @payment="handlePayment" @update-contact="handleUpdateContact"/>
+        <check-out v-if="plan" :plan="plan" :discount-value-router="discountValueRouter" @payment="handlePayment" @update-contact="handleUpdateContact"/>
       </div>
     </div>
     <a-modal v-model:open="openModal" width="500px" destroy-on-close :footer="null" @ok="handleOk">
