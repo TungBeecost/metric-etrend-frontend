@@ -12,7 +12,7 @@
     <div class="container">
       <div class="top-bar" @click="navigateToPricing">
         <div class="text">
-          <b style="font-size: 14px">Ưu đãi giảm 30%</b>
+          <b style="font-size: 14px">Ưu đãi đặc biệt</b>
           <span style="font-size: 14px"> áp dụng với tất cả các gói dịch vụ đến hết ngày 30/09/2024</span>
         </div>
       </div>
