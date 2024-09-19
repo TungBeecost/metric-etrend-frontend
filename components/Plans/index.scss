@@ -17,6 +17,9 @@
     font-size: 44px;
     font-weight: 700;
     line-height: 56px;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
 
     @include mobile {
       font-size: 24px;
@@ -50,7 +53,7 @@
       flex: 1 0 0;
       will-change: transform, background-color;
 
-      .discount_percent{
+      .discount_percent {
         display: flex;
         width: 60px;
         padding: 9px 16px;
@@ -64,12 +67,15 @@
         top: 0;
         right: 0;
 
-        .text{
+        .text {
           color: #FFF;
           text-align: center;
           font-size: 14px;
           font-weight: 500;
           line-height: 22px;
+          white-space: nowrap; /* Prevent text wrapping */
+          overflow: hidden; /* Hide overflow text */
+          text-overflow: ellipsis; /* Add ellipsis for overflow text */
         }
       }
 
@@ -110,6 +116,9 @@
             font-weight: 700;
             line-height: 28px;
             margin-bottom: 8px;
+            white-space: nowrap; /* Prevent text wrapping */
+            overflow: hidden; /* Hide overflow text */
+            text-overflow: ellipsis; /* Add ellipsis for overflow text */
           }
 
           .planDesc {
@@ -118,21 +127,30 @@
             font-weight: 400;
             line-height: 22px;
             margin-bottom: 24px;
+            white-space: nowrap; /* Prevent text wrapping */
+            overflow: hidden; /* Hide overflow text */
+            text-overflow: ellipsis; /* Add ellipsis for overflow text */
           }
 
-          .planDiscountPrice{
+          .planDiscountPrice {
             color: #716B95;
             font-size: 24px;
             font-weight: 700;
             line-height: 24px;
             text-decoration-line: line-through;
             padding-bottom: 6px;
+            white-space: nowrap; /* Prevent text wrapping */
+            overflow: hidden; /* Hide overflow text */
+            text-overflow: ellipsis; /* Add ellipsis for overflow text */
           }
 
           .planPrice {
             font-size: 36px;
             font-weight: 700;
             line-height: 48px;
+            white-space: nowrap; /* Prevent text wrapping */
+            overflow: hidden; /* Hide overflow text */
+            text-overflow: ellipsis; /* Add ellipsis for overflow text */
 
             @include mobile {
               font-size: 24px;
@@ -144,6 +162,9 @@
               font-size: 16px;
               font-weight: 400;
               line-height: 24px;
+              white-space: nowrap; /* Prevent text wrapping */
+              overflow: hidden; /* Hide overflow text */
+              text-overflow: ellipsis; /* Add ellipsis for overflow text */
             }
           }
         }
@@ -164,6 +185,9 @@
             font-size: 14px;
             font-weight: 700;
             line-height: 22px;
+            white-space: nowrap; /* Prevent text wrapping */
+            overflow: hidden; /* Hide overflow text */
+            text-overflow: ellipsis; /* Add ellipsis for overflow text */
           }
 
           .permissionList {
@@ -181,6 +205,9 @@
               font-size: 14px;
               font-weight: 400;
               line-height: 22px;
+              white-space: nowrap; /* Prevent text wrapping */
+              overflow: hidden; /* Hide overflow text */
+              text-overflow: ellipsis; /* Add ellipsis for overflow text */
 
               .permissionIcon {
                 width: 16px;
@@ -191,25 +218,37 @@
                 display: flex;
                 align-items: center;
                 gap: 12px;
+                white-space: nowrap; /* Prevent text wrapping */
+                overflow: hidden; /* Hide overflow text */
+                text-overflow: ellipsis; /* Add ellipsis for overflow text */
               }
 
               .subPerm {
                 margin-left: 16px;
+                white-space: nowrap; /* Prevent text wrapping */
+                overflow: hidden; /* Hide overflow text */
+                text-overflow: ellipsis; /* Add ellipsis for overflow text */
               }
             }
           }
         }
-        
-        .not_user_plan{
+
+        .not_user_plan {
           background: #E85912;
           color: #FFF;
           width: 100%;
+          white-space: nowrap; /* Prevent text wrapping */
+          overflow: hidden; /* Hide overflow text */
+          text-overflow: ellipsis; /* Add ellipsis for overflow text */
         }
 
-        .user_plan{
+        .user_plan {
           background: #DEDEE4;
           color: #9D9BB0;
           width: 100%;
+          white-space: nowrap; /* Prevent text wrapping */
+          overflow: hidden; /* Hide overflow text */
+          text-overflow: ellipsis; /* Add ellipsis for overflow text */
         }
       }
     }
