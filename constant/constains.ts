@@ -131,7 +131,7 @@ export const LABEL_PERMISSION_PLAN = {
     icon: "ViewCount"
   },
   viewReportPro: {
-    label: "Xem chi tiết số liệu báo cáo:",
+    label: "Phạm vi báo cáo tổng quan:",
     icon: "Docs",
     sub: {
       summary: "Số liệu tổng quan",
@@ -143,7 +143,7 @@ export const LABEL_PERMISSION_PLAN = {
     }
   },
   viewReportBasic: {
-    label: "Xem chi tiết số liệu báo cáo:",
+    label: "Phạm vi báo cáo tổng quan:",
     icon: "Docs",
     sub: {
       summary: "Số liệu tổng quan",
@@ -181,7 +181,7 @@ export const PLANS: Array<IPLAN> = [
   {
     type: "Starter",
     plan_code: 'e_starter',
-    description: "Thời hạn diễn ra chương trình: 30/09/2024",
+    description: "Thời hạn chương trình: 30/09/2024",
     price: "300000",
     // priceDiscount: "300000",
     unit: "15 ngày",
