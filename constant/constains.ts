@@ -183,7 +183,7 @@ export const PLANS: Array<IPLAN> = [
     plan_code: 'e_starter',
     description: "Thời hạn diễn ra chương trình: 30/09/2024",
     price: "300000",
-    priceDiscount: "300000",
+    // priceDiscount: "300000",
     unit: "15 ngày",
     permissions: [
         LABEL_PERMISSION_PLAN.viewCountTrial,
