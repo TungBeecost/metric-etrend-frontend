@@ -118,6 +118,10 @@ export const LABEL_PERMISSION_PLAN = {
     label: "Tải báo cáo chi tiết (Tính phí theo lượt tải)",
     icon: "Download"
   },
+  viewCountTrial: {
+    label: "3 lượt xem báo cáo chi tiết",
+    icon: "ViewCount"
+  },
   viewCountBasic: {
     label: "10 lượt xem báo cáo chi tiết",
     icon: "ViewCount"
@@ -175,60 +179,60 @@ interface IPLAN {
 }
 export const PLANS: Array<IPLAN> = [
   {
-    type: "Community",
-    plan_code: 'e_community',
-    description: "Truy cập kho báo cáo và cập nhật xu hướng",
-    price: "Miễn phí",
-    unit: undefined,
+    type: "Starter",
+    plan_code: 'e_starter',
+    description: "Thời hạn diễn ra chương trình: 30/09/2024",
+    price: "300.000đ",
+    unit: "15 ngày",
     permissions: [
-        LABEL_PERMISSION_PLAN.viewReportDetailFree,
-        LABEL_PERMISSION_PLAN.downloadDeptReport,
+        LABEL_PERMISSION_PLAN.viewCountTrial,
     ]
   },
   {
     type: "Basic",
     plan_code: "e_basic",
     description: "Xem số liệu tổng quan về thị trường",
-    price: "3500000",
+    price: "2500000",
     priceDiscount: "5000000",
-    discountPercent: "-30%",
+    discountPercent: "-50%",
     unit: "năm",
     isHighlight: true,
     permissions: [
-      LABEL_PERMISSION_PLAN.viewReportDetailFree,
-      {
-        ...LABEL_PERMISSION_PLAN.viewReportBasic,
-        sub: Object.values(LABEL_PERMISSION_PLAN.viewReportBasic.sub)
-      },
+      // LABEL_PERMISSION_PLAN.viewReportDetailFree,
+      LABEL_PERMISSION_PLAN.viewCountBasic,
       {
         label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(200),
         icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
       },
-      LABEL_PERMISSION_PLAN.viewCountBasic,
-      LABEL_PERMISSION_PLAN.downloadDeptReport,
+      // LABEL_PERMISSION_PLAN.downloadDeptReport,
+      {
+        ...LABEL_PERMISSION_PLAN.viewReportBasic,
+        sub: Object.values(LABEL_PERMISSION_PLAN.viewReportBasic.sub)
+      },
     ]
   },
   {
     type: "Pro",
     plan_code: "e_pro",
     description: "Xem số liệu chi tiết về thị trường",
-    price: "4900000",
+    price: "3500000",
     priceDiscount: "7000000",
-    discountPercent: "-30%",
+    discountPercent: "-50%",
     unit: "năm",
     isHighlight: true,
     permissions: [
-      LABEL_PERMISSION_PLAN.viewReportDetailFree,
-      {
-        ...LABEL_PERMISSION_PLAN.viewReportPro,
-        sub: Object.values(LABEL_PERMISSION_PLAN.viewReportPro.sub)
-      },
+      // LABEL_PERMISSION_PLAN.viewReportDetailFree,
+      LABEL_PERMISSION_PLAN.viewCountPro,
       {
         label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(200),
         icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
       },
-      LABEL_PERMISSION_PLAN.viewCountPro,
-      LABEL_PERMISSION_PLAN.downloadDeptReport,
+      // LABEL_PERMISSION_PLAN.downloadDeptReport,
+      {
+        ...LABEL_PERMISSION_PLAN.viewReportPro,
+        sub: Object.values(LABEL_PERMISSION_PLAN.viewReportPro.sub)
+      },
+
     ]
   }
 ];
