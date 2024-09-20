@@ -213,6 +213,29 @@ export const PLANS: Array<IPLAN> = [
     ]
   },
   {
+    type: "Basic Lite",
+    plan_code: "e_basic_lite",
+    description: "Xem số liệu tổng quan về thị trường",
+    price: "1000000",
+    // priceDiscount: "5000000",
+    // discountPercent: "-50%",
+    unit: "năm",
+    isHighlight: true,
+    permissions: [
+      // LABEL_PERMISSION_PLAN.viewReportDetailFree,
+      LABEL_PERMISSION_PLAN.viewCountBasic,
+      {
+        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(200),
+        icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
+      },
+      // LABEL_PERMISSION_PLAN.downloadDeptReport,
+      {
+        ...LABEL_PERMISSION_PLAN.viewReportBasic,
+        sub: Object.values(LABEL_PERMISSION_PLAN.viewReportBasic.sub)
+      },
+    ]
+  },
+  {
     type: "Pro",
     plan_code: "e_pro",
     description: "Xem số liệu chi tiết về thị trường",
@@ -235,7 +258,31 @@ export const PLANS: Array<IPLAN> = [
       },
 
     ]
-  }
+  },
+  {
+    type: "Pro Lite",
+    plan_code: "e_pro_lite",
+    description: "Xem số liệu chi tiết về thị trường",
+    price: "1500000",
+    // priceDiscount: "7000000",
+    // discountPercent: "-50%",
+    unit: "năm",
+    isHighlight: true,
+    permissions: [
+      // LABEL_PERMISSION_PLAN.viewReportDetailFree,
+      LABEL_PERMISSION_PLAN.viewCountPro,
+      {
+        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(200),
+        icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
+      },
+      // LABEL_PERMISSION_PLAN.downloadDeptReport,
+      {
+        ...LABEL_PERMISSION_PLAN.viewReportPro,
+        sub: Object.values(LABEL_PERMISSION_PLAN.viewReportPro.sub)
+      },
+
+    ]
+  },
 ];
 
 
