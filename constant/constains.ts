@@ -225,7 +225,7 @@ export const PLANS: Array<IPLAN> = [
       // LABEL_PERMISSION_PLAN.viewReportDetailFree,
       LABEL_PERMISSION_PLAN.viewCountBasic,
       {
-        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(200),
+        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(150),
         icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
       },
       // LABEL_PERMISSION_PLAN.downloadDeptReport,
@@ -272,7 +272,7 @@ export const PLANS: Array<IPLAN> = [
       // LABEL_PERMISSION_PLAN.viewReportDetailFree,
       LABEL_PERMISSION_PLAN.viewCountPro,
       {
-        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(200),
+        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(150),
         icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
       },
       // LABEL_PERMISSION_PLAN.downloadDeptReport,
