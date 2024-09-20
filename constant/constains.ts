@@ -171,6 +171,7 @@ interface IPLAN {
   discountPercent?: string;
   unit?: string;
   isHighlight?: boolean;
+  isHide?: boolean;
   permissions: Array<{
     label: string;
     icon: string;
