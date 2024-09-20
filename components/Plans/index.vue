@@ -38,6 +38,10 @@ const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
 
   return '';
 };
+
+const lstDisplayPlans = computed(() => {
+  return PLANS.filter((plan) => !plan.isHide);
+});
 </script>
 
 <template>
@@ -49,7 +53,7 @@ const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
     </p>
 
     <div class="pricings">
-      <div v-for="plan in PLANS" class="planItem">
+      <div v-for="plan in lstDisplayPlans" class="planItem">
         <div class="focusHeader"/>
 
         <div class="content">
