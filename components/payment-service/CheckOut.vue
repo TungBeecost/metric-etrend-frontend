@@ -220,7 +220,7 @@ const isHidePromotionInput = hideShowPromotionInputPlans.includes(plan.plan_code
               v-model:input="discountValue" :discount-value-router="discountValueRouter"
               :status-apply-code="statusApplyCode" style="display: flex"
               :error-message="errors.discount"
-              label="Nhập mã giảm giá" :is-required="true"
+              label="Nhập mã giảm giá"
               :input-props="{ placeholder: 'Nhập mã giảm giá' }" @apply-discount="handleDiscount"/>
         </div>
       </div>
