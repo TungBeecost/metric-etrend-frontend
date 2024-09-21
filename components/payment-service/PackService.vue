@@ -9,7 +9,7 @@ const { plan } = defineProps({
   }
 });
 
-const showMore = ref(false);
+const showMore = ref(plan.autoShowDetail || false);
 
 const toggleShowMore = () => {
   showMore.value = !showMore.value;
