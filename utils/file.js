@@ -25,7 +25,7 @@ class FileModule {
                 }
             );
             console.log(response.data.data.url);
-            return response.data.data.url; // Ensure the URL is returned correctly
+            return response.data.data.url;
         } catch (e) {
             console.error(`[ERROR] File upload failed, status=${e.response?.status}, message=${e.message}`);
             throw e;

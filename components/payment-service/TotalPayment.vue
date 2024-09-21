@@ -44,20 +44,24 @@ const calculateDiscountAmount = (planPriceDiscount: number, discount: any) => {
 };
 
 const discountAmount = ref(0);
-const promotionalDiscount = ref(plan.value.priceDiscount - plan.value.price);
+const promotionalDiscount = ref(0);
 
 const updateValues = async () => {
   await nextTick();
+  const priceDiscount = plan.value.priceDiscount ?? plan.value.price;
   if (statusApplyCode.value) {
-    discountAmount.value = calculateDiscountAmount(plan.value.priceDiscount, discountInfo.value);
+    discountAmount.value = calculateDiscountAmount(priceDiscount, discountInfo.value);
     promotionalDiscount.value = 0;
   } else {
     discountAmount.value = 0;
-    promotionalDiscount.value = plan.value.priceDiscount - plan.value.price;
+    promotionalDiscount.value = plan.value.priceDiscount ? plan.value.priceDiscount - plan.value.price : 0;
   }
 };
 
-const finalPrice = computed(() => plan.value.priceDiscount - discountAmount.value - promotionalDiscount.value);
+const finalPrice = computed(() => {
+  const priceDiscount = plan.value.priceDiscount ?? plan.value.price;
+  return priceDiscount - discountAmount.value - promotionalDiscount.value;
+});
 
 watch([discountInfo, statusApplyCode], updateValues);
 
@@ -69,16 +73,13 @@ onMounted(() => {
   updateValues();
 });
 </script>
+
 <template>
   <div class="calculate">
     <div class="calculate_item">
       <div class="money">Số tiền</div>
-      <div class="money">{{ formatCurrency(plan.priceDiscount) }}</div>
+      <div class="money">{{ formatCurrency(plan.priceDiscount ?? plan.price) }}</div>
     </div>
-<!--    <div class="calculate_item">-->
-<!--      <div class="money">Chiết khấu</div>-->
-<!--      <div class="money">-{{ formatCurrency(promotionalDiscount + discountAmount) }}</div>-->
-<!--    </div>-->
     <div class="calculate_item">
       <div class="promotional_program">Chương trình khuyến mại</div>
       <div v-if="promotionalDiscount" class="promotional_program">-{{ formatCurrency(promotionalDiscount) }}</div>

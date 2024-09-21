@@ -63,7 +63,7 @@ export const formatSortTextCurrencyWithMinValuePlan = (price, isShortest = false
     if (price - (price % 1000) !== 0 && price >= min) {
         result = price / 1000;
         result = result % 1 !== 0 ? result.toFixed(1).replace('.', ',') : Math.round(result);
-        return `${formatNumber(result)}${isShortest ? " ng" : " nghìn"}`;
+        return `${formatNumber(result)}${isShortest ? " ng" : ".000đ"}`;
     }
     return formatNumber(price);
 };
