@@ -2,8 +2,8 @@
 import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import CustomInputDiscount from "~/components/CustomInputDiscount.vue";
 import useDiscount from "~/composables/useDiscount";
-import { defineEmits, ref, watch, defineProps } from 'vue';
-import { formatCurrency } from "~/helpers/FormatHelper";
+import {defineEmits, defineProps, ref, watch} from 'vue';
+import {formatCurrency} from "~/helpers/FormatHelper";
 import FormVat from "~/components/payment-service/FormVat.vue";
 
 export interface IFormValue {
@@ -24,10 +24,10 @@ const discountInfo = ref<any>({});
 const finalPrice = ref<number>(0);
 const checked = ref(false);
 const emit = defineEmits(['payment', 'updateContact']);
-const { getVoucher } = useDiscount();
+const {getVoucher} = useDiscount();
 const statusApplyCode = ref<boolean>(false);
 
-const { plan, discountValueRouter } = defineProps({
+const {plan, discountValueRouter} = defineProps({
   plan: {
     type: Object,
     required: true
@@ -44,7 +44,7 @@ watch(plan, (newPlan) => {
   if (newPlan && newPlan.price) {
     finalPrice.value = newPlan.price;
   }
-}, { immediate: true });
+}, {immediate: true});
 
 const handleFinalPrice = (price: number) => {
   finalPrice.value = price;
@@ -87,7 +87,7 @@ const handlePayment = () => {
   if (!finalPrice.value) {
     finalPrice.value = plan.price;
   }
-  emit('payment', { finalPrice: finalPrice.value, discountInfo: discountInfo.value });
+  emit('payment', {finalPrice: finalPrice.value, discountInfo: discountInfo.value});
 };
 
 const isFormVatValid = () => {
@@ -136,7 +136,7 @@ const fetchDiscount = async () => {
     const response = await getVoucher(discountValue.value);
 
     if (response) {
-      const { discount } = response;
+      const {discount} = response;
       console.log(discount);
       console.log(plan.price);
 
@@ -148,20 +148,16 @@ const fetchDiscount = async () => {
       if (isExpired) {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá đã hết hạn';
-      }
-      else if (discount.applicable_to != 'subscription_package') {
+      } else if (discount.applicable_to != 'subscription_package') {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá không áp dụng cho sản phẩm này';
-      }
-      else if (discount.minimum_order_value !== null && plan.priceDiscount < discount.minimum_order_value) {
+      } else if (discount.minimum_order_value !== null && plan.priceDiscount < discount.minimum_order_value) {
         statusApplyCode.value = false;
         errors.value.discount = `Mã giảm giá chỉ áp dụng với đơn hàng từ ${formatCurrency(discount.minimum_order_value)}`;
-      }
-      else if (discount.usage_count >= discount.max_usage) {
+      } else if (discount.usage_count >= discount.max_usage) {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá đã hết lượt sử dụng';
-      }
-      else {
+      } else {
         statusApplyCode.value = true;
         errors.value.discount = 'Đã áp dụng mã giảm giá';
       }
@@ -179,6 +175,14 @@ const fetchDiscount = async () => {
 const handleFormVatUpdate = (formValues: IFormValue) => {
   formVatValues.value = formValues;
 };
+
+const hideShowPromotionInputPlans = [
+  'e_starter',
+  'e_basic_lite',
+  'e_pro_lite',
+]
+
+const isHidePromotionInput = hideShowPromotionInputPlans.includes(plan.plan_code);
 
 </script>
 
@@ -211,15 +215,22 @@ const handleFormVatUpdate = (formValues: IFormValue) => {
               :is-required="true"
               :input-props="{ placeholder: 'Nhập SĐT' }"
           />
-          <CustomInputDiscount v-model:input="discountValue" :discount-value-router="discountValueRouter" :status-apply-code="statusApplyCode" style="display: flex" :error-message="errors.discount"
-                               label="Nhập mã giảm giá" :is-required="true" :input-props="{ placeholder: 'Nhập mã giảm giá' }" @apply-discount="handleDiscount"/>
+          <CustomInputDiscount
+              v-if="!isHidePromotionInput"
+              v-model:input="discountValue" :discount-value-router="discountValueRouter"
+              :status-apply-code="statusApplyCode" style="display: flex"
+              :error-message="errors.discount"
+              label="Nhập mã giảm giá" :is-required="true"
+              :input-props="{ placeholder: 'Nhập mã giảm giá' }" @apply-discount="handleDiscount"/>
         </div>
       </div>
       <div class="total">
-        <total-payment v-if="plan" :plan="plan" :status-apply-code="statusApplyCode" :discount-info="discountInfo" @final-price="handleFinalPrice"/>
+        <total-payment v-if="plan" :plan="plan" :status-apply-code="statusApplyCode" :discount-info="discountInfo"
+                       @final-price="handleFinalPrice"/>
         <a-checkbox v-model:checked="checked" style="padding-top: 16px">Yêu cầu xuất VAT</a-checkbox>
         <form-vat v-if="checked" :errors="errors" @form-values="handleFormVatUpdate"/>
-        <a-button style="width: 100%; height: 40px; margin-top: 16px" type="primary" @click="handlePayment">Thanh toán</a-button>
+        <a-button style="width: 100%; height: 40px; margin-top: 16px" type="primary" @click="handlePayment">Thanh toán
+        </a-button>
       </div>
     </div>
   </div>
@@ -227,31 +238,32 @@ const handleFormVatUpdate = (formValues: IFormValue) => {
 
 
 <style scoped lang="scss">
-#option_payment{
+#option_payment {
   //height: 100%;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
   background-color: #FFF;
 
-  .statistic-item__title{
+  .statistic-item__title {
     padding: 24px;
     border: 1px solid #EEEBFF;
     border-radius: 16px 16px 0 0;
 
-    .title{
+    .title {
       display: flex;
       gap: 16px;
       align-items: center;
 
-      .title_content{
+      .title_content {
         font-size: 24px;
         line-height: 38px;
         font-weight: bold;
       }
     }
   }
-  .statistic-item__content{
+
+  .statistic-item__content {
     padding: 24px;
     border: 1px solid #EEEBFF;
     border-top: none;
@@ -261,24 +273,24 @@ const handleFormVatUpdate = (formValues: IFormValue) => {
     flex: 1 0 0;
     justify-content: space-between;
 
-    .content{
+    .content {
       font-size: 14px;
       line-height: 22px;
       color: #716B95;
 
     }
 
-    .discount_code{
+    .discount_code {
       align-items: flex-start;
 
-      .content{
+      .content {
         font-size: 16px;
         font-weight: bold;
         line-height: 22px;
         color: #241E46;
       }
 
-      .input_discount{
+      .input_discount {
         display: flex;
         flex-direction: column;
         gap: 16px;
@@ -288,7 +300,7 @@ const handleFormVatUpdate = (formValues: IFormValue) => {
   }
 }
 
-.total{
+.total {
   border-top: 1px solid #EEEBFF;
 }
 </style>
