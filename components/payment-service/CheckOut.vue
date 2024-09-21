@@ -5,6 +5,8 @@ import useDiscount from "~/composables/useDiscount";
 import {defineEmits, defineProps, ref, watch} from 'vue';
 import {formatCurrency} from "~/helpers/FormatHelper";
 import FormVat from "~/components/payment-service/FormVat.vue";
+const currentUserStore = useCurrentUser();
+const { userInfo } = storeToRefs(currentUserStore);
 
 export interface IFormValue {
   companyName?: string;
@@ -14,11 +16,13 @@ export interface IFormValue {
   discount?: string;
   name?: string;
   phone?: string;
+  emailAccount?: string;
 }
 
 const discountValue = ref<string>('');
 const nameValue = ref<string>('');
 const phoneValue = ref<string>('');
+const emailAccount = ref<string>('');
 const errors = ref<Partial<IFormValue>>({});
 const discountInfo = ref<any>({});
 const finalPrice = ref<number>(0);
@@ -66,10 +70,20 @@ const handlePayment = () => {
     errors.value.phone = '';
   }
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!userInfo.id && !emailAccount.value) {
+    errors.value.emailAccount = 'Bạn cần nhập email tài khoản mua hàng';
+  } else if (!emailRegex.test(emailAccount.value)) {
+    errors.value.emailAccount = 'Email không hợp lệ';
+  } else {
+    errors.value.emailAccount = '';
+  }
 
   emit('updateContact', {
     name: nameValue.value,
     phone: phoneValue.value,
+    emailAccount: emailAccount.value,
     companyName: formVatValues.value.companyName,
     taxCode: formVatValues.value.taxCode,
     email: formVatValues.value.email,
@@ -214,6 +228,15 @@ const isHidePromotionInput = hideShowPromotionInputPlans.includes(plan.plan_code
               label="Số điện thoại"
               :is-required="true"
               :input-props="{ placeholder: 'Nhập SĐT' }"
+          />
+          <CustomInput
+              v-if="!userInfo.id"
+              v-model:input="emailAccount"
+              class="emailAccount"
+              :error-message="errors.emailAccount"
+              label="Email tài khoản mua hàng"
+              :is-required="true"
+              :input-props="{ placeholder: 'Nhập email' }"
           />
           <CustomInputDiscount
               v-if="!isHidePromotionInput"

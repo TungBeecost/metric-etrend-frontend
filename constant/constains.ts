@@ -223,7 +223,6 @@ export const PLANS: Array<IPLAN> = [
     unit: "năm",
     isHighlight: true,
     isHide: true,
-    autoShowDetail: true,
     permissions: [
       // LABEL_PERMISSION_PLAN.viewReportDetailFree,
       LABEL_PERMISSION_PLAN.viewCountBasic,
@@ -272,7 +271,6 @@ export const PLANS: Array<IPLAN> = [
     unit: "năm",
     isHighlight: true,
     isHide: true,
-    autoShowDetail: true,
     permissions: [
       // LABEL_PERMISSION_PLAN.viewReportDetailFree,
       LABEL_PERMISSION_PLAN.viewCountPro,

@@ -44,10 +44,6 @@ const handleSelectedOption = (selectedOption: string) => {
 
 const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string; discountInfo: DiscountInfo }) => {
   discountValue.value = discountInfo;
-
-  if (!userInfo.value.id) {
-    message.error('Vui lòng đăng nhập trước khi thanh toán');
-  } else {
     if (selectedWalletOption.value) {
       const paymentMethod = selectedWalletOption.value;
       if (reportDetail.value && reportDetail.value.id) {
@@ -77,7 +73,6 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
     } else {
       message.error('Vui lòng chọn phương thức thanh toán trước khi thanh toán');
     }
-  }
 };
 
 const fetchReportData = async () => {

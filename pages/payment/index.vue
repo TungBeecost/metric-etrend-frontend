@@ -7,8 +7,6 @@ import { usePayment } from "#imports";
 import QRCode from "qrcode.vue";
 import { message } from 'ant-design-vue';
 import {PAGE_TITLES, PLANS} from "~/constant/constains";
-const currentUserStore = useCurrentUser();
-const { userInfo } = storeToRefs(currentUserStore);
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
 const { createPaymentTransaction, verifyTransaction } = usePayment()
@@ -19,7 +17,7 @@ const openModal = ref<boolean>(false);
 const openModalWaiting = ref<boolean>(false);
 const planCode = ref('');
 const discountValueRouter = ref<string>('');
-const information = ref({ name: '', phone: '', companyName: '', taxCode: '', email: '', address: '' });
+const information = ref({ name: '', phone: '', emailAccount: '', companyName: '', taxCode: '', email: '', address: '' });
 
 interface ErrorResponse {
   response: {
@@ -74,42 +72,39 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
     statusApplyCode.value = false;
   }
 
-  if (!userInfo.value.id) {
-    message.error('Vui lòng đăng nhập trước khi thanh toán');
-  } else {
-    if (selectedWalletOption.value) {
-      const paymentMethod = selectedWalletOption.value;
-      const currentPlan = plan.value;
+  if (selectedWalletOption.value) {
+    const paymentMethod = selectedWalletOption.value;
+    const currentPlan = plan.value;
 
-      if (currentPlan) {
-        const itemCode = `${currentPlan.plan_code}__12m`;
-        try {
-          const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
-          if (transactionResult?.response?.payment_url) {
-            window.location.href = transactionResult.response.payment_url;
-          } else {
-            qrCodeData.value = transactionResult.response.qrcode;
-            openModal.value = true;
+    if (currentPlan) {
+      const itemCode = `${currentPlan.plan_code}__12m`;
+      try {
+        const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        if (transactionResult?.response?.payment_url) {
+          window.location.href = transactionResult.response.payment_url;
+        } else {
+          qrCodeData.value = transactionResult.response.qrcode;
+          openModal.value = true;
 
-            const { isCompleted } = useCheckTransactionCompletion(transactionResult.response.transaction_id);
-            isCompleted.value && (window.location.href = '/');
-          }
-        } catch (error) {
-          console.error("Error creating transaction:", error);
-          const typedError = error as ErrorResponse;
-          if (typedError.response && typedError.response.data && typedError.response.data.detail === "User already has a subscription" && typedError.response.data.status_code === 400) {
-            message.error('Bạn đã có một đăng ký. Không thể thực hiện thêm.');
-          } else {
-            message.error('Đã xảy ra lỗi khi tạo giao dịch. Vui lòng thử lại.');
-          }
+          const { isCompleted } = useCheckTransactionCompletion(transactionResult.response.transaction_id);
+          isCompleted.value && (window.location.href = '/');
         }
-      } else {
-        message.error('Kế hoạch không tồn tại');
+      } catch (error) {
+        console.error("Error creating transaction:", error);
+        const typedError = error as ErrorResponse;
+        if (typedError.response && typedError.response.data && typedError.response.data.detail === "User already has a subscription" && typedError.response.data.status_code === 400) {
+          message.error('Bạn đã có một đăng ký. Không thể thực hiện thêm.');
+        } else {
+          message.error('Đã xảy ra lỗi khi tạo giao dịch. Vui lòng thử lại.');
+        }
       }
     } else {
-      message.error('Vui lòng chọn phương thức thanh toán trước khi thanh toán');
+      message.error('Kế hoạch không tồn tại');
     }
-  }
+  } else {
+    message.error('Vui lòng chọn phương thức thanh toán trước khi thanh toán');
+    }
+
 };
 
 
@@ -185,9 +180,10 @@ onMounted(() => {
 });
 
 
-const handleUpdateContact = (contact: { name: string, phone: string, companyName: string, taxCode: string, email: string, address: string }) => {
+const handleUpdateContact = (contact: { name: string, phone: string, emailAccount: string, companyName: string, taxCode: string, email: string, address: string }) => {
   information.value.name = contact.name;
   information.value.phone = contact.phone;
+  information.value.emailAccount = contact.emailAccount;
   information.value.companyName = contact.companyName;
   information.value.taxCode = contact.taxCode;
   information.value.email = contact.email;
