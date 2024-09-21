@@ -231,10 +231,10 @@ export const PLANS: Array<IPLAN> = [
         icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
       },
       // LABEL_PERMISSION_PLAN.downloadDeptReport,
-      {
-        ...LABEL_PERMISSION_PLAN.viewReportBasic,
-        sub: Object.values(LABEL_PERMISSION_PLAN.viewReportBasic.sub)
-      },
+      // {
+      //   ...LABEL_PERMISSION_PLAN.viewReportBasic,
+      //   sub: Object.values(LABEL_PERMISSION_PLAN.viewReportBasic.sub)
+      // },
     ]
   },
   {
@@ -279,10 +279,10 @@ export const PLANS: Array<IPLAN> = [
         icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
       },
       // LABEL_PERMISSION_PLAN.downloadDeptReport,
-      {
-        ...LABEL_PERMISSION_PLAN.viewReportPro,
-        sub: Object.values(LABEL_PERMISSION_PLAN.viewReportPro.sub)
-      },
+      // {
+      //   ...LABEL_PERMISSION_PLAN.viewReportPro,
+      //   sub: Object.values(LABEL_PERMISSION_PLAN.viewReportPro.sub)
+      // },
 
     ]
   },
