@@ -72,7 +72,7 @@ const handlePayment = () => {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (!userInfo.id && !emailAccount.value) {
+  if (!userInfo.value.id && !emailAccount.value) {
     errors.value.emailAccount = 'Bạn cần nhập email tài khoản mua hàng';
   } else if (!emailRegex.test(emailAccount.value)) {
     errors.value.emailAccount = 'Email không hợp lệ';
