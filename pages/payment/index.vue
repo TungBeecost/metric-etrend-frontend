@@ -9,7 +9,7 @@ import { message } from 'ant-design-vue';
 import {PAGE_TITLES, PLANS} from "~/constant/constains";
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
-const { createPaymentTransaction, verifyTransaction } = usePayment()
+const { createPaymentTransaction, verifyTransaction, createPaymentTransactionGuest } = usePayment()
 const selectedWalletOption = ref('');
 const qrCodeData = ref('');
 const statusApplyCode = ref<boolean>(false);
@@ -79,7 +79,12 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
     if (currentPlan) {
       const itemCode = `${currentPlan.plan_code}__12m`;
       try {
-        const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        let transactionResult = null;
+        if (information.value.emailAccount) {
+          transactionResult = await createPaymentTransactionGuest(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        } else {
+          transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        }
         if (transactionResult?.response?.payment_url) {
           window.location.href = transactionResult.response.payment_url;
         } else {
@@ -103,8 +108,7 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
     }
   } else {
     message.error('Vui lòng chọn phương thức thanh toán trước khi thanh toán');
-    }
-
+  }
 };
 
 

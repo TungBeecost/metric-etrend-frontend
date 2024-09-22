@@ -57,6 +57,66 @@ export const createTransaction = async (
     }
 };
 
+export const createTransactionGuest = async (
+    paymentMethod: string,
+    itemCode: string,
+    redirectUrl: string,
+    totalPrice: string,
+    discountCode: string | null,
+    name: string | null,
+    phone: string | null,
+    emailAccount: string | null,
+    company: string | null,
+    tax_code: string | null,
+    receive_email: string | null,
+    address: string | null
+) => {
+    try {
+        const params = new URLSearchParams({
+            payment_method: paymentMethod,
+            item_code: itemCode,
+            redirect_url: redirectUrl,
+            total_price: totalPrice
+        });
+
+        if (discountCode) {
+            params.append('discount_code', discountCode);
+        }
+        if (name) {
+            params.append('name', name);
+        }
+        if (phone) {
+            params.append('phone', phone);
+        }
+        if (emailAccount) {
+            params.append('email_account', emailAccount);
+        }
+        if (company) {
+            params.append('company', company);
+        }
+        if (tax_code) {
+            params.append('tax_code', tax_code);
+        }
+        if (receive_email) {
+            params.append('receive_email', receive_email);
+        }
+        if (address) {
+            params.append('address', address);
+        }
+
+        const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment_guest.endpoint)}?${params.toString()}`, {}, {
+            headers: {
+                'accept': 'application/json',
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error("createTransaction error: ", error);
+        return null;
+    }
+};
+
 export const createTransactionPdf = async (
     paymentMethod: string,
     report_id: string,
