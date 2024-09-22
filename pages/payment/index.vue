@@ -79,7 +79,7 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
     if (currentPlan) {
       const itemCode = `${currentPlan.plan_code}__12m`;
       try {
-        const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        const transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
         if (transactionResult?.response?.payment_url) {
           window.location.href = transactionResult.response.payment_url;
         } else {

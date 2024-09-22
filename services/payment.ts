@@ -9,7 +9,6 @@ export const createTransaction = async (
     discountCode: string | null,
     name: string | null,
     phone: string | null,
-    emailAccount: string | null,
     company: string | null,
     tax_code: string | null,
     receive_email: string | null,
@@ -31,9 +30,6 @@ export const createTransaction = async (
         }
         if (phone) {
             params.append('phone', phone);
-        }
-        if (emailAccount) {
-            params.append('email_account', emailAccount);
         }
         if (company) {
             params.append('company', company);
