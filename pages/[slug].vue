@@ -164,42 +164,82 @@ const handleOk = () => {
   navigateTo(`${NAVIGATIONS.home}${route.params.slug}`);
 };
 
+const head = computed(() => {
+  return {
+    title: `${data.value.reportDetail.name} - Báo cáo xu hướng thị trường sàn TMĐT`,
+    meta: [
+      {
+        hid: 'og:title',
+        property: 'og:title',
+        content: `Báo cáo thị trường ${data.value.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`,
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: `Báo cáo chi tiết thị trường ${data.value.reportDetail.name}`,
+      },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content: `Báo cáo chi tiết thị trường ${data.value.reportDetail.name}`,
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: data.value.reportDetail.url_cover || data.value.reportDetail.url_thumbnail,
+      },
+      {
+        hid: 'og:image:alt',
+        property: 'og:image:alt',
+        content: `Báo cáo thị trường ${data.value.reportDetail.name}`,
+      },
+    ],
+    link: [
+      {
+        rel: 'canonical',
+        href: `${config.public.BASE_URL}${route.fullPath}`,
+      },
+    ],
+  };
+});
+
 onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);
 });
 </script>
 
 <template>
-  <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
-  <Meta property="og:title"
-        :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>
-  <Meta property="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
-  <Meta property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
-  <Meta property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>
-  <Meta property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>
-  <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>
-  <component is="script" type="application/ld+json">
-    {{
-      JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Metric",
-            item: "https://ereport.vn",
-          },
-          ...(data.reportDetail.lst_category || []).map((item, index) => ({
-            "@type": "ListItem",
-            position: index + 2,
-            name: item.name,
-            item: `https://ereport.vn/${item.slug}`,
-          })),
-        ]
-      })
-    }}
-  </component>
+<!--  <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>-->
+<!--  <Meta property="og:title"-->
+<!--        :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>-->
+<!--  <Meta property="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>-->
+<!--  <Meta property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>-->
+<!--  <Meta property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>-->
+<!--  <Meta property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>-->
+<!--  <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>-->
+<!--  <component is="script" type="application/ld+json">-->
+<!--    {{-->
+<!--      JSON.stringify({-->
+<!--        '@context': 'https://schema.org',-->
+<!--        '@type': 'BreadcrumbList',-->
+<!--        itemListElement: [-->
+<!--          {-->
+<!--            "@type": "ListItem",-->
+<!--            position: 1,-->
+<!--            name: "Metric",-->
+<!--            item: "https://ereport.vn",-->
+<!--          },-->
+<!--          ...(data.reportDetail.lst_category || []).map((item, index) => ({-->
+<!--            "@type": "ListItem",-->
+<!--            position: index + 2,-->
+<!--            name: item.name,-->
+<!--            item: `https://ereport.vn/${item.slug}`,-->
+<!--          })),-->
+<!--        ]-->
+<!--      })-->
+<!--    }}-->
+<!--  </component>-->
+  <Head :title="head.title" :meta="head.meta" :link="head.link" />
 
   <div class="container_content">
     <div class="title default_section">
