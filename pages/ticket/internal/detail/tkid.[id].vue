@@ -212,6 +212,16 @@ const filterCCOptions = (input, option) => {
 const filterDepartmentOptions = (input, option) => {
   return option.label.toLowerCase().startsWith(input.toLowerCase());
 }
+
+const isMobile = ref(window.innerWidth < 768);
+
+window.addEventListener('resize', () => {
+  isMobile.value = window.innerWidth < 768;
+});
+
+const wrapperCol = computed(() => {
+  return isMobile.value ? {} : { span: 24, offset: 20 };
+});
 </script>
 
 <template>
@@ -231,7 +241,7 @@ const filterDepartmentOptions = (input, option) => {
       <app-section class="ticket-detail-section">
         <div class="header">
           <app-title :text="`[#${ticket.data?.id}] ${ticket.data?.title}`"/>
-          <a-button class="modified-button" size="large" @click="handleClickEditButton">
+          <a-button class="modified-button" style="display: flex; align-items: center; gap: 8px" size="large" @click="handleClickEditButton">
             <template #icon>
               <icon-edit class="icon-edit"/>
             </template>
@@ -260,7 +270,7 @@ const filterDepartmentOptions = (input, option) => {
             </tr>
           </table>
           <a-divider/>
-          <a-flex gap="middle">
+          <a-flex v-if="!isMobile" gap="middle">
             <table class="ticket-metadata">
               <tr class="ticket-metadata__item">
                 <td class="ticket-metadata__item__label">Ưu tiên</td>
@@ -300,23 +310,48 @@ const filterDepartmentOptions = (input, option) => {
               </tr>
             </table>
           </a-flex>
+          <a-flex v-else gap="middle">
+            <table class="ticket-metadata">
+              <tr class="ticket-metadata__item">
+                <td class="ticket-metadata__item__label">Ưu tiên</td>
+                <td class="ticket-metadata__item__value">
+                  <app-tag :type="getPriorityColor(ticket.data?.priority)">{{ getPriorityText(ticket.data?.priority) }}</app-tag>
+                </td>
+              </tr>
+              <tr class="ticket-metadata__item">
+                <td class="ticket-metadata__item__label">Người báo cáo</td>
+                <td class="ticket-metadata__item__value">{{ ticket.data?.reporter }}</td>
+              </tr>
+              <tr class="ticket-metadata__item">
+                <td class="ticket-metadata__item__label">Khách hàng</td>
+                <td class="ticket-metadata__item__value">{{ ticket.data?.customer_email }}</td>
+              </tr>
+              <tr class="ticket-metadata__item">
+                <td class="ticket-metadata__item__label">Người sở hữu</td>
+                <td class="ticket-metadata__item__value">{{ ticket.data?.owner }}</td>
+              </tr>
+              <tr class="ticket-metadata__item">
+                <td class="ticket-metadata__item__label">Phụ trách</td>
+                <td class="ticket-metadata__item__value">{{ ticket.data?.person_incharge }}</td>
+              </tr>
+              <tr class="ticket-metadata__item">
+                <td class="ticket-metadata__item__label">Ngày đến hạn</td>
+                <td class="ticket-metadata__item__value">{{ formatDateTime(ticket.data?.due_date) }}</td>
+              </tr>
+              <tr class="ticket-metadata__item">
+                <td class="ticket-metadata__item__label">MKT Giới thiệu</td>
+                <td class="ticket-metadata__item__value">{{ ticket.data?.mkt_tagline }}</td>
+              </tr>
+              <tr class="ticket-metadata__item">
+                <td class="ticket-metadata__item__label">Cc</td>
+                <td class="ticket-metadata__item__value">{{ ticket.data?.cc?.join(', ') }}</td>
+              </tr>
+            </table>
+          </a-flex>
           <a-divider/>
           <div class="description" v-html="ticket.data?.description"></div>
         </div>
       </app-section>
-<!--      <app-section v-if="true" class="child-tickets-section">-->
-<!--        <div class="header">-->
-<!--          <app-title text="Child Tickets"/>-->
-<!--        </div>-->
-<!--        <app-ticket-list :tickets="ticket.data.child_tickets"-->
-<!--                         :loading="ticketLoading"-->
-<!--                         :pagination="{-->
-<!--                           pageSize: ticket.data.child_tickets.length,-->
-<!--                           current: 1,-->
-<!--                           total: ticket.data.child_tickets.length-->
-<!--                         }"-->
-<!--        />-->
-<!--      </app-section>-->
     </a-spin>
     <app-drawer :open="isOpenDrawer" @close="handleCloseDrawer">
       <a-form :model="formEditState" name="form-edit" layout="vertical" @finish="handleSubmitAction">
@@ -373,10 +408,7 @@ const filterDepartmentOptions = (input, option) => {
                     :loading="staffOptionsLoading"
                     mode="multiple"></a-select>
         </a-form-item>
-<!--        <a-form-item label="MKT Tagline" name="mktTagline">-->
-<!--          <a-input v-model:value="formEditState.mktTagline"/>-->
-<!--        </a-form-item>-->
-        <a-form-item :wrapper-col="{span: 24, offset: 20}">
+        <a-form-item :wrapper-col="wrapperCol">
           <a-button type="primary" style="display: flex; gap: 0.25rem" html-type="submit">
             <template #icon>
               <icon-send/>
@@ -425,35 +457,27 @@ const filterDepartmentOptions = (input, option) => {
   }
 
   .ticket-detail-section {
+    flex: 1;
+    background-color: #ffffff;
+
     .header {
-      padding: 1.5rem;
-      border-bottom: 1px solid #eeebff;
       display: flex;
       justify-content: space-between;
-
-      .modified-button {
-        display: flex;
-        gap: 0.25rem;
-        border: 1px solid #9D97BF;
-        color: #241E46;
-
-        .icon-edit {
-          transform: translateY(0.1rem);
-        }
-
-        &:hover {
-          border: 1px solid #241E46;
-          background-color: #f5f3fd;
-        }
-      }
+      padding: 1.5rem;
+      border-bottom: 1px solid #eeebff;
     }
 
     .content {
       padding: 1.5rem;
 
       .ticket-metadata {
+        margin-bottom: 1rem; // Add margin to ensure space between metadata and other elements
+
         &__item {
           height: 2.5rem;
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 1rem; // Add margin to create space between items
 
           &__label {
             width: 10rem;
@@ -463,6 +487,7 @@ const filterDepartmentOptions = (input, option) => {
             font-style: normal;
             font-weight: 400;
             line-height: 22px;
+            margin-right: 1rem; // Add margin to create space between label and value
           }
 
           &__value {
@@ -486,18 +511,11 @@ const filterDepartmentOptions = (input, option) => {
         font-style: normal;
         font-weight: 400;
         line-height: 22px;
+
+        img {
+          cursor: pointer;
+        }
       }
-    }
-  }
-
-  .child-tickets-section {
-    margin-top: 1rem;
-
-    .header {
-      padding: 1.5rem;
-      border-bottom: 1px solid #eeebff;
-      display: flex;
-      justify-content: space-between;
     }
   }
 
@@ -512,6 +530,43 @@ const filterDepartmentOptions = (input, option) => {
       border-bottom: 1px solid #eeebff;
     }
   }
+}
 
+@media (max-width: 768px) {
+  .title-segment {
+    margin-top: 30px;
+
+  }
+
+  .ticket-detail-section {
+    .header, .content {
+      padding: 1rem;
+    }
+
+    .ticket-metadata {
+      margin-bottom: 4rem !important; // Ensure space between metadata and other elements on mobile
+
+      &__item {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+
+        &__label, &__value {
+          width: 100%;
+          text-align: left;
+        }
+
+        &__label {
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .comment-section {
+    &__header {
+      padding: 1rem;
+    }
+  }
 }
 </style>

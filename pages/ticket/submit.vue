@@ -120,7 +120,7 @@ const assignedEmails = computed(() => {
                  size="large"/>
       </a-form-item>
       <a-form-item label="Bộ phận hỗ trợ *" name="supportDepartment" :validate-status="formErrors.supportDepartment ? 'error' : ''" :help="formErrors.supportDepartment">
-        <a-radio-group v-model:value="formSupportDepartment" style="display: flex; gap: 16px">
+        <a-radio-group v-model:value="formSupportDepartment" style="display: flex; gap: 16px" class="support-department">
           <form-radio-card v-for="option in supportDepartmentOptions"
                            :key="option.value"
                            :label="option.label"
@@ -195,6 +195,11 @@ const assignedEmails = computed(() => {
 }
 
 @media (max-width: 768px) {
-
+  .support-department{
+    flex-direction: column;
+  }
+  .title-segment{
+    margin-top: 30px;
+  }
 }
 </style>

@@ -30,4 +30,12 @@ defineProps({
     color: #241E46;
   }
 }
+
+@media (max-width: 768px) {
+  .app-title {
+    h2.title {
+      font-size: 16px;
+    }
+  }
+}
 </style>
