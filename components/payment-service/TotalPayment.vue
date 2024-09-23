@@ -14,6 +14,10 @@ const props = defineProps({
   discountInfo: {
     type: Object,
     default: () => ({})
+  },
+  isHidePromotionInput: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -76,16 +80,16 @@ onMounted(() => {
 
 <template>
   <div class="calculate">
-    <div class="calculate_item">
+    <div v-if="!isHidePromotionInput" class="calculate_item">
       <div class="money">Số tiền</div>
       <div class="money">{{ formatCurrency(plan.priceDiscount ?? plan.price) }}</div>
     </div>
-    <div class="calculate_item">
+    <div v-if="!isHidePromotionInput" class="calculate_item">
       <div class="promotional_program">Chương trình khuyến mại</div>
       <div v-if="promotionalDiscount" class="promotional_program">-{{ formatCurrency(promotionalDiscount) }}</div>
       <div v-else class="promotional_program">0đ</div>
     </div>
-    <div class="calculate_item">
+    <div v-if="!isHidePromotionInput" class="calculate_item">
       <div class="promotional_program">Áp dụng mã giảm giá</div>
       <div v-if="statusApplyCode" class="promotional_program">
         -{{ formatCurrency(discountAmount) }}
