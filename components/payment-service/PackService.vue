@@ -16,6 +16,11 @@ const toggleShowMore = () => {
 };
 
 const toggleIcon = computed(() => showMore.value ? CaretUpOutlined : CaretDownOutlined);
+
+const specialOfferLink = computed(() => {
+  const specialPlans = ['e_basic_lite', 'e_pro_lite', 'e_starter'];
+  return specialPlans.includes(plan.plan_code) ? 'https://dangky.metric.vn/ereportspecial_offer' : '/pricing';
+});
 </script>
 
 <template>
@@ -33,7 +38,7 @@ const toggleIcon = computed(() => showMore.value ? CaretUpOutlined : CaretDownOu
         </div>
       </div>
       <div class="title_link">
-        <a href="/pricing">Đổi gói dịch vụ</a>
+        <a :href="specialOfferLink">Đổi gói dịch vụ</a>
       </div>
     </div>
     <div class="statistic-item__content">
