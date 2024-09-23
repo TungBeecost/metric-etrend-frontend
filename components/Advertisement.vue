@@ -2,6 +2,7 @@
 import { notification } from 'ant-design-vue';
 import { onMounted, h, defineEmits, onUnmounted } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router';
+import { useCurrentUser } from "~/stores/current-user";
 
 // Define emits
 const emit = defineEmits(['handle-advertisement']);
@@ -141,10 +142,14 @@ const closeNotification = () => {
 };
 
 onMounted(() => {
-  // Set a timeout to open the notification after 30 seconds
-  notificationTimeout = window.setTimeout(() => {
-    openNotification();
-  }, 30000);
+  const currentUserStore = useCurrentUser();
+  const { userInfo } = storeToRefs(currentUserStore);
+
+  if (!userInfo.value.id) {
+    notificationTimeout = window.setTimeout(() => {
+      openNotification();
+    }, 30000);
+  }
 
   window.addEventListener('close-advertisement', closeNotification);
 });
