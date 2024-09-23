@@ -66,7 +66,7 @@ const isHideContentBasic = computed(() => {
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
-            :is-hide-content="isHideContent"
+            :is-hide-content="isHideContent || isHideContentBasic"
         />
         <ChartMask
             v-if="isHideContentBasic"
