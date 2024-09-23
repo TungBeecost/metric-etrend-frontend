@@ -7,6 +7,7 @@ import AppTag from "~/components/ticket/AppTag.vue";
 import {watchDebounced} from '@vueuse/core';
 // import { useState, useAsyncData, navigateTo } from '#imports';
 import dayjs from "dayjs";
+import {ref} from "vue";
 
 const currentPage = useState('myTicket.currentPage', () => 1);
 const totalRow = useState('myTicket.totalRow', () => 0);
@@ -68,17 +69,28 @@ const formatDateTime = (date) => {
   if (!date) return ''
   return dayjs(date).format('DD/MM/YYYY HH:mm:ss')
 }
+
+const isMobile = ref(window?.innerWidth <= 768);
+
 </script>
 
 <template>
   <div class="main-content">
     <app-section class="ticket-list-section default_section">
       <a-flex align="center" justify="space-between" class="filter-section">
-        <app-title :text="'Yêu cầu của tôi'"/>
+        <div class="title_button">
+          <app-title :text="'Yêu cầu của tôi'"/>
+          <a-button v-if="isMobile" class="button_create" type="primary" size="large" style="margin-left: 1rem" @click="navigateTo('/ticket/submit')">
+            <template #icon>
+              <plus-outlined/>
+            </template>
+            Tạo mới
+          </a-button>
+        </div>
         <a-flex align="center">
-          <div class="list-filter-desktop" id="list-filter">
+          <div id="list-filter" class="list-filter-desktop">
             <a-input v-model:value="textInputSearch" placeholder="Tìm kiếm theo tiêu đề hoặc id" class="equal-height"
-                     style="width: 20rem">
+                     style="width: 20rem;">
               <template #prefix>
                 <search-outlined style="height: fit-content"/>
               </template>
@@ -86,6 +98,7 @@ const formatDateTime = (date) => {
             <a-select
                 v-model:value="supportDepartmentFilterValue"
                 placeholder="Lọc theo phân loại hỗ trợ"
+                class="equal-height"
                 style="width: 12rem;"
                 size="large"
             >
@@ -94,7 +107,7 @@ const formatDateTime = (date) => {
               <a-select-option value="technical_support">Hỗ trợ kỹ thuật</a-select-option>
             </a-select>
           </div>
-          <a-button type="primary" size="large" style="margin-left: 1rem" @click="navigateTo('/ticket/submit')">
+          <a-button v-if="!isMobile" class="button_create" type="primary" size="large" style="margin-left: 1rem" @click="navigateTo('/ticket/submit')">
             <template #icon>
               <plus-outlined/>
             </template>
@@ -235,43 +248,53 @@ const formatDateTime = (date) => {
   margin-bottom: 2.5rem;
 }
 
+@media (max-width: 768px) {
+  .title_button{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .main-content {
+    .filter-section {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      height: 180px;
+      gap: 16px;
+    }
+
+    .ticket-list-section {
+
+      .list-filter-desktop {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+
+        .equal-height{
+          height: 40px !important;
+          width: 100% !important;
+        }
+      }
+    }
+  }
+}
+
 </style>
 
 <style scoped lang="scss">
 #list-filter {
   height: 40px;
-
-  .ant-input-affix-wrapper {
-    height: 100% !important;
-  }
-
-  .ant-select {
-    height: 100% !important;
-
-    .ant-select-selector {
-      height: 100% !important;
-
-      .ant-select-selection-search {
-        height: 100% !important;
-
-        .ant-select-selection-search-input {
-          height: 100% !important;
-        }
-      }
-
-      .ant-select-selection-item {
-        height: 100% !important;
-      }
-    }
-
-    .ant-select-arrow {
-      height: 100% !important;
-    }
-  }
 }
 
 .ant-select-selection-search-input {
   height: 40px !important;
+}
+
+@media (max-width: 768px) {
+  .ant-flex{
+    width: 100% !important;
+  }
 }
 </style>
 

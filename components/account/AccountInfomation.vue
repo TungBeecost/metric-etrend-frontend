@@ -45,7 +45,7 @@ const handleClickPlan = () => {
             <div class="detail_info_value">{{ formatDate(props.userInfo.current_plan.expired_at)}}</div>
           </div>
           <div class="account_detail_item">
-            <div class="detail_info_title">Số lượt xem báo cáo chi tiết</div>
+            <div class="detail_info_title">Số lượt xem báo cáo tổng quan</div>
             <div class="detail_info_value">{{ props.userInfo.current_plan.remain_claim || 0 }} lượt</div>
           </div>
           <div class="account_detail_item">
