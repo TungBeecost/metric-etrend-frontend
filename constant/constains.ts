@@ -187,6 +187,7 @@ export const PLANS: Array<IPLAN> = [
     price: "300000",
     // priceDiscount: "300000",
     unit: "15 ngày",
+    autoShowDetail: true,
     permissions: [
         LABEL_PERMISSION_PLAN.viewCountTrial,
     ]
