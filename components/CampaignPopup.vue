@@ -1,7 +1,7 @@
 <!-- components/CampaignPopup.vue -->
 <template>
   <div v-if="showPopup" class="campaign-popup-overlay" @click="closePopup">
-    <div class="campaign-popup" @click.stop>
+    <div class="campaign-popup" @click.stop="openCampaignUrl">
       <img :src="CAMPAIGN_IMG" alt="Campaign Image"/>
       <a-button class="close-button" @click="closePopup">
         Đóng
@@ -16,6 +16,7 @@ import { ref, onMounted } from 'vue';
 // Constants
 const CAMPAIGN_CODE = 'campaign_t92024';
 const CAMPAIGN_IMG = 'https://storage.googleapis.com/ereport-static/%5Bereport%5D%20campaign-q3-2024-fullhd.png';
+const CAMPAIGN_URL = 'https://dangky.metric.vn/ereportoffer_300/?utm_source=website&utm_medium=ereport_t9&pub=popup';
 const CAMPAIGN_END_DATE = '2024-09-31';
 
 const showPopup = ref(false);
@@ -23,6 +24,10 @@ const showPopup = ref(false);
 const closePopup = () => {
   localStorage.setItem(CAMPAIGN_CODE, 'true');
   showPopup.value = false;
+};
+
+const openCampaignUrl = () => {
+  window.open(CAMPAIGN_URL, '_blank');
 };
 
 onMounted(() => {
@@ -55,6 +60,7 @@ onMounted(() => {
   width: 90%;
   max-height: 90%;
   max-width: 750px;
+  cursor: pointer;
 }
 
 .campaign-popup img {
