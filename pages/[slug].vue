@@ -171,12 +171,12 @@ onUnmounted(() => {
 
 <template>
   <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
-  <Meta name="og:title"
+  <Meta property="og:title"
         :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>
-  <Meta name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
-  <Meta name="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
-  <Meta name="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>
-  <Meta name="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>
+  <Meta property="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+  <Meta property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+  <Meta property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>
+  <Meta property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>
   <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>
   <component is="script" type="application/ld+json">
     {{
