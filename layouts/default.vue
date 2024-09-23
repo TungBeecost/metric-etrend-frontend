@@ -1,3 +1,4 @@
+<!-- layouts/default.vue -->
 <template>
   <a-config-provider
       v-if="fetchedUser"
@@ -49,6 +50,7 @@
         </div>
       </footer>
     </div>
+    <CampaignPopup v-if="showCampaignPopup" />
   </a-config-provider>
   <div
       v-else
@@ -62,6 +64,7 @@
 <script setup lang="ts">
 import { NAVIGATIONS } from '~/constant/constains';
 import { useGTM } from '~/composables/useGTM';
+import CampaignPopup from '~/components/CampaignPopup.vue';
 
 const { fetchCurrentUser } = useCurrentUser();
 const { userInfo, fetchedUser } = storeToRefs(useCurrentUser());
@@ -74,6 +77,8 @@ const isMobile = ref(false);
 if (!userInfo.value.id) {
   fetchCurrentUser();
 }
+
+const showCampaignPopup = ref(false);
 
 const handleResize = () => {
   isMobile.value = window.innerWidth <= 1380;
@@ -165,6 +170,11 @@ onMounted(() => {
   window.addEventListener('scroll', handleScroll);
   window.addEventListener('resize', handleResize);
   handleScroll();
+
+  // Show campaign popup only on home and search pages
+  if (route.path === NAVIGATIONS.home || route.path === NAVIGATIONS.search) {
+    showCampaignPopup.value = true;
+  }
 });
 
 onUnmounted(() => {
@@ -174,6 +184,12 @@ onUnmounted(() => {
 
 watch(() => route.path, () => {
   recheckHeader();
+  // Show campaign popup only on home and search pages
+  if (route.path === NAVIGATIONS.home || route.path === NAVIGATIONS.search) {
+    showCampaignPopup.value = true;
+  } else {
+    showCampaignPopup.value = false;
+  }
 });
 </script>
 
