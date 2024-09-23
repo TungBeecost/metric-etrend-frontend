@@ -28,6 +28,9 @@ const closePopup = () => {
 
 const openCampaignUrl = () => {
   window.open(CAMPAIGN_URL, '_blank');
+
+  localStorage.setItem(CAMPAIGN_CODE, 'true');
+  showPopup.value = false;
 };
 
 onMounted(() => {
