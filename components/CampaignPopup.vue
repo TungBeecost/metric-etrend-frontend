@@ -1,8 +1,8 @@
 <!-- components/CampaignPopup.vue -->
 <template>
   <div v-if="showPopup" class="campaign-popup-overlay" @click="closePopup">
-    <div class="campaign-popup" @click.stop="openCampaignUrl">
-      <img :src="CAMPAIGN_IMG" alt="Campaign Image"/>
+    <div class="campaign-popup" @click.stop>
+      <img :src="CAMPAIGN_IMG" alt="Campaign Image" @click="openCampaignUrl"/>
       <a-button class="close-button" @click="closePopup">
         Đóng
       </a-button>
@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 
 // Constants
 const CAMPAIGN_CODE = 'campaign_t92024';
