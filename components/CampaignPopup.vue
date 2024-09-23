@@ -11,7 +11,14 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted} from 'vue';
+import {ref, onMounted, watch} from 'vue';
+import {useRoute} from 'vue-router';
+import {storeToRefs} from 'pinia';
+import {PLANS} from '~/constant/constains';
+
+const {userInfo} = storeToRefs(useCurrentUser());
+
+const route = useRoute();
 
 // Constants
 const CAMPAIGN_CODE = 'campaign_t92024';
@@ -28,19 +35,33 @@ const closePopup = () => {
 
 const openCampaignUrl = () => {
   window.open(CAMPAIGN_URL, '_blank');
-
   localStorage.setItem(CAMPAIGN_CODE, 'true');
   showPopup.value = false;
 };
 
-onMounted(() => {
-  const isPopupClosed = localStorage.getItem(CAMPAIGN_CODE) === 'true';
-  const currentDate = new Date();
-  const campaignEndDate = new Date(CAMPAIGN_END_DATE);
+const checkPopupVisibility = () => {
+  const userPlan = PLANS.find(plan => plan.plan_code === userInfo.value?.current_plan?.plan_code);
+  const isPaidUser = !!userPlan?.plan_code;
 
-  if (!isPopupClosed && currentDate <= campaignEndDate) {
-    showPopup.value = true;
+  console.log(1111, userPlan?.plan_code)
+  if (!isPaidUser) {
+    const isPopupClosed = localStorage.getItem(CAMPAIGN_CODE) === 'true';
+    const currentDate = new Date();
+    const campaignEndDate = new Date(CAMPAIGN_END_DATE);
+    if (!isPopupClosed && currentDate <= campaignEndDate) {
+      showPopup.value = true;
+    }
   }
+};
+
+onMounted(() => {
+  setTimeout(() => {
+    checkPopupVisibility();
+  }, 1000);
+});
+
+watch(() => route.path, () => {
+  checkPopupVisibility();
 });
 </script>
 
