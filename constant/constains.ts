@@ -172,6 +172,7 @@ interface IPLAN {
   unit?: string;
   isHighlight?: boolean;
   isHide?: boolean;
+  autoShowDetail?: boolean;
   permissions: Array<{
     label: string;
     icon: string;
