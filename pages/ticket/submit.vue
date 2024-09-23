@@ -193,4 +193,8 @@ const assignedEmails = computed(() => {
     color: red;
   }
 }
+
+@media (max-width: 768px) {
+
+}
 </style>
