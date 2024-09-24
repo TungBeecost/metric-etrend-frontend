@@ -167,68 +167,38 @@ const handleOk = () => {
 onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);
 });
-
-function generateMetaTags({description, ogImage }) {
-  return [
-    { charset: "utf-8" },
-    { name: "viewport", content: "width=device-width, initial-scale=1" },
-    {
-      hid: "description",
-      name: "description",
-      content: description || "eReport là Kho báo cáo thị trường Ecommerce toàn diện giúp Doanh nghiệp, Thương hiệu và Nhà bán tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu chính xác nhất.",
-    },
-    {
-      hid: "og:image",
-      property: "og:image",
-      content: ogImage || "https://static.metric.vn/report/thumbnail/0/97cd29f1edf9724568932e5799c8e26c-kinh-can-nu-11500.png",
-    },
-    { name: "google-site-verification", content: "-A5h4Bx3cBpC9vnJxfRvxvegNFZgMorMQlE6M76uLbc" },
-  ];
-}
-
-const metaTags = generateMetaTags({
-  title: data?.reportDetail?.name || "eReport",
-  description: data?.reportDetail?.description || "eReport là Kho báo cáo thị trường Ecommerce toàn diện giúp Doanh nghiệp, Thương hiệu và Nhà bán tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu chính xác nhất.",
-  ogImage: data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail || "https://static.metric.vn/report/thumbnail/0/97cd29f1edf9724568932e5799c8e26c-kinh-can-nu-11500.png"
-});
-
-useHead({
-  title: metaTags.title,
-  meta: metaTags
-});
-
 </script>
 
 <template>
-<!--  <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>-->
-<!--  <Meta hid="og:title" property="og:title" :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>-->
-<!--  <Meta hid="description" name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>-->
-<!--  <Meta hid="og:description" property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>-->
-<!--  <Meta hid="og:image" property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>-->
-<!--  <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>-->
-<!--  <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>-->
-<!--  <component is="script" type="application/ld+json">-->
-<!--    {{-->
-<!--      JSON.stringify({-->
-<!--        '@context': 'https://schema.org',-->
-<!--        '@type': 'BreadcrumbList',-->
-<!--        itemListElement: [-->
-<!--          {-->
-<!--            "@type": "ListItem",-->
-<!--            position: 1,-->
-<!--            name: "Metric",-->
-<!--            item: "https://ereport.vn",-->
-<!--          },-->
-<!--          ...(data.reportDetail.lst_category || []).map((item, index) => ({-->
-<!--            "@type": "ListItem",-->
-<!--            position: index + 2,-->
-<!--            name: item.name,-->
-<!--            item: `https://ereport.vn/${item.slug}`,-->
-<!--          })),-->
-<!--        ]-->
-<!--      })-->
-<!--    }}-->
-<!--  </component>-->
+  <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
+  <Meta hid="og:title" property="og:title" :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>
+  <Meta hid="description" name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+  <Meta hid="og:description" property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+  <Meta hid="og:image" property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>
+  <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>
+  <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>
+  <component is="script" type="application/ld+json">
+    {{
+      JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Metric",
+            item: "https://ereport.vn",
+          },
+          ...(data.reportDetail.lst_category || []).map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 2,
+            name: item.name,
+            item: `https://ereport.vn/${item.slug}`,
+          })),
+        ]
+      })
+    }}
+  </component>
 
   <div class="container_content">
     <div class="title default_section">
