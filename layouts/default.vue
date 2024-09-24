@@ -30,44 +30,45 @@
           />
 
           <div style="padding-right: 24px" @click="toggleMenu">
-            <CustomIcon v-if="isMobile && !isShowMenu" :is-custom-size="true" :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'" />
-            <CustomIcon v-else-if="isShowMenu" :is-custom-size="true" type="Close" />
+            <CustomIcon v-if="isMobile && !isShowMenu" :is-custom-size="true"
+                        :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'"/>
+            <CustomIcon v-else-if="isShowMenu" :is-custom-size="true" type="Close"/>
           </div>
-          <HeaderNavbar v-if="!isMobile" :is-dark-blue-header="isDarkBlueHeader" />
-          <HeaderMobileMenu v-else :active="isShowMenu" />
+          <HeaderNavbar v-if="!isMobile" :is-dark-blue-header="isDarkBlueHeader"/>
+          <HeaderMobileMenu v-else :active="isShowMenu"/>
         </div>
       </header>
 
       <!-- content section -->
       <main>
-        <slot />
+        <slot/>
       </main>
 
       <!-- footer section -->
       <footer>
         <div class="default_section footer">
-          <Footer />
+          <Footer/>
         </div>
       </footer>
     </div>
-    <CampaignPopup v-if="showCampaignPopup" />
+    <CampaignPopup v-if="showCampaignPopup"/>
   </a-config-provider>
   <div
       v-else
       class="loading"
       style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; position: fixed;"
   >
-    <a-spin size="large" />
+    <a-spin size="large"/>
   </div>
 </template>
 
 <script setup lang="ts">
-import { NAVIGATIONS } from '~/constant/constains';
-import { useGTM } from '~/composables/useGTM';
+import {NAVIGATIONS} from '~/constant/constains';
+import {useGTM} from '~/composables/useGTM';
 import CampaignPopup from '~/components/CampaignPopup.vue';
 
-const { fetchCurrentUser } = useCurrentUser();
-const { userInfo, fetchedUser } = storeToRefs(useCurrentUser());
+const {fetchCurrentUser} = useCurrentUser();
+const {userInfo, fetchedUser} = storeToRefs(useCurrentUser());
 const gtm = useGTM();
 const route = useRoute();
 const headerRef = ref(null);
@@ -88,7 +89,7 @@ const handleScroll = () => {
   isScrolled.value = window.scrollY > 0;
 };
 
-const { isShowMenu } = useShowMainMenu();
+const {isShowMenu} = useShowMainMenu();
 
 const toggleMenu = () => {
   isShowMenu.value = !isShowMenu.value;
@@ -117,7 +118,7 @@ const navigateToPricing = () => {
 // Track GTM events
 const trackEvent = (event: string, data: any) => {
   if (gtm) {
-    gtm.push({ event, ...data });
+    gtm.push({event, ...data});
   }
 };
 
@@ -127,7 +128,7 @@ onMounted(() => {
   recheckHeader();
 
   // Track page view
-  trackEvent('page_view', { page: route.path });
+  trackEvent('page_view', {page: route.path});
 
   let lastScrollTop = 0;
   const topBar = document.querySelector('.top-bar') as HTMLElement;
@@ -172,7 +173,7 @@ onMounted(() => {
   handleScroll();
 
   // Show campaign popup only on home and search pages
-  if (route.path === NAVIGATIONS.home || route.path === NAVIGATIONS.search) {
+  if (route.path === NAVIGATIONS.home || route.path === NAVIGATIONS.search || route.path === NAVIGATIONS.report) {
     showCampaignPopup.value = true;
   }
 });
@@ -185,7 +186,7 @@ onUnmounted(() => {
 watch(() => route.path, () => {
   recheckHeader();
   // Show campaign popup only on home and search pages
-  if (route.path === NAVIGATIONS.home || route.path === NAVIGATIONS.search) {
+  if (route.path === NAVIGATIONS.home || route.path === NAVIGATIONS.search || route.path === NAVIGATIONS.report) {
     showCampaignPopup.value = true;
   } else {
     showCampaignPopup.value = false;
