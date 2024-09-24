@@ -167,12 +167,23 @@ const handleOk = () => {
 onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);
 });
+
+useHead({
+  title: `${data?.reportDetail.name} - Báo cáo xu hướng thị trường sàn TMĐT`,
+  meta: [
+    { hid: "description", name: "description", content: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}` },
+    { hid: "og:title", property: "og:title", content: `Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}` },
+    { hid: "og:description", property: "og:description", content: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}` },
+    { hid: "og:image", property: "og:image", content: data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail },
+    { hid: "og:image:alt", property: "og:image:alt", content: `Báo cáo thị trường ${data?.reportDetail.name}` },
+  ],
+});
 </script>
 
 <template>
   <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
   <Meta hid="og:title" property="og:title" :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>
-  <Meta hid="description" property="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+  <Meta hid="description" name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
   <Meta hid="og:description" property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
   <Meta hid="og:image" property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>
   <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>
