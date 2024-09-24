@@ -18,9 +18,12 @@ export const useCurrentUser = defineStore("currentUserStore", {
     state: () => {
         const isServerRender = process.env.SSR === 'true'
 
+        console.log('isServerRender',isServerRender)
+
         return {
             fetchedUser: isServerRender,
             showPopupLogin: false,
+            showPopupCampaign: true,
             userInfo: {
                 id: undefined,
                 email: undefined,
@@ -40,6 +43,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
     },
     getters: {
         isShowPopupLogin: (state) => state.showPopupLogin,
+        isShowPopupCampaign: (state) => state.showPopupCampaign,
         remainingUnlock: (state) => state.userInfo.current_plan.remain_claim,
         remainingUnlockPdf: (state) => state.userInfo.current_plan.remain_claim_pdf,
         authenticated: (state) => state.userInfo.id !== undefined,
@@ -47,6 +51,9 @@ export const useCurrentUser = defineStore("currentUserStore", {
     actions: {
         setShowPopupLogin(value) {
             this.showPopupLogin = value
+        },
+        setShowPopupCampaign(value) {
+            this.showPopupCampaign = value
         },
         async fetchCurrentUser() {
             if (typeof window === 'undefined') {

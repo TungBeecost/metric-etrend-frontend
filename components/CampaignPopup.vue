@@ -16,7 +16,7 @@ import {useRoute} from 'vue-router';
 import {storeToRefs} from 'pinia';
 import {PLANS} from '~/constant/constains';
 
-const {userInfo} = storeToRefs(useCurrentUser());
+const {userInfo, showPopupCampaign} = storeToRefs(useCurrentUser());
 
 const route = useRoute();
 
@@ -29,13 +29,14 @@ const CAMPAIGN_END_DATE = '2024-09-31';
 const showPopup = ref(false);
 
 const closePopup = () => {
-  localStorage.setItem(CAMPAIGN_CODE, 'true');
+  showPopupCampaign.value = false;
   showPopup.value = false;
 };
 
 const openCampaignUrl = () => {
   window.open(CAMPAIGN_URL, '_blank');
-  localStorage.setItem(CAMPAIGN_CODE, 'true');
+
+  showPopupCampaign.value = false;
   showPopup.value = false;
 };
 
@@ -45,7 +46,8 @@ const checkPopupVisibility = () => {
 
   console.log(1111, userPlan?.plan_code)
   if (!isPaidUser) {
-    const isPopupClosed = localStorage.getItem(CAMPAIGN_CODE) === 'true';
+    // get from session storage
+    const isPopupClosed = !showPopupCampaign.value;
     const currentDate = new Date();
     const campaignEndDate = new Date(CAMPAIGN_END_DATE);
     if (!isPopupClosed && currentDate <= campaignEndDate) {
