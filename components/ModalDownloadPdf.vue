@@ -107,6 +107,7 @@ const handleView = async () => {
     navigateTo(`${NAVIGATIONS.home}view_pdf/${route.params.slug}`);
   } else {
     showAlert.value = true;
+    console.log('showAlert', showAlert.value)
   }
 
 };

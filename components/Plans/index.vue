@@ -32,7 +32,8 @@ const getIsShowActiveButton = (user_plan_code: string, plan_code: string) => {
     return 'Đang sử dụng';
   }
 
-  if (user_plan_code === 'e_community' || user_plan_code === 'e_trial' || !user_plan_code) {
+  if (user_plan_code === 'e_community' || user_plan_code === 'e_trial' || user_plan_code === 'e_starter' ||
+      !user_plan_code || user_plan_code === 'e_basic_lite' || user_plan_code === 'e_pro_lite') {
     return 'Mua ngay';
   }
 

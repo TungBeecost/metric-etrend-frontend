@@ -67,11 +67,10 @@ const isViewReportDisabled = computed(() => userInfo.value.current_plan.remain_c
       @ok="toggleUnlock"
   >
     <div class="unlock-report-modal">
-      <div v-if="currentUser.remainingUnlock">
+      <div v-if="currentUser.remainingUnlockPdf">
         <div style="text-align: center;">
           <NuxtImg src="/icons/DeptReportAlert.svg" class="unlock-icon"/>
         </div>
-
         <div class="content">
           <div class="view_count">
             Số lượt xem hiện tại: <b>{{ userInfo.current_plan.remain_claim_pdf }}</b>
@@ -85,7 +84,7 @@ const isViewReportDisabled = computed(() => userInfo.value.current_plan.remain_c
       <div class="unlock-report-modal-footer">
         <AButton style="width: 100%;" size="large" class="optionBtn" @click="toggleUnlock">Huỷ</AButton>
         <AButton
-            v-if="currentUser.remainingUnlock"
+            v-if="currentUser.remainingUnlockPdf"
             :disabled="isViewReportDisabled"
             style="width: 100%;"
             size="large"
