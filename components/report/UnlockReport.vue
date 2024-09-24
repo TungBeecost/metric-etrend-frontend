@@ -50,7 +50,7 @@ const handlePricing = () => {
 };
 
 const openModalHandle = () => {
-  openModal.value = true;
+  open.value = true;
 };
 </script>
 
