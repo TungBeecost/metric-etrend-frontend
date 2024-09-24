@@ -231,7 +231,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <head>
+  <Head>
     <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
     <Meta hid="og:title" property="og:title" :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>
     <Meta hid="description" name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
@@ -261,7 +261,7 @@ onUnmounted(() => {
         })
       }}
     </component>
-  </head>
+  </Head>
 
   <div class="container_content">
     <div class="title default_section">
