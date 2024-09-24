@@ -19,7 +19,7 @@ const toggleIcon = computed(() => showMore.value ? CaretUpOutlined : CaretDownOu
 
 const specialOfferLink = computed(() => {
   const specialPlans = ['e_basic_lite', 'e_pro_lite', 'e_starter'];
-  return specialPlans.includes(plan.plan_code) ? 'https://dangky.metric.vn/ereportspecial_offer' : '/pricing';
+  return specialPlans.includes(plan.plan_code) ? 'https://dangky.metric.vn/ereport_doi-goi-dich-vu' : '/pricing';
 });
 </script>
 
