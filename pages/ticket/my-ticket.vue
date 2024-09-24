@@ -8,6 +8,7 @@ import {watchDebounced} from '@vueuse/core';
 // import { useState, useAsyncData, navigateTo } from '#imports';
 import dayjs from "dayjs";
 import {ref} from "vue";
+import ListTicket from "~/components/ticket/ListTicket.vue";
 
 const currentPage = useState('myTicket.currentPage', () => 1);
 const totalRow = useState('myTicket.totalRow', () => 0);
@@ -48,8 +49,8 @@ const columns = [
 ];
 
 const handleMyTicketTableChange = async (pagination) => {
-  const {current} = pagination;
-  currentPage.value = current;
+  console.log('pagination', pagination);
+  currentPage.value = pagination;
   await refreshMyTickets();
 };
 
@@ -71,6 +72,10 @@ const formatDateTime = (date) => {
 }
 
 const isMobile = ref(window?.innerWidth <= 768);
+
+onMounted(() => {
+  currentPage.value = 1;
+});
 
 </script>
 
@@ -115,7 +120,8 @@ const isMobile = ref(window?.innerWidth <= 768);
           </a-button>
         </a-flex>
       </a-flex>
-      <a-table :columns="columns"
+      <a-table v-if="!isMobile"
+               :columns="columns"
                :loading="listMyTicketsLoading"
                :data-source="myTickets.data"
                :pagination="{
@@ -183,6 +189,17 @@ const isMobile = ref(window?.innerWidth <= 768);
           <div class="empty-subtext">Dữ liệu hiện tại đang trống</div>
         </template>
       </a-table>
+      <div v-else>
+        <list-ticket :data="myTickets.data"
+                     :loading="listMyTicketsLoading"
+                     :pagination="{
+                       pageSize: 10,
+                       current: currentPage,
+                       total: totalRow
+                     }"
+                     @change="handleMyTicketTableChange"
+        />
+      </div>
     </app-section>
   </div>
 </template>
@@ -271,6 +288,10 @@ const isMobile = ref(window?.innerWidth <= 768);
         align-items: flex-start;
         width: 100%;
 
+        .ticket-title {
+          font-size: 14px;
+        }
+
         .equal-height{
           height: 40px !important;
           width: 100% !important;
@@ -295,6 +316,11 @@ const isMobile = ref(window?.innerWidth <= 768);
   .ant-flex{
     width: 100% !important;
   }
+
+  .app-section{
+    border: none;
+  }
 }
+
 </style>
 

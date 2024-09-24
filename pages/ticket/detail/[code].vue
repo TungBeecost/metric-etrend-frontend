@@ -189,8 +189,12 @@ const handleDeleteComment = async ({commentId}) => {
       padding: 1.5rem;
 
       .ticket-metadata {
+        margin-bottom: 4rem; // Add margin to ensure space between metadata and other elements
+
         &__item {
           height: 2.5rem;
+          display: flex;
+          justify-content: space-between;
 
           &__label {
             width: 10rem;
@@ -240,6 +244,43 @@ const handleDeleteComment = async ({commentId}) => {
     &__header {
       padding: 1.5rem;
       border-bottom: 1px solid #eeebff;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .title-segment {
+    margin-top: 30px;
+  }
+
+  .ticket-detail-section {
+    .header, .content {
+      padding: 1rem;
+    }
+
+    .ticket-metadata {
+      margin-bottom: 4rem !important;
+
+      &__item {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+
+        &__label, &__value {
+          width: 100%;
+          text-align: left;
+        }
+
+        &__label {
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .comment-section {
+    &__header {
+      padding: 1rem;
     }
   }
 }

@@ -1,3 +1,4 @@
+// Update `pages/ticket/internal/index.vue` to handle the emitted event and refresh data
 <script setup>
 import { FilterOutlined, SearchOutlined } from "@ant-design/icons-vue";
 import { getTickets } from "~/utils/ticket.js";
@@ -5,7 +6,9 @@ import AppTicketList from "~/components/ticket/AppTicketList.vue";
 import AppDrawer from "~/components/ticket/AppDrawer.vue";
 import AppTitle from "~/components/ticket/AppTitle.vue";
 import AppSection from "~/components/ticket/AppSection.vue";
-import {priorityOptions, statusOptions, supportDepartmentOptions} from "~/constant/general/common_ticket.js";
+import { priorityOptions, statusOptions, supportDepartmentOptions } from "~/constant/general/common_ticket.js";
+import { ref } from "vue";
+import ListTicket from "~/components/ticket/ListTicket.vue";
 
 definePageMeta({
   title: "View Tickets",
@@ -126,11 +129,16 @@ const {
   return tickets;
 });
 
-const handleTicketTableChange = async (pagination, filters, sorter, { currentDataSource }) => {
-  const { current } = pagination;
-  currentPage.value = current;
+const isMobile = ref(window?.innerWidth <= 768);
+
+const handleTicketTableChange = async (page) => {
+  currentPage.value = page;
   await refreshTickets();
 };
+
+onMounted(() => {
+  currentPage.value = 1;
+});
 </script>
 
 <template>
@@ -138,14 +146,14 @@ const handleTicketTableChange = async (pagination, filters, sorter, { currentDat
     <app-section>
       <a-flex justify="space-between" class="header">
         <app-title text="Yêu cầu hỗ trợ"/>
-        <a-button type="default" @click="handleOpenFilterDrawer" size="large">
+        <a-button type="default" size="large" @click="handleOpenFilterDrawer">
           <template #icon>
             <filter-outlined/>
           </template>
           Filter
         </a-button>
       </a-flex>
-      <div class="content">
+      <div v-if="!isMobile" class="content">
         <app-ticket-list :tickets="tickets.data"
                          :loading="ticketsLoading"
                          :pagination="{
@@ -154,6 +162,17 @@ const handleTicketTableChange = async (pagination, filters, sorter, { currentDat
                            total: totalRow
                          }"
                          @change="handleTicketTableChange"
+        />
+      </div>
+      <div v-else>
+        <list-ticket :data="tickets.data"
+                     :loading="ticketsLoading"
+                     :pagination="{
+                       pageSize: 10,
+                       current: currentPage,
+                       total: totalRow
+                     }"
+                     @change="handleTicketTableChange"
         />
       </div>
     </app-section>
@@ -262,7 +281,6 @@ const handleTicketTableChange = async (pagination, filters, sorter, { currentDat
           >
           </a-select>
         </a-form-item>
-
         <a-flex gap="small">
           <a-spin :spinning="ticketsLoading">
             <a-form-item>
@@ -301,5 +319,30 @@ a-spin {
 
 .ant-pagination-options {
   display: none;
+}
+
+@media (max-width: 768px) {
+  .main-content{
+    margin-top: 20px;
+  }
+
+  .ant-form-item {
+    width: 100%;
+  }
+
+  .ant-form-item .ant-input,
+  .ant-form-item .ant-select,
+  .ant-form-item .ant-picker {
+    width: 100%;
+  }
+
+  .ant-form-item .ant-flex {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .app-section{
+    border: none;
+  }
 }
 </style>

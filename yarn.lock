@@ -1902,6 +1902,14 @@
   resolved "https://registry.npmjs.org/@ungap/structured-clone/-/structured-clone-1.2.0.tgz"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
+"@unhead/dom@1.11.6":
+  version "1.11.6"
+  resolved "https://registry.yarnpkg.com/@unhead/dom/-/dom-1.11.6.tgz#639e90793eb18605038591d496ee772d0e6a1449"
+  integrity sha512-FYU8Cu+XWcpbO4OvXdB6x7m6GTPcl6CW7igI8rNu6Kc0Ilxb+atxIvyFXdTGAyB7h/F0w3ex06ZVWJ65f3EW8A==
+  dependencies:
+    "@unhead/schema" "1.11.6"
+    "@unhead/shared" "1.11.6"
+
 "@unhead/dom@1.9.16", "@unhead/dom@^1.9.16":
   version "1.9.16"
   resolved "https://registry.npmjs.org/@unhead/dom/-/dom-1.9.16.tgz"
@@ -1910,6 +1918,14 @@
     "@unhead/schema" "1.9.16"
     "@unhead/shared" "1.9.16"
 
+"@unhead/schema@1.11.6":
+  version "1.11.6"
+  resolved "https://registry.yarnpkg.com/@unhead/schema/-/schema-1.11.6.tgz#4528d08ecb1addae0721221aca443fc04bb61bdd"
+  integrity sha512-Ava5+kQERaZ2fi66phgR9KZQr9SsheN1YhhKM8fCP2A4Jb5lHUssVQ19P0+89V6RX9iUg/Q27WdEbznm75LzhQ==
+  dependencies:
+    hookable "^5.5.3"
+    zhead "^2.2.4"
+
 "@unhead/schema@1.9.16":
   version "1.9.16"
   resolved "https://registry.npmjs.org/@unhead/schema/-/schema-1.9.16.tgz"
@@ -1917,6 +1933,13 @@
   dependencies:
     hookable "^5.5.3"
     zhead "^2.2.4"
+
+"@unhead/shared@1.11.6":
+  version "1.11.6"
+  resolved "https://registry.yarnpkg.com/@unhead/shared/-/shared-1.11.6.tgz#f70a0b0c72bfb836f96f36a20bb1831ddecd160e"
+  integrity sha512-aGrtzRCcFlVh9iru73fBS8FA1vpQskS190t5cCRRMpisOEunVv3ueqXN1F8CseQd0W4wyEr/ycDvdfKt+RPv5g==
+  dependencies:
+    "@unhead/schema" "1.11.6"
 
 "@unhead/shared@1.9.16":
   version "1.9.16"
@@ -1932,6 +1955,17 @@
   dependencies:
     "@unhead/schema" "1.9.16"
     "@unhead/shared" "1.9.16"
+
+"@unhead/vue@^1.11.6":
+  version "1.11.6"
+  resolved "https://registry.yarnpkg.com/@unhead/vue/-/vue-1.11.6.tgz#dd9b117777f3be93b39a9cf50099a7b7b2ae7a94"
+  integrity sha512-CMuDJGTi4n4wKdOp6/JmB9roGshjTdoFKF34PEkXu4+g97BiVFiZ9LvgY44+UlWCUzQHcqEPRQIzm9iKEqcfKw==
+  dependencies:
+    "@unhead/schema" "1.11.6"
+    "@unhead/shared" "1.11.6"
+    defu "^6.1.4"
+    hookable "^5.5.3"
+    unhead "1.11.6"
 
 "@unhead/vue@^1.9.16":
   version "1.9.16"
@@ -8167,6 +8201,16 @@ unenv@^1.10.0, unenv@^1.9.0:
     mime "^3.0.0"
     node-fetch-native "^1.6.4"
     pathe "^1.1.2"
+
+unhead@1.11.6:
+  version "1.11.6"
+  resolved "https://registry.yarnpkg.com/unhead/-/unhead-1.11.6.tgz#2358cfe4e1d2a6f70d992a0ec57bc7ae5f6354dc"
+  integrity sha512-TKTQGUzHKF925VZ4KZVbLfKFzTVTEWfPLaXKmkd/ptEY2FHEoJUF7xOpAWc3K7Jzy/ExS66TL7GnLLjtd4sISg==
+  dependencies:
+    "@unhead/dom" "1.11.6"
+    "@unhead/schema" "1.11.6"
+    "@unhead/shared" "1.11.6"
+    hookable "^5.5.3"
 
 unhead@1.9.16:
   version "1.9.16"

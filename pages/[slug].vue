@@ -167,39 +167,41 @@ const handleOk = () => {
 onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);
 });
+
 </script>
 
 <template>
-  <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
-  <Meta property="og:title"
-        :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>
-  <Meta property="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
-  <Meta property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
-  <Meta property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>
-  <Meta property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>
-  <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>
-  <component is="script" type="application/ld+json">
-    {{
-      JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Metric",
-            item: "https://ereport.vn",
-          },
-          ...(data.reportDetail.lst_category || []).map((item, index) => ({
-            "@type": "ListItem",
-            position: index + 2,
-            name: item.name,
-            item: `https://ereport.vn/${item.slug}`,
-          })),
-        ]
-      })
-    }}
-  </component>
+  <Head>
+    <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
+    <Meta hid="og:title" property="og:title" :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>
+    <Meta hid="description" name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+    <Meta hid="og:description" property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+    <Meta hid="og:image" property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>
+    <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>
+    <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>
+    <component is="script" type="application/ld+json">
+      {{
+        JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Metric",
+              item: "https://ereport.vn",
+            },
+            ...(data.reportDetail.lst_category || []).map((item, index) => ({
+              "@type": "ListItem",
+              position: index + 2,
+              name: item.name,
+              item: `https://ereport.vn/${item.slug}`,
+            })),
+          ]
+        })
+      }}
+    </component>
+  </Head>
 
   <div class="container_content">
     <div class="title default_section">
