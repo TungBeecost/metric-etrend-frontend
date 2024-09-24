@@ -168,63 +168,40 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);
 });
 
-useHead({
-  title: `${data?.reportDetail.name} - Báo cáo xu hướng thị trường sàn TMĐT`,
-  meta: [
-    { name: "title", content: `${data?.reportDetail.name} - Báo cáo xu hướng thị trường sàn TMĐT` },
-    { name: "description", content: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}` },
-    { property: "og:type", content: "website" },
-    { property: "og:url", content: config.public.BASE_URL + route.fullPath },
-    { property: "og:title", content: `Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}` },
-    { property: "og:description", content: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}` },
-    { property: "og:image", content: data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail },
-    { property: "og:image:alt", content: `Báo cáo thị trường ${data?.reportDetail.name}` },
-    { property: "twitter:card", content: "summary_large_image" },
-    { property: "twitter:url", content: config.public.BASE_URL + route.fullPath },
-    { property: "twitter:title", content: `Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}` },
-    { property: "twitter:description", content: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}` },
-    { property: "twitter:image", content: data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail },
-    { property: "twitter:image:alt", content: `Báo cáo thị trường ${data?.reportDetail.name}` },
-    { name: "robots", content: "index, follow" },
-    { name: "canonical", content: config.public.BASE_URL + route.fullPath },
-  ]
-});
-
-
 </script>
 
 <template>
-<!--  <Head>-->
-<!--    <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>-->
-<!--    <Meta hid="og:title" property="og:title" :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>-->
-<!--    <Meta hid="description" name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>-->
-<!--    <Meta hid="og:description" property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>-->
-<!--    <Meta hid="og:image" property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>-->
-<!--    <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>-->
-<!--    <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>-->
-<!--    <component is="script" type="application/ld+json">-->
-<!--      {{-->
-<!--        JSON.stringify({-->
-<!--          '@context': 'https://schema.org',-->
-<!--          '@type': 'BreadcrumbList',-->
-<!--          itemListElement: [-->
-<!--            {-->
-<!--              "@type": "ListItem",-->
-<!--              position: 1,-->
-<!--              name: "Metric",-->
-<!--              item: "https://ereport.vn",-->
-<!--            },-->
-<!--            ...(data.reportDetail.lst_category || []).map((item, index) => ({-->
-<!--              "@type": "ListItem",-->
-<!--              position: index + 2,-->
-<!--              name: item.name,-->
-<!--              item: `https://ereport.vn/${item.slug}`,-->
-<!--            })),-->
-<!--          ]-->
-<!--        })-->
-<!--      }}-->
-<!--    </component>-->
-<!--  </Head>-->
+  <Head>
+    <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
+    <Meta hid="og:title" property="og:title" :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>
+    <Meta hid="description" name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+    <Meta hid="og:description" property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+    <Meta hid="og:image" property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>
+    <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>
+    <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>
+    <component is="script" type="application/ld+json">
+      {{
+        JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Metric",
+              item: "https://ereport.vn",
+            },
+            ...(data.reportDetail.lst_category || []).map((item, index) => ({
+              "@type": "ListItem",
+              position: index + 2,
+              name: item.name,
+              item: `https://ereport.vn/${item.slug}`,
+            })),
+          ]
+        })
+      }}
+    </component>
+  </Head>
 
   <div class="container_content">
     <div class="title default_section">
