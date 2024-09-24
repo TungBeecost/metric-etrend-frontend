@@ -167,6 +167,66 @@ const handleOk = () => {
 onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);
 });
+
+useHead({
+  title: `${data?.reportDetail.name} - Báo cáo xu hướng thị trường sàn TMĐT`,
+  meta: [
+    {
+      hid: 'og:title',
+      property: 'og:title',
+      content: `Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`
+    },
+    {
+      hid: 'description',
+      name: 'description',
+      content: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}`
+    },
+    {
+      hid: 'og:description',
+      property: 'og:description',
+      content: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}`
+    },
+    {
+      hid: 'og:image',
+      property: 'og:image',
+      content: data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail
+    },
+    {
+      hid: 'og:image:alt',
+      property: 'og:image:alt',
+      content: `Báo cáo thị trường ${data?.reportDetail.name}`
+    }
+  ],
+  link: [
+    {
+      rel: 'canonical',
+      href: `${config.public.BASE_URL}${route.fullPath}`
+    }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Metric",
+            item: "https://ereport.vn",
+          },
+          ...(data.reportDetail.lst_category || []).map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 2,
+            name: item.name,
+            item: `https://ereport.vn/${item.slug}`,
+          })),
+        ]
+      })
+    }
+  ]
+});
 </script>
 
 <template>
