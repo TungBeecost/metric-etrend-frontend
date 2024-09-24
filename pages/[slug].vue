@@ -168,30 +168,27 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);
 });
 
-useSeoMeta({
+useHead({
   title: `${data?.reportDetail.name} - Báo cáo xu hướng thị trường sàn TMĐT`,
-  description: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}`,
-  image: data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail,
-  url: config.public.BASE_URL + route.fullPath,
-  og: {
-    title: `Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`,
-    description: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}`,
-    image: data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail,
-    imageAlt: `Báo cáo thị trường ${data?.reportDetail.name}`,
-  },
-  canonical: config.public.BASE_URL + route.fullPath,
-  breadcrumb: [
-    {
-      name: "Metric",
-      item: "https://ereport.vn",
-    },
-    ...(data.reportDetail.lst_category || []).map((item) => ({
-      name: item.name,
-      item: `https://ereport.vn/${item.slug}`,
-    })),
-  ],
+  meta: [
+    { name: "title", content: `${data?.reportDetail.name} - Báo cáo xu hướng thị trường sàn TMĐT` },
+    { name: "description", content: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}` },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: config.public.BASE_URL + route.fullPath },
+    { property: "og:title", content: `Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}` },
+    { property: "og:description", content: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}` },
+    { property: "og:image", content: data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail },
+    { property: "og:image:alt", content: `Báo cáo thị trường ${data?.reportDetail.name}` },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:url", content: config.public.BASE_URL + route.fullPath },
+    { property: "twitter:title", content: `Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}` },
+    { property: "twitter:description", content: `Báo cáo chi tiết thị trường ${data?.reportDetail.name}` },
+    { property: "twitter:image", content: data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail },
+    { property: "twitter:image:alt", content: `Báo cáo thị trường ${data?.reportDetail.name}` },
+    { name: "robots", content: "index, follow" },
+    { name: "canonical", content: config.public.BASE_URL + route.fullPath },
+  ]
 });
-
 
 
 </script>
