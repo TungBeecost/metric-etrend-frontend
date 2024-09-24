@@ -17,6 +17,7 @@ import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
 import { useCurrentUser } from "~/stores/current-user.js";
 import { useGTM } from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
+import { useHead } from '@unhead/vue';
 
 const route = useRoute();
 const router = useRouter();
