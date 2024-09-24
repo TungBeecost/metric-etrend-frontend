@@ -22,7 +22,7 @@ const reportFilterDisplayFields = computed(() => {
       'lst_bee_category_base_id',
       'is_smart_queries',
       'is_remove_fake_sale',
-      'lst_keyword_exclude',
+      // 'lst_keyword_exclude',
     ]
   }
 
@@ -32,7 +32,7 @@ const reportFilterDisplayFields = computed(() => {
     'lst_keyword',
     'is_smart_queries',
     'is_remove_fake_sale',
-    'lst_keyword_exclude',
+    // 'lst_keyword_exclude',
   ]
 })
 
@@ -52,7 +52,7 @@ const fieldLabel: FieldLabels = {
   is_smart_queries: 'Tìm thông minh',
   is_remove_fake_sale: 'Lọc bỏ sản phẩm ảo/bất thường',
   date_range: 'Dữ liệu phân tích trong khoảng',
-  lst_keyword_exclude: 'Từ khóa loại trừ',
+  // lst_keyword_exclude: 'Từ khóa loại trừ',
 }
 
 
@@ -67,7 +67,7 @@ const formatDate = (value: string | Date, format: string, inputFormat: string = 
   return moment(value, inputFormat).format(format);
 }
 
-const isExpanded = ref(false);
+// const isExpanded = ref(false);
 
 const fieldValueParse: FieldValueParsers = {
   lst_platform_id: (value: number[]) => {
@@ -84,7 +84,7 @@ const fieldValueParse: FieldValueParsers = {
     const {start_date, end_date} = props.data.filter_custom;
     return `${formatDate(start_date, 'DD/MM/YYYY')} - ${formatDate(end_date, 'DD/MM/YYYY')}`
   },
-  lst_keyword_exclude: (value: string[]) => value ? (!isExpanded.value ? value.slice(0, 3) : value).join(', ') : '',
+  // lst_keyword_exclude: (value: string[]) => value ? (!isExpanded.value ? value.slice(0, 3) : value).join(', ') : '',
 }
 
 </script>
@@ -98,7 +98,7 @@ const fieldValueParse: FieldValueParsers = {
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div class="title">
-        Chi tiết bộ lọc nhóm hàng
+        Phạm vi báo cáo
       </div>
     </div>
     <div class="report-filter-content">
@@ -111,24 +111,23 @@ const fieldValueParse: FieldValueParsers = {
             {{ fieldLabel[field] }}
           </div>
           <div class="report-filter-field-value">
-<!--            {{ props.data.data_filter_report[field] }}-->
             {{ fieldValueParse[field](props.data.data_filter_report[field]) }}
           </div>
         </div>
       </div>
-      <div>
-        <a-button style="color: #E85912" type="link" size="small" @click="isExpanded = !isExpanded">
-          {{ isExpanded ? 'Thu gọn' : 'Xem thêm' }}
-          <svg
-              xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"
-              style="margin-left: 4px;"
-              :style="{ transform: isExpanded ? 'rotate(180deg) translateY(-3px)' : 'rotate(0deg) translateY(3px)' }"
-          >
-            <path d="M11.7949 6.17627L8.04492 9.67627L4.29492 6.17627" stroke="#E85912" stroke-width="1.3"
-                  stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a-button>
-      </div>
+<!--      <div>-->
+<!--        <a-button style="color: #E85912" type="link" size="small" @click="isExpanded = !isExpanded">-->
+<!--          {{ isExpanded ? 'Thu gọn' : 'Xem thêm' }}-->
+<!--          <svg-->
+<!--              xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"-->
+<!--              style="margin-left: 4px;"-->
+<!--              :style="{ transform: isExpanded ? 'rotate(180deg) translateY(-3px)' : 'rotate(0deg) translateY(3px)' }"-->
+<!--          >-->
+<!--            <path d="M11.7949 6.17627L8.04492 9.67627L4.29492 6.17627" stroke="#E85912" stroke-width="1.3"-->
+<!--                  stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--          </svg>-->
+<!--        </a-button>-->
+<!--      </div>-->
     </div>
   </div>
 </template>
@@ -145,14 +144,15 @@ const fieldValueParse: FieldValueParsers = {
 
   .report-filter-title {
     display: flex;
-    gap: 8px;
+    gap: 16px;
+    margin-bottom: 16px;
+
 
     .title {
       font-family: 'Inter', sans-serif;
       font-weight: 700;
-      font-size: 20px;
+      font-size: 24px;
       line-height: 28px;
-      margin-bottom: 16px;
     }
   }
 

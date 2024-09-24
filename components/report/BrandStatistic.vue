@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps } from 'vue';
+import { computed, defineProps, ref, onMounted } from 'vue';
 
 const props = defineProps({
   data: {
@@ -11,6 +11,171 @@ const props = defineProps({
     default: true,
   },
 });
+
+const renderChartSales = ref(false);
+const renderChartOutput = ref(false);
+const windowWidth = ref(window.innerWidth);
+
+onMounted(() => {
+  window.addEventListener('resize', () => {
+    windowWidth.value = window.innerWidth;
+  });
+  renderChartSales.value = true;
+  renderChartOutput.value = true;
+});
+
+const chartWidth = computed(() => {
+  if (windowWidth.value < 1200) {
+    return 300;
+  } else if (windowWidth.value < 1500) {
+    return 400;
+  } else {
+    return 700;
+  }
+});
+
+const colors = [
+  '#8B54D9', '#F1584B', '#8BA87C', '#E85912', '#42A4FF',
+  '#241E46', '#FBE13E', '#FBA140', '#5473EF', '#3DCDCD'
+];
+
+const chartOptionsSales = computed(() => ({
+  chart: {
+    type: "pie",
+    width: chartWidth.value || 500,
+    style: {
+      fontFamily: "Inter",
+    },
+  },
+  title: {
+    text: "Tỷ trọng top 10 thương hiệu theo doanh số *",
+    style: {
+      fontSize: '14px',
+      color: '#241E46',
+      fontWeight: 700,
+      fontFamily: 'Inter'
+    }
+  },
+  legend: {
+    enabled: true,
+    layout: 'vertical',
+    align: 'left',
+    verticalAlign: 'middle',
+    symbolHeight: 10,
+    symbolWidth: 10,
+    itemStyle: {
+      fontSize: '12px',
+      color: '#241E46',
+      fontWeight: 400,
+      fontFamily: 'Inter'
+    }
+  },
+  tooltip: {
+    enabled: false,
+  },
+  plotOptions: {
+    pie: {
+      cursor: "pointer",
+      showInLegend: true,
+      innerSize: '50%',
+      borderWidth: 1,
+      borderColor: null,
+      dataLabels: {
+        enabled: true,
+        connectorShape: 'crookedLine',
+        format: '{point.name}: {point.percentage:.1f}%',
+        style: {
+          fontSize: '12px',
+          color: '#241E46',
+          fontWeight: 400,
+          fontFamily: 'Inter'
+        },
+      }
+    },
+    series: {
+      enableMouseTracking: false
+    }
+  },
+  series: [
+    {
+      name: 'Doanh số (Đồng)',
+      data: props.data.data_analytic.by_brand.lst_top_brand_revenue.map(({ name, revenue, ratio_revenue }, index) => ({
+        name: name,
+        y: revenue || ratio_revenue,
+        color: colors[index % colors.length]
+      })).sort((a, b) => b.y - a.y),
+    }
+  ]
+}));
+
+const chartOptionsOutput = computed(() => ({
+  chart: {
+    type: "pie",
+    width: chartWidth.value || 500,
+    style: {
+      fontFamily: "Inter",
+    },
+  },
+  title: {
+    text: "Tỷ trọng top 10 thương hiệu theo sản lượng *",
+    style: {
+      fontSize: '14px',
+      color: '#241E46',
+      fontWeight: 700,
+      fontFamily: 'Inter'
+    }
+  },
+  legend: {
+    enabled: true,
+    layout: 'vertical',
+    align: 'left',
+    verticalAlign: 'middle',
+    symbolHeight: 10,
+    symbolWidth: 10,
+    itemStyle: {
+      fontSize: '12px',
+      color: '#241E46',
+      fontWeight: 400,
+      fontFamily: 'Inter'
+    }
+  },
+  tooltip: {
+    enabled: false,
+  },
+  plotOptions: {
+    pie: {
+      cursor: "pointer",
+      showInLegend: true,
+      innerSize: '50%',
+      borderWidth: 1,
+      borderColor: null,
+      dataLabels: {
+        enabled: true,
+        connectorShape: 'crookedLine',
+        format: '{point.name}: {point.percentage:.1f}%',
+        style: {
+          fontSize: '12px',
+          color: '#241E46',
+          fontWeight: 400,
+          fontFamily: 'Inter'
+        },
+      }
+    },
+    series: {
+      enableMouseTracking: false
+    }
+  },
+  series: [
+    {
+      name: 'Doanh số (Đồng)',
+      data: props.data.data_analytic.by_brand.lst_top_brand_sale.map(({ name, sale, ratio_sale }, index) => ({
+        name: name,
+        y: sale || ratio_sale,
+        color: colors[index % colors.length]
+      })).sort((a, b) => b.y - a.y),
+    }
+  ]
+}));
 </script>
 
 <template>
@@ -24,88 +189,20 @@ const props = defineProps({
       class="border statistic-block"
   >
     <div class="statistic-item__title">
-      <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
-           xmlns="http://www.w3.org/2000/svg">
+      <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
         <div class="statistic-item__title">Thương hiệu</div>
+        <div style="font-size: 14px; color: #716B95">Top thương hiệu trong 365 ngày qua</div>
       </div>
     </div>
-    <div class="pie_chart">
-      <div class="pie_chart_item">
-        <div class="chart-title">
-          Top thương hiệu theo Doanh số
-        </div>
-        <a-table
-            :columns="[
-            {
-              title: 'STT',
-              dataIndex: 'stt',
-              key: 'stt',
-              width: 100,
-              align: 'center',
-              slots: {customRender: 'stt'}
-            },
-            {
-              title: 'Thương hiệu',
-              dataIndex: 'brand_name',
-              key: 'brand_name',
-              align: 'center',
-              slots: {customRender: 'brand_name'}
-            },
-          ]"
-            :pagination="false"
-            :data-source="props.data.data_analytic.by_brand.lst_top_brand_revenue.map(
-            ({ name = '' } = {}, idx=0) => ({
-              stt: idx + 1,
-              brand_name: name,
-            })
-          )"
-        >
-          <template #brand_name="{text}">
-            <BlurContent :is-blurred="isHideContent">
-              {{ text }}
-            </BlurContent>
-          </template>
-        </a-table>
+    <div style="display: flex; justify-content: space-between">
+      <div style="pointer-events: none">
+        <highchart v-if="renderChartSales" :options="chartOptionsSales"/>
       </div>
-      <div class="pie_chart_item">
-        <div class="chart-title">
-          Top thương hiệu theo Số sản phẩm đã bán
-        </div>
-        <a-table
-            :columns="[
-            {
-              title: 'STT',
-              dataIndex: 'stt',
-              key: 'stt',
-              width: 100,
-              align: 'center',
-              slots: {customRender: 'stt'}
-            },
-            {
-              title: 'Thương hiệu',
-              dataIndex: 'brand_name',
-              key: 'brand_name',
-              align: 'center',
-              slots: {customRender: 'brand_name'}
-            },
-          ]"
-            :pagination="false"
-            :data-source="props.data.data_analytic.by_brand.lst_top_brand_sale.map(
-            ({ name = '' } = {}, idx=0) => ({
-              stt: idx + 1,
-              brand_name: name,
-            })
-          )"
-        >
-          <template #brand_name="{text}">
-            <BlurContent :is-blurred="isHideContent">
-              {{ text }}
-            </BlurContent>
-          </template>
-        </a-table>
+      <div style="pointer-events: none">
+        <highchart v-if="renderChartOutput" :options="chartOptionsOutput"/>
       </div>
     </div>
     <InsightBlock

@@ -84,15 +84,11 @@ const top5Shops = (): string[] => {
         </span>
         trong {{ diffMonths }}.
         Đánh giá thị trường {{ props.data.name }}, phân khúc giá có doanh số cao nhất là từ
-        <BlurContent :is-hide-content="isHideContent">
           {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
           {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}
-        </BlurContent>
           . Những thương hiệu {{ props.data.name }} được phân phối và
         bán chạy nhất là
-        <BlurContent :is-hide-content="isHideContent">
-          <span>{{ top5Shops().join(', ') }}</span>
-        </BlurContent>
+          <b>{{ top5Shops().join(', ') }}</b>
         v.v...
       </div>
     </div>
@@ -102,7 +98,7 @@ const top5Shops = (): string[] => {
 <style scoped lang="scss">
 .overview {
   padding: 24px;
-  border-radius: 8px;
+  border-radius: 16px;
   border: 1px solid #EEEBFF;
   display: flex;
   flex-direction: column;

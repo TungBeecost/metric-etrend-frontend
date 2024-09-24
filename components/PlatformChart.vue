@@ -63,7 +63,7 @@ const chartWidth = computed(() => {
   } else if (windowWidth.value < 1500) {
     return 400;
   } else {
-    return 500;
+    return 900;
   }
 });
 const chartOptions = computed(() => ({

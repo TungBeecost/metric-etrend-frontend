@@ -74,6 +74,7 @@ const displayTableOfContent = computed(() => {
         {title: 'Quy mô thị trường'},
         {title: 'Doanh số, sản phẩm đã bán theo tháng'},
         {title: 'Tỷ trọng doanh số theo sàn'},
+        {title: 'Thống kê doanh số theo sàn'},
       ],
     },
     {
@@ -93,6 +94,8 @@ const displayTableOfContent = computed(() => {
       title: 'Gian hàng hàng đầu',
       children: [
         {title: 'Tỷ trọng doanh số theo loại gian hàng'},
+        {title: 'Tỷ trọng doanh số top gian hàng bán chạy'},
+        {title: 'Tỷ trọng sản lượng top gian hàng bán chạy'},
         {title: 'Thống kê top gian hàng hàng đầu'},
       ],
     },
@@ -100,6 +103,7 @@ const displayTableOfContent = computed(() => {
       title: 'Sản phẩm bán chạy',
       children: [
         {title: 'Top sản phẩm bán chạy'},
+        {title: 'Top sản phẩm mới bán chạy'},
       ],
     },
   ]
@@ -136,17 +140,16 @@ const displayTableOfContent = computed(() => {
 <style scoped lang="scss">
 .report_content {
   padding: 24px;
-  border-radius: 8px;
+  border-radius: 16px;
   border: 1px solid #EEEBFF;
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
 .statistic-item__title {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
   font-size: 24px;
   font-weight: 700;
   color: #241E46;
@@ -155,12 +158,13 @@ const displayTableOfContent = computed(() => {
 .content {
   font-size: 14px;
   line-height: 24px;
+  padding-left: 36px;
 }
 
 .title {
   font-size: 16px;
   font-weight: 600;
-  margin-top: 8px;
+  margin-top: 10px;
   color: #241E46;
 }
 
@@ -169,7 +173,7 @@ ul {
 }
 
 li {
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 @media (max-width: 768px) {

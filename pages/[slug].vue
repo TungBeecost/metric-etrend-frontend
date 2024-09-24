@@ -208,12 +208,26 @@ onUnmounted(() => {
       <div class="breadcrumbs">
         <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
       </div>
-      <h1 class="report-title">
-        {{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT
+      <h1 style="font-size: 36px; font-weight: 700; line-height: 48px; color: #101828;">
+        Báo cáo {{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT
       </h1>
+      <div class="container_report_detail">
+        <div class="container_report_detail_left">
+          <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
+          <report-content :data="data?.reportDetail"/>
+        </div>
+        <div class="container_report_detail_right">
+          <indept-report-link v-if="userInfo.current_plan.plan_code && userInfo.current_plan.plan_code !== 'e_community'
+         && data.reportDetail && !checkLevelCategory" :slug="route.params.slug" :data="data.reportDetail"/>
+          <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>
+        </div>
+      </div>
     </div>
     <div class="container default_section">
       <div class="general_overview_container">
+        <h1 class="report-title">
+          Báo cáo tổng quan thị trường Dép nam trên sàn TMĐT
+        </h1>
         <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
@@ -221,15 +235,15 @@ onUnmounted(() => {
         <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
       </div>
-      <div class="different_info">
-        <unlock-report v-if="!userInfo.current_plan.plan_code || userInfo.current_plan.plan_code === 'e_community'" :data="data.reportDetail" :check-level-category="checkLevelCategory"/>
-        <indept-report-link v-if="userInfo.current_plan.plan_code && userInfo.current_plan.plan_code !== 'e_community'
-         && data.reportDetail && !checkLevelCategory" :slug="route.params.slug" :data="data.reportDetail"/>
-        <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
-        <report-content :data="data?.reportDetail"/>
-        <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>
-        <maybe-interested v-if="!isMobile" :recomends="data.listRecommend"/>
-      </div>
+<!--      <div class="different_info">-->
+<!--        <unlock-report v-if="!userInfo.current_plan.plan_code || userInfo.current_plan.plan_code === 'e_community'" :data="data.reportDetail" :check-level-category="checkLevelCategory"/>-->
+<!--        <indept-report-link v-if="userInfo.current_plan.plan_code && userInfo.current_plan.plan_code !== 'e_community'-->
+<!--         && data.reportDetail && !checkLevelCategory" :slug="route.params.slug" :data="data.reportDetail"/>-->
+<!--        <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>-->
+<!--        <report-content :data="data?.reportDetail"/>-->
+<!--        <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>-->
+<!--        <maybe-interested v-if="!isMobile" :recomends="data.listRecommend"/>-->
+<!--      </div>-->
     </div>
     <maybe-interested v-if="isMobile" :recomends="data?.listRecommend"/>
     <poster-detail-report :list-suggest="tagSuggestions"/>
@@ -274,17 +288,31 @@ onUnmounted(() => {
   .title {
     display: flex;
     flex-direction: column;
+    padding-bottom: 80px;
 
     .breadcrumbs {
       display: flex;
       gap: 10px;
     }
 
-    .report-title {
-      font-size: 36px;
-      font-weight: 700;
-      line-height: 48px;
-      color: #101828;
+    .container_report_detail{
+      display: flex;
+      gap: 24px;
+
+      .container_report_detail_left{
+        flex:0.7;
+        display: flex;
+        flex-direction: column;
+        gap: 16px
+      }
+
+      .container_report_detail_right{
+        flex:0.3;
+        display: flex;
+        flex-direction: column;
+        gap: 16px
+      }
+
     }
   }
 
@@ -293,18 +321,18 @@ onUnmounted(() => {
     gap: 20px;
 
     .general_overview_container {
-      flex: 0.7;
       display: flex;
       flex-direction: column;
       gap: 16px;
+
+      .report-title {
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 48px;
+        color: #101828;
+      }
     }
 
-    .different_info {
-      flex: 0.3;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
   }
 }
 

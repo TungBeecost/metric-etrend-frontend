@@ -65,6 +65,7 @@ const slideComponents = [
 const props = defineProps({
   data: Object,
   dynamicScale: Boolean,
+  isSlugPage: Boolean || false,
 });
 
 const index = ref(0);
@@ -74,8 +75,12 @@ const parentHeight = ref(380);
 
 const handleResize = () => {
   const isMobile = window.innerWidth < 768;
-  const width = isMobile ? 320 : 540;
-  const height = isMobile ? 230 : 380;
+  let width = isMobile ? 320 : 540;
+  let height = isMobile ? 230 : 380;
+  if(props.isSlugPage){
+    width = 400;
+    height = 285;
+  }
 
   parentWidth.value = `${width}px`;
   parentHeight.value = (parseInt(parentWidth.value) * height) / width;
