@@ -112,7 +112,9 @@ const navigateToHome = () => {
 };
 
 const navigateToPricing = () => {
-  navigateTo(NAVIGATIONS.pricing);
+  const CAMPAIGN_URL = 'https://dangky.metric.vn/ereportoffer_300/?utm_source=website&utm_medium=ereport_t9&pub=popup';
+  window.open(CAMPAIGN_URL, '_blank');
+  // navigateTo(NAVIGATIONS.pricing);
 };
 
 // Track GTM events
