@@ -62,7 +62,7 @@ const isHideContentBasic = computed(() => {
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContent ? 6 : 12)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContent ? 10 : 15)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
@@ -93,7 +93,7 @@ const isHideContentBasic = computed(() => {
           <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
         </svg>
         <div>
-          <div class="statistic-item__title">Top sản phẩm mới đang bán chạy</div>
+          <div class="statistic-item__title">Sản phẩm trending</div>
           <div
               v-if="
             props.data.data_analytic &&
@@ -108,7 +108,7 @@ const isHideContentBasic = computed(() => {
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(0, isHideContent ? 6 : 12)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(0, isHideContent ? 10 : 15)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
@@ -528,7 +528,7 @@ const isHideContentBasic = computed(() => {
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 16px;
   margin-bottom: 16px;
 

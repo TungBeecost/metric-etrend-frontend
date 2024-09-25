@@ -1,11 +1,12 @@
 <script setup>
-import {defineProps, computed} from 'vue';
+import {defineProps, computed, ref, onMounted} from 'vue';
 import PieChart from "~/components/report/PieChart.vue";
 import {formatSortTextCurrency, getUrlImageOption, goToUrl} from "~/helpers/utils.js";
 import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
 
 const config = useRuntimeConfig();
-
+const renderChartSales = ref(false);
+const renderChartOutput = ref(false);
 const props = defineProps({
   data: {
     type: Object,
@@ -21,8 +22,15 @@ const props = defineProps({
   },
 });
 
-console.log('TopShopStatistic', props.data);
+const windowWidth = ref(window.innerWidth);
 
+onMounted(() => {
+  window.addEventListener('resize', () => {
+    windowWidth.value = window.innerWidth;
+  });
+  renderChartSales.value = true;
+  renderChartOutput.value = true;
+});
 const isHideContentBasic = computed(() => {
   console.log('isHideContentBasic', config.public.SSR);
   if (config.public.SSR === 'true') {
@@ -32,6 +40,180 @@ const isHideContentBasic = computed(() => {
 });
 
 const formatNumber = (value = "") => value.toLocaleString("vi-VN");
+
+const chartWidth = computed(() => {
+  if (windowWidth.value < 1200) {
+    return 300;
+  } else if (windowWidth.value < 1500) {
+    return 400;
+  } else {
+    return 700;
+  }
+});
+
+const colors = [
+  '#8B54D9', '#F1584B', '#8BA87C', '#E85912', '#42A4FF',
+  '#241E46', '#FBE13E', '#FBA140', '#5473EF', '#3DCDCD'
+];
+
+const top12Shops = computed(() => props.data.data_analytic.by_shop.lst_shop.slice(0, 12));
+
+
+const truncateName = (name) => {
+  return name.length > 10 ? name.substring(0, 10) + '...' : name;
+};
+
+const chartOptionsSales = computed(() => ({
+  chart: {
+    type: "pie",
+    width: chartWidth.value || 500,
+    style: {
+      fontFamily: "Inter",
+    },
+  },
+  title: {
+    text: "Tỷ trọng top 10 gian hàng theo doanh số",
+    style: {
+      fontSize: '14px',
+      color: '#241E46',
+      fontWeight: 700,
+      fontFamily: 'Inter'
+    }
+  },
+  legend: {
+    enabled: true,
+    layout: 'vertical',
+    align: 'left',
+    verticalAlign: 'middle',
+    symbolHeight: 10,
+    symbolWidth: 10,
+    itemStyle: {
+      fontSize: '12px',
+      color: '#241E46',
+      fontWeight: 400,
+      fontFamily: 'Inter'
+    }
+  },
+  tooltip: {
+    enabled: false,
+  },
+  plotOptions: {
+    pie: {
+      cursor: "pointer",
+      showInLegend: true,
+      innerSize: '50%',
+      borderWidth: 1,
+      borderColor: null,
+      dataLabels: {
+        enabled: true,
+        connectorShape: 'crookedLine',
+        formatter: function() {
+          return `${truncateName(this.point.name)}: ${this.point.percentage.toFixed(1)}%`;
+        },
+        style: {
+          fontSize: '12px',
+          color: '#241E46',
+          fontWeight: 400,
+          fontFamily: 'Inter'
+        },
+      }
+    },
+    series: {
+      enableMouseTracking: false
+    }
+  },
+  series: [
+    {
+      name: 'Doanh số (Đồng)',
+      data: props.data.data_analytic.by_shop.lst_top_shop.map(({ name, revenue, ratio_revenue }, index) => ({
+        name: name,
+        y: revenue || ratio_revenue,
+        color: colors[index % colors.length]
+      })).sort((a, b) => b.y - a.y),
+    }
+  ]
+}));
+
+const sortedTopShops = computed(() => {
+  return props.data.data_analytic.by_shop.lst_shop
+      .slice() // Create a shallow copy to avoid mutating the original array
+      .sort((a, b) => b.sale - a.sale)
+      .slice(0, 10)
+      .map(({ name, sale }, index) => ({
+        name: name,
+        y: sale,
+        color: colors[index % colors.length]
+      }))
+      .sort((a, b) => b.y - a.y);
+});
+
+
+const chartOptionsOutput = computed(() => ({
+  chart: {
+    type: "pie",
+    width: chartWidth.value || 500,
+    style: {
+      fontFamily: "Inter",
+    },
+  },
+  title: {
+    text: "Tỷ trọng top 10 thương hiệu theo sản lượng *",
+    style: {
+      fontSize: '14px',
+      color: '#241E46',
+      fontWeight: 700,
+      fontFamily: 'Inter'
+    }
+  },
+  legend: {
+    enabled: true,
+    layout: 'vertical',
+    align: 'left',
+    verticalAlign: 'middle',
+    symbolHeight: 10,
+    symbolWidth: 10,
+    itemStyle: {
+      fontSize: '12px',
+      color: '#241E46',
+      fontWeight: 400,
+      fontFamily: 'Inter'
+    }
+  },
+  tooltip: {
+    enabled: false,
+  },
+  plotOptions: {
+    pie: {
+      cursor: "pointer",
+      showInLegend: true,
+      innerSize: '50%',
+      borderWidth: 1,
+      borderColor: null,
+      dataLabels: {
+        enabled: true,
+        connectorShape: 'crookedLine',
+        formatter: function() {
+          return `<span title="${this.point.name}">${truncateName(this.point.name)}: ${this.point.percentage.toFixed(1)}%</span>`;
+        },
+        style: {
+          fontSize: '12px',
+          color: '#241E46',
+          fontWeight: 400,
+          fontFamily: 'Inter'
+        },
+      }
+    },
+    series: {
+      enableMouseTracking: false
+    }
+  },
+  series: [
+    {
+      name: 'Doanh số (Đồng)',
+      data: sortedTopShops.value,
+    }
+  ]
+}));
 </script>
 
 <template>
@@ -67,7 +249,7 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
           <a-table
               :columns="[
             {
-              title: 'Loại shop',
+              title: 'Loại gian hàng',
               dataIndex: 'shop_type',
               key: 'shop_type',
               align: 'center',
@@ -75,7 +257,7 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
               slots: {customRender: 'shop_type'}
             },
             {
-              title: 'Số lượng shop',
+              title: 'Số gian hàng',
               dataIndex: 'shop_count',
               key: 'shop_count',
               align: 'right',
@@ -114,7 +296,6 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
       >
         <PieChart
             title="Tỷ trọng doanh số theo loại gian hàng"
-            subtitle="Shop Mall và Shop thường"
             :is-hide-content="isHideContentBasic"
             :series="[
             {
@@ -136,63 +317,23 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
         />
       </div>
     </div>
-    <div style="width: 100%;max-width: 800px; margin: auto; position: relative;">
-      <a-table
-          :columns="[
-        {
-          title: 'STT',
-          dataIndex: 'stt',
-          key: 'stt',
-          width: 100,
-          align: 'center',
-        },
-        {
-          title: 'Kênh bán',
-          dataIndex: 'platform',
-          key: 'platform',
-          align: 'center',
-          slots: {customRender: 'platform'}
-        },
-        {
-          title: 'Tên shop',
-          dataIndex: 'shop',
-          key: 'shop',
-          align: 'center',
-          width: '50%',
-          slots: {customRender: 'shop'}
-        },
-      ]"
-          :pagination="false"
-          :data-source="props.data.data_analytic.by_shop.lst_shop.slice(0, 10).map((shop, index) => ({...shop, stt: index + 1}))"
-      >
-        <template #platform="{record}">
-          <div class="platform-column">
-            <img :src="getPlatformById(record.platform_id).urlLogo" class="platform-icon"/>
-          </div>
-        </template>
-        <template #shop="{record}">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <div
-                style="width: 32px; height: 32px;"
-                @click="goToUrl(getUrlAnalyticShop(record.url_shop), '_blank')"
-            >
-              <img :src="getUrlImageOption(record.url_image, 'thumbnail')" style="width: 100%; background-size: cover;">
-            </div>
-            <div @click="goToUrl(record.url_shop, '_blank')" style="cursor: pointer">
-              {{ record.name }}
-              <img v-if="record.official_type === 1" src="/icons/mall_flag.svg"
-                   style="width: 30px; transform: translateY(2px); margin-left: 4px;"/>
-            </div>
-          </div>
-        </template>
-      </a-table>
-
-      <ChartMask
-          v-if="isHideContentBasic"
-          :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
-          :ok-button="isHideContentBasic ? '' :'Xem báo cáo'"
-          :report="data"
-      />
+    <div>
+      <div style="display: flex; justify-content: space-between">
+        <div style="pointer-events: none">
+          <highchart v-if="renderChartSales" :options="chartOptionsSales"/>
+        </div>
+        <div style="pointer-events: none">
+          <highchart v-if="renderChartOutput" :options="chartOptionsOutput"/>
+        </div>
+      </div>
+    </div>
+    <div class="logo-grid">
+      <div v-for="(record, index) in top12Shops" :key="index" class="logo-item">
+        <img :src="getUrlImageOption(record.url_image, 'thumbnail')" style="width: 64px; height: 64px; border-radius: 8px; background-size: cover;">
+        <p style="font-size: 12px;font-weight: 500;line-height: 24px;overflow: hidden; text-align: center">
+          {{record.name}}
+        </p>
+      </div>
     </div>
     <InsightBlock
         v-if="
@@ -408,6 +549,20 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
   display: flex;
   flex-direction: column;
   gap: 40px;
+}
+
+.logo-grid{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  overflow: hidden;
+
+  .logo-item{
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
 }
 
 @media (max-width: 768px) {

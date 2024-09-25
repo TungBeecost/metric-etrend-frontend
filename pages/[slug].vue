@@ -17,6 +17,7 @@ import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
 import { useCurrentUser } from "~/stores/current-user.js";
 import { useGTM } from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
+import PopularRelateKeywords from "~/components/report/PopularRelateKeywords.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -53,9 +54,9 @@ const trackEvent = (event, data) => {
   }
 };
 
-const fetchRecommend = async (categoryReportId) => {
+const fetchRecommend = async (categoryReportId, number_of_reports = 15) => {
   try {
-    return await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.list_recomend.endpoint}?category_report_id=${categoryReportId}`);
+    return await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.list_recomend.endpoint}?category_report_id=${categoryReportId}&number_of_reports=${number_of_reports}`);
   } catch (error) {
     return [];
   }
@@ -142,6 +143,7 @@ const { data: tagSuggestions } = await useAsyncData(
       return await fetchSuggest(data?.reportDetail?.name, { limit: 5 });
     }
 );
+
 
 const isMobile = ref(window?.innerWidth <= 768);
 
@@ -245,7 +247,7 @@ onUnmounted(() => {
 <!--        <maybe-interested v-if="!isMobile" :recomends="data.listRecommend"/>-->
 <!--      </div>-->
     </div>
-    <maybe-interested v-if="isMobile" :recomends="data?.listRecommend"/>
+    <maybe-interested class="default_section" :recomends="data?.listRecommend"/>
     <poster-detail-report :list-suggest="tagSuggestions"/>
   </div>
   <a-modal v-if="showModal" v-model:visible="showModal" width="600px" :footer="null" @ok="handleOk">

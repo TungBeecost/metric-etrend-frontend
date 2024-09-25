@@ -9,7 +9,6 @@ const props = defineProps({
   }
 });
 
-
 const handleItemClick = (item: LstRecommed) => {
   if (item.source === 'marketing') {
     navigateTo(`${NAVIGATIONS.home}/insight/${item.slug}`);
@@ -52,23 +51,44 @@ const handleItemClick = (item: LstRecommed) => {
         Có thể bạn quan tâm
       </div>
     </div>
-    <div v-for="item in props.recomends" :key="item.id" class="item" @click="handleItemClick(item)">
-      <div v-if="item.url_thumbnail" class="image">
-        <img :src="item.url_thumbnail" alt="">
-      </div>
-      <div class="info">
-        <div>
-        <span class="report_type">
-          <span v-if="item.category_report_name === null">Báo cáo khác</span>
-          <span v-else>{{ item.source === 'marketing'? 'Báo cáo khác | ' : 'Báo cáo nhóm hàng | ' }}</span>
-        </span>
-        <span v-if="item.category_report_name" class="breadcrumb">{{ item.category_report_name }}
-        </span>
+    <div v-if="props.recomends.length > 5" class="grid">
+      <div v-for="item in props.recomends" :key="item.id" class="item" @click="handleItemClick(item)">
+        <div v-if="item.url_thumbnail" class="image">
+          <img :src="item.url_thumbnail" alt="">
         </div>
-        <nuxt-link :to="item.source === 'marketing' ? `/insight/${item.slug}` : `/${item.slug}`" class="name">
-          {{ item.source === 'marketing' ? '' : 'Báo cáo' }}
-          {{ item.name.replace('Báo cáo', '') }}
-        </nuxt-link>
+        <div class="info">
+          <div class="line-clamp__1">
+            <span class="report_type">
+              <span v-if="item.category_report_name === null">Báo cáo khác</span>
+              <span v-else>{{ item.source === 'marketing'? 'Báo cáo khác | ' : 'Báo cáo nhóm hàng | ' }}</span>
+            </span>
+            <span v-if="item.category_report_name" class="breadcrumb">{{ item.category_report_name }}</span>
+          </div>
+          <nuxt-link :to="item.source === 'marketing' ? `/insight/${item.slug}` : `/${item.slug}`" class="name">
+            {{ item.source === 'marketing' ? '' : 'Báo cáo' }}
+            {{ item.name.replace('Báo cáo', '') }}
+          </nuxt-link>
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      <div v-for="item in props.recomends" :key="item.id" class="item" @click="handleItemClick(item)">
+        <div v-if="item.url_thumbnail" class="image">
+          <img :src="item.url_thumbnail" alt="">
+        </div>
+        <div class="info">
+          <div class="line-clamp__1">
+            <span class="report_type">
+              <span v-if="item.category_report_name === null">Báo cáo khác</span>
+              <span v-else>{{ item.source === 'marketing'? 'Báo cáo khác | ' : 'Báo cáo nhóm hàng | ' }}</span>
+            </span>
+            <span v-if="item.category_report_name" class="breadcrumb">{{ item.category_report_name }}</span>
+          </div>
+          <nuxt-link :to="item.source === 'marketing' ? `/insight/${item.slug}` : `/${item.slug}`" class="name">
+            {{ item.source === 'marketing' ? '' : 'Báo cáo' }}
+            {{ item.name.replace('Báo cáo', '') }}
+          </nuxt-link>
+        </div>
       </div>
     </div>
   </div>
@@ -84,7 +104,6 @@ const handleItemClick = (item: LstRecommed) => {
   border: 1px solid #EEEBFF;
   background: #FFF;
   gap: 24px;
-
   margin-bottom: 16px;
 
   .title {
@@ -98,6 +117,13 @@ const handleItemClick = (item: LstRecommed) => {
       color: #241E46;
       line-height: 24px;
     }
+  }
+
+  .grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
   }
 
   .item {
@@ -114,7 +140,6 @@ const handleItemClick = (item: LstRecommed) => {
         width: 60px;
         height: 60px;
         border-radius: 8px;
-
         object-fit: cover;
       }
     }
@@ -126,7 +151,7 @@ const handleItemClick = (item: LstRecommed) => {
       padding: 8px 0;
       flex: 1 0 0;
 
-      .report_type{
+      .report_type {
         font-size: 14px;
         color: #716B95;
         font-weight: 400;

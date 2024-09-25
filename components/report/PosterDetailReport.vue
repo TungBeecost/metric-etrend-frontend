@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type SearchReport from "~/components/search/search-report.vue";
 import {NAVIGATIONS} from "~/constant/constains";
+import PopularRelateKeywords from "~/components/report/PopularRelateKeywords.vue";
 
 const onClickSuggestion = (suggestion: string) => {
   navigateTo(`${NAVIGATIONS.search}?search=${suggestion}`);
