@@ -4,10 +4,8 @@ import { onMounted, h, defineEmits, onUnmounted } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router';
 import { useCurrentUser } from "~/stores/current-user";
 
-// Define emits
 const emit = defineEmits(['handle-advertisement']);
 
-// Set a variable to store the timeout ID
 let notificationTimeout: number | undefined;
 
 const svgIcon = () => (
@@ -155,14 +153,12 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  // Clear the timeout if the component is unmounted before the delay completes
   if (notificationTimeout) {
     window.clearTimeout(notificationTimeout);
   }
   window.removeEventListener('close-advertisement', closeNotification);
 });
 
-// Handle route changes to close notification
 onBeforeRouteLeave(() => {
   closeNotification();
 });
