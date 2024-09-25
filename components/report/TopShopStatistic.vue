@@ -80,7 +80,7 @@ const chartOptionsSales = computed(() => ({
     }
   },
   legend: {
-    enabled: true,
+    enabled: !isHideContentBasic.value,
     layout: 'vertical',
     align: 'left',
     verticalAlign: 'middle',
@@ -107,7 +107,10 @@ const chartOptionsSales = computed(() => ({
         enabled: true,
         connectorShape: 'crookedLine',
         formatter: function() {
-          return `${truncateName(this.point.name)}: ${this.point.percentage.toFixed(1)}%`;
+          if (isHideContentBasic.value) {
+            return `<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>`;
+          }
+          return `<span style="font-weight: 500">${truncateName(this.point.name)}</span>: <span style="color: #E85912">${this.point.percentage.toFixed(1)}%</span>`;
         },
         style: {
           fontSize: '12px',
@@ -135,7 +138,7 @@ const chartOptionsSales = computed(() => ({
 
 const sortedTopShops = computed(() => {
   return props.data.data_analytic.by_shop.lst_shop
-      .slice() // Create a shallow copy to avoid mutating the original array
+      .slice()
       .sort((a, b) => b.sale - a.sale)
       .slice(0, 10)
       .map(({ name, sale }, index) => ({
@@ -165,7 +168,7 @@ const chartOptionsOutput = computed(() => ({
     }
   },
   legend: {
-    enabled: true,
+    enabled: !isHideContentBasic.value,
     layout: 'vertical',
     align: 'left',
     verticalAlign: 'middle',
@@ -192,7 +195,10 @@ const chartOptionsOutput = computed(() => ({
         enabled: true,
         connectorShape: 'crookedLine',
         formatter: function() {
-          return `<span title="${this.point.name}">${truncateName(this.point.name)}: ${this.point.percentage.toFixed(1)}%</span>`;
+          if (isHideContentBasic.value) {
+            return `<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>`;
+          }
+          return `<span style="font-weight: 500">${truncateName(this.point.name)}</span>: <span style="color: #E85912">${this.point.percentage.toFixed(1)}%</span>`;
         },
         style: {
           fontSize: '12px',
@@ -331,10 +337,13 @@ const chartOptionsOutput = computed(() => ({
     </div>
     <div class="logo-grid">
       <div v-for="(record, index) in top12Shops" :key="index" class="logo-item">
-        <img :src="getUrlImageOption(record.url_image, 'thumbnail')" style="width: 64px; height: 64px; border-radius: 8px; background-size: cover;">
-        <p style="font-size: 12px;font-weight: 500;line-height: 24px;overflow: hidden; text-align: center">
-          {{record.name}}
-        </p>
+        <img :class="{ 'blurred': isHideContentBasic }"  :src="getUrlImageOption(record.url_image, 'thumbnail')" style="width: 64px; height: 64px; border-radius: 8px; background-size: cover;">
+        <BlurContent :is-hide-content="isHideContentBasic">
+          <p style="font-size: 12px;font-weight: 500;line-height: 24px;overflow: hidden; text-align: center">
+            {{record.name}}
+          </p>
+        </BlurContent>
+
       </div>
     </div>
     <InsightBlock
@@ -394,7 +403,9 @@ const chartOptionsOutput = computed(() => ({
         .
       </li>
     </InsightBlock>
+
   </div>
+
 </template>
 
 <style lang="scss">
@@ -558,6 +569,7 @@ const chartOptionsOutput = computed(() => ({
   grid-template-columns: repeat(6, 1fr);
   overflow: hidden;
 
+
   .logo-item{
     padding: 12px;
     display: flex;
@@ -565,6 +577,10 @@ const chartOptionsOutput = computed(() => ({
     align-items: center;
     gap: 16px;
   }
+}
+
+.blurred {
+  filter: blur(4px);
 }
 
 @media (max-width: 768px) {

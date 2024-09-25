@@ -159,6 +159,7 @@ const displayTableOfContent = computed(() => {
   font-size: 14px;
   line-height: 24px;
   padding-left: 36px;
+  padding-top: 8px;
 }
 
 .title {

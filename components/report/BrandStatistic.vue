@@ -1,6 +1,6 @@
 <script setup>
 import { computed, defineProps, ref, onMounted } from 'vue';
-
+import Highcharts from 'highcharts';
 const props = defineProps({
   data: {
     type: Object,
@@ -57,7 +57,7 @@ const chartOptionsSales = computed(() => ({
     }
   },
   legend: {
-    enabled: true,
+    enabled: !props.isHideContent,
     layout: 'vertical',
     align: 'left',
     verticalAlign: 'middle',
@@ -83,7 +83,12 @@ const chartOptionsSales = computed(() => ({
       dataLabels: {
         enabled: true,
         connectorShape: 'crookedLine',
-        format: '{point.name}: {point.percentage:.1f}%',
+        formatter: function () {
+          if (props.isHideContent) {
+            return '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
+          }
+          return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+        },
         style: {
           fontSize: '12px',
           color: '#241E46',
@@ -126,7 +131,7 @@ const chartOptionsOutput = computed(() => ({
     }
   },
   legend: {
-    enabled: true,
+    enabled: !props.isHideContent,
     layout: 'vertical',
     align: 'left',
     verticalAlign: 'middle',
@@ -152,7 +157,12 @@ const chartOptionsOutput = computed(() => ({
       dataLabels: {
         enabled: true,
         connectorShape: 'crookedLine',
-        format: '{point.name}: {point.percentage:.1f}%',
+        formatter: function () {
+          if (props.isHideContent) {
+            return '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
+          }
+          return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+        },
         style: {
           fontSize: '12px',
           color: '#241E46',

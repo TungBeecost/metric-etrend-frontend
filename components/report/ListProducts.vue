@@ -62,7 +62,7 @@ const isHideContentBasic = computed(() => {
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContent ? 10 : 15)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContentBasic ? 10 : 15)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
@@ -108,11 +108,11 @@ const isHideContentBasic = computed(() => {
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(0, isHideContent ? 10 : 15)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(0, isHideContentBasic ? 10 : 15)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
-            :is-hide-content="isHideContent"
+            :is-hide-content="isHideContent || isHideContentBasic"
         />
         <ChartMask
             v-if="isHideContentBasic"
@@ -540,7 +540,7 @@ const isHideContentBasic = computed(() => {
 
 #list-products {
   padding: 24px 24px 0 24px;
-  border-radius: 8px;
+  border-radius: 16px;
   border: 1px solid #EEEBFF;
   display: flex;
   flex-direction: column;
