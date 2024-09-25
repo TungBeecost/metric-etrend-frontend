@@ -9,7 +9,7 @@ import useBEEndpoint from "~/composables/useBEEndpoint";
 
 const route = useRoute()
 const {fetchListRecommendMarketing} = useSearchReport()
-
+const currentUserStore = useCurrentUser();
 const data = ref({})
 
 const slug = route.params.slug;
@@ -77,8 +77,12 @@ const handleSubmitSuccess = () => {
 
 onMounted(() => {
   const unlockedMktReports = localStorage.getItem('report_mkt_unlocked');
-  if (unlockedMktReports === 'true') {
+  if (currentUserStore.authenticated) {
     isHideContent.value = false;
+  } else{
+    if (unlockedMktReports === 'true') {
+      isHideContent.value = false;
+    }
   }
   fetchReportData();
 });

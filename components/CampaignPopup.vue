@@ -22,7 +22,7 @@ const route = useRoute();
 
 // Constants
 const CAMPAIGN_CODE = 'campaign_t92024';
-const CAMPAIGN_IMG = 'https://storage.googleapis.com/ereport-static/%5Bereport%5D%20campaign-q3-2024-fullhd.png';
+const CAMPAIGN_IMG = 'https://storage.googleapis.com/ereport-static/%5Bereport%5D%20campaign-q3-2024-fullhd-2.png';
 const CAMPAIGN_URL = 'https://dangky.metric.vn/ereportoffer_300/?utm_source=website&utm_medium=ereport_t9&pub=popup';
 const CAMPAIGN_END_DATE = '2024-09-31';
 
