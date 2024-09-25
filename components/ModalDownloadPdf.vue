@@ -176,8 +176,13 @@ const discountPercentage = computed(() => {
             <div style="color: #716B95">hoặc</div>
             <a-button v-if="userInfo.current_plan.remain_claim_pdf"
                       :disabled="!canViewReport"
-                      style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center"
-                      class="download_report_button" @click="handleView">Xem báo cáo
+                      style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
+                      class="download_report_button" @click="handleView">
+              Xem báo cáo
+              <div style="position: absolute; top: -12px; right: -12px; background: #241E46; color: #FFFFFF; padding: 2px 4px">còn 3 lượt</div>
+              <svg style="position: absolute; top: 15px; right: -12px;" xmlns="http://www.w3.org/2000/svg" width="13" height="8" viewBox="0 0 13 8" fill="none">
+                <path d="M0 8L13 0H0V8Z" fill="#120B37"/>
+              </svg>
             </a-button>
           </div>
           <div v-if="!props.data.can_download" class="wallet_info">
