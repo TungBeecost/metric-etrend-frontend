@@ -1,8 +1,7 @@
 <script setup>
 import {defineProps, computed, ref, onMounted} from 'vue';
 import PieChart from "~/components/report/PieChart.vue";
-import {formatSortTextCurrency, getUrlImageOption, goToUrl} from "~/helpers/utils.js";
-import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
+import {formatSortTextCurrency, getUrlImageOption} from "~/helpers/utils.js";
 
 const config = useRuntimeConfig();
 const renderChartSales = ref(false);
@@ -326,6 +325,9 @@ const chartOptionsOutput = computed(() => ({
           <highchart v-if="renderChartOutput" :options="chartOptionsOutput"/>
         </div>
       </div>
+    </div>
+    <div style="color: #241E46; font-weight: 700; line-height: 22px; text-align: center">
+      Danh sách gian bán chạy theo doanh số trong nhóm hàng {{props.data.name}}
     </div>
     <div class="logo-grid">
       <div v-for="(record, index) in top12Shops" :key="index" class="logo-item">
