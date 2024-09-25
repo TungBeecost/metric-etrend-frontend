@@ -207,7 +207,7 @@ const chartOptionsOutput = computed(() => ({
         <div style="font-size: 14px; color: #716B95">Top thương hiệu trong 365 ngày qua</div>
       </div>
     </div>
-    <div style="display: flex; justify-content: space-between">
+    <div class="chart_item" >
       <div style="pointer-events: none">
         <highchart v-if="renderChartSales" :options="chartOptionsSales"/>
       </div>
@@ -662,6 +662,11 @@ const chartOptionsOutput = computed(() => ({
   }
 }
 
+.chart_item{
+  display: flex;
+  justify-content: space-between;
+}
+
 @media (min-width: 768px) {
   .main {
     padding: 24px;
@@ -722,6 +727,10 @@ const chartOptionsOutput = computed(() => ({
       margin-bottom: 16px;
     }
   }
+}
+
+.chart_item{
+  flex-direction: column;
 }
 
 .statistic-item__title {

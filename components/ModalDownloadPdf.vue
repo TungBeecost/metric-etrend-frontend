@@ -395,3 +395,13 @@ const discountPercentage = computed(() => {
   }
 }
 </style>
+
+<style lang="scss">
+  .ant-modal {
+    @media (max-width: 767px) {
+      top: 20px;
+      margin: 0 auto;
+    }
+  }
+
+</style>

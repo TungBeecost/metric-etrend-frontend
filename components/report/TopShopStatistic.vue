@@ -323,7 +323,7 @@ const chartOptionsOutput = computed(() => ({
       </div>
     </div>
     <div>
-      <div style="display: flex; justify-content: space-between">
+      <div class="chart_item">
         <div style="pointer-events: none">
           <highchart v-if="renderChartSales" :options="chartOptionsSales"/>
         </div>
@@ -495,6 +495,11 @@ const chartOptionsOutput = computed(() => ({
   }
 }
 
+.chart_item{
+  display: flex;
+  justify-content: space-between;
+}
+
 .statistic-item__title {
   display: flex;
   align-items: center;
@@ -584,6 +589,9 @@ const chartOptionsOutput = computed(() => ({
 }
 
 @media (max-width: 768px) {
+  .chart_item{
+    flex-direction: column;
+  }
   .pie_chart {
     flex-direction: column;
   }

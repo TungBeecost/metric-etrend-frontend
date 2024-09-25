@@ -132,7 +132,6 @@ const handleItemClick = (item: LstRecommed) => {
     justify-content: center;
     align-content: flex-start;
     gap: 16px;
-    flex-wrap: wrap;
     cursor: pointer;
 
     .image {
@@ -172,6 +171,14 @@ const handleItemClick = (item: LstRecommed) => {
         line-height: 24px;
         text-decoration: none;
       }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .maybe_interested {
+    .grid {
+      grid-template-columns: repeat(1, 1fr);
     }
   }
 }

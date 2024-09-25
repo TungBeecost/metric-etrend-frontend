@@ -77,7 +77,7 @@ const handleResize = () => {
   const isMobile = window.innerWidth < 768;
   let width = isMobile ? 320 : 540;
   let height = isMobile ? 230 : 380;
-  if(props.isSlugPage){
+  if(props.isSlugPage && !isMobile){
     width = 400;
     height = 285;
   }

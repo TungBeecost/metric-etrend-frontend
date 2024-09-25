@@ -65,7 +65,8 @@ const fetchRecommend = async (categoryReportId, number_of_reports = 12) => {
 };
 
 const handleScroll = () => {
-  showAdvertisement.value = window.scrollY > 850;
+  const scrollThreshold = isMobile.value ? 800 : 850;
+  showAdvertisement.value = window.scrollY > scrollThreshold;
 };
 
 const fetchReportData = async () => {
@@ -223,7 +224,7 @@ onUnmounted(() => {
       <div class="breadcrumbs">
         <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
       </div>
-      <h1 style="font-size: 36px; font-weight: 700; line-height: 48px; color: #101828;">
+      <h1 class="title_main">
         Báo cáo {{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT
       </h1>
       <div class="container_report_detail">
@@ -240,9 +241,9 @@ onUnmounted(() => {
     </div>
     <div class="container default_section">
       <div class="general_overview_container">
-        <h1 class="report-title">
+        <div class="title_main ">
           Báo cáo tổng quan thị trường Dép nam trên sàn TMĐT
-        </h1>
+        </div>
         <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
@@ -397,6 +398,10 @@ onUnmounted(() => {
   }
 }
 
+.title_main{
+  font-size: 36px; font-weight: 700; line-height: 48px; color: #101828;
+}
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s;
 }
@@ -405,13 +410,13 @@ onUnmounted(() => {
 }
 
 @media (max-width: 768px) {
-  .container_content {
-    .title {
-      .report-title {
-        font-size: 24px;
-        line-height: 32px;
-      }
-    }
+  .container_report_detail{
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .container_report_detail_right {
+    order: -1;
   }
 
   .different_info {
@@ -421,5 +426,14 @@ onUnmounted(() => {
   .different_info .maybe-interested-component {
     order: 2;
   }
+}
+
+.title{
+  padding-bottom: 16px !important;
+}
+
+.title_main{
+  font-size: 24px;
+  line-height: 32px;
 }
 </style>
