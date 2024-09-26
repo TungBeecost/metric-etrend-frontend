@@ -22,6 +22,7 @@ const reportFilterDisplayFields = computed(() => {
       'lst_bee_category_base_id',
       'is_smart_queries',
       'is_remove_fake_sale',
+      'methods_of_collecting'
       // 'lst_keyword_exclude',
     ]
   }
@@ -32,6 +33,7 @@ const reportFilterDisplayFields = computed(() => {
     'lst_keyword',
     'is_smart_queries',
     'is_remove_fake_sale',
+    'methods_of_collecting'
     // 'lst_keyword_exclude',
   ]
 })
@@ -52,6 +54,7 @@ const fieldLabel: FieldLabels = {
   is_smart_queries: 'Tìm thông minh',
   is_remove_fake_sale: 'Lọc bỏ sản phẩm ảo/bất thường',
   date_range: 'Dữ liệu phân tích trong khoảng',
+  methods_of_collecting: 'Phương pháp thu thập và xử lý dữ liệu',
   // lst_keyword_exclude: 'Từ khóa loại trừ',
 }
 
@@ -84,6 +87,7 @@ const fieldValueParse: FieldValueParsers = {
     const {start_date, end_date} = props.data.filter_custom;
     return `${formatDate(start_date, 'DD/MM/YYYY')} - ${formatDate(end_date, 'DD/MM/YYYY')}`
   },
+  methods_of_collecting: (value: string) => value ? 'Công nghê Big data & AI (Xem chi tiết)' : 'Công nghê Big data & AI (Xem chi tiết)',
   // lst_keyword_exclude: (value: string[]) => value ? (!isExpanded.value ? value.slice(0, 3) : value).join(', ') : '',
 }
 

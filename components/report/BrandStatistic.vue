@@ -1,6 +1,8 @@
 <script setup>
 import { computed, defineProps, ref, onMounted } from 'vue';
 import Highcharts from 'highcharts';
+import { formatNumber } from "~/helpers/FormatHelper.js";
+
 const props = defineProps({
   data: {
     type: Object,
@@ -57,7 +59,7 @@ const chartOptionsSales = computed(() => ({
     }
   },
   legend: {
-    enabled: !props.isHideContent,
+    enabled: false,
     layout: 'vertical',
     align: 'left',
     verticalAlign: 'middle',
@@ -131,7 +133,7 @@ const chartOptionsOutput = computed(() => ({
     }
   },
   legend: {
-    enabled: !props.isHideContent,
+    enabled: false, // Hide the legend
     layout: 'vertical',
     align: 'left',
     verticalAlign: 'middle',
@@ -186,6 +188,10 @@ const chartOptionsOutput = computed(() => ({
     }
   ]
 }));
+
+const formattedBrandCount = computed(() => {
+  return formatNumber(props.data.data_analytic.by_brand.ratio?.brand.brand || 0);
+});
 </script>
 
 <template>
@@ -215,6 +221,8 @@ const chartOptionsOutput = computed(() => ({
         <highchart v-if="renderChartOutput" :options="chartOptionsOutput"/>
       </div>
     </div>
+    <div style="display: flex; justify-content: flex-end; font-style: italic;">* Thị phần thương hiệu chỉ thống kê số liệu sàn Shopee, Lazada, Tiki </div>
+
     <InsightBlock
         v-if="
         props.data.data_analytic.by_brand &&
@@ -223,36 +231,85 @@ const chartOptionsOutput = computed(() => ({
       "
     >
       <li>
-        Về doanh số,
-        <BlurContent :is-blurred="props.isHideContent">
-          {{ props.data.data_analytic.by_brand.lst_top_brand_revenue[0].name }}
-        </BlurContent>
-        là thương hiệu chiếm thị phần cao nhất,
-        theo sau lần lượt là
-        <BlurContent v-for="(brand, index) in props.data.data_analytic.by_brand.lst_top_brand_revenue.slice(1)"
-                     :key="brand.name"
-                     :is-blurred="props.isHideContent">
-          {{ brand.name }}<span v-if="index !== props.data.data_analytic.by_brand.lst_top_brand_revenue.length - 2">,
-          </span>
-        </BlurContent>.
-      </li>
-      <li>
-        Về số sản phẩm đã bán, thương hiệu dẫn đầu là
-        <BlurContent :is-blurred="props.isHideContent">
-          {{ props.data.data_analytic.by_brand.lst_top_brand_sale[0].name }}
-        </BlurContent>
-        các thương hiệu
-        <BlurContent v-for="(brand, index) in props.data.data_analytic.by_brand.lst_top_brand_sale.slice(1)"
-                     :key="brand.name"
-                     :is-blurred="props.isHideContent">
-          {{ brand.name }}<span v-if="index !== props.data.data_analytic.by_brand.lst_top_brand_sale.length - 2">,
+        Phân tích thị trường {{ data.name }} có hơn
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{ formattedBrandCount }}
           </span>
         </BlurContent>
-        lần lượt giữ vị trí tiếp theo.
+
+        thương hiệu chiếm
+        {{
+          Number(
+              data.data_analytic.by_brand.ratio?.brand.ratio_revenue * 100 || 0
+          ).toFixed(1)
+        }}% tổng doanh thu. So sánh giữa 10 thương hiệu hàng đầu,
+        <span class="text-bold">{{
+            data.data_analytic.by_brand.lst_top_brand_revenue[0].name
+          }}</span>
+        đang chiếm
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{
+              Number(
+                  data.data_analytic.by_brand.lst_top_brand_revenue[0]
+                      .ratio_revenue * 100
+              ).toFixed(2)
+            }}
+          </span>
+        </BlurContent>
+        % thị phần về doanh thu{{
+          data.data_analytic.by_brand.lst_top_brand_revenue[0].ratio_sale
+              ? " và " +
+              Number(
+                  data.data_analytic.by_brand.lst_top_brand_revenue[0].ratio_sale
+              ).toFixed(2) +
+              "% thị phần về sản lượng"
+              : ""
+        }}.
+        <template
+            v-if="
+            data.data_analytic.by_brand &&
+            data.data_analytic.by_brand.lst_top_brand_revenue &&
+            data.data_analytic.by_brand.lst_top_brand_revenue.length > 2
+          "
+        >Tiếp theo đó là
+          <span class="text-bold">
+            {{ data.data_analytic.by_brand.lst_top_brand_revenue[1].name }}
+          </span>
+          và
+          <span class="text-bold">{{
+              data.data_analytic.by_brand.lst_top_brand_revenue[2].name
+            }}</span>
+          tương ứng thị phần {{ data.name }} với doanh thu là
+          <BlurContent :is-hide-content="isHideContent">
+            <span>
+              {{
+                Number(
+                    data.data_analytic.by_brand.lst_top_brand_revenue[1]
+                        .ratio_revenue * 100
+                ).toFixed(2)
+              }}
+            </span>
+          </BlurContent>
+          % và
+          <BlurContent :is-hide-content="isHideContent">
+            <span>
+              {{
+                Number(
+                    data.data_analytic.by_brand.lst_top_brand_revenue[2]
+                        .ratio_revenue * 100
+                ).toFixed(2)
+              }}
+            </span>
+          </BlurContent>
+          %.
+        </template>
       </li>
     </InsightBlock>
   </div>
 </template>
+
 <style lang="scss">
 #thong-ke-thuong-hieu {
   .ant-table {
@@ -729,9 +786,6 @@ const chartOptionsOutput = computed(() => ({
   }
 }
 
-.chart_item{
-  flex-direction: column;
-}
 
 .statistic-item__title {
   display: flex;
@@ -756,6 +810,10 @@ const chartOptionsOutput = computed(() => ({
   #thong-ke-thuong-hieu {
     padding: 16px;
     border: none;
+  }
+
+  .chart_item{
+    flex-direction: column;
   }
 
   .pie_chart{

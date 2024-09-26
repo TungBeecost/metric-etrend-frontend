@@ -59,7 +59,7 @@ const top12Shops = computed(() => props.data.data_analytic.by_shop.lst_shop.slic
 
 
 const truncateName = (name) => {
-  return name.length > 10 ? name.substring(0, 10) + '...' : name;
+  return name.length > 10 ? name.substring(0, 100) + '...' : name;
 };
 
 const chartOptionsSales = computed(() => ({
@@ -71,7 +71,7 @@ const chartOptionsSales = computed(() => ({
     },
   },
   title: {
-    text: "Tỷ trọng top 10 gian hàng theo doanh số",
+    text: "Tỷ trọng top 10 thương hiệu Dép nam theo doanh số *",
     style: {
       fontSize: '14px',
       color: '#241E46',
@@ -80,7 +80,7 @@ const chartOptionsSales = computed(() => ({
     }
   },
   legend: {
-    enabled: !isHideContentBasic.value,
+    enabled: false,
     layout: 'vertical',
     align: 'left',
     verticalAlign: 'middle',
@@ -159,7 +159,7 @@ const chartOptionsOutput = computed(() => ({
     },
   },
   title: {
-    text: "Tỷ trọng top 10 thương hiệu theo sản lượng *",
+    text: "Tỷ trọng top 10 thương hiệu Dép nam theo sản lượng *",
     style: {
       fontSize: '14px',
       color: '#241E46',
@@ -168,7 +168,7 @@ const chartOptionsOutput = computed(() => ({
     }
   },
   legend: {
-    enabled: !isHideContentBasic.value,
+    enabled: false,
     layout: 'vertical',
     align: 'left',
     verticalAlign: 'middle',
@@ -247,9 +247,7 @@ const chartOptionsOutput = computed(() => ({
           class="pie_chart_item"
           style="flex-direction: column; gap: 24px; justify-content: flex-start"
       >
-        <div style="font-size: 16px; font-weight: bold; line-height: 22px; text-align: center; color: #241E46">Số lượng
-          gian hàng
-        </div>
+        <div style="font-size: 16px; font-weight: bold; line-height: 22px; text-align: center; color: #241E46">Số lượng gian hàng {{props.data.name}}</div>
         <div>
           <a-table
               :columns="[
@@ -322,6 +320,7 @@ const chartOptionsOutput = computed(() => ({
         />
       </div>
     </div>
+    <div style="display: flex; justify-content: flex-end; font-style: italic;">* Thị phần theo loại gian hàng chỉ thống kê số liệu sàn Shopee, Lazada</div>
     <div>
       <div class="chart_item">
         <div style="pointer-events: none">
@@ -333,7 +332,7 @@ const chartOptionsOutput = computed(() => ({
       </div>
     </div>
     <div style="color: #241E46; font-weight: 700; line-height: 22px; text-align: center">
-      Danh sách gian bán chạy theo doanh số trong nhóm hàng {{props.data.name}}
+      Danh sách shop phổ biến của nhóm hàng {{props.data.name}} trên sàn TMĐT
     </div>
     <div class="logo-grid">
       <div v-for="(record, index) in top12Shops" :key="index" class="logo-item">

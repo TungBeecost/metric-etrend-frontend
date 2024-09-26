@@ -16,6 +16,7 @@ import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
 import { useCurrentUser } from "~/stores/current-user.js";
 import { useGTM } from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
+import RelateReport from "~/components/RelateReport.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -56,7 +57,7 @@ const trackEvent = (event, data) => {
   }
 };
 
-const fetchRecommend = async (categoryReportId, number_of_reports = 12) => {
+const fetchRecommend = async (categoryReportId, number_of_reports = 18) => {
   try {
     return await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.list_recomend.endpoint}?category_report_id=${categoryReportId}&number_of_reports=${number_of_reports}`);
   } catch (error) {
@@ -241,6 +242,7 @@ onUnmounted(() => {
     </div>
     <div class="container default_section">
       <div class="general_overview_container">
+        <relate-report class="default_section" :recomends="data?.listRecommend"/>
         <div class="title_main ">
           Báo cáo tổng quan thị trường Dép nam trên sàn TMĐT
         </div>
@@ -261,7 +263,6 @@ onUnmounted(() => {
 <!--        <maybe-interested v-if="!isMobile" :recomends="data.listRecommend"/>-->
 <!--      </div>-->
     </div>
-    <maybe-interested class="default_section" :recomends="data?.listRecommend"/>
     <poster-detail-report :list-suggest="tagSuggestions"/>
     <transition name="fade">
       <div v-if="showAdvertisement" class="advertisement">
@@ -316,7 +317,7 @@ onUnmounted(() => {
   .title {
     display: flex;
     flex-direction: column;
-    padding-bottom: 80px;
+    padding-bottom: 16px;
 
     .breadcrumbs {
       display: flex;
@@ -399,7 +400,10 @@ onUnmounted(() => {
 }
 
 .title_main{
-  font-size: 36px; font-weight: 700; line-height: 48px; color: #101828;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 48px;
+  color: #101828;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -426,14 +430,14 @@ onUnmounted(() => {
   .different_info .maybe-interested-component {
     order: 2;
   }
-}
 
-.title{
-  padding-bottom: 16px !important;
-}
+  .title_main{
+    font-size: 24px;
+    line-height: 32px;
+  }
 
-.title_main{
-  font-size: 24px;
-  line-height: 32px;
+  .title{
+    padding-bottom: 16px !important;
+  }
 }
 </style>

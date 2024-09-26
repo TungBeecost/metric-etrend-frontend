@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import {computed} from 'vue';
+import { computed } from 'vue';
 import SummaryStatistic from "~/components/report/SummaryStatistic.vue";
-
-import {formatSortTextCurrency} from "~/helpers/utils";
+import { formatSortTextCurrency } from "~/helpers/utils";
 import dayjs from "dayjs";
-import {formatNumber} from "~/helpers/FormatHelper";
-
+import { formatNumber } from "~/helpers/FormatHelper";
 
 const props = defineProps({
   data: {
     type: Object,
-    default: () => {
-    },
+    default: () => {},
   },
   isHideContent: {
     type: Boolean,
@@ -26,17 +23,26 @@ onMounted(() => {
 });
 
 const hightestMonthRevenue = computed(() => {
-  const {lst_revenue_sale_monthly} = props.data.data_analytic.by_overview;
+  const { lst_revenue_sale_monthly } = props.data.data_analytic.by_overview;
   const highestMonthRevenue = lst_revenue_sale_monthly.reduce(
-      (acc: { revenue: number }, item: { revenue: number }) => {
-        if (item.revenue > acc.revenue) {
-          return item;
+      (acc: { revenue: number }, item: { revenue: string | number }) => {
+        const itemRevenue = typeof item.revenue === 'string' ? parseFloat(item.revenue) : item.revenue;
+        if (itemRevenue > acc.revenue) {
+          return { ...item, revenue: itemRevenue };
         }
         return acc;
       },
-      lst_revenue_sale_monthly[0]
+      { revenue: 0 }
   );
   return highestMonthRevenue;
+});
+
+const formattedHighestMonthRevenue = computed(() => {
+  return formatSortTextCurrency(hightestMonthRevenue.value.revenue);
+});
+
+const formattedHighestMonthSale = computed(() => {
+  return formatSortTextCurrency(hightestMonthRevenue.value.sale);
 });
 
 const formatDateFunc = (value: string, format: string) => {
@@ -44,10 +50,47 @@ const formatDateFunc = (value: string, format: string) => {
 };
 
 const diffMonths = computed(() => {
-  const {start_date, end_date} = props.data.filter_custom;
+  const { start_date, end_date } = props.data.filter_custom;
   const startDate = dayjs(start_date);
   const endDate = dayjs(end_date);
   return endDate.diff(startDate, "months") + 1 + " tháng";
+});
+
+const diffRevenueMonths = computed(() => {
+  const { lst_revenue_sale_monthly } = props.data.data_analytic.by_overview;
+  const latestMonth = lst_revenue_sale_monthly.slice(-1);
+  const previousMonth = lst_revenue_sale_monthly.slice(-2, -1);
+  const diff = latestMonth[0].revenue - previousMonth[0].revenue;
+  const diffPercent = (diff / previousMonth[0].revenue) * 100;
+  return {
+    latestMonth,
+    previousMonth,
+    diffPercent: parseFloat(diffPercent.toFixed(2))
+  };
+});
+
+const diffHalfYear = computed(() => {
+  const { lst_revenue_sale_monthly } = props.data.data_analytic.by_overview;
+  const latestHalfYear = lst_revenue_sale_monthly.slice(-6);
+  const previousHalfYear = lst_revenue_sale_monthly.slice(-12, -6);
+
+  const revenueLatestHalfYear = latestHalfYear.reduce(
+      (acc: number, item: { revenue: number }) => acc + item.revenue,
+      0
+  );
+
+  const revenuePreviousHalfYear = previousHalfYear.reduce(
+      (acc: number, item: { revenue: number }) => acc + item.revenue,
+      0
+  );
+
+  const diff = revenueLatestHalfYear - revenuePreviousHalfYear;
+
+  return {
+    diffPercent: ((diff / revenuePreviousHalfYear) * 100).toFixed(1),
+    latestHalfYear,
+    previousHalfYear,
+  };
 });
 
 const charts = computed(() => {
@@ -99,6 +142,29 @@ const charts = computed(() => {
               fontFamily: 'Inter'
             },
           },
+          opposite: true, // Display on the right side
+          labels: {
+            style: {
+              fontSize: '12px',
+              color: '#241E46',
+              fontWeight: 400,
+              fontFamily: 'Inter'
+            },
+            formatter: function(): string {
+              return formatSortTextCurrency(this.value);
+            }
+          }
+        },
+        {
+          title: {
+            text: 'Doanh số',
+            style: {
+              fontSize: '12px',
+              color: '#241E46',
+              fontWeight: 400,
+              fontFamily: 'Inter'
+            },
+          },
           opposite: false,
           labels: {
             style: {
@@ -106,13 +172,10 @@ const charts = computed(() => {
               color: '#241E46',
               fontWeight: 400,
               fontFamily: 'Inter'
+            },
+            formatter: function(): string {
+              return formatSortTextCurrency(this.value);
             }
-          }
-        },
-        {
-          title: false,
-          labels: {
-            enabled: false,
           }
         },
       ],
@@ -151,6 +214,7 @@ const charts = computed(() => {
           name: 'Số sản phẩm đã bán',
           color: '#1A1A46',
           type: 'spline',
+          yAxis: 0, // Map to the right axis
           zIndex: 1,
           data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
               .slice()
@@ -160,7 +224,7 @@ const charts = computed(() => {
           name: 'Doanh số',
           stack: 'platform_revenue_price_range',
           type: 'column',
-          yAxis: 1,
+          yAxis: 1, // Map to the left axis
           borderRadius: 3,
           data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
               .slice()
@@ -180,6 +244,20 @@ const charts = computed(() => {
               [0, '#FCA14E'],
               [1, '#FF733F']
             ]
+          },
+          dataLabels: {
+            enabled: true,
+            formatter: function(): string {
+              return formatSortTextCurrency(this.y);
+            },
+            verticalAlign: 'top', // Position the labels above the columns
+            y: -20,
+            style: {
+              fontSize: '10px',
+              color: '#241E46',
+              fontWeight: 400,
+              fontFamily: 'Inter'
+            }
           }
         },
       ]
@@ -217,34 +295,38 @@ const charts = computed(() => {
     </div>
     <InsightBlock>
       <li>
-        Trong {{ diffMonths }}, {{ data.report_type === 'report_product_line' ? 'nhóm hàng' : ''}} {{ data.name }}:
-        đạt tổng doanh số
-        <BlurContent :is-hide-content="props.isHideContent">
+        <b>
+          Doanh số bán {{data.name}} trong {{ diffMonths }} đạt:
+          <BlurContent :is-hide-content="props.isHideContent">
         <span>
-          {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
+          <b>
+            {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
+          </b>
         </span>
-        </BlurContent>
-        đồng, với
-        <BlurContent :is-hide-content="props.isHideContent">
+          </BlurContent>
+          đồng, với
+          <BlurContent :is-hide-content="props.isHideContent">
         <span>
-          {{ formatSortTextCurrency(data.data_analytic.by_overview.sale) }}
+          <b>
+            {{ formatSortTextCurrency(data.data_analytic.by_overview.sale) }}
+          </b>
         </span>
-        </BlurContent>
-        sản phẩm bán ra.
+          </BlurContent>
+          sản phẩm bán ra.
+        </b>
       </li>
       <li>
-        Thị trường {{ data.name }} có hơn
+        Cập nhật tình hình thị trường {{ data.name }} có hơn
         <BlurContent :is-hide-content="props.isHideContent">
           <span>
             {{ formatNumber(data.data_analytic.by_overview.shop) }}
           </span>
         </BlurContent>
-         nhà bán trên
-        sàn TMĐT với hơn
+        nhà bán trên sàn TMĐT với hơn
         <BlurContent :is-hide-content="props.isHideContent">
-      <span>
-        {{ formatNumber(data.data_analytic.by_overview.product) }}
-      </span>
+          <span>
+            {{ formatNumber(data.data_analytic.by_overview.product) }}
+          </span>
         </BlurContent>
         mặt hàng.
       </li>
@@ -252,22 +334,65 @@ const charts = computed(() => {
           v-for="platform in data.data_analytic.by_marketplace.lst_marketplace"
           :key="platform.name"
       >
-        <span class="text-bold">{{ platform.name }}</span> chiếm
+        <b class="text-bold">{{ platform.name }}</b> chiếm
         <BlurContent :is-hide-content="props.isHideContent">
           {{ Number(platform.ratio_revenue * 100).toFixed(1) }}%
         </BlurContent>
-        tổng doanh số, tương ứng
+        tổng doanh số và
         <BlurContent :is-hide-content="props.isHideContent">
-          {{ formatSortTextCurrency(platform.revenue) }}
+          {{ Number(platform.ratio_sale * 100).toFixed(1) }}%
         </BlurContent>
-        đồng.
+        về sản lượng
       </li>
       <li>
-        Tháng
+        Doanh số của sản phẩm {{ data.name }} trong tháng
         <BlurContent :is-hide-content="props.isHideContent">
           {{ formatDateFunc(hightestMonthRevenue.begin, "MM/YYYY") }}
         </BlurContent>
-        ghi nhận doanh số cao nhất trong 12 tháng.
+        đạt mức cao nhất với
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{ formattedHighestMonthRevenue }}
+          </span>
+        </BlurContent>
+        đồng và
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{ formattedHighestMonthSale }}
+          </span>
+        </BlurContent>
+        về sản lượng.
+      </li>
+      <li>
+        Quy mô thị trường {{ data.name }} tháng
+        {{ formatDateFunc(diffRevenueMonths.latestMonth[0].begin, "MM/YYYY") }}
+        đạt
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{
+              formatSortTextCurrency(diffRevenueMonths.latestMonth[0].revenue)
+            }}
+          </span>
+        </BlurContent>
+        doanh số và tăng trưởng
+        {{ diffRevenueMonths.diffPercent > 0 ? "tốt" : "thấp" }} hơn so với
+        tháng
+        {{ formatDateFunc(diffRevenueMonths.previousMonth[0].begin, "MM/YYYY") }}
+        là {{ Math.abs(diffRevenueMonths.diffPercent) }}%.
+      </li>
+      <li>
+        <b class="text-bold">Nhận xét trung hạn</b> trong 6 tháng gần
+        nhất, {{ data.name }}
+        {{
+          Number(diffHalfYear.diffPercent) > 0
+              ? "tăng trưởng doanh thu"
+              : "doanh thu giảm"
+        }}
+        <BlurContent :is-hide-content="isHideContent">
+        <span>
+          {{ diffHalfYear.diffPercent }}
+        </span>
+        </BlurContent>% so với 6 tháng liền kề.
       </li>
     </InsightBlock>
   </div>
