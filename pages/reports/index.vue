@@ -1,17 +1,18 @@
 <script setup lang="ts">
-
 import Discover from "~/components/report/Discover.vue";
 import FeaturedReport from "~/components/report/FeaturedReport.vue";
 import ItemNewReport from "~/components/report/ItemNewReport.vue";
-import {type SearchReportPayload} from "~/services/reports";
-import {PAGE_TITLES} from "~/constant/constains";
-import {REPORT_ENDPOINTS} from "~/constant/endpoints";
+import { type SearchReportPayload } from "~/services/reports";
+import { PAGE_TITLES } from "~/constant/constains";
+import { REPORT_ENDPOINTS } from "~/constant/endpoints";
 import ExploreByReportType from "~/components/report/ExploreByReportType.vue";
 
 const config = useRuntimeConfig();
+const isLoading = ref(true);
+const lstReport = ref([]);
 
 const fetchReport = async () => {
-  console.log('fetchReport')
+  console.log('fetchReport');
   try {
     const body: SearchReportPayload = {
       limit: 6,
@@ -20,25 +21,26 @@ const fetchReport = async () => {
       lst_category_report_id: [],
       offset: 0,
       sort: "created_at",
-      // sort: "popularity",
       order: "desc",
     };
-    const {lst_report}: any = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
+    const { lst_report }: any = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
       method: 'POST',
       body
-    })
-    console.log('lst_report', lst_report)
-    return lst_report
+    });
+    console.log('lst_report', lst_report);
+    lstReport.value = lst_report;
   } catch (e) {
-    console.log(e)
+    console.log(e);
+  } finally {
+    isLoading.value = false;
   }
-}
-const {data: lstReport} = await useAsyncData(fetchReport)
+};
 
+fetchReport();
 
 useSeoMeta({
   title: PAGE_TITLES.reports
-})
+});
 </script>
 
 <template>
@@ -48,19 +50,21 @@ useSeoMeta({
         <div class="title">
           <div class="content">
             <div class="report_title">Số liệu thị trường chính xác</div>
-            <div class="description">Báo cáo cung cấp thông tin tổng quan về các sàn TMĐT hàng đầu Việt Nam, từ doanh số,
+            <div class="description">
+              Báo cáo cung cấp thông tin tổng quan về các sàn TMĐT hàng đầu Việt Nam, từ doanh số,
               sản lượng bán, số lượng sản phẩm, số lượng gian hàng, top thương hiệu và nhà bán, tỷ trọng theo các tiêu
-              chí tới xu hướng tăng trưởng... theo ngành hàng, nhóm hàng. eReport giúp doanh nghiệp nắm bắt thị trường
+              chí tới xu hướng tăng trưởng... theo ng��nh hàng, nhóm hàng. eReport giúp doanh nghiệp nắm bắt thị trường
               và ra quyết định kinh doanh ngay lập tức với chi phí tối ưu nhất.
             </div>
           </div>
           <div class="new_report">
-            <div class="new_report">
-              <div class="title_new_report">
-                Báo cáo mới nhất
-              </div>
-              <item-new-report :reports="lstReport"/>
+            <div class="title_new_report">
+              Báo cáo mới nhất
             </div>
+            <div v-if="isLoading">
+              <a-skeleton />
+            </div>
+            <item-new-report v-else class="item_new_report_tran" :reports="lstReport" />
           </div>
         </div>
       </div>
@@ -97,7 +101,6 @@ useSeoMeta({
         display: flex;
         flex-direction: column;
         gap: 16px;
-
 
         .report_title {
           font-size: 44px;
@@ -136,6 +139,20 @@ useSeoMeta({
   }
 }
 
+.item_new_report_tran{
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
 @media (max-width: 1023px) {
   .new_report {
     gap: 16px;
@@ -157,7 +174,6 @@ useSeoMeta({
 
           .description {
             font-size: 16px;
-            //width: 600px;
           }
         }
       }

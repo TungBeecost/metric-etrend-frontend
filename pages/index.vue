@@ -12,7 +12,12 @@
       <div class="sectionContent searchContent">
         <SearchReport class="searchBox"/>
 
-        <div class="recommendSearch">
+        <div v-if="recommendSearchLoading" class="recommendSearch">
+          <div v-for="(item, index) in listTagSuggestions" :key="index" class="recommendItem">
+            <a-skeleton />
+          </div>
+        </div>
+        <div v-else class="recommendSearch">
           <AButton v-for="(item, index) in listTagSuggestions" :key="index" class="recommendItem"
                    @click="onClickSuggestion(item)">
             {{ item }}
@@ -108,9 +113,9 @@ const listTagSuggestions = ref<string[]>([]);
 const showModal = ref(false);
 const isMobile = ref(false);
 const isHideContent = ref(true)
+const recommendSearchLoading = ref(true);
 
 const fetchTagSuggest = async (value: string) => {
-  console.log('fetchTagSuggest', value);
   try {
     const result = await fetchSuggest(value);
     if (result.length) {
@@ -120,6 +125,8 @@ const fetchTagSuggest = async (value: string) => {
     }
   } catch (e) {
     console.error(e);
+  } finally {
+    recommendSearchLoading.value = false;
   }
 };
 
@@ -293,6 +300,22 @@ const handleAdvertisement = () => {
   margin: 24px 0;
 }
 
+.recommendSearch {
+  animation: fadeIn 0.5s ease-out forwards;
+  min-height: 100px;
+}
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.recommendItem {
+  height: 40px;
+}
 
 </style>
