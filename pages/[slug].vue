@@ -12,7 +12,6 @@ import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
-import { useCurrentUser } from "~/stores/current-user.js";
 import { useGTM } from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
 import RelateReport from "~/components/RelateReport.vue";
@@ -20,9 +19,7 @@ import RelateReport from "~/components/RelateReport.vue";
 const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
-const currentUserStore = useCurrentUser();
 const gtm = useGTM();
-const { userInfo } = storeToRefs(currentUserStore);
 const checkLevelCategory = ref(false);
 const showModal = ref(false);
 const showAdvertisement = ref(false);
@@ -30,6 +27,7 @@ const showNotification = ref(true);
 const loadingRecommend = ref(true);
 const loadingSuggest = ref(true);
 const showButton = ref(false);
+const loading = ref(true); // Add loading state
 
 const fetchSuggest = async (value = '', options = {}) => {
   try {
@@ -144,6 +142,8 @@ const fetchReportData = async () => {
     console.log(error);
     await router.push('/search');
     return {};
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -186,7 +186,6 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);
   window.removeEventListener('scroll', handleScroll);
 });
-
 </script>
 
 <template>
@@ -221,10 +220,9 @@ onUnmounted(() => {
       }}
     </component>
   </Head>
-
   <div class="container_content">
-    <div v-if="loadingRecommend" class="default_section">
-      <a-skeleton />
+    <div v-if="loading" class="loading-spinner">
+      <a-spin size="large" />
     </div>
     <div v-else>
       <div class="title default_section">
