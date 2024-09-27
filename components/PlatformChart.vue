@@ -66,6 +66,7 @@ const chartWidth = computed(() => {
     return 900;
   }
 });
+
 const chartOptions = computed(() => ({
     chart: {
       type: "pie",
@@ -95,7 +96,7 @@ const chartOptions = computed(() => ({
       }
     },
     tooltip: {
-      enabled: false,
+      enabled: true,
     },
     plotOptions: {
       pie: {
@@ -114,7 +115,7 @@ const chartOptions = computed(() => ({
             fontFamily: 'Inter'
           },
           formatter: function () {
-            if (isHideContent) {
+            if (isHideContent && this.point.name !== 'Shopee') {
               return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
             }
 

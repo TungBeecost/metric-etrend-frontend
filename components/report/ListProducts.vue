@@ -62,7 +62,31 @@ const isHideContentBasic = computed(() => {
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContentBasic ? 10 : 10)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContentBasic ? 5 : 5)"
+            :key="product.product_base_id"
+            :product-item="product"
+            :product="product"
+            :is-hide-content="isHideContent || isHideContentBasic"
+        />
+        <ChartMask
+            v-if="isHideContentBasic"
+            :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
+            :ok-button="isHideContentBasic ? '' :'Xem báo cáo'"
+            :report="data"
+        />
+      </div>
+      <div class="products-grid">
+        <ProductItem
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(5, isHideContentBasic ? 10 : 10)"
+            :key="product.product_base_id"
+            :product-item="product"
+            :product="product"
+            :is-hide-content="false"
+        />
+      </div>
+      <div class="products-grid">
+        <ProductItem
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(10, isHideContentBasic ? 20 : 20)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
@@ -108,7 +132,7 @@ const isHideContentBasic = computed(() => {
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(0, isHideContentBasic ? 10 : 10)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(0, isHideContentBasic ? 5 : 5)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
@@ -119,6 +143,15 @@ const isHideContentBasic = computed(() => {
             :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
             :ok-button="isHideContentBasic ? '' :'Xem báo cáo'"
             :report="data"
+        />
+      </div>
+      <div class="products-grid">
+        <ProductItem
+            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(5, isHideContentBasic ? 10 : 10)"
+            :key="product.product_base_id"
+            :product-item="product"
+            :product="product"
+            :is-hide-content="false"
         />
       </div>
     </div>

@@ -71,7 +71,7 @@ const chartOptionsSales = computed(() => ({
     },
   },
   title: {
-    text: "Tỷ trọng top 10 thương hiệu Dép nam theo doanh số *",
+    text: `Tỷ trọng top 10 thương hiệu ${props.data.name} theo doanh số *`,
     style: {
       fontSize: '14px',
       color: '#241E46',
@@ -107,10 +107,11 @@ const chartOptionsSales = computed(() => ({
         enabled: true,
         connectorShape: 'crookedLine',
         formatter: function() {
-          if (isHideContentBasic.value) {
+          const exemptIndexes = [4, 6, 8]; // 0-based index for 5th, 7th, 9th items
+          if (isHideContentBasic.value && !exemptIndexes.includes(this.point.index)) {
             return `<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>`;
           }
-          return `<span style="font-weight: 500">${truncateName(this.point.name)}</span>: <span style="color: #E85912">${this.point.percentage.toFixed(1)}%</span>`;
+          return `<span style="font-weight: 500">${this.point.name}</span>: <span style="color: #E85912">${this.point.percentage.toFixed(1)}%</span>`;
         },
         style: {
           fontSize: '12px',
@@ -159,7 +160,7 @@ const chartOptionsOutput = computed(() => ({
     },
   },
   title: {
-    text: "Tỷ trọng top 10 thương hiệu Dép nam theo sản lượng *",
+    text: `Tỷ trọng top 10 thương hiệu ${props.data.name} theo sản lượng *`,
     style: {
       fontSize: '14px',
       color: '#241E46',
@@ -195,10 +196,11 @@ const chartOptionsOutput = computed(() => ({
         enabled: true,
         connectorShape: 'crookedLine',
         formatter: function() {
-          if (isHideContentBasic.value) {
+          const exemptIndexes = [4, 6, 8]; // 0-based index for 5th, 7th, 9th items
+          if (isHideContentBasic.value && !exemptIndexes.includes(this.point.index)) {
             return `<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>`;
           }
-          return `<span style="font-weight: 500">${truncateName(this.point.name)}</span>: <span style="color: #E85912">${this.point.percentage.toFixed(1)}%</span>`;
+          return `<span style="font-weight: 500">${this.point.name}</span>: <span style="color: #E85912">${this.point.percentage.toFixed(1)}%</span>`;
         },
         style: {
           fontSize: '12px',
@@ -299,7 +301,7 @@ const chartOptionsOutput = computed(() => ({
       >
         <PieChart
             title="Tỷ trọng doanh số theo loại gian hàng"
-            :is-hide-content="isHideContentBasic"
+            :is-hide-content="false"
             :series="[
             {
               name: 'Sản phẩm đã bán',
@@ -336,12 +338,10 @@ const chartOptionsOutput = computed(() => ({
     </div>
     <div class="logo-grid">
       <div v-for="(record, index) in top12Shops" :key="index" class="logo-item">
-        <img :class="{ 'blurred': isHideContentBasic }"  :src="getUrlImageOption(record.url_image, 'thumbnail')" style="width: 64px; height: 64px; border-radius: 8px; background-size: cover;">
-        <BlurContent :is-hide-content="isHideContentBasic">
+        <img :src="getUrlImageOption(record.url_image, 'thumbnail')" style="width: 64px; height: 64px; border-radius: 8px; background-size: cover;">
           <p style="font-size: 12px;font-weight: 500;line-height: 24px;overflow: hidden; text-align: center">
             {{record.name}}
           </p>
-        </BlurContent>
 
       </div>
     </div>

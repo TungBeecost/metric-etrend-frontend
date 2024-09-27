@@ -108,14 +108,7 @@ const charts = computed(() => {
   return [
     {
       title: {
-        text: 'Doanh số và sản phẩm đã bán theo tháng',
-        style: {
-          fontSize: '14px',
-          color: '#241E46',
-          fontWeight: 700,
-          fontFamily: 'Inter',
-        },
-        margin: 50,
+        text: null,
       },
       legend: {
         enabled: true,
@@ -278,6 +271,7 @@ const charts = computed(() => {
       </div>
     </div>
     <summary-statistic :data="props.data" :is-hide-content="props.isHideContent"/>
+    <div style="font-size: 16px; color: #241E46; font-weight: bold; text-align: center">Doanh số và sản phẩm đã bán theo tháng</div>
     <div
         id="monthly-growth-chart"
         ref="monthlyGrowthChart"
@@ -317,11 +311,9 @@ const charts = computed(() => {
       </li>
       <li>
         Cập nhật tình hình thị trường {{ data.name }} có hơn
-        <BlurContent :is-hide-content="props.isHideContent">
           <span>
             {{ formatNumber(data.data_analytic.by_overview.shop) }}
           </span>
-        </BlurContent>
         nhà bán trên sàn TMĐT với hơn
         <BlurContent :is-hide-content="props.isHideContent">
           <span>
@@ -335,20 +327,14 @@ const charts = computed(() => {
           :key="platform.name"
       >
         <b class="text-bold">{{ platform.name }}</b> chiếm
-        <BlurContent :is-hide-content="props.isHideContent">
           {{ Number(platform.ratio_revenue * 100).toFixed(1) }}%
-        </BlurContent>
         tổng doanh số và
-        <BlurContent :is-hide-content="props.isHideContent">
           {{ Number(platform.ratio_sale * 100).toFixed(1) }}%
-        </BlurContent>
         về sản lượng
       </li>
       <li>
         Doanh số của sản phẩm {{ data.name }} trong tháng
-        <BlurContent :is-hide-content="props.isHideContent">
           {{ formatDateFunc(hightestMonthRevenue.begin, "MM/YYYY") }}
-        </BlurContent>
         đạt mức cao nhất với
         <BlurContent :is-hide-content="isHideContent">
           <span>

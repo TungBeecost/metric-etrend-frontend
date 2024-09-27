@@ -244,7 +244,7 @@ onUnmounted(() => {
       <div class="general_overview_container">
         <relate-report class="default_section" :recomends="data?.listRecommend"/>
         <div class="title_main ">
-          Báo cáo tổng quan thị trường Dép nam trên sàn TMĐT
+          Báo cáo tổng quan thị trường {{ data?.reportDetail.name }} trên sàn TMĐT
         </div>
         <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>

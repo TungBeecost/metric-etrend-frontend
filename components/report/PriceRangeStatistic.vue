@@ -77,13 +77,7 @@ const chartOptions = computed(() => {
       },
     },
     title: {
-      text: "Doanh số và số sản phẩm Dép nam đã bán theo phân khúc giá",
-      style: {
-        fontSize: '16px',
-        color: '#241E46',
-        fontWeight: 700,
-        fontFamily: 'Inter'
-      }
+      text: null,
     },
     legend: {
       enabled: true,
@@ -236,6 +230,7 @@ const chartOptions = computed(() => {
         <div class="statistic-item__title">Phân khúc giá</div>
       </div>
     </div>
+    <div style="text-align: center; font-weight: bold; font-size: 16px">Doanh số và số sản phẩm {{ props.data.name }} đã bán theo phân khúc giá</div>
     <div class="my-4 w-full text-center relative" style="position: relative">
       <highchart :options="chartOptions"/>
       <ChartMask v-if="props.isHideContent" :report="props.data"/>
@@ -245,27 +240,18 @@ const chartOptions = computed(() => {
     >
       <li>
         Trong {{ diffMonths }} qua, phân khúc khách hàng thị trường Áo thun nam thường mua chủ yếu ở mức giá khoảng
-        <BlurContent :is-hide-content="props.isHideContent">
           {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
-          {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}
-        </BlurContent>
-
-        .
+          {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}.
       </li>
       <li
           v-if="priceRangesSortBy('revenue') &&priceRangesSortBy('revenue').length > 1"
       >
         Phân khúc giá phổ biến của Áo thun nam là
-        <BlurContent :is-hide-content="props.isHideContent">
           {{ priceRangesSortBy("sale")[0].begin ? formatCurrency(priceRangesSortBy("sale")[0].begin) + ' - ' : '< ' }}
           {{ formatCurrency(priceRangesSortBy("sale")[0].end) }}
-        </BlurContent>
         ,
-        <BlurContent :is-hide-content="props.isHideContent">
           {{ formatCurrency(priceRangesSortBy("revenue")[1].begin) }} -
-          {{ formatCurrency(priceRangesSortBy("revenue")[1].end) }}
-        </BlurContent>
-        .
+          {{ formatCurrency(priceRangesSortBy("revenue")[1].end) }}.
       </li>
     </InsightBlock>
   </div>

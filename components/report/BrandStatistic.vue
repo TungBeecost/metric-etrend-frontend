@@ -50,7 +50,7 @@ const chartOptionsSales = computed(() => ({
     },
   },
   title: {
-    text: "Tỷ trọng top 10 thương hiệu theo doanh số *",
+    text: `Tỷ trọng top 10 thương hiệu ${props.data.name} theo doanh số *`,
     style: {
       fontSize: '14px',
       color: '#241E46',
@@ -124,7 +124,7 @@ const chartOptionsOutput = computed(() => ({
     },
   },
   title: {
-    text: "Tỷ trọng top 10 thương hiệu theo sản lượng *",
+    text: `Tỷ trọng top 10 thương hiệu ${props.data.name} theo sản lượng *`,
     style: {
       fontSize: '14px',
       color: '#241E46',

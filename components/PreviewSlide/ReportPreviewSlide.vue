@@ -44,22 +44,22 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
-import TrangBia from '/components/PreviewSlide/TrangBia.vue';
-import NoiDungChinh from '/components/PreviewSlide/NoiDungChinh.vue';
-import ThiPhanCacSanTMDT from '/components/PreviewSlide/ThiPhanCacSanTMDT.vue';
+// import TrangBia from '/components/PreviewSlide/TrangBia.vue';
+// import NoiDungChinh from '/components/PreviewSlide/NoiDungChinh.vue';
+// import ThiPhanCacSanTMDT from '/components/PreviewSlide/ThiPhanCacSanTMDT.vue';
 import ThongKeThuongHieu from '/components/PreviewSlide/ThongKeThuongHieu.vue';
-import ThongKeVungMien from '/components/PreviewSlide/ThongKeVungMien.vue';
-import PhanTichShopBanChay from '/components/PreviewSlide/PhanTichShopBanChay.vue';
-import TinTuongBoiHangNganDoanhNghiep from '/components/PreviewSlide/TinTuongBoiHangNganDoanhNghiep.vue';
+// import ThongKeVungMien from '/components/PreviewSlide/ThongKeVungMien.vue';
+// import PhanTichShopBanChay from '/components/PreviewSlide/PhanTichShopBanChay.vue';
+// import TinTuongBoiHangNganDoanhNghiep from '/components/PreviewSlide/TinTuongBoiHangNganDoanhNghiep.vue';
 
 const slideComponents = [
-  TrangBia,
-  NoiDungChinh,
-  ThiPhanCacSanTMDT,
+  // TrangBia,
+  // NoiDungChinh,
+  // ThiPhanCacSanTMDT,
   ThongKeThuongHieu,
-  ThongKeVungMien,
-  PhanTichShopBanChay,
-  TinTuongBoiHangNganDoanhNghiep,
+  // ThongKeVungMien,
+  // PhanTichShopBanChay,
+  // TinTuongBoiHangNganDoanhNghiep,
 ];
 
 const props = defineProps({
