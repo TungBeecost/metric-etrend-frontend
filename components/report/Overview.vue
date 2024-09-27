@@ -62,6 +62,7 @@ const diffRevenueLatestQuarterPercent = computed(() => {
       0
   );
   const diff = revenueLatestQuarter - revenuePreviousQuarter;
+  console.log(latestQuarter);
   return parseFloat(((diff / revenuePreviousQuarter) * 100).toFixed(2));
 });
 </script>

@@ -258,7 +258,6 @@ const charts = computed(() => {
           dataLabels: {
             enabled: true,
             formatter: function(this: { y: number }): string {
-              console.log('Data label', this.y);
               return formatSortTextCurrency(this.y);
             },
             verticalAlign: 'top',

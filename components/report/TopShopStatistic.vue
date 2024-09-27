@@ -242,7 +242,7 @@ const chartOptionsOutput = computed(() => ({
       dataLabels: dataLabels.value,
     },
     series: {
-      enableMouseTracking: true // Enable mouse tracking for tooltips
+      enableMouseTracking: true
     }
   },
   series: [
