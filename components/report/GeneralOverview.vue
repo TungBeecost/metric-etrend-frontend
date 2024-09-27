@@ -150,7 +150,7 @@ const charts = computed(() => {
               fontWeight: 400,
               fontFamily: 'Inter'
             },
-            formatter: function(): string {
+            formatter: function(this: { value: number }): string {
               return formatSortTextCurrency(this.value);
             }
           }
@@ -173,7 +173,7 @@ const charts = computed(() => {
               fontWeight: 400,
               fontFamily: 'Inter'
             },
-            formatter: function(): string {
+            formatter: function(this: { value: number }): string {
               return formatSortTextCurrency(this.value);
             }
           }
@@ -247,7 +247,7 @@ const charts = computed(() => {
           },
           dataLabels: {
             enabled: true,
-            formatter: function(): string {
+            formatter: function(this: { y: number }): string {
               return formatSortTextCurrency(this.y);
             },
             verticalAlign: 'top', // Position the labels above the columns
