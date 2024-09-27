@@ -79,7 +79,7 @@ const diffRevenueLatestQuarterPercent = computed(() => {
     </div>
     <div class="content">
       <div>
-        <b> Báo cáo nghiên cứu thị trường cho từ khoá {{ props.data.name }} </b> trên sàn Thương mại điện tử
+        <b> Báo cáo nghiên cứu thị trường {{ props.data.name }} </b> trên sàn Thương mại điện tử
         {{
           props.data.data_analytic.by_marketplace.lst_marketplace.map((platform: Platform) => platform.name).join(', ')
         }}
@@ -95,7 +95,7 @@ const diffRevenueLatestQuarterPercent = computed(() => {
       <br>
       <div>
         <span class="text-bold">
-          Báo cáo doanh thu cho từ khoá {{ props.data.name }} trên sàn TMĐT đạt
+          Báo cáo doanh thu {{ props.data.name }} trên sàn TMĐT đạt
           <BlurContent :is-hide-content="isHideContent">
             <b>{{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }} đồng</b>
           </BlurContent>

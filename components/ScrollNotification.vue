@@ -104,7 +104,7 @@ onBeforeRouteLeave(() => {
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 12px;">
           <svgIcon />
-          <p>Số liệu chi tiết về thị trường Dép Nam trên Shopee, Tiktok, Lazada, Tiki</p>
+          <p>Số liệu chi tiết về thị trường {{ props.data.name }} trên Shopee, Tiktok, Lazada, Tiki</p>
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 12px;">
           <svgIcon />
@@ -116,7 +116,7 @@ onBeforeRouteLeave(() => {
         </div>
         <div style="display: flex; align-items: center;">
           <svgIcon />
-          <p>Thống kê 60 sản phẩm Quần jean nam đang bán chạy trên các sàn TMĐT</p>
+          <p>Thống kê 60 sản phẩm {{ props.data.name }} đang bán chạy trên các sàn TMĐT</p>
         </div>
         <button style="display: flex; width: 100%; height: 40px; padding: 9px 16px; flex-direction: column; justify-content: center; align-items: center; border-radius: 8px; background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 99.23%); color: #fff; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center; margin-top: 36px;" @click="handleOpenModal">
           Xem báo cáo chi tiết

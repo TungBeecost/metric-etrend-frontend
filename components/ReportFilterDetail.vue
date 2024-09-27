@@ -70,7 +70,7 @@ const formatDate = (value: string | Date, format: string, inputFormat: string = 
 const fieldValueParse: FieldValueParsers = {
   lst_platform_id: (value: number[]) => {
     if (!value || value.length === 4) {
-      return 'Tất cả';
+      return 'Shopee, Tiktok, Lazada, Tiki';
     }
     return value.map((platformId: number) => PLATFORMS[platformId]).join(', ');
   },
