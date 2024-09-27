@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import SummaryStatistic from "~/components/report/SummaryStatistic.vue";
 import { formatSortTextCurrency } from "~/helpers/utils";
 import dayjs from "dayjs";
@@ -41,7 +41,7 @@ const formattedHighestMonthRevenue = computed(() => {
   return formatSortTextCurrency(hightestMonthRevenue.value.revenue);
 });
 
-const formatCurrency = (value) => {
+const formatCurrency = (value: number | string): string => {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
 };
 
