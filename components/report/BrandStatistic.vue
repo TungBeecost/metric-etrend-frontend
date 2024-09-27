@@ -50,7 +50,7 @@ watchEffect(() => {
       ? {
         enabled: true,
         formatter: function () {
-          const name = ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0
+          const name = ![5, 7, 9].includes(this.point.index) && this.point.categoryName?.length > 0
               ? `${this.point.categoryName} ${this.point.index + 1}`
               : this.point.name;
           return `${name}<br/>
@@ -70,7 +70,7 @@ watchEffect(() => {
       ? {
         enabled: true,
         formatter: function () {
-          const name = ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0
+          const name = ![5, 7, 9].includes(this.point.index) && this.point.categoryName?.length > 0
               ? `${this.point.categoryName} ${this.point.index + 1}`
               : this.point.name;
           return `${name}<br/>
@@ -93,7 +93,9 @@ watchEffect(() => {
           if (isMobile.value) {
             return '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>';
           }
-          return '<span>' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>';
+          return ![5, 7, 9].includes(this.point.index)
+              ? '<span>' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>'
+              : '<span>' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
         },
       }
       : {
