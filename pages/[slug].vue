@@ -240,8 +240,7 @@ onUnmounted(() => {
             <report-content :data="data?.reportDetail"/>
           </div>
           <div class="container_report_detail_right">
-            <indept-report-link v-if="userInfo.current_plan.plan_code && userInfo.current_plan.plan_code !== 'e_community'
-           && data.reportDetail && !checkLevelCategory" :slug="route.params.slug" :data="data.reportDetail"/>
+            <indept-report-link :slug="route.params.slug" :data="data.reportDetail"/>
             <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>
           </div>
         </div>
