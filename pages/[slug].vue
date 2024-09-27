@@ -238,8 +238,8 @@ onUnmounted(() => {
             <report-content :data="data?.reportDetail"/>
           </div>
           <div class="container_report_detail_right">
-            <indept-report-link :slug="route.params.slug" :data="data.reportDetail"/>
-            <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>
+            <indept-report-link v-if="data?.reportDetail.report_type !== 'report_category'" :slug="route.params.slug" :data="data.reportDetail"/>
+            <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" :breadcrumbs="data?.breadcrumbs" class="report-filter-detail"/>
           </div>
         </div>
       </div>
@@ -262,7 +262,7 @@ onUnmounted(() => {
       </div>
       <poster-detail-report :list-suggest="tagSuggestions" :loading="loadingSuggest"/>
       <transition name="fade">
-        <div v-if="showAdvertisement" class="advertisement">
+        <div v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category'" class="advertisement">
           <scroll-notification
               v-if="data.reportDetail.name"
               :data="data.reportDetail"

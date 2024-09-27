@@ -113,7 +113,7 @@ watchEffect(() => {
             return '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>';
           }
           if (![5, 7, 9].includes(this.point.index)) {
-            return '<span>' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>';
+            return '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>';
           }
           return '<span>' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
         },
@@ -128,6 +128,77 @@ watchEffect(() => {
         },
       };
 });
+
+const chartOptionsShopType = computed(() => ({
+  chart: {
+    type: "pie",
+    width: chartWidth.value || 500,
+    style: {
+      fontFamily: "Inter",
+    },
+  },
+  title: {
+    text: `Tỷ trọng doanh số ${props.data.name} theo loại gian hàng`,
+    style: {
+      fontSize: '14px',
+      color: '#241E46',
+      fontWeight: 700,
+      fontFamily: 'Inter'
+    }
+  },
+  legend: {
+    enabled: false,
+    layout: 'vertical',
+    align: 'left',
+    verticalAlign: 'middle',
+    symbolHeight: 10,
+    symbolWidth: 10,
+    itemStyle: {
+      fontSize: '12px',
+      color: '#241E46',
+      fontWeight: 400,
+      fontFamily: 'Inter'
+    }
+  },
+  tooltip: {
+    enabled: false,
+  },
+  plotOptions: {
+    pie: {
+      cursor: "pointer",
+      showInLegend: true,
+      innerSize: '50%',
+      borderWidth: 1,
+      borderColor: null,
+      dataLabels: {
+        enabled: true,
+        formatter: function () {
+          return `<span>${this.point.name}</span>: <span style="color: #E85912">${Highcharts.numberFormat(this.percentage, 1, ',')}%</span>`;
+        },
+      },
+    },
+    series: {
+      enableMouseTracking: true
+    }
+  },
+  series: [
+    {
+      name: 'Sản phẩm đã bán',
+      data: [
+        {
+          name: 'Shop Mall',
+          y: props.data.data_analytic.by_shop.ratio.mall?.revenue || props.data.data_analytic.by_shop.ratio.mall?.ratio_revenue,
+          color: '#D82618',
+        },
+        {
+          name: 'Shop thường',
+          y: props.data.data_analytic.by_shop.ratio.normal?.revenue || props.data.data_analytic.by_shop.ratio.normal?.ratio_revenue,
+          color: '#838EA5',
+        },
+      ],
+    }
+  ]
+}));
 
 const chartOptionsSales = computed(() => ({
   chart: {
@@ -198,7 +269,6 @@ const sortedTopShops = computed(() => {
       }))
       .sort((a, b) => b.y - a.y);
 });
-
 
 const chartOptionsOutput = computed(() => ({
   chart: {
@@ -329,27 +399,7 @@ const chartOptionsOutput = computed(() => ({
         "
           class="pie_chart_item"
       >
-        <PieChart
-            title="Tỷ trọng doanh số theo loại gian hàng"
-            :is-hide-content="false"
-            :series="[
-            {
-              name: 'Sản phẩm đã bán',
-              data: [
-                {
-                  name: 'Shop Mall',
-                  y: props.data.data_analytic.by_shop.ratio.mall?.revenue || props.data.data_analytic.by_shop.ratio.mall?.ratio_revenue,
-                  color: '#D82618',
-                },
-                {
-                  name: 'Shop thường',
-                  y: props.data.data_analytic.by_shop.ratio.normal?.revenue || props.data.data_analytic.by_shop.ratio.normal?.ratio_revenue,
-                  color: '#838EA5',
-                },
-              ],
-            },
-          ]"
-        />
+        <highchart v-if="renderChartSales" :options="chartOptionsShopType"/>
       </div>
     </div>
     <div style="display: flex; justify-content: flex-end; font-style: italic;">* Thị phần theo loại gian hàng chỉ thống kê số liệu sàn Shopee, Lazada</div>

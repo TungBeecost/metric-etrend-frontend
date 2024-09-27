@@ -8,6 +8,10 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
+  breadcrumbs: {
+    type: Array,
+    default: () => [],
+  },
 });
 
 const reportFilterDisplayFields = computed(() => {
@@ -20,7 +24,6 @@ const reportFilterDisplayFields = computed(() => {
       'lst_platform_id',
       'date_range',
       'lst_bee_category_base_id',
-      'is_smart_queries',
       'is_remove_fake_sale',
     ];
   }
@@ -46,7 +49,10 @@ type FieldValueParsers = {
 const fieldLabel: FieldLabels = {
   lst_platform_id: 'Kênh bán hàng',
   category: 'Ngành hàng',
+  lst_bee_category_base_id: 'Ngành hàng',
+  lst_category_base_id: 'Ngành hàng',
   lst_keyword: 'Từ khóa',
+
   is_remove_fake_sale: 'Lọc bỏ sản phẩm ảo/bất thường',
   date_range: 'Dữ liệu phân tích trong khoảng',
 };
@@ -57,11 +63,6 @@ const PLATFORMS: Record<number, string> = {
   3: 'Tiki',
   4: 'Sendo',
 };
-
-const categoryLabel = computed(() => {
-  const category = allReports.find(cat => cat.value === props.data.category_report_id);
-  return category ? category.label : 'N/A';
-});
 
 const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
   return moment(value, inputFormat).format(format);
@@ -82,7 +83,10 @@ const fieldValueParse: FieldValueParsers = {
     const { start_date, end_date } = props.data.filter_custom;
     return `${formatDate(start_date, 'DD/MM/YYYY')} - ${formatDate(end_date, 'DD/MM/YYYY')}`;
   },
-  category: () => categoryLabel.value,
+  category: () => {
+    const breadcrumbs = props.breadcrumbs.slice(1, -1);
+    return breadcrumbs.map(breadcrumb => breadcrumb.name).join(' / ');
+  },
 };
 
 </script>

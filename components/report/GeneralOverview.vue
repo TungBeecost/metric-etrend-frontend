@@ -288,7 +288,7 @@ const charts = computed(() => {
       </div>
     </div>
     <summary-statistic :data="props.data" :is-hide-content="props.isHideContent"/>
-    <div style="font-size: 16px; color: #241E46; font-weight: bold; text-align: center">Doanh số và sản phẩm đã bán theo tháng</div>
+    <div style="font-size: 16px; color: #241E46; font-weight: bold; text-align: center">Doanh số và sản phẩm {{props.data.name}} đã bán theo tháng</div>
     <div
         id="monthly-growth-chart"
         ref="monthlyGrowthChart"

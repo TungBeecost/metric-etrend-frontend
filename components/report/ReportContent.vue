@@ -19,44 +19,46 @@ const displayTableOfContent = computed(() => {
   if (data?.report_type === 'report_category') {
     return [
       {
-        title: 'Tổng quan',
+        title: `I. Tổng quan thị trường`,
         children: [
-          {title: 'Quy mô thị trường'},
-          {title: 'Doanh số, sản phẩm đã bán theo tháng'},
-          {title: 'Tỷ trọng doanh số theo sàn'},
+          {title: `Quy mô thị trường`},
+          {title: 'Thống kê theo sàn'},
+          {title: 'Thống kê theo tháng'},
+          {title: 'Thống kê theo phân khúc giá'},
+          {title: 'Doanh số, sản phẩm đã bán theo phân khúc giá'},
+
         ],
       },
       {
-        title: 'Nhóm hàng',
+        title: 'II. Thống kê thương hiệu',
         children: [
-          {title: 'Tỷ trọng doanh số theo top 5 nhóm hàng'},
-          {title: 'Tỷ trọng sản lượng bán theo top 5 nhóm hàng'}
+          {title: 'Thống kê thương hiệu toàn thị trường'},
+          {title: 'Top thương hiệu sàn Shopee, Tiktok, Lazada, Tiki'},
         ],
       },
       {
-        title: 'Phân khúc giá',
+        title: 'III. Thống kê gian hàng',
         children: [
-          {title: 'Doanh số, sản phẩm đã bán theo phân khúc giá'}
+          {title: 'Thị phần doanh số theo loại gian hàng'},
+          {title: 'Thị phần doanh số theo khu vực của gian hàng'},
+          {title: 'Thống kê gian hàng bán chạy toàn thị trường'},
+          {title: 'Thống kê gian hàng bán chạy từng sàn Shopee, Tiktok. Lazada, Tiki'},
+          {title: 'Chi tiết 20 gian hàng bán chạy'},
         ],
       },
       {
-        title: 'Thương hiệu',
+        title: 'IV. Thống kê sản phẩm bán chạy',
         children: [
-          {title: 'Top thương hiệu theo doanh số'},
-          {title: 'Top thương hiệu theo sản lượng bán'},
+          {title: 'Sản phẩm bán chạy toàn thị trường'},
+          {title: 'Sản phẩm bán chạy từng sàn Shopee, Tiktok, Lazada, Tiki'},
+          {title: 'Sản phẩm trending bán chạy'},
         ],
       },
       {
-        title: 'Gian hàng hàng đầu',
+        title: 'V. Thống kê đánh giá',
         children: [
-          {title: 'Tỷ trọng doanh số theo loại gian hàng'},
-          {title: 'Thống kê top gian hàng hàng đầu'},
-        ],
-      },
-      {
-        title: 'Sản phẩm bán chạy',
-        children: [
-          {title: 'Top sản phẩm bán chạy'},
+          {title: 'Thống kê shop có đánh giá tốt'},
+          {title: 'Thống kê sản phẩm có đánh giá tốt'},
         ],
       },
     ]

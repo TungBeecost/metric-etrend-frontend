@@ -94,8 +94,8 @@ watchEffect(() => {
             return '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>';
           }
           return ![5, 7, 9].includes(this.point.index)
-              ? '<span>' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>'
-              : '<span>' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+              ? '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span> ' + '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>'
+              : '<span style="font-weight: bold">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
         },
       }
       : {
@@ -104,7 +104,7 @@ watchEffect(() => {
           if (isMobile.value) {
             return '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
           }
-          return '<span>' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          return '<span style="font-weight: bold>' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
         },
       };
 });
