@@ -41,6 +41,10 @@ const formattedHighestMonthRevenue = computed(() => {
   return formatSortTextCurrency(hightestMonthRevenue.value.revenue);
 });
 
+const formatCurrency = (value) => {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+};
+
 const formattedHighestMonthSale = computed(() => {
   return formatSortTextCurrency(hightestMonthRevenue.value.sale);
 });
@@ -48,6 +52,20 @@ const formattedHighestMonthSale = computed(() => {
 const formatDateFunc = (value: string, format: string) => {
   return dayjs(value, "YYYYMMDD").format(format);
 };
+
+const correctedSalesData = props.data.data_analytic.by_overview.lst_revenue_sale_monthly
+    .slice()
+    .map((item: { sale: number, score?: number }) => {
+      if (item.sale !== undefined) {
+        return item.sale;
+      } else if (item.score !== undefined) {
+        return item.score;
+      } else {
+        return 0; // Default value if both are undefined
+      }
+    });
+
+console.log('data', correctedSalesData);
 
 const diffMonths = computed(() => {
   const { start_date, end_date } = props.data.filter_custom;
@@ -96,7 +114,7 @@ const diffHalfYear = computed(() => {
 const charts = computed(() => {
   if (!props.data) return [];
   const platformId = props.data.filter_custom.lst_platform_id[0];
-  const isMobile = screenWidth.value < 768; // Assuming 768px as a breakpoint for mobile devices
+  const isMobile = screenWidth.value < 768;
 
   let yAxisTitleText = 'Số sản phẩm đã bán';
   let xAxisTitleText = '';
@@ -105,6 +123,7 @@ const charts = computed(() => {
     yAxisTitleText = '';
     xAxisTitleText = 'Số sản phẩm đã bán';
   }
+
   return [
     {
       title: {
@@ -124,7 +143,7 @@ const charts = computed(() => {
       tooltip: {
         enabled: true,
         formatter: function(this: { x: string, y: number, series: { name: string } }): string {
-          return `<b>${this.series.name}</b><br/>${this.x}: ${formatSortTextCurrency(this.y)}`;
+          return `<b>${this.series.name}</b><br/>${this.x}: ${formatCurrency(this.y)}`;
         }
       },
       yAxis: [
@@ -138,7 +157,7 @@ const charts = computed(() => {
               fontFamily: 'Inter'
             },
           },
-          opposite: true, // Display on the right side
+          opposite: true,
           labels: {
             style: {
               fontSize: '12px',
@@ -146,9 +165,6 @@ const charts = computed(() => {
               fontWeight: 400,
               fontFamily: 'Inter'
             },
-            formatter: function(this: { value: number }): string {
-              return formatSortTextCurrency(this.value);
-            }
           }
         },
         {
@@ -210,17 +226,15 @@ const charts = computed(() => {
           name: 'Số sản phẩm đã bán',
           color: '#1A1A46',
           type: 'spline',
-          yAxis: 0, // Map to the right axis
+          yAxis: 0,
           zIndex: 1,
-          data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
-              .slice()
-              .map((item: { sale: number, score?: number }) => item.sale || item.score),
+          data: correctedSalesData,
         },
         {
           name: 'Doanh số',
           stack: 'platform_revenue_price_range',
           type: 'column',
-          yAxis: 1, // Map to the left axis
+          yAxis: 1,
           borderRadius: 3,
           data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
               .slice()
@@ -244,9 +258,10 @@ const charts = computed(() => {
           dataLabels: {
             enabled: true,
             formatter: function(this: { y: number }): string {
+              console.log('Data label', this.y);
               return formatSortTextCurrency(this.y);
             },
-            verticalAlign: 'top', // Position the labels above the columns
+            verticalAlign: 'top',
             y: -20,
             style: {
               fontSize: '10px',

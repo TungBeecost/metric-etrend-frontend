@@ -1,5 +1,5 @@
 <script setup>
-import { computed, defineProps, ref, onMounted } from 'vue';
+import { computed, defineProps, ref, onMounted, watchEffect } from 'vue';
 import Highcharts from 'highcharts';
 import { formatNumber } from "~/helpers/FormatHelper.js";
 
@@ -41,6 +41,74 @@ const colors = [
   '#241E46', '#FBE13E', '#FBA140', '#5473EF', '#3DCDCD'
 ];
 
+const tooltipSales = ref({});
+const tooltipOutput = ref({});
+const dataLabels = ref({});
+
+watchEffect(() => {
+  tooltipSales.value = props.isHideContent
+      ? {
+        enabled: true,
+        formatter: function () {
+          const name = ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0
+              ? `${this.point.categoryName} ${this.point.index + 1}`
+              : this.point.name;
+          return `${name}<br/>
+            <svg width="10" height="10">
+              <rect width="10" height="10" style="fill:${this.point.color};stroke-width:3;stroke:rgb(0,0,0)" />
+            </svg> ${this.series.name}: <strong>Đã bị ẩn</strong>`;
+        },
+      }
+      : {
+        enabled: true,
+        formatter: function () {
+          return `<b>${this.point.name}</b><br/>Doanh số: ${Highcharts.numberFormat(this.point.y, 0, ',', '.')} đ`;
+        },
+      };
+
+  tooltipOutput.value = props.isHideContent
+      ? {
+        enabled: true,
+        formatter: function () {
+          const name = ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0
+              ? `${this.point.categoryName} ${this.point.index + 1}`
+              : this.point.name;
+          return `${name}<br/>
+            <svg width="10" height="10">
+              <rect width="10" height="10" style="fill:${this.point.color};stroke-width:3;stroke:rgb(0,0,0)" />
+            </svg> ${this.series.name}: <strong>Đã bị ẩn</strong>`;
+        },
+      }
+      : {
+        enabled: true,
+        formatter: function () {
+          return `<b>${this.point.name}</b><br/>Sản lượng: ${Highcharts.numberFormat(this.point.y, 0, ',', '.')}`;
+        },
+      };
+
+  dataLabels.value = props.isHideContent
+      ? {
+        enabled: true,
+        formatter: function () {
+          if (isMobile.value) {
+            return '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>';
+          }
+          return '<span>' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>';
+        },
+      }
+      : {
+        enabled: true,
+        formatter: function () {
+          if (isMobile.value) {
+            return '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          }
+          return '<span>' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+        },
+      };
+});
+
+const isMobile = window?.innerWidth < 768;
+
 const chartOptionsSales = computed(() => ({
   chart: {
     type: "pie",
@@ -72,9 +140,7 @@ const chartOptionsSales = computed(() => ({
       fontFamily: 'Inter'
     }
   },
-  tooltip: {
-    enabled: false,
-  },
+  tooltip: tooltipSales.value,
   plotOptions: {
     pie: {
       cursor: "pointer",
@@ -83,15 +149,8 @@ const chartOptionsSales = computed(() => ({
       borderWidth: 1,
       borderColor: null,
       dataLabels: {
-        enabled: true,
+        ...dataLabels.value,
         connectorShape: 'crookedLine',
-        formatter: function() {
-          const exemptIndexes = [4, 6, 8]; // 0-based index for 5th, 7th, 9th items
-          if (props.isHideContent && !exemptIndexes.includes(this.point.index)) {
-            return `<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>`;
-          }
-          return `<span style="font-weight: 500">${this.point.name}</span>: <span style="color: #E85912">${this.point.percentage.toFixed(1)}%</span>`;
-        },
         style: {
           fontSize: '12px',
           color: '#241E46',
@@ -101,7 +160,7 @@ const chartOptionsSales = computed(() => ({
       }
     },
     series: {
-      enableMouseTracking: false
+      enableMouseTracking: true
     }
   },
   series: [
@@ -147,9 +206,7 @@ const chartOptionsOutput = computed(() => ({
       fontFamily: 'Inter'
     }
   },
-  tooltip: {
-    enabled: false,
-  },
+  tooltip: tooltipOutput.value,
   plotOptions: {
     pie: {
       cursor: "pointer",
@@ -158,15 +215,8 @@ const chartOptionsOutput = computed(() => ({
       borderWidth: 1,
       borderColor: null,
       dataLabels: {
-        enabled: true,
+        ...dataLabels.value,
         connectorShape: 'crookedLine',
-        formatter: function() {
-          const exemptIndexes = [4, 6, 8]; // 0-based index for 5th, 7th, 9th items
-          if (props.isHideContent && !exemptIndexes.includes(this.point.index)) {
-            return `<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>`;
-          }
-          return `<span style="font-weight: 500">${this.point.name}</span>: <span style="color: #E85912">${this.point.percentage.toFixed(1)}%</span>`;
-        },
         style: {
           fontSize: '12px',
           color: '#241E46',
@@ -176,12 +226,12 @@ const chartOptionsOutput = computed(() => ({
       }
     },
     series: {
-      enableMouseTracking: false
+      enableMouseTracking: true
     }
   },
   series: [
     {
-      name: 'Doanh số (Đồng)',
+      name: 'Sản lượng (Đồng)',
       data: props.data.data_analytic.by_brand.lst_top_brand_sale.map(({ name, sale, ratio_sale }, index) => ({
         name: name,
         y: sale || ratio_sale,
@@ -216,10 +266,10 @@ const formattedBrandCount = computed(() => {
       </div>
     </div>
     <div class="chart_item" >
-      <div style="pointer-events: none">
+      <div>
         <highchart v-if="renderChartSales" :options="chartOptionsSales"/>
       </div>
-      <div style="pointer-events: none">
+      <div>
         <highchart v-if="renderChartOutput" :options="chartOptionsOutput"/>
       </div>
     </div>
@@ -259,8 +309,7 @@ const formattedBrandCount = computed(() => {
               ).toFixed(2)
             }}
           </span>
-        </BlurContent>
-        % thị phần về doanh thu{{
+        </BlurContent>% thị phần về doanh thu{{
           data.data_analytic.by_brand.lst_top_brand_revenue[0].ratio_sale
               ? " và " +
               Number(
@@ -293,8 +342,7 @@ const formattedBrandCount = computed(() => {
                 ).toFixed(2)
               }}
             </span>
-          </BlurContent>
-          % và
+          </BlurContent>% và
           <BlurContent :is-hide-content="isHideContent">
             <span>
               {{
@@ -304,8 +352,7 @@ const formattedBrandCount = computed(() => {
                 ).toFixed(2)
               }}
             </span>
-          </BlurContent>
-          %.
+          </BlurContent>%.
         </template>
       </li>
     </InsightBlock>
