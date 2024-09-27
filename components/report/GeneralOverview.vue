@@ -122,7 +122,10 @@ const charts = computed(() => {
         }
       },
       tooltip: {
-        enabled: false,
+        enabled: true,
+        formatter: function(this: { x: string, y: number, series: { name: string } }): string {
+          return `<b>${this.series.name}</b><br/>${this.x}: ${formatSortTextCurrency(this.y)}`;
+        }
       },
       yAxis: [
         {

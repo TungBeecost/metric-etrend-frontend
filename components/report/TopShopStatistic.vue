@@ -1,7 +1,7 @@
 <script setup>
-import {defineProps, computed, ref, onMounted} from 'vue';
-import PieChart from "~/components/report/PieChart.vue";
-import {formatSortTextCurrency, getUrlImageOption} from "~/helpers/utils.js";
+import { defineProps, computed, ref, onMounted } from 'vue';
+import PieChart from '~/components/report/PieChart.vue';
+import { getUrlImageOption } from '~/helpers/utils.js';
 
 const config = useRuntimeConfig();
 const renderChartSales = ref(false);
@@ -30,6 +30,7 @@ onMounted(() => {
   renderChartSales.value = true;
   renderChartOutput.value = true;
 });
+
 const isHideContentBasic = computed(() => {
   console.log('isHideContentBasic', config.public.SSR);
   if (config.public.SSR === 'true') {
@@ -56,11 +57,6 @@ const colors = [
 ];
 
 const top12Shops = computed(() => props.data.data_analytic.by_shop.lst_shop.slice(0, 12));
-
-
-const truncateName = (name) => {
-  return name.length > 10 ? name.substring(0, 100) + '...' : name;
-};
 
 const chartOptionsSales = computed(() => ({
   chart: {
@@ -149,7 +145,6 @@ const sortedTopShops = computed(() => {
       }))
       .sort((a, b) => b.y - a.y);
 });
-
 
 const chartOptionsOutput = computed(() => ({
   chart: {
@@ -347,59 +342,103 @@ const chartOptionsOutput = computed(() => ({
     </div>
     <InsightBlock
         v-if="
-        props.data.data_analytic.by_shop.ratio.mall &&
-        props.data.data_analytic.by_shop.ratio.normal
+        data.data_analytic.by_shop.ratio.mall &&
+        data.data_analytic.by_shop.ratio.normal
       "
     >
       <li>
-        Thống kê về loại gian hàng, thị trường có
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ formatNumber(props.data.data_analytic.by_shop.ratio.mall.shop) }}
+        Doanh thu của {{ data.name }} đến từ
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{formatNumber(data.data_analytic.by_shop.ratio.mall.shop)}}
+          </span>
         </BlurContent>
-        shop Mall chiếm
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{
-            Number(
-                props.data.data_analytic.by_shop.ratio.mall.ratio_revenue * 100
-            ).toFixed(1)
-          }}%
-        </BlurContent>
-        thị phần doanh số với
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ formatSortTextCurrency(props.data.data_analytic.by_shop.ratio.mall.revenue) }} đồng
-        </BlurContent>
-        và
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ formatNumber(props.data.data_analytic.by_shop.ratio.normal.shop) }}
+        shop mall chiếm
+        {{
+          Number(
+              data.data_analytic.by_shop.ratio.mall.ratio_revenue * 100
+          ).toFixed(1)
+        }}% và hơn
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{ formatNumber(data.data_analytic.by_shop.ratio.normal.shop) }}
+          </span>
         </BlurContent>
         shop thường chiếm
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{
-            Number(
-                props.data.data_analytic.by_shop.ratio.normal.ratio_revenue * 100
-            ).toFixed(1)
-          }}%
+        {{
+          Number(
+              data.data_analytic.by_shop.ratio.normal.ratio_revenue * 100
+          ).toFixed(1)
+        }}% doanh số. Báo cáo về {{ data.name }} của 10 shop bán chạy hàng đầu,
+        Shop
+        <span class="text-bold">{{
+            data.data_analytic.by_shop.lst_top_shop[0].name
+          }}</span>
+        có tỉ trọng doanh thu cao nhất chiếm
+
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{
+              Number(
+                  data.data_analytic.by_shop.lst_top_shop[0].ratio_revenue * 100
+              ).toFixed(2)
+            }}
+          </span>
         </BlurContent>
-        doanh số tương ứng
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ formatSortTextCurrency(props.data.data_analytic.by_shop.ratio.normal.revenue) }} đồng
-        </BlurContent>
-        .
-      </li>
-      <li>
-        Trong top 10 gian hàng bán chạy, Shop
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ props.data.data_analytic.by_shop.lst_top_shop[0].name }}
-        </BlurContent>
-        có tỷ trọng doanh số cao nhất, tiếp theo đó là
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ props.data.data_analytic.by_shop.lst_top_shop[1].name }}
-        </BlurContent>
+        % doanh số. Tiếp theo đó là các shop
+        <template
+            v-if="
+            data.data_analytic &&
+            data.data_analytic.by_shop.lst_top_shop &&
+            data.data_analytic.by_shop.lst_top_shop.length >= 2
+          "
+        >
+          <span class="text-bold">{{
+              data.data_analytic.by_shop.lst_top_shop[1].name
+            }}</span
+          >,
+        </template>
+        <template
+            v-if="
+            data.data_analytic &&
+            data.data_analytic.by_shop.lst_top_shop &&
+            data.data_analytic.by_shop.lst_top_shop.length >= 3
+          "
+        >
+          <span class="text-bold">{{
+              data.data_analytic.by_shop.lst_top_shop[2].name
+            }}</span>
+          tương ứng thị phần doanh thu là
+          <BlurContent :is-hide-content="isHideContent">
+            <span>
+              {{
+                Number(
+                    data.data_analytic.by_shop.lst_top_shop[1].ratio_revenue * 100
+                ).toFixed(2)
+              }}
+            </span>
+          </BlurContent>
+          %
+        </template>
         và
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ props.data.data_analytic.by_shop.lst_top_shop[2].name }}
-        </BlurContent>
-        .
+        <template
+            v-if="
+            data.data_analytic &&
+            data.data_analytic.by_shop.lst_top_shop &&
+            data.data_analytic.by_shop.lst_top_shop.length >= 3
+          "
+        >
+          <BlurContent :is-hide-content="isHideContent">
+            <span>
+              {{
+                Number(
+                    data.data_analytic.by_shop.lst_top_shop[2].ratio_revenue * 100
+                ).toFixed(2)
+              }}
+            </span>
+          </BlurContent>
+        </template>
+        %.
       </li>
     </InsightBlock>
 

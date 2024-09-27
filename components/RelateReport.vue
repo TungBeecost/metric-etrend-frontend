@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type {LstRecommed} from "~/services/reports";
-import {NAVIGATIONS} from "~/constant/constains";
+import type { LstRecommed } from "~/services/reports";
+import { NAVIGATIONS } from "~/constant/constains";
 
 const props = defineProps({
   recomends: {
@@ -12,9 +12,14 @@ const props = defineProps({
 const handleItemClick = (item: LstRecommed) => {
   if (item.source === 'marketing') {
     navigateTo(`${NAVIGATIONS.home}/insight/${item.slug}`);
-    return
+    return;
   }
   navigateTo(`${NAVIGATIONS.home}${item.slug}`);
+};
+
+const getRandomReplacement = () => {
+  const replacements = ["Báo cáo thị trường", "Nghiên cứu thị trường"];
+  return replacements[Math.floor(Math.random() * replacements.length)];
 };
 </script>
 
@@ -36,7 +41,7 @@ const handleItemClick = (item: LstRecommed) => {
               <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="#9D97BF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M13.168 13.1699L17.4984 17.5004" stroke="#9D97BF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            {{ item.source === 'marketing' ? '' : 'Báo cáo' }}
+            {{ item.source === 'marketing' ? '' : getRandomReplacement() }}
             {{ item.name.replace('Báo cáo', '') }}
           </nuxt-link>
         </div>

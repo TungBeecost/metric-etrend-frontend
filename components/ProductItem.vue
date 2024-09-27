@@ -164,7 +164,7 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
             </svg>
           </div>
           <div>
-            <span class="statistic-name">{{ $t('Doanh số đã bán:') }}:</span> <span
+            <span class="statistic-name">{{ $t('Doanh số đã bán') }}:</span> <span
               class="value">{{ formatCurrency(product.revenue) }}</span>
           </div>
         </div>

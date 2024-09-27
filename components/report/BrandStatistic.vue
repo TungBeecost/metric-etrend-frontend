@@ -85,11 +85,12 @@ const chartOptionsSales = computed(() => ({
       dataLabels: {
         enabled: true,
         connectorShape: 'crookedLine',
-        formatter: function () {
-          if (props.isHideContent) {
-            return '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
+        formatter: function() {
+          const exemptIndexes = [4, 6, 8]; // 0-based index for 5th, 7th, 9th items
+          if (props.isHideContent && !exemptIndexes.includes(this.point.index)) {
+            return `<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>`;
           }
-          return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          return `<span style="font-weight: 500">${this.point.name}</span>: <span style="color: #E85912">${this.point.percentage.toFixed(1)}%</span>`;
         },
         style: {
           fontSize: '12px',
@@ -159,11 +160,12 @@ const chartOptionsOutput = computed(() => ({
       dataLabels: {
         enabled: true,
         connectorShape: 'crookedLine',
-        formatter: function () {
-          if (props.isHideContent) {
-            return '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
+        formatter: function() {
+          const exemptIndexes = [4, 6, 8]; // 0-based index for 5th, 7th, 9th items
+          if (props.isHideContent && !exemptIndexes.includes(this.point.index)) {
+            return `<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>`;
           }
-          return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          return `<span style="font-weight: 500">${this.point.name}</span>: <span style="color: #E85912">${this.point.percentage.toFixed(1)}%</span>`;
         },
         style: {
           fontSize: '12px',
@@ -244,9 +246,9 @@ const formattedBrandCount = computed(() => {
               data.data_analytic.by_brand.ratio?.brand.ratio_revenue * 100 || 0
           ).toFixed(1)
         }}% tổng doanh thu. So sánh giữa 10 thương hiệu hàng đầu,
-        <span class="text-bold">{{
+        <b class="text-bold">{{
             data.data_analytic.by_brand.lst_top_brand_revenue[0].name
-          }}</span>
+          }}</b>
         đang chiếm
         <BlurContent :is-hide-content="isHideContent">
           <span>
@@ -274,13 +276,13 @@ const formattedBrandCount = computed(() => {
             data.data_analytic.by_brand.lst_top_brand_revenue.length > 2
           "
         >Tiếp theo đó là
-          <span class="text-bold">
+          <b class="text-bold">
             {{ data.data_analytic.by_brand.lst_top_brand_revenue[1].name }}
-          </span>
+          </b>
           và
-          <span class="text-bold">{{
+          <b class="text-bold">{{
               data.data_analytic.by_brand.lst_top_brand_revenue[2].name
-            }}</span>
+            }}</b>
           tương ứng thị phần {{ data.name }} với doanh thu là
           <BlurContent :is-hide-content="isHideContent">
             <span>
