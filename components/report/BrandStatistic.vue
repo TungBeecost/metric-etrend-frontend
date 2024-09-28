@@ -865,6 +865,8 @@ const formattedBrandCount = computed(() => {
 
   .chart_item{
     flex-direction: column;
+    width: 100%;
+    align-items: center;
   }
 
   .pie_chart{

@@ -75,7 +75,7 @@ const chartOptions = computed(() => ({
     },
   },
   title: {
-    text: "Tỷ trọng doanh số theo sàn",
+    text: `Tỷ trọng doanh số ${data.name} theo sàn`,
     style: {
       fontSize: '14px',
       color: '#241E46',

@@ -65,7 +65,7 @@ onMounted(() => {
              </clipPath>
            </defs>
          </svg>
-         <span>Chi tiết số liệu top 10 thương hiệu hàng đầu</span>
+         <span>Chi tiết số liệu top 10 thương hiệu {{props.data.name}} hàng đầu</span>
        </div>
        <div class="content_item">
          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -91,7 +91,7 @@ onMounted(() => {
              </clipPath>
            </defs>
          </svg>
-         <span>Báo cáo chi tiết 56 trang</span>
+         <span>Báo cáo chi tiết {{props.data.name}} 56 trang</span>
        </div>
 
      </div>
