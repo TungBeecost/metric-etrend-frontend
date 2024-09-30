@@ -6,14 +6,17 @@ permissions: read-all
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "staging","production","product-ereport-vn" ]
+    branches: [ "staging","production","build-pdf" ]
+env:  
+  PUBLIC_REGISTRY: ${{ vars.PUBLIC_REGISTRY }}
 
 jobs:
-
-  include-builds:
-
-    uses: beecost/workflow-template/.github/workflows/template-workflows-build-fe.yml@master
-    secrets: inherit
+  # include-builds:
+  #   uses: beecost/workflow-template/.github/workflows/template-workflows-build-be.yml@master
+  #   secrets: inherit
+  include-builds:  
+    uses: beecost/cicd-template/.github/workflows/build-stage-selfhosted.yml@main  
+    secrets: inherit  
   
   include-deploy:
 
