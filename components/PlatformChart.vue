@@ -98,7 +98,7 @@ const chartOptions = computed(() => ({
   tooltip: {
     enabled: true,
     formatter: function () {
-      if (isHideContent && this.point.name !== 'Shopee') {
+      if (isHideContent) {
         const name = ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0
             ? `${this.point.categoryName} ${this.point.index + 1}`
             : this.point.name;
@@ -129,10 +129,10 @@ const chartOptions = computed(() => ({
         },
         formatter: function () {
           if (isHideContent && this.point.name !== 'Shopee') {
-            return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
+            return '<b style="font-weight: 500">' + this.point.name + '</b>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
           }
 
-          return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          return '<b style="font-weight: 500">' + this.point.name + '</b>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
         },
       }
     },
