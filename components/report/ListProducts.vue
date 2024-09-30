@@ -47,7 +47,7 @@ const isHideContentBasic = computed(() => {
           <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
         </svg>
         <div>
-          <div class="statistic-item__title">Sản phẩm bán chạy</div>
+          <h3 class="statistic-item__title">Sản phẩm bán chạy</h3>
           <div
               v-if="
             props.data.data_analytic &&
@@ -117,7 +117,7 @@ const isHideContentBasic = computed(() => {
           <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
         </svg>
         <div>
-          <div class="statistic-item__title">Sản phẩm trending</div>
+          <h3 class="statistic-item__title">Sản phẩm trending</h3>
           <div
               v-if="
             props.data.data_analytic &&

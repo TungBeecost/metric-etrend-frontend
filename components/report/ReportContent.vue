@@ -126,7 +126,7 @@ const displayTableOfContent = computed(() => {
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Nội dung báo cáo</div>
+        <h2 class="statistic-item__title">Nội dung báo cáo</h2>
       </div>
     </div>
     <div class="content">

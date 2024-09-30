@@ -29,9 +29,9 @@ const getRandomReplacement = () => {
       <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
-      <div class="title_content">
+      <h2 class="title_content">
         Báo cáo liên quan
-      </div>
+      </h2>
     </div>
     <div class="grid">
       <div v-for="item in props.recomends" :key="item.id" class="item" @click="handleItemClick(item)">

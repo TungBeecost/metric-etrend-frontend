@@ -227,10 +227,10 @@ const chartOptions = computed(() => {
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Phân khúc giá</div>
+        <h3 class="statistic-item__title">Phân khúc giá</h3>
       </div>
     </div>
-    <div style="text-align: center; font-weight: bold; font-size: 16px">Doanh số và số sản phẩm {{ props.data.name }} đã bán theo phân khúc giá</div>
+    <h4 style="text-align: center; font-weight: bold; font-size: 16px">Doanh số và số sản phẩm {{ props.data.name }} đã bán theo phân khúc giá</h4>
     <div class="my-4 w-full text-center relative" style="position: relative">
       <highchart :options="chartOptions"/>
       <ChartMask v-if="props.isHideContent" :report="props.data"/>

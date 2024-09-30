@@ -120,7 +120,8 @@ const chartOptionsSales = computed(() => ({
     },
   },
   title: {
-    text: `Tỷ trọng top 10 thương hiệu ${props.data.name} theo doanh số *`,
+    text: `<h4>Tỷ trọng top 10 thương hiệu ${props.data.name} theo doanh số *</h4>`,
+    useHTML: true,
     style: {
       fontSize: '14px',
       color: '#241E46',
@@ -186,7 +187,8 @@ const chartOptionsOutput = computed(() => ({
     },
   },
   title: {
-    text: `Tỷ trọng top 10 thương hiệu ${props.data.name} theo sản lượng *`,
+    text: `<h4>Tỷ trọng top 10 thương hiệu ${props.data.name} theo sản lượng *</h4>`,
+    useHTML: true,
     style: {
       fontSize: '14px',
       color: '#241E46',
@@ -263,7 +265,7 @@ const formattedBrandCount = computed(() => {
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Thương hiệu</div>
+        <h3 class="statistic-item__title">Thương hiệu</h3>
         <div style="font-size: 14px; color: #716B95">Top thương hiệu trong 365 ngày qua</div>
       </div>
     </div>

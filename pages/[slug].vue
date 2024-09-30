@@ -249,9 +249,9 @@ onUnmounted(() => {
             <a-skeleton />
           </div>
           <relate-report v-else class="default_section relate_report" :recomends="data?.listRecommend" />
-          <div class="title_main ">
+          <h2 class="title_main ">
             Báo cáo tổng quan thị trường {{ data?.reportDetail.name }} trên sàn TMĐT
-          </div>
+          </h2>
           <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
           <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
           <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>

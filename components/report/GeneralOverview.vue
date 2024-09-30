@@ -284,11 +284,11 @@ const charts = computed(() => {
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Tổng quan</div>
+        <h3 class="statistic-item__title">Tổng quan</h3>
       </div>
     </div>
     <summary-statistic :data="props.data" :is-hide-content="props.isHideContent"/>
-    <div style="font-size: 16px; color: #241E46; font-weight: bold; text-align: center">Doanh số và sản phẩm {{props.data.name}} đã bán theo tháng</div>
+    <h4 style="font-size: 16px; color: #241E46; font-weight: bold; text-align: center">Doanh số và sản phẩm {{props.data.name}} đã bán theo tháng</h4>
     <div
         id="monthly-growth-chart"
         ref="monthlyGrowthChart"

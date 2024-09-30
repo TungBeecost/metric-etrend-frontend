@@ -1,6 +1,5 @@
 <script setup>
 import { defineProps, computed, ref, onMounted, watchEffect } from 'vue';
-import PieChart from '~/components/report/PieChart.vue';
 import { getUrlImageOption } from '~/helpers/utils.js';
 import Highcharts from "highcharts";
 
@@ -138,7 +137,8 @@ const chartOptionsShopType = computed(() => ({
     },
   },
   title: {
-    text: `Tỷ trọng doanh số ${props.data.name} theo loại gian hàng`,
+    text: `<h4>Tỷ trọng doanh số ${props.data.name} theo loại gian hàng</h4>`,
+    useHTML: true,
     style: {
       fontSize: '14px',
       color: '#241E46',
@@ -209,7 +209,8 @@ const chartOptionsSales = computed(() => ({
     },
   },
   title: {
-    text: `Tỷ trọng top 10 thương hiệu ${props.data.name} theo doanh số *`,
+    text: `<h4>Tỷ trọng top 10 thương hiệu ${props.data.name} theo doanh số *</h4>`,
+    useHTML: true,
     style: {
       fontSize: '14px',
       color: '#241E46',
@@ -279,7 +280,8 @@ const chartOptionsOutput = computed(() => ({
     },
   },
   title: {
-    text: `Tỷ trọng top 10 thương hiệu ${props.data.name} theo sản lượng *`,
+    text: `<h4>Tỷ trọng top 10 thương hiệu ${props.data.name} theo sản lượng *</h4>`,
+    useHTML: true,
     style: {
       fontSize: '14px',
       color: '#241E46',
@@ -339,7 +341,7 @@ const chartOptionsOutput = computed(() => ({
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Gian hàng hàng đầu</div>
+        <h3 class="statistic-item__title">Gian hàng hàng đầu</h3>
         <div style="font-size: 14px; color: #716B95">Top gian hàng trong 365 ngày qua</div>
       </div>
     </div>
@@ -349,7 +351,7 @@ const chartOptionsOutput = computed(() => ({
           class="pie_chart_item"
           style="flex-direction: column; gap: 24px; justify-content: flex-start"
       >
-        <div style="font-size: 16px; font-weight: bold; line-height: 22px; text-align: center; color: #241E46">Số lượng gian hàng {{props.data.name}}</div>
+        <h4 style="font-size: 16px; font-weight: bold; line-height: 22px; text-align: center; color: #241E46">Số lượng gian hàng {{props.data.name}}</h4>
         <div>
           <a-table
               :columns="[
@@ -413,9 +415,9 @@ const chartOptionsOutput = computed(() => ({
         </div>
       </div>
     </div>
-    <div style="color: #241E46; font-weight: 700; line-height: 22px; text-align: center">
+    <h4 style="color: #241E46; font-weight: 700; line-height: 22px; text-align: center">
       Danh sách shop phổ biến của nhóm hàng {{props.data.name}} trên sàn TMĐT
-    </div>
+    </h4>
     <div class="logo-grid">
       <div v-for="(record, index) in top12Shops" :key="index" class="logo-item">
         <img :src="getUrlImageOption(record.url_image, 'thumbnail')" style="width: 64px; height: 64px; border-radius: 8px; background-size: cover;">
