@@ -9,15 +9,11 @@ env:
   PUBLIC_REGISTRY: ${{ vars.PUBLIC_REGISTRY }}
 
 jobs:
-  # include-builds:
-  #   uses: beecost/workflow-template/.github/workflows/template-workflows-build-be.yml@master
-  #   secrets: inherit
   include-builds:  
     uses: beecost/cicd-template/.github/workflows/build-stage-ereport-fe.yml@main  
     secrets: inherit  
   
-  include-deploy:
-
-    uses: beecost/workflow-template/.github/workflows/template-workflows-deploy-fe.yml@master
-    secrets: inherit  
-    needs: [include-builds]
+  # include-deploy:
+  #   uses: beecost/workflow-template/.github/workflows/template-workflows-deploy-fe.yml@master
+  #   secrets: inherit  
+  #   needs: [include-builds]
