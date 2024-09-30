@@ -3,13 +3,18 @@ import { defineProps, computed } from 'vue';
 import moment from "moment/moment";
 import allReports from "public/file_json/list_category.json";
 
+type Breadcrumb = {
+  name: string;
+  value: string | null;
+};
+
 const props = defineProps({
   data: {
     type: Object,
     default: () => ({})
   },
   breadcrumbs: {
-    type: Array,
+    type: Array as () => Breadcrumb[],
     default: () => [],
   },
 });
@@ -34,7 +39,6 @@ const reportFilterDisplayFields = computed(() => {
     'category',
     'lst_keyword',
     'is_remove_fake_sale',
-
   ];
 });
 
@@ -52,7 +56,6 @@ const fieldLabel: FieldLabels = {
   lst_bee_category_base_id: 'Ngành hàng',
   lst_category_base_id: 'Ngành hàng',
   lst_keyword: 'Từ khóa',
-
   is_remove_fake_sale: 'Lọc bỏ sản phẩm ảo/bất thường',
   date_range: 'Dữ liệu phân tích trong khoảng',
 };
@@ -85,10 +88,9 @@ const fieldValueParse: FieldValueParsers = {
   },
   category: () => {
     const breadcrumbs = props.breadcrumbs.slice(1, -1);
-    return breadcrumbs.map(breadcrumb => breadcrumb.name).join(' / ');
+    return breadcrumbs.map((breadcrumb: Breadcrumb) => breadcrumb.name).join(' / ');
   },
 };
-
 </script>
 
 <template>
