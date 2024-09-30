@@ -15,6 +15,7 @@ import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
 import { useGTM } from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
 import RelateReport from "~/components/RelateReport.vue";
+import ScrollNotification from "~/components/ScrollNotification.vue";
 
 const route = useRoute();
 const router = useRouter();
