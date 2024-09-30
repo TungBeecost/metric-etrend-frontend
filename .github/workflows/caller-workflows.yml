@@ -11,9 +11,10 @@ on:
 jobs:
 
   include-builds:
-
-    uses: beecost/workflow-template/.github/workflows/template-workflows-build-fe.yml@master
-    secrets: inherit
+    uses: beecost/cicd-template/.github/workflows/build-stage-selfhosted.yml@main  
+    secrets: inherit  
+    # uses: beecost/workflow-template/.github/workflows/template-workflows-build-fe.yml@master
+    # secrets: inherit
   
   include-deploy:
 
