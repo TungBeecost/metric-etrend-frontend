@@ -1,4 +1,3 @@
-<!-- layouts/default.vue -->
 <template>
   <a-config-provider
       v-if="fetchedUser"
@@ -11,7 +10,7 @@
     }"
   >
     <div class="container">
-      <div class="top-bar" @click="navigateToPricing">
+      <div v-if="showTopBar" class="top-bar" @click="navigateToPricing">
         <div class="text">
           <b style="font-size: 14px">Ưu đãi đặc biệt</b>
           <span style="font-size: 14px"> áp dụng với tất cả các gói dịch vụ đến hết ngày 30/09/2024</span>
@@ -30,8 +29,7 @@
           />
 
           <div style="padding-right: 24px" @click="toggleMenu">
-            <CustomIcon v-if="isMobile && !isShowMenu" :is-custom-size="true"
-                        :type="isDarkBlueHeader ? 'Menu' : 'MenuBlack'"/>
+            <CustomIcon v-if="isMobile && !isShowMenu" :is-custom-size="true" type="Menu"/>
             <CustomIcon v-else-if="isShowMenu" :is-custom-size="true" type="Close"/>
           </div>
           <HeaderNavbar v-if="!isMobile" :is-dark-blue-header="isDarkBlueHeader"/>
@@ -74,6 +72,7 @@ const route = useRoute();
 const headerRef = ref(null);
 const isScrolled = ref(false);
 const isMobile = ref(false);
+const showTopBar = ref(false); // New reactive property to control top-bar visibility
 
 if (!userInfo.value.id) {
   fetchCurrentUser();
@@ -133,7 +132,6 @@ onMounted(() => {
   trackEvent('page_view', {page: route.path});
 
   let lastScrollTop = 0;
-  const topBar = document.querySelector('.top-bar') as HTMLElement;
   const header = document.querySelector('header') as HTMLElement;
 
   const handleScroll = () => {
@@ -143,27 +141,21 @@ onMounted(() => {
     if (screenWidth <= 768) {
       // Mobile-specific behavior
       if (scrollTop > lastScrollTop && scrollTop > 64) {
-        if (topBar) topBar.style.top = '-65px';
-        if (header) header.style.top = '0';
+        header.style.top = showTopBar.value ? '-64px' : '0';
       } else {
-        if (topBar) topBar.style.top = '0';
-        if (header) header.style.top = '64px';
+        header.style.top = '0';
       }
     } else if (screenWidth <= 1380) {
       if (scrollTop > lastScrollTop && scrollTop > 40) {
-        if (topBar) topBar.style.top = '-40px';
-        if (header) header.style.top = '0';
+        header.style.top = showTopBar.value ? '-40px' : '0';
       } else {
-        if (topBar) topBar.style.top = '0';
-        if (header) header.style.top = '40px';
+        header.style.top = '0';
       }
     } else {
       if (scrollTop > lastScrollTop && scrollTop > 33) {
-        if (topBar) topBar.style.top = '-32px';
-        if (header) header.style.top = '0';
+        header.style.top = showTopBar.value ? '-33px' : '0';
       } else {
-        if (topBar) topBar.style.top = '0';
-        if (header) header.style.top = '32px';
+        header.style.top = '0';
       }
     }
 
