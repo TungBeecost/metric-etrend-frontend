@@ -2,22 +2,18 @@ name: Call a templated workflow
 
 permissions: read-all
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "staging","production","product-ereport-vn" ]
 
 jobs:
-
   include-builds:
-    uses: beecost/cicd-template/.github/workflows/build-stage-selfhosted.yml@main  
+    uses: beecost/cicd-template/.github/workflows/build-stage-ereport-fe.yml@main  
     secrets: inherit  
     # uses: beecost/workflow-template/.github/workflows/template-workflows-build-fe.yml@master
     # secrets: inherit
   
   include-deploy:
-
     uses: beecost/workflow-template/.github/workflows/template-workflows-deploy-fe.yml@master
     secrets: inherit  
     needs: [include-builds]
