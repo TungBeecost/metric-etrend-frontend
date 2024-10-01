@@ -2,16 +2,19 @@ name: Call a templated workflow
 
 permissions: read-all
 
-on:
-  push:
-    branches: [ "staging","production","product-ereport-vn" ]
+on:  
+  push:  
+    tags:  
+    # 17-09-2024_v1
+      - '*-*-*_*'
+
 env:  
   PUBLIC_REGISTRY: ${{ vars.PUBLIC_REGISTRY }}
 
 jobs:
   include-builds:  
     # uses: beecost/workflow-template/.github/workflows/template-workflows-build-fe.yml@master  
-    uses: beecost/cicd-template/.github/workflows/build-stage-ereport-fe.yml@main  
+    uses: beecost/cicd-template/.github/workflows/build-stage-ereport-fe-stag.yml@main  
     secrets: inherit  
   
   include-deploy:
