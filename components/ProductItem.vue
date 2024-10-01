@@ -104,6 +104,9 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
             {{ product.shop_platform_name }}
           </span>
         </div>
+        <div v-if="product.platform_created_at" class="product-info-item">
+          {{ $t('Ngày tạo') }}: {{ timestampToDate(product.platform_created_at) }}
+        </div>
       </div>
       <div class="product-statistic-info">
         <div class="product-statistic-info-item">
@@ -128,6 +131,41 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
           <div>
             <span class="statistic-name">{{ $t('Giá trong phân loại hàng') }}: </span>
             <span class="value">{{ displayPrice }}</span>
+          </div>
+        </div>
+        <div class="product-statistic-info-item">
+          <div class="product-statistic-info-item-icon">
+            <svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_1223_35846)">
+                <path
+                    d="M8 13C9.10457 13 10 12.1046 10 11C10 9.89543 9.10457 9 8 9C6.89543 9 6 9.89543 6 11C6 12.1046 6.89543 13 8 13Z"
+                    stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15 7H1V15H15V7Z" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+                <path d="M15 9.5C14.3754 9.39414 13.7992 9.09663 13.3513 8.64869C12.9034 8.20075 12.6059 7.62457 12.5 7"
+                      stroke="#716B95"
+                      stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path
+                    d="M12.5 15C12.6059 14.3754 12.9034 13.7992 13.3513 13.3513C13.7992 12.9034 14.3754 12.6059 15 12.5"
+                    stroke="#716B95"
+                    stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M1 12.5C1.62457 12.6059 2.20075 12.9034 2.64869 13.3513C3.09663 13.7992 3.39414 14.3754 3.5 15"
+                      stroke="#716B95"
+                      stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3.5 7C3.39414 7.62457 3.09663 8.20075 2.64869 8.64869C2.20075 9.09663 1.62457 9.39414 1 9.5"
+                      stroke="#716B95"
+                      stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_1223_35846">
+                  <rect width="16" height="16" fill="white" transform="translate(0 3)"/>
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <div>
+            <span class="statistic-name">{{ $t('Doanh số đã bán') }}:</span> <span
+              class="value">{{ formatCurrency(product.revenue) }}</span>
           </div>
         </div>
         <div class="product-statistic-info-item">

@@ -24,6 +24,7 @@ export const extractDomain = (url) => {
     return hostname;
 };
 
+
 export const formatSortTextCurrencyWithMinValue = (price, isShortest = false, min = 1000) => {
     if (!!+price === false) {
         return price;

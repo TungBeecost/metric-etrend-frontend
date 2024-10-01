@@ -8,7 +8,7 @@
           <div class="plan_info_description">{{ plan.description }}</div>
         </div>
       </div>
-      <div class="button" :style="buttonStyle">
+      <div class="button" :style="buttonStyle" @click="navigateToPricing">
         <span :style="textColor">{{ plan.textButton }}</span>
       </div>
     </div>
@@ -30,6 +30,8 @@ interface Plan {
   svg: string;
 }
 
+const router = useRouter();
+
 const props = defineProps<{
   plan: Plan;
 }>();
@@ -46,6 +48,10 @@ const buttonStyle = computed(() => ({
 const textColor = computed(() => ({
   color: props.plan.textColorButton
 }));
+
+const navigateToPricing = () => {
+  router.push('/pricing');
+};
 </script>
 
 <style scoped>

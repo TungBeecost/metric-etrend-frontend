@@ -120,10 +120,21 @@ const canViewReport = computed(() => {
   return (userInfo.value.current_plan?.remain_claim_pdf ?? 0) > 0;
 });
 
+const handleBuyReport = () => {
+  navigateTo(`${NAVIGATIONS.pricing}`);
+};
 
 const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFormat: string = "YYYY-MM-DD[T]HH:mm:ss"): string => {
   return moment(value, inputFormat).format(format);
 }
+
+const discountPercentage = computed(() => {
+  if (props.data.price_before_discount && props.data.price) {
+    const discount = ((props.data.price_before_discount - props.data.price) / props.data.price_before_discount) * 100;
+    return Math.round(discount);
+  }
+  return 0;
+});
 
 </script>
 
@@ -145,16 +156,19 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
               <li>• Từ {{ formatDate(props.data.start_date, "DD-MM-YYYY") }}
                 đến {{ formatDate(props.data.end_date, "DD-MM-YYYY") }}
               </li>
+              <li>• Nhận báo cáo qua email trong vòng 05 phút</li>
             </ul>
           </div>
         </div>
         <div class="payment_container">
           <div v-if="!props.data.can_download" class="price">
-            <p class="price_real">{{ formatCurrency(props.data.price) }}</p>
-            <p class="price_discount">{{ formatCurrency(props.data.price_before_discount) }}</p>
-          </div>
-          <div v-if="!props.data.can_download" class="note">
-            Nhận báo cáo qua email trong vòng 05 phút
+            <div style="text-align: center">
+              <span style="color: #716B95">Giá niêm yết: </span><span class="price_discount">{{ formatCurrency(props.data.price_before_discount) }}</span>
+            </div>
+            <div style="text-align: center">
+              <span class="price_real">{{ formatCurrency(props.data.price) }}</span>
+              <span style="font-size: 12px; color: #E85912; font-weight: 400;">(-{{discountPercentage}})%</span>
+            </div>
           </div>
           <div class="button_group">
             <a-button type="primary"
@@ -162,10 +176,25 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
                       class="download_report_button" :loading="downloading"
                       @click="handleDownload">Tải báo cáo
             </a-button>
-            <a-button v-if="userInfo.current_plan.remain_claim_pdf"
+            <div style="color: #716B95">hoặc</div>
+            <a-button v-if="(userInfo.current_plan?.remain_claim_pdf ?? 0) > 0"
                       :disabled="!canViewReport"
-                      style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center"
-                      class="download_report_button" @click="handleView">Xem báo cáo
+                      style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
+                      class="download_report_button" @click="handleView">
+              Xem báo cáo
+              <div style="position: absolute; top: -12px; right: -12px; background: #241E46; color: #FFFFFF; padding: 2px 4px">
+                còn {{ userInfo.current_plan?.remain_claim_pdf ?? 0 }} lượt
+              </div>
+              <svg style="position: absolute; top: 15px; right: -12px;" xmlns="http://www.w3.org/2000/svg" width="13" height="8" viewBox="0 0 13 8" fill="none">
+                <path d="M0 8L13 0H0V8Z" fill="#120B37"/>
+              </svg>
+            </a-button>
+            <a-button
+                v-else
+                style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
+                @click="handleBuyReport"
+            >
+              Mua gói báo cáo
             </a-button>
           </div>
           <div v-if="!props.data.can_download" class="wallet_info">
@@ -206,7 +235,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
       display: flex;
       flex-direction: column;
       gap: 20px;
-      margin-bottom: 50px;
+      margin-bottom: 24px;
 
       .title_report {
         color: #E85912;
@@ -256,7 +285,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
 
         .price_real {
           color: #E85912;
-          font-size: 36px;
+          font-size: 20px;
           font-weight: 800;
           text-align: center;
         }
@@ -281,12 +310,13 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
     .button_group {
       width: 80%;
       display: flex;
-      gap: 8px;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
     }
 
     .wallet_info {
       display: flex;
-      flex-direction: column;
       align-items: center;
 
       p {
@@ -369,10 +399,21 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
   }
 }
 
+
 @media (max-width: 768px) {
   .noti_view_dept_report {
     margin-top: 16px;
     gap: 24px;
   }
 }
+</style>
+
+<style lang="scss">
+  .ant-modal {
+    @media (max-width: 767px) {
+      top: 20px;
+      margin: 0 auto;
+    }
+  }
+
 </style>

@@ -18,7 +18,6 @@ const {data, isHideContent} = defineProps({
 
 const renderChart = ref(false)
 
-// Initialize windowWidth with a default value
 const windowWidth = ref(1024);
 
 onMounted(() => {
@@ -63,85 +62,100 @@ const chartWidth = computed(() => {
   } else if (windowWidth.value < 1500) {
     return 400;
   } else {
-    return 500;
+    return 900;
   }
 });
-const chartOptions = computed(() => ({
-    chart: {
-      type: "pie",
-      width: chartWidth.value || 500,
-      style: {
-        fontFamily: "Inter",
-      },
-    },
-    title: {
-      text: "Tỷ trọng doanh số theo sàn",
-      style: {
-        fontSize: '14px',
-        color: '#241E46',
-        fontWeight: 700,
-        fontFamily: 'Inter'
-      }
-    },
-    legend: {
-      enabled: true,
-      symbolHeight: 10,
-      symbolWidth: 10,
-      itemStyle: {
-        fontSize: '12px',
-        color: '#241E46',
-        fontWeight: 400,
-        fontFamily: 'Inter'
-      }
-    },
-    tooltip: {
-      enabled: false,
-    },
-    plotOptions: {
-      pie: {
-        cursor: "pointer",
-        showInLegend: true,
-        innerSize: '60%',
-        borderWidth: 1,
-        borderColor: null,
-        dataLabels: {
-          enabled: true,
-          connectorShape: 'crookedLine',
-          style: {
-            fontSize: '12px',
-            color: '#241E46',
-            fontWeight: 400,
-            fontFamily: 'Inter'
-          },
-          formatter: function () {
-            if (isHideContent) {
-              return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
-            }
 
-            return '<span style="font-weight: 500">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
-          },
-        }
-      },
-      series: {
-        enableMouseTracking: false
+const chartOptions = computed(() => ({
+  chart: {
+    type: "pie",
+    width: chartWidth.value || 500,
+    style: {
+      fontFamily: "Inter",
+    },
+  },
+  title: {
+    text: `<h4>Tỷ trọng doanh số ${data.name} theo sàn</h4>`,
+    useHTML: true,
+    style: {
+      fontSize: '14px',
+      color: '#241E46',
+      fontWeight: 700,
+      fontFamily: 'Inter'
+    }
+  },
+  legend: {
+    enabled: true,
+    symbolHeight: 10,
+    symbolWidth: 10,
+    itemStyle: {
+      fontSize: '12px',
+      color: '#241E46',
+      fontWeight: 400,
+      fontFamily: 'Inter'
+    }
+  },
+  tooltip: {
+    enabled: true,
+    formatter: function () {
+      if (isHideContent) {
+        const name = ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0
+            ? `${this.point.categoryName} ${this.point.index + 1}`
+            : this.point.name;
+        return `${name}<br/>
+          <svg width="10" height="10">
+            <rect width="10" height="10" style="fill:${this.point.color};stroke-width:3;stroke:rgb(0,0,0)" />
+          </svg> ${this.series.name}: <strong>Đã bị ẩn</strong>`;
+      } else {
+        return `<b>${this.point.name}</b><br/>Doanh số: ${Highcharts.numberFormat(this.point.y, 0, ',', '.')} đ`;
+      }
+    }
+  },
+  plotOptions: {
+    pie: {
+      cursor: "pointer",
+      showInLegend: true,
+      innerSize: '60%',
+      borderWidth: 1,
+      borderColor: null,
+      dataLabels: {
+        enabled: true,
+        connectorShape: 'crookedLine',
+        style: {
+          fontSize: '12px',
+          color: '#241E46',
+          fontWeight: 400,
+          fontFamily: 'Inter'
+        },
+        formatter: function () {
+          if (isHideContent && this.point.name !== 'Shopee') {
+            return '<b style="font-weight: 500">' + this.point.name + '</b>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
+          }
+
+          return '<b style="font-weight: 500">' + this.point.name + '</b>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+        },
       }
     },
-    series: [
-      {
-        name: 'Doanh số (Đồng)',
-        data: data.data_analytic.by_marketplace.lst_marketplace.map(({platform_id, revenue, ratio_revenue}) => ({
-          name: getPlatformById(platform_id).name,
-          y: revenue || ratio_revenue,
-          color: {
-            linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
-            stops: [
-              [0, platformColors[getPlatformById(platform_id).name][0]],
-              [1, platformColors[getPlatformById(platform_id).name][1]]
-            ]
-          }
-        })).sort((a, b) => b.y - a.y),
-      }
-    ]
+    series: {
+      enableMouseTracking: true
+    }
+  },
+  series: [
+    {
+      name: 'Doanh số (Đồng)',
+      data: data.data_analytic.by_marketplace.lst_marketplace.map(({platform_id, revenue, ratio_revenue}) => ({
+        name: getPlatformById(platform_id).name,
+        y: revenue || ratio_revenue,
+        color: {
+          linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
+          stops: [
+            [0, platformColors[getPlatformById(platform_id).name][0]],
+            [1, platformColors[getPlatformById(platform_id).name][1]]
+          ]
+        }
+      })).sort((a, b) => b.y - a.y),
+    }
+  ]
 }));
 
 const dataSource = computed(() => {
@@ -157,7 +171,7 @@ const dataSource = computed(() => {
 <template>
   <div id="platform_chart" class="PlatformChart">
     <div>
-      <div style="position: relative; pointer-events: none">
+      <div style="position: relative">
         <highchart v-if="renderChart" :options="chartOptions"/>
       </div>
     </div>

@@ -2,6 +2,7 @@
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
 import { defineProps, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import ReportPreviewSlide from "~/components/PreviewSlide/ReportPreviewSlide.vue";
 
 const open = ref(false);
 const route = useRoute();
@@ -34,10 +35,11 @@ onMounted(() => {
 <template>
   <div class="dept_report_link">
    <div class="container">
-    <div class="title_container">
-      <p style="text-align: center; color: #E85812; font-size: 24px; font-weight: 700; line-height: 32px">Báo cáo chi tiết</p>
-      <p style="text-align: center; color: #050038; font-size: 14px; font-weight: 600; line-height: 20px">Nhóm hàng {{data.name}}</p>
-    </div>
+     <div class="border_slide_thumbnail">
+       <div class="slide_thumbnail">
+         <ReportPreviewSlide :data="props.data" :is-slug-page="true"/>
+       </div>
+     </div>
      <div class="content_container">
        <div class="content_item">
          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -50,7 +52,7 @@ onMounted(() => {
              </clipPath>
            </defs>
          </svg>
-         <span>Số liệu chi tiết về thị trường {{data.name}} trên Shopee, Lazada, Tiki</span>
+         <span>Thống kê chi tiết từng sàn Shopee, Tiktok, Lazada, Tiki</span>
        </div>
        <div class="content_item">
          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -63,7 +65,7 @@ onMounted(() => {
              </clipPath>
            </defs>
          </svg>
-         <span>Xu hướng tăng trưởng doanh số và sản lượng bán trong 12 tháng qua</span>
+         <span>Chi tiết số liệu top 10 thương hiệu {{props.data.name}} hàng đầu</span>
        </div>
        <div class="content_item">
          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,7 +78,7 @@ onMounted(() => {
              </clipPath>
            </defs>
          </svg>
-         <span>Thống kê thương hiệu và phân tích chi tiết số liệu gian hàng bán chạy</span>
+         <span>Thống kê chi tiết 20 gian hàng và 60 sản phẩm bán chạy</span>
        </div>
        <div class="content_item">
          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -89,12 +91,12 @@ onMounted(() => {
              </clipPath>
            </defs>
          </svg>
-         <span>Thống kê đánh giá người tiêu dùng về gian hàng và bản phẩm bán chạy</span>
+         <span>Báo cáo chi tiết {{props.data.name}} 56 trang</span>
        </div>
 
      </div>
    </div>
-    <a-button style="width: 100%; height: 40px" type="primary" class="btn" @click="handleClick">Xem chi tiết</a-button>
+    <a-button style="width: 100%; height: 40px" type="primary" class="btn" @click="handleClick">Xem báo cáo chi tiết</a-button>
   </div>
   <modal-download-pdf v-model:open="open" :data="props.data"/>
 </template>
@@ -106,7 +108,7 @@ onMounted(() => {
   flex-direction: column;
   justify-content: space-between;
   gap: 24px;
-  border-radius: 8px;
+  border-radius: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   .container{
@@ -114,10 +116,16 @@ onMounted(() => {
     flex-direction: column;
     gap: 24px;
 
-    .title_container{
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .border_slide_thumbnail{
+      padding: 10px;
+      background: var(--Gradient-2, linear-gradient(90deg, #FF6931 1.09%, #FF9839 99.23%));
+      border-radius: 8px;
+
+      .slide_thumbnail{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
 
     .content_container{

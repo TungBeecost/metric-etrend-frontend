@@ -7,25 +7,28 @@ import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import moment from "moment";
-import UnlockReport from "~/components/report/UnlockReport.vue";
-import MaybeInterested from "~/components/report/MaybeInterested.vue";
 import { REPORT_ENDPOINTS } from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
-import { useCurrentUser } from "~/stores/current-user.js";
 import { useGTM } from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
+import RelateReport from "~/components/RelateReport.vue";
+import ScrollNotification from "~/components/ScrollNotification.vue";
 
 const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
-const currentUserStore = useCurrentUser();
 const gtm = useGTM();
-const { userInfo } = storeToRefs(currentUserStore);
 const checkLevelCategory = ref(false);
 const showModal = ref(false);
+const showAdvertisement = ref(false);
+const showNotification = ref(true);
+const loadingRecommend = ref(true);
+const loadingSuggest = ref(true);
+const showButton = ref(false);
+const loading = ref(true); // Add loading state
 
 const fetchSuggest = async (value = '', options = {}) => {
   try {
@@ -44,6 +47,8 @@ const fetchSuggest = async (value = '', options = {}) => {
     return lst_report;
   } catch (error) {
     return [];
+  } finally {
+    loadingSuggest.value = false;
   }
 };
 
@@ -53,12 +58,19 @@ const trackEvent = (event, data) => {
   }
 };
 
-const fetchRecommend = async (categoryReportId) => {
+const fetchRecommend = async (categoryReportId, number_of_reports = 18) => {
   try {
-    return await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.list_recomend.endpoint}?category_report_id=${categoryReportId}`);
+    return await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.list_recomend.endpoint}?category_report_id=${categoryReportId}&number_of_reports=${number_of_reports}`);
   } catch (error) {
     return [];
+  } finally {
+    loadingRecommend.value = false;
   }
+};
+
+const handleScroll = () => {
+  const scrollThreshold = isMobile.value ? 800 : 850;
+  showAdvertisement.value = window.scrollY > scrollThreshold;
 };
 
 const fetchReportData = async () => {
@@ -131,6 +143,8 @@ const fetchReportData = async () => {
     console.log(error);
     await router.push('/search');
     return {};
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -152,149 +166,114 @@ const updateWindowSize = () => {
 onMounted(() => {
   trackEvent('page_view', { page: route.path });
   window.addEventListener('resize', updateWindowSize);
-  console.log('route.query', data.value.reportDetail);
+  window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
   if (transactionId) {
     showModal.value = true;
   }
 });
 
-useHead({
-  title: `${data?.value.reportDetail?.name ?? ''} - Báo cáo xu hướng thị trường sàn TMĐT`,
-  meta: [
-    { name: 'description', content: `Báo cáo chi tiết thị trường ${data?.value.reportDetail?.name ?? ''}` },
-    { property: 'og:title', content: `Báo cáo thị trường ${data?.value.reportDetail?.name ?? ''} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}` },
-    { property: 'og:description', content: `Báo cáo chi tiết thị trường ${data?.value.reportDetail?.name ?? ''}` },
-    { property: 'og:image', content: data?.value.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail || '' },
-    { property: 'og:image:alt', content: `Báo cáo thị trường ${data?.value.reportDetail?.name ?? ''}` },
-  ],
-  bodyAttrs: {
-    class: 'report-detail'
-  },
-  script: [
-    {
-      hid: 'og:title',
-      property: 'og:title',
-      content: `Báo cáo thị trường ${data?.value.reportDetail?.name ?? ''} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`
-    },
-    {
-      hid: 'og:description',
-      property: 'og:description',
-      content: `Báo cáo chi tiết thị trường ${data?.value.reportDetail?.name ?? ''}`
-    },
-    {
-      hid: 'og:image',
-      property: 'og:image',
-      content: data?.value.reportDetail?.url_cover || data?.value.reportDetail?.url_thumbnail || ''
-    },
-    {
-      hid: 'og:image:alt',
-      property: 'og:image:alt',
-      content: `Báo cáo thị trường ${data?.value.reportDetail?.name ?? ''}`
-    },
-    {
-      hid: 'canonical',
-      rel: 'canonical',
-      href: `${config.public.BASE_URL}${route.fullPath}`
-    },
-    {
-      hid: 'ld+json',
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Metric",
-            item: "https://ereport.vn",
-          },
-          ...(data?.value.reportDetail?.lst_category || []).map((item, index) => ({
-            "@type": "ListItem",
-            position: index + 2,
-            name: item.name,
-            item: `https://ereport.vn/${item.slug}`,
-          })),
-        ]
-      })
-    }
-  ]
-});
 const handleOk = () => {
   showModal.value = false;
   navigateTo(`${NAVIGATIONS.home}${route.params.slug}`);
 };
 
+const handleShowNotification = () => {
+  showNotification.value = false;
+  showButton.value = true;
+}
+
 onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);
+  window.removeEventListener('scroll', handleScroll);
 });
-
 </script>
 
 <template>
-<!--  <Head>-->
-<!--    <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>-->
-<!--    <Meta hid="og:title" property="og:title" :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>-->
-<!--    <Meta hid="description" name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>-->
-<!--    <Meta hid="og:description" property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>-->
-<!--    <Meta hid="og:image" property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>-->
-<!--    <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>-->
-<!--    <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>-->
-<!--    <component is="script" type="application/ld+json">-->
-<!--      {{-->
-<!--        JSON.stringify({-->
-<!--          '@context': 'https://schema.org',-->
-<!--          '@type': 'BreadcrumbList',-->
-<!--          itemListElement: [-->
-<!--            {-->
-<!--              "@type": "ListItem",-->
-<!--              position: 1,-->
-<!--              name: "Metric",-->
-<!--              item: "https://ereport.vn",-->
-<!--            },-->
-<!--            ...(data.reportDetail.lst_category || []).map((item, index) => ({-->
-<!--              "@type": "ListItem",-->
-<!--              position: index + 2,-->
-<!--              name: item.name,-->
-<!--              item: `https://ereport.vn/${item.slug}`,-->
-<!--            })),-->
-<!--          ]-->
-<!--        })-->
-<!--      }}-->
-<!--    </component>-->
-<!--  </Head>-->
-
+  <Head>
+    <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
+    <Meta hid="og:title" property="og:title" :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>
+    <Meta hid="description" name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+    <Meta hid="og:description" property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>
+    <Meta hid="og:image" property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>
+    <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>
+    <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>
+    <component is="script" type="application/ld+json">
+      {{
+        JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Metric",
+              item: "https://ereport.vn",
+            },
+            ...(data.reportDetail.lst_category || []).map((item, index) => ({
+              "@type": "ListItem",
+              position: index + 2,
+              name: item.name,
+              item: `https://ereport.vn/${item.slug}`,
+            })),
+          ]
+        })
+      }}
+    </component>
+  </Head>
   <div class="container_content">
-    <div class="title default_section">
-      <div class="breadcrumbs">
-        <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
-      </div>
-      <h1 class="report-title">
-        {{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT
-      </h1>
+    <div v-if="loading" class="loading-spinner">
+      <a-spin size="large" />
     </div>
-    <div class="container default_section">
-      <div class="general_overview_container">
-        <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-        <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-        <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-        <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-        <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-        <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+    <div v-else>
+      <div class="title default_section">
+        <div class="breadcrumbs">
+          <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
+        </div>
+        <h1 class="title_main">
+          Báo cáo {{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT
+        </h1>
+        <div class="container_report_detail">
+          <div class="container_report_detail_left">
+            <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
+            <report-content :data="data?.reportDetail"/>
+          </div>
+          <div class="container_report_detail_right">
+            <indept-report-link v-if="data?.reportDetail.report_type !== 'report_category'" :slug="route.params.slug" :data="data.reportDetail"/>
+            <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" :breadcrumbs="data?.breadcrumbs" class="report-filter-detail"/>
+          </div>
+        </div>
       </div>
-      <div class="different_info">
-        <unlock-report v-if="!userInfo.current_plan.plan_code || userInfo.current_plan.plan_code === 'e_community'" :data="data.reportDetail" :check-level-category="checkLevelCategory"/>
-        <indept-report-link v-if="userInfo.current_plan.plan_code && userInfo.current_plan.plan_code !== 'e_community'
-         && data.reportDetail && !checkLevelCategory" :slug="route.params.slug" :data="data.reportDetail"/>
-        <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
-        <report-content :data="data?.reportDetail"/>
-        <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" class="report-filter-detail"/>
-        <maybe-interested v-if="!isMobile" :recomends="data.listRecommend"/>
+      <div class="container default_section">
+        <div class="general_overview_container">
+          <div v-if="loadingRecommend" class="default_section">
+            <a-skeleton />
+          </div>
+          <relate-report v-else class="default_section relate_report" :recomends="data?.listRecommend" />
+          <h2 class="title_main ">
+            Báo cáo tổng quan thị trường {{ data?.reportDetail.name }} trên sàn TMĐT
+          </h2>
+          <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+          <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+          <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+          <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+          <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+          <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+        </div>
       </div>
-    </div>
-    <maybe-interested v-if="isMobile" :recomends="data?.listRecommend"/>
-    <poster-detail-report :list-suggest="tagSuggestions"/>
+      <poster-detail-report :list-suggest="tagSuggestions" :loading="loadingSuggest"/>
+      <transition name="fade">
+        <div v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category'" class="advertisement">
+          <scroll-notification
+              v-if="data.reportDetail.name"
+              :data="data.reportDetail"
+              :show-notification="showNotification"
+              :show-button="showButton"
+              @show-notification="handleShowNotification"
+          />
+        </div>
+      </transition>
+    </div> <!-- Missing closing div for the main container -->
     <a-modal v-if="showModal" v-model:visible="showModal" width="600px" :footer="null" @ok="handleOk">
       <div class="modal_content">
         <div class="alert_success">
@@ -336,17 +315,31 @@ onUnmounted(() => {
   .title {
     display: flex;
     flex-direction: column;
+    padding-bottom: 16px;
 
     .breadcrumbs {
       display: flex;
       gap: 10px;
     }
 
-    .report-title {
-      font-size: 36px;
-      font-weight: 700;
-      line-height: 48px;
-      color: #101828;
+    .container_report_detail{
+      display: flex;
+      gap: 24px;
+
+      .container_report_detail_left{
+        flex:0.7;
+        display: flex;
+        flex-direction: column;
+        gap: 16px
+      }
+
+      .container_report_detail_right{
+        flex:0.3;
+        display: flex;
+        flex-direction: column;
+        gap: 16px
+      }
+
     }
   }
 
@@ -355,18 +348,18 @@ onUnmounted(() => {
     gap: 20px;
 
     .general_overview_container {
-      flex: 0.7;
       display: flex;
       flex-direction: column;
       gap: 16px;
+
+      .report-title {
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 48px;
+        color: #101828;
+      }
     }
 
-    .different_info {
-      flex: 0.3;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
   }
 }
 
@@ -402,17 +395,43 @@ onUnmounted(() => {
       }
     }
   }
+}
 
+.title_main{
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 48px;
+  color: #101828;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.relate_report{
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 768px) {
-  .container_content {
-    .title {
-      .report-title {
-        font-size: 24px;
-        line-height: 32px;
-      }
-    }
+  .container_report_detail{
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .container_report_detail_right {
+    order: -1;
   }
 
   .different_info {
@@ -421,6 +440,15 @@ onUnmounted(() => {
 
   .different_info .maybe-interested-component {
     order: 2;
+  }
+
+  .title_main{
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .title{
+    padding-bottom: 16px !important;
   }
 }
 </style>

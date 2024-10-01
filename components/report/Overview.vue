@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import {formatSortTextCurrency} from "~/helpers/utils";
-import {computed} from "vue";
+import { formatSortTextCurrency } from "~/helpers/utils";
+import { computed } from "vue";
 import dayjs from "dayjs";
-import {formatCurrency} from "~/helpers/FormatHelper";
+import { formatCurrency } from "~/helpers/FormatHelper";
 
 const props = defineProps({
   data: {
     type: Object,
-    default: () => {
-    },
+    default: () => ({}),
   },
   isHideContent: {
     type: Boolean,
@@ -17,7 +16,7 @@ const props = defineProps({
 });
 
 const diffMonths = computed(() => {
-  const {start_date, end_date} = props.data.filter_custom;
+  const { start_date, end_date } = props.data.filter_custom;
   const startDate = dayjs(start_date);
   const endDate = dayjs(end_date);
   return endDate.diff(startDate, "months") + 1 + " tháng";
@@ -25,12 +24,11 @@ const diffMonths = computed(() => {
 
 interface PriceRange {
   revenue: number;
-
   [key: string]: number;
 }
 
 const priceRangesSortBy = (field: keyof PriceRange = 'revenue') => {
-  const {lst_price_range} = props.data.data_analytic.by_price_range;
+  const { lst_price_range } = props.data.data_analytic.by_price_range;
   return lst_price_range.slice().sort((a: PriceRange, b: PriceRange) => b[field] - a[field]) || [];
 };
 
@@ -46,6 +44,27 @@ const top5Shops = (): string[] => {
   const shops: Shop[] = props.data.data_analytic.by_brand.lst_top_brand_revenue;
   return shops.slice(0, 5).map(brand => brand.name);
 };
+
+interface RevenueItem {
+  revenue: number;
+}
+
+const diffRevenueLatestQuarterPercent = computed(() => {
+  const { lst_revenue_sale_monthly } = props.data.data_analytic.by_overview;
+  const latestQuarter = lst_revenue_sale_monthly.slice(-3);
+  const previousQuarter = lst_revenue_sale_monthly.slice(-6, -3);
+  const revenueLatestQuarter = latestQuarter.reduce(
+      (acc: number, item: RevenueItem) => acc + item.revenue,
+      0
+  );
+  const revenuePreviousQuarter = previousQuarter.reduce(
+      (acc: number, item: RevenueItem) => acc + item.revenue,
+      0
+  );
+  const diff = revenueLatestQuarter - revenuePreviousQuarter;
+  console.log(latestQuarter);
+  return parseFloat(((diff / revenuePreviousQuarter) * 100).toFixed(2));
+});
 </script>
 
 <template>
@@ -56,22 +75,22 @@ const top5Shops = (): string[] => {
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Giới thiệu</div>
+        <h2 class="statistic-item__title">Giới thiệu</h2>
       </div>
     </div>
     <div class="content">
       <div>
-        Báo cáo nghiên cứu thị trường {{ props.data.name }} trên sàn Thương mại điện tử
+        <b> Báo cáo nghiên cứu thị trường {{ props.data.name }} </b> trên sàn Thương mại điện tử
         {{
           props.data.data_analytic.by_marketplace.lst_marketplace.map((platform: Platform) => platform.name).join(', ')
         }}
-        từ tháng
+        dành cho nhà bán hàng <b> từ tháng
         {{ props.data.filter_custom.start_date.slice(4, 6) + '/' + props.data.filter_custom.start_date.slice(0, 4) }}
         đến tháng {{
           props.data.filter_custom.end_date.slice(4, 6) + '/' + props.data.filter_custom.end_date.slice(0, 4)
-        }},
+        }}</b>,
         được thực hiện bởi
-        <a style="color: #E85912" href="https://metric.vn/" target="_blank">Metric.vn - Nền tảng phân tích số liệu thị
+        <a style="color: #E85912; font-weight: 500" href="https://metric.vn/" target="_blank">Metric.vn - Nền tảng phân tích số liệu thị
           trường</a>.
       </div>
       <br>
@@ -82,17 +101,17 @@ const top5Shops = (): string[] => {
             <b>{{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }} đồng</b>
           </BlurContent>
         </span>
-        trong {{ diffMonths }}.
+        trong {{ diffMonths }}  và so với quý gần nhất
+        {{
+          diffRevenueLatestQuarterPercent > 0 ? "tăng trưởng hơn" : "giảm"
+        }}
+        {{ Math.abs(diffRevenueLatestQuarterPercent) }}%
         Đánh giá thị trường {{ props.data.name }}, phân khúc giá có doanh số cao nhất là từ
-        <BlurContent :is-hide-content="isHideContent">
           {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
           {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}
-        </BlurContent>
           . Những thương hiệu {{ props.data.name }} được phân phối và
         bán chạy nhất là
-        <BlurContent :is-hide-content="isHideContent">
-          <span>{{ top5Shops().join(', ') }}</span>
-        </BlurContent>
+          <b>{{ top5Shops().join(', ') }}</b>
         v.v...
       </div>
     </div>
@@ -102,7 +121,7 @@ const top5Shops = (): string[] => {
 <style scoped lang="scss">
 .overview {
   padding: 24px;
-  border-radius: 8px;
+  border-radius: 16px;
   border: 1px solid #EEEBFF;
   display: flex;
   flex-direction: column;

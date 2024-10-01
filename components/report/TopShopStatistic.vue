@@ -1,11 +1,11 @@
 <script setup>
-import {defineProps, computed} from 'vue';
-import PieChart from "~/components/report/PieChart.vue";
-import {formatSortTextCurrency, getUrlImageOption, goToUrl} from "~/helpers/utils.js";
-import {getPlatformById} from "~/helpers/PermissionPlatformHelper.js";
+import { defineProps, computed, ref, onMounted, watchEffect } from 'vue';
+import { getUrlImageOption } from '~/helpers/utils.js';
+import Highcharts from "highcharts";
 
 const config = useRuntimeConfig();
-
+const renderChartSales = ref(false);
+const renderChartOutput = ref(false);
 const props = defineProps({
   data: {
     type: Object,
@@ -21,18 +21,309 @@ const props = defineProps({
   },
 });
 
-console.log('TopShopStatistic', props.data);
+const windowWidth = ref(window.innerWidth);
+const isMobile = window?.innerWidth < 768;
+
+onMounted(() => {
+  window.addEventListener('resize', () => {
+    windowWidth.value = window.innerWidth;
+  });
+  renderChartSales.value = true;
+  renderChartOutput.value = true;
+});
 
 const isHideContentBasic = computed(() => {
   console.log('isHideContentBasic', config.public.SSR);
   if (config.public.SSR === 'true') {
     return false;
   }
-  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_trial');
+  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_pro_lite' || props.data?.tier_report === 'e_trial');
 });
 
 const formatNumber = (value = "") => value.toLocaleString("vi-VN");
-</script>
+
+const chartWidth = computed(() => {
+  if (windowWidth.value < 1200) {
+    return 300;
+  } else if (windowWidth.value < 1500) {
+    return 400;
+  } else {
+    return 700;
+  }
+});
+
+const colors = [
+  '#8B54D9', '#F1584B', '#8BA87C', '#E85912', '#42A4FF',
+  '#241E46', '#FBE13E', '#FBA140', '#5473EF', '#3DCDCD'
+];
+
+const top12Shops = computed(() => props.data.data_analytic.by_shop.lst_shop.slice(0, 12));
+
+const tooltipSales = ref({});
+const tooltipOutput = ref({});
+const dataLabels = ref({});
+
+watchEffect(() => {
+  tooltipSales.value = props.isHideContent
+      ? {
+        enabled: true,
+        formatter: function () {
+          const name = ![5, 7, 9].includes(this.point.index) && this.point.categoryName?.length > 0
+              ? `${this.point.categoryName} ${this.point.index + 1}`
+              : this.point.name;
+          return `${name}<br/>
+            <svg width="10" height="10">
+              <rect width="10" height="10" style="fill:${this.point.color};stroke-width:3;stroke:rgb(0,0,0)" />
+            </svg> ${this.series.name}: <strong>Đã bị ẩn</strong>`;
+        },
+      }
+      : {
+        enabled: true,
+        formatter: function () {
+          return `<b>${this.point.name}</b><br/>Doanh số: ${Highcharts.numberFormat(this.point.y, 0, ',', '.')} đ`;
+        },
+      };
+
+  tooltipOutput.value = props.isHideContent
+      ? {
+        enabled: true,
+        formatter: function () {
+          const name = ![5, 7, 9].includes(this.point.index) && this.point.categoryName?.length > 0
+              ? `${this.point.categoryName} ${this.point.index + 1}`
+              : this.point.name;
+          return `${name}<br/>
+            <svg width="10" height="10">
+              <rect width="10" height="10" style="fill:${this.point.color};stroke-width:3;stroke:rgb(0,0,0)" />
+            </svg> ${this.series.name}: <strong>Đã bị ẩn</strong>`;
+        },
+      }
+      : {
+        enabled: true,
+        formatter: function () {
+          return `<b>${this.point.name}</b><br/>Sản lượng: ${Highcharts.numberFormat(this.point.y, 0, ',', '.')}`;
+        },
+      };
+
+  dataLabels.value = props.isHideContent
+      ? {
+        enabled: true,
+        formatter: function () {
+          if (isMobile.value) {
+            return '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>';
+          }
+          if (![5, 7, 9].includes(this.point.index)) {
+            return '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>: ' + '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>';
+          }
+          return '<span>' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+        },
+      }
+      : {
+        enabled: true,
+        formatter: function () {
+          if (isMobile.value) {
+            return '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          }
+          return '<span>' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+        },
+      };
+});
+
+const chartOptionsShopType = computed(() => ({
+  chart: {
+    type: "pie",
+    width: chartWidth.value || 500,
+    style: {
+      fontFamily: "Inter",
+    },
+  },
+  title: {
+    text: `<h4>Tỷ trọng doanh số ${props.data.name} theo loại gian hàng</h4>`,
+    useHTML: true,
+    style: {
+      fontSize: '14px',
+      color: '#241E46',
+      fontWeight: 700,
+      fontFamily: 'Inter'
+    }
+  },
+  legend: {
+    enabled: false,
+    layout: 'vertical',
+    align: 'left',
+    verticalAlign: 'middle',
+    symbolHeight: 10,
+    symbolWidth: 10,
+    itemStyle: {
+      fontSize: '12px',
+      color: '#241E46',
+      fontWeight: 400,
+      fontFamily: 'Inter'
+    }
+  },
+  tooltip: {
+    enabled: false,
+  },
+  plotOptions: {
+    pie: {
+      cursor: "pointer",
+      showInLegend: true,
+      innerSize: '50%',
+      borderWidth: 1,
+      borderColor: null,
+      dataLabels: {
+        enabled: true,
+        formatter: function () {
+          return `<span>${this.point.name}</span>: <span style="color: #E85912">${Highcharts.numberFormat(this.percentage, 1, ',')}%</span>`;
+        },
+      },
+    },
+    series: {
+      enableMouseTracking: true
+    }
+  },
+  series: [
+    {
+      name: 'Sản phẩm đã bán',
+      data: [
+        {
+          name: 'Shop Mall',
+          y: props.data.data_analytic.by_shop.ratio.mall?.revenue || props.data.data_analytic.by_shop.ratio.mall?.ratio_revenue,
+          color: '#D82618',
+        },
+        {
+          name: 'Shop thường',
+          y: props.data.data_analytic.by_shop.ratio.normal?.revenue || props.data.data_analytic.by_shop.ratio.normal?.ratio_revenue,
+          color: '#838EA5',
+        },
+      ],
+    }
+  ]
+}));
+
+const chartOptionsSales = computed(() => ({
+  chart: {
+    type: "pie",
+    width: chartWidth.value || 500,
+    style: {
+      fontFamily: "Inter",
+    },
+  },
+  title: {
+    text: `<h4>Tỷ trọng top 10 thương hiệu ${props.data.name} theo doanh số *</h4>`,
+    useHTML: true,
+    style: {
+      fontSize: '14px',
+      color: '#241E46',
+      fontWeight: 700,
+      fontFamily: 'Inter'
+    }
+  },
+  legend: {
+    enabled: false,
+    layout: 'vertical',
+    align: 'left',
+    verticalAlign: 'middle',
+    symbolHeight: 10,
+    symbolWidth: 10,
+    itemStyle: {
+      fontSize: '12px',
+      color: '#241E46',
+      fontWeight: 400,
+      fontFamily: 'Inter'
+    }
+  },
+  tooltip: tooltipSales.value,
+  plotOptions: {
+    pie: {
+      cursor: "pointer",
+      showInLegend: true,
+      innerSize: '50%',
+      borderWidth: 1,
+      borderColor: null,
+      dataLabels: dataLabels.value,
+    },
+    series: {
+      enableMouseTracking: true
+    }
+  },
+  series: [
+    {
+      name: 'Doanh số (Đồng)',
+      data: props.data.data_analytic.by_shop.lst_top_shop.map(({ name, revenue, ratio_revenue }, index) => ({
+        name: name,
+        y: revenue || ratio_revenue,
+        color: colors[index % colors.length]
+      })).sort((a, b) => b.y - a.y),
+    }
+  ]
+}));
+
+const sortedTopShops = computed(() => {
+  return props.data.data_analytic.by_shop.lst_shop
+      .slice()
+      .sort((a, b) => b.sale - a.sale)
+      .slice(0, 10)
+      .map(({ name, sale }, index) => ({
+        name: name,
+        y: sale,
+        color: colors[index % colors.length]
+      }))
+      .sort((a, b) => b.y - a.y);
+});
+
+const chartOptionsOutput = computed(() => ({
+  chart: {
+    type: "pie",
+    width: chartWidth.value || 500,
+    style: {
+      fontFamily: "Inter",
+    },
+  },
+  title: {
+    text: `<h4>Tỷ trọng top 10 thương hiệu ${props.data.name} theo sản lượng *</h4>`,
+    useHTML: true,
+    style: {
+      fontSize: '14px',
+      color: '#241E46',
+      fontWeight: 700,
+      fontFamily: 'Inter'
+    }
+  },
+  legend: {
+    enabled: false,
+    layout: 'vertical',
+    align: 'left',
+    verticalAlign: 'middle',
+    symbolHeight: 10,
+    symbolWidth: 10,
+    itemStyle: {
+      fontSize: '12px',
+      color: '#241E46',
+      fontWeight: 400,
+      fontFamily: 'Inter'
+    }
+  },
+  tooltip: tooltipOutput.value,
+  plotOptions: {
+    pie: {
+      cursor: "pointer",
+      showInLegend: true,
+      innerSize: '50%',
+      borderWidth: 1,
+      borderColor: null,
+      dataLabels: dataLabels.value,
+    },
+    series: {
+      enableMouseTracking: true
+    }
+  },
+  series: [
+    {
+      name: 'Sản lượng (Đơn vị)',
+      data: sortedTopShops.value,
+    }
+  ]
+}));</script>
 
 <template>
   <div
@@ -50,7 +341,7 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Gian hàng hàng đầu</div>
+        <h3 class="statistic-item__title">Gian hàng hàng đầu</h3>
         <div style="font-size: 14px; color: #716B95">Top gian hàng trong 365 ngày qua</div>
       </div>
     </div>
@@ -60,14 +351,12 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
           class="pie_chart_item"
           style="flex-direction: column; gap: 24px; justify-content: flex-start"
       >
-        <div style="font-size: 16px; font-weight: bold; line-height: 22px; text-align: center; color: #241E46">Số lượng
-          gian hàng
-        </div>
+        <h4 style="font-size: 16px; font-weight: bold; line-height: 22px; text-align: center; color: #241E46">Số lượng gian hàng {{props.data.name}}</h4>
         <div>
           <a-table
               :columns="[
             {
-              title: 'Loại shop',
+              title: 'Loại gian hàng',
               dataIndex: 'shop_type',
               key: 'shop_type',
               align: 'center',
@@ -75,7 +364,7 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
               slots: {customRender: 'shop_type'}
             },
             {
-              title: 'Số lượng shop',
+              title: 'Số gian hàng',
               dataIndex: 'shop_count',
               key: 'shop_count',
               align: 'right',
@@ -112,146 +401,132 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
         "
           class="pie_chart_item"
       >
-        <PieChart
-            title="Tỷ trọng doanh số theo loại gian hàng"
-            subtitle="Shop Mall và Shop thường"
-            :is-hide-content="isHideContentBasic"
-            :series="[
-            {
-              name: 'Sản phẩm đã bán',
-              data: [
-                {
-                  name: 'Shop Mall',
-                  y: props.data.data_analytic.by_shop.ratio.mall?.revenue || props.data.data_analytic.by_shop.ratio.mall?.ratio_revenue,
-                  color: '#D82618',
-                },
-                {
-                  name: 'Shop thường',
-                  y: props.data.data_analytic.by_shop.ratio.normal?.revenue || props.data.data_analytic.by_shop.ratio.normal?.ratio_revenue,
-                  color: '#838EA5',
-                },
-              ],
-            },
-          ]"
-        />
+        <highchart v-if="renderChartSales" :options="chartOptionsShopType"/>
       </div>
     </div>
-    <div style="width: 100%;max-width: 800px; margin: auto; position: relative;">
-      <a-table
-          :columns="[
-        {
-          title: 'STT',
-          dataIndex: 'stt',
-          key: 'stt',
-          width: 100,
-          align: 'center',
-        },
-        {
-          title: 'Kênh bán',
-          dataIndex: 'platform',
-          key: 'platform',
-          align: 'center',
-          slots: {customRender: 'platform'}
-        },
-        {
-          title: 'Tên shop',
-          dataIndex: 'shop',
-          key: 'shop',
-          align: 'center',
-          width: '50%',
-          slots: {customRender: 'shop'}
-        },
-      ]"
-          :pagination="false"
-          :data-source="props.data.data_analytic.by_shop.lst_shop.slice(0, 10).map((shop, index) => ({...shop, stt: index + 1}))"
-      >
-        <template #platform="{record}">
-          <div class="platform-column">
-            <img :src="getPlatformById(record.platform_id).urlLogo" class="platform-icon"/>
-          </div>
-        </template>
-        <template #shop="{record}">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <div
-                style="width: 32px; height: 32px;"
-                @click="goToUrl(getUrlAnalyticShop(record.url_shop), '_blank')"
-            >
-              <img :src="getUrlImageOption(record.url_image, 'thumbnail')" style="width: 100%; background-size: cover;">
-            </div>
-            <div @click="goToUrl(record.url_shop, '_blank')" style="cursor: pointer">
-              {{ record.name }}
-              <img v-if="record.official_type === 1" src="/icons/mall_flag.svg"
-                   style="width: 30px; transform: translateY(2px); margin-left: 4px;"/>
-            </div>
-          </div>
-        </template>
-      </a-table>
-
-      <ChartMask
-          v-if="isHideContentBasic"
-          :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
-          :ok-button="isHideContentBasic ? '' :'Xem báo cáo'"
-          :report="data"
-      />
+    <div style="display: flex; justify-content: flex-end; font-style: italic;">* Thị phần theo loại gian hàng chỉ thống kê số liệu sàn Shopee, Lazada</div>
+    <div>
+      <div class="chart_item">
+        <div>
+          <highchart v-if="renderChartSales" :options="chartOptionsSales"/>
+        </div>
+        <div>
+          <highchart v-if="renderChartOutput" :options="chartOptionsOutput"/>
+        </div>
+      </div>
+    </div>
+    <h4 style="color: #241E46; font-weight: 700; line-height: 22px; text-align: center">
+      Danh sách shop phổ biến của nhóm hàng {{props.data.name}} trên sàn TMĐT
+    </h4>
+    <div class="logo-grid">
+      <div v-for="(record, index) in top12Shops" :key="index" class="logo-item">
+        <img :src="getUrlImageOption(record.url_image, 'thumbnail')" style="width: 64px; height: 64px; border-radius: 8px; background-size: cover;">
+          <p style="font-size: 12px;font-weight: 500;line-height: 24px;overflow: hidden; text-align: center">
+            {{record.name}}
+          </p>
+      </div>
     </div>
     <InsightBlock
         v-if="
-        props.data.data_analytic.by_shop.ratio.mall &&
-        props.data.data_analytic.by_shop.ratio.normal
+        data.data_analytic.by_shop.ratio.mall &&
+        data.data_analytic.by_shop.ratio.normal
       "
     >
       <li>
-        Thống kê về loại gian hàng, thị trường có
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ formatNumber(props.data.data_analytic.by_shop.ratio.mall.shop) }}
+        Doanh thu của {{ data.name }} đến từ
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{formatNumber(data.data_analytic.by_shop.ratio.mall.shop)}}
+          </span>
         </BlurContent>
-        shop Mall chiếm
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{
-            Number(
-                props.data.data_analytic.by_shop.ratio.mall.ratio_revenue * 100
-            ).toFixed(1)
-          }}%
-        </BlurContent>
-        thị phần doanh số với
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ formatSortTextCurrency(props.data.data_analytic.by_shop.ratio.mall.revenue) }} đồng
-        </BlurContent>
-        và
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ formatNumber(props.data.data_analytic.by_shop.ratio.normal.shop) }}
+        shop mall chiếm
+        {{
+          Number(
+              data.data_analytic.by_shop.ratio.mall.ratio_revenue * 100
+          ).toFixed(1)
+        }}% và hơn
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{ formatNumber(data.data_analytic.by_shop.ratio.normal.shop) }}
+          </span>
         </BlurContent>
         shop thường chiếm
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{
-            Number(
-                props.data.data_analytic.by_shop.ratio.normal.ratio_revenue * 100
-            ).toFixed(1)
-          }}%
-        </BlurContent>
-        doanh số tương ứng
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ formatSortTextCurrency(props.data.data_analytic.by_shop.ratio.normal.revenue) }} đồng
-        </BlurContent>
-        .
-      </li>
-      <li>
-        Trong top 10 gian hàng bán chạy, Shop
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ props.data.data_analytic.by_shop.lst_top_shop[0].name }}
-        </BlurContent>
-        có tỷ trọng doanh số cao nhất, tiếp theo đó là
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ props.data.data_analytic.by_shop.lst_top_shop[1].name }}
-        </BlurContent>
+        {{
+          Number(
+              data.data_analytic.by_shop.ratio.normal.ratio_revenue * 100
+          ).toFixed(1)
+        }}% doanh số. Báo cáo về {{ data.name }} của 10 shop bán chạy hàng đầu,
+        Shop
+        <span class="text-bold">{{
+            data.data_analytic.by_shop.lst_top_shop[0].name
+          }}</span>
+        có tỉ trọng doanh thu cao nhất chiếm
+
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{
+              Number(
+                  data.data_analytic.by_shop.lst_top_shop[0].ratio_revenue * 100
+              ).toFixed(2)
+            }}
+          </span>
+        </BlurContent>% doanh số. Tiếp theo đó là các shop
+        <template
+            v-if="
+            data.data_analytic &&
+            data.data_analytic.by_shop.lst_top_shop &&
+            data.data_analytic.by_shop.lst_top_shop.length >= 2
+          "
+        >
+          <span class="text-bold">{{
+              data.data_analytic.by_shop.lst_top_shop[1].name
+            }}</span
+          >,
+        </template>
+        <template
+            v-if="
+            data.data_analytic &&
+            data.data_analytic.by_shop.lst_top_shop &&
+            data.data_analytic.by_shop.lst_top_shop.length >= 3
+          "
+        >
+          <span class="text-bold">{{
+              data.data_analytic.by_shop.lst_top_shop[2].name
+            }}</span>
+          tương ứng thị phần doanh thu là
+          <BlurContent :is-hide-content="isHideContent">
+            <span>
+              {{
+                Number(
+                    data.data_analytic.by_shop.lst_top_shop[1].ratio_revenue * 100
+                ).toFixed(2)
+              }}
+            </span>
+          </BlurContent>%
+        </template>
         và
-        <BlurContent :is-hide-content="isHideContentBasic">
-          {{ props.data.data_analytic.by_shop.lst_top_shop[2].name }}
-        </BlurContent>
-        .
+        <template
+            v-if="
+            data.data_analytic &&
+            data.data_analytic.by_shop.lst_top_shop &&
+            data.data_analytic.by_shop.lst_top_shop.length >= 3
+          "
+        >
+          <BlurContent :is-hide-content="isHideContent">
+            <span>
+              {{
+                Number(
+                    data.data_analytic.by_shop.lst_top_shop[2].ratio_revenue * 100
+                ).toFixed(2)
+              }}
+            </span>
+          </BlurContent>
+        </template>%.
       </li>
     </InsightBlock>
+
   </div>
+
 </template>
 
 <style lang="scss">
@@ -341,6 +616,11 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
   }
 }
 
+.chart_item{
+  display: flex;
+  justify-content: space-between;
+}
+
 .statistic-item__title {
   display: flex;
   align-items: center;
@@ -410,7 +690,29 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
   gap: 40px;
 }
 
+.logo-grid{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  overflow: hidden;
+
+
+  .logo-item{
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.blurred {
+  filter: blur(4px);
+}
+
 @media (max-width: 768px) {
+  .chart_item{
+    flex-direction: column;
+  }
   .pie_chart {
     flex-direction: column;
   }

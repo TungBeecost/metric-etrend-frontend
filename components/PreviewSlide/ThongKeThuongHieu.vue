@@ -292,7 +292,7 @@ const charts = computed(() => {
           background-color: #f9f9f9;  // Background color for each item
           border-radius: 8px;
           box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-          padding: 16px;  // Padding inside the statistic items
+          padding: 8px;  // Padding inside the statistic items
 
           .chart-title {
             font-weight: 700;

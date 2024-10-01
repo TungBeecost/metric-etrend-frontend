@@ -5,13 +5,14 @@ permissions: read-all
 on:
   push:
     branches: [ "staging","production","product-ereport-vn" ]
+env:  
+  PUBLIC_REGISTRY: ${{ vars.PUBLIC_REGISTRY }}
 
 jobs:
-  include-builds:
+  include-builds:  
+    # uses: beecost/workflow-template/.github/workflows/template-workflows-build-fe.yml@master  
     uses: beecost/cicd-template/.github/workflows/build-stage-ereport-fe.yml@main  
     secrets: inherit  
-    # uses: beecost/workflow-template/.github/workflows/template-workflows-build-fe.yml@master
-    # secrets: inherit
   
   include-deploy:
     uses: beecost/workflow-template/.github/workflows/template-workflows-deploy-fe.yml@master

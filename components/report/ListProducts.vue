@@ -23,7 +23,7 @@ const isHideContentBasic = computed(() => {
   if (config.public.SSR === 'true') {
     return false;
   }
-  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_trial');
+  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_pro_lite' || props.data?.tier_report === 'e_trial');
 });
 
 </script>
@@ -47,7 +47,7 @@ const isHideContentBasic = computed(() => {
           <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
         </svg>
         <div>
-          <div class="statistic-item__title">Sản phẩm bán chạy</div>
+          <h3 class="statistic-item__title">Sản phẩm bán chạy</h3>
           <div
               v-if="
             props.data.data_analytic &&
@@ -62,7 +62,31 @@ const isHideContentBasic = computed(() => {
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContent ? 6 : 12)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContentBasic ? 5 : 5)"
+            :key="product.product_base_id"
+            :product-item="product"
+            :product="product"
+            :is-hide-content="isHideContent || isHideContentBasic"
+        />
+        <ChartMask
+            v-if="isHideContentBasic"
+            :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
+            :ok-button="isHideContentBasic ? '' :'Xem báo cáo'"
+            :report="data"
+        />
+      </div>
+      <div class="products-grid">
+        <ProductItem
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(5, isHideContentBasic ? 10 : 10)"
+            :key="product.product_base_id"
+            :product-item="product"
+            :product="product"
+            :is-hide-content="false"
+        />
+      </div>
+      <div class="products-grid">
+        <ProductItem
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(10, isHideContentBasic ? 20 : 20)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
@@ -93,7 +117,7 @@ const isHideContentBasic = computed(() => {
           <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
         </svg>
         <div>
-          <div class="statistic-item__title">Top sản phẩm mới đang bán chạy</div>
+          <h3 class="statistic-item__title">Sản phẩm trending</h3>
           <div
               v-if="
             props.data.data_analytic &&
@@ -108,17 +132,26 @@ const isHideContentBasic = computed(() => {
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(0, isHideContent ? 6 : 12)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(0, isHideContentBasic ? 5 : 5)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
-            :is-hide-content="isHideContent"
+            :is-hide-content="isHideContent || isHideContentBasic"
         />
         <ChartMask
             v-if="isHideContentBasic"
             :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
             :ok-button="isHideContentBasic ? '' :'Xem báo cáo'"
             :report="data"
+        />
+      </div>
+      <div class="products-grid">
+        <ProductItem
+            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(5, isHideContentBasic ? 10 : 10)"
+            :key="product.product_base_id"
+            :product-item="product"
+            :product="product"
+            :is-hide-content="false"
         />
       </div>
     </div>
@@ -528,7 +561,7 @@ const isHideContentBasic = computed(() => {
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 16px;
   margin-bottom: 16px;
 
@@ -540,7 +573,7 @@ const isHideContentBasic = computed(() => {
 
 #list-products {
   padding: 24px 24px 0 24px;
-  border-radius: 8px;
+  border-radius: 16px;
   border: 1px solid #EEEBFF;
   display: flex;
   flex-direction: column;
