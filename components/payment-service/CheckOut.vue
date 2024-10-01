@@ -94,7 +94,10 @@ const handlePayment = () => {
     return;
   }
 
-  if (!nameValue.value || !phoneValue.value || errors.value.name || errors.value.phone || errors.value.emailAccount) {
+  if (!nameValue.value || !phoneValue.value || errors.value.name || errors.value.phone ) {
+    if(!userInfo.value.email && errors.value.emailAccount){
+      return;
+    }
     return;
   }
 
