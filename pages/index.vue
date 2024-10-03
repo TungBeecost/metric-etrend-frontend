@@ -91,9 +91,9 @@
       </div>
       <ContactUsForm :source-name="'eReport'" :popup="true" :handle-submit-success="handleSubmitSuccess"/>
     </a-modal>
-    <div class="advertisement">
-      <advertisement @handle-advertisement="handleAdvertisement"/>
-    </div>
+<!--    <div class="advertisement">-->
+<!--      <advertisement @handle-advertisement="handleAdvertisement"/>-->
+<!--    </div>-->
   </div>
 </template>
 

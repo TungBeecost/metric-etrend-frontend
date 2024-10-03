@@ -222,10 +222,10 @@ onUnmounted(() => {
     </component>
   </Head>
   <div class="container_content">
-    <div v-if="loading" class="loading-spinner">
-      <a-spin size="large" />
-    </div>
-    <div v-else>
+<!--    <div v-if="loading" class="loading-spinner">-->
+<!--      <a-spin style="width: 100%; display: flex; justify-content: center" size="large" />-->
+<!--    </div>-->
+    <div>
       <div class="title default_section">
         <div class="breadcrumbs">
           <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
