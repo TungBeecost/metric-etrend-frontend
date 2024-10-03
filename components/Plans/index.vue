@@ -71,7 +71,7 @@ const lstDisplayPlans = computed(() => {
           <div class="divider"/>
 
           <div class="permission">
-            <p class="includeLabel">Bao gồm:</p>
+            <p v-if="userInfo.current_plan?.plan_code != 'e_community'" class="includeLabel">Bao gồm:</p>
             <div class="permissionList">
               <div v-for="permission in plan.permissions" class="permissionItem">
                 <div class="perm">
