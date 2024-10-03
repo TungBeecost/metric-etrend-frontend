@@ -275,15 +275,15 @@ export const PLANCARD = [
 
 export const PLANS: Array<IPLAN> = [
   {
-    type: "Starter",
-    plan_code: 'e_starter',
-    description: "Thời hạn diễn ra chương trình: 30/09/2024",
-    price: "300000",
+    type: "Community",
+    plan_code: 'e_community',
+    description: "Truy cập kho báo cáo và cập nhật xu hướng",
+    price: "Miễn phí",
     // priceDiscount: "300000",
-    unit: "15 ngày",
+    // unit: "15 ngày",
     autoShowDetail: true,
     permissions: [
-        LABEL_PERMISSION_PLAN.viewCountTrial,
+        // LABEL_PERMISSION_PLAN.viewCountTrial,
     ]
   },
   {
