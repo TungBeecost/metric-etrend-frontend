@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { defineProps, computed } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-
-const props = defineProps({
-  categoryName: {
-    type: String,
-    required: false
-  }
-});
+import allReports from '@/public/file_json/list_category.json';
 
 const route = useRoute();
 
 const displayContent = computed(() => {
-  return route.query.category_report_id && props.categoryName ? props.categoryName : 'Danh sách báo cáo';
+  const categoryReportId = route.query.category_report_id;
+  if (categoryReportId) {
+    const category = allReports.find(cat => cat.value === categoryReportId);
+    return category ? category.label : 'Danh sách báo cáo';
+  }
+  return 'Danh sách báo cáo';
 });
 </script>
 

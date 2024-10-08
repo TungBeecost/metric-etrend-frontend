@@ -240,7 +240,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <banner-report :category-name="selectedCategoryName" />
+  <banner-report/>
   <div id="search_report">
     <div class="sectionTitle default_section">
       <div v-if="route.query.category_report_id && selectedCategoryName" class="sectionTitle_content">
