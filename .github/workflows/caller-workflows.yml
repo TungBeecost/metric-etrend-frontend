@@ -4,9 +4,7 @@ permissions: read-all
 
 on:
   push:
-    tags:
-      # 17-09-2024_v1
-      - '*-*-*_*'
+    branches: [ "production" ]
 
 env:
   PUBLIC_REGISTRY: ${{ vars.PUBLIC_REGISTRY }}
