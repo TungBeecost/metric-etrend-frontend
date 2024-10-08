@@ -19,7 +19,6 @@ onMounted(() => {
   redirectToSearch();
 });
 </script>
-
 <template>
 
 </template>
