@@ -240,7 +240,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <banner-report/>
+  <banner-report :category-name="selectedCategoryName" />
   <div id="search_report">
     <div class="sectionTitle default_section">
       <div v-if="route.query.category_report_id && selectedCategoryName" class="sectionTitle_content">
@@ -256,7 +256,7 @@ useSeoMeta({
     <div class="container default_section">
       <div class="list_report_industry">
         <div class="general">
-          <div>{{data?.total}}</div>
+          <div></div>
           <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect"/>
           <a-button v-else style="border: 1px solid #9D97BF" @click="clickButtonFilter">
             <div style="display: flex; gap: 8px; justify-content: center; align-items: center">

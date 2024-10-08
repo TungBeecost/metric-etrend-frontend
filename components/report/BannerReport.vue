@@ -1,11 +1,25 @@
 <script setup lang="ts">
+import { defineProps, computed } from 'vue';
+import { useRoute } from 'vue-router';
 
+const props = defineProps({
+  categoryName: {
+    type: String,
+    required: false
+  }
+});
+
+const route = useRoute();
+
+const displayContent = computed(() => {
+  return route.query.category_report_id && props.categoryName ? props.categoryName : 'Danh sách báo cáo';
+});
 </script>
 
 <template>
   <div class="banner">
     <div class="title">
-      <div class="content default_section">Danh sách báo cáo</div>
+      <div class="content default_section">{{ displayContent }}</div>
     </div>
   </div>
 </template>

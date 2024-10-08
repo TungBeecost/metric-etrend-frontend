@@ -2,11 +2,15 @@ name: Call a templated workflow
 
 permissions: read-all
 
-on:  
-  push:  
-    tags:  
-    # 17-09-2024_v1
-      - '*-*-*_*'
+# on:  
+#   push:  
+#     tags:  
+#     # 17-09-2024_v1
+#       - '*-*-*_*'
+
+on:
+  push:
+    branches: [ "staging" ]
 
 env:  
   PUBLIC_REGISTRY: ${{ vars.PUBLIC_REGISTRY }}
