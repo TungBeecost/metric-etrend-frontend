@@ -279,7 +279,7 @@ useSeoMeta({
   <banner-report/>
   <div id="search_report">
     <div class="sectionTitle default_section">
-      <div v-if="route.query.category_report_id && selectedCategoryName" class="sectionTitle_content">
+      <div v-if="route.hash && selectedCategoryName" class="sectionTitle_content">
         Kết quả tìm kiếm cho ngành hàng <b>"{{ selectedCategoryName }}"</b>
       </div>
       <div v-if="route.query.search && searchValueSearch" class="sectionTitle_content">
