@@ -9,6 +9,7 @@ export const NAVIGATIONS = {
   contactUs: "/contact-us",
   payment: "/payment",
   signIn: "/sign-in",
+  category: "/c",
   informationPolicy: "/chinh-sach-bao-mat-thong-tin",
   paymentMethod: "/hinh-thuc-thanh-toan",
   // refundPolicy: "/chinh-sach-doi-tra-san-pham",
