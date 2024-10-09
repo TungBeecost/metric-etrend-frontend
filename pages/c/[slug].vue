@@ -234,9 +234,12 @@ const onClickViewPrice = () => {
 const handleReportTypeChange = async (selectedReportType: string[]) => {
   selecteReportType.value = selectedReportType;
   const list_category_report_id = [];
-  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
-    list_category_report_id.push(route.query.category_report_id);
-    selectedCategory.value = route.query.category_report_id;
+  const hash = route.hash;
+  const categoryIdMatch = hash.match(/#id=([^&]*)/);
+  if (categoryIdMatch && categoryIdMatch[1]) {
+    const categoryId = categoryIdMatch[1];
+    list_category_report_id.push(categoryId);
+    selectedCategory.value = categoryId;
   }
   await fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
 };
