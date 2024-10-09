@@ -46,10 +46,11 @@ const handleCategorySelect = (newSelectedCategory: string) => {
   selectedCategory.value = newSelectedCategory;
   searchValueSearch.value = '';
   listTagSuggestions.value = [];
-  const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
-  navigateTo(`${NAVIGATIONS.search}?category_report_id=${newSelectedCategory}`);
   const category = allReports.find(cat => cat.value === newSelectedCategory);
   selectedCategoryName.value = category ? category.label : '';
+  const slugNameCategory = generateSlug(selectedCategoryName.value);
+  const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
+  navigateTo(`${NAVIGATIONS.category}/${slugNameCategory}#id=${newSelectedCategory}`);
   handleSearch(searchValueSearch.value, lstCategoryReportId);
 };
 
@@ -206,6 +207,26 @@ onMounted(() => {
 const onClickViewPrice = () => {
   navigateTo(NAVIGATIONS.pricing);
 };
+
+function generateSlug(categoryName: string): string {
+  const vietnameseMap: { [key: string]: string } = {
+    'á': 'a', 'à': 'a', 'ả': 'a', 'ã': 'a', 'ạ': 'a', 'ă': 'a', 'ắ': 'a', 'ằ': 'a', 'ẳ': 'a', 'ẵ': 'a', 'ặ': 'a',
+    'â': 'a', 'ấ': 'a', 'ầ': 'a', 'ẩ': 'a', 'ẫ': 'a', 'ậ': 'a', 'é': 'e', 'è': 'e', 'ẻ': 'e', 'ẽ': 'e', 'ẹ': 'e',
+    'ê': 'e', 'ế': 'e', 'ề': 'e', 'ể': 'e', 'ễ': 'e', 'ệ': 'e', 'í': 'i', 'ì': 'i', 'ỉ': 'i', 'ĩ': 'i', 'ị': 'i',
+    'ó': 'o', 'ò': 'o', 'ỏ': 'o', 'õ': 'o', 'ọ': 'o', 'ô': 'o', 'ố': 'o', 'ồ': 'o', 'ổ': 'o', 'ỗ': 'o', 'ộ': 'o',
+    'ơ': 'o', 'ớ': 'o', 'ờ': 'o', 'ở': 'o', 'ỡ': 'o', 'ợ': 'o', 'ú': 'u', 'ù': 'u', 'ủ': 'u', 'ũ': 'u', 'ụ': 'u',
+    'ư': 'u', 'ứ': 'u', 'ừ': 'u', 'ử': 'u', 'ữ': 'u', 'ự': 'u', 'ý': 'y', 'ỳ': 'y', 'ỷ': 'y', 'ỹ': 'y', 'ỵ': 'y',
+    'đ': 'd'
+  };
+
+  return categoryName
+      .toLowerCase()
+      .trim()
+      .replace(/[áàảãạăắằẳẵặâấầẩẫậéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵđ]/g, match => vietnameseMap[match])
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+}
 
 const handleReportTypeChange = async (selectedReportType: string[]) => {
   selecteReportType.value = selectedReportType;
