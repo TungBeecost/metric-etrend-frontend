@@ -316,7 +316,7 @@ export const PLANS: Array<IPLAN> = [
     description: "Dùng cho nhu cầu quan tâm tới <b>một số ít báo cáo</b>",
     price: "299000",
     // priceDiscount: "5000000",
-    // discountPercent: "-50%",
+    discountPercent: "Sắp ra mắt",
     unit: " báo cáo",
     isHighlight: true,
     permissions: [
@@ -333,7 +333,7 @@ export const PLANS: Array<IPLAN> = [
     description: "Dùng cho nhu cầu quan tâm tới <b>một số ít báo cáo</b>",
     price: "1800000",
     // priceDiscount: "5000000",
-    // discountPercent: "-50%",
+    discountPercent: "Sắp ra mắt",
     unit: " báo cáo / 6 tháng",
     isHighlight: true,
     permissions: [

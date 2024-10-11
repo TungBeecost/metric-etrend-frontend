@@ -77,7 +77,7 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
     const currentPlan = plan.value;
 
     if (currentPlan) {
-      const itemCode = `${currentPlan.plan_code}__12m`;
+      const itemCode = `${currentPlan.plan_code}__6m`;
       try {
         let transactionResult = null;
         if (information.value.emailAccount) {

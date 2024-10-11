@@ -46,7 +46,7 @@ const specialOfferLink = computed(() => {
       <div class="content">
         <div class="summary">
           <div class="planType"> {{ plan.type }}</div>
-          <div class="planDesc">{{ plan.description }}</div>
+          <div class="planDesc" v-html="plan.description"></div>
         </div>
 
         <div class="divider"/>
