@@ -131,30 +131,41 @@ export const LABEL_PERMISSION_PLAN = {
     label: "15 lượt xem báo cáo chi tiết",
     icon: "ViewCount"
   },
-  viewReportPro: {
-    label: "Phạm vi báo cáo tổng quan:",
-    icon: "Docs",
+  analysis: {
+    label: "Mở xem và phân tích nhiều báo cáo:",
+    icon: "Unlock",
     sub: {
-      summary: "Số liệu tổng quan",
-      priceSegment: "Số liệu về phân khúc giá",
-      category: "Số liệu về ngành hàng/ nhóm hàng",
-      brand: "Số liệu về thương hiệu",
-      topTierSell: "Danh sách gian hàng bán chạy",
-      topTierProduct: "Danh sách sản phẩm bán chạy"
+      action: "Trải nghiệm tương tác báo cáo thông minh",
+      unlimitedView: "Không giới hạn xem kho báo cáo tổng quan",
+      unlimitedView24h: "Không giới hạn xem báo cáo đã mở trong 24h",
+      expiry: "Thời gian sử dụng: 6 tháng",
     }
   },
-  viewReportBasic: {
-    label: "Phạm vi báo cáo tổng quan:",
-    icon: "Docs",
+  smartReporting: {
+    label: "Báo cáo thông minh:",
+    icon: "Unlock",
     sub: {
-      summary: "Số liệu tổng quan",
-      priceSegment: "Số liệu về phân khúc giá",
-      category: "Số liệu về ngành hàng/ nhóm hàng",
-      brand: "Số liệu về thương hiệu",
+      unlimitedView: "Không giới hạn xem kho báo cáo tổng quan",
+      free5TimeOpen: "Miễn phí 5 lượt mở xem báo cáo khác",
+      expiry: "Thời gian sử dụng: 6 tháng",
     }
   },
-  numberOfUnlockReport: {
-    label: (number: number) => `${number} lượt xem báo cáo tổng quan`,
+  pdfReporting: {
+    label: "Báo cáo định dạng PDF:",
+    icon: "Download",
+    sub: {
+      fieldReport: "Báo cáo thị trường và tăng trưởng quý, năm",
+      top: "Top nhà bán, thương hiệu, thị phần, mức giá",
+      detail: "Chi tiết gian hàng, sản phẩm bán chạy",
+      review: "Đánh giá gian hàng, sản phẩm từ người mua",
+    }
+  },
+  updatedWeekly: {
+    label: `Cập nhật hàng tuần số liệu thị trường, đối thủ, trending bán chạy, cách bán hàng hiệu quả`,
+    icon: "Bell"
+  },
+  openViewReport: {
+    label: "Mở xem và phân tích nhiều báo cáo",
     icon: "Unlock"
   },
   customFilterAnalysis: {
@@ -167,6 +178,7 @@ interface IPLAN {
   type: string;
   description: string;
   plan_code: string;
+  type_package: string;
   price: string;
   priceDiscount?: string;
   discountPercent?: string;
@@ -270,119 +282,103 @@ export const PLANCARD = [
     backgroundButton: '#E85912',
     textButton: 'Nâng cấp gói',
     svg: '<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="24" fill="#FDEEE7"/><path opacity="0.2" d="M24 27.3338C27.6824 27.3338 30.6675 24.3486 30.6675 20.6663C30.6675 16.9839 27.6824 13.9988 24 13.9988C20.3177 13.9988 17.3325 16.9839 17.3325 20.6663C17.3325 24.3486 20.3177 27.3338 24 27.3338Z" fill="#E85912"/><path d="M24 27.3338C27.6824 27.3338 30.6675 24.3486 30.6675 20.6663C30.6675 16.9839 27.6824 13.9988 24 13.9988C20.3177 13.9988 17.3325 16.9839 17.3325 20.6663C17.3325 24.3486 20.3177 27.3338 24 27.3338Z" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.9988 33.1678C16.0167 29.6809 19.6818 27.3337 24 27.3337C28.3183 27.3337 31.9833 29.6809 34.0013 33.1678" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-  }
+  },
+  {
+    code: 'pt50',
+    name: 'Gói phân tích',
+    description: 'Bạn đang sử dụng gói phân tích và không bị giới hạn hiển thị dữ liệu của báo cáo',
+    background: 'linear-gradient(90.12deg, #FCA14E 1.09%, #FF733F 99.22%)',
+    textColor: '#FFFFFF',
+    textColorButton: '#E85912',
+    backgroundButton: '#FFFFFF',
+    textButton: 'Danh sách gói',
+    svg: '<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"> <g filter="url(#filter0_d_7028_11121)"> <rect x="16" y="10" width="48" height="48" rx="24" fill="white" shape-rendering="crispEdges"/> <rect x="16.5" y="10.5" width="47" height="47" rx="23.5" stroke="#F9D7C6" shape-rendering="crispEdges"/> <g clip-path="url(#clip0_7028_11121)"> <path opacity="0.2" d="M32.2104 41.5C32.2104 41.5 35 39.8333 40 39.8333C45 39.8333 47.7896 41.5 47.7896 41.5L51.6438 29.6885C51.6719 29.6083 51.6753 29.5215 51.6537 29.4392C51.6321 29.357 51.5863 29.2831 51.5223 29.2271C51.4584 29.1711 51.3791 29.1355 51.2948 29.1249C51.2104 29.1143 51.1248 29.1292 51.049 29.1677L45.4833 31.9427C45.387 31.9903 45.2762 32 45.1731 31.9699C45.0699 31.9399 44.9817 31.8721 44.926 31.7802L40.3667 24.2083C40.3285 24.1458 40.275 24.0942 40.2111 24.0583C40.1473 24.0225 40.0753 24.0037 40.0021 24.0037C39.9289 24.0037 39.8569 24.0225 39.793 24.0583C39.7292 24.0942 39.6756 24.1458 39.6375 24.2083L35.074 31.7833C35.0185 31.8757 34.9301 31.9438 34.8266 31.9739C34.7231 32.004 34.6121 31.994 34.5156 31.9458L28.9583 29.1729C28.8825 29.1347 28.7969 29.1199 28.7126 29.1306C28.6283 29.1413 28.5491 29.1768 28.4851 29.2328C28.4211 29.2887 28.3753 29.3624 28.3535 29.4445C28.3316 29.5266 28.3348 29.6134 28.3625 29.6937L32.2104 41.5Z" fill="#E85912"/> <path d="M32.2104 41.5C32.2104 41.5 35 39.8333 40 39.8333C45 39.8333 47.7896 41.5 47.7896 41.5L51.6438 29.6885C51.6719 29.6083 51.6753 29.5215 51.6537 29.4392C51.6321 29.357 51.5863 29.2831 51.5223 29.2271C51.4584 29.1711 51.3791 29.1355 51.2948 29.1249C51.2104 29.1143 51.1248 29.1292 51.049 29.1677L45.4833 31.9427C45.387 31.9903 45.2762 32 45.1731 31.9699C45.0699 31.9399 44.9817 31.8721 44.926 31.7802L40.3667 24.2083C40.3285 24.1458 40.275 24.0942 40.2111 24.0583C40.1473 24.0225 40.0753 24.0037 40.0021 24.0037C39.9289 24.0037 39.8569 24.0225 39.793 24.0583C39.7292 24.0942 39.6756 24.1458 39.6375 24.2083L35.074 31.7833C35.0185 31.8757 34.9301 31.9438 34.8266 31.9739C34.7231 32.004 34.6121 31.994 34.5156 31.9458L28.9583 29.1729C28.8825 29.1347 28.7969 29.1199 28.7126 29.1306C28.6283 29.1413 28.5491 29.1768 28.4851 29.2328C28.4211 29.2887 28.3753 29.3624 28.3535 29.4445C28.3316 29.5266 28.3348 29.6134 28.3625 29.6937L32.2104 41.5Z" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g> </g> <defs> <filter id="filter0_d_7028_11121" x="0" y="0" width="80" height="80" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"> <feFlood flood-opacity="0" result="BackgroundImageFix"/> <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/> <feOffset dy="6"/> <feGaussianBlur stdDeviation="8"/> <feComposite in2="hardAlpha" operator="out"/> <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.545098 0 0 0 0 0.211765 0 0 0 0.16 0"/> <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_7028_11121"/> <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_7028_11121" result="shape"/> </filter> <clipPath id="clip0_7028_11121"> <rect width="26.6667" height="26.6667" fill="white" transform="translate(26.6667 20.6666)"/> </clipPath> </defs> </svg>'
+  },
+  {
+    code: 'pt100',
+    name: 'Gói phân tích',
+    description: 'Bạn đang sử dụng gói phân tích và không bị giới hạn hiển thị dữ liệu của báo cáo',
+    background: 'linear-gradient(90.12deg, #FCA14E 1.09%, #FF733F 99.22%)',
+    textColor: '#FFFFFF',
+    textColorButton: '#E85912',
+    backgroundButton: '#FFFFFF',
+    textButton: 'Danh sách gói',
+    svg: '<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"> <g filter="url(#filter0_d_7028_11121)"> <rect x="16" y="10" width="48" height="48" rx="24" fill="white" shape-rendering="crispEdges"/> <rect x="16.5" y="10.5" width="47" height="47" rx="23.5" stroke="#F9D7C6" shape-rendering="crispEdges"/> <g clip-path="url(#clip0_7028_11121)"> <path opacity="0.2" d="M32.2104 41.5C32.2104 41.5 35 39.8333 40 39.8333C45 39.8333 47.7896 41.5 47.7896 41.5L51.6438 29.6885C51.6719 29.6083 51.6753 29.5215 51.6537 29.4392C51.6321 29.357 51.5863 29.2831 51.5223 29.2271C51.4584 29.1711 51.3791 29.1355 51.2948 29.1249C51.2104 29.1143 51.1248 29.1292 51.049 29.1677L45.4833 31.9427C45.387 31.9903 45.2762 32 45.1731 31.9699C45.0699 31.9399 44.9817 31.8721 44.926 31.7802L40.3667 24.2083C40.3285 24.1458 40.275 24.0942 40.2111 24.0583C40.1473 24.0225 40.0753 24.0037 40.0021 24.0037C39.9289 24.0037 39.8569 24.0225 39.793 24.0583C39.7292 24.0942 39.6756 24.1458 39.6375 24.2083L35.074 31.7833C35.0185 31.8757 34.9301 31.9438 34.8266 31.9739C34.7231 32.004 34.6121 31.994 34.5156 31.9458L28.9583 29.1729C28.8825 29.1347 28.7969 29.1199 28.7126 29.1306C28.6283 29.1413 28.5491 29.1768 28.4851 29.2328C28.4211 29.2887 28.3753 29.3624 28.3535 29.4445C28.3316 29.5266 28.3348 29.6134 28.3625 29.6937L32.2104 41.5Z" fill="#E85912"/> <path d="M32.2104 41.5C32.2104 41.5 35 39.8333 40 39.8333C45 39.8333 47.7896 41.5 47.7896 41.5L51.6438 29.6885C51.6719 29.6083 51.6753 29.5215 51.6537 29.4392C51.6321 29.357 51.5863 29.2831 51.5223 29.2271C51.4584 29.1711 51.3791 29.1355 51.2948 29.1249C51.2104 29.1143 51.1248 29.1292 51.049 29.1677L45.4833 31.9427C45.387 31.9903 45.2762 32 45.1731 31.9699C45.0699 31.9399 44.9817 31.8721 44.926 31.7802L40.3667 24.2083C40.3285 24.1458 40.275 24.0942 40.2111 24.0583C40.1473 24.0225 40.0753 24.0037 40.0021 24.0037C39.9289 24.0037 39.8569 24.0225 39.793 24.0583C39.7292 24.0942 39.6756 24.1458 39.6375 24.2083L35.074 31.7833C35.0185 31.8757 34.9301 31.9438 34.8266 31.9739C34.7231 32.004 34.6121 31.994 34.5156 31.9458L28.9583 29.1729C28.8825 29.1347 28.7969 29.1199 28.7126 29.1306C28.6283 29.1413 28.5491 29.1768 28.4851 29.2328C28.4211 29.2887 28.3753 29.3624 28.3535 29.4445C28.3316 29.5266 28.3348 29.6134 28.3625 29.6937L32.2104 41.5Z" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g> </g> <defs> <filter id="filter0_d_7028_11121" x="0" y="0" width="80" height="80" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"> <feFlood flood-opacity="0" result="BackgroundImageFix"/> <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/> <feOffset dy="6"/> <feGaussianBlur stdDeviation="8"/> <feComposite in2="hardAlpha" operator="out"/> <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.545098 0 0 0 0 0.211765 0 0 0 0.16 0"/> <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_7028_11121"/> <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_7028_11121" result="shape"/> </filter> <clipPath id="clip0_7028_11121"> <rect width="26.6667" height="26.6667" fill="white" transform="translate(26.6667 20.6666)"/> </clipPath> </defs> </svg>'
+  },
 ];
 
 
 export const PLANS: Array<IPLAN> = [
   {
-    type: "Community",
-    plan_code: 'e_community',
-    description: "Truy cập kho báo cáo và cập nhật xu hướng",
-    price: "Miễn phí",
-    // priceDiscount: "300000",
-    // unit: "15 ngày",
-    autoShowDetail: true,
-    permissions: [
-        // LABEL_PERMISSION_PLAN.viewCountTrial,
-    ]
-  },
-  {
-    type: "Basic",
-    plan_code: "e_basic",
-    description: "Xem số liệu tổng quan về thị trường",
-    price: "2500000",
-    priceDiscount: "5000000",
-    discountPercent: "-50%",
-    unit: "năm",
-    isHighlight: true,
-    permissions: [
-      // LABEL_PERMISSION_PLAN.viewReportDetailFree,
-      LABEL_PERMISSION_PLAN.viewCountBasic,
-      {
-        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(200),
-        icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
-      },
-      // LABEL_PERMISSION_PLAN.downloadDeptReport,
-      {
-        ...LABEL_PERMISSION_PLAN.viewReportBasic,
-        sub: Object.values(LABEL_PERMISSION_PLAN.viewReportBasic.sub)
-      },
-    ]
-  },
-  {
-    type: "Basic Lite",
-    plan_code: "e_basic_lite",
-    description: "Xem số liệu tổng quan về thị trường",
-    price: "1000000",
+    type: "Gói báo cáo",
+    plan_code: "pdf_report",
+    type_package: "report",
+    description: "Dùng cho nhu cầu quan tâm tới <b>một số ít báo cáo</b>",
+    price: "299000",
     // priceDiscount: "5000000",
     // discountPercent: "-50%",
-    unit: "năm",
+    unit: " báo cáo",
     isHighlight: true,
-    isHide: true,
-    autoShowDetail: true,
     permissions: [
-      // LABEL_PERMISSION_PLAN.viewReportDetailFree,
-      LABEL_PERMISSION_PLAN.viewCountBasic,
       {
-        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(150),
-        icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
+        ...LABEL_PERMISSION_PLAN.pdfReporting,
+        sub: Object.values(LABEL_PERMISSION_PLAN.pdfReporting.sub)
       },
-      // LABEL_PERMISSION_PLAN.downloadDeptReport,
-      // {
-      //   ...LABEL_PERMISSION_PLAN.viewReportBasic,
-      //   sub: Object.values(LABEL_PERMISSION_PLAN.viewReportBasic.sub)
-      // },
     ]
   },
   {
-    type: "Pro",
-    plan_code: "e_pro",
-    description: "Xem số liệu chi tiết về thị trường",
-    price: "3500000",
-    priceDiscount: "7000000",
-    discountPercent: "-50%",
-    unit: "năm",
+    type: "Gói báo cáo",
+    plan_code: "smart_report",
+    type_package: "report",
+    description: "Dùng cho nhu cầu quan tâm tới <b>một số ít báo cáo</b>",
+    price: "1800000",
+    // priceDiscount: "5000000",
+    // discountPercent: "-50%",
+    unit: " báo cáo / 6 tháng",
     isHighlight: true,
     permissions: [
-      // LABEL_PERMISSION_PLAN.viewReportDetailFree,
-      LABEL_PERMISSION_PLAN.viewCountPro,
       {
-        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(200),
-        icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
+        ...LABEL_PERMISSION_PLAN.smartReporting,
+        sub: Object.values(LABEL_PERMISSION_PLAN.smartReporting.sub)
       },
-      // LABEL_PERMISSION_PLAN.downloadDeptReport,
       {
-        ...LABEL_PERMISSION_PLAN.viewReportPro,
-        sub: Object.values(LABEL_PERMISSION_PLAN.viewReportPro.sub)
+        label: LABEL_PERMISSION_PLAN.updatedWeekly.label,
+        icon: LABEL_PERMISSION_PLAN.updatedWeekly.icon
       },
-
     ]
   },
   {
-    type: "Pro Lite",
-    plan_code: "e_pro_lite",
-    description: "Xem số liệu chi tiết về thị trường",
-    price: "1500000",
+    type: "Gói phân tích",
+    plan_code: "pt50",
+    type_package: "analysis",
+    description: "Dùng cho nhu cầu xem và phân tích <b>nhiều báo cáo</b>",
+    price: "3000000",
     // priceDiscount: "7000000",
     // discountPercent: "-50%",
-    unit: "năm",
+    unit: " 50 báo cáo / 1 năm",
     isHighlight: true,
-    isHide: true,
-    autoShowDetail: true,
     permissions: [
-      // LABEL_PERMISSION_PLAN.viewReportDetailFree,
-      LABEL_PERMISSION_PLAN.viewCountPro,
       {
-        label: LABEL_PERMISSION_PLAN.numberOfUnlockReport.label(150),
-        icon: LABEL_PERMISSION_PLAN.numberOfUnlockReport.icon
+        ...LABEL_PERMISSION_PLAN.analysis,
+        sub: Object.values(LABEL_PERMISSION_PLAN.analysis.sub)
       },
-      // LABEL_PERMISSION_PLAN.downloadDeptReport,
-      // {
-      //   ...LABEL_PERMISSION_PLAN.viewReportPro,
-      //   sub: Object.values(LABEL_PERMISSION_PLAN.viewReportPro.sub)
-      // },
-
+    ]
+  },
+  {
+    type: "Gói phân tích",
+    plan_code: "pt100",
+    type_package: "analysis",
+    description: "Dùng cho nhu cầu xem và phân tích <b>nhiều báo cáo</b>",
+    price: "5000000",
+    // priceDiscount: "7000000",
+    // discountPercent: "-50%",
+    unit: " 100 báo cáo / 1 năm",
+    isHighlight: true,
+    permissions: [
+      {
+        ...LABEL_PERMISSION_PLAN.analysis,
+        sub: Object.values(LABEL_PERMISSION_PLAN.analysis.sub)
+      },
     ]
   },
 ];

@@ -17,6 +17,7 @@ const toggleShowMore = () => {
 
 const toggleIcon = computed(() => showMore.value ? CaretUpOutlined : CaretDownOutlined);
 
+
 const specialOfferLink = computed(() => {
   const specialPlans = ['e_basic_lite', 'e_pro_lite', 'e_starter'];
   return specialPlans.includes(plan.plan_code) ? 'https://dangky.metric.vn/ereport_doi-goi-dich-vu' : '/pricing';
@@ -44,14 +45,14 @@ const specialOfferLink = computed(() => {
     <div class="statistic-item__content">
       <div class="content">
         <div class="summary">
-          <div class="planType"> Gói {{ plan.type }}</div>
+          <div class="planType"> {{ plan.type }}</div>
           <div class="planDesc">{{ plan.description }}</div>
         </div>
 
         <div class="divider"/>
 
         <div class="permission">
-          <p class="includeLabel">Bao gồm:</p>
+<!--          <p class="includeLabel">Bao gồm:</p>-->
           <div v-show="showMore" class="permissionList">
             <div v-for="(permission, index) in plan.permissions" :key="index" class="permissionItem">
               <div class="perm">
