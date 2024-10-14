@@ -4,12 +4,14 @@ permissions: read-all
 
 on:
   push:
-    branches: [ "staging" ]
+    branches: [ "production" ]
+
 env:
   PUBLIC_REGISTRY: ${{ vars.PUBLIC_REGISTRY }}
 
 jobs:
   include-builds:
+    # uses: beecost/workflow-template/.github/workflows/template-workflows-build-fe.yml@master
     uses: beecost/cicd-template/.github/workflows/build-stage-ereport-fe-stag.yml@main
     secrets: inherit
 
