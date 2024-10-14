@@ -37,7 +37,9 @@ const isHideContentBasic = computed(() => {
   if (config.public.SSR === 'true') {
     return false;
   }
-  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_pro_lite' || props.data?.tier_report === 'e_trial');
+  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_pro_lite'
+      || props.data?.tier_report === 'e_trial' || props.data?.tier_report === 'pt50'
+      || props.data?.tier_report === 'pt100');
 });
 
 const formatNumber = (value = "") => value.toLocaleString("vi-VN");
