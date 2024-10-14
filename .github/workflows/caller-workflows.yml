@@ -5,6 +5,7 @@ permissions: read-all
 on:
   push:
     branches: [ "staging" ]
+
 env:
   PUBLIC_REGISTRY: ${{ vars.PUBLIC_REGISTRY }}
 
