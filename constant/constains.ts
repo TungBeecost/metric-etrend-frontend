@@ -135,10 +135,9 @@ export const LABEL_PERMISSION_PLAN = {
     label: "Mở xem và phân tích nhiều báo cáo:",
     icon: "Unlock",
     sub: {
-      action: "Trải nghiệm tương tác báo cáo thông minh",
-      unlimitedView: "Không giới hạn xem kho báo cáo tổng quan",
-      unlimitedView24h: "Không giới hạn xem báo cáo đã mở trong 24h",
-      expiry: "Thời gian sử dụng: 6 tháng",
+      unlimitedView: "Không giới hạn xem lại báo cáo trong 24h",
+      expiry: "Truy cập báo cáo Community trong thời gian sử dụng",
+      expiry1: "Thời hạn sử dụng: 6 tháng",
     }
   },
   smartReporting: {
@@ -156,8 +155,8 @@ export const LABEL_PERMISSION_PLAN = {
     sub: {
       fieldReport: "Báo cáo thị trường và tăng trưởng quý, năm",
       top: "Top nhà bán, thương hiệu, thị phần, mức giá",
-      detail: "Chi tiết gian hàng, sản phẩm bán chạy",
-      review: "Đánh giá gian hàng, sản phẩm từ người mua",
+      detail: "Chi tiết shop, sản phẩm bán chạy",
+      review: "Đánh giá shop, sản phẩm từ người mua",
     }
   },
   updatedWeekly: {
@@ -310,13 +309,13 @@ export const PLANCARD = [
 
 export const PLANS: Array<IPLAN> = [
   {
-    type: "Gói báo cáo",
+    type: "Báo cáo lẻ (một báo cáo)",
     plan_code: "pdf_report",
     type_package: "report",
-    description: "Dùng cho nhu cầu quan tâm tới <b>một số ít báo cáo</b>",
-    price: "299000",
+    description: "Quan tâm <b>ít nhóm hàng</b>",
+    price: 'Từ 249K',
     // priceDiscount: "5000000",
-    discountPercent: "Sắp ra mắt",
+    // discountPercent: "Sắp ra mắt",
     unit: " báo cáo",
     isHighlight: true,
     permissions: [
@@ -327,14 +326,14 @@ export const PLANS: Array<IPLAN> = [
     ]
   },
   {
-    type: "Gói báo cáo",
+    type: "Báo cáo lẻ (một báo cáo)",
     plan_code: "smart_report",
     type_package: "report",
-    description: "Dùng cho nhu cầu quan tâm tới <b>một số ít báo cáo</b>",
-    price: "1800000",
+    description: "Quan tâm <b>ít nhóm hàng</b>",
+    price: 'Từ 300K',
     // priceDiscount: "5000000",
     discountPercent: "Sắp ra mắt",
-    unit: " báo cáo / 6 tháng",
+    unit: " báo cáo / 1 tháng",
     isHighlight: true,
     permissions: [
       {
@@ -348,11 +347,11 @@ export const PLANS: Array<IPLAN> = [
     ]
   },
   {
-    type: "Gói phân tích",
+    type: "Gói xem nhanh (nhiều báo cáo)",
     plan_code: "pt50",
     type_package: "analysis",
-    description: "Dùng cho nhu cầu xem và phân tích <b>nhiều báo cáo</b>",
-    price: "3000000",
+    description: "Quan tâm <b>nhiều nhóm hàng</b>",
+    price: '1.99 triệu',
     // priceDiscount: "7000000",
     // discountPercent: "-50%",
     unit: " 50 báo cáo / 1 năm",
@@ -365,11 +364,11 @@ export const PLANS: Array<IPLAN> = [
     ]
   },
   {
-    type: "Gói phân tích",
+    type: "Gói xem nhanh (nhiều báo cáo)",
     plan_code: "pt100",
     type_package: "analysis",
-    description: "Dùng cho nhu cầu xem và phân tích <b>nhiều báo cáo</b>",
-    price: "5000000",
+    description: "Quan tâm <b>nhiều nhóm hàng</b>",
+    price: '2.99 triệu',
     // priceDiscount: "7000000",
     // discountPercent: "-50%",
     unit: " 100 báo cáo / 1 năm",
