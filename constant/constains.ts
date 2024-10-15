@@ -310,7 +310,7 @@ export const PLANCARD = [
 
 export const PLANS: Array<IPLAN> = [
   {
-    type: "Báo cáo lẻ (một báo cáo)",
+    type: "Báo cáo lẻ",
     plan_code: "pdf_report",
     type_package: "report",
     description: "Quan tâm <b>ít nhóm hàng</b>",
@@ -328,7 +328,7 @@ export const PLANS: Array<IPLAN> = [
     ]
   },
   {
-    type: "Báo cáo lẻ (một báo cáo)",
+    type: "Báo cáo lẻ",
     plan_code: "smart_report",
     type_package: "report",
     description: "Quan tâm <b>ít nhóm hàng</b>",
@@ -350,7 +350,7 @@ export const PLANS: Array<IPLAN> = [
     ]
   },
   {
-    type: "Gói xem nhanh (nhiều báo cáo)",
+    type: "Gói xem nhanh",
     plan_code: "pt50",
     type_package: "analysis",
     description: "Quan tâm <b>nhiều nhóm hàng</b>",
@@ -368,7 +368,7 @@ export const PLANS: Array<IPLAN> = [
     ]
   },
   {
-    type: "Gói xem nhanh (nhiều báo cáo)",
+    type: "Gói xem nhanh",
     plan_code: "pt100",
     type_package: "analysis",
     description: "Quan tâm <b>nhiều nhóm hàng</b>",
