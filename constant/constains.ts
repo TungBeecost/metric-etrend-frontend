@@ -144,7 +144,7 @@ export const LABEL_PERMISSION_PLAN = {
     label: "Báo cáo thông minh:",
     icon: "Unlock",
     sub: {
-      unlimitedView: "Không giới hạn xem kho báo cáo tổng quan",
+      unlimitedView: "Không giới hạn xem Báo cáo Community",
       free5TimeOpen: "Miễn phí 5 lượt mở xem báo cáo khác",
       expiry: "Thời gian sử dụng: 6 tháng",
     }
