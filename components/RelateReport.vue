@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type {LstRecommed} from "~/services/reports";
 import {NAVIGATIONS} from "~/constant/constains";
-import {upperFirst} from "lodash";
+import {upperFirstLetter} from "~/helpers/utils";
 
 const props = defineProps({
   recomends: {
@@ -46,7 +46,7 @@ const getRandomReplacement = () => {
                     stroke-linejoin="round"/>
             </svg>
             {{ item.source === 'marketing' ? '' : getRandomReplacement() }}
-            {{ upperFirst(item.name.replace('Báo cáo', '')) }}
+            {{ upperFirstLetter(item.name.replace('Báo cáo', '')) }}
           </nuxt-link>
         </div>
       </div>
