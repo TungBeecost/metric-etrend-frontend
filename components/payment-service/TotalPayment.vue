@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { formatCurrency } from "~/helpers/FormatHelper";
-import { toRefs, computed, watch, onMounted, ref, nextTick } from 'vue';
+import {formatCurrency} from "~/helpers/FormatHelper";
+import {toRefs, computed, watch, onMounted, ref, nextTick} from 'vue';
 
 const props = defineProps({
   plan: {
@@ -21,22 +21,23 @@ const props = defineProps({
   }
 });
 
-const { plan, discountInfo, statusApplyCode } = toRefs(props);
+const {plan, discountInfo, statusApplyCode} = toRefs(props);
+console.log('plan', plan)
 const emit = defineEmits(['finalPrice']);
 
-const calculateDiscountAmount = (planPrice: number, discount: any) => {
+const calculateDiscountAmount = (planPriceDiscount: number, discount: any) => {
   if (!discount || !discount.discount) {
     console.log('No discount info available.');
     return 0;
   }
 
-  const { discount_type, discount_value, maximum_discount } = discount.discount;
-  console.log('Discount Details:', { discount_type, discount_value, maximum_discount });
+  const {discount_type, discount_value, maximum_discount} = discount.discount;
+  console.log('Discount Details:', {discount_type, discount_value, maximum_discount});
 
   let discountAmount = 0;
 
   if (discount_type === 'percentage') {
-    discountAmount = (planPrice * discount_value) / 100;
+    discountAmount = (planPriceDiscount * discount_value) / 100;
   } else if (discount_type === 'amount') {
     discountAmount = discount_value;
   }
@@ -52,19 +53,19 @@ const promotionalDiscount = ref(0);
 
 const updateValues = async () => {
   await nextTick();
-  const price = plan.value.price;
+  const priceDiscount = plan.value.priceDiscount ?? plan.value.priceValue;
   if (statusApplyCode.value) {
-    discountAmount.value = calculateDiscountAmount(price, discountInfo.value);
+    discountAmount.value = calculateDiscountAmount(priceDiscount, discountInfo.value);
     promotionalDiscount.value = 0;
   } else {
     discountAmount.value = 0;
-    promotionalDiscount.value = plan.value.priceDiscount ? plan.value.priceDiscount - plan.value.price : 0;
+    promotionalDiscount.value = plan.value.priceDiscount ? plan.value.priceDiscount - plan.value.priceValue : 0;
   }
 };
 
 const finalPrice = computed(() => {
-  const price = plan.value.price;
-  return price - discountAmount.value - promotionalDiscount.value;
+  const priceDiscount = plan.value.priceDiscount ?? plan.value.priceValue;
+  return priceDiscount - discountAmount.value - promotionalDiscount.value;
 });
 
 watch([discountInfo, statusApplyCode], updateValues);
@@ -93,7 +94,8 @@ onMounted(() => {
       <div class="promotional_program">Áp dụng mã giảm giá</div>
       <div v-if="statusApplyCode" class="promotional_program">
         -{{ formatCurrency(discountAmount) }}
-        <span v-if="discountInfo.discount.discount_type === 'percentage'" class="promotional_program">({{discountInfo.discount.discount_value}}%)</span>
+        <span v-if="discountInfo.discount.discount_type === 'percentage'"
+              class="promotional_program">({{ discountInfo.discount.discount_value }}%)</span>
       </div>
       <div v-else class="promotional_program">0đ</div>
     </div>

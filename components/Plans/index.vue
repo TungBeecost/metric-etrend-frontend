@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
-import { NAVIGATIONS, PLANS } from '~/constant/constains';
-import { formatSortTextCurrencyPlan } from "~/helpers/utils";
+import {computed, onMounted, ref} from 'vue';
+import {NAVIGATIONS, PLANS} from '~/constant/constains';
+import {formatSortTextCurrencyPlan} from "~/helpers/utils";
 
 const currentUserStore = useCurrentUser();
-const { userInfo }: any = storeToRefs(currentUserStore);
+const {userInfo}: any = storeToRefs(currentUserStore);
 
 defineProps<{
   isDarkTitle?: boolean,
@@ -82,7 +82,6 @@ const filteredPlans = computed(() => {
           <div class="summary">
             <p class="planType">{{ plan.type }}</p>
             <p class="planDesc" v-html="plan.description"></p>
-            <div class="planDiscountPrice">{{ formatSortTextCurrencyPlan(plan.priceDiscount) }}</div>
             <div class="select_packet">
               <a-select
                   v-if="plan.type_package === 'report'"
@@ -91,7 +90,7 @@ const filteredPlans = computed(() => {
                   style="width: 200px"
               >
                 <a-select-option value="smart_report">Báo cáo thông minh</a-select-option>
-                <a-select-option value="pdf_report">Báo cáo thường (PDF)</a-select-option>
+                <a-select-option value="pdf_report">Báo cáo PDF</a-select-option>
               </a-select>
               <a-select
                   v-if="plan.type_package === 'analysis'"
@@ -103,18 +102,10 @@ const filteredPlans = computed(() => {
                 <a-select-option value="pt50">50 lượt mở xem báo cáo</a-select-option>
               </a-select>
             </div>
-            <div v-if="plan.plan_code==='pdf_report'" class="planPrice">
-              Từ {{ formatSortTextCurrencyPlan(plan.price) }}
-              <span v-if="plan.unit" class="priceUnit"> /{{
-                  plan.unit
-                }}
-              </span>
-            </div>
-            <div v-else class="planPrice">{{ formatSortTextCurrencyPlan(plan.price) }}
-              <span v-if="plan.unit" class="priceUnit"> /{{
-                plan.unit
-              }}
-              </span>
+            <div class="planDiscountPrice">{{ formatSortTextCurrencyPlan(plan.priceDiscount) }}</div>
+            <div class="planPrice">
+              {{ formatSortTextCurrencyPlan(plan.price) }}
+              <span v-if="plan.unit" class="priceUnit"> /{{ plan.unit }}</span>
             </div>
           </div>
 
