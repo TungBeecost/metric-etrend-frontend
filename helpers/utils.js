@@ -83,6 +83,11 @@ export const formatSortTextCurrencyPlan = (price, isShortest = false) => {
     return formatSortTextCurrencyWithMinValuePlan(price, isShortest);
 };
 
+
+export const upperFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export const getUrlImageOption = (urlImage, type = "thumbnail") => {
     if (
         urlImage?.length > 0 &&
