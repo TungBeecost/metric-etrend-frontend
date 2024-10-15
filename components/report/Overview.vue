@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { formatSortTextCurrency } from "~/helpers/utils";
-import { computed } from "vue";
+import {formatSortTextCurrency} from "~/helpers/utils";
+import {computed} from "vue";
 import dayjs from "dayjs";
-import { formatCurrency } from "~/helpers/FormatHelper";
+import {formatCurrency} from "~/helpers/FormatHelper";
 
 const props = defineProps({
   data: {
@@ -16,7 +16,7 @@ const props = defineProps({
 });
 
 const diffMonths = computed(() => {
-  const { start_date, end_date } = props.data.filter_custom;
+  const {start_date, end_date} = props.data.filter_custom;
   const startDate = dayjs(start_date);
   const endDate = dayjs(end_date);
   return endDate.diff(startDate, "months") + 1 + " tháng";
@@ -28,7 +28,7 @@ interface PriceRange {
 }
 
 const priceRangesSortBy = (field: keyof PriceRange = 'revenue') => {
-  const { lst_price_range } = props.data.data_analytic.by_price_range;
+  const {lst_price_range} = props.data.data_analytic.by_price_range;
   return lst_price_range.slice().sort((a: PriceRange, b: PriceRange) => b[field] - a[field]) || [];
 };
 
@@ -50,7 +50,7 @@ interface RevenueItem {
 }
 
 const diffRevenueLatestQuarterPercent = computed(() => {
-  const { lst_revenue_sale_monthly } = props.data.data_analytic.by_overview;
+  const {lst_revenue_sale_monthly} = props.data.data_analytic.by_overview;
   const latestQuarter = lst_revenue_sale_monthly.slice(-3);
   const previousQuarter = lst_revenue_sale_monthly.slice(-6, -3);
   const revenueLatestQuarter = latestQuarter.reduce(
@@ -69,18 +69,9 @@ const diffRevenueLatestQuarterPercent = computed(() => {
 
 <template>
   <div class="overview">
-    <div class="statistic-item__title">
-      <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
-           xmlns="http://www.w3.org/2000/svg">
-        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
-      </svg>
-      <div>
-        <h2 class="statistic-item__title">Giới thiệu</h2>
-      </div>
-    </div>
     <div class="content">
       <div>
-        <b> Báo cáo nghiên cứu thị trường {{ props.data.name }} </b> trên sàn Thương mại điện tử
+        Báo cáo nghiên cứu thị trường <b>{{ props.data.name }}</b> trên sàn Thương mại điện tử
         {{
           props.data.data_analytic.by_marketplace.lst_marketplace.map((platform: Platform) => platform.name).join(', ')
         }}
@@ -90,7 +81,8 @@ const diffRevenueLatestQuarterPercent = computed(() => {
           props.data.filter_custom.end_date.slice(4, 6) + '/' + props.data.filter_custom.end_date.slice(0, 4)
         }}</b>,
         được thực hiện bởi
-        <a style="color: #E85912; font-weight: 500" href="https://metric.vn/" target="_blank">Metric.vn - Nền tảng phân tích số liệu thị
+        <a style="color: #E85912; font-weight: 500" href="https://metric.vn/" target="_blank">Metric.vn - Nền tảng phân
+          tích số liệu thị
           trường</a>.
       </div>
       <br>
@@ -101,17 +93,17 @@ const diffRevenueLatestQuarterPercent = computed(() => {
             <b>{{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }} đồng</b>
           </BlurContent>
         </span>
-        trong {{ diffMonths }}  và so với quý gần nhất
+        trong {{ diffMonths }} và so với quý gần nhất
         {{
           diffRevenueLatestQuarterPercent > 0 ? "tăng trưởng hơn" : "giảm"
         }}
         {{ Math.abs(diffRevenueLatestQuarterPercent) }}%
         Đánh giá thị trường {{ props.data.name }}, phân khúc giá có doanh số cao nhất là từ
-          {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
-          {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}
-          . Những thương hiệu {{ props.data.name }} được phân phối và
+        {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
+        {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}
+        . Những thương hiệu {{ props.data.name }} được phân phối và
         bán chạy nhất là
-          <b>{{ top5Shops().join(', ') }}</b>
+        <b>{{ top5Shops().join(', ') }}</b>
         v.v...
       </div>
     </div>
@@ -120,12 +112,19 @@ const diffRevenueLatestQuarterPercent = computed(() => {
 
 <style scoped lang="scss">
 .overview {
-  padding: 24px;
-  border-radius: 16px;
-  border: 1px solid #EEEBFF;
+  //padding: 24px;
+  //border-radius: 16px;
+  //border: 1px solid #EEEBFF;
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  .content {
+    color: #2e2e2e;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
 }
 
 .statistic-item__title {
@@ -139,12 +138,12 @@ const diffRevenueLatestQuarterPercent = computed(() => {
 }
 
 .text-bold {
-  color: var(--Dark-blue-dark-blue-7, #332D59);
+  //color: var(--Dark-blue-dark-blue-7, #332D59);
   font-family: Inter, sans-serif;
-  font-size: 14px;
-  font-style: normal;
+  //font-size: 14px;
+  //font-style: normal;
   font-weight: 700;
-  line-height: 24px;
+  //line-height: 24px;
 }
 
 @media (max-width: 768px) {

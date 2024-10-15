@@ -29,7 +29,7 @@ const colors = [
   "#36CFC9",
   "#AEC986",
   "#FFC53D"
-];
+]
 
 
 const isMobile = ref(window?.innerWidth < 768);

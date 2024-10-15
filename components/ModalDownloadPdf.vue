@@ -148,54 +148,63 @@ const discountPercentage = computed(() => {
       </div>
       <div class="summary">
         <div class="title_container">
-          <div class="title_report">Báo cáo chi tiết</div>
+          <div class="title_report">Mua báo cáo thị trường</div>
           <div>
-            <p>Nhóm hàng {{ props.data.name }}</p>
+            <div style="margin-bottom: 32px;">
+              <div style="text-align: center; margin-bottom: 12px;">Nhóm hàng</div>
+              <p>{{ props.data.name }}</p>
+            </div>
             <ul>
-              <li>• Số liệu sàn: Shopee, Tiki, Lazada</li>
-              <li>• Từ {{ formatDate(props.data.start_date, "DD-MM-YYYY") }}
+              <li>Số liệu sàn: Shopee, Tiki, Lazada, Tiktok</li>
+              <li>Từ {{ formatDate(props.data.start_date, "DD-MM-YYYY") }}
                 đến {{ formatDate(props.data.end_date, "DD-MM-YYYY") }}
               </li>
-              <li>• Nhận báo cáo qua email trong vòng 05 phút</li>
+              <li>Báo cáo PDF - 50 trang</li>
+              <li>Nhận báo cáo qua email</li>
             </ul>
           </div>
         </div>
         <div class="payment_container">
           <div v-if="!props.data.can_download" class="price">
             <div style="text-align: center">
-              <span style="color: #716B95">Giá niêm yết: </span><span class="price_discount">{{ formatCurrency(props.data.price_before_discount) }}</span>
+              <span class="price_real">{{ formatCurrency(props.data.price) }}</span>
             </div>
             <div style="text-align: center">
-              <span class="price_real">{{ formatCurrency(props.data.price) }}</span>
-              <span style="font-size: 12px; color: #E85912; font-weight: 400;">(-{{discountPercentage}})%</span>
+              <span class="price_discount">{{ formatCurrency(props.data.price_before_discount) }}</span>
             </div>
           </div>
           <div class="button_group">
-            <a-button type="primary"
-                      style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center"
-                      class="download_report_button" :loading="downloading"
-                      @click="handleDownload">Tải báo cáo
-            </a-button>
-            <div style="color: #716B95">hoặc</div>
-            <a-button v-if="(userInfo.current_plan?.remain_claim_pdf ?? 0) > 0"
-                      :disabled="!canViewReport"
-                      style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
-                      class="download_report_button" @click="handleView">
-              Xem báo cáo
-              <div style="position: absolute; top: -12px; right: -12px; background: #241E46; color: #FFFFFF; padding: 2px 4px">
-                còn {{ userInfo.current_plan?.remain_claim_pdf ?? 0 }} lượt
-              </div>
-              <svg style="position: absolute; top: 15px; right: -12px;" xmlns="http://www.w3.org/2000/svg" width="13" height="8" viewBox="0 0 13 8" fill="none">
-                <path d="M0 8L13 0H0V8Z" fill="#120B37"/>
-              </svg>
-            </a-button>
             <a-button
-                v-else
-                style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
-                @click="handleBuyReport"
-            >
-              Mua gói báo cáo
+                type="primary"
+                style="height: 40px; font-size: 14px; box-shadow: 0 2px 0 rgba(0,0,0,.045); filter: drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 4px); font-family: Montserrat,serif;font-weight: 500"
+                class="download_report_button" :loading="downloading"
+                @click="handleDownload">
+              Thanh toán
             </a-button>
+            <div class="button_group" v-if="userInfo.current_plan?.remain_claim_pdf">
+              <div style="color: #716B95">hoặc</div>
+              <a-button v-if="(userInfo.current_plan?.remain_claim_pdf ?? 0) > 0"
+                        :disabled="!canViewReport"
+                        style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
+                        class="download_report_button" @click="handleView">
+                Xem báo cáo
+                <div
+                    style="position: absolute; top: -12px; right: -12px; background: #241E46; color: #FFFFFF; padding: 2px 4px">
+                  còn {{ userInfo.current_plan?.remain_claim_pdf ?? 0 }} lượt
+                </div>
+                <svg style="position: absolute; top: 15px; right: -12px;" xmlns="http://www.w3.org/2000/svg" width="13"
+                     height="8" viewBox="0 0 13 8" fill="none">
+                  <path d="M0 8L13 0H0V8Z" fill="#120B37"/>
+                </svg>
+              </a-button>
+              <a-button
+                  v-else
+                  style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
+                  @click="handleBuyReport"
+              >
+                Mua gói báo cáo
+              </a-button>
+            </div>
           </div>
           <div v-if="!props.data.can_download" class="wallet_info">
             <p>Hỗ trợ thanh toán trực tuyến</p>
@@ -218,6 +227,8 @@ const discountPercentage = computed(() => {
   display: flex;
   padding: 16px;
 
+  font-family: 'Montserrat', sans-serif;
+
   .slide_thumbnail {
     display: flex;
     flex: 0.6;
@@ -235,38 +246,44 @@ const discountPercentage = computed(() => {
       display: flex;
       flex-direction: column;
       gap: 20px;
-      margin-bottom: 24px;
+      //margin-bottom: px;
 
       .title_report {
         color: #E85912;
         text-align: center;
-        font-size: 28px;
-        font-weight: 700;
+        font-size: 24px;
+        font-weight: 800;
       }
 
       div {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
+        //display: flex;
+        //flex-direction: column;
+        //gap: 24px;
 
         p {
           color: #241E46;
           text-align: center;
-          font-family: Inter, sans-serif;
-          font-size: 20px;
-          font-weight: 600;
+          //font-family: Inter, sans-serif;
+          font-size: 28px;
+          font-weight: 700;
           line-height: 20px;
+
+          margin-bottom: 12px;
         }
 
         ul {
+          list-style-type: none;
+
           li {
-            color: var(--Dark-blue-dark-blue-5, #716B95);
+            color: rgb(89, 90, 92);
             text-align: center;
-            font-family: Inter, sans-serif;
+            //font-family: Inter, sans-serif;
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
-            line-height: 20px; /* 133.333% */
+            line-height: 1.4; /* 133.333% */
+
+            margin-bottom: 8px;
           }
         }
       }
@@ -284,16 +301,16 @@ const discountPercentage = computed(() => {
         gap: 8px;
 
         .price_real {
-          color: #E85912;
-          font-size: 20px;
+          color: rgb(237, 75, 0);
+          font-size: 36px;
           font-weight: 800;
           text-align: center;
         }
 
         .price_discount {
           color: #716B95;
-          font-size: 14px;
-          font-weight: 400;
+          font-size: 20px;
+          font-weight: 500;
           text-align: center;
           text-decoration-line: line-through;
         }
@@ -302,7 +319,7 @@ const discountPercentage = computed(() => {
       .note {
         color: #716B95;
         font-size: 12px;
-        font-weight: 400;
+        font-weight: 500;
         text-align: center;
       }
     }
@@ -322,7 +339,7 @@ const discountPercentage = computed(() => {
       p {
         color: #716B95;
         font-size: 14px;
-        font-weight: 400;
+        font-weight: 500;
         text-align: center;
       }
     }
@@ -409,11 +426,11 @@ const discountPercentage = computed(() => {
 </style>
 
 <style lang="scss">
-  .ant-modal {
-    @media (max-width: 767px) {
-      top: 20px;
-      margin: 0 auto;
-    }
+.ant-modal {
+  @media (max-width: 767px) {
+    top: 20px;
+    margin: 0 auto;
   }
+}
 
 </style>

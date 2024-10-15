@@ -1,7 +1,8 @@
 <script setup>
-import { defineProps, computed, ref, onMounted, watchEffect } from 'vue';
-import { getUrlImageOption } from '~/helpers/utils.js';
+import {defineProps, computed, ref, onMounted, watchEffect} from 'vue';
+import {getUrlImageOption, goToUrl} from '~/helpers/utils.js';
 import Highcharts from "highcharts";
+import {getUrlAnalyticShop} from "~/services/MetricCommonService.js";
 
 const config = useRuntimeConfig();
 const renderChartSales = ref(false);
@@ -53,9 +54,17 @@ const chartWidth = computed(() => {
 });
 
 const colors = [
-  '#8B54D9', '#F1584B', '#8BA87C', '#E85912', '#42A4FF',
-  '#241E46', '#FBE13E', '#FBA140', '#5473EF', '#3DCDCD'
-];
+  "#9254DE",
+  "#FF7A45",
+  "#FF4D4F",
+  "#597EF7",
+  "#241E46",
+  "#F15D25",
+  "#1890FF",
+  "#36CFC9",
+  "#AEC986",
+  "#FFC53D"
+]
 
 const top12Shops = computed(() => props.data.data_analytic.by_shop.lst_shop.slice(0, 12));
 
@@ -131,18 +140,27 @@ watchEffect(() => {
 const chartOptionsShopType = computed(() => ({
   chart: {
     type: "pie",
-    width: chartWidth.value || 500,
+    width: 500,
     style: {
       fontFamily: "Inter",
     },
   },
   title: {
-    text: `<h4>Tỷ trọng doanh số ${props.data.name} theo loại gian hàng</h4>`,
+    text: `<h4>Tỷ trọng doanh số theo loại shop</h4>`,
     useHTML: true,
     style: {
-      fontSize: '14px',
+      fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
+      fontFamily: 'Montserrat'
+    }
+  },
+  subtitle: {
+    text: `Shop mall và shop thường (Shopee, Lazada)`,
+    style: {
+      fontSize: '13px',
+      color: '#716B95',
+      fontWeight: 400,
       fontFamily: 'Inter'
     }
   },
@@ -168,8 +186,6 @@ const chartOptionsShopType = computed(() => ({
       cursor: "pointer",
       showInLegend: true,
       innerSize: '50%',
-      borderWidth: 1,
-      borderColor: null,
       dataLabels: {
         enabled: true,
         formatter: function () {
@@ -209,13 +225,13 @@ const chartOptionsSales = computed(() => ({
     },
   },
   title: {
-    text: `<h4>Tỷ trọng top 10 thương hiệu ${props.data.name} theo doanh số *</h4>`,
+    text: `<h4>Top 10 Shop theo doanh số</h4>`,
     useHTML: true,
     style: {
-      fontSize: '14px',
+      fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
-      fontFamily: 'Inter'
+      fontFamily: 'Montserrat'
     }
   },
   legend: {
@@ -238,8 +254,6 @@ const chartOptionsSales = computed(() => ({
       cursor: "pointer",
       showInLegend: true,
       innerSize: '50%',
-      borderWidth: 1,
-      borderColor: null,
       dataLabels: dataLabels.value,
     },
     series: {
@@ -249,7 +263,7 @@ const chartOptionsSales = computed(() => ({
   series: [
     {
       name: 'Doanh số (Đồng)',
-      data: props.data.data_analytic.by_shop.lst_top_shop.map(({ name, revenue, ratio_revenue }, index) => ({
+      data: props.data.data_analytic.by_shop.lst_top_shop.map(({name, revenue, ratio_revenue}, index) => ({
         name: name,
         y: revenue || ratio_revenue,
         color: colors[index % colors.length]
@@ -263,7 +277,7 @@ const sortedTopShops = computed(() => {
       .slice()
       .sort((a, b) => b.sale - a.sale)
       .slice(0, 10)
-      .map(({ name, sale }, index) => ({
+      .map(({name, sale}, index) => ({
         name: name,
         y: sale,
         color: colors[index % colors.length]
@@ -280,13 +294,13 @@ const chartOptionsOutput = computed(() => ({
     },
   },
   title: {
-    text: `<h4>Tỷ trọng top 10 thương hiệu ${props.data.name} theo sản lượng *</h4>`,
+    text: `<h4>Top 10 Shop theo sản lượng</h4>`,
     useHTML: true,
     style: {
-      fontSize: '14px',
+      fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
-      fontFamily: 'Inter'
+      fontFamily: 'Montserrat'
     }
   },
   legend: {
@@ -309,8 +323,6 @@ const chartOptionsOutput = computed(() => ({
       cursor: "pointer",
       showInLegend: true,
       innerSize: '50%',
-      borderWidth: 1,
-      borderColor: null,
       dataLabels: dataLabels.value,
     },
     series: {
@@ -334,6 +346,7 @@ const chartOptionsOutput = computed(() => ({
     "
       id="top-shop"
       class="border statistic-block mb-6"
+      style="gap: 48px;"
   >
     <div class="statistic-item__title">
       <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
@@ -341,8 +354,7 @@ const chartOptionsOutput = computed(() => ({
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <h3 class="statistic-item__title">Gian hàng hàng đầu</h3>
-        <div style="font-size: 14px; color: #716B95">Top gian hàng trong 365 ngày qua</div>
+        <h3 class="statistic-item__title">Shop hàng đầu</h3>
       </div>
     </div>
     <div class="pie_chart">
@@ -351,12 +363,13 @@ const chartOptionsOutput = computed(() => ({
           class="pie_chart_item"
           style="flex-direction: column; gap: 24px; justify-content: flex-start"
       >
-        <h4 style="font-size: 16px; font-weight: bold; line-height: 22px; text-align: center; color: #241E46">Số lượng gian hàng {{props.data.name}}</h4>
+        <h4 style="font-size: 16px; font-weight: bold; line-height: 22px; text-align: center; color: #241E46">Số lượng
+          shop</h4>
         <div>
           <a-table
               :columns="[
             {
-              title: 'Loại gian hàng',
+              title: 'Loại shop',
               dataIndex: 'shop_type',
               key: 'shop_type',
               align: 'center',
@@ -364,7 +377,7 @@ const chartOptionsOutput = computed(() => ({
               slots: {customRender: 'shop_type'}
             },
             {
-              title: 'Số gian hàng',
+              title: 'Số shop',
               dataIndex: 'shop_count',
               key: 'shop_count',
               align: 'right',
@@ -404,7 +417,10 @@ const chartOptionsOutput = computed(() => ({
         <highchart v-if="renderChartSales" :options="chartOptionsShopType"/>
       </div>
     </div>
-    <div style="display: flex; justify-content: flex-end; font-style: italic;">* Thị phần theo loại gian hàng chỉ thống kê số liệu sàn Shopee, Lazada</div>
+    <!--        <div style="display: flex; justify-content: flex-end; font-style: italic;">* Thị phần theo loại shop chỉ thống-->
+    <!--          kê số liệu sàn Shopee, Lazada-->
+    <!--        </div>-->
+    <hr style="border: 1px solid #EEEBFF; margin: 4px 0"/>
     <div>
       <div class="chart_item">
         <div>
@@ -416,14 +432,21 @@ const chartOptionsOutput = computed(() => ({
       </div>
     </div>
     <h4 style="color: #241E46; font-weight: 700; line-height: 22px; text-align: center">
-      Danh sách shop phổ biến của nhóm hàng {{props.data.name}} trên sàn TMĐT
+      Danh sách shop phổ biến của nhóm hàng {{ props.data.name }} trên sàn TMĐT
     </h4>
     <div class="logo-grid">
-      <div v-for="(record, index) in top12Shops" :key="index" class="logo-item">
-        <img :src="getUrlImageOption(record.url_image, 'thumbnail')" style="width: 64px; height: 64px; border-radius: 8px; background-size: cover;">
-          <p style="font-size: 12px;font-weight: 500;line-height: 24px;overflow: hidden; text-align: center">
-            {{record.name}}
-          </p>
+      <div
+          v-for="(record, index) in top12Shops"
+          :key="index" class="logo-item"
+      >
+        <img
+            :src="getUrlImageOption(record.url_image, 'thumbnail')"
+            :alt="record.name"
+            style="width: 64px; height: 64px; border-radius: 8px; background-size: cover;"
+        />
+        <p style="font-size: 12px;font-weight: 500;line-height: 24px;overflow: hidden; text-align: center">
+          {{ record.name }}
+        </p>
       </div>
     </div>
     <InsightBlock
@@ -436,7 +459,7 @@ const chartOptionsOutput = computed(() => ({
         Doanh thu của {{ data.name }} đến từ
         <BlurContent :is-hide-content="isHideContent">
           <span>
-            {{formatNumber(data.data_analytic.by_shop.ratio.mall.shop)}}
+            {{ formatNumber(data.data_analytic.by_shop.ratio.mall.shop) }}
           </span>
         </BlurContent>
         shop mall chiếm
@@ -470,7 +493,8 @@ const chartOptionsOutput = computed(() => ({
               ).toFixed(2)
             }}
           </span>
-        </BlurContent>% doanh số. Tiếp theo đó là các shop
+        </BlurContent>
+        % doanh số. Tiếp theo đó là các shop
         <template
             v-if="
             data.data_analytic &&
@@ -502,7 +526,8 @@ const chartOptionsOutput = computed(() => ({
                 ).toFixed(2)
               }}
             </span>
-          </BlurContent>%
+          </BlurContent>
+          %
         </template>
         và
         <template
@@ -521,7 +546,8 @@ const chartOptionsOutput = computed(() => ({
               }}
             </span>
           </BlurContent>
-        </template>%.
+        </template>
+        %.
       </li>
     </InsightBlock>
 
@@ -616,7 +642,7 @@ const chartOptionsOutput = computed(() => ({
   }
 }
 
-.chart_item{
+.chart_item {
   display: flex;
   justify-content: space-between;
 }
@@ -690,13 +716,13 @@ const chartOptionsOutput = computed(() => ({
   gap: 40px;
 }
 
-.logo-grid{
+.logo-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   overflow: hidden;
 
 
-  .logo-item{
+  .logo-item {
     padding: 12px;
     display: flex;
     flex-direction: column;
@@ -710,7 +736,7 @@ const chartOptionsOutput = computed(() => ({
 }
 
 @media (max-width: 768px) {
-  .chart_item{
+  .chart_item {
     flex-direction: column;
   }
   .pie_chart {

@@ -49,7 +49,7 @@
           >
             <div class="chart-title" style="margin-bottom: 0; margin-left: 0">
               <div class="chart-title-shape" style="background: #FFE7BA"/>
-              Top 10 thương hiệu có sản lượng bán cao nhất<br/>trên các sàn TMĐT
+              Top 10 thương hiệu có sản lượng bán cao nhất trên các sàn TMĐT
             </div>
             <div :class="{'blurred-4': isCovered}">
               <highchart :options="charts[1]"/>
@@ -83,9 +83,9 @@
 
 
 <script setup>
-import { computed, defineProps } from 'vue';
+import {computed, defineProps} from 'vue';
 import Highcharts from 'highcharts';
-import { formatNumber } from '~/helpers/FormatHelper.js';
+import {formatNumber} from '~/helpers/FormatHelper.js';
 
 const props = defineProps({
   data: {
@@ -168,12 +168,12 @@ const charts = computed(() => {
         verticalAlign: 'middle',
         layout: 'vertical',
         itemMarginTop: 10,
-        itemStyle: { fontSize: '8px', fontFamily: 'Montserrat', fontWeight: 400 }
+        itemStyle: {fontSize: '8px', fontFamily: 'Montserrat', fontWeight: 400}
       },
       series: [
         {
           name: 'Doanh số',
-          data: revenueData.map(({ name, ratio_revenue }) => {
+          data: revenueData.map(({name, ratio_revenue}) => {
             return {
               name: name ? (name.length > 13 ? name.slice(0, 13) + '...' : name) : '',
               y: ratio_revenue * 100 || 0,  // Convert ratio to percentage
@@ -229,12 +229,12 @@ const charts = computed(() => {
         verticalAlign: 'middle',
         layout: 'vertical',
         itemMarginTop: 10,
-        itemStyle: { fontSize: '8px', fontFamily: 'Montserrat', fontWeight: 400 }
+        itemStyle: {fontSize: '8px', fontFamily: 'Montserrat', fontWeight: 400}
       },
       series: [
         {
           name: 'Sản phẩm đã bán',
-          data: saleData.map(({ name, ratio_sale }) => {
+          data: saleData.map(({name, ratio_sale}) => {
             return {
               name: name ? (name.length > 13 ? name.slice(0, 13) + '...' : name) : '',
               y: ratio_sale ? ratio_sale * 100 : 0,  // Convert ratio to percentage
@@ -257,18 +257,25 @@ const charts = computed(() => {
   height: 100%;
 
   .main-slide {
+
     width: 100%;
+    height: 600px;
+
     background-color: #fff;
-    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    padding: 18px 40px;
 
     .title {
       font-weight: 700;
-      font-size: 28px;  // Increase font size for better visibility
-      line-height: 36px;
-      color: #241E46;
-      margin-bottom: 24px;  // Increase margin for separation
+      font-size: 24px;
+      line-height: 32px;
+
       letter-spacing: -0.02em;
+
+      margin-bottom: 24px;
+
+      color: #241E46;
 
       span {
         font-weight: 700;
@@ -276,23 +283,23 @@ const charts = computed(() => {
     }
 
     .relative {
-      position: relative;  // Needed for any absolutely positioned elements
+      position: relative; // Needed for any absolutely positioned elements
 
       .statistics {
         display: flex;
-        flex-wrap: wrap;  // Allow items to wrap on smaller screens
-        gap: 20px;  // Add spacing between chart items
+        flex-wrap: wrap; // Allow items to wrap on smaller screens
+        gap: 20px; // Add spacing between chart items
 
         .statistic-item {
           flex: 1;
-          min-width: 300px;  // Minimum width for responsiveness
+          min-width: 300px; // Minimum width for responsiveness
           display: flex;
           flex-direction: column;
           align-items: stretch;
-          background-color: #f9f9f9;  // Background color for each item
-          border-radius: 8px;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-          padding: 8px;  // Padding inside the statistic items
+          //background-color: #f9f9f9; // Background color for each item
+          //border-radius: 8px;
+          //box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          //padding: 8px; // Padding inside the statistic items
 
           .chart-title {
             font-weight: 700;
@@ -351,7 +358,8 @@ const charts = computed(() => {
     }
   }
 }
-.blurred-4{
+
+.blurred-4 {
   filter: blur(4px);
 }
 </style>
