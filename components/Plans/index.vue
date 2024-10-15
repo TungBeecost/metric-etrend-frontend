@@ -82,7 +82,6 @@ const filteredPlans = computed(() => {
           <div class="summary">
             <p class="planType">{{ plan.type }}</p>
             <p class="planDesc" v-html="plan.description"></p>
-            <div class="planDiscountPrice">{{ formatSortTextCurrencyPlan(plan.priceDiscount) }}</div>
             <div class="select_packet">
               <a-select
                   v-if="plan.type_package === 'report'"
@@ -103,6 +102,7 @@ const filteredPlans = computed(() => {
                 <a-select-option value="pt50">50 lượt mở xem báo cáo</a-select-option>
               </a-select>
             </div>
+            <div class="planDiscountPrice">{{ formatSortTextCurrencyPlan(plan.priceDiscount) }}</div>
             <div class="planPrice">
               {{ formatSortTextCurrencyPlan(plan.price) }}
               <span v-if="plan.unit" class="priceUnit"> /{{ plan.unit }}</span>
