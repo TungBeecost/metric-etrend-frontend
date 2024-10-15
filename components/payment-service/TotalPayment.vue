@@ -24,7 +24,7 @@ const props = defineProps({
 const { plan, discountInfo, statusApplyCode } = toRefs(props);
 const emit = defineEmits(['finalPrice']);
 
-const calculateDiscountAmount = (planPriceDiscount: number, discount: any) => {
+const calculateDiscountAmount = (planPrice: number, discount: any) => {
   if (!discount || !discount.discount) {
     console.log('No discount info available.');
     return 0;
@@ -36,7 +36,7 @@ const calculateDiscountAmount = (planPriceDiscount: number, discount: any) => {
   let discountAmount = 0;
 
   if (discount_type === 'percentage') {
-    discountAmount = (planPriceDiscount * discount_value) / 100;
+    discountAmount = (planPrice * discount_value) / 100;
   } else if (discount_type === 'amount') {
     discountAmount = discount_value;
   }
@@ -52,9 +52,9 @@ const promotionalDiscount = ref(0);
 
 const updateValues = async () => {
   await nextTick();
-  const priceDiscount = plan.value.priceDiscount ?? plan.value.price;
+  const price = plan.value.price;
   if (statusApplyCode.value) {
-    discountAmount.value = calculateDiscountAmount(priceDiscount, discountInfo.value);
+    discountAmount.value = calculateDiscountAmount(price, discountInfo.value);
     promotionalDiscount.value = 0;
   } else {
     discountAmount.value = 0;
@@ -63,8 +63,8 @@ const updateValues = async () => {
 };
 
 const finalPrice = computed(() => {
-  const priceDiscount = plan.value.priceDiscount ?? plan.value.price;
-  return priceDiscount - discountAmount.value - promotionalDiscount.value;
+  const price = plan.value.price;
+  return price - discountAmount.value - promotionalDiscount.value;
 });
 
 watch([discountInfo, statusApplyCode], updateValues);

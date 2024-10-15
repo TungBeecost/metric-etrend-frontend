@@ -168,6 +168,9 @@ const fetchDiscount = async () => {
       } else if (discount.applicable_to != 'subscription_package') {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá không áp dụng cho sản phẩm này';
+      } else if (discount.discount_value > plan.price && discount.discount_type === 'amount') {
+        statusApplyCode.value = false;
+        errors.value.discount = 'Mã giảm giá không áp dụng cho sản phẩm này';
       } else if (discount.minimum_order_value !== null && plan.priceDiscount < discount.minimum_order_value) {
         statusApplyCode.value = false;
         errors.value.discount = `Mã giảm giá chỉ áp dụng với đơn hàng từ ${formatCurrency(discount.minimum_order_value)}`;
