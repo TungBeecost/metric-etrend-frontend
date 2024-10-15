@@ -179,6 +179,7 @@ interface IPLAN {
   plan_code: string;
   type_package: string;
   price: string;
+  priceValue?: string;
   priceDiscount?: string;
   discountPercent?: string;
   unit?: string;
