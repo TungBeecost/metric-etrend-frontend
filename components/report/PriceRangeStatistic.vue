@@ -230,7 +230,6 @@ const chartOptions = computed(() => {
         <h3 class="statistic-item__title">Phân khúc giá</h3>
       </div>
     </div>
-    <h4 style="text-align: center; font-weight: bold; font-size: 16px">Doanh số và số sản phẩm {{ props.data.name }} đã bán theo phân khúc giá</h4>
     <div class="my-4 w-full text-center relative" style="position: relative">
       <highchart :options="chartOptions"/>
       <ChartMask v-if="props.isHideContent" :report="props.data"/>

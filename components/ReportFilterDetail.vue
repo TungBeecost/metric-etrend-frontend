@@ -96,9 +96,9 @@ const fieldValueParse: FieldValueParsers = {
 <template>
   <div class="report-filter">
     <div class="report-filter-title">
-      <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
-      </svg>
+<!--      <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>-->
+<!--      </svg>-->
       <h2 class="title">
         Phạm vi báo cáo
       </h2>

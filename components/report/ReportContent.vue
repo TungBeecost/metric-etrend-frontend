@@ -37,13 +37,13 @@ const displayTableOfContent = computed(() => {
         ],
       },
       {
-        title: 'III. Thống kê gian hàng',
+        title: 'III. Thống kê shop',
         children: [
-          {title: 'Thị phần doanh số theo loại gian hàng'},
-          {title: 'Thị phần doanh số theo khu vực của gian hàng'},
-          {title: 'Thống kê gian hàng bán chạy toàn thị trường'},
-          {title: 'Thống kê gian hàng bán chạy từng sàn Shopee, Tiktok. Lazada, Tiki'},
-          {title: 'Chi tiết 20 gian hàng bán chạy'},
+          {title: 'Thị phần doanh số theo loại shop'},
+          {title: 'Thị phần doanh số theo khu vực của shop'},
+          {title: 'Thống kê shop bán chạy toàn thị trường'},
+          {title: 'Thống kê shop bán chạy từng sàn Shopee, Tiktok. Lazada, Tiki'},
+          {title: 'Chi tiết 20 shop bán chạy'},
         ],
       },
       {
@@ -89,13 +89,13 @@ const displayTableOfContent = computed(() => {
       ],
     },
     {
-      title: 'III. Thống kê gian hàng',
+      title: 'III. Thống kê shop',
       children: [
-        {title: 'Thị phần doanh số theo loại gian hàng'},
-        {title: 'Thị phần doanh số theo khu vực của gian hàng'},
-        {title: 'Thống kê gian hàng bán chạy toàn thị trường'},
-        {title: 'Thống kê gian hàng bán chạy từng sàn Shopee, Tiktok. Lazada, Tiki'},
-        {title: 'Chi tiết 20 gian hàng bán chạy'},
+        {title: 'Thị phần doanh số theo loại shop'},
+        {title: 'Thị phần doanh số theo khu vực của shop'},
+        {title: 'Thống kê shop bán chạy toàn thị trường'},
+        {title: 'Thống kê shop bán chạy từng sàn Shopee, Tiktok. Lazada, Tiki'},
+        {title: 'Chi tiết 20 shop bán chạy'},
       ],
     },
     {
@@ -121,10 +121,10 @@ const displayTableOfContent = computed(() => {
 <template>
   <div class="report_content">
     <div class="statistic-item__title">
-      <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
-           xmlns="http://www.w3.org/2000/svg">
-        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
-      </svg>
+<!--      <svg width="16" height="32" viewBox="0 0 16 32" fill="none"-->
+<!--           xmlns="http://www.w3.org/2000/svg">-->
+<!--        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>-->
+<!--      </svg>-->
       <div>
         <h2 class="statistic-item__title">Nội dung báo cáo</h2>
       </div>
@@ -150,6 +150,8 @@ const displayTableOfContent = computed(() => {
   border: 1px solid #EEEBFF;
   display: flex;
   flex-direction: column;
+
+  background: #fff;
 }
 
 .statistic-item__title {
@@ -164,7 +166,7 @@ const displayTableOfContent = computed(() => {
 .content {
   font-size: 14px;
   line-height: 24px;
-  padding-left: 36px;
+  //padding-left: 24px;
   padding-top: 8px;
 }
 

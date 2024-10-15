@@ -52,7 +52,7 @@ useSeoMeta({
             <div class="report_title">Số liệu thị trường chính xác</div>
             <div class="description">
               Báo cáo cung cấp thông tin tổng quan về các sàn TMĐT hàng đầu Việt Nam, từ doanh số,
-              sản lượng bán, số lượng sản phẩm, số lượng gian hàng, top thương hiệu và nhà bán, tỷ trọng theo các tiêu
+              sản lượng bán, số lượng sản phẩm, số lượng shop, top thương hiệu và nhà bán, tỷ trọng theo các tiêu
               chí tới xu hướng tăng trưởng... theo ngành hàng, nhóm hàng. eReport giúp doanh nghiệp nắm bắt thị trường
               và ra quyết định kinh doanh ngay lập tức với chi phí tối ưu nhất.
             </div>

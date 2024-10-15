@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import {ref, onMounted, onBeforeUnmount, watch} from 'vue';
 import TrangBia from '/components/PreviewSlide/TrangBia.vue';
 import NoiDungChinh from '/components/PreviewSlide/NoiDungChinh.vue';
 import ThiPhanCacSanTMDT from '/components/PreviewSlide/ThiPhanCacSanTMDT.vue';
@@ -73,13 +73,15 @@ const scale = ref(0);
 const parentWidth = ref('100%');
 const parentHeight = ref(380);
 
+
 const handleResize = () => {
+  console.log('parentWidth', parentWidth.value)
   const isMobile = window.innerWidth < 768;
   let width = isMobile ? 320 : 540;
   let height = isMobile ? 230 : 380;
-  if(props.isSlugPage && !isMobile){
-    width = 400;
-    height = 285;
+  if (props.isSlugPage && !isMobile) {
+    width = 540;
+    height = 380;
   }
 
   parentWidth.value = `${width}px`;
