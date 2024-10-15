@@ -285,8 +285,8 @@ export const PLANCARD = [
   },
   {
     code: 'pt50',
-    name: 'Gói phân tích',
-    description: 'Bạn đang sử dụng gói phân tích và không bị giới hạn hiển thị dữ liệu của báo cáo',
+    name: 'Gói xem nhanh',
+    description: 'Bạn đang sử dụng gói xem nhanh và không bị giới hạn hiển thị dữ liệu của báo cáo',
     background: 'linear-gradient(90.12deg, #FCA14E 1.09%, #FF733F 99.22%)',
     textColor: '#FFFFFF',
     textColorButton: '#E85912',
@@ -296,8 +296,8 @@ export const PLANCARD = [
   },
   {
     code: 'pt100',
-    name: 'Gói phân tích',
-    description: 'Bạn đang sử dụng gói phân tích và không bị giới hạn hiển thị dữ liệu của báo cáo',
+    name: 'Gói xem nhanh',
+    description: 'Bạn đang sử dụng gói xem nhanh và không bị giới hạn hiển thị dữ liệu của báo cáo',
     background: 'linear-gradient(90.12deg, #FCA14E 1.09%, #FF733F 99.22%)',
     textColor: '#FFFFFF',
     textColorButton: '#E85912',
