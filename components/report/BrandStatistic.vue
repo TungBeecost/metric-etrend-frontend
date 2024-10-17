@@ -1,7 +1,7 @@
 <script setup>
-import { computed, defineProps, ref, onMounted, watchEffect } from 'vue';
+import {computed, defineProps, ref, onMounted, watchEffect} from 'vue';
 import Highcharts from 'highcharts';
-import { formatNumber } from "~/helpers/FormatHelper.js";
+import {formatNumber} from "~/helpers/FormatHelper.js";
 
 const props = defineProps({
   data: {
@@ -37,9 +37,17 @@ const chartWidth = computed(() => {
 });
 
 const colors = [
-  '#8B54D9', '#F1584B', '#8BA87C', '#E85912', '#42A4FF',
-  '#241E46', '#FBE13E', '#FBA140', '#5473EF', '#3DCDCD'
-];
+  "#9254DE",
+  "#FF7A45",
+  "#FF4D4F",
+  "#597EF7",
+  "#241E46",
+  "#F15D25",
+  "#1890FF",
+  "#36CFC9",
+  "#AEC986",
+  "#FFC53D"
+]
 
 const tooltipSales = ref({});
 const tooltipOutput = ref({});
@@ -120,28 +128,26 @@ const chartOptionsSales = computed(() => ({
     },
   },
   title: {
-    text: `<h4>Tỷ trọng top 10 thương hiệu ${props.data.name} theo doanh số *</h4>`,
+    text: `<h4>Top 10 thương hiệu theo doanh số</h4>`,
     useHTML: true,
     style: {
-      fontSize: '14px',
+      fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
+      fontFamily: 'Montserrat'
+    }
+  },
+  subtitle: {
+    text: `Chỉ thống kê sàn Shopee, Lazada, Tiki`,
+    style: {
+      fontSize: '13px',
+      color: '#716B95',
+      fontWeight: 400,
       fontFamily: 'Inter'
     }
   },
   legend: {
     enabled: false,
-    layout: 'vertical',
-    align: 'left',
-    verticalAlign: 'middle',
-    symbolHeight: 10,
-    symbolWidth: 10,
-    itemStyle: {
-      fontSize: '12px',
-      color: '#241E46',
-      fontWeight: 400,
-      fontFamily: 'Inter'
-    }
   },
   tooltip: tooltipSales.value,
   plotOptions: {
@@ -149,8 +155,6 @@ const chartOptionsSales = computed(() => ({
       cursor: "pointer",
       showInLegend: true,
       innerSize: '50%',
-      borderWidth: 1,
-      borderColor: null,
       dataLabels: {
         ...dataLabels.value,
         connectorShape: 'crookedLine',
@@ -158,7 +162,7 @@ const chartOptionsSales = computed(() => ({
           fontSize: '12px',
           color: '#241E46',
           fontWeight: 400,
-          fontFamily: 'Inter'
+          fontFamily: 'Montserrat'
         },
       }
     },
@@ -169,7 +173,7 @@ const chartOptionsSales = computed(() => ({
   series: [
     {
       name: 'Doanh số (Đồng)',
-      data: props.data.data_analytic.by_brand.lst_top_brand_revenue.map(({ name, revenue, ratio_revenue }, index) => ({
+      data: props.data.data_analytic.by_brand.lst_top_brand_revenue.map(({name, revenue, ratio_revenue}, index) => ({
         name: name,
         y: revenue || ratio_revenue,
         color: colors[index % colors.length]
@@ -187,12 +191,21 @@ const chartOptionsOutput = computed(() => ({
     },
   },
   title: {
-    text: `<h4>Tỷ trọng top 10 thương hiệu ${props.data.name} theo sản lượng *</h4>`,
+    text: `<h4>Top 10 thương hiệu theo sản lượng</h4>`,
     useHTML: true,
     style: {
-      fontSize: '14px',
+      fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
+      fontFamily: 'Montserrat'
+    }
+  },
+  subtitle: {
+    text: `Chỉ thống kê sàn Shopee, Lazada, Tiki`,
+    style: {
+      fontSize: '13px',
+      color: '#716B95',
+      fontWeight: 400,
       fontFamily: 'Inter'
     }
   },
@@ -216,8 +229,6 @@ const chartOptionsOutput = computed(() => ({
       cursor: "pointer",
       showInLegend: true,
       innerSize: '50%',
-      borderWidth: 1,
-      borderColor: null,
       dataLabels: {
         ...dataLabels.value,
         connectorShape: 'crookedLine',
@@ -236,7 +247,7 @@ const chartOptionsOutput = computed(() => ({
   series: [
     {
       name: 'Sản lượng (Đồng)',
-      data: props.data.data_analytic.by_brand.lst_top_brand_sale.map(({ name, sale, ratio_sale }, index) => ({
+      data: props.data.data_analytic.by_brand.lst_top_brand_sale.map(({name, sale, ratio_sale}, index) => ({
         name: name,
         y: sale || ratio_sale,
         color: colors[index % colors.length]
@@ -266,10 +277,10 @@ const formattedBrandCount = computed(() => {
       </svg>
       <div>
         <h3 class="statistic-item__title">Thương hiệu</h3>
-        <div style="font-size: 14px; color: #716B95">Top thương hiệu trong 365 ngày qua</div>
+        <!--        <div style="font-size: 14px; color: #716B95">Chỉ thống kê số liệu sàn Shopee, Lazada, Tiki</div>-->
       </div>
     </div>
-    <div class="chart_item" >
+    <div class="chart_item">
       <div>
         <highchart v-if="renderChartSales" :options="chartOptionsSales"/>
       </div>
@@ -277,8 +288,6 @@ const formattedBrandCount = computed(() => {
         <highchart v-if="renderChartOutput" :options="chartOptionsOutput"/>
       </div>
     </div>
-    <div style="display: flex; justify-content: flex-end; font-style: italic;">* Thị phần thương hiệu chỉ thống kê số liệu sàn Shopee, Lazada, Tiki </div>
-
     <InsightBlock
         v-if="
         props.data.data_analytic.by_brand &&
@@ -313,7 +322,8 @@ const formattedBrandCount = computed(() => {
               ).toFixed(2)
             }}
           </span>
-        </BlurContent>% thị phần về doanh thu{{
+        </BlurContent>
+        % thị phần về doanh thu{{
           data.data_analytic.by_brand.lst_top_brand_revenue[0].ratio_sale
               ? " và " +
               Number(
@@ -346,7 +356,8 @@ const formattedBrandCount = computed(() => {
                 ).toFixed(2)
               }}
             </span>
-          </BlurContent>% và
+          </BlurContent>
+          % và
           <BlurContent :is-hide-content="isHideContent">
             <span>
               {{
@@ -356,7 +367,8 @@ const formattedBrandCount = computed(() => {
                 ).toFixed(2)
               }}
             </span>
-          </BlurContent>%.
+          </BlurContent>
+          %.
         </template>
       </li>
     </InsightBlock>
@@ -772,7 +784,7 @@ const formattedBrandCount = computed(() => {
   }
 }
 
-.chart_item{
+.chart_item {
   display: flex;
   justify-content: space-between;
 }
@@ -843,10 +855,13 @@ const formattedBrandCount = computed(() => {
 .statistic-item__title {
   display: flex;
   align-items: center;
+
   gap: 16px;
   font-size: 20px;
+
   font-weight: 700;
-  line-height: 32px;
+  line-height: 28px;
+
   color: #241E46;
 }
 
@@ -865,13 +880,13 @@ const formattedBrandCount = computed(() => {
     border: none;
   }
 
-  .chart_item{
+  .chart_item {
     flex-direction: column;
     width: 100%;
     align-items: center;
   }
 
-  .pie_chart{
+  .pie_chart {
     flex-direction: column;
   }
 }

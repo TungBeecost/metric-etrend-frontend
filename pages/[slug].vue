@@ -5,19 +5,18 @@ import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
 import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
-import { ref, onMounted, onUnmounted } from "vue";
+import {ref, onMounted, onUnmounted} from "vue";
 import moment from "moment";
-import { REPORT_ENDPOINTS } from "~/constant/endpoints";
+import {REPORT_ENDPOINTS} from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
-import { useGTM } from '~/composables/useGTM';
+import {useGTM} from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
 import RelateReport from "~/components/RelateReport.vue";
 import ScrollNotification from "~/components/ScrollNotification.vue";
 import {toSeoName} from "~/helpers/StringHelper.js";
-import {formatSortTextCurrency} from "~/helpers/utils.js";
 
 const route = useRoute();
 const router = useRouter();
@@ -42,7 +41,7 @@ const fetchSuggest = async (value = '', options = {}) => {
       lst_query: value ? [value] : [],
       ...options
     };
-    const { lst_report } = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
+    const {lst_report} = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
       method: 'POST',
       body
     });
@@ -56,7 +55,7 @@ const fetchSuggest = async (value = '', options = {}) => {
 
 const trackEvent = (event, data) => {
   if (gtm) {
-    gtm.push({ event, ...data });
+    gtm.push({event, ...data});
   }
 };
 
@@ -107,7 +106,7 @@ const fetchReportData = async () => {
       }
     }
 
-    const { tier_report } = response;
+    const {tier_report} = response;
     if (tier_report !== 'e_community' || config.public.SSR === 'true') {
       isHideContent = false;
     }
@@ -150,12 +149,12 @@ const fetchReportData = async () => {
   }
 };
 
-const { data } = await useAsyncData(fetchReportData);
+const {data} = await useAsyncData(fetchReportData);
 
-const { data: tagSuggestions } = await useAsyncData(
+const {data: tagSuggestions} = await useAsyncData(
     'fetchSuggest',
     async () => {
-      return await fetchSuggest(data?.reportDetail?.name, { limit: 5 });
+      return await fetchSuggest(data?.reportDetail?.name, {limit: 5});
     }
 );
 
@@ -166,7 +165,7 @@ const updateWindowSize = () => {
 };
 
 onMounted(() => {
-  trackEvent('page_view', { page: route.path });
+  trackEvent('page_view', {page: route.path});
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
@@ -217,8 +216,8 @@ const _head = () => {
   return {
     title,
     meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      {charset: "utf-8"},
+      {name: "viewport", content: "width=device-width, initial-scale=1"},
       {
         hid: "description",
         name: "description",
@@ -267,41 +266,41 @@ const _head = () => {
 </script>
 
 <template>
-<!--  <Head>-->
-<!--    <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>-->
-<!--    <Meta hid="og:title" property="og:title" :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>-->
-<!--    <Meta hid="description" name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>-->
-<!--    <Meta hid="og:description" property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>-->
-<!--    <Meta hid="og:image" property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>-->
-<!--    <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>-->
-<!--    <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>-->
-<!--    <component is="script" type="application/ld+json">-->
-<!--      {{-->
-<!--        JSON.stringify({-->
-<!--          '@context': 'https://schema.org',-->
-<!--          '@type': 'BreadcrumbList',-->
-<!--          itemListElement: [-->
-<!--            {-->
-<!--              "@type": "ListItem",-->
-<!--              position: 1,-->
-<!--              name: "Metric",-->
-<!--              item: "https://ereport.vn",-->
-<!--            },-->
-<!--            ...(data.reportDetail.lst_category || []).map((item, index) => ({-->
-<!--              "@type": "ListItem",-->
-<!--              position: index + 2,-->
-<!--              name: item.name,-->
-<!--              item: `https://ereport.vn/${item.slug}`,-->
-<!--            })),-->
-<!--          ]-->
-<!--        })-->
-<!--      }}-->
-<!--    </component>-->
-<!--  </Head>-->
+  <!--  <Head>-->
+  <!--    <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>-->
+  <!--    <Meta hid="og:title" property="og:title" :content="`Báo cáo thị trường ${data?.reportDetail.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format('MM/YYYY')}`"/>-->
+  <!--    <Meta hid="description" name="description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>-->
+  <!--    <Meta hid="og:description" property="og:description" :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name}`"/>-->
+  <!--    <Meta hid="og:image" property="og:image" :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>-->
+  <!--    <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>-->
+  <!--    <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>-->
+  <!--    <component is="script" type="application/ld+json">-->
+  <!--      {{-->
+  <!--        JSON.stringify({-->
+  <!--          '@context': 'https://schema.org',-->
+  <!--          '@type': 'BreadcrumbList',-->
+  <!--          itemListElement: [-->
+  <!--            {-->
+  <!--              "@type": "ListItem",-->
+  <!--              position: 1,-->
+  <!--              name: "Metric",-->
+  <!--              item: "https://ereport.vn",-->
+  <!--            },-->
+  <!--            ...(data.reportDetail.lst_category || []).map((item, index) => ({-->
+  <!--              "@type": "ListItem",-->
+  <!--              position: index + 2,-->
+  <!--              name: item.name,-->
+  <!--              item: `https://ereport.vn/${item.slug}`,-->
+  <!--            })),-->
+  <!--          ]-->
+  <!--        })-->
+  <!--      }}-->
+  <!--    </component>-->
+  <!--  </Head>-->
   <div class="container_content">
-<!--    <div v-if="loading" class="loading-spinner">-->
-<!--      <a-spin style="width: 100%; display: flex; justify-content: center" size="large" />-->
-<!--    </div>-->
+    <!--    <div v-if="loading" class="loading-spinner">-->
+    <!--      <a-spin style="width: 100%; display: flex; justify-content: center" size="large" />-->
+    <!--    </div>-->
     <div>
       <div class="title default_section">
         <div class="breadcrumbs">
@@ -316,22 +315,25 @@ const _head = () => {
             <report-content :data="data?.reportDetail"/>
           </div>
           <div class="container_report_detail_right">
-            <indept-report-link v-if="data?.reportDetail.report_type !== 'report_category'" :slug="route.params.slug" :data="data.reportDetail"/>
-            <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom" :breadcrumbs="data?.breadcrumbs" class="report-filter-detail"/>
+            <indept-report-link :slug="route.params.slug"
+                                :data="data.reportDetail"/>
+            <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom"
+                                  :breadcrumbs="data?.breadcrumbs" class="report-filter-detail"/>
           </div>
         </div>
       </div>
       <div class="container default_section">
         <div class="general_overview_container">
           <div v-if="loadingRecommend" class="default_section">
-            <a-skeleton />
+            <a-skeleton/>
           </div>
-          <relate-report v-else class="default_section relate_report" :recomends="data?.listRecommend" />
+          <relate-report v-else class="relate_report" :recomends="data?.listRecommend"/>
           <h2 class="title_main ">
             Báo cáo tổng quan thị trường {{ data?.reportDetail.name }} trên sàn TMĐT
           </h2>
           <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+          <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail"
+                             :is-hide-content="data.isHideContent"/>
           <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
           <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
           <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
@@ -399,19 +401,19 @@ const _head = () => {
       gap: 10px;
     }
 
-    .container_report_detail{
+    .container_report_detail {
       display: flex;
       gap: 24px;
 
-      .container_report_detail_left{
-        flex:0.7;
+      .container_report_detail_left {
+        flex: 0.6;
         display: flex;
         flex-direction: column;
         gap: 16px
       }
 
-      .container_report_detail_right{
-        flex:0.3;
+      .container_report_detail_right {
+        flex: 0.4;
         display: flex;
         flex-direction: column;
         gap: 16px
@@ -474,7 +476,7 @@ const _head = () => {
   }
 }
 
-.title_main{
+.title_main {
   font-size: 36px;
   font-weight: 700;
   line-height: 48px;
@@ -484,11 +486,12 @@ const _head = () => {
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s;
 }
+
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
 
-.relate_report{
+.relate_report {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
@@ -502,7 +505,7 @@ const _head = () => {
 }
 
 @media (max-width: 768px) {
-  .container_report_detail{
+  .container_report_detail {
     flex-direction: column;
     gap: 16px;
   }
@@ -519,12 +522,12 @@ const _head = () => {
     order: 2;
   }
 
-  .title_main{
+  .title_main {
     font-size: 24px;
     line-height: 32px;
   }
 
-  .title{
+  .title {
     padding-bottom: 16px !important;
   }
 }
