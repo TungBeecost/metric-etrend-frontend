@@ -238,14 +238,14 @@ const chartOptions = computed(() => {
         v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length"
     >
       <li>
-        Trong {{ diffMonths }} qua, phân khúc khách hàng thị trường Áo thun nam thường mua chủ yếu ở mức giá khoảng
+        Trong {{ diffMonths }} qua, phân khúc khách hàng thị trường {{ props.data.name }} thường mua chủ yếu ở mức giá khoảng
           {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
           {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}.
       </li>
       <li
           v-if="priceRangesSortBy('revenue') &&priceRangesSortBy('revenue').length > 1"
       >
-        Phân khúc giá phổ biến của Áo thun nam là
+        Phân khúc giá phổ biến của {{ props.data.name }} là
           {{ priceRangesSortBy("sale")[0].begin ? formatCurrency(priceRangesSortBy("sale")[0].begin) + ' - ' : '< ' }}
           {{ formatCurrency(priceRangesSortBy("sale")[0].end) }}
         ,
