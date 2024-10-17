@@ -81,7 +81,7 @@ if (!userInfo.value.id) {
 const showCampaignPopup = ref(false);
 
 const handleResize = () => {
-  isMobile.value = window.innerWidth <= 1380;
+  isMobile.value = window.innerWidth <= 1024;
 };
 
 const handleScroll = () => {
