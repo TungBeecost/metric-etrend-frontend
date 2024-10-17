@@ -17,7 +17,6 @@ import {NAVIGATIONS} from "~/constant/constains";
 import RelateReport from "~/components/RelateReport.vue";
 import ScrollNotification from "~/components/ScrollNotification.vue";
 import {toSeoName} from "~/helpers/StringHelper.js";
-import {formatSortTextCurrency} from "~/helpers/utils.js";
 
 const route = useRoute();
 const router = useRouter();

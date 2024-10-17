@@ -145,7 +145,7 @@ onBeforeRouteLeave(() => {
             size="large"
             @click="handleOpenModal"
         >
-          Tải báo cáo chi tiết
+          Tải báo cáo PDF
         </AButton>
         <div style="font-size: 11px;">
           Được tin dùng bởi hơn 1,000 doanh nghiệp TMĐT hàng đầu
