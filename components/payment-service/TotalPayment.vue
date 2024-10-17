@@ -25,7 +25,7 @@ const {plan, discountInfo, statusApplyCode} = toRefs(props);
 console.log('plan', plan)
 const emit = defineEmits(['finalPrice']);
 
-const calculateDiscountAmount = (planPriceDiscount: number, discount: any) => {
+const calculateDiscountAmount = (finalPrice: number, discount: any) => {
   if (!discount || !discount.discount) {
     console.log('No discount info available.');
     return 0;
@@ -37,7 +37,7 @@ const calculateDiscountAmount = (planPriceDiscount: number, discount: any) => {
   let discountAmount = 0;
 
   if (discount_type === 'percentage') {
-    discountAmount = (planPriceDiscount * discount_value) / 100;
+    discountAmount = (finalPrice * discount_value) / 100;
   } else if (discount_type === 'amount') {
     discountAmount = discount_value;
   }
@@ -51,26 +51,24 @@ const calculateDiscountAmount = (planPriceDiscount: number, discount: any) => {
 const discountAmount = ref(0);
 const promotionalDiscount = ref(0);
 
-const updateValues = async () => {
-  await nextTick();
-  const priceDiscount = plan.value.priceDiscount ?? plan.value.priceValue;
-  if (statusApplyCode.value) {
-    discountAmount.value = calculateDiscountAmount(priceDiscount, discountInfo.value);
-    promotionalDiscount.value = 0;
-  } else {
-    discountAmount.value = 0;
-    promotionalDiscount.value = plan.value.priceDiscount ? plan.value.priceDiscount - plan.value.priceValue : 0;
-  }
-};
-
 const finalPrice = computed(() => {
   const priceDiscount = plan.value.priceDiscount ?? plan.value.priceValue;
-  return priceDiscount - discountAmount.value - promotionalDiscount.value;
+  return priceDiscount - promotionalDiscount.value;
+});
+
+const updateValues = async () => {
+  await nextTick();
+  promotionalDiscount.value = plan.value.priceDiscount ? plan.value.priceDiscount - plan.value.priceValue : 0;
+  discountAmount.value = calculateDiscountAmount(finalPrice.value, discountInfo.value);
+};
+
+const finalPriceWithDiscount = computed(() => {
+  return finalPrice.value - discountAmount.value;
 });
 
 watch([discountInfo, statusApplyCode], updateValues);
 
-watch(finalPrice, (newValue) => {
+watch(finalPriceWithDiscount, (newValue) => {
   emit('finalPrice', newValue);
 });
 
@@ -101,10 +99,11 @@ onMounted(() => {
     </div>
     <div class="calculate_item">
       <div class="total">Thành tiền</div>
-      <div class="total_price">{{ formatCurrency(finalPrice) }}</div>
+      <div class="total_price">{{ formatCurrency(finalPriceWithDiscount) }}</div>
     </div>
   </div>
 </template>
+
 <style scoped lang="scss">
 .calculate {
   display: flex;
