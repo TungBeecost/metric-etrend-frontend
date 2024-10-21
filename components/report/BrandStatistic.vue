@@ -112,7 +112,7 @@ watchEffect(() => {
           if (isMobile.value) {
             return '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
           }
-          return '<span style="font-weight: bold>' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          return '<span style="font-weight: bold">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
         },
       };
 });
