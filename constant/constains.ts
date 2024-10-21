@@ -85,28 +85,28 @@ export const COMPANY_TYPES: Array<CommonOptionItem> = [
 
 export const SOCIAL_MEDIA_TYPES: Array<CommonOptionItem> = [
   {
-    label: "Đây là lần đầu tôi biết tới Metric",
-    value: "Đây là lần đầu tôi biết tới Metric"
+    label: "Chưa từng biết",
+    value: "Chưa từng biết"
   },
   {
-    label: "Báo cáo thị trường Thương mại Điện tử",
-    value: "Báo cáo thị trường Thương mại Điện tử"
+    label: "Báo cáo thị trường",
+    value: "Báo cáo thị trường"
   },
   {
-    label: "Tham gia sự kiện liên quan tới Ecommerce",
-    value: "Tham gia sự kiện liên quan tới Ecommerce"
+    label: "Sự kiện event",
+    value: "Sự kiện event"
   },
   {
-    label: "Social Media (Facebook, Zalo, Tiktok,...)",
-    value: "Social Media (Facebook, Zalo, Tiktok,...)"
+    label: "Social media, MXH",
+    value: "Social media, MXH"
   },
   {
     label: "Báo chí",
     value: "Báo chí"
   },
   {
-    label: "Khác",
-    value: "Khác"
+    label: "Google",
+    value: "Google"
   }
 ];
 
