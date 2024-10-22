@@ -134,7 +134,7 @@ onMounted(() => {
   <div v-else class="container_content">
     <div class="title default_section">
       <div v-if="data" class="breadcrumbs">
-        <Breadcrumb :breadcrumbs="[{name: 'Báo cáo miễn phí', value: ''}, {name: 'Báo cáo thị trường'}]"/>
+        <Breadcrumb :breadcrumbs="[{name: 'Báo cáo Metric phát hành', value: ''}, {name: 'Báo cáo thị trường'}]"/>
       </div>
       <h1 v-if="data" class="report-title">
         {{ data.name }} - Báo cáo xu hướng thị trường sàn TMĐT
