@@ -74,13 +74,13 @@ const handleScroll = () => {
   showAdvertisement.value = window.scrollY > scrollThreshold;
 };
 
-const fetchReportData = async () => {
+const fetchReportData = async (period) => {
   const slug = route.params.slug;
   try {
     let isHideContent = true;
 
     const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
-    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
+    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}&period=${period}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
     }
@@ -149,7 +149,7 @@ const fetchReportData = async () => {
   }
 };
 
-const { data } = await useAsyncData(fetchReportData);
+const { data } = await useAsyncData(() => fetchReportData('2023M9_2022M10'));
 
 const { data: tagSuggestions } = await useAsyncData(
     'fetchSuggest',
