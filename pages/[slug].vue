@@ -1,22 +1,24 @@
 <script setup>
+import { ref, onMounted, onUnmounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useRuntimeConfig } from "#imports";
+import { useGTM } from "~/composables/useGTM";
+import { REPORT_ENDPOINTS } from "~/constant/endpoints";
+import { NAVIGATIONS } from "~/constant/constains";
+import moment from "moment";
 import GeneralOverview from "~/components/report/GeneralOverview.vue";
 import Overview from "~/components/report/Overview.vue";
 import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
 import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
-import {ref, onMounted, onUnmounted} from "vue";
-import moment from "moment";
-import {REPORT_ENDPOINTS} from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
-import {useGTM} from '~/composables/useGTM';
-import {NAVIGATIONS} from "~/constant/constains";
 import RelateReport from "~/components/RelateReport.vue";
 import ScrollNotification from "~/components/ScrollNotification.vue";
-import {toSeoName} from "~/helpers/StringHelper.js";
+import { toSeoName } from "~/helpers/StringHelper.js";
 
 const route = useRoute();
 const router = useRouter();
@@ -29,7 +31,9 @@ const showNotification = ref(true);
 const loadingRecommend = ref(true);
 const loadingSuggest = ref(true);
 const showButton = ref(false);
-const loading = ref(true); // Add loading state
+const loading = ref(true);
+const activeKey = ref('1');
+const cache = ref({});
 
 const fetchSuggest = async (value = '', options = {}) => {
   try {
@@ -41,7 +45,7 @@ const fetchSuggest = async (value = '', options = {}) => {
       lst_query: value ? [value] : [],
       ...options
     };
-    const {lst_report} = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
+    const { lst_report } = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
       method: 'POST',
       body
     });
@@ -55,7 +59,7 @@ const fetchSuggest = async (value = '', options = {}) => {
 
 const trackEvent = (event, data) => {
   if (gtm) {
-    gtm.push({event, ...data});
+    gtm.push({ event, ...data });
   }
 };
 
@@ -74,13 +78,28 @@ const handleScroll = () => {
   showAdvertisement.value = window.scrollY > scrollThreshold;
 };
 
-const fetchReportData = async () => {
+const handleTabChange = async (key) => {
+  activeKey.value = key;
+  loading.value = true;
+  const period = key === '1' ? '2023M9_2022M10' : '2024M9_2023M10';
+
+  if (cache.value[period]) {
+    data.value = cache.value[period];
+    loading.value = false;
+  } else {
+    const fetchedData = await fetchReportData(period);
+    cache.value[period] = fetchedData;
+    data.value = fetchedData;
+  }
+};
+
+const fetchReportData = async (period) => {
   const slug = route.params.slug;
   try {
     let isHideContent = true;
 
     const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
-    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
+    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}&period=${period}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
     }
@@ -106,7 +125,7 @@ const fetchReportData = async () => {
       }
     }
 
-    const {tier_report} = response;
+    const { tier_report } = response;
     if (tier_report !== 'e_community' || config.public.SSR === 'true') {
       isHideContent = false;
     }
@@ -149,12 +168,12 @@ const fetchReportData = async () => {
   }
 };
 
-const {data} = await useAsyncData(fetchReportData);
+const { data } = await useAsyncData(() => fetchReportData('2023M9_2022M10'));
 
-const {data: tagSuggestions} = await useAsyncData(
+const { data: tagSuggestions } = await useAsyncData(
     'fetchSuggest',
     async () => {
-      return await fetchSuggest(data?.reportDetail?.name, {limit: 5});
+      return await fetchSuggest(data?.reportDetail?.name, { limit: 5 });
     }
 );
 
@@ -165,7 +184,7 @@ const updateWindowSize = () => {
 };
 
 onMounted(() => {
-  trackEvent('page_view', {page: route.path});
+  trackEvent('page_view', { page: route.path });
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
@@ -216,8 +235,8 @@ const _head = () => {
   return {
     title,
     meta: [
-      {charset: "utf-8"},
-      {name: "viewport", content: "width=device-width, initial-scale=1"},
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
       {
         hid: "description",
         name: "description",
@@ -321,24 +340,48 @@ const _head = () => {
                                   :breadcrumbs="data?.breadcrumbs" class="report-filter-detail"/>
           </div>
         </div>
+        <div v-if="loadingRecommend" class="default_section">
+          <a-skeleton/>
+        </div>
+        <relate-report v-else class="relate_report" :recomends="data?.listRecommend"/>
       </div>
       <div class="container default_section">
-        <div class="general_overview_container">
-          <div v-if="loadingRecommend" class="default_section">
-            <a-skeleton/>
+        <a-tabs v-model:activeKey="activeKey" style="width: 100%" type="card" @change="handleTabChange">
+          <a-tab-pane v-if="data.reportDetail.lst_sub_report_period.includes('2023M9_2022M10')" key="1" tab="1 năm trước">
+            <div v-if="loading">
+              <a-skeleton active/>
+            </div>
+            <div v-else class="general_overview_container">
+            <h2 class="title_main ">
+              Báo cáo tổng quan thị trường {{ data?.reportDetail.name }} trên sàn TMĐT
+            </h2>
+            <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+            <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail"
+                               :is-hide-content="data.isHideContent"/>
+            <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+            <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+            <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+            <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
           </div>
-          <relate-report v-else class="relate_report" :recomends="data?.listRecommend"/>
-          <h2 class="title_main ">
-            Báo cáo tổng quan thị trường {{ data?.reportDetail.name }} trên sàn TMĐT
-          </h2>
-          <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail"
-                             :is-hide-content="data.isHideContent"/>
-          <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-        </div>
+          </a-tab-pane>
+          <a-tab-pane key="2" tab="1 năm gần nhất">
+            <div v-if="loading" style="display: flex; justify-content: center; width: 100%">
+              <a-skeleton active />
+            </div>
+            <div v-else class="general_overview_container">
+              <h2 class="title_main ">
+                Báo cáo tổng quan thị trường {{ data?.reportDetail.name }} trên sàn TMĐT
+              </h2>
+              <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+              <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail"
+                                 :is-hide-content="data.isHideContent"/>
+              <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+              <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+              <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+              <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+            </div>
+          </a-tab-pane>
+        </a-tabs>
       </div>
       <poster-detail-report :list-suggest="tagSuggestions" :loading="loadingSuggest"/>
       <transition name="fade">
