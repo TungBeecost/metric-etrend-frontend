@@ -78,7 +78,7 @@ const reportTypes = ref([
   {label: 'Tất cả', value: 'all'},
   {label: 'Báo cáo ngành hàng', value: 'report_category'},
   {label: 'Báo cáo nhóm hàng', value: 'report_product_line'},
-  {label: 'Báo cáo khác', value: 'other'},
+  {label: 'Báo cáo Metric phát hành', value: 'other'},
 ]);
 
 watch(selectedReportType, (newVal) => {

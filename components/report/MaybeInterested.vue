@@ -59,8 +59,8 @@ const handleItemClick = (item: LstRecommed) => {
         <div class="info">
           <div class="line-clamp__1">
             <span class="report_type">
-              <span v-if="item.category_report_name === null">Báo cáo khác</span>
-              <span v-else>{{ item.source === 'marketing'? 'Báo cáo khác | ' : 'Báo cáo nhóm hàng | ' }}</span>
+              <span v-if="item.category_report_name === null">Báo cáo Metric phát hành</span>
+              <span v-else>{{ item.source === 'marketing'? 'Báo cáo Metric phát hành | ' : 'Báo cáo nhóm hàng | ' }}</span>
             </span>
             <span v-if="item.category_report_name" class="breadcrumb">{{ item.category_report_name }}</span>
           </div>
@@ -79,8 +79,8 @@ const handleItemClick = (item: LstRecommed) => {
         <div class="info">
           <div class="line-clamp__1">
             <span class="report_type">
-              <span v-if="item.category_report_name === null">Báo cáo khác</span>
-              <span v-else>{{ item.source === 'marketing'? 'Báo cáo khác | ' : 'Báo cáo nhóm hàng | ' }}</span>
+              <span v-if="item.category_report_name === null">Báo cáo Metric phát hành</span>
+              <span v-else>{{ item.source === 'marketing'? 'Báo cáo Metric phát hành | ' : 'Báo cáo nhóm hàng | ' }}</span>
             </span>
             <span v-if="item.category_report_name" class="breadcrumb">{{ item.category_report_name }}</span>
           </div>

@@ -429,7 +429,7 @@ const discountPercentage = computed(() => {
 .ant-modal {
   @media (max-width: 767px) {
     top: 20px;
-    margin: 0 auto;
+    //margin: 0 auto;
   }
 }
 

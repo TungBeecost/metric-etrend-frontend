@@ -33,6 +33,16 @@ onMounted(() => {
   renderChartOutput.value = true;
 });
 
+const isHideContentBasic = computed(() => {
+  console.log('isHideContentBasic', config.public.SSR);
+  if (config.public.SSR === 'true') {
+    return false;
+  }
+  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_pro_lite'
+      || props.data?.tier_report === 'e_trial' || props.data?.tier_report === 'pt50'
+      || props.data?.tier_report === 'pt100');
+});
+
 const formatNumber = (value = "") => value.toLocaleString("vi-VN");
 
 const chartWidth = computed(() => {
@@ -390,7 +400,7 @@ const chartOptionsOutput = computed(() => ({
           ]"
           >
             <template #shop_count="{text}">
-              <BlurContent :is-hide-content="isHideContent">
+              <BlurContent :is-hide-content="isHideContentBasic">
                 {{ text }}
               </BlurContent>
             </template>

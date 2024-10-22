@@ -6,12 +6,11 @@ import allReports from '@/public/file_json/list_category.json';
 const route = useRoute();
 
 const displayContent = computed(() => {
-  const categoryReportId = route.query.category_report_id;
-  if (categoryReportId) {
-    const category = allReports.find(cat => cat.value === categoryReportId);
-    return category ? category.label : 'Danh sách báo cáo';
-  }
-  return 'Danh sách báo cáo';
+  const hash = route.hash;
+  const categoryIdMatch = hash.match(/#id=([^&]*)/);
+  const categoryId = categoryIdMatch ? categoryIdMatch[1] : '';
+  const category = categoryId ? allReports.find(cat => cat.value === categoryId) : null;
+  return category ? category.label : 'Danh sách báo cáo';
 });
 </script>
 

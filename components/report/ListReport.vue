@@ -45,7 +45,7 @@ const getDisplayedCategories = (item: any) => {
             <span class="report_type">
               {{
                 item.report_type === 'report_product_line' ? 'Báo cáo nhóm hàng' : item.report_type ===
-                'report_category' ? 'Báo cáo ngành hàng' : 'Báo cáo khác'
+                'report_category' ? 'Báo cáo ngành hàng' : 'Báo cáo Metric phát hành'
               }} |
             </span>
             <span v-if="item.report_type === 'report_product_line'">

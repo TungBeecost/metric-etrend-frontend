@@ -57,8 +57,10 @@ const handleCategorySelect = (newSelectedCategory: string) => {
 const handleSortSelect = async (sortChange: string) => {
   sortSelect.value = sortChange;
   console.log(selectedCategory.value);
-  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
-    await fetchData(searchValueSearch.value, [route.query.category_report_id], sortChange, page.value);
+  const hash = route.hash;
+  const categoryIdMatch = hash.match(/#id=([^&]*)/);
+  if (categoryIdMatch && categoryIdMatch[1]) {
+    await fetchData(searchValueSearch.value, [categoryIdMatch[1]], sortChange, page.value);
   } else {
     await fetchData(searchValueSearch.value, [], sortChange, page.value);
   }
@@ -197,8 +199,11 @@ const current = ref(1);
 const onChange = async (page: number) => {
   console.log('onChange', page);
   current.value = page
-  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
-    selectedCategory.value = route.query.category_report_id;
+  const hash = route.hash;
+  const categoryIdMatch = hash.match(/#id=([^&]*)/);
+  if (categoryIdMatch && categoryIdMatch[1]) {
+    const categoryId = categoryIdMatch[1];
+    selectedCategory.value = categoryId;
   }
   const lstCategoryReportId = selectedCategory.value ? [selectedCategory.value] : [];
   await fetchData(searchValueSearch.value, lstCategoryReportId, sortSelect.value, page);
@@ -232,11 +237,15 @@ const onClickViewPrice = () => {
 };
 
 const handleReportTypeChange = async (selectedReportType: string[]) => {
+  console.log('handleReportTypeChange', selectedReportType);
   selecteReportType.value = selectedReportType;
   const list_category_report_id = [];
-  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
-    list_category_report_id.push(route.query.category_report_id);
-    selectedCategory.value = route.query.category_report_id;
+  const hash = route.hash;
+  const categoryIdMatch = hash.match(/#id=([^&]*)/);
+  if (categoryIdMatch && categoryIdMatch[1]) {
+    const categoryId = categoryIdMatch[1];
+    list_category_report_id.push(categoryId);
+    selectedCategory.value = categoryId;
   }
   await fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
 };
@@ -251,9 +260,12 @@ const handleReportTypeBuyChange = async (selectedReportTypeBuy: string[]) => {
     selectedReportTypeBuy.push('marketing');
   }
   const list_category_report_id = [];
-  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
-    list_category_report_id.push(route.query.category_report_id);
-    selectedCategory.value = route.query.category_report_id;
+  const hash = route.hash;
+  const categoryIdMatch = hash.match(/#id=([^&]*)/);
+  if (categoryIdMatch && categoryIdMatch[1]) {
+    const categoryId = categoryIdMatch[1];
+    list_category_report_id.push(categoryId);
+    selectedCategory.value = categoryId;
   }
   selecteReportTypeBuy.value = selectedReportTypeBuy;
   await fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
@@ -267,7 +279,7 @@ useSeoMeta({
   <banner-report/>
   <div id="search_report">
     <div class="sectionTitle default_section">
-      <div v-if="route.query.category_report_id && selectedCategoryName" class="sectionTitle_content">
+      <div v-if="route.hash && selectedCategoryName" class="sectionTitle_content">
         Kết quả tìm kiếm cho ngành hàng <b>"{{ selectedCategoryName }}"</b>
       </div>
       <div v-if="route.query.search && searchValueSearch" class="sectionTitle_content">
