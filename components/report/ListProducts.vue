@@ -19,13 +19,13 @@ const props = defineProps({
 const config = useRuntimeConfig();
 
 const isHideContentBasic = computed(() => {
-  console.log('isHideContentBasic', config.public.SSR);
   if (config.public.SSR === 'true') {
     return false;
   }
-  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_pro_lite'
-      || props.data?.tier_report === 'e_trial' || props.data?.tier_report === 'pt50'
-      || props.data?.tier_report === 'pt100');
+  if (props.data?.tier_report === 'e_basic' || props.data?.tier_report === 'e_basic_lite') {
+    return true;
+  }
+  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_pro_lite' || props.data?.tier_report === 'e_trial' || props.data?.tier_report === 'pt50' || props.data?.tier_report === 'pt100');
 });
 
 </script>
@@ -71,9 +71,9 @@ const isHideContentBasic = computed(() => {
             :is-hide-content="isHideContent || isHideContentBasic"
         />
         <ChartMask
-            v-if="isHideContentBasic"
-            :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
-            :ok-button="isHideContentBasic ? '' :'Xem báo cáo'"
+            v-if="isHideContent || isHideContentBasic"
+            :subtitle="isHideContent ? 'Bạn cần mở khoá để xem số liệu đầy đủ' : (isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' : '')"
+            :ok-button="isHideContent ? 'Mua báo cáo' : (isHideContentBasic ? '' : '')"
             :report="data"
         />
       </div>
@@ -95,9 +95,9 @@ const isHideContentBasic = computed(() => {
             :is-hide-content="isHideContent || isHideContentBasic"
         />
         <ChartMask
-            v-if="isHideContentBasic"
-            :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
-            :ok-button="isHideContentBasic ? '' :'Xem báo cáo'"
+            v-if="isHideContent || isHideContentBasic"
+            :subtitle="isHideContent ? 'Bạn cần mở khoá để xem số liệu đầy đủ' : (isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' : '')"
+            :ok-button="isHideContent ? 'Mua báo cáo' : (isHideContentBasic ? '' : '')"
             :report="data"
         />
       </div>
@@ -599,6 +599,13 @@ const isHideContentBasic = computed(() => {
   line-height: 28px;
   color: #241E46;
   gap: 16px;
+}
+
+.statistic-item__subtitle {
+  color: #716b95;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
 }
 
 @media (min-width: 768px) {

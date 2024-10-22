@@ -5,14 +5,14 @@ import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
 import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
-import {ref, onMounted, onUnmounted} from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import moment from "moment";
-import {REPORT_ENDPOINTS} from "~/constant/endpoints";
+import { REPORT_ENDPOINTS } from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
-import {useGTM} from '~/composables/useGTM';
+import { useGTM } from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
 import RelateReport from "~/components/RelateReport.vue";
 import ScrollNotification from "~/components/ScrollNotification.vue";
@@ -41,7 +41,7 @@ const fetchSuggest = async (value = '', options = {}) => {
       lst_query: value ? [value] : [],
       ...options
     };
-    const {lst_report} = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
+    const { lst_report } = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
       method: 'POST',
       body
     });
@@ -55,7 +55,7 @@ const fetchSuggest = async (value = '', options = {}) => {
 
 const trackEvent = (event, data) => {
   if (gtm) {
-    gtm.push({event, ...data});
+    gtm.push({ event, ...data });
   }
 };
 
@@ -74,13 +74,13 @@ const handleScroll = () => {
   showAdvertisement.value = window.scrollY > scrollThreshold;
 };
 
-const fetchReportData = async () => {
+const fetchReportData = async (period) => {
   const slug = route.params.slug;
   try {
     let isHideContent = true;
 
     const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
-    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
+    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}&period=${period}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
     }
@@ -106,7 +106,7 @@ const fetchReportData = async () => {
       }
     }
 
-    const {tier_report} = response;
+    const { tier_report } = response;
     if (tier_report !== 'e_community' || config.public.SSR === 'true') {
       isHideContent = false;
     }
@@ -149,12 +149,12 @@ const fetchReportData = async () => {
   }
 };
 
-const {data} = await useAsyncData(fetchReportData);
+const { data } = await useAsyncData(() => fetchReportData('2023M9_2022M10'));
 
-const {data: tagSuggestions} = await useAsyncData(
+const { data: tagSuggestions } = await useAsyncData(
     'fetchSuggest',
     async () => {
-      return await fetchSuggest(data?.reportDetail?.name, {limit: 5});
+      return await fetchSuggest(data?.reportDetail?.name, { limit: 5 });
     }
 );
 
@@ -165,7 +165,7 @@ const updateWindowSize = () => {
 };
 
 onMounted(() => {
-  trackEvent('page_view', {page: route.path});
+  trackEvent('page_view', { page: route.path });
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
@@ -216,8 +216,8 @@ const _head = () => {
   return {
     title,
     meta: [
-      {charset: "utf-8"},
-      {name: "viewport", content: "width=device-width, initial-scale=1"},
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
       {
         hid: "description",
         name: "description",
@@ -404,19 +404,19 @@ const _head = () => {
       gap: 10px;
     }
 
-    .container_report_detail {
+    .container_report_detail{
       display: flex;
       gap: 24px;
 
-      .container_report_detail_left {
-        flex: 0.6;
+      .container_report_detail_left{
+        flex:0.7;
         display: flex;
         flex-direction: column;
         gap: 16px
       }
 
-      .container_report_detail_right {
-        flex: 0.4;
+      .container_report_detail_right{
+        flex:0.3;
         display: flex;
         flex-direction: column;
         gap: 16px
@@ -479,7 +479,7 @@ const _head = () => {
   }
 }
 
-.title_main {
+.title_main{
   font-size: 36px;
   font-weight: 700;
   line-height: 48px;
@@ -489,12 +489,11 @@ const _head = () => {
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s;
 }
-
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
 
-.relate_report {
+.relate_report{
   animation: fadeIn 0.5s ease-out forwards;
 }
 
@@ -508,7 +507,7 @@ const _head = () => {
 }
 
 @media (max-width: 768px) {
-  .container_report_detail {
+  .container_report_detail{
     flex-direction: column;
     gap: 16px;
   }
@@ -525,12 +524,12 @@ const _head = () => {
     order: 2;
   }
 
-  .title_main {
+  .title_main{
     font-size: 24px;
     line-height: 32px;
   }
 
-  .title {
+  .title{
     padding-bottom: 16px !important;
   }
 }
