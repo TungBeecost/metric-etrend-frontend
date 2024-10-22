@@ -268,7 +268,7 @@ const _head = () => {
 <template>
   <Head>
     <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
-    <Meta hid="og:title" property="og:title" :content="`Báo cáo ${data?.reportDetail.name}`"/>
+    <Meta hid="og:title" property="og:title" :content="`eReport - Báo cáo ${data?.reportDetail.name}`"/>
     <Meta hid="description" name="description"
           :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name} - Báo cáo xu hướng thị trường sàn TMĐT`"/>
     <Meta hid="og:description" name="og:description"
