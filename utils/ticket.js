@@ -1,8 +1,10 @@
 import axios from 'axios';
+import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
 // const API_ENDPOINT = 'http://localhost:8000';
 const config = useRuntimeConfig();
-const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
-
+// const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
+const accessToken = await getIndexedDB("access_token");
+const visitorId = await getIndexedDB("__visitor");
 
 export const createNewTicket = async ({ title, linkReport, customerEmail, supportDepartment, description, assignedEmails }) => {
     try {
@@ -17,7 +19,8 @@ export const createNewTicket = async ({ title, linkReport, customerEmail, suppor
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `${accessToken}`,
+                'Visitorid': visitorId.visitor_id,
             }
         });
         return response?.data;
@@ -46,7 +49,8 @@ export const getMyTickets = async (page = 0, limit = 10, filter = undefined, sor
             params: payload,
             headers: {
                 'Accept': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `${accessToken}`,
+                'Visitorid': visitorId.visitor_id,
             }
         });
         return [response?.data || [], response?.data?.total || 0];
@@ -62,7 +66,8 @@ export const getTicketDetail = async (ticketId, isInternal = false) => {
             params: { internal: isInternal },
             headers: {
                 'Accept': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `${accessToken}`,
+                'Visitorid': visitorId.visitor_id,
             }
         });
         return response?.data;
@@ -79,7 +84,8 @@ export const getTicketDetailByCode = async (ticketCode, isInternal = false) => {
             params: { isInternal },
             headers: {
                 'Accept': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `${accessToken}`,
+                'Visitorid': visitorId.visitor_id,
             }
         });
         return response?.data;
@@ -124,7 +130,8 @@ export const getTickets = async (page = 0, limit = 10, search = '', filter = {},
             params: payload,
             headers: {
                 'Accept': '*/*',
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `${accessToken}`,
+                'Visitorid': visitorId.visitor_id,
             }
         });
         return [response?.data, response?.data?.total];
@@ -181,7 +188,8 @@ export const updateTicket = async (ticketId, payload) => {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `${accessToken}`,
+                'Visitorid': visitorId.visitor_id,
             }
         });
         return response?.data;

@@ -4,6 +4,7 @@ import { createLoadingTask, VuePdf } from 'vue3-pdfjs';
 import axios from 'axios';
 import HeaderDeptReport from '~/components/report/HeaderDeptReport.vue';
 import { useCurrentUser } from '~/stores/current-user.js';
+import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
 
 const config = useRuntimeConfig();
 const url_download = ref({});
@@ -47,13 +48,15 @@ const downloading = ref(false);
 
 const getReportPdfUrl = async (slug) => {
   const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${slug}&type=view`;
-
-  const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
+  const accessToken = await getIndexedDB("access_token");
+  const visitorId = await getIndexedDB("__visitor");
+  // const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
   try {
     downloading.value = true;
     const response = await $fetch(url, {
       headers: {
-        'Authorization': `Bearer ${accessToken}`
+        'Authorization': `${accessToken}`,
+        'Visitorid': visitorId.visitor_id,
       }
     });
     remainingTime.value = response.remaining_time;

@@ -19,9 +19,11 @@ interface CurrentPlan {
   remain_claim_pdf: number;
 }
 
-export const fetchUserProfile = async () => {
+export const fetchUserProfile = async (headers: object) => {
   try {
-    const response = await axios.get(useBEEndpoint(USER_ENDPOINTS.profile.endpoint));
+    const response = await axios.get(useBEEndpoint(USER_ENDPOINTS.profile.endpoint), {
+      headers
+    });
     const result = response.data as ProfileRes;
 
     if (!result?.id) {

@@ -16,6 +16,7 @@ import { useGTM } from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
 import RelateReport from "~/components/RelateReport.vue";
 import ScrollNotification from "~/components/ScrollNotification.vue";
+import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
 import {toSeoName} from "~/helpers/StringHelper.js";
 
 const route = useRoute();
@@ -79,7 +80,8 @@ const fetchReportData = async (period) => {
   try {
     let isHideContent = true;
 
-    const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
+    const accessToken = await getIndexedDB("access_token");
+    const visitorId = await getIndexedDB("__visitor");
     let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}&period=${period}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
@@ -88,7 +90,8 @@ const fetchReportData = async (period) => {
         url,
         {
           headers: {
-            'Authorization': `Bearer ${accessToken}`
+            'Authorization': `${accessToken}`,
+            'Visitorid': visitorId.visitor_id,
           }
         }
     );

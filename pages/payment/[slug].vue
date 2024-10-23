@@ -7,6 +7,7 @@ import { message } from 'ant-design-vue';
 import { PAGE_TITLES } from "~/constant/constains";
 import PackServicePdf from "~/components/payment-service/PackServicePdf.vue";
 import CheckOutPdf from "~/components/payment-service/CheckOutPdf.vue";
+import {getIndexedDB} from "~/helpers/IndexedDBHelper";
 
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
@@ -78,7 +79,9 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
 const fetchReportData = async () => {
   const slug = route.params.slug;
   try {
-    const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
+    const accessToken = await getIndexedDB("access_token");
+    const visitorId = await getIndexedDB("__visitor");
+    // const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
     let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
@@ -87,7 +90,8 @@ const fetchReportData = async () => {
         url,
         {
           headers: {
-            'Authorization': `Bearer ${accessToken}`
+            'Authorization': `${accessToken}`,
+            'Visitorid': visitorId.visitor_id,
           }
         }
     );

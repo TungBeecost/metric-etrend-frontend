@@ -74,6 +74,7 @@ export default defineNuxtConfig({
       public: {
           gtagId: 'GTM-MLBXG49P',
           apiBase: process.env.API_ENDPOINT,
+          URL_AUTH_SERVICE_API: process.env.URL_AUTH_SERVICE_API,
           API_ENDPOINT: process.env.API_ENDPOINT,
           BASE_URL: process.env.BASE_URL,
           MODE: process.env.MODE,
@@ -136,16 +137,7 @@ export default defineNuxtConfig({
       '@zadigetvoltaire/nuxt-gtm',
       '@nuxtjs/sitemap',
       ["nuxt-highcharts", {}],
-      async function () {
-          for (const key in AntD) {
-              if (["version", "install"].includes(key)) continue;
-              await addComponent({
-                  filePath: "ant-design-vue",
-                  name: `A${key}`,
-                  export: key,
-              });
-          }
-      },
+
       "nuxt-svgo",
       "@ant-design-vue/nuxt",
       "@pinia/nuxt",

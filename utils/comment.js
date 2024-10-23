@@ -1,15 +1,18 @@
 import axios from 'axios';
+import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
 // const API_ENDPOINT = 'http://localhost:8000';
 const config = useRuntimeConfig();
-const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
-
+// const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
+const accessToken = await getIndexedDB("access_token");
+const visitorId = await getIndexedDB("__visitor");
 export const getCommentsByTicketId = async (ticketId) => {
     try {
         const response = await axios.get(`${config.public.API_ENDPOINT}/api/comment/comment/ticket/${ticketId}`, {
             params: { internal: 0 },
             headers: {
                 'Accept': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `${accessToken}`,
+                'Visitorid': visitorId.visitor_id,
             }
         });
         return response?.data;
@@ -25,7 +28,8 @@ export const getCommentsByTicketIdInternal = async (ticketId) => {
             params: { internal: 1 },
             headers: {
                 'Accept': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `${accessToken}`,
+                'Visitorid': visitorId.visitor_id,
             }
         });
         return response?.data;
@@ -45,7 +49,8 @@ export const addNewComment = async (ticketId, content) => {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `${accessToken}`,
+                'Visitorid': visitorId.visitor_id,
             }
         });
         return response?.data;
@@ -65,7 +70,8 @@ export const addNewInternalComment = async (ticketId, content) => {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `${accessToken}`,
+                'Visitorid': visitorId.visitor_id,
             }
         });
         return response?.data;
@@ -80,7 +86,8 @@ export const removeComment = async (commentId) => {
         const response = await axios.delete(`${config.public.API_ENDPOINT}/api/comment/comment/${commentId}`, {
             headers: {
                 'Accept': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `${accessToken}`,
+                'Visitorid': visitorId.visitor_id,
             }
         });
         return response?.data;
@@ -98,7 +105,8 @@ export const editComment = async (commentId, content) => {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `${accessToken}`,
+                'Visitorid': visitorId.visitor_id,
             }
         });
         return response?.data;
