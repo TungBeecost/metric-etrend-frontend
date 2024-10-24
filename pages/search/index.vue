@@ -265,20 +265,59 @@ useSeoMeta({
   <banner-report/>
   <div id="search_report">
     <div class="sectionTitle default_section">
-      <div v-if="route.query.category_report_id && selectedCategoryName" class="sectionTitle_content">
-        Kết quả tìm kiếm cho ngành hàng <b>"{{ selectedCategoryName }}"</b>
-      </div>
-      <div v-if="route.query.search && searchValueSearch" class="sectionTitle_content">
-        Kết quả tìm kiếm cho từ khoá <b>"{{ searchValueSearch }}"</b>
-      </div>
       <div class="sectionContent searchContent">
         <SearchReport class="default_section" :handle-search="handleSearch"/>
       </div>
     </div>
     <div class="container default_section">
       <div class="list_report_industry">
+        <div class="general">
+          <div v-if="route.query.category_report_id && selectedCategoryName" class="sectionTitle_content">
+            Kết quả tìm kiếm cho ngành hàng <b>"{{ selectedCategoryName }}"</b>
+          </div>
+          <div v-if="route.query.search && searchValueSearch" class="sectionTitle_content">
+            Kết quả tìm kiếm cho từ khoá <b>"{{ searchValueSearch }}"</b>
+          </div>
+          <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect"/>
+          <a-button v-else style="border: 1px solid #9D97BF" @click="clickButtonFilter">
+            <div style="display: flex; gap: 8px; justify-content: center; align-items: center">
+              <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_4202_14089)">
+                  <path
+                      d="M8 4.375C8 5.41053 8.83947 6.25 9.875 6.25C10.9105 6.25 11.75 5.41053 11.75 4.375C11.75 3.33947 10.9105 2.5 9.875 2.5C8.83947 2.5 8 3.33947 8 4.375Z"
+                      stroke="#241E46"
+                      stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path
+                      d="M11.75 10C11.75 11.0355 12.5895 11.875 13.625 11.875C14.6605 11.875 15.5 11.0355 15.5 10C15.5 8.96447 14.6605 8.125 13.625 8.125C12.5895 8.125 11.75 8.96447 11.75 10Z"
+                      stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path
+                      d="M5.5 15.625C5.5 16.6605 6.33947 17.5 7.375 17.5C8.41053 17.5 9.25 16.6605 9.25 15.625C9.25 14.5895 8.41053 13.75 7.375 13.75C6.33947 13.75 5.5 14.5895 5.5 15.625Z"
+                      stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M17.375 4.375L11.75 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M17.375 15.625L9.25 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M17.375 10L15.5 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M8 4.375L3.625 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M5.5 15.625L3.625 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M11.75 10L3.625 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_4202_14089">
+                    <rect width="20" height="20" fill="white" transform="translate(0.5)"/>
+                  </clipPath>
+                </defs>
+              </svg>
+              Bộ lọc
+            </div>
+          </a-button>
+        </div>
         <template v-if="isLoading">
-          <a-card v-for="i in Array.from({ length: 6 })">
+          <a-card v-for="i in Array.from({ length: 6 })" :key="i" style="margin-bottom: 24px;">
             <div style="display: flex; gap: 16px; margin-bottom: 24px;">
               <div style="width: 180px; height: 160px; background: #efefef; border-radius: 8px;"/>
               <a-skeleton :paragraph="{ rows: 2 }" active style="flex: 1;"/>
@@ -332,9 +371,11 @@ useSeoMeta({
             </svg>
             <div>
               <div style="font-size: 24px; font-weight: bold; margin-bottom: 40px;">Không có kết quả</div>
-              <div style="margin-bottom: 8px;"><b>Phân tích thông minh</b> với từ khoá "{{ searchValueSearch }}"</div>
+              <div style="margin-bottom: 16px; color: #716B95;">Phân tích thông minh với từ khoá <span
+                  style="color: #241E46">"{{ searchValueSearch }}"</span></div>
               <a-button
                   type="primary"
+                  size="large"
                   @click="router.push(`${NAVIGATIONS.smart_analytic}?keyword=${searchValueSearch}`)"
               >
                 Phân tích ngay
@@ -343,46 +384,6 @@ useSeoMeta({
           </div>
         </div>
         <template v-else>
-          <div class="general">
-            <div/>
-            <sort-report v-if="displaySortReport" class="sort_report" @sort-select="handleSortSelect"/>
-            <a-button v-else style="border: 1px solid #9D97BF" @click="clickButtonFilter">
-              <div style="display: flex; gap: 8px; justify-content: center; align-items: center">
-                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_4202_14089)">
-                    <path
-                        d="M8 4.375C8 5.41053 8.83947 6.25 9.875 6.25C10.9105 6.25 11.75 5.41053 11.75 4.375C11.75 3.33947 10.9105 2.5 9.875 2.5C8.83947 2.5 8 3.33947 8 4.375Z"
-                        stroke="#241E46"
-                        stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path
-                        d="M11.75 10C11.75 11.0355 12.5895 11.875 13.625 11.875C14.6605 11.875 15.5 11.0355 15.5 10C15.5 8.96447 14.6605 8.125 13.625 8.125C12.5895 8.125 11.75 8.96447 11.75 10Z"
-                        stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path
-                        d="M5.5 15.625C5.5 16.6605 6.33947 17.5 7.375 17.5C8.41053 17.5 9.25 16.6605 9.25 15.625C9.25 14.5895 8.41053 13.75 7.375 13.75C6.33947 13.75 5.5 14.5895 5.5 15.625Z"
-                        stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M17.375 4.375L11.75 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                    <path d="M17.375 15.625L9.25 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                    <path d="M17.375 10L15.5 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                    <path d="M8 4.375L3.625 4.375" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                    <path d="M5.5 15.625L3.625 15.625" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                    <path d="M11.75 10L3.625 10" stroke="#241E46" stroke-width="1.3" stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_4202_14089">
-                      <rect width="20" height="20" fill="white" transform="translate(0.5)"/>
-                    </clipPath>
-                  </defs>
-                </svg>
-                Bộ lọc
-              </div>
-            </a-button>
-          </div>
           <list-report :class="{ 'hidden-list': isLoading, 'visible-list': !isLoading }" :data="data?.lst_report"/>
           <div class="page">
             <a-pagination v-if="data?.total" v-model:current="current" :total="data?.total > 200 ? 199 : data?.total"
