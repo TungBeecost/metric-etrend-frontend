@@ -8,6 +8,7 @@ export const NAVIGATIONS = {
   pricing: "/pricing",
   contactUs: "/contact-us",
   payment: "/payment",
+  smart_analytic: "/smart_analytic",
   signIn: "/sign-in",
   category: "/c",
   informationPolicy: "/chinh-sach-bao-mat-thong-tin",

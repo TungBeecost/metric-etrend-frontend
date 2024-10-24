@@ -122,8 +122,12 @@ import MetricLoadingIcon from "~/components/MetricLoadingIcon.vue";
 const currentUserStore = useCurrentUser();
 const {userInfo} = storeToRefs(currentUserStore);
 
+const route = useRoute();
+
+const keyword = route.query.keyword || '';
+
 const data = reactive({
-  keyword: '',
+  keyword,
   analyticResult: {
     keyword: '',
     response: null
