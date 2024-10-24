@@ -1,3 +1,6 @@
+import * as AntD from "ant-design-vue";
+import { addComponent } from "@nuxt/kit";
+
 export default defineNuxtConfig({
     ssr: false, // Bật chế độ SSR
 
@@ -10,16 +13,16 @@ export default defineNuxtConfig({
                 lang: "vi",
             },
             meta: [
-                {charset: "utf-8"},
-                {name: "viewport", content: "width=device-width, initial-scale=1"},
+                { charset: "utf-8" },
+                { name: "viewport", content: "width=device-width, initial-scale=1" },
                 {
                     hid: "description",
                     name: "description",
                     content:
                         "eReport là Kho báo cáo thị trường Ecommerce toàn diện giúp Doanh nghiệp, Thương hiệu và Nhà bán tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu chính xác nhất.",
                 },
-                {name: "google-site-verification", content: "-A5h4Bx3cBpC9vnJxfRvxvegNFZgMorMQlE6M76uLbc"},
-                {name: "zalo-platform-site-verification", content: "N8Qw0ApqOJbHzja6h_fi0bwDtIIo-mrwD3arc"},
+                { name: "google-site-verification", content: "-A5h4Bx3cBpC9vnJxfRvxvegNFZgMorMQlE6M76uLbc" },
+                { name: "zalo-platform-site-verification", content: "N8Qw0ApqOJbHzja6h_fi0bwDtIIo-mrwD3arc" },
             ],
             link: [
                 {
@@ -61,19 +64,18 @@ export default defineNuxtConfig({
 
     $production: {
         routeRules: {
-            "/**": {ssr: true},
+            "/**": { ssr: true },
         },
     },
 
     $development: {
-        devtools: {enabled: true},
+        devtools: { enabled: true },
     },
 
     runtimeConfig: {
         public: {
             gtagId: 'GTM-MLBXG49P',
             apiBase: process.env.API_ENDPOINT,
-            URL_AUTH_SERVICE_API: process.env.URL_AUTH_SERVICE_API,
             API_ENDPOINT: process.env.API_ENDPOINT,
             BASE_URL: process.env.BASE_URL,
             MODE: process.env.MODE,
@@ -136,7 +138,16 @@ export default defineNuxtConfig({
         '@zadigetvoltaire/nuxt-gtm',
         '@nuxtjs/sitemap',
         ["nuxt-highcharts", {}],
-
+        async function () {
+            for (const key in AntD) {
+                if (["version", "install"].includes(key)) continue;
+                await addComponent({
+                    filePath: "ant-design-vue",
+                    name: `A${key}`,
+                    export: key,
+                });
+            }
+        },
         "nuxt-svgo",
         "@ant-design-vue/nuxt",
         "@pinia/nuxt",
