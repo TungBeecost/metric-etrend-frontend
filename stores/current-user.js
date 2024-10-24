@@ -40,7 +40,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
     state: () => {
         const isServerRender = process.env.SSR === 'true'
 
-        console.log('isServerRender',isServerRender)
+        console.log('isServerRender', isServerRender)
 
         return {
             fetchedUser: isServerRender,
@@ -81,36 +81,38 @@ export const useCurrentUser = defineStore("currentUserStore", {
             if (typeof window === 'undefined') {
                 return;
             }
+            const accessToken = await getIndexedDB("access_token") || "";
+            const visitorId = await getIndexedDB("__visitor");
 
-            const access_token = typeof window !== 'undefined' ? localStorage?.getItem("access_token") : "";
-            if (!access_token) {
+            // const access_token = typeof window !== 'undefined' ? localStorage?.getItem("access_token") : "";
+            if (!accessToken) {
                 this.fetchedUser = true;
                 return;
             }
-            const isValidToken = access_token.split(".").length === 3;
+            const isValidToken = accessToken.split(".").length === 3;
             if (!isValidToken) {
-                localStorage?.removeItem("access_token");
+                // localStorage?.removeItem("access_token");
+                await setIndexedDB('access_token', '');
                 this.fetchedUser = true;
                 return;
             }
 
-            const isExpired = jwt_decode(access_token).exp < Date.now() / 1000;
+            const isExpired = jwt_decode(accessToken).exp < Date.now() / 1000;
             if (isExpired) {
-                localStorage?.removeItem("access_token");
+                // localStorage?.removeItem("access_token");
+                await setIndexedDB('access_token', '');
                 this.fetchedUser = true;
                 return;
             }
 
             try {
-                this.userInfo = {...this.userInfo, ...jwt_decode(access_token)};
+                this.userInfo = {...this.userInfo, ...jwt_decode(accessToken)};
                 this.fetchedUser = true;
 
                 // Retrieve visitorId from IndexedDB
-                const visitorId = await getIndexedDB("__visitor");
-                console.log("VisitorId: ", visitorId.visitor_id);
                 const headers = {
-                    Authorization: access_token,
-                    VisitorId: visitorId.visitor_id,
+                    Authorization: accessToken,
+                    VisitorId: visitorId?.visitor_id,
                     PlatformId: 1,
                 };
 
@@ -131,9 +133,10 @@ export const useCurrentUser = defineStore("currentUserStore", {
             // call BE to verify & update state
             await fetchPdfReport(slug);
         },
-        logOut() {
+        async logOut() {
             console.log("Logging out");
             if (typeof window !== 'undefined') {
+                await setIndexedDB('access_token', '');
                 localStorage.removeItem("access_token");
             }
             this.user = null;
@@ -152,7 +155,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
                 };
                 console.log("Credential: ", credential);
                 try {
-                    const data = await googleCallback({credential});
+                    await googleCallback({credential});
                     await apiGoogleAuthCallback(payload).then(async res => {
                         if (res === 423) {
                             console.log("User is locked");
@@ -180,27 +183,10 @@ export const useCurrentUser = defineStore("currentUserStore", {
                             if (userInfo?.id) {
                                 this.userInfo = {...userInfo, current_plan};
                                 this.fetchedUser = true;
+                                window.location.reload();
                             }
                         }
                     });
-
-                    const access_token = data?.value?.access_token;
-                    if (access_token) {
-                        if (typeof window !== 'undefined') {
-                            localStorage.setItem("access_token", access_token);
-                        }
-                        // localStorage.setItem("refresh_token", refreshToken);
-                        if (access_token && typeof access_token === "string" && access_token.length > 0) {
-                            try {
-                                this.userInfo = jwt_decode(access_token);
-                            } catch (err) {
-                                console.log("Invalid access token: ", err);
-                            }
-                        } else {
-                            console.log("Invalid access token");
-                        }
-                        window.location.reload();
-                    }
                 } catch (err) {
                     console.log("Error: ", err);
                 }
