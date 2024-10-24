@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     ssr: false, // Bật chế độ SSR
 
     app: {
-      cdnURL: process.env.URL_CDN,
+      cdnURL: process.env.URL_CDN || 'https://ereport.vn/_nuxt',
       head: {
           title: "eReport - Kho báo cáo Ecommerce toàn diện",
           htmlAttrs: {
