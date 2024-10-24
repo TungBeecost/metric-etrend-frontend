@@ -317,7 +317,7 @@ useSeoMeta({
           </a-button>
         </div>
         <template v-if="isLoading">
-          <a-card v-for="i in Array.from({ length: 6 })" :key="i" style="margin-bottom: 24px;">
+          <a-card v-for="i in Array.from({ length: 6 })" style="margin-bottom: 24px;">
             <div style="display: flex; gap: 16px; margin-bottom: 24px;">
               <div style="width: 180px; height: 160px; background: #efefef; border-radius: 8px;"/>
               <a-skeleton :paragraph="{ rows: 2 }" active style="flex: 1;"/>

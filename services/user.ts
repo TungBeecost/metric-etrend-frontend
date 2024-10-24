@@ -32,7 +32,7 @@ export const fetchUserProfile = async (headers: object) => {
         }
 
         return result;
-    } catch (error) {
+    } catch (error: any) {
         console.error("fetchUserProfile error: ", error);
 
         const statusCode = error.response?.status;
