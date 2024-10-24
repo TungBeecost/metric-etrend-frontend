@@ -385,6 +385,15 @@ useSeoMeta({
         </div>
         <template v-else>
           <list-report :class="{ 'hidden-list': isLoading, 'visible-list': !isLoading }" :data="data?.lst_report"/>
+          <div>
+            Không có báo cáo bạn cần? Phân tích thông minh với từ khóa
+            "<nuxt-link
+                :to="`${NAVIGATIONS.smart_analytic}?keyword=${searchValueSearch}`"
+                style="color: #e85912;">
+              {{ searchValueSearch }}
+            </nuxt-link>"
+
+          </div>
           <div class="page">
             <a-pagination v-if="data?.total" v-model:current="current" :total="data?.total > 200 ? 199 : data?.total"
                           show-less-items @change="onChange"/>

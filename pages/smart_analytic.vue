@@ -119,6 +119,8 @@ import {getIndexedDB, setIndexedDB} from "~/helpers/IndexedDBHelper";
 import BannerReport from "~/components/report/BannerReport.vue";
 import MetricLoadingIcon from "~/components/MetricLoadingIcon.vue";
 
+const config = useRuntimeConfig();
+
 const currentUserStore = useCurrentUser();
 const {userInfo} = storeToRefs(currentUserStore);
 
@@ -157,7 +159,7 @@ async function handleAnalyticKeyword() {
 
     const accessToken = await getIndexedDB("access_token");
     const visitorId = await getIndexedDB("__visitor");
-    const url = `http://localhost:8000/api/analytic/?keyword=${keyword}`;
+    const url = `${config.public.API_ENDPOINT}/api/analytic/?keyword=${keyword}`;
     // const url = `https://api-ereport.staging.muadee.vn/api/analytic/?keyword=${keyword}`;
     const data_analytic = await $fetch(
         url,

@@ -117,7 +117,10 @@ export const useCurrentUser = defineStore("currentUserStore", {
                 };
 
                 const {current_plan, ...userInfo} = await fetchUserProfile(headers);
-                if (!userInfo?.id) return;
+                if (!userInfo?.id) {
+                    this.userInfo = {};
+                    return;
+                }
                 this.userInfo = {...userInfo, current_plan};
                 this.fetchedUser = true;
             } catch (err) {
