@@ -405,6 +405,7 @@ const charts = computed(() => {
   border: 1px solid #EEEBFF;
   border-radius: 8px;
   padding: 24px;
+  background: #fff;
 
   .statistic-item__title {
     display: flex;

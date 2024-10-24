@@ -683,6 +683,7 @@ const chartOptionsOutput = computed(() => ({
   display: flex;
   flex-direction: column;
   gap: 16px;
+  background: #fff;
 }
 
 

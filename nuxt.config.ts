@@ -3,7 +3,7 @@ export default defineNuxtConfig({
 
     app: {
         buildAssetsDir: '/ereport_nuxt/',
-        baseURL:  process.env.BASE_PATH || '/ereport-migrate/',
+        baseURL:  process.env.BASE_PATH || '',
         head: {
             title: "eReport - Kho báo cáo Ecommerce toàn diện",
             htmlAttrs: {
