@@ -87,20 +87,25 @@
             {{ formatDate(data.analyticResult.response.filter_custom.end_date) }}
           </div>
         </div>
-        <div style="margin-bottom: 16px;">
-          <general-overview :data="data.analyticResult.response" :is-hide-content="false"/>
+        <div v-if="!data?.analyticResult?.response?.data_analytic">
+          Không có kết quả
         </div>
-        <div style="margin-bottom: 16px;">
-          <price-range-statistic :data="data.analyticResult.response" :is-hide-content="false"/>
-        </div>
-        <div style="margin-bottom: 16px;">
-          <brand-statistic :data="data.analyticResult.response" :is-hide-content="false"/>
-        </div>
-        <div style="margin-bottom: 16px;">
-          <top-shop-statistic :data="data.analyticResult.response" :is-hide-content="false"/>
-        </div>
-        <div style="margin-bottom: 16px;">
-          <list-products :data="data.analyticResult.response" :is-hide-content="false"/>
+        <div v-else>
+          <div style="margin-bottom: 16px;">
+            <general-overview :data="data.analyticResult.response" :is-hide-content="false"/>
+          </div>
+          <div style="margin-bottom: 16px;">
+            <price-range-statistic :data="data.analyticResult.response" :is-hide-content="false"/>
+          </div>
+          <div style="margin-bottom: 16px;">
+            <brand-statistic :data="data.analyticResult.response" :is-hide-content="false"/>
+          </div>
+          <div style="margin-bottom: 16px;">
+            <top-shop-statistic :data="data.analyticResult.response" :is-hide-content="false"/>
+          </div>
+          <div style="margin-bottom: 16px;">
+            <list-products :data="data.analyticResult.response" :is-hide-content="false"/>
+          </div>
         </div>
       </div>
     </div>
@@ -172,6 +177,28 @@ async function handleAnalyticKeyword() {
     );
 
     console.log(1111, data_analytic)
+
+    if (!data_analytic) {
+      loading.value = false
+      data.analyticResult = {
+        keyword,
+        response: {
+          filter_custom: {
+            "lst_platform_id": [
+              1,
+              2,
+              3,
+              8
+            ],
+            "start_date": "20231001",
+            "end_date": "20240930"
+          },
+          tier_report: 'e_pro',
+          data_analytic: null,
+        }
+      }
+      return;
+    }
 
     data.analyticResult = {
       keyword,
