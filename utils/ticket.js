@@ -3,10 +3,18 @@ import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
 // const API_ENDPOINT = 'http://localhost:8000';
 const config = useRuntimeConfig();
 // const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
-const accessToken = await getIndexedDB("access_token");
-const visitorId = await getIndexedDB("__visitor");
 
-export const createNewTicket = async ({ title, linkReport, customerEmail, supportDepartment, description, assignedEmails }) => {
+
+export const createNewTicket = async ({
+                                          title,
+                                          linkReport,
+                                          customerEmail,
+                                          supportDepartment,
+                                          description,
+                                          assignedEmails
+                                      }) => {
+    const accessToken = await getIndexedDB("access_token");
+    const visitorId = await getIndexedDB("__visitor");
     try {
         const response = await axios.post(`${config.public.API_ENDPOINT}/api/ticket/ticket`, {
             title,
@@ -31,6 +39,8 @@ export const createNewTicket = async ({ title, linkReport, customerEmail, suppor
 };
 
 export const getMyTickets = async (page = 0, limit = 10, filter = undefined, sorter = undefined) => {
+    const accessToken = await getIndexedDB("access_token");
+    const visitorId = await getIndexedDB("__visitor");
     try {
         const payload = {
             page,
@@ -61,9 +71,11 @@ export const getMyTickets = async (page = 0, limit = 10, filter = undefined, sor
 };
 
 export const getTicketDetail = async (ticketId, isInternal = false) => {
+    const accessToken = await getIndexedDB("access_token");
+    const visitorId = await getIndexedDB("__visitor");
     try {
         const response = await axios.get(`${config.public.API_ENDPOINT}/api/ticket/ticket/${ticketId}`, {
-            params: { internal: isInternal },
+            params: {internal: isInternal},
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `${accessToken}`,
@@ -79,9 +91,11 @@ export const getTicketDetail = async (ticketId, isInternal = false) => {
 
 
 export const getTicketDetailByCode = async (ticketCode, isInternal = false) => {
+    const accessToken = await getIndexedDB("access_token");
+    const visitorId = await getIndexedDB("__visitor");
     try {
         const response = await axios.get(`${config.public.API_ENDPOINT}/api/ticket/ticket/detail/${ticketCode}`, {
-            params: { isInternal },
+            params: {isInternal},
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `${accessToken}`,
@@ -96,11 +110,13 @@ export const getTicketDetailByCode = async (ticketCode, isInternal = false) => {
 };
 
 export const getTickets = async (page = 0, limit = 10, search = '', filter = {}, sorter = {}) => {
+    const accessToken = await getIndexedDB("access_token");
+    const visitorId = await getIndexedDB("__visitor");
     try {
         console.log('filter', filter.created_at);
         const filterParams = {
-            created_at: filter.created_at || { start: '', end: '' },
-            resolved_at: filter.resolved_at || { start: '', end: '' },
+            created_at: filter.created_at || {start: '', end: ''},
+            resolved_at: filter.resolved_at || {start: '', end: ''},
             priority: filter.priority || '',
             status: filter.status || '',
             incharge_by: filter.incharge_by || '',
@@ -183,6 +199,8 @@ export const getPriorityText = (priority) => {
 //
 
 export const updateTicket = async (ticketId, payload) => {
+    const accessToken = await getIndexedDB("access_token");
+    const visitorId = await getIndexedDB("__visitor");
     try {
         const response = await axios.put(`${config.public.API_ENDPOINT}/api/ticket/ticket/${ticketId}`, payload, {
             headers: {

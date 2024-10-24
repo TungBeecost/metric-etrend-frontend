@@ -6,7 +6,6 @@ import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
 import { ref, onMounted, onUnmounted } from "vue";
-import moment from "moment";
 import { REPORT_ENDPOINTS } from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
@@ -17,7 +16,6 @@ import {NAVIGATIONS} from "~/constant/constains";
 import RelateReport from "~/components/RelateReport.vue";
 import ScrollNotification from "~/components/ScrollNotification.vue";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
-import {toSeoName} from "~/helpers/StringHelper.js";
 
 const route = useRoute();
 const router = useRouter();
@@ -191,81 +189,6 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);
   window.removeEventListener('scroll', handleScroll);
 });
-
-const _head = () => {
-  const urlCanonical = config.public.BASE_URL + route.fullPath;
-
-  const title = `Báo cáo thị trường ${data.value.name} dành cho doanh nghiệp - Cập nhật tháng ${moment().format("MM/YYYY")}`;
-
-  const description = `Báo cáo chi tiết thị trường ${data?.value.reportDetail.name}`;
-
-  const itemListElement = [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Metric",
-      item: "https://metric.vn",
-    },
-    ...(data.value.lst_category || []).map((item, index) => ({
-      "@type": "ListItem",
-      position: index + 2,
-      name: item.name,
-      item: `https://metric.vn/${toSeoName(item.name)}-c.${item.id}`,
-    })),
-  ];
-
-  const ogImage = data.value?.reportDetail?.url_cover || data.value?.reportDetail?.url_thumbnail;
-
-  return {
-    title,
-    meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      {
-        hid: "description",
-        name: "description",
-        content: description,
-      },
-      {
-        hid: "og:title",
-        property: "og:title",
-        content: title,
-      },
-      {
-        hid: "og:description",
-        property: "og:description",
-        content: description,
-      },
-      {
-        hid: "og:image",
-        property: "og:image",
-        content: ogImage,
-      },
-      {
-        hid: "og:image:alt",
-        property: "og:image:alt",
-        content: title,
-      },
-    ],
-    link: [
-      {
-        hid: "canonical",
-        rel: "canonical",
-        href: urlCanonical,
-      },
-    ],
-    script: [
-      {
-        type: "application/ld+json",
-        json: {
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement,
-        },
-      },
-    ],
-  };
-};
 </script>
 
 <template>

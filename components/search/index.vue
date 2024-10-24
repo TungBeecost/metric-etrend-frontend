@@ -16,7 +16,7 @@
     </AInputSearch>
 
     <!-- suggestion -->
-    <div v-if="suggestions" class="suggestions" :class="{ active: isShowSuggestions }">
+    <div v-if="suggestions && suggestions.length" class="suggestions" :class="{ active: isShowSuggestions }">
       <div v-for="suggestion in suggestions" :key="suggestion" class="suggestion-item"
            @click="handleSuggestionClick(suggestion)">
         {{ suggestion }}
