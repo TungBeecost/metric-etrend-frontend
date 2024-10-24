@@ -89,7 +89,7 @@ const fetchReportData = async (period) => {
         {
           headers: {
             'Authorization': `${accessToken}`,
-            'Visitorid': visitorId.visitor_id,
+            'Visitorid': visitorId?.visitor_id,
           }
         }
     );
