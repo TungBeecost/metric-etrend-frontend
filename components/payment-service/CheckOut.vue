@@ -255,7 +255,7 @@ const isHidePromotionInput = hideShowPromotionInputPlans.includes(plan.plan_code
       </div>
       <div class="total">
         <total-payment v-if="plan" :plan="plan" :status-apply-code="statusApplyCode" :discount-info="discountInfo"
-                       @final-price="handleFinalPrice" :isHidePromotionInput="isHidePromotionInput"/>
+                       :is-hide-promotion-input="isHidePromotionInput" @final-price="handleFinalPrice"/>
         <a-checkbox v-model:checked="checked" style="padding-top: 16px">Yêu cầu xuất VAT</a-checkbox>
         <form-vat v-if="checked" :errors="errors" @form-values="handleFormVatUpdate"/>
         <a-button style="width: 100%; height: 40px; margin-top: 16px" type="primary" @click="handlePayment">Thanh toán

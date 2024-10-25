@@ -24,7 +24,7 @@ const {
 const emit = defineEmits(['finalPrice']);
 
 const calculateDiscountAmount = (planPriceDiscount: number, discount: any) => {
-  if (!discount || !discount.discount) {
+  if (!discount || !discount.discount || !statusApplyCode.value) {
     console.log('No discount info available.');
     return 0;
   }
