@@ -8,6 +8,7 @@ import ReportPreviewSlide from "~/components/PreviewSlide/ReportPreviewSlide.vue
 import moment from "moment";
 import {message} from "ant-design-vue";
 import {formatCurrency} from "~/helpers/FormatHelper";
+import {getIndexedDB} from "~/helpers/IndexedDBHelper";
 
 const config = useRuntimeConfig();
 const route = useRoute();
@@ -39,15 +40,17 @@ const handleDownload = async () => {
 
   if (props.data.can_download) {
     const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${props.data.slug}&type=download`;
+    const accessToken = await getIndexedDB("access_token");
+    const visitorId = await getIndexedDB("__visitor");
 
-    const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
     try {
       downloading.value = true;
       const response: any = await $fetch(
           url,
           {
             headers: {
-              'Authorization': `Bearer ${accessToken}`
+              'Authorization': `${accessToken}`,
+              'Visitorid': visitorId.visitor_id,
             }
           }
       );

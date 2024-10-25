@@ -66,7 +66,7 @@ const toggleUnlock = () => {
             Bạn có chắc chắn muốn sử dụng
             <span class="highlight" style="font-size: 16px">01 lượt xem</span>
             trong vòng 24 giờ cho
-            <span class="report-name" style="font-size: 16px">
+            <span v-if="report" class="report-name" style="font-size: 16px">
               {{ report.name }} - Báo cáo xu hướng thị trường sàn TMĐT
             </span>
             không?

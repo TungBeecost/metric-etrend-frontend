@@ -675,6 +675,8 @@ const chartOptions = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  background: #fff;
 }
 
 @media (min-width: 768px) {

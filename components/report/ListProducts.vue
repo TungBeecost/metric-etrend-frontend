@@ -580,6 +580,7 @@ const isHideContentBasic = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  background: #fff;
 
   .line {
     border: 1px solid #EEEBFF;

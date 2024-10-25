@@ -1,7 +1,10 @@
 // utils/file.js
 import axios from 'axios';
+import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
+
 const config = useRuntimeConfig();
-const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
+
+// const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
 
 class FileModule {
     async uploadFile(file) {
@@ -13,6 +16,8 @@ class FileModule {
         formData.append('file', file);
 
         try {
+            const accessToken = await getIndexedDB("access_token");
+            const visitorId = await getIndexedDB("__visitor");
             const response = await axios.post(
                 `${config.public.API_ENDPOINT}/api/comment/pictures/upload`, // Use the config object directly
                 formData,
@@ -20,7 +25,8 @@ class FileModule {
                     headers: {
                         'x-api-key': 'beecost',
                         'Content-Type': 'multipart/form-data',
-                        'Authorization': `Bearer ${accessToken}`
+                        'Authorization': `${accessToken}`,
+                        'Visitorid': visitorId.visitor_id,
                     }
                 }
             );

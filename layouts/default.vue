@@ -139,9 +139,11 @@ onMounted(() => {
   trackEvent('page_view', {page: route.path});
 
   let lastScrollTop = 0;
-  const header = document.querySelector('header') as HTMLElement;
+  const header = document.querySelector('header') as HTMLElement | null;
 
   const handleScroll = () => {
+    if (!header) return; // Ensure header is not null
+
     const scrollTop = window.scrollY;
     const screenWidth = window.innerWidth;
 

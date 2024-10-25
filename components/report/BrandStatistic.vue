@@ -872,6 +872,7 @@ const formattedBrandCount = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  background: #fff;
 }
 
 @media (max-width: 768px) {

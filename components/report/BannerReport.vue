@@ -1,11 +1,21 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
+import {computed} from 'vue';
+import {useRoute} from 'vue-router';
 import allReports from '@/public/file_json/list_category.json';
 
 const route = useRoute();
 
+const props = defineProps({
+  content: {
+    type: String,
+    default: () => '',
+  },
+});
+
 const displayContent = computed(() => {
+  if (props.content) {
+    return props.content;
+  }
   const hash = route.hash;
   const categoryIdMatch = hash.match(/#id=([^&]*)/);
   const categoryId = categoryIdMatch ? categoryIdMatch[1] : '';

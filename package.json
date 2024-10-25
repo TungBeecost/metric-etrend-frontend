@@ -21,6 +21,7 @@
   "dependencies": {
     "@ant-design-vue/nuxt": "^1.4.1",
     "@ant-design/icons-vue": "^7.0.1",
+    "@fingerprintjs/fingerprintjs": "^3.4.0",
     "@gtm-support/vue-gtm": "^3.0.1",
     "@nuxt/eslint": "^0.3.13",
     "@nuxt/image": "^1.7.0",
