@@ -21,11 +21,14 @@
       </div>
     </div>
 
-    <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"
-             :footer="false"
-             style="margin-top: 30px"
-             @ok="currentUserStore.setShowPopupLogin(false)"
-             @cancel="currentUserStore.setShowPopupLogin(false)">
+    <a-modal
+        class="button_login" :visible="currentUserStore.isShowPopupLogin"
+        :footer="false"
+        style="margin-top: 30px"
+        @ok="currentUserStore.setShowPopupLogin(false)"
+        @cancel="currentUserStore.setShowPopupLogin(false)"
+        destroy-on-close
+    >
       <login-button/>
     </a-modal>
   </div>
