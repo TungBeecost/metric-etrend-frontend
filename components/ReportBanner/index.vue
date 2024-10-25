@@ -1,6 +1,6 @@
 <template>
   <div class="callActionBanner">
-    <NuxtImg src="/images/orange-banner-wave.png" class="background" />
+    <NuxtImg src="/ereport/ereport/images/orange-banner-wave.png" class="background" />
 
     <div class="callActionBlock">
       <p class="title">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</p>
@@ -8,8 +8,8 @@
     </div>
 
     <div class="illustrationBlock">
-      <NuxtImg src="/images/Chart.svg" class="mainIllust" />
-      <NuxtImg src="/images/Line-Styling.svg" class="sideIllust" />
+      <NuxtImg src="/ereport/images/Chart.svg" class="mainIllust" />
+      <NuxtImg src="/ereport/images/Line-Styling.svg" class="sideIllust" />
     </div>
 
   </div>

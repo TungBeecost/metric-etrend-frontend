@@ -79,7 +79,7 @@ const openNotification = () => {
             }
           }, [
             h('img', {
-              src: '/images/Thumbnail_popup_1.png',
+              src: '/ereport/images/Thumbnail_popup_1.png',
               alt: 'Thumbnail 1',
               style: {
                 width: '148px',
@@ -90,7 +90,7 @@ const openNotification = () => {
               }
             }),
             h('img', {
-              src: '/images/Thumbnail_popup_2.png',
+              src: '/ereport/images/Thumbnail_popup_2.png',
               alt: 'Thumbnail 2',
               style: {
                 width: '148px',
