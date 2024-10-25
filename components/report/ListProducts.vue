@@ -73,7 +73,7 @@ const isHideContentBasic = computed(() => {
         <ChartMask
             v-if="isHideContent || isHideContentBasic"
             :subtitle="isHideContent ? 'Bạn cần mở khoá để xem số liệu đầy đủ' : (isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' : '')"
-            :ok-button="isHideContent ? 'Mua báo cáo' : (isHideContentBasic ? '' : '')"
+            :ok-button="isHideContent ? 'Xem báo cáo' : (isHideContentBasic ? '' : '')"
             :report="data"
         />
       </div>

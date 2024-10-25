@@ -9,6 +9,7 @@ import moment from "moment";
 import {message} from "ant-design-vue";
 import {formatCurrency} from "~/helpers/FormatHelper";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper";
+import LoginButton from "~/components/google/LoginButton.vue";
 
 const config = useRuntimeConfig();
 const route = useRoute();
@@ -131,17 +132,16 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
   return moment(value, inputFormat).format(format);
 }
 
-const discountPercentage = computed(() => {
-  if (props.data.price_before_discount && props.data.price) {
-    const discount = ((props.data.price_before_discount - props.data.price) / props.data.price_before_discount) * 100;
-    return Math.round(discount);
-  }
-  return 0;
-});
-
 </script>
 
 <template>
+<!--  <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"-->
+<!--           :footer="false"-->
+<!--           style="padding-top: 24px; z-index: 1050;"-->
+<!--           @ok="currentUserStore.setShowPopupLogin(false)"-->
+<!--           @cancel="currentUserStore.setShowPopupLogin(false)">-->
+<!--    <login-button/>-->
+<!--  </a-modal>-->
   <a-modal
       :visible="open" :width="1000" :footer="null" @cancel="toggleUnlock" @ok="toggleUnlock"
   >
@@ -184,7 +184,7 @@ const discountPercentage = computed(() => {
                 @click="handleDownload">
               {{ props.data.can_download ? 'Tải xuống báo cáo' : 'Mua báo cáo' }}
             </a-button>
-            <div class="button_group" v-if="userInfo.current_plan?.remain_claim_pdf && !props.data.can_download">
+            <div v-if="userInfo.current_plan?.remain_claim_pdf && !props.data.can_download" class="button_group">
               <div style="color: #716B95">hoặc</div>
               <a-button v-if="(userInfo.current_plan?.remain_claim_pdf ?? 0) > 0"
                         :disabled="!canViewReport"
