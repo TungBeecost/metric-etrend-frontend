@@ -171,7 +171,7 @@ const handleSubmitLeadForm = async () => {
 
 <template>
   <div class="wrapper contact-us">
-    <NuxtImg src="/ereport/images/orange-banner-wave.png" class="background"
+    <NuxtImg src="/images/orange-banner-wave.png" class="background"
     />
 
     <div class="content default_section">

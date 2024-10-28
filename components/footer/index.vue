@@ -3,9 +3,9 @@
     <div class="footerContent">
       <!-- introduce -->
       <div class="info introduce">
-        <NuxtImg src="/ereport/images/Logo-black.svg" width="186" height="36" />
+        <NuxtImg src="/images/Logo-black.svg" width="186" height="36" />
         <p style="font-size: 16px">Hơn 1.000.000 báo cáo thị trường sàn eCommerce sử dụng nguồn cơ sở dữ liệu Big Data ứng dụng AI của Metric, được thiết kế dành riêng cho cá nhân, nhà bán và doanh nghiệp nhỏ. Chỉ mất 5 giây nhấp chuột để nắm được tổng quan tình hình thị trường, giúp việc đưa ra quyết định kinh doanh chính xác và nhanh hơn 5 lần.</p>
-        <NuxtImg src="/ereport/images/gov-mark.png" width="176" height="67" />
+        <NuxtImg src="/images/gov-mark.png" width="176" height="67" />
       </div>
 
       <!-- term & policy -->
