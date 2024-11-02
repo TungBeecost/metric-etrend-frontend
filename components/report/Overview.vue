@@ -43,7 +43,7 @@ useHead({
     },
   ],
   link: [
-    {hid: "canonical", rel: "canonical", href: `${config.public.BASE_URL}${route.fullPath}`},
+    {key: "canonical", rel: "canonical", href: `${config.public.BASE_URL}${route.fullPath}`},
   ],
   // script: [
   //   {
