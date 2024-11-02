@@ -25,19 +25,19 @@ useHead({
     {charset: "utf-8"},
     {name: "viewport", content: "width=device-width, initial-scale=1"},
     {
-      hid: "description",
+      key: "description",
       name: "description",
       content: `Báo cáo chi tiết thị trường ${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`
     },
-    {hid: "og:title", property: "og:title", content: `${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`},
+    {key: "og:title", property: "og:title", content: `${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`},
     {
-      hid: "og:description",
+      key: "og:description",
       property: "og:description",
       content: `Báo cáo chi tiết thị trường ${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`
     },
-    {hid: "og:image", property: "og:image", content: props.data?.url_cover || props.data?.url_thumbnail},
+    {key: "og:image", property: "og:image", content: props.data?.url_cover || props.data?.url_thumbnail},
     {
-      hid: "og:image:alt",
+      key: "og:image:alt",
       property: "og:image:alt",
       content: `${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`
     },

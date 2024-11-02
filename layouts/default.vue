@@ -10,11 +10,11 @@
     }"
   >
 
-    <Head>
-      <Meta hid="og:title" property="og:title" :content="`eReport - Kho báo cáo Ecommerce toàn diện`"/>
-      <Meta hid="og:description" name="og:description" :content="`eReport là Kho báo cáo thị trường Ecommerce toàn diện giúp Doanh nghiệp, Thương hiệu và Nhà bán tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu chính xác nhất.`"/>
-      <Meta hid="og:image" property="og:image" :content="'https://lh3.googleusercontent.com/pw/AP1GczMTZp0lf_VW7W_Y6n3qg602m-LlqfpCIeVX_i4D3pnqT6FiloK5hY86XfTsqVHd4xRRs9tSKppP6FZdEPWO_V8D_UEsfj8KEnChoiU7zyiwDlHzZaTeAePmGxcqzG98qDJ9bahok5MhwtDzp3EKTiI_=w1600-h900-s-no-gm'"/>
-    </Head>
+<!--    <Head>-->
+<!--      <Meta hid="og:title" property="og:title" :content="`eReport - Kho báo cáo Ecommerce toàn diện`"/>-->
+<!--      <Meta hid="og:description" name="og:description" :content="`eReport là Kho báo cáo thị trường Ecommerce toàn diện giúp Doanh nghiệp, Thương hiệu và Nhà bán tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu chính xác nhất.`"/>-->
+<!--      <Meta hid="og:image" property="og:image" :content="'https://lh3.googleusercontent.com/pw/AP1GczMTZp0lf_VW7W_Y6n3qg602m-LlqfpCIeVX_i4D3pnqT6FiloK5hY86XfTsqVHd4xRRs9tSKppP6FZdEPWO_V8D_UEsfj8KEnChoiU7zyiwDlHzZaTeAePmGxcqzG98qDJ9bahok5MhwtDzp3EKTiI_=w1600-h900-s-no-gm'"/>-->
+<!--    </Head>-->
     <div class="container">
       <div v-if="showTopBar" class="top-bar" @click="navigateToPricing">
         <div class="text">
