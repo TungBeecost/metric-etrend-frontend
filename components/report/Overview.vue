@@ -16,59 +16,34 @@ const props = defineProps({
   },
 });
 
-const title = computed(() => 'HAHA')
+const config = useRuntimeConfig();
+const route = useRoute();
+
 useHead({
-  title,
-})
-
-// const config = useRuntimeConfig();
-// const route = useRoute();
-
-// const title = computed(() => `HAHA - Báo cáo xu hướng thị trường sàn TMĐT`);
-//   description: `Báo cáo chi tiết thị trường ${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`,
-//   ogImage: props.data?.url_cover || props.data?.url_thumbnail,
-//   urlCanonical: `${config.public.BASE_URL}${route.fullPath}`,
-//   itemListElement: [
-//     {
-//       "@type": "ListItem",
-//       position: 1,
-//       name: "Metric",
-//       item: "https://metric.vn/ereport",
-//     },
-//     ...(props.data.lst_category || []).map((item: any, index: any) => ({
-//       "@type": "ListItem",
-//       position: index + 2,
-//       name: item.name,
-//       item: `https://metric.vn/ereport/${item.slug}`,
-//     })),
-//   ],
-// };
-
-// useHead({
-//   title,
-  // meta: [
-  //   {charset: "utf-8"},
-  //   {name: "viewport", content: "width=device-width, initial-scale=1"},
-  //   {
-  //     hid: "description",
-  //     name: "description",
-  //     content: () => `Báo cáo chi tiết thị trường ${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`
-  //   },
-  //   {hid: "og:title", property: "og:title", content: () => `${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`},
-  //   {
-  //     hid: "og:description",
-  //     property: "og:description",
-  //     content: () => `Báo cáo chi tiết thị trường ${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`
-  //   },
-  //   {hid: "og:image", property: "og:image", content: () => props.data?.url_cover || props.data?.url_thumbnail},
-  //   {
-  //     hid: "og:image:alt",
-  //     property: "og:image:alt",
-  //     content: () => `${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`
-  //   },
-  // ],
+  title: `Báo cáo chi tiết thị trường ${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`,
+  meta: [
+    {charset: "utf-8"},
+    {name: "viewport", content: "width=device-width, initial-scale=1"},
+    {
+      hid: "description",
+      name: "description",
+      content: `Báo cáo chi tiết thị trường ${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`
+    },
+    {hid: "og:title", property: "og:title", content: `${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`},
+    {
+      hid: "og:description",
+      property: "og:description",
+      content: `Báo cáo chi tiết thị trường ${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`
+    },
+    {hid: "og:image", property: "og:image", content: props.data?.url_cover || props.data?.url_thumbnail},
+    {
+      hid: "og:image:alt",
+      property: "og:image:alt",
+      content: `${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`
+    },
+  ],
   // link: [
-  //   {hid: "canonical", rel: "canonical", href: () => `${config.public.BASE_URL}${route.fullPath}`},
+  //   {hid: "canonical", rel: "canonical", href: `${config.public.BASE_URL}${route.fullPath}`},
   // ],
   // script: [
   //   {
@@ -76,14 +51,14 @@ useHead({
   //     json: {
   //       "@context": "https://schema.org",
   //       "@type": "BreadcrumbList",
-  //       itemListElement: () => [
+  //       itemListElement: [
   //         {
   //           "@type": "ListItem",
   //           position: 1,
   //           name: "Metric",
   //           item: "https://metric.vn/ereport",
   //         },
-  //         ...(props.data.lst_category || []).map((item, index) => ({
+  //         ...(props.data.lst_category || []).map((item:any, index:any) => ({
   //           "@type": "ListItem",
   //           position: index + 2,
   //           name: item.name,
@@ -93,7 +68,7 @@ useHead({
   //     },
   //   },
   // ],
-// });
+});
 
 
 const diffMonths = computed(() => {
