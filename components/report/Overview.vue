@@ -42,9 +42,9 @@ useHead({
       content: `${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`
     },
   ],
-  // link: [
-  //   {hid: "canonical", rel: "canonical", href: `${config.public.BASE_URL}${route.fullPath}`},
-  // ],
+  link: [
+    {hid: "canonical", rel: "canonical", href: `${config.public.BASE_URL}${route.fullPath}`},
+  ],
   // script: [
   //   {
   //     type: "application/ld+json",
@@ -58,7 +58,7 @@ useHead({
   //           name: "Metric",
   //           item: "https://metric.vn/ereport",
   //         },
-  //         ...(props.data.lst_category || []).map((item:any, index:any) => ({
+  //         ...(props.data.lst_category || []).map((item: any, index: any) => ({
   //           "@type": "ListItem",
   //           position: index + 2,
   //           name: item.name,
@@ -80,6 +80,7 @@ const diffMonths = computed(() => {
 
 interface PriceRange {
   revenue: number;
+
   [key: string]: number;
 }
 
