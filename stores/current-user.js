@@ -68,7 +68,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
         isShowPopupCampaign: (state) => state.showPopupCampaign,
         remainingUnlock: (state) => state.userInfo.current_plan.remain_claim,
         remainingUnlockPdf: (state) => state.userInfo.current_plan.remain_claim_pdf,
-        authenticated: (state) => state.userInfo.id !== undefined,
+        authenticated: (state) => state.userInfo.email !== undefined,
     },
     actions: {
         setShowPopupLogin(value) {
@@ -85,11 +85,13 @@ export const useCurrentUser = defineStore("currentUserStore", {
             const visitorId = await getIndexedDB("__visitor");
 
             // const access_token = typeof window !== 'undefined' ? localStorage?.getItem("access_token") : "";
+            // console.log(111, accessToken)
             if (!accessToken) {
                 this.fetchedUser = true;
                 return;
             }
             const isValidToken = accessToken.split(".").length === 3;
+            // console.log(222)
             if (!isValidToken) {
                 // localStorage?.removeItem("access_token");
                 await setIndexedDB('access_token', '');
@@ -98,6 +100,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
             }
 
             const isExpired = jwt_decode(accessToken).exp < Date.now() / 1000;
+            // console.log(333)
             if (isExpired) {
                 // localStorage?.removeItem("access_token");
                 await setIndexedDB('access_token', '');
@@ -107,6 +110,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
 
             try {
                 this.userInfo = {...this.userInfo, ...jwt_decode(accessToken)};
+                // console.log(777, this.userInfo)
                 this.fetchedUser = true;
 
                 // Retrieve visitorId from IndexedDB
@@ -116,12 +120,15 @@ export const useCurrentUser = defineStore("currentUserStore", {
                     PlatformId: 1,
                 };
 
+                // console.log(444)
                 const {current_plan, ...userInfo} = await fetchUserProfile(headers);
+                // console.log(555, userInfo, !userInfo?.id)
                 if (!userInfo?.id) {
                     this.userInfo = {};
                     return;
                 }
                 this.userInfo = {...userInfo, current_plan};
+                // console.log(666, this.userInfo)
                 this.fetchedUser = true;
             } catch (err) {
                 this.fetchedUser = true;
