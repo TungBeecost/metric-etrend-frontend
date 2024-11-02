@@ -16,6 +16,8 @@ import {NAVIGATIONS} from "~/constant/constains";
 import RelateReport from "~/components/RelateReport.vue";
 import ScrollNotification from "~/components/ScrollNotification.vue";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
+import { useHead } from 'unhead'
+
 
 const route = useRoute();
 const router = useRouter();
@@ -29,6 +31,18 @@ const loadingRecommend = ref(true);
 const loadingSuggest = ref(true);
 const showButton = ref(false);
 const loading = ref(true); // Add loading state
+
+useHead({
+  title: 'My App',
+  meta: [
+    { name: 'description', content: 'My amazing site.' }
+  ],
+  bodyAttrs: {
+    class: 'test'
+  },
+  script: [ { innerHTML: 'console.log(\'Hello world\')' } ]
+})
+
 
 const fetchSuggest = async (value = '', options = {}) => {
   try {
