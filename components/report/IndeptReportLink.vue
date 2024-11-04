@@ -96,7 +96,6 @@ onMounted(() => {
           <span>Số liệu cập nhật đến tháng mới nhất</span>
         </div>
         <a-button
-            v-if="data.report_type !== 'report_category'"
             style="width: 100%; height: 50px; font-family: Montserrat,sans-serif; font-weight: 500;"
             type="primary" class="btn"
             @click="handleClick"
@@ -112,7 +111,6 @@ onMounted(() => {
           Tải báo cáo PDF chi tiết
         </a-button>
         <div
-            v-if="data.report_type !== 'report_category'"
             style="text-align: center;font-family: Montserrat,sans-serif; font-weight: 500; color: #666;font-size: 14px;">
           (Nhận báo cáo qua Email trong 5 - 30 phút)
         </div>
