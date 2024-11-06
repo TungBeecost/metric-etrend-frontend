@@ -239,4 +239,10 @@ onBeforeRouteLeave(() => {
     font-size: 14px;
   }
 }
+
+@media (max-width: 768px) {
+  .button-notification {
+    width: 400px;
+  }
+}
 </style>

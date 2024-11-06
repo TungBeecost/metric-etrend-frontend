@@ -36,6 +36,14 @@ const chartWidth = computed(() => {
   }
 });
 
+const chartHeight = computed(() => {
+  if (windowWidth.value < 1200) {
+    return 300;
+  } else {
+    return 400;
+  }
+});
+
 const colors = [
   "#9254DE",
   "#FF7A45",
@@ -123,13 +131,13 @@ const chartOptionsSales = computed(() => ({
   chart: {
     type: "pie",
     width: chartWidth.value || 500,
-    height: 300,
+    height: chartHeight.value || 400,
     style: {
       fontFamily: "Inter",
     },
   },
   title: {
-    text: `<div style="text-align: center;"><h4>TyTop 10 thương hiệu theo doanh số</h4></div>`,    useHTML: true,
+    text: `<div style="text-align: center;"><h4>Top 10 thương hiệu theo doanh số</h4></div>`,    useHTML: true,
     style: {
       fontSize: '16px',
       color: '#241E46',
@@ -186,7 +194,7 @@ const chartOptionsOutput = computed(() => ({
   chart: {
     type: "pie",
     width: chartWidth.value || 500,
-    height: 300,
+    height: chartHeight.value || 400,
     style: {
       fontFamily: "Inter",
     },

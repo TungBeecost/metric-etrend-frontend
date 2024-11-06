@@ -47,11 +47,19 @@ const formatNumber = (value = "") => value.toLocaleString("vi-VN");
 
 const chartWidth = computed(() => {
   if (windowWidth.value < 1200) {
-    return 300;
+    return 350;
   } else if (windowWidth.value < 1500) {
     return 400;
   } else {
     return 700;
+  }
+});
+
+const chartHeight = computed(() => {
+  if (windowWidth.value < 1200) {
+    return 300;
+  } else {
+    return 400;
   }
 });
 
@@ -142,7 +150,8 @@ watchEffect(() => {
 const chartOptionsShopType = computed(() => ({
   chart: {
     type: "pie",
-    width: 500,
+    width: chartWidth.value || 500,
+    height: chartHeight.value || 400,
     style: {
       fontFamily: "Inter",
     },
@@ -222,6 +231,7 @@ const chartOptionsSales = computed(() => ({
   chart: {
     type: "pie",
     width: chartWidth.value || 500,
+    height: chartHeight.value || 400,
     style: {
       fontFamily: "Inter",
     },
@@ -274,23 +284,11 @@ const chartOptionsSales = computed(() => ({
   ]
 }));
 
-const sortedTopShops = computed(() => {
-  return props.data.data_analytic.by_shop.lst_shop
-      .slice()
-      .sort((a, b) => b.sale - a.sale)
-      .slice(0, 10)
-      .map(({name, sale}, index) => ({
-        name: name,
-        y: sale,
-        color: colors[index % colors.length]
-      }))
-      .sort((a, b) => b.y - a.y);
-});
-
 const chartOptionsOutput = computed(() => ({
   chart: {
     type: "pie",
     width: chartWidth.value || 500,
+    height: chartHeight.value || 400,
     style: {
       fontFamily: "Inter",
     },
@@ -334,7 +332,7 @@ const chartOptionsOutput = computed(() => ({
   series: [
     {
       name: 'Sản lượng (Đơn vị)',
-      data: props.data.data_analytic.by_shop.lst_top_shop_order.slice(0, 10).map(({name, sale, ratio_sale}, index) => ({
+      data: props.data.data_analytic.by_shop.lst_shop.slice(0, 10).map(({name, sale, ratio_sale}, index) => ({
         name: name,
         y: sale || ratio_sale,
         color: colors[index % colors.length]
@@ -352,7 +350,6 @@ const chartOptionsOutput = computed(() => ({
     "
       id="top-shop"
       class="border statistic-block mb-6"
-      style="gap: 48px;"
   >
     <div class="statistic-item__title">
       <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
@@ -688,8 +685,8 @@ const chartOptionsOutput = computed(() => ({
   border: 1px solid #EEEBFF;
   display: flex;
   flex-direction: column;
-  gap: 16px;
   background: #fff;
+  gap: 48px;
 }
 
 
@@ -755,6 +752,7 @@ const chartOptionsOutput = computed(() => ({
   #top-shop {
     padding: 16px;
     border: none;
+    gap: 16px;
   }
 
   .logo-grid {
