@@ -25,6 +25,10 @@ const props = defineProps({
 const windowWidth = ref(window.innerWidth);
 const isMobile = window?.innerWidth < 768;
 
+const newTabUrl = (url) => {
+  window.open(url, '_blank');
+};
+
 onMounted(() => {
   window.addEventListener('resize', () => {
     windowWidth.value = window.innerWidth;
@@ -441,7 +445,7 @@ const chartOptionsOutput = computed(() => ({
       <div
           v-for="(record, index) in top12Shops"
           :key="index" class="logo-item"
-          @click="goToUrl(record.url_shop)"
+          @click="newTabUrl(record.url_shop)"
 
       >
         <img
