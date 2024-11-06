@@ -123,13 +123,13 @@ const chartOptionsSales = computed(() => ({
   chart: {
     type: "pie",
     width: chartWidth.value || 500,
+    height: 300,
     style: {
       fontFamily: "Inter",
     },
   },
   title: {
-    text: `<h4>Top 10 thương hiệu theo doanh số</h4>`,
-    useHTML: true,
+    text: `<div style="text-align: center;"><h4>TyTop 10 thương hiệu theo doanh số</h4></div>`,    useHTML: true,
     style: {
       fontSize: '16px',
       color: '#241E46',
@@ -186,13 +186,13 @@ const chartOptionsOutput = computed(() => ({
   chart: {
     type: "pie",
     width: chartWidth.value || 500,
+    height: 300,
     style: {
       fontFamily: "Inter",
     },
   },
   title: {
-    text: `<h4>Top 10 thương hiệu theo sản lượng</h4>`,
-    useHTML: true,
+    text: `<div style="text-align: center;"><h4>Top 10 thương hiệu theo sản lượng</h4></div>`,    useHTML: true,
     style: {
       fontSize: '16px',
       color: '#241E46',

@@ -117,7 +117,6 @@ watch(() => props.dynamicScale, handleResize);
   position: relative;
   overflow: hidden;
   font-family: "Montserrat", sans-serif;
-
   width: 850px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   transform-origin: top left;
@@ -149,4 +148,5 @@ watch(() => props.dynamicScale, handleResize);
 .next-btn {
   right: 10px;
 }
+
 </style>

@@ -444,6 +444,8 @@ const chartOptionsOutput = computed(() => ({
       <div
           v-for="(record, index) in top12Shops"
           :key="index" class="logo-item"
+          @click="goToUrl(record.url_shop)"
+
       >
         <img
             :src="getUrlImageOption(record.url_image, 'thumbnail')"
@@ -735,6 +737,7 @@ const chartOptionsOutput = computed(() => ({
     flex-direction: column;
     align-items: center;
     gap: 16px;
+    cursor: pointer;
   }
 }
 
@@ -752,6 +755,10 @@ const chartOptionsOutput = computed(() => ({
   #top-shop {
     padding: 16px;
     border: none;
+  }
+
+  .logo-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 </style>

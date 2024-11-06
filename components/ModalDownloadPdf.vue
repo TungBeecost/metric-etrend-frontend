@@ -130,15 +130,6 @@ const handleBuyReport = () => {
 const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFormat: string = "YYYY-MM-DD[T]HH:mm:ss"): string => {
   return moment(value, inputFormat).format(format);
 }
-
-const discountPercentage = computed(() => {
-  if (props.data.price_before_discount && props.data.price) {
-    const discount = ((props.data.price_before_discount - props.data.price) / props.data.price_before_discount) * 100;
-    return Math.round(discount);
-  }
-  return 0;
-});
-
 </script>
 
 <template>
@@ -151,8 +142,9 @@ const discountPercentage = computed(() => {
       </div>
       <div class="summary">
         <div class="title_container">
-          <div class="title_report">Mua báo cáo thị trường</div>
-          <div>
+          <div class="title_report">
+            {{ props.data.can_download ? 'Tải báo cáo PDF' : 'Mua báo cáo thị trường' }}
+          </div>          <div>
             <div style="margin-bottom: 32px;">
               <div style="text-align: center; margin-bottom: 12px;">Nhóm hàng</div>
               <p>{{ props.data.name }}</p>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
-import {defineProps, ref, onMounted} from "vue";
-import {useRoute} from "vue-router";
+import {defineProps, ref, onMounted, watch} from "vue";
+import {useRoute, useRouter} from "vue-router";
 import ReportPreviewSlide from "~/components/PreviewSlide/ReportPreviewSlide.vue";
 
 const open = ref(false);
@@ -16,6 +16,10 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  showModalDownloadPdf: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 onMounted(() => {
@@ -28,6 +32,12 @@ onMounted(() => {
         download: undefined,
       },
     });
+  }
+});
+
+watch(() => props.showModalDownloadPdf, (newVal) => {
+  if (newVal) {
+    open.value = true;
   }
 });
 </script>
@@ -140,7 +150,8 @@ onMounted(() => {
     .border_slide_thumbnail {
       padding: 24px;
       background: var(--Gradient-2, linear-gradient(90deg, #FF6931 1.09%, #FF9839 99.23%));
-      //border-radius: 8px;
+      display: flex;
+      justify-content: center;
 
       .slide_thumbnail {
         display: flex;

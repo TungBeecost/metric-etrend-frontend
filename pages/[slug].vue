@@ -31,6 +31,7 @@ const loadingRecommend = ref(true);
 const loadingSuggest = ref(true);
 const showButton = ref(false);
 const loading = ref(true); // Add loading state
+const showModalDownloadPdf = ref(false);
 
 useHead({
   title: 'My App',
@@ -40,7 +41,7 @@ useHead({
   bodyAttrs: {
     class: 'test'
   },
-  script: [ { innerHTML: 'console.log(\'Hello world\')' } ]
+  script: [ { innerHTML: 'console.log(\'Hello world LDC\')' } ]
 })
 
 
@@ -83,8 +84,13 @@ const fetchRecommend = async (categoryReportId, number_of_reports = 18) => {
 };
 
 const handleScroll = () => {
-  const scrollThreshold = isMobile.value ? 800 : 850;
-  showAdvertisement.value = window.scrollY > scrollThreshold;
+  const scrollThreshold = isMobile.value ? 2000 : 850;
+  if (!isMobile.value) {
+    showAdvertisement.value = window.scrollY > scrollThreshold;
+  }
+  if (isMobile.value && window.scrollY > 2000) {
+    showModalDownloadPdf.value = true;
+  }
 };
 
 const fetchReportData = async (period) => {
@@ -259,7 +265,9 @@ onUnmounted(() => {
           </div>
           <div class="container_report_detail_right">
             <indept-report-link :slug="route.params.slug"
-                                :data="data.reportDetail"/>
+                                :data="data.reportDetail"
+                                :show-modal-download-pdf="showModalDownloadPdf"
+            />
             <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom"
                                   :breadcrumbs="data?.breadcrumbs" class="report-filter-detail"/>
           </div>
@@ -450,10 +458,6 @@ onUnmounted(() => {
   .container_report_detail{
     flex-direction: column;
     gap: 16px;
-  }
-
-  .container_report_detail_right {
-    order: -1;
   }
 
   .different_info {

@@ -392,17 +392,20 @@ export const PLANS: Array<IPLAN> = [
 interface IWALLET {
   code: string;
   label: string;
+  name: string;
   thumbnail: string;
 }
 export const WALLET: Array<IWALLET> = [
     {
         code: "momo",
         label: "Momo",
+        name: "Ví Momo",
         thumbnail: "/images/wallet/momo.png"
     },
     {
         code: "vnpay",
         label: "VnPay",
+        name: "VNPay QR",
         thumbnail: "/images/wallet/vnpay.png"
     }
     ];
