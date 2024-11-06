@@ -60,7 +60,7 @@ const formattedEndDate = formatDate(report.end_date);
         <div class="permission">
           <p class="includeLabel">Thông tin chi tiết</p>
           <div class="permissionList">
-            <p>• Số liệu sàn: {{ report.data_analytic.by_marketplace.lst_marketplace.map((marketplace: Marketplace) => marketplace.name).join(', ') }}</p>
+            <p>• Số liệu sàn: Shopee, Tiktok, Lazada, Tiki</p>
             <p>• Từ {{ formattedStartDate }} đến {{ formattedEndDate }}</p>
           </div>
         </div>

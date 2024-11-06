@@ -1,8 +1,7 @@
 <script setup>
 import {defineProps, computed, ref, onMounted, watchEffect} from 'vue';
-import {getUrlImageOption, goToUrl} from '~/helpers/utils.js';
+import {getUrlImageOption} from '~/helpers/utils.js';
 import Highcharts from "highcharts";
-import {getUrlAnalyticShop} from "~/services/MetricCommonService.js";
 
 const config = useRuntimeConfig();
 const renderChartSales = ref(false);

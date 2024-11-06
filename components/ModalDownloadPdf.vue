@@ -144,7 +144,8 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
         <div class="title_container">
           <div class="title_report">
             {{ props.data.can_download ? 'Tải báo cáo PDF' : 'Mua báo cáo thị trường' }}
-          </div>          <div>
+          </div>
+          <div>
             <div style="margin-bottom: 32px;">
               <div style="text-align: center; margin-bottom: 12px;">Nhóm hàng</div>
               <p>{{ props.data.name }}</p>

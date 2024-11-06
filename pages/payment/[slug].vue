@@ -7,13 +7,9 @@ import { message } from 'ant-design-vue';
 import { PAGE_TITLES } from "~/constant/constains";
 import PackServicePdf from "~/components/payment-service/PackServicePdf.vue";
 import CheckOutPdf from "~/components/payment-service/CheckOutPdf.vue";
-import {getIndexedDB} from "~/helpers/IndexedDBHelper";
-
-const currentUserStore = useCurrentUser();
-const { userInfo } = storeToRefs(currentUserStore);
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
-const { createPaymentTransactionPdf, verifyTransaction } = usePayment();
+const { createPaymentTransactionPdf, verifyTransaction, createPaymentTransactionPdfGuest } = usePayment();
 const selectedWalletOption = ref('');
 const qrCodeData = ref('');
 const openModal = ref<boolean>(false);
@@ -22,7 +18,7 @@ const planCode = ref('');
 const route = useRoute();
 const config = useRuntimeConfig();
 const reportDetail = ref<any>(null);
-const information = ref({ name: '', phone: '', companyName: '', taxCode: '', email: '', address: '' });
+const information = ref({ name: '', phone: '', emailAccount: '', companyName: '', taxCode: '', email: '', address: '' });
 const slug = route.params.slug;
 const reportLink = `https://ereport.vn/${slug}`;
 interface ErrorResponse {
@@ -49,7 +45,13 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
       const paymentMethod = selectedWalletOption.value;
       if (reportDetail.value && reportDetail.value.id) {
         try {
-          const transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+          let transactionResult = null;
+          if (information.value.emailAccount) {
+            console.log('information', information.value);
+            transactionResult = await createPaymentTransactionPdfGuest(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+          } else {
+            transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+          }
           if (transactionResult?.response?.payment_url) {
             window.location.href = transactionResult.response.payment_url;
           } else {
@@ -82,21 +84,13 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
 const fetchReportData = async () => {
   const slug = route.params.slug;
   try {
-    const accessToken = await getIndexedDB("access_token");
-    const visitorId = await getIndexedDB("__visitor");
     // const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
-    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
+    let url = `${config.public.API_ENDPOINT}/api/report/detail_payment?slug=${slug}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
     }
     reportDetail.value = await $fetch(
         url,
-        {
-          headers: {
-            'Authorization': `${accessToken}`,
-            'Visitorid': visitorId.visitor_id,
-          }
-        }
     );
   } catch (error) {
     console.log(error)
@@ -156,9 +150,10 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
   return { isCompleted };
 };
 
-const handleUpdateContact = (contact: { name: string, phone: string, companyName: string, taxCode: string, email: string, address: string }) => {
+const handleUpdateContact = (contact: { name: string, phone: string, emailAccount: string, companyName: string, taxCode: string, email: string, address: string }) => {
   information.value.name = contact.name;
   information.value.phone = contact.phone;
+  information.value.emailAccount = contact.emailAccount;
   information.value.companyName = contact.companyName;
   information.value.taxCode = contact.taxCode;
   information.value.email = contact.email;
