@@ -53,9 +53,12 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
           if (transactionResult?.response?.payment_url) {
             window.location.href = transactionResult.response.payment_url;
           } else {
-            qrCodeData.value = transactionResult.response.qrcode;
-            openModal.value = true;
-
+            if(transactionResult.response.status == 'done'){
+              openModalWaiting.value = true;
+            } else {
+              qrCodeData.value = transactionResult.response.qrcode;
+              openModal.value = true;
+            }
             const { isCompleted } = useCheckTransactionCompletion(transactionResult.response.transaction_id);
             isCompleted.value && (window.location.href = '/');
           }

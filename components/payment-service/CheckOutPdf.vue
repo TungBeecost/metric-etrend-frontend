@@ -72,7 +72,9 @@ const handlePayment = () => {
     return;
   }
 
-  if (!finalPrice.value) {
+  if (finalPrice.value === 0 && statusApplyCode.value) {
+    finalPrice.value = 0;
+  } else if (!finalPrice.value) {
     finalPrice.value = report.price;
   }
 
