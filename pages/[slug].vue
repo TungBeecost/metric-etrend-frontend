@@ -193,6 +193,11 @@ onMounted(() => {
 });
 
 onMounted(async () => {
+  const loginPayment = localStorage.getItem('loginPayment');
+  if (loginPayment) {
+    localStorage.removeItem('loginPayment');
+    navigateTo(loginPayment);
+  }
   data.value = await fetchReportData('2024M9_2023M10');
   listRecommend.value = await fetchRecommend(data.value?.categoryReportId);
   tagSuggestions.value = await fetchSuggest(data.value?.reportDetail?.name, { limit: 5 });

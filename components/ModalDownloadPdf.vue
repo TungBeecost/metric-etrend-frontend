@@ -34,10 +34,11 @@ const downloading = ref(false);
 
 const handleDownload = async () => {
   if (!currentUserStore.authenticated) {
+    emits('update:open', false);
+    localStorage.setItem('loginPayment', `${NAVIGATIONS.payment}/${route.params.slug}`);
     currentUserStore.setShowPopupLogin(true);
     return;
   }
-
   if (props.data.can_download) {
     const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${props.data.slug}&type=download`;
     const accessToken = await getIndexedDB("access_token");
@@ -54,8 +55,6 @@ const handleDownload = async () => {
             }
           }
       );
-
-      console.log('response', response)
       const {url_download} = response;
       downloading.value = false;
       if (url_download) {
@@ -100,6 +99,7 @@ const handleDownload = async () => {
   const slug = route.params.slug;
   navigateTo(`${NAVIGATIONS.payment}/${slug}`);
 };
+
 const handleView = async () => {
   if (!currentUserStore.authenticated) {
     currentUserStore.setShowPopupLogin(true);
