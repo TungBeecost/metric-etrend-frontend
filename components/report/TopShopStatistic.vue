@@ -282,7 +282,7 @@ const chartOptionsSales = computed(() => ({
   series: [
     {
       name: 'Doanh số (Đồng)',
-      data: (props.data?.data_analytic?.by_shop?.lst_top_shop_revenue || props.data?.data_analytic?.by_shop?.lst_shop).slice(0, 10).map(({name, revenue, ratio_revenue}, index) => ({
+      data: (props.data?.data_analytic?.by_shop?.lst_top_shop_revenue || props.data?.data_analytic?.by_shop?.lst_shop || []).slice(0, 10).map(({name, revenue, ratio_revenue}, index) => ({
         name: name,
         y: revenue || ratio_revenue,
         color: colors[index % colors.length]
@@ -339,7 +339,7 @@ const chartOptionsOutput = computed(() => ({
   series: [
     {
       name: 'Sản lượng (Đơn vị)',
-      data: (props.data?.data_analytic?.by_shop?.lst_top_shop_order || props.data?.data_analytic?.by_shop?.lst_shop).slice(0, 10).map(({name, sale, ratio_sale}, index) => ({
+      data: (props.data?.data_analytic?.by_shop?.lst_top_shop_order || props.data?.data_analytic?.by_shop?.lst_shop || []).slice(0, 10).map(({name, sale, ratio_sale}, index) => ({
         name: name,
         y: sale || ratio_sale,
         color: colors[index % colors.length]

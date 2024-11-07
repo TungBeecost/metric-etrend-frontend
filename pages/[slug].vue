@@ -291,9 +291,9 @@ onUnmounted(() => {
           :list-suggest="tagSuggestions"
           :loading="loadingSuggest"/>
       <transition name="fade">
-        <div v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category'" class="advertisement">
+        <div v-if="showAdvertisement && data?.reportDetail?.report_type !== 'report_category'" class="advertisement">
           <scroll-notification
-              v-if="data.reportDetail.name"
+              v-if="data?.reportDetail?.name"
               :data="data.reportDetail"
               :show-notification="showNotification"
               :show-button="showButton"
