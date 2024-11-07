@@ -17,6 +17,10 @@ const props = defineProps({
   isHideContent: {
     type: Boolean,
     default: () => true
+  },
+  loading: {
+    type: Boolean,
+    default: () => true
   }
 });
 

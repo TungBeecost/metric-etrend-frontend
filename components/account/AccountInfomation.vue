@@ -21,6 +21,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  loading: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFormat: string = "YYYY-MM-DD[T]HH:mm:ss"): string => {
@@ -54,7 +58,8 @@ watch(() => props.userInfo.current_plan.plan_code, (newPlanCode) => {
       <svg data-v-ebf597eb="" width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px;"><rect data-v-ebf597eb="" width="16" height="32" rx="4" fill="#EEEBFF"></rect></svg>
       <div class="account_info_header_title">Thông tin tài khoản</div>
     </div>
-    <div class="account_info_content default_section">
+    <a-skeleton v-if="loading" class="default_section" :paragraph="{ rows: 7 }"/>
+    <div v-else class="account_info_content default_section">
       <div class="user_info">
         <div class="basic_info">
           <img :src="props.userInfo.avatar" alt="user-avatar">

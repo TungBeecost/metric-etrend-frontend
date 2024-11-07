@@ -26,13 +26,11 @@ const props = defineProps({
     </div>
     <div class="searchContent">
       <SearchReport class="searchBox"/>
-      <div class="recommendSearch">
+      <a-skeleton v-if="loading" :paragraph="{ rows: 1 }"/>
+      <div  v-else class="recommendSearch">
         <div class="content_key">Từ khoá liên quan nổi bật: </div>
         <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-          <div v-if="props.loading">
-            <a-skeleton />
-          </div>
-          <AButton v-for="(item, index) in props.listSuggest" v-else :key="index" ghost class="recommendItem"
+          <AButton v-for="(item, index) in props.listSuggest" :key="index" ghost class="recommendItem"
                    @click="onClickSuggestion(item.name)">
             {{ item.name }}
           </AButton>

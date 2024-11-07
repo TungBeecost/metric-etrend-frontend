@@ -6,7 +6,8 @@ export const REPORT_ENDPOINTS: { [key: string]: { endpoint: string; method: METH
     marketing_report_recommend: {endpoint: `/api/report/marketing_report_recommend`, method: "GET"},
     claim: {endpoint: `/api/report/claim`, method: "GET"},
     claim_pdf: {endpoint: `/api/report/claim_pdf`, method: "GET"},
-    list_claimed: {endpoint: `/api/report/claimed-list`, method: "GET"}
+    list_claimed: {endpoint: `/api/report/claimed-list`, method: "GET"},
+    list_claimed_pdf: {endpoint: `/api/report/claimed-list-pdf`, method: "GET"}
 };
 
 export const AUTH_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {

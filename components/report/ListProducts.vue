@@ -14,6 +14,10 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  loading: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const config = useRuntimeConfig();
@@ -33,12 +37,6 @@ const isHideContentBasic = computed(() => {
 <template>
   <div>
     <div
-        v-if="
-      props.data.data_analytic &&
-      props.data.data_analytic.by_product &&
-      props.data.data_analytic.by_product.lst_product_revenue_30d &&
-      props.data.data_analytic.by_product.lst_product_revenue_30d.length > 0
-    "
         id="list-products"
         class="border statistic-block"
         style="margin-bottom: 16px;"
@@ -51,23 +49,19 @@ const isHideContentBasic = computed(() => {
         <div>
           <h3 class="statistic-item__title">Sản phẩm bán chạy</h3>
           <div
-              v-if="
-            props.data.data_analytic &&
-            props.data.data_analytic.by_product &&
-            props.data.data_analytic.by_product.lst_product_revenue_30d &&
-            props.data.data_analytic.by_product.lst_product_revenue_30d.length > 0
-          "
               class="statistic-item__subtitle"
           >Top sản phẩm doanh số cao nhất 30 ngày qua
           </div>
         </div>
       </div>
-      <div class="products-grid">
+      <a-skeleton v-if="loading" :paragraph="{ rows: 17 }"/>
+      <div v-else class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContentBasic ? 5 : 5)"
-            :key="product.product_base_id"
+            v-for="product in props.data?.data_analytic?.by_product?.lst_product_revenue_30d.slice(0, isHideContentBasic ? 5 : 5)"
+            :key="product?.product_base_id"
             :product-item="product"
             :product="product"
+            :loading="loading"
             :is-hide-content="isHideContent || isHideContentBasic"
         />
         <ChartMask
@@ -77,21 +71,25 @@ const isHideContentBasic = computed(() => {
             :report="data"
         />
       </div>
-      <div class="products-grid">
+      <a-skeleton v-if="loading" :paragraph="{ rows: 17 }"/>
+      <div v-else class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(5, isHideContentBasic ? 10 : 10)"
+            v-for="product in props.data?.data_analytic?.by_product?.lst_product_revenue_30d.slice(5, isHideContentBasic ? 10 : 10)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
+            :loading="loading"
             :is-hide-content="false"
         />
       </div>
-      <div class="products-grid">
+      <a-skeleton v-if="loading" :paragraph="{ rows: 17 }"/>
+      <div v-else class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(10, isHideContentBasic ? 20 : 20)"
+            v-for="product in props.data?.data_analytic?.by_product?.lst_product_revenue_30d.slice(10, isHideContentBasic ? 20 : 20)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
+            :loading="loading"
             :is-hide-content="isHideContent || isHideContentBasic"
         />
         <ChartMask
@@ -101,14 +99,9 @@ const isHideContentBasic = computed(() => {
             :report="data"
         />
       </div>
+      <a-skeleton v-if="loading" :paragraph="{ rows: 17 }"/>
     </div>
     <div
-        v-if="
-          props.data.data_analytic &&
-          props.data.data_analytic.by_product &&
-          props.data.data_analytic.by_product.lst_product_new_30d &&
-          props.data.data_analytic.by_product.lst_product_new_30d.length > 0
-        "
         id="list-products"
         class="border statistic-block"
         style="margin-bottom: 16px;"
@@ -121,23 +114,19 @@ const isHideContentBasic = computed(() => {
         <div>
           <h3 class="statistic-item__title">Sản phẩm trending</h3>
           <div
-              v-if="
-            props.data.data_analytic &&
-            props.data.data_analytic.by_product &&
-            props.data.data_analytic.by_product.lst_product_new_30d &&
-            props.data.data_analytic.by_product.lst_product_new_30d.length > 0
-          "
               class="statistic-item__subtitle"
           >Top sản phẩm mới tạo trong 30 ngày có doanh số cao
           </div>
         </div>
       </div>
-      <div class="products-grid">
+      <a-skeleton v-if="loading" :paragraph="{ rows: 17 }"/>
+      <div v-else class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(0, isHideContentBasic ? 5 : 5)"
+            v-for="product in props.data?.data_analytic?.by_product?.lst_product_new_30d.slice(0, isHideContentBasic ? 5 : 5)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
+            :loading="loading"
             :is-hide-content="isHideContent || isHideContentBasic"
         />
         <ChartMask
@@ -147,12 +136,14 @@ const isHideContentBasic = computed(() => {
             :report="data"
         />
       </div>
-      <div class="products-grid">
+      <a-skeleton v-if="loading" :paragraph="{ rows: 17 }"/>
+      <div v-else class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(5, isHideContentBasic ? 10 : 10)"
+            v-for="product in props.data?.data_analytic?.by_product.lst_product_new_30d.slice(5, isHideContentBasic ? 10 : 10)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
+            :loading="loading"
             :is-hide-content="false"
         />
       </div>

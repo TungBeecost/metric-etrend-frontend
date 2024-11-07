@@ -75,7 +75,6 @@ const parentHeight = ref(380);
 
 
 const handleResize = () => {
-  console.log('parentWidth', parentWidth.value)
   const isMobile = window.innerWidth < 768;
   let width = isMobile ? 320 : 540;
   let height = isMobile ? 230 : 380;

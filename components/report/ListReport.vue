@@ -52,10 +52,7 @@ const getDisplayedCategories = (item: any) => {
               <span v-if="item.lst_category">
                 {{ getDisplayedCategories(item) }}
               </span>
-              <span v-else>
-                {{ item.report_type }}
-              </span>
-              <span class="bf_date" style="color: #EEEBFF"> | </span>
+              <span v-if="item.report_type !== 'report_product_line'" class="bf_date" style="color: #EEEBFF"> | </span>
             </span>
             <span :class="(item.report_type === 'report_product_line' || item.report_type === 'report_category') ? 'display_none' : 'display'">{{ formatDate(item.end_date) }}</span>
           </div>

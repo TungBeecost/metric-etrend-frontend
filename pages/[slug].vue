@@ -30,7 +30,10 @@ const showNotification = ref(true);
 const loadingRecommend = ref(true);
 const loadingSuggest = ref(true);
 const showButton = ref(false);
-const loading = ref(true); // Add loading state
+const data = ref(null);
+const loading = ref(true);
+const listRecommend = ref([]);
+const tagSuggestions = ref([]);
 const showModalDownloadPdf = ref(false);
 
 useHead({
@@ -73,16 +76,6 @@ const trackEvent = (event, data) => {
   }
 };
 
-const fetchRecommend = async (categoryReportId, number_of_reports = 18) => {
-  try {
-    return await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.list_recomend.endpoint}?category_report_id=${categoryReportId}&number_of_reports=${number_of_reports}`);
-  } catch (error) {
-    return [];
-  } finally {
-    loadingRecommend.value = false;
-  }
-};
-
 const handleScroll = () => {
   const scrollThreshold = isMobile.value ? 2000 : 850;
   if (!isMobile.value) {
@@ -90,6 +83,16 @@ const handleScroll = () => {
   }
   if (isMobile.value && window.scrollY > 2000) {
     showModalDownloadPdf.value = true;
+  }
+};
+
+const fetchRecommend = async (categoryReportId, number_of_reports = 18) => {
+  try {
+    return await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.list_recomend.endpoint}?category_report_id=${categoryReportId}&number_of_reports=${number_of_reports}`);
+  } catch (error) {
+    return [];
+  } finally {
+    loadingRecommend.value = false;
   }
 };
 
@@ -131,9 +134,6 @@ const fetchReportData = async (period) => {
     if (tier_report !== 'e_community' || config.public.SSR === 'true') {
       isHideContent = false;
     }
-    const [listRecommend] = await Promise.all([
-      fetchRecommend(response.category_report_id)
-    ]);
 
     let breadcrumbs = [
       {
@@ -157,27 +157,18 @@ const fetchReportData = async (period) => {
 
     return {
       reportDetail: response,
-      listRecommend,
       isHideContent,
-      breadcrumbs
+      breadcrumbs,
+      categoryReportId: response.category_report_id
     };
   } catch (error) {
     console.log(error);
     await router.push('/search');
     return {};
   } finally {
-    loading.value = false;
+    loading.value = false; // Ensure loading state is updated correctly
   }
 };
-
-const { data } = await useAsyncData(() => fetchReportData('2023M9_2022M10'));
-
-const { data: tagSuggestions } = await useAsyncData(
-    'fetchSuggest',
-    async () => {
-      return await fetchSuggest(data?.reportDetail?.name, { limit: 5 });
-    }
-);
 
 const isMobile = ref(window?.innerWidth <= 768);
 
@@ -193,6 +184,12 @@ onMounted(() => {
   if (transactionId) {
     showModal.value = true;
   }
+});
+
+onMounted(async () => {
+  data.value = await fetchReportData('2023M9_2022M10');
+  listRecommend.value = await fetchRecommend(data.value?.categoryReportId);
+  tagSuggestions.value = await fetchSuggest(data.value?.reportDetail?.name, { limit: 5 });
 });
 
 const handleOk = () => {
@@ -212,86 +209,79 @@ onUnmounted(() => {
 </script>
 
 <template>
-<!--  <Head>-->
-<!--    <Title>{{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>-->
-<!--    <Meta hid="og:title" property="og:title" :content="`eReport - Báo cáo ${data?.reportDetail.name}`"/>-->
-<!--    <Meta hid="description" name="description"-->
-<!--          :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name} - Báo cáo xu hướng thị trường sàn TMĐT`"/>-->
-<!--    <Meta hid="og:description" name="og:description"-->
-<!--          :content="`Báo cáo chi tiết thị trường ${data?.reportDetail.name} - Báo cáo xu hướng thị trường sàn TMĐT`"/>-->
-<!--&lt;!&ndash;    <Meta hid="og:image" property="og:image"&ndash;&gt;-->
-<!--&lt;!&ndash;          :content="data?.reportDetail?.url_cover || data?.reportDetail?.url_thumbnail"/>&ndash;&gt;-->
-<!--&lt;!&ndash;    <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.reportDetail.name}`"/>&ndash;&gt;-->
-<!--    <Link rel="canonical" :href="config.public.BASE_URL + route.fullPath"/>-->
-<!--    <component is="script" type="application/ld+json">-->
-<!--      {{-->
-<!--        JSON.stringify({-->
-<!--          '@context': 'https://schema.org',-->
-<!--          '@type': 'BreadcrumbList',-->
-<!--          itemListElement: [-->
-<!--            {-->
-<!--              "@type": "ListItem",-->
-<!--              position: 1,-->
-<!--              name: "Metric",-->
-<!--              item: "https://ereport.vn",-->
-<!--            },-->
-<!--            ...(data.reportDetail.lst_category || []).map((item, index) => ({-->
-<!--              "@type": "ListItem",-->
-<!--              position: index + 2,-->
-<!--              name: item.name,-->
-<!--              item: `https://ereport.vn/${item.slug}`,-->
-<!--            })),-->
-<!--          ]-->
-<!--        })-->
-<!--      }}-->
-<!--    </component>-->
-<!--  </Head>-->
   <div class="container_content">
-    <!--    <div v-if="loading" class="loading-spinner">-->
-    <!--      <a-spin style="width: 100%; display: flex; justify-content: center" size="large" />-->
-    <!--    </div>-->
     <div>
+<!--      {{data}}-->
       <div class="title default_section">
         <div class="breadcrumbs">
           <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
         </div>
-        <h1 class="title_main">
+        <a-skeleton v-if="loading" :paragraph="{ rows: 0 }"/>
+        <h1 v-else class="title_main">
           Báo cáo {{ data?.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT
         </h1>
         <div class="container_report_detail">
           <div class="container_report_detail_left">
-            <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
-            <report-content :data="data?.reportDetail"/>
+            <overview :loading="loading" :is-hide-content="data?.isHideContent" :data="data?.reportDetail"/>
+            <report-content :loading="loading" :data="data?.reportDetail"/>
           </div>
           <div class="container_report_detail_right">
             <indept-report-link :slug="route.params.slug"
-                                :data="data.reportDetail"
+                                :data="data?.reportDetail"
                                 :show-modal-download-pdf="showModalDownloadPdf"
+                                :loading="loading"
             />
-            <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom"
-                                  :breadcrumbs="data?.breadcrumbs" class="report-filter-detail"/>
+            <report-filter-detail :data="data?.reportDetail"
+                                  :filter="data?.filter_custom"
+                                  :breadcrumbs="data?.breadcrumbs"
+                                  :loading="loading"
+                                  class="report-filter-detail"
+            />
           </div>
         </div>
       </div>
       <div class="container default_section">
         <div class="general_overview_container">
-          <div v-if="loadingRecommend" class="default_section">
-            <a-skeleton/>
-          </div>
-          <relate-report v-else class="relate_report" :recomends="data?.listRecommend"/>
-          <h2 class="title_main ">
+          <relate-report :loading="loadingRecommend" class="relate_report" :recomends="listRecommend"/>
+          <a-skeleton v-if="loading" :paragraph="{ rows: 0 }"/>
+          <h2 v-else class="title_main ">
             Báo cáo tổng quan thị trường {{ data?.reportDetail.name }} trên sàn TMĐT
           </h2>
-          <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail"
-                             :is-hide-content="data.isHideContent"/>
-          <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+          <general-overview
+              :loading="loading"
+              :data="data?.reportDetail"
+              :is-hide-content="data?.isHideContent"
+          />
+          <keyword-statistic
+              :loading="loading"
+              :data="data?.reportDetail"
+              :is-hide-content="data?.isHideContent"
+          />
+          <price-range-statistic
+              :loading="loading"
+              :data="data?.reportDetail"
+              :is-hide-content="data?.isHideContent"
+          />
+          <brand-statistic
+              :loading="loading"
+              :data="data?.reportDetail"
+              :is-hide-content="data?.isHideContent"
+          />
+          <top-shop-statistic
+              :loading="loading"
+              :data="data?.reportDetail"
+              :is-hide-content="data?.isHideContent"
+          />
+          <list-products
+              :loading="loading"
+              :data="data?.reportDetail"
+              :is-hide-content="data?.isHideContent"
+          />
         </div>
       </div>
-      <poster-detail-report :list-suggest="tagSuggestions" :loading="loadingSuggest"/>
+      <poster-detail-report
+          :list-suggest="tagSuggestions"
+          :loading="loadingSuggest"/>
       <transition name="fade">
         <div v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category'" class="advertisement">
           <scroll-notification
@@ -381,6 +371,7 @@ onUnmounted(() => {
       display: flex;
       flex-direction: column;
       gap: 16px;
+      width: 100%;
 
       .report-title {
         font-size: 36px;

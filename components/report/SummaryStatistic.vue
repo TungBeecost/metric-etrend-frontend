@@ -11,7 +11,11 @@ const {data, isHideContent} = defineProps({
   isHideContent: {
     type: Boolean,
     default: false
-  }
+  },
+  loading: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const $t = (text) => {
@@ -22,7 +26,8 @@ const $t = (text) => {
 <template>
   <div class="SummaryStatistic">
     <div class="summary-statistic">
-      <div class="summary-statistic-item">
+      <a-skeleton v-if="loading" style="padding: 8px" :paragraph="{ rows: 2 }"/>
+      <div v-else class="summary-statistic-item">
         <div class="summary-statistic-item__icon">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                xmlns="http://www.w3.org/2000/svg">
@@ -43,7 +48,8 @@ const $t = (text) => {
           </div>
         </div>
       </div>
-      <div class="summary-statistic-item summary-statistic-item1">
+      <a-skeleton v-if="loading" style="padding: 8px" :paragraph="{ rows: 2 }"/>
+      <div v-else class="summary-statistic-item summary-statistic-item1">
         <div class="summary-statistic-item__icon">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                xmlns="http://www.w3.org/2000/svg">
@@ -64,7 +70,8 @@ const $t = (text) => {
           </div>
         </div>
       </div>
-      <div class="summary-statistic-item">
+      <a-skeleton v-if="loading" style="padding: 8px" :paragraph="{ rows: 2 }"/>
+      <div v-else class="summary-statistic-item">
         <div class="summary-statistic-item__icon">
           <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="0.5" y="0.5" width="55" height="55" rx="27.5" fill="#E8F4FF"/>
@@ -83,11 +90,12 @@ const $t = (text) => {
             {{ $t('Sản phẩm có lượt bán') }}
           </div>
           <div class="summary-statistic-item__value">
-            {{ formatNumberHuman(data.data_analytic.by_overview.product) }}
+            {{ formatNumberHuman(data?.data_analytic?.by_overview?.product) }}
           </div>
         </div>
       </div>
-      <div class="summary-statistic-item summary-statistic-item1">
+      <a-skeleton v-if="loading" style="padding: 8px" :paragraph="{ rows: 2 }"/>
+      <div v-else class="summary-statistic-item summary-statistic-item1">
         <div class="summary-statistic-item__icon">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                xmlns="http://www.w3.org/2000/svg">
@@ -110,7 +118,7 @@ const $t = (text) => {
             {{ $t('Shop có lượt bán') }}
           </div>
           <div class="summary-statistic-item__value">
-            {{ formatNumberHuman(data.data_analytic.by_overview.shop) }}
+            {{ formatNumberHuman(data?.data_analytic?.by_overview?.shop) }}
           </div>
         </div>
       </div>
