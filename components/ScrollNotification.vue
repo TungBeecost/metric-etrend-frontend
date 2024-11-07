@@ -186,6 +186,8 @@ onBeforeRouteLeave(() => {
 </template>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 .custom-notification {
   position: fixed;
   bottom: 20px;
@@ -197,6 +199,7 @@ onBeforeRouteLeave(() => {
   overflow: hidden;
   z-index: 999;
   padding: 12px;
+  font-family: 'Inter', sans-serif;
 }
 
 .button-notification {
@@ -205,12 +208,11 @@ onBeforeRouteLeave(() => {
   right: 20px;
   width: 350px;
   height: 40px;
-  //background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
   overflow: hidden;
   z-index: 9999;
-
+  font-family: 'Inter', sans-serif;
 }
 
 .notification-content {
@@ -232,8 +234,7 @@ onBeforeRouteLeave(() => {
 
 .notification-body {
   margin-top: 16px;
-
-  font-family: Montserrat, sans-serif;
+  font-family: 'Inter', sans-serif;
 
   p {
     font-size: 14px;

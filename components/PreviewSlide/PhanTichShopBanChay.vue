@@ -181,7 +181,7 @@ const shopDetail = computed(() => {
 const chartOptions = computed(() => {
   const chartTextStyle = {
     fontSize: "8px",
-    fontFamily: "Montserrat",
+    fontFamily: "Inter",
     fontWeight: 400
   };
 
@@ -191,7 +191,7 @@ const chartOptions = computed(() => {
         width: 500,
         height: 230,
         style: {
-          fontFamily: "Montserrat",
+          fontFamily: "Inter",
         },
       },
       title: {

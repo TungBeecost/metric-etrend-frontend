@@ -170,7 +170,7 @@ const chartOptionsShopType = computed(() => ({
       fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
-      fontFamily: 'Montserrat'
+      fontFamily: "Inter",
     }
   },
   subtitle: {
@@ -250,7 +250,7 @@ const chartOptionsSales = computed(() => ({
       fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
-      fontFamily: 'Montserrat'
+      fontFamily: "Inter",
     }
   },
   legend: {
@@ -307,7 +307,7 @@ const chartOptionsOutput = computed(() => ({
       fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
-      fontFamily: 'Montserrat'
+      fontFamily: "Inter",
     }
   },
   legend: {

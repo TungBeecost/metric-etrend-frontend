@@ -146,7 +146,7 @@ const chartOptionsSales = computed(() => ({
       fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
-      fontFamily: 'Montserrat'
+      fontFamily: "Inter",
     }
   },
   subtitle: {
@@ -174,7 +174,7 @@ const chartOptionsSales = computed(() => ({
           fontSize: '12px',
           color: '#241E46',
           fontWeight: 400,
-          fontFamily: 'Montserrat'
+          fontFamily: "Inter",
         },
       }
     },
@@ -209,7 +209,7 @@ const chartOptionsOutput = computed(() => ({
       fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
-      fontFamily: 'Montserrat'
+      fontFamily: "Inter",
     }
   },
   subtitle: {

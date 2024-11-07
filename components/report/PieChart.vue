@@ -89,7 +89,7 @@ watchEffect(() => {
       width: chartWidth.value,
       // height: chartWidth.value,
       style: {
-        fontFamily: "Montserrat, Inter, sans-serif",
+        fontFamily: "Inter, sans-serif",
       },
     },
     // tooltip: tooltip.value,

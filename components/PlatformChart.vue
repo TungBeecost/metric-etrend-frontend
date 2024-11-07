@@ -80,7 +80,7 @@ const chartOptions = computed(() => ({
       fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
-      fontFamily: 'Montserrat'
+      fontFamily: "Inter",
     }
   },
   legend: {
@@ -122,7 +122,7 @@ const chartOptions = computed(() => ({
           fontSize: '12px',
           color: '#241E46',
           fontWeight: 400,
-          fontFamily: 'Montserrat'
+          fontFamily: "Inter",
         },
         formatter: function () {
           if (isHideContent && this.point.name !== 'Shopee') {
