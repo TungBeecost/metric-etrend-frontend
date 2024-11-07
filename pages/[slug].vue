@@ -193,7 +193,7 @@ onMounted(() => {
 });
 
 onMounted(async () => {
-  data.value = await fetchReportData('2023M9_2022M10');
+  data.value = await fetchReportData('2024M9_2023M10');
   listRecommend.value = await fetchRecommend(data.value?.categoryReportId);
   tagSuggestions.value = await fetchSuggest(data.value?.reportDetail?.name, { limit: 5 });
 });
