@@ -20,6 +20,8 @@ const props = defineProps({
   }
 });
 
+const isMobile = computed(() => window.innerWidth <= 768);
+
 const showNotification = ref(props.showNotification);
 const showButton = ref(props.showButton);
 const open = ref(false);
@@ -66,7 +68,7 @@ onBeforeRouteLeave(() => {
 </script>
 
 <template>
-  <div v-if="showNotification" class="custom-notification">
+  <div v-if="showNotification && !isMobile" class="custom-notification">
     <div class="notification-content">
       <div class="notification-header">
         <svg width="100" height="26" viewBox="0 0 100 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -243,7 +245,15 @@ onBeforeRouteLeave(() => {
 
 @media (max-width: 768px) {
   .button-notification {
-    width: 400px;
+    width: 100%;
+    bottom: 4px;
+    right: 0;
+  }
+
+  .custom-notification{
+    right: 0;
+    width: 100%;
+    bottom: 4px;
   }
 }
 </style>

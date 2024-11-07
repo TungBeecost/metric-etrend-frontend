@@ -49,7 +49,7 @@ watch(() => props.showModalDownloadPdf, (newVal) => {
 <template>
   <div  class="dept_report_link">
     <a-skeleton-image v-if="loading"/>
-    <a-skeleton v-if="loading" size="large" :paragraph="{ rows: 10 }"/>
+    <a-skeleton style="padding: 16px" v-if="loading" size="large" :paragraph="{ rows: 10 }"/>
     <div v-else class="container">
       <div class="border_slide_thumbnail">
         <ReportPreviewSlide :data="props.data" :is-slug-page="true"/>

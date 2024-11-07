@@ -17,6 +17,7 @@ import RelateReport from "~/components/RelateReport.vue";
 import ScrollNotification from "~/components/ScrollNotification.vue";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
 import { useHead } from 'unhead'
+import moment from "moment/moment.js";
 
 
 const route = useRoute();
@@ -76,6 +77,10 @@ const trackEvent = (event, data) => {
   }
 };
 
+const formatDate = (date) => {
+  return moment(date).format('DD/MM/YYYY');
+};
+
 const handleScroll = () => {
   const scrollThreshold = isMobile.value ? 2000 : 850;
   if (!isMobile.value) {
@@ -83,6 +88,7 @@ const handleScroll = () => {
   }
   if (data.value && isMobile.value && window.scrollY > 2000) {
     showModalDownloadPdf.value = true;
+    showAdvertisement.value = window.scrollY > scrollThreshold;
   }
 };
 
@@ -211,7 +217,6 @@ onUnmounted(() => {
 <template>
   <div class="container_content">
     <div>
-<!--      {{data}}-->
       <div class="title default_section">
         <div class="breadcrumbs">
           <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
@@ -243,9 +248,12 @@ onUnmounted(() => {
       <div class="container default_section">
         <div class="general_overview_container">
           <relate-report :loading="loadingRecommend" class="relate_report" :recomends="listRecommend"/>
-          <a-skeleton v-if="loading" :paragraph="{ rows: 0 }"/>
+          <a-skeleton v-if="loading" :paragraph="{ rows: 1 }"/>
           <h2 v-else class="title_main ">
             Báo cáo tổng quan thị trường {{ data?.reportDetail.name }} trên sàn TMĐT
+            <p style="font-weight: 400; font-size: 16px; line-height: 28px">
+              Từ {{ formatDate(data?.reportDetail?.start_date) }} đến {{ formatDate(data?.reportDetail?.end_date) }}
+            </p>
           </h2>
           <general-overview
               :loading="loading"
