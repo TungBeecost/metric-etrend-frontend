@@ -282,7 +282,7 @@ const chartOptionsSales = computed(() => ({
   series: [
     {
       name: 'Doanh số (Đồng)',
-      data: (props.data?.data_analytic?.by_shop?.lst_top_shop_revenue || props.data?.data_analytic?.by_shop?.lst_shop || []).slice(0, 10).map(({name, revenue, ratio_revenue}, index) => ({
+      data: (props.data?.data_analytic?.by_shop?.lst_top_shop_revenue || props.data?.data_analytic?.by_shop?.lst_top_shop || []).slice(0, 10).map(({name, revenue, ratio_revenue}, index) => ({
         name: name,
         y: revenue || ratio_revenue,
         color: colors[index % colors.length]
