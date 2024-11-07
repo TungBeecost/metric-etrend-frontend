@@ -94,8 +94,8 @@ watchEffect(() => {
       ? {
         enabled: true,
         formatter: function () {
-          const name = ![5, 7, 9].includes(this.point.index) && this.point.categoryName?.length > 0
-              ? `${this.point.categoryName} ${this.point.index + 1}`
+          const name = ![5, 7, 9].includes(this.point.index)
+              ? `Đã bị ẩn`
               : this.point.name;
           return `${name}<br/>
             <svg width="10" height="10">
@@ -114,8 +114,8 @@ watchEffect(() => {
       ? {
         enabled: true,
         formatter: function () {
-          const name = ![5, 7, 9].includes(this.point.index) && this.point.categoryName?.length > 0
-              ? `${this.point.categoryName} ${this.point.index + 1}`
+          const name = ![5, 7, 9].includes(this.point.index)
+              ? `Đã bị ẩn`
               : this.point.name;
           return `${name}<br/>
             <svg width="10" height="10">
