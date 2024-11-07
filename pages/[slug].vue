@@ -81,7 +81,7 @@ const handleScroll = () => {
   if (!isMobile.value) {
     showAdvertisement.value = window.scrollY > scrollThreshold;
   }
-  if (isMobile.value && window.scrollY > 2000) {
+  if (data.value && isMobile.value && window.scrollY > 2000) {
     showModalDownloadPdf.value = true;
   }
 };
