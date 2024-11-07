@@ -237,7 +237,7 @@ const charts = computed(() => {
           yAxis: 0,
           zIndex: 1,
           data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
-              .slice()
+              .slice(0, 12)
               .map(
                   (monthly: {
                     sale: number,
@@ -256,7 +256,7 @@ const charts = computed(() => {
           yAxis: 1,
           borderRadius: 3,
           data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
-              .slice()
+              .slice(0, 12)
               .map(
                   (monthly: {
                     revenue: number,
