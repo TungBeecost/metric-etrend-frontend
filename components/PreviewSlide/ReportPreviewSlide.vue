@@ -126,6 +126,7 @@ watch(() => props.dynamicScale, handleResize);
 
 .slide-components {
   display: flex;
+  overflow: hidden;
   transition: transform 0.5s ease;
 }
 
