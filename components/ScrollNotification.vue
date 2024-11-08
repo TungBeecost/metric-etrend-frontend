@@ -183,9 +183,9 @@ onBeforeRouteLeave(() => {
   </div>
   <div v-else class="button-notification">
     <button
-        style="display: flex; width: 95%; height: 40px; padding: 9px 16px; flex-direction: column; justify-content: center; align-items: center; border-radius: 8px; background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 99.23%); color: #fff; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"
+        style="display: flex; width: 100%; height: 40px; padding: 9px 16px; flex-direction: column; justify-content: center; align-items: center; border-radius: 8px; background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 99.23%); color: #fff; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"
         @click="handleOpenModal">
-      Xem báo cáo chi tiết
+      Tải báo cáo chi tiết
     </button>
   </div>
   <modal-download-pdf v-model:open="open" :data="props.data"/>
