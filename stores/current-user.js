@@ -38,9 +38,8 @@ export const getDeviceInformation = async () => {
 
 export const useCurrentUser = defineStore("currentUserStore", {
     state: () => {
-        const isServerRender = process.env.SSR === 'true'
-
-        console.log('isServerRender', isServerRender)
+        const config = useRuntimeConfig();
+        const isServerRender = config.public.SSR === 'true'
 
         return {
             fetchedUser: isServerRender,

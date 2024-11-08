@@ -41,7 +41,6 @@ onMounted(() => {
 });
 
 const isHideContentBasic = computed(() => {
-  console.log('isHideContentBasic', config.public.SSR);
   if (config.public.SSR === 'true') {
     return false;
   }

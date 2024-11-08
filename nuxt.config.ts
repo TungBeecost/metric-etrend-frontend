@@ -82,6 +82,7 @@ export default defineNuxtConfig({
             gtagId: 'GTM-522F9NZ',
             apiBase: process.env.API_ENDPOINT,
             API_ENDPOINT: process.env.API_ENDPOINT,
+            URL_AUTH_SERVICE_API: process.env.URL_AUTH_SERVICE_API,
             BASE_URL: process.env.BASE_URL,
             MODE: process.env.MODE,
             SSR: process.env.SSR,
