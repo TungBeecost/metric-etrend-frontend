@@ -15,6 +15,10 @@ const props = defineProps({
     type: Boolean,
     default: () => true,
   },
+  loading: {
+    type: Boolean,
+    default: () => true,
+  },
 });
 
 const formatPriceRange = (priceRange, prefix = ['trên', 'dưới']) => {
@@ -28,8 +32,8 @@ const formatPriceRange = (priceRange, prefix = ['trên', 'dưới']) => {
 };
 
 const priceRangesSortBy = (field = 'revenue') => {
-  const {lst_price_range} = props.data.data_analytic.by_price_range;
-  return lst_price_range.slice().sort((a, b) => b[field] - a[field]) || [];
+  const lst_price_range = props.data.data_analytic?.by_price_range?.lst_price_range;
+  return lst_price_range ? lst_price_range.slice().sort((a, b) => b[field] - a[field]) : [];
 };
 
 const diffMonths = computed(() => {
@@ -60,14 +64,18 @@ const platformColors = {
 };
 
 const chartOptions = computed(() => {
-  const BY__PRICE_RANGE = [...props.data.data_analytic.by_price_range.lst_price_range].sort((a, b) => {
-    if (!a.begin) {
-      return -1;
-    }
-    return a.begin - b.end;
-  });
+  const BY__PRICE_RANGE = props.data.data_analytic?.by_price_range?.lst_price_range
+      ? [...props.data.data_analytic.by_price_range.lst_price_range].sort((a, b) => {
+        if (!a.begin) {
+          return -1;
+        }
+        return a.begin - b.end;
+      })
+      : [];
 
-  const lstPlatform = BY__PRICE_RANGE[0].lst_platform.map((item) => item.platform_id).reverse();
+  const lstPlatform = BY__PRICE_RANGE.length > 0
+      ? BY__PRICE_RANGE[0].lst_platform.map((item) => item.platform_id).reverse()
+      : [];
 
   return {
     chart: {
@@ -116,8 +124,8 @@ const chartOptions = computed(() => {
       },
     },
     xAxis: {
-      categories: BY__PRICE_RANGE.map(({begin, end} = {}) => {
-        return formatPriceRange({begin, end}, ['<', '>']);
+      categories: BY__PRICE_RANGE.map(({ begin, end } = {}) => {
+        return formatPriceRange({ begin, end }, ['<', '>']);
       }),
       title: {
         text: 'Mức giá (Đồng)',
@@ -188,13 +196,11 @@ const chartOptions = computed(() => {
     ],
     series: [
       {
-        name: 'Số sản phẩm đã bán cả 3 sàn',
+        name: 'Số sản phẩm đã bán',
         color: '#1A1A46',
         type: 'spline',
         zIndex: 10,
-        data: props.data.data_analytic.by_price_range.lst_price_range
-            .slice()
-            .map((item) => item.sale),
+        data: BY__PRICE_RANGE.map((item) => item.sale),
       },
       ...lstPlatform.map((platformId) => {
         const platform = getPlatformById(platformId);
@@ -204,8 +210,8 @@ const chartOptions = computed(() => {
           borderRadius: 4,
           yAxis: 1,
           data: BY__PRICE_RANGE.map(
-              ({lst_platform}) => lst_platform.find(
-                  ({platform_id}) => platform_id === platformId
+              ({ lst_platform }) => lst_platform.find(
+                  ({ platform_id }) => platform_id === platformId
               )?.revenue || 0
           ),
           tooltip: {
@@ -230,29 +236,33 @@ const chartOptions = computed(() => {
         <h3 class="statistic-item__title">Phân khúc giá</h3>
       </div>
     </div>
-    <div class="my-4 w-full text-center relative" style="position: relative">
+    <a-skeleton v-if="loading" :paragraph="{ rows: 10 }"/>
+    <div v-else class="my-4 w-full text-center relative" style="position: relative">
       <highchart :options="chartOptions"/>
       <ChartMask v-if="props.isHideContent" :report="props.data"/>
     </div>
-    <InsightBlock
-        v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length"
-    >
-      <li>
-        Trong {{ diffMonths }} qua, phân khúc khách hàng thị trường {{ props.data.name }} thường mua chủ yếu ở mức giá khoảng
+    <a-skeleton v-if="loading" :paragraph="{ rows: 3 }"/>
+    <div v-else>
+      <InsightBlock
+          v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length"
+      >
+        <li>
+          Trong {{ diffMonths }} qua, phân khúc khách hàng thị trường {{ props.data.name }} thường mua chủ yếu ở mức giá khoảng
           {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
           {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}.
-      </li>
-      <li
-          v-if="priceRangesSortBy('revenue') &&priceRangesSortBy('revenue').length > 1"
-      >
-        Phân khúc giá phổ biến của {{ props.data.name }} là
+        </li>
+        <li
+            v-if="priceRangesSortBy('revenue') &&priceRangesSortBy('revenue').length > 1"
+        >
+          Phân khúc giá phổ biến của {{ props.data.name }} là
           {{ priceRangesSortBy("sale")[0].begin ? formatCurrency(priceRangesSortBy("sale")[0].begin) + ' - ' : '< ' }}
           {{ formatCurrency(priceRangesSortBy("sale")[0].end) }}
-        ,
+          ,
           {{ formatCurrency(priceRangesSortBy("revenue")[1].begin) }} -
           {{ formatCurrency(priceRangesSortBy("revenue")[1].end) }}.
-      </li>
-    </InsightBlock>
+        </li>
+      </InsightBlock>
+    </div>
   </div>
 </template>
 

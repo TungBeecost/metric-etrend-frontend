@@ -192,7 +192,7 @@ const charts = computed(() => {
         width: 330,
         height: 210,
         style: {
-          fontFamily: "Montserrat",
+          fontFamily: "Inter",
         },
       },
       title: {
@@ -217,7 +217,7 @@ const charts = computed(() => {
         }
       },
       legend: {
-        itemStyle: { fontSize: "8px", fontFamily: "Montserrat", fontWeight: 400 },
+        itemStyle: { fontSize: "8px", fontFamily: "Inter", fontWeight: 400 },
         symbolRadius: 1,
       },
       series: [
@@ -246,7 +246,7 @@ const charts = computed(() => {
         type: 'column',
       },
       legend: {
-        itemStyle: { fontSize: "8px", fontFamily: "Montserrat", fontWeight: 400 },
+        itemStyle: { fontSize: "8px", fontFamily: "Inter", fontWeight: 400 },
         reversed: true,
         symbolRadius: 1,
       },
@@ -256,14 +256,14 @@ const charts = computed(() => {
             text: "Doanh số (VNĐ)",
             style: {
               fontSize: "8px",
-              fontFamily: "Montserrat",
+              fontFamily: "Inter",
               fontWeight: 400
             },
           },
           labels: {
             style: {
               fontSize: "8px",
-              fontFamily: "Montserrat",
+              fontFamily: "Inter",
               fontWeight: 400
             },
           },
@@ -273,14 +273,14 @@ const charts = computed(() => {
             text: "Số sản phẩm đã bán",
             style: {
               fontSize: "8px",
-              fontFamily: "Montserrat",
+              fontFamily: "Inter",
               fontWeight: 400
             },
           },
           labels: {
             style: {
               fontSize: "8px",
-              fontFamily: "Montserrat",
+              fontFamily: "Inter",
               fontWeight: 400
             },
           },
@@ -292,7 +292,7 @@ const charts = computed(() => {
         labels: {
           style: {
             fontSize: "8px",
-            fontFamily: "Montserrat",
+            fontFamily: "Inter",
             fontWeight: 400
           }
         }

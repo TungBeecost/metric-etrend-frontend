@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
-import {defineProps, ref, onMounted} from "vue";
-import {useRoute} from "vue-router";
+import {defineProps, ref, onMounted, watch} from "vue";
+import {useRoute, useRouter} from "vue-router";
 import ReportPreviewSlide from "~/components/PreviewSlide/ReportPreviewSlide.vue";
 
 const open = ref(false);
@@ -15,6 +15,14 @@ const props = defineProps({
   data: {
     type: Object,
     default: () => ({}),
+  },
+  showModalDownloadPdf: {
+    type: Boolean,
+    default: false,
+  },
+  loading: {
+    type: Boolean,
+    default: true,
   },
 });
 
@@ -30,11 +38,19 @@ onMounted(() => {
     });
   }
 });
+
+watch(() => props.showModalDownloadPdf, (newVal) => {
+  if (newVal) {
+    open.value = true;
+  }
+});
 </script>
 
 <template>
-  <div class="dept_report_link">
-    <div class="container">
+  <div  class="dept_report_link">
+    <a-skeleton-image v-if="loading"/>
+    <a-skeleton v-if="loading" style="padding: 16px" size="large" :paragraph="{ rows: 10 }"/>
+    <div v-else class="container">
       <div class="border_slide_thumbnail">
         <ReportPreviewSlide :data="props.data" :is-slug-page="true"/>
       </div>
@@ -140,7 +156,8 @@ onMounted(() => {
     .border_slide_thumbnail {
       padding: 24px;
       background: var(--Gradient-2, linear-gradient(90deg, #FF6931 1.09%, #FF9839 99.23%));
-      //border-radius: 8px;
+      display: flex;
+      justify-content: center;
 
       .slide_thumbnail {
         display: flex;
@@ -171,5 +188,12 @@ onMounted(() => {
     }
 
   }
+}
+</style>
+
+<style lang="scss">
+.ant-skeleton-image{
+  width: 100% !important;
+  height: 400px !important;
 }
 </style>

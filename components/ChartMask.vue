@@ -1,6 +1,7 @@
 <script setup>
 import {onMounted, ref} from 'vue';
 import { NAVIGATIONS } from "~/constant/constains";
+import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
 
 const isDesktop = ref(true);
 const currentUserStore = useCurrentUser();
@@ -40,15 +41,11 @@ const handleButtonClick = () => {
   if (handleUnlockReport) {
     return handleUnlockReport();
   }
-  if (userInfo.value.id) {
-    if(okButton === 'Nâng cấp ngay'){
-      navigateTo(`${NAVIGATIONS.pricing}`);
-    }
-    else{
-      toggleUnlock();
-    }
-  } else {
-    currentUserStore.setShowPopupLogin(true);
+  if(okButton === 'Nâng cấp ngay'){
+    navigateTo(`${NAVIGATIONS.pricing}`);
+  }
+  else{
+    toggleUnlock();
   }
 };
 
@@ -104,8 +101,7 @@ const toggleUnlock = () => {
       </div>
     </div>
   </div>
-
-  <ModalUnlock v-model:showUnlock="showUnlock" :report="report"/>
+  <modal-download-pdf v-model:open="showUnlock" :data="report"/>
 </template>
 
 <style lang="scss" scoped>

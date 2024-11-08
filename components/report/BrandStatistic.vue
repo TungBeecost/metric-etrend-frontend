@@ -12,6 +12,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  loading: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const renderChartSales = ref(false);
@@ -32,7 +36,15 @@ const chartWidth = computed(() => {
   } else if (windowWidth.value < 1500) {
     return 400;
   } else {
-    return 700;
+    return 600;
+  }
+});
+
+const chartHeight = computed(() => {
+  if (windowWidth.value < 1200) {
+    return 300;
+  } else {
+    return 400;
   }
 });
 
@@ -58,8 +70,8 @@ watchEffect(() => {
       ? {
         enabled: true,
         formatter: function () {
-          const name = ![5, 7, 9].includes(this.point.index) && this.point.categoryName?.length > 0
-              ? `${this.point.categoryName} ${this.point.index + 1}`
+          const name = ![5, 7, 9].includes(this.point.index)
+              ? `Đã bị ẩn`
               : this.point.name;
           return `${name}<br/>
             <svg width="10" height="10">
@@ -78,8 +90,8 @@ watchEffect(() => {
       ? {
         enabled: true,
         formatter: function () {
-          const name = ![5, 7, 9].includes(this.point.index) && this.point.categoryName?.length > 0
-              ? `${this.point.categoryName} ${this.point.index + 1}`
+          const name = ![5, 7, 9].includes(this.point.index)
+              ? `Đã bị ẩn`
               : this.point.name;
           return `${name}<br/>
             <svg width="10" height="10">
@@ -123,18 +135,18 @@ const chartOptionsSales = computed(() => ({
   chart: {
     type: "pie",
     width: chartWidth.value || 500,
+    height: chartHeight.value || 400,
     style: {
       fontFamily: "Inter",
     },
   },
   title: {
-    text: `<h4>Top 10 thương hiệu theo doanh số</h4>`,
-    useHTML: true,
+    text: `<div style="text-align: center;"><h4>Top 10 thương hiệu theo doanh số</h4></div>`,    useHTML: true,
     style: {
       fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
-      fontFamily: 'Montserrat'
+      fontFamily: "Inter",
     }
   },
   subtitle: {
@@ -162,7 +174,7 @@ const chartOptionsSales = computed(() => ({
           fontSize: '12px',
           color: '#241E46',
           fontWeight: 400,
-          fontFamily: 'Montserrat'
+          fontFamily: "Inter",
         },
       }
     },
@@ -173,7 +185,7 @@ const chartOptionsSales = computed(() => ({
   series: [
     {
       name: 'Doanh số (Đồng)',
-      data: props.data.data_analytic.by_brand.lst_top_brand_revenue.map(({name, revenue, ratio_revenue}, index) => ({
+      data: props.data.data_analytic.by_brand.lst_top_brand_revenue.slice(0, 10).map(({name, revenue, ratio_revenue}, index) => ({
         name: name,
         y: revenue || ratio_revenue,
         color: colors[index % colors.length]
@@ -186,18 +198,18 @@ const chartOptionsOutput = computed(() => ({
   chart: {
     type: "pie",
     width: chartWidth.value || 500,
+    height: chartHeight.value || 400,
     style: {
       fontFamily: "Inter",
     },
   },
   title: {
-    text: `<h4>Top 10 thương hiệu theo sản lượng</h4>`,
-    useHTML: true,
+    text: `<div style="text-align: center;"><h4>Top 10 thương hiệu theo sản lượng</h4></div>`,    useHTML: true,
     style: {
       fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
-      fontFamily: 'Montserrat'
+      fontFamily: "Inter",
     }
   },
   subtitle: {
@@ -247,7 +259,7 @@ const chartOptionsOutput = computed(() => ({
   series: [
     {
       name: 'Sản lượng (Đồng)',
-      data: props.data.data_analytic.by_brand.lst_top_brand_sale.map(({name, sale, ratio_sale}, index) => ({
+      data: props.data.data_analytic.by_brand.lst_top_brand_sale.slice(0, 10).map(({name, sale, ratio_sale}, index) => ({
         name: name,
         y: sale || ratio_sale,
         color: colors[index % colors.length]
@@ -263,11 +275,6 @@ const formattedBrandCount = computed(() => {
 
 <template>
   <div
-      v-if="
-      props.data.data_analytic.by_brand &&
-      props.data.data_analytic.by_brand.lst_top_brand_revenue &&
-      props.data.data_analytic.by_brand.lst_top_brand_revenue.length > 1
-    "
       id="thong-ke-thuong-hieu"
       class="border statistic-block"
   >
@@ -277,101 +284,111 @@ const formattedBrandCount = computed(() => {
       </svg>
       <div>
         <h3 class="statistic-item__title">Thương hiệu</h3>
-        <!--        <div style="font-size: 14px; color: #716B95">Chỉ thống kê số liệu sàn Shopee, Lazada, Tiki</div>-->
       </div>
     </div>
-    <div class="chart_item">
-      <div>
-        <highchart v-if="renderChartSales" :options="chartOptionsSales"/>
-      </div>
-      <div>
-        <highchart v-if="renderChartOutput" :options="chartOptionsOutput"/>
+    <a-skeleton v-if="loading" :paragraph="{ rows: 10 }"/>
+    <div v-else>
+      <div
+          v-if="props.data?.data_analytic?.by_brand &&
+          props.data?.data_analytic?.by_brand?.lst_top_brand_revenue &&
+          props.data?.data_analytic?.by_brand?.lst_top_brand_revenue.length > 1"
+          class="chart_item"
+      >
+        <div>
+          <highchart v-if="renderChartSales" :options="chartOptionsSales"/>
+        </div>
+        <div>
+          <highchart v-if="renderChartOutput" :options="chartOptionsOutput"/>
+        </div>
       </div>
     </div>
-    <InsightBlock
-        v-if="
-        props.data.data_analytic.by_brand &&
-        props.data.data_analytic.by_brand.lst_top_brand_revenue &&
-        props.data.data_analytic.by_brand.lst_top_brand_revenue.length > 1
+    <a-skeleton v-if="loading" :paragraph="{ rows: 3 }"/>
+    <div v-else>
+      <InsightBlock
+          v-if="
+        props.data?.data_analytic?.by_brand &&
+        props.data?.data_analytic?.by_brand?.lst_top_brand_revenue &&
+        props.data?.data_analytic?.by_brand?.lst_top_brand_revenue.length > 1
       "
-    >
-      <li>
-        Phân tích thị trường {{ data.name }} có hơn
-        <BlurContent :is-hide-content="isHideContent">
+      >
+        <li>
+          Phân tích thị trường {{ data?.name }} có hơn
+          <BlurContent :is-hide-content="isHideContent">
           <span>
             {{ formattedBrandCount }}
           </span>
-        </BlurContent>
+          </BlurContent>
 
-        thương hiệu chiếm
-        {{
-          Number(
-              data.data_analytic.by_brand.ratio?.brand.ratio_revenue * 100 || 0
-          ).toFixed(1)
-        }}% tổng doanh thu. So sánh giữa 10 thương hiệu hàng đầu,
-        <b class="text-bold">{{
-            data.data_analytic.by_brand.lst_top_brand_revenue[0].name
-          }}</b>
-        đang chiếm
-        <BlurContent :is-hide-content="isHideContent">
+          thương hiệu chiếm
+          {{
+            Number(
+                data?.data_analytic?.by_brand.ratio?.brand.ratio_revenue * 100 || 0
+            ).toFixed(1)
+          }}% tổng doanh thu. So sánh giữa 10 thương hiệu hàng đầu,
+          <b class="text-bold">{{
+              data.data_analytic?.by_brand?.lst_top_brand_revenue[0]?.name
+            }}</b>
+          đang chiếm
+          <BlurContent :is-hide-content="isHideContent">
           <span>
             {{
               Number(
-                  data.data_analytic.by_brand.lst_top_brand_revenue[0]
+                  data.data_analytic?.by_brand?.lst_top_brand_revenue[0]
                       .ratio_revenue * 100
               ).toFixed(2)
             }}
           </span>
-        </BlurContent>
-        % thị phần về doanh thu{{
-          data.data_analytic.by_brand.lst_top_brand_revenue[0].ratio_sale
-              ? " và " +
-              Number(
-                  data.data_analytic.by_brand.lst_top_brand_revenue[0].ratio_sale
-              ).toFixed(2) +
-              "% thị phần về sản lượng"
-              : ""
-        }}.
-        <template
-            v-if="
-            data.data_analytic.by_brand &&
-            data.data_analytic.by_brand.lst_top_brand_revenue &&
-            data.data_analytic.by_brand.lst_top_brand_revenue.length > 2
+          </BlurContent>
+          % thị phần về doanh thu{{
+            data.data_analytic?.by_brand?.lst_top_brand_revenue[0].ratio_sale
+                ? " và " +
+                Number(
+                    data.data_analytic?.by_brand?.lst_top_brand_revenue[0].ratio_sale
+                ).toFixed(2) +
+                "% thị phần về sản lượng"
+                : ""
+          }}.
+          <template
+              v-if="
+            data?.data_analytic?.by_brand &&
+            data?.data_analytic?.by_brand?.lst_top_brand_revenue &&
+            data?.data_analytic?.by_brand?.lst_top_brand_revenue.length > 2
           "
-        >Tiếp theo đó là
-          <b class="text-bold">
-            {{ data.data_analytic.by_brand.lst_top_brand_revenue[1].name }}
-          </b>
-          và
-          <b class="text-bold">{{
-              data.data_analytic.by_brand.lst_top_brand_revenue[2].name
-            }}</b>
-          tương ứng thị phần {{ data.name }} với doanh thu là
-          <BlurContent :is-hide-content="isHideContent">
+          >Tiếp theo đó là
+            <b class="text-bold">
+              {{ data?.data_analytic?.by_brand?.lst_top_brand_revenue[1].name }}
+            </b>
+            và
+            <b class="text-bold">{{
+                data.data_analytic?.by_brand?.lst_top_brand_revenue[2].name
+              }}</b>
+            tương ứng thị phần {{ data?.name }} với doanh thu là
+            <BlurContent :is-hide-content="isHideContent">
             <span>
               {{
                 Number(
-                    data.data_analytic.by_brand.lst_top_brand_revenue[1]
+                    data?.data_analytic?.by_brand?.lst_top_brand_revenue[1]
                         .ratio_revenue * 100
                 ).toFixed(2)
               }}
             </span>
-          </BlurContent>
-          % và
-          <BlurContent :is-hide-content="isHideContent">
+            </BlurContent>
+            % và
+            <BlurContent :is-hide-content="isHideContent">
             <span>
               {{
                 Number(
-                    data.data_analytic.by_brand.lst_top_brand_revenue[2]
+                    data.data_analytic?.by_brand?.lst_top_brand_revenue[2]
                         .ratio_revenue * 100
                 ).toFixed(2)
               }}
             </span>
-          </BlurContent>
-          %.
-        </template>
-      </li>
-    </InsightBlock>
+            </BlurContent>
+            %.
+          </template>
+        </li>
+      </InsightBlock>
+    </div>
   </div>
 </template>
 

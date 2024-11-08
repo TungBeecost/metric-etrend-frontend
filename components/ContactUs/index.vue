@@ -85,15 +85,7 @@ const isSubmitFormLoading = useState('LandingPage.isSubmitFormLoading', () => fa
 
 const handleSubmitLeadForm = async () => {
   isSubmitFormLoading.value = true
-  // const userProfile = authStore.userProfile
   const variables = await getGlobalVariable();
-
-  console.log('variables', variables);
-  // console.log('formData', formData.value);
-  //
-  // isSubmitFormLoading.value = false
-  // return
-
   const utm_source = variables?.utm_source || ''
   const utm_medium = variables?.utm_medium || ''
   const utm_campaign = variables?.utm_campaign || ''

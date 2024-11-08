@@ -75,13 +75,12 @@ const chartOptions = computed(() => ({
     },
   },
   title: {
-    text: `<h4>Tỷ trọng doanh số ${data.name} theo sàn</h4>`,
-    useHTML: true,
+    text: `<div style="text-align: center;"><h4>Tỷ trọng doanh số ${data.name} theo sàn</h4></div>`,    useHTML: true,
     style: {
       fontSize: '16px',
       color: '#241E46',
       fontWeight: 700,
-      fontFamily: 'Montserrat'
+      fontFamily: "Inter",
     }
   },
   legend: {
@@ -123,7 +122,7 @@ const chartOptions = computed(() => ({
           fontSize: '12px',
           color: '#241E46',
           fontWeight: 400,
-          fontFamily: 'Montserrat'
+          fontFamily: "Inter",
         },
         formatter: function () {
           if (isHideContent && this.point.name !== 'Shopee') {

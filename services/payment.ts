@@ -174,6 +174,67 @@ export const createTransactionPdf = async (
     }
 };
 
+export const createTransactionPdfGuest = async (
+    paymentMethod: string,
+    report_id: string,
+    redirectUrl: string,
+    totalPrice: string,
+    discountCode: string | null,
+    reportLink: string,
+    name: string | null,
+    phone: string | null,
+    emailAccount: string | null,
+    company: string | null,
+    tax_code: string | null,
+    receive_email: string | null,
+    address: string | null
+) => {
+    try {
+        const params = new URLSearchParams({
+            payment_method: paymentMethod,
+            report_id: report_id,
+            redirect_url: redirectUrl,
+            total_price: totalPrice,
+            report_link: reportLink
+        });
+
+        if (discountCode) {
+            params.append('discount_code', discountCode);
+        }
+        if (name) {
+            params.append('name', name);
+        }
+        if (phone) {
+            params.append('phone', phone);
+        }
+        if (emailAccount) {
+            params.append('email_account', emailAccount);
+        }
+        if (company) {
+            params.append('company', company);
+        }
+        if (tax_code) {
+            params.append('tax_code', tax_code);
+        }
+        if (receive_email) {
+            params.append('receive_email', receive_email);
+        }
+        if (address) {
+            params.append('address', address);
+        }
+
+        const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment_pdf_guest.endpoint)}?${params.toString()}`, {}, {
+            headers: {
+                'accept': 'application/json',
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("createTransaction error: ", error);
+        return null;
+    }
+}
+
 export const checkTransactionStatus = async (transactionId: string) => {
     try {
         const response = await axios.get(`${useBEEndpoint(PAYMENT_ENDPOINTS.checkTransaction.endpoint)}?transaction_code=${transactionId}`, {

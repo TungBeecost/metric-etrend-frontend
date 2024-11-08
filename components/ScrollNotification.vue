@@ -17,8 +17,14 @@ const props = defineProps({
   showButton: {
     type: Boolean,
     default: false
+  },
+  showModalDownloadPdf: {
+    type: Boolean,
+    default: false
   }
 });
+
+const isMobile = computed(() => window.innerWidth <= 768);
 
 const showNotification = ref(props.showNotification);
 const showButton = ref(props.showButton);
@@ -66,7 +72,7 @@ onBeforeRouteLeave(() => {
 </script>
 
 <template>
-  <div v-if="showNotification" class="custom-notification">
+  <div v-if="showNotification && !isMobile" class="custom-notification">
     <div class="notification-content">
       <div class="notification-header">
         <svg width="100" height="26" viewBox="0 0 100 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -179,13 +185,15 @@ onBeforeRouteLeave(() => {
     <button
         style="display: flex; width: 100%; height: 40px; padding: 9px 16px; flex-direction: column; justify-content: center; align-items: center; border-radius: 8px; background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 99.23%); color: #fff; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"
         @click="handleOpenModal">
-      Xem báo cáo chi tiết
+      Tải báo cáo chi tiết
     </button>
   </div>
   <modal-download-pdf v-model:open="open" :data="props.data"/>
 </template>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 .custom-notification {
   position: fixed;
   bottom: 20px;
@@ -197,6 +205,7 @@ onBeforeRouteLeave(() => {
   overflow: hidden;
   z-index: 999;
   padding: 12px;
+  font-family: 'Inter', sans-serif;
 }
 
 .button-notification {
@@ -205,12 +214,11 @@ onBeforeRouteLeave(() => {
   right: 20px;
   width: 350px;
   height: 40px;
-  //background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
   overflow: hidden;
-  z-index: 9999;
-
+  z-index: 999;
+  font-family: 'Inter', sans-serif;
 }
 
 .notification-content {
@@ -232,11 +240,26 @@ onBeforeRouteLeave(() => {
 
 .notification-body {
   margin-top: 16px;
-
-  font-family: Montserrat, sans-serif;
+  font-family: 'Inter', sans-serif;
 
   p {
     font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .button-notification {
+    width: 100%;
+    bottom: 4px;
+    right: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .custom-notification{
+    right: 0;
+    width: 95%;
+    bottom: 4px;
   }
 }
 </style>

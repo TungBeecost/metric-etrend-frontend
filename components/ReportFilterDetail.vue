@@ -17,6 +17,10 @@ const props = defineProps({
     type: Array as () => Breadcrumb[],
     default: () => [],
   },
+  loading: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const showDetailPopup = ref(false);
@@ -41,7 +45,7 @@ const reportFilterDisplayFields = computed(() => {
     'category',
     'lst_keyword',
     'lst_keyword_required',
-    'lst_keyword_exclude',
+    // 'lst_keyword_exclude',
     'is_remove_fake_sale',
   ];
 });
@@ -61,7 +65,7 @@ const fieldLabel: FieldLabels = {
   lst_category_base_id: 'Ngành hàng',
   lst_keyword: 'Từ khóa',
   lst_keyword_required: 'Từ khóa bắt buộc',
-  lst_keyword_exclude: 'Từ khóa loại trừ',
+  // lst_keyword_exclude: 'Từ khóa loại trừ',
   is_remove_fake_sale: 'Lọc bỏ sản phẩm ảo/bất thường',
   date_range: 'Dữ liệu phân tích trong khoảng',
 };
@@ -85,10 +89,8 @@ const fieldValueParse: FieldValueParsers = {
     return value.map((platformId: number) => PLATFORMS[platformId]).join(', ');
   },
   lst_bee_category_base_id: (lst_bee_category: string[]) => lst_bee_category ? (lst_bee_category.map(bee_category => allReports.find(cat => cat.value === bee_category)?.label)).join(', ') : '',
-  lst_keyword: (value: string[]) => value ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : '',
-  lst_keyword_required: (value: string[]) => value ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : '',
-  lst_keyword_exclude: (value: string[]) => value ? value.length > 10 ? `${value.slice(0, 10).join(', ')}, ...` : value.join(', ') : '',
-  // lst_keyword_exclude: (value: string[]) => value ? (value).join(', ') : '',
+  lst_keyword: (value: string[]) => value && value.length > 0 ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : 'không có',
+  lst_keyword_required: (value: string[]) => value && value.length > 0 ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : 'không có',
   is_smart_queries: (value: boolean) => value ? 'Có' : 'Không',
   is_remove_fake_sale: (value: boolean) => value ? 'Loại trừ sản phẩm có tỉ lệ đánh giá / lượt bán thấp hơn 5%' : 'Không',
   date_range: () => {
@@ -105,27 +107,22 @@ const fieldValueParse: FieldValueParsers = {
 <template>
   <div class="report-filter">
     <div class="report-filter-title">
-      <!--      <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-      <!--        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>-->
-      <!--      </svg>-->
       <h2 class="title">
         Phạm vi báo cáo
       </h2>
     </div>
-    <div class="report-filter-content">
+    <a-skeleton v-if="loading" size="large" :paragraph="{ rows: 20 }"/>
+    <div v-else class="report-filter-content">
       <div v-for="field in reportFilterDisplayFields" :key="field">
         <div class="report-filter-field">
           <div class="report-filter-field-title">
             {{ fieldLabel[field] }}
           </div>
           <div class="report-filter-field-value">
-            {{ fieldValueParse[field] ? fieldValueParse[field](props.data.data_filter_report[field]) : 'N/A' }}
+            {{ props.data.data_filter_report && fieldValueParse[field] ? fieldValueParse[field](props.data.data_filter_report[field]) : 'N/A' }}
           </div>
         </div>
       </div>
-<!--      <a-button type="link" @click="showDetailPopup = true">-->
-<!--        Xem chi tiết-->
-<!--      </a-button>-->
     </div>
 
     <a-modal v-model:visible="showDetailPopup" title="Chi tiết báo cáo" width="800px">

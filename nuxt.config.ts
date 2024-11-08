@@ -21,6 +21,11 @@ export default defineNuxtConfig({
                     content:
                         "eReport là Kho báo cáo thị trường Ecommerce toàn diện giúp Doanh nghiệp, Thương hiệu và Nhà bán tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu chính xác nhất.",
                 },
+                {
+                    hid: "og:image",
+                    property: "og:image",
+                    content: "https://lh3.googleusercontent.com/pw/AP1GczMTZp0lf_VW7W_Y6n3qg602m-LlqfpCIeVX_i4D3pnqT6FiloK5hY86XfTsqVHd4xRRs9tSKppP6FZdEPWO_V8D_UEsfj8KEnChoiU7zyiwDlHzZaTeAePmGxcqzG98qDJ9bahok5MhwtDzp3EKTiI_=w1600-h900-s-no-gm?authuser=0",
+                },
                 { name: "google-site-verification", content: "-A5h4Bx3cBpC9vnJxfRvxvegNFZgMorMQlE6M76uLbc" },
                 { name: "zalo-platform-site-verification", content: "N8Qw0ApqOJbHzja6h_fi0bwDtIIo-mrwD3arc" },
             ],
@@ -49,13 +54,13 @@ export default defineNuxtConfig({
                   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                  })(window,document,'script','dataLayer','GTM-MLBXG49P');`,
+                  })(window,document,'script','dataLayer','GTM-522F9NZ');`,
                     type: 'text/javascript'
                 }
             ],
             noscript: [
                 {
-                    children: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MLBXG49P"
+                    children: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-522F9NZ"
                   height="0" width="0" style="display:none;visibility:hidden"></iframe>`
                 }
             ],
@@ -74,19 +79,19 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         public: {
-            gtagId: 'GTM-MLBXG49P',
+            gtagId: 'GTM-522F9NZ',
             apiBase: process.env.API_ENDPOINT,
             API_ENDPOINT: process.env.API_ENDPOINT,
             BASE_URL: process.env.BASE_URL,
             MODE: process.env.MODE,
             SSR: process.env.SSR,
             gtm: {
-                id: 'GTM-MLBXG49P',
+                id: 'GTM-522F9NZ',
             },
         },
         publicRuntimeConfig: {
             gtm: {
-                id: 'GTM-MLBXG49P',
+                id: 'GTM-522F9NZ',
             },
         },
     },
@@ -159,7 +164,7 @@ export default defineNuxtConfig({
     },
 
     gtm: {
-        id: 'GTM-MLBXG49P',
+        id: 'GTM-522F9NZ',
     },
 
     site: {

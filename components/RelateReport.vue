@@ -7,7 +7,11 @@ const props = defineProps({
   recomends: {
     type: Array as () => LstRecommed[],
     required: true
-  }
+  },
+  loading: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const handleItemClick = (item: LstRecommed) => {
@@ -27,14 +31,12 @@ const getRandomReplacement = () => {
 <template>
   <div class="raleted_report">
     <div class="title">
-      <!--      <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-      <!--        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>-->
-      <!--      </svg>-->
       <h2 class="title_content">
         Báo cáo liên quan
       </h2>
     </div>
-    <div class="grid">
+    <a-skeleton v-if="loading" :paragraph="{ rows: 7 }"/>
+    <div v-else class="grid">
       <div v-for="item in props.recomends" :key="item.id" class="item" @click="handleItemClick(item)">
         <div class="info">
           <nuxt-link :to="item.source === 'marketing' ? `/insight/${item.slug}` : `/${item.slug}`" class="name">

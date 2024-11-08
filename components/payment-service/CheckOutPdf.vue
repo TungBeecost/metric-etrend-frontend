@@ -5,10 +5,12 @@ import { defineEmits, ref, defineProps } from 'vue';
 import { formatCurrency } from "~/helpers/FormatHelper";
 import TotalPaymentPdf from "~/components/payment-service/TotalPaymentPdf.vue";
 import FormVat from "~/components/payment-service/FormVat.vue";
-
+const currentUserStore = useCurrentUser();
+const { userInfo } = storeToRefs(currentUserStore);
 const discountValue = ref<string>('');
 const nameValue = ref<string>('');
 const phoneValue = ref<string>('');
+const emailAccount = ref<string>('');
 const errors = useState<Partial<IFormValue>>(() => ({}));
 const discountInfo = ref<any>({});
 const finalPrice = ref<number>(0);
@@ -26,6 +28,7 @@ interface IFormValue {
   taxCode?: string;
   email?: string;
   address?: string;
+  emailAccount?: string;
 }
 
 const { report } = defineProps({
@@ -55,9 +58,20 @@ const handlePayment = () => {
     errors.value.phone = '';
   }
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!userInfo.value.id && !emailAccount.value) {
+    errors.value.emailAccount = 'Bạn cần nhập email tài khoản mua hàng';
+  } else if (!emailRegex.test(emailAccount.value)) {
+    errors.value.emailAccount = 'Email không hợp lệ';
+  } else {
+    errors.value.emailAccount = '';
+  }
+
   emit('updateContact', {
     name: nameValue.value,
     phone: phoneValue.value,
+    emailAccount: emailAccount.value,
     companyName: formVatValues.value.companyName,
     taxCode: formVatValues.value.taxCode,
     email: formVatValues.value.email,
@@ -68,11 +82,16 @@ const handlePayment = () => {
     return;
   }
 
-  if (!nameValue.value || !phoneValue.value || errors.value.name || errors.value.phone) {
+  if (!nameValue.value || !phoneValue.value || errors.value.name || errors.value.phone ) {
+    if(!userInfo.value.email && errors.value.emailAccount){
+      return;
+    }
     return;
   }
 
-  if (!finalPrice.value) {
+  if (finalPrice.value === 0 && statusApplyCode.value) {
+    finalPrice.value = 0;
+  } else if (!finalPrice.value) {
     finalPrice.value = report.price;
   }
 
@@ -199,8 +218,25 @@ const fetchDiscount = async () => {
               :is-required="true"
               :input-props="{ placeholder: 'Nhập SĐT' }"
           />
-          <CustomInputDiscount v-model:input="discountValue" :status-apply-code="statusApplyCode" style="display: flex" :error-message="errors.discount"
-                               label="Nhập mã giảm giá" :is-required="true" :input-props="{ placeholder: 'Nhập mã giảm giá' }" @apply-discount="handleDiscount"/>
+          <CustomInput
+              v-if="!userInfo.id"
+              v-model:input="emailAccount"
+              class="emailAccount"
+              :error-message="errors.emailAccount"
+              label="Email tài khoản mua hàng"
+              :is-required="true"
+              :input-props="{ placeholder: 'Nhập email' }"
+          />
+          <CustomInputDiscount
+              v-model:input="discountValue"
+              :status-apply-code="statusApplyCode"
+              style="display: flex"
+              :error-message="errors.discount"
+              label="Nhập mã giảm giá"
+              :is-required="true"
+              :input-props="{ placeholder: 'Nhập mã giảm giá' }"
+              @apply-discount="handleDiscount"
+          />
         </div>
       </div>
       <div class="total">

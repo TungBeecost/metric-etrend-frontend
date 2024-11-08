@@ -27,15 +27,11 @@
           <div
               v-for="platform in props.data.filter_custom?.lst_platform_id" :key="platform" class="platform"
           >
-<!--            <img-->
-<!--                :src="require(`@/assets/svg/${platformIcons[platform]}`)"-->
-<!--                alt=""-->
-<!--            />-->
           </div>
         </div>
         <div class="links">
           <div>
-            https://ereport.vn/{{ props.data.slug }}
+            https://metric.vn/ereport/{{ props.data.slug }}
           </div>
         </div>
       </div>

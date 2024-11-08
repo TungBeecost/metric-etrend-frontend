@@ -25,13 +25,10 @@ const emit = defineEmits(['finalPrice']);
 
 const calculateDiscountAmount = (planPriceDiscount: number, discount: any) => {
   if (!discount || !discount.discount || !statusApplyCode.value) {
-    console.log('No discount info available.');
     return 0;
   }
 
   const { discount_type, discount_value, maximum_discount } = discount.discount;
-  console.log('Discount Details:', { discount_type, discount_value, maximum_discount });
-
   let discountAmount = 0;
 
   if (discount_type === 'percentage') {
@@ -60,7 +57,10 @@ const updateValues = async () => {
   }
 };
 
-const finalPrice = computed(() => props.report.price - discountAmount.value - promotionalDiscount.value);
+const finalPrice = computed(() => {
+  const price = props.report.price - discountAmount.value - promotionalDiscount.value;
+  return price < 0 ? 0 : price;
+});
 
 watch([discountInfo, statusApplyCode], updateValues);
 
@@ -93,10 +93,13 @@ onMounted(() => {
     </div>
     <div class="calculate_item">
       <div class="total">Thành tiền</div>
-      <div class="total_price">{{ formatCurrency(finalPrice) }}</div>
+      <div class="total_price">
+        {{ finalPrice === 0 ? '0đ' : formatCurrency(finalPrice) }}
+      </div>
     </div>
   </div>
 </template>
+
 <style scoped lang="scss">
 .calculate {
   display: flex;

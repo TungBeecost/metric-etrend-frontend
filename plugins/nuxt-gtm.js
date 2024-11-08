@@ -3,7 +3,7 @@ import { createGtm } from '@gtm-support/vue-gtm'
 
 export default defineNuxtPlugin(nuxtApp => {
     const gtmConfig = {
-        id: 'GTM-MLBXG49P',
+        id: 'GTM-522F9NZ',
         queryParams: {
             gtm_auth: process.env.GTM_AUTH,
             gtm_preview: process.env.GTM_PREVIEW,

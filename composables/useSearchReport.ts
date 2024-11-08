@@ -1,5 +1,5 @@
 import {
-    fetchClaimedListReport,
+    fetchClaimedListReport, fetchClaimedPDFListReport,
     fetchListRecommendReport,
     fetchListRecommendReportMarketing,
     searchReport,
@@ -73,6 +73,20 @@ export default function useSearchReport() {
         }
     }
 
+    const fetchClaimedPDFList = async (page: number = 0, limit: number = 10) => {
+        try {
+            const response = await fetchClaimedPDFListReport(page, limit);
+            if (!response) {
+                console.error("fetchClaimedPDFList error: No response");
+                return null;
+            }
+            return response;
+        } catch (error) {
+            console.error("fetchClaimedPDFList error: ", error);
+            return null;
+        }
+    }
+
     const fetchListRecommendMarketing = async (numberOfReports: number = 5, report_type: string = '') => {
         try {
             return await fetchListRecommendReportMarketing(numberOfReports, report_type);
@@ -82,5 +96,5 @@ export default function useSearchReport() {
         }
     }
 
-    return {fetchSearch, fetchSuggest, fetchListRecommend, fetchListRecommendMarketing, fetchClaimedList};
+    return {fetchSearch, fetchSuggest, fetchListRecommend, fetchListRecommendMarketing, fetchClaimedList, fetchClaimedPDFList};
 }

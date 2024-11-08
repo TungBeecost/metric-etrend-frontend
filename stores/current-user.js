@@ -74,9 +74,6 @@ export const useCurrentUser = defineStore("currentUserStore", {
         setShowPopupLogin(value) {
             this.showPopupLogin = value
         },
-        setShowPopupCampaign(value) {
-            this.showPopupCampaign = value
-        },
         async fetchCurrentUser() {
             if (typeof window === 'undefined') {
                 return;

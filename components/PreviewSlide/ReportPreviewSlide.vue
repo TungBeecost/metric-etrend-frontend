@@ -75,7 +75,6 @@ const parentHeight = ref(380);
 
 
 const handleResize = () => {
-  console.log('parentWidth', parentWidth.value)
   const isMobile = window.innerWidth < 768;
   let width = isMobile ? 320 : 540;
   let height = isMobile ? 230 : 380;
@@ -117,7 +116,6 @@ watch(() => props.dynamicScale, handleResize);
   position: relative;
   overflow: hidden;
   font-family: "Montserrat", sans-serif;
-
   width: 850px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   transform-origin: top left;
@@ -128,6 +126,7 @@ watch(() => props.dynamicScale, handleResize);
 
 .slide-components {
   display: flex;
+  overflow: hidden;
   transition: transform 0.5s ease;
 }
 
@@ -149,4 +148,5 @@ watch(() => props.dynamicScale, handleResize);
 .next-btn {
   right: 10px;
 }
+
 </style>

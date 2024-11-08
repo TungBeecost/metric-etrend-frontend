@@ -129,7 +129,7 @@ const charts = computed(() => {
         width: 400,
         height: 300,
         style: {
-          fontFamily: 'Montserrat',
+          fontFamily: "Inter",
         },
       },
       title: {
@@ -168,7 +168,7 @@ const charts = computed(() => {
         verticalAlign: 'middle',
         layout: 'vertical',
         itemMarginTop: 10,
-        itemStyle: {fontSize: '8px', fontFamily: 'Montserrat', fontWeight: 400}
+        itemStyle: {fontSize: '8px', fontFamily: 'Inter', fontWeight: 400}
       },
       series: [
         {
@@ -189,7 +189,7 @@ const charts = computed(() => {
         width: 400,
         height: 300,
         style: {
-          fontFamily: 'Montserrat',
+          fontFamily: "Inter",
         },
       },
       title: {
@@ -229,7 +229,7 @@ const charts = computed(() => {
         verticalAlign: 'middle',
         layout: 'vertical',
         itemMarginTop: 10,
-        itemStyle: {fontSize: '8px', fontFamily: 'Montserrat', fontWeight: 400}
+        itemStyle: {fontSize: '8px', fontFamily: 'Inter', fontWeight: 400}
       },
       series: [
         {

@@ -17,6 +17,10 @@ const props = defineProps({
   isHideContent: {
     type: Boolean,
     default: () => true
+  },
+  loading: {
+    type: Boolean,
+    default: () => true
   }
 });
 
@@ -524,9 +528,6 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
 }
 
 @media (max-width: 768px) {
-  .product-name {
-    -webkit-line-clamp: 1;
-  }
   .product-price-rating {
     display: flex;
     flex-direction: row;

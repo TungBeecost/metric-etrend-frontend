@@ -9,9 +9,21 @@ const props = defineProps({
     type: Array as () => ListClaimed[] | null,
     default: () => [],
   },
+  loading: {
+    type: Boolean,
+    default: true,
+  },
+  title:{
+    type: String,
+    default: 'Báo cáo chi tiết đã xem'
+  },
   total: {
     type: Number,
     default: 0,
+  },
+  pageSizes: {
+    type: Number,
+    default: 5,
   },
 });
 
@@ -32,13 +44,14 @@ const onChange = async (page: number) => {
            style="margin-right: 10px;">
         <rect data-v-ebf597eb="" width="16" height="32" rx="4" fill="#EEEBFF"></rect>
       </svg>
-      <div class="detailed_reports_viewed_header_title">Báo cáo chi tiết đã xem</div>
+      <div class="detailed_reports_viewed_header_title">{{title}}</div>
     </div>
-    <div class="detailed_reports_viewed_content default_section">
+    <a-skeleton v-if="loading" class="default_section" :paragraph="{ rows: 20 }"/>
+    <div v-else class="detailed_reports_viewed_content default_section">
       <div v-if="props.data?.length" style="display: flex; flex-direction: column; gap: 24px; margin: 24px">
         <list-report :data="props.data"/>
         <div class="page">
-          <a-pagination v-model:current="current" :total="props.total" show-less-items @change="onChange" />
+          <a-pagination v-model:current="current" :total="props.total" :page-size="pageSizes" show-less-items @change="onChange" />
         </div>
       </div>
       <div v-else>

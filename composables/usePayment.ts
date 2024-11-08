@@ -1,4 +1,11 @@
-import {checkTransactionStatus, createTransaction, createTransactionPdf, sendLeadInformation, createTransactionGuest} from "~/services/payment";
+import {
+    checkTransactionStatus,
+    createTransaction,
+    createTransactionPdf,
+    sendLeadInformation,
+    createTransactionGuest,
+    createTransactionPdfGuest
+} from "~/services/payment";
 
 export default function usePayment() {
     const createPaymentTransaction = async (paymentMethod: string, itemCode: string, redirectUrl: string, totalPrice: string, discountCode: string | null,  name: string | null, phone: string | null, company: string | null, tax_code: string | null, receive_email: string | null, address: string | null) => {
@@ -28,6 +35,15 @@ export default function usePayment() {
         }
     };
 
+    const createPaymentTransactionPdfGuest = async (paymentMethod: string, report_id: string, redirectUrl: string, totalPrice: string, discountCode: string | null, reportLink: string, name: string | null, phone: string | null, emailAccount: string | null, company: string | null, tax_code: string | null, receive_email: string | null, address: string | null) => {
+        try {
+            return await createTransactionPdfGuest(paymentMethod, report_id, redirectUrl, totalPrice, discountCode, reportLink, name, phone, emailAccount, company, tax_code, receive_email, address);
+        } catch (error) {
+            console.error("createPaymentTransaction error: ", error);
+            return null;
+        }
+    }
+
     const verifyTransaction = async (transactionId: string) => {
         try {
             return await checkTransactionStatus(transactionId);
@@ -46,5 +62,5 @@ export default function usePayment() {
         }
     };
 
-    return { createPaymentTransaction, verifyTransaction, submitLeadInformation, createPaymentTransactionPdf, createPaymentTransactionGuest };
+    return { createPaymentTransaction, verifyTransaction, submitLeadInformation, createPaymentTransactionPdf, createPaymentTransactionGuest, createPaymentTransactionPdfGuest };
 }
