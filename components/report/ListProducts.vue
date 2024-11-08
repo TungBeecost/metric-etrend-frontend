@@ -23,9 +23,9 @@ const props = defineProps({
 const config = useRuntimeConfig();
 
 const isHideContentBasic = computed(() => {
-  if (config.public.SSR === 'true') {
-    return false;
-  }
+  // if (config.public.SSR === 'true') {
+  //   return false;
+  // }
   if (props.data?.tier_report === 'e_basic' || props.data?.tier_report === 'e_basic_lite') {
     return true;
   }

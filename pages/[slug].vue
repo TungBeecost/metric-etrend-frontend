@@ -137,7 +137,7 @@ const fetchReportData = async (period) => {
     }
 
     const { tier_report } = response;
-    if (tier_report !== 'e_community' || config.public.SSR === 'true') {
+    if (tier_report !== 'e_community') {
       isHideContent = false;
     }
 
