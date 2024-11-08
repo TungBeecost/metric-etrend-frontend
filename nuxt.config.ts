@@ -2,13 +2,13 @@ import * as AntD from "ant-design-vue";
 import { addComponent } from "@nuxt/kit";
 
 export default defineNuxtConfig({
-    ssr: true, // Bật chế độ SSR
+    ssr: false, // Bật chế độ SSR
 
     app: {
         buildAssetsDir: '/ereport_nuxt/',
         baseURL:  process.env.BASE_PATH || '/',
         head: {
-            title: "eReport - Kho báo cáo Ecommerce toàn diệnnnnn",
+            title: "eReport - Kho báo cáo Ecommerce toàn diện",
             htmlAttrs: {
                 lang: "vi",
             },
