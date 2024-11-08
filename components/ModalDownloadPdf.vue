@@ -172,12 +172,12 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
           <div class="button_group">
             <a-button
                 type="primary"
-                style="height: 40px; font-size: 14px; box-shadow: 0 2px 0 rgba(0,0,0,.045); filter: drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 4px); font-family: Montserrat,serif;font-weight: 500"
+                style="width: 100%;height: 40px; font-size: 14px; box-shadow: 0 2px 0 rgba(0,0,0,.045); filter: drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 4px); font-family: Montserrat,serif;font-weight: 500"
                 class="download_report_button" :loading="downloading"
                 @click="handleDownload">
               {{ props.data.can_download ? 'Tải xuống báo cáo' : 'Mua báo cáo' }}
             </a-button>
-            <div class="button_group" v-if="userInfo.current_plan?.remain_claim_pdf && !props.data.can_download">
+            <div class="button_group_view" v-if="userInfo.current_plan?.remain_claim_pdf && !props.data.can_download">
               <div style="color: #716B95">hoặc</div>
               <a-button v-if="(userInfo.current_plan?.remain_claim_pdf ?? 0) > 0"
                         :disabled="!canViewReport"
@@ -223,7 +223,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
   display: flex;
   padding: 16px;
 
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
 
   .slide_thumbnail {
     display: flex;
@@ -242,7 +242,6 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
       display: flex;
       flex-direction: column;
       gap: 20px;
-      //margin-bottom: px;
 
       .title_report {
         color: #E85912;
@@ -252,18 +251,12 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
       }
 
       div {
-        //display: flex;
-        //flex-direction: column;
-        //gap: 24px;
-
         p {
           color: #241E46;
           text-align: center;
-          //font-family: Inter, sans-serif;
           font-size: 28px;
           font-weight: 700;
           line-height: 20px;
-
           margin-bottom: 12px;
         }
 
@@ -273,12 +266,10 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
           li {
             color: rgb(89, 90, 92);
             text-align: center;
-            //font-family: Inter, sans-serif;
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
-            line-height: 1.4; /* 133.333% */
-
+            line-height: 1.4;
             margin-bottom: 8px;
           }
         }
@@ -321,11 +312,19 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
     }
 
     .button_group {
-      width: 80%;
+      width: 300px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 12px;
+
+      .button_group_view {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
     }
 
     .wallet_info {
@@ -412,7 +411,6 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
   }
 }
 
-
 @media (max-width: 768px) {
   .noti_view_dept_report {
     margin-top: 16px;
@@ -425,8 +423,6 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
 .ant-modal {
   @media (max-width: 767px) {
     top: 20px;
-    //margin: 0 auto;
   }
 }
-
 </style>

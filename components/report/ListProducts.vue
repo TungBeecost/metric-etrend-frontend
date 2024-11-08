@@ -66,8 +66,8 @@ const isHideContentBasic = computed(() => {
         />
         <ChartMask
             v-if="isHideContent || isHideContentBasic"
-            :subtitle="isHideContent ? 'Bạn cần mở khoá để xem số liệu đầy đủ' : (isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' : '')"
-            :ok-button="isHideContent ? 'Mua báo cáo' : (isHideContentBasic ? '' : '')"
+            subtitle="Bạn cần mở khoá để xem số liệu đầy đủ"
+            ok-button="Mua báo cáo"
             :report="data"
         />
       </div>
@@ -94,8 +94,8 @@ const isHideContentBasic = computed(() => {
         />
         <ChartMask
             v-if="isHideContent || isHideContentBasic"
-            :subtitle="isHideContent ? 'Bạn cần mở khoá để xem số liệu đầy đủ' : (isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' : '')"
-            :ok-button="isHideContent ? 'Mua báo cáo' : (isHideContentBasic ? '' : '')"
+            subtitle="Bạn cần mở khoá để xem số liệu đầy đủ"
+            ok-button="Mua báo cáo"
             :report="data"
         />
       </div>
@@ -130,9 +130,9 @@ const isHideContentBasic = computed(() => {
             :is-hide-content="isHideContent || isHideContentBasic"
         />
         <ChartMask
-            v-if="isHideContentBasic"
-            :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
-            :ok-button="isHideContentBasic ? '' :'Xem báo cáo'"
+            v-if="isHideContent || isHideContentBasic"
+            subtitle="Bạn cần mở khoá để xem số liệu đầy đủ"
+            ok-button="Mua báo cáo"
             :report="data"
         />
       </div>

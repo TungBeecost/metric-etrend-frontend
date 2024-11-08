@@ -196,7 +196,7 @@ const chartOptions = computed(() => {
     ],
     series: [
       {
-        name: 'Số sản phẩm đã bán cả 3 sàn',
+        name: 'Số sản phẩm đã bán',
         color: '#1A1A46',
         type: 'spline',
         zIndex: 10,

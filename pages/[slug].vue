@@ -236,9 +236,9 @@ onUnmounted(() => {
             <report-content :loading="loading" :data="data?.reportDetail"/>
           </div>
           <div class="container_report_detail_right">
-            <indept-report-link :slug="route.params.slug"
+            <indept-report-link v-model:show-modal-download-pdf="showModalDownloadPdf"
+                                :slug="route.params.slug"
                                 :data="data?.reportDetail"
-                                :show-modal-download-pdf="showModalDownloadPdf"
                                 :loading="loading"
             />
             <report-filter-detail :data="data?.reportDetail"
@@ -306,7 +306,7 @@ onUnmounted(() => {
           />
         </div>
       </transition>
-    </div> <!-- Missing closing div for the main container -->
+    </div>
     <a-modal v-if="showModal" v-model:visible="showModal" width="600px" :footer="null" @ok="handleOk">
       <div class="modal_content">
         <div class="alert_success">

@@ -45,7 +45,7 @@ const reportFilterDisplayFields = computed(() => {
     'category',
     'lst_keyword',
     'lst_keyword_required',
-    'lst_keyword_exclude',
+    // 'lst_keyword_exclude',
     'is_remove_fake_sale',
   ];
 });
@@ -65,7 +65,7 @@ const fieldLabel: FieldLabels = {
   lst_category_base_id: 'Ngành hàng',
   lst_keyword: 'Từ khóa',
   lst_keyword_required: 'Từ khóa bắt buộc',
-  lst_keyword_exclude: 'Từ khóa loại trừ',
+  // lst_keyword_exclude: 'Từ khóa loại trừ',
   is_remove_fake_sale: 'Lọc bỏ sản phẩm ảo/bất thường',
   date_range: 'Dữ liệu phân tích trong khoảng',
 };
@@ -89,10 +89,8 @@ const fieldValueParse: FieldValueParsers = {
     return value.map((platformId: number) => PLATFORMS[platformId]).join(', ');
   },
   lst_bee_category_base_id: (lst_bee_category: string[]) => lst_bee_category ? (lst_bee_category.map(bee_category => allReports.find(cat => cat.value === bee_category)?.label)).join(', ') : '',
-  lst_keyword: (value: string[]) => value ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : '',
-  lst_keyword_required: (value: string[]) => value ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : '',
-  lst_keyword_exclude: (value: string[]) => value ? value.length > 10 ? `${value.slice(0, 10).join(', ')}, ...` : value.join(', ') : '',
-  // lst_keyword_exclude: (value: string[]) => value ? (value).join(', ') : '',
+  lst_keyword: (value: string[]) => value && value.length > 0 ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : 'không có',
+  lst_keyword_required: (value: string[]) => value && value.length > 0 ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : 'không có',
   is_smart_queries: (value: boolean) => value ? 'Có' : 'Không',
   is_remove_fake_sale: (value: boolean) => value ? 'Loại trừ sản phẩm có tỉ lệ đánh giá / lượt bán thấp hơn 5%' : 'Không',
   date_range: () => {
