@@ -1,27 +1,22 @@
 <script setup>
-import {defineProps, computed} from 'vue';
 
-const props = defineProps({
+const {tableOfContent, data} = defineProps({
   data: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   tableOfContent: {
     type: Array,
-    default: () => [],
-  },
-  loading: {
-    type: Boolean,
-    default: true,
-  },
+    default: () => []
+  }
 });
 
 const displayTableOfContent = computed(() => {
-  if (!props.data) {
+  if (!data) {
     return []
   }
 
-  if (props.data?.report_type === 'report_category') {
+  if (data?.report_type === 'report_category') {
     return [
       {
         title: `I. Tổng quan thị trường`,
@@ -70,8 +65,8 @@ const displayTableOfContent = computed(() => {
 
   }
 
-  if (props.data.report_type !== 'report_category' && props.data.report_type !== 'report_product_line') {
-    return props.data?.data_analytic?.table_of_content || [];
+  if (data.report_type !== 'report_category' && data.report_type !== 'report_product_line') {
+    return data?.data_analytic?.table_of_content || [];
   }
 
   return [
@@ -120,17 +115,21 @@ const displayTableOfContent = computed(() => {
     },
   ]
 })
+
 </script>
 
 <template>
   <div class="report_content">
     <div class="statistic-item__title">
+      <!--      <svg width="16" height="32" viewBox="0 0 16 32" fill="none"-->
+      <!--           xmlns="http://www.w3.org/2000/svg">-->
+      <!--        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>-->
+      <!--      </svg>-->
       <div>
         <h2 class="statistic-item__title">Nội dung báo cáo</h2>
       </div>
     </div>
-    <a-skeleton style="padding-top: 8px" v-if="props.loading" :paragraph="{ rows: 23 }"/>
-    <div v-else class="content">
+    <div class="content">
       <div v-for="(item, index) in displayTableOfContent">
         <div class="title">
           {{ item?.title || item }}
@@ -138,7 +137,7 @@ const displayTableOfContent = computed(() => {
         <ul v-if="item?.children?.length">
           <li v-for="child in item.children">{{ child.title }}</li>
         </ul>
-        <br v-else-if="index !== props.tableOfContent.length - 1">
+        <br v-else-if="index !== tableOfContent.length - 1">
       </div>
     </div>
   </div>

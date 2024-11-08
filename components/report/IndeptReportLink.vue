@@ -20,10 +20,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  loading: {
-    type: Boolean,
-    default: true,
-  },
 });
 
 onMounted(() => {
@@ -47,10 +43,8 @@ watch(() => props.showModalDownloadPdf, (newVal) => {
 </script>
 
 <template>
-  <div  class="dept_report_link">
-    <a-skeleton-image v-if="loading"/>
-    <a-skeleton v-if="loading" style="padding: 16px" size="large" :paragraph="{ rows: 10 }"/>
-    <div v-else class="container">
+  <div class="dept_report_link">
+    <div class="container">
       <div class="border_slide_thumbnail">
         <ReportPreviewSlide :data="props.data" :is-slug-page="true"/>
       </div>
@@ -188,12 +182,5 @@ watch(() => props.showModalDownloadPdf, (newVal) => {
     }
 
   }
-}
-</style>
-
-<style lang="scss">
-.ant-skeleton-image{
-  width: 100% !important;
-  height: 400px !important;
 }
 </style>

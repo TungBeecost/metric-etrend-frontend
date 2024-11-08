@@ -14,10 +14,6 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  loading: {
-    type: Boolean,
-    default: true,
-  },
 });
 
 const config = useRuntimeConfig();
@@ -136,8 +132,7 @@ const diffRevenueLatestQuarterPercent = computed(() => {
 </script>
 
 <template>
-  <a-skeleton v-if="loading" :paragraph="{ rows: 8 }"/>
-  <div v-else class="overview">
+  <div class="overview">
     <div class="content">
       <div>
         Báo cáo nghiên cứu thị trường <b>{{ props.data.name }}</b> trên sàn Thương mại điện tử

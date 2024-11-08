@@ -26,8 +26,7 @@ const $t = (text) => {
 <template>
   <div class="SummaryStatistic">
     <div class="summary-statistic">
-      <a-skeleton v-if="loading" style="padding: 8px" :paragraph="{ rows: 2 }"/>
-      <div v-else class="summary-statistic-item">
+      <div class="summary-statistic-item">
         <div class="summary-statistic-item__icon">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                xmlns="http://www.w3.org/2000/svg">
@@ -48,8 +47,7 @@ const $t = (text) => {
           </div>
         </div>
       </div>
-      <a-skeleton v-if="loading" style="padding: 8px" :paragraph="{ rows: 2 }"/>
-      <div v-else class="summary-statistic-item summary-statistic-item1">
+      <div class="summary-statistic-item summary-statistic-item1">
         <div class="summary-statistic-item__icon">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                xmlns="http://www.w3.org/2000/svg">
@@ -70,8 +68,7 @@ const $t = (text) => {
           </div>
         </div>
       </div>
-      <a-skeleton v-if="loading" style="padding: 8px" :paragraph="{ rows: 2 }"/>
-      <div v-else class="summary-statistic-item">
+      <div class="summary-statistic-item">
         <div class="summary-statistic-item__icon">
           <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="0.5" y="0.5" width="55" height="55" rx="27.5" fill="#E8F4FF"/>
@@ -94,8 +91,7 @@ const $t = (text) => {
           </div>
         </div>
       </div>
-      <a-skeleton v-if="loading" style="padding: 8px" :paragraph="{ rows: 2 }"/>
-      <div v-else class="summary-statistic-item summary-statistic-item1">
+      <div class="summary-statistic-item summary-statistic-item1">
         <div class="summary-statistic-item__icon">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                xmlns="http://www.w3.org/2000/svg">

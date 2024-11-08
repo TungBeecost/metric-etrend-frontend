@@ -25,25 +25,30 @@ const props = defineProps({
   },
 });
 
-const windowWidth = ref(window.innerWidth);
-const isMobile = window?.innerWidth < 768;
+const windowWidth = ref(0);
+const isMobile = ref(false);
 
 const newTabUrl = (url) => {
   window.open(url, '_blank');
 };
 
 onMounted(() => {
-  window.addEventListener('resize', () => {
+  if (typeof window !== 'undefined') {
     windowWidth.value = window.innerWidth;
-  });
+    isMobile.value = window.innerWidth < 768;
+    window.addEventListener('resize', () => {
+      windowWidth.value = window.innerWidth;
+      isMobile.value = window.innerWidth < 768;
+    });
+  }
   renderChartSales.value = true;
   renderChartOutput.value = true;
 });
 
 const isHideContentBasic = computed(() => {
-  // if (config.public.SSR === 'true') {
-  //   return false;
-  // }
+  if (config.public.SSR === 'true') {
+    return false;
+  }
   return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_pro_lite'
       || props.data?.tier_report === 'e_trial' || props.data?.tier_report === 'pt50'
       || props.data?.tier_report === 'pt100');
@@ -349,6 +354,11 @@ const chartOptionsOutput = computed(() => ({
 
 <template>
   <div
+      v-if="
+      props.data.data_analytic.by_shop &&
+      props.data.data_analytic.by_shop.lst_top_shop &&
+      props.data.data_analytic.by_shop.lst_top_shop.length > 1
+    "
       id="top-shop"
       class="border statistic-block mb-6"
   >
@@ -361,24 +371,17 @@ const chartOptionsOutput = computed(() => ({
         <h3 class="statistic-item__title">Shop hàng đầu</h3>
       </div>
     </div>
-    <a-skeleton v-if="loading" :paragraph="{ rows: 10 }"/>
-    <div v-else>
+    <div class="pie_chart">
       <div
-          v-if="props.data?.data_analytic?.by_shop &&
-        props.data?.data_analytic?.by_shop?.lst_top_shop &&
-        props.data?.data_analytic?.by_shop?.lst_top_shop.length > 1"
-          class="pie_chart"
+          v-if="props.data.data_analytic.by_shop.lst_top_shop.length > 1"
+          class="pie_chart_item"
+          style="flex-direction: column; gap: 24px; justify-content: flex-start"
       >
-        <div
-            v-if="props.data?.data_analytic?.by_shop?.lst_top_shop.length > 1"
-            class="pie_chart_item"
-            style="flex-direction: column; gap: 24px; justify-content: flex-start"
-        >
-          <h4 style="font-size: 16px; font-weight: bold; line-height: 22px; text-align: center; color: #241E46">Số lượng
-            shop</h4>
-          <div>
-            <a-table
-                :columns="[
+        <h4 style="font-size: 16px; font-weight: bold; line-height: 22px; text-align: center; color: #241E46">Số lượng
+          shop</h4>
+        <div>
+          <a-table
+              :columns="[
             {
               title: 'Loại shop',
               dataIndex: 'shop_type',
@@ -396,42 +399,43 @@ const chartOptionsOutput = computed(() => ({
               slots: {customRender: 'shop_count'}
             },
           ]"
-                :pagination="false"
-                :data-source="[
+              :pagination="false"
+              :data-source="[
             {
               shop_type: 'Shop Mall',
-              shop_count: props.data?.data_analytic?.by_shop?.ratio?.mall?.shop
+              shop_count: props.data.data_analytic.by_shop.ratio.mall.shop
             },
             {
               shop_type: 'Shop thường',
-              shop_count: props.data?.data_analytic?.by_shop?.ratio?.normal?.shop
+              shop_count: props.data.data_analytic.by_shop.ratio.normal.shop
             }
           ]"
-            >
-              <template #shop_count="{text}">
-                <BlurContent :is-hide-content="isHideContentBasic">
-                  {{ text }}
-                </BlurContent>
-              </template>
-            </a-table>
-          </div>
-        </div>
-        <div
-            v-if="
-          (props.data.data_analytic?.by_shop?.ratio.mall?.revenue > 0 &&
-          props.data.data_analytic?.by_shop?.ratio.normal?.revenue) ||
-          (props.data.data_analytic?.by_shop?.ratio.mall?.ratio_revenue > 0 &&
-          props.data.data_analytic?.by_shop?.ratio.normal?.ratio_revenue)
-        "
-            class="pie_chart_item"
-        >
-          <highchart v-if="renderChartSales" :options="chartOptionsShopType"/>
+          >
+            <template #shop_count="{text}">
+              <BlurContent :is-hide-content="isHideContentBasic">
+                {{ text }}
+              </BlurContent>
+            </template>
+          </a-table>
         </div>
       </div>
+      <div
+          v-if="
+          (props.data.data_analytic.by_shop.ratio.mall?.revenue > 0 &&
+          props.data.data_analytic.by_shop.ratio.normal?.revenue) ||
+          (props.data.data_analytic.by_shop.ratio.mall?.ratio_revenue > 0 &&
+          props.data.data_analytic.by_shop.ratio.normal?.ratio_revenue)
+        "
+          class="pie_chart_item"
+      >
+        <highchart v-if="renderChartSales" :options="chartOptionsShopType"/>
+      </div>
     </div>
+    <!--        <div style="display: flex; justify-content: flex-end; font-style: italic;">* Thị phần theo loại shop chỉ thống-->
+    <!--          kê số liệu sàn Shopee, Lazada-->
+    <!--        </div>-->
     <hr style="border: 1px solid #EEEBFF; margin: 4px 0"/>
-    <a-skeleton v-if="loading" :paragraph="{ rows: 10 }"/>
-    <div v-else>
+    <div>
       <div class="chart_item">
         <div>
           <highchart v-if="renderChartSales" :options="chartOptionsSales"/>
@@ -441,12 +445,10 @@ const chartOptionsOutput = computed(() => ({
         </div>
       </div>
     </div>
-    <a-skeleton v-if="loading" :paragraph="{ rows: 0 }"/>
-    <h4 v-else style="color: #241E46; font-weight: 700; line-height: 22px; text-align: center">
+    <h4 style="color: #241E46; font-weight: 700; line-height: 22px; text-align: center">
       Danh sách shop phổ biến của nhóm hàng {{ props.data.name }} trên sàn TMĐT
     </h4>
-    <a-skeleton v-if="loading" :paragraph="{ rows: 10 }"/>
-    <div v-else class="logo-grid">
+    <div class="logo-grid">
       <div
           v-for="(record, index) in top12Shops"
           :key="index" class="logo-item"
@@ -463,97 +465,95 @@ const chartOptionsOutput = computed(() => ({
         </p>
       </div>
     </div>
-    <a-skeleton v-if="loading" :paragraph="{ rows: 3 }"/>
-    <div>
-      <InsightBlock
-          v-if="
-        data.data_analytic?.by_shop?.ratio?.mall &&
-        data.data_analytic?.by_shop?.ratio?.normal
+    <InsightBlock
+        v-if="
+        data.data_analytic.by_shop.ratio.mall &&
+        data.data_analytic.by_shop.ratio.normal
       "
-      >
-        <li>
-          Doanh thu của {{ data?.name }} đến từ
-          <BlurContent :is-hide-content="isHideContent">
+    >
+      <li>
+        Doanh thu của {{ data.name }} đến từ
+        <BlurContent :is-hide-content="isHideContent">
           <span>
-            {{ formatNumber(data.data_analytic?.by_shop?.ratio?.mall?.shop) }}
+            {{ formatNumber(data.data_analytic.by_shop.ratio.mall.shop) }}
           </span>
-          </BlurContent>
-          shop mall chiếm
-          {{
-            Number(
-                data.data_analytic?.by_shop?.ratio?.mall?.ratio_revenue * 100
-            ).toFixed(1)
-          }}% và hơn
-          <BlurContent :is-hide-content="isHideContent">
+        </BlurContent>
+        shop mall chiếm
+        {{
+          Number(
+              data.data_analytic.by_shop.ratio.mall.ratio_revenue * 100
+          ).toFixed(1)
+        }}% và hơn
+        <BlurContent :is-hide-content="isHideContent">
           <span>
-            {{ formatNumber(data.data_analytic?.by_shop?.ratio?.normal?.shop) }}
+            {{ formatNumber(data.data_analytic.by_shop.ratio.normal.shop) }}
           </span>
-          </BlurContent>
-          shop thường chiếm
-          {{
-            Number(
-                data.data_analytic?.by_shop?.ratio?.normal?.ratio_revenue * 100
-            ).toFixed(1)
-          }}% doanh số. Báo cáo về {{ data?.name }} của 10 shop bán chạy hàng đầu,
-          Shop
-          <span class="text-bold">{{
-              data.data_analytic?.by_shop?.lst_top_shop[0].name
-            }}</span>
-          có tỉ trọng doanh thu cao nhất chiếm
+        </BlurContent>
+        shop thường chiếm
+        {{
+          Number(
+              data.data_analytic.by_shop.ratio.normal.ratio_revenue * 100
+          ).toFixed(1)
+        }}% doanh số. Báo cáo về {{ data.name }} của 10 shop bán chạy hàng đầu,
+        Shop
+        <span class="text-bold">{{
+            data.data_analytic.by_shop.lst_top_shop[0].name
+          }}</span>
+        có tỉ trọng doanh thu cao nhất chiếm
 
-          <BlurContent :is-hide-content="isHideContent">
+        <BlurContent :is-hide-content="isHideContent">
           <span>
             {{
               Number(
-                  data.data_analytic?.by_shop?.lst_top_shop[0].ratio_revenue * 100
+                  data.data_analytic.by_shop.lst_top_shop[0].ratio_revenue * 100
               ).toFixed(2)
             }}
           </span>
-          </BlurContent>
-          % doanh số. Tiếp theo đó là các shop
-          <template
-              v-if="
+        </BlurContent>
+        % doanh số. Tiếp theo đó là các shop
+        <template
+            v-if="
             data.data_analytic &&
-            data.data_analytic?.by_shop?.lst_top_shop &&
-            data.data_analytic?.by_shop?.lst_top_shop.length >= 2
+            data.data_analytic.by_shop.lst_top_shop &&
+            data.data_analytic.by_shop.lst_top_shop.length >= 2
           "
-          >
+        >
           <span class="text-bold">{{
-              data.data_analytic?.by_shop?.lst_top_shop[1].name
+              data.data_analytic.by_shop.lst_top_shop[1].name
             }}</span
           >,
-          </template>
-          <template
-              v-if="
+        </template>
+        <template
+            v-if="
             data.data_analytic &&
-            data.data_analytic?.by_shop?.lst_top_shop &&
-            data.data_analytic?.by_shop?.lst_top_shop.length >= 3
+            data.data_analytic.by_shop.lst_top_shop &&
+            data.data_analytic.by_shop.lst_top_shop.length >= 3
           "
-          >
+        >
           <span class="text-bold">{{
-              data.data_analytic?.by_shop?.lst_top_shop[2].name
+              data.data_analytic.by_shop.lst_top_shop[2].name
             }}</span>
-            tương ứng thị phần doanh thu là
-            <BlurContent :is-hide-content="isHideContent">
+          tương ứng thị phần doanh thu là
+          <BlurContent :is-hide-content="isHideContent">
             <span>
               {{
                 Number(
-                    data.data_analytic?.by_shop?.lst_top_shop[1].ratio_revenue * 100
+                    data.data_analytic.by_shop.lst_top_shop[1].ratio_revenue * 100
                 ).toFixed(2)
               }}
             </span>
-            </BlurContent>
-            %
-          </template>
-          và
-          <template
-              v-if="
+          </BlurContent>
+          %
+        </template>
+        và
+        <template
+            v-if="
             data.data_analytic &&
-            data.data_analytic?.by_shop?.lst_top_shop &&
-            data.data_analytic?.by_shop?.lst_top_shop.length >= 3
+            data.data_analytic.by_shop.lst_top_shop &&
+            data.data_analytic.by_shop.lst_top_shop.length >= 3
           "
-          >
-            <BlurContent :is-hide-content="isHideContent">
+        >
+          <BlurContent :is-hide-content="isHideContent">
             <span>
               {{
                 Number(
@@ -561,12 +561,12 @@ const chartOptionsOutput = computed(() => ({
                 ).toFixed(2)
               }}
             </span>
-            </BlurContent>
-          </template>
-          %.
-        </li>
-      </InsightBlock>
-    </div>
+          </BlurContent>
+        </template>
+        %.
+      </li>
+    </InsightBlock>
+
   </div>
 
 </template>

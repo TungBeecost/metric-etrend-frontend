@@ -17,10 +17,6 @@ const props = defineProps({
     type: Array as () => Breadcrumb[],
     default: () => [],
   },
-  loading: {
-    type: Boolean,
-    default: true,
-  },
 });
 
 const showDetailPopup = ref(false);
@@ -111,8 +107,7 @@ const fieldValueParse: FieldValueParsers = {
         Phạm vi báo cáo
       </h2>
     </div>
-    <a-skeleton v-if="loading" size="large" :paragraph="{ rows: 20 }"/>
-    <div v-else class="report-filter-content">
+    <div class="report-filter-content">
       <div v-for="field in reportFilterDisplayFields" :key="field">
         <div class="report-filter-field">
           <div class="report-filter-field-title">

@@ -15,10 +15,6 @@ const props = defineProps({
     type: Boolean,
     default: true
   },
-  loading: {
-    type: Boolean,
-    default: true,
-  },
 });
 
 const screenWidth = ref(window?.innerWidth);
@@ -306,10 +302,8 @@ const charts = computed(() => {
         <h3 class="statistic-item__title">Tổng quan</h3>
       </div>
     </div>
-    <summary-statistic :loading="loading" :data="props.data" :is-hide-content="props.isHideContent"/>
-    <a-skeleton v-if="loading" style="padding-top: 16px" :paragraph="{ rows: 11 }"/>
+    <summary-statistic :data="props.data" :is-hide-content="props.isHideContent"/>
     <div
-        v-else
         id="monthly-growth-chart"
         ref="monthlyGrowthChart"
         style="margin-bottom: 24px; position: relative;"
@@ -317,16 +311,14 @@ const charts = computed(() => {
       <highchart :options="charts[0]"/>
       <ChartMask v-if="props.isHideContent" :report="props.data"/>
     </div>
-    <a-skeleton v-if="loading" style="padding-top: 16px" :paragraph="{ rows: 11 }"/>
-    <div v-else id="thi-phan-cac-san-thuong-mai-dien-tu" class="items-center">
+    <div id="thi-phan-cac-san-thuong-mai-dien-tu" class="items-center">
       <platform-chart
           v-if="props.data"
           :is-hide-content="props.isHideContent"
           :data="props.data"
       />
     </div>
-    <a-skeleton v-if="loading" style="padding-top: 16px" :paragraph="{ rows: 10 }"/>
-    <InsightBlock v-else>
+    <InsightBlock >
       <li>
         <b>
           Doanh số bán {{ data?.name }} trong {{ diffMonths }} đạt:

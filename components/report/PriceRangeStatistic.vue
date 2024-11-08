@@ -15,10 +15,6 @@ const props = defineProps({
     type: Boolean,
     default: () => true,
   },
-  loading: {
-    type: Boolean,
-    default: () => true,
-  },
 });
 
 const formatPriceRange = (priceRange, prefix = ['trên', 'dưới']) => {
@@ -236,13 +232,11 @@ const chartOptions = computed(() => {
         <h3 class="statistic-item__title">Phân khúc giá</h3>
       </div>
     </div>
-    <a-skeleton v-if="loading" :paragraph="{ rows: 10 }"/>
-    <div v-else class="my-4 w-full text-center relative" style="position: relative">
+    <div class="my-4 w-full text-center relative" style="position: relative">
       <highchart :options="chartOptions"/>
       <ChartMask v-if="props.isHideContent" :report="props.data"/>
     </div>
-    <a-skeleton v-if="loading" :paragraph="{ rows: 3 }"/>
-    <div v-else>
+    <div>
       <InsightBlock
           v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length"
       >

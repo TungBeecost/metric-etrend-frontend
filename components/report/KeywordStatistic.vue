@@ -11,10 +11,6 @@ const {data, isHideContent} = defineProps({
     type: Boolean,
     default: true,
   },
-  loading: {
-    type: Boolean,
-    default: true,
-  },
 });
 
 const top5KeywordsByRevenue = computed(() => {
