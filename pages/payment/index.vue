@@ -85,14 +85,14 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
         } else {
           transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
         }
+        sessionStorage.setItem('name_payment', `${information.value.name}`);
+        sessionStorage.setItem('phone_payment', `${information.value.phone}`);
+        sessionStorage.setItem('emailAccount_payment', `${information.value.emailAccount}`);
+        sessionStorage.setItem('companyName_payment', `${information.value.companyName}`);
+        sessionStorage.setItem('taxCode_payment', `${information.value.taxCode}`);
+        sessionStorage.setItem('email_payment', `${information.value.email}`);
+        sessionStorage.setItem('address_payment', `${information.value.address}`);
         if (transactionResult?.response?.payment_url) {
-          sessionStorage.setItem('name_payment', `${information.value.name}`);
-          sessionStorage.setItem('phone_payment', `${information.value.phone}`);
-          sessionStorage.setItem('emailAccount_payment', `${information.value.emailAccount}`);
-          sessionStorage.setItem('companyName_payment', `${information.value.companyName}`);
-          sessionStorage.setItem('taxCode_payment', `${information.value.taxCode}`);
-          sessionStorage.setItem('email_payment', `${information.value.email}`);
-          sessionStorage.setItem('address_payment', `${information.value.address}`);
           window.location.href = transactionResult.response.payment_url;
         } else {
           qrCodeData.value = transactionResult.response.qrcode;
