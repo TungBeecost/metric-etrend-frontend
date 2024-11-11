@@ -57,7 +57,7 @@ const handleFinalPrice = (price: number) => {
 onMounted(() => {
   const fields = ['name_payment', 'phone_payment', 'emailAccount_payment', 'companyName_payment', 'taxCode_payment', 'email_payment', 'address_payment'];
   fields.forEach(field => {
-    const value = localStorage.getItem(field);
+    const value = sessionStorage.getItem(field);
     console.log(value);
     if (value) {
       switch (field) {
