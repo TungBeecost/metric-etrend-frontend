@@ -47,7 +47,7 @@ const formattedHighestMonthRevenue = computed(() => {
 });
 
 const formatCurrency = (value: number | string): string => {
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "";
 };
 
 const formattedHighestMonthSale = computed(() => {
