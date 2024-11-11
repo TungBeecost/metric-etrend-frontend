@@ -17,6 +17,7 @@ import RelateReport from "~/components/RelateReport.vue";
 import ScrollNotification from "~/components/ScrollNotification.vue";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
 import { useHead } from 'unhead'
+import {useCurrentUser} from "~/stores/current-user.js";
 
 
 const route = useRoute();
@@ -32,6 +33,8 @@ const loadingSuggest = ref(true);
 const showButton = ref(false);
 const loading = ref(true); // Add loading state
 const showModalDownloadPdf = ref(false);
+const currentUserStore = useCurrentUser();
+const { userInfo } = storeToRefs(currentUserStore);
 
 useHead({
   title: 'My App',
@@ -189,6 +192,12 @@ const updateWindowSize = () => {
 };
 
 onMounted(() => {
+  const loginPayment = localStorage.getItem('loginPayment');
+  if (loginPayment) {
+    localStorage.removeItem('loginPayment');
+    if (userInfo.value?.current_plan !== 'e_community')
+      navigateTo(loginPayment);
+  }
   trackEvent('page_view', { page: route.path });
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);

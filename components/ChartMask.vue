@@ -14,15 +14,15 @@ const {report, title, subtitle, okButton, handleUnlockReport} = defineProps({
   },
   title: {
     type: String,
-    default: 'Số liệu bị khoá'
+    default: 'Số liệu bị ẩn'
   },
   subtitle: {
     type: String,
-    default: 'Bạn cần mở khoá để xem số liệu đầy đủ'
+    default: 'Tải báo cáo chi tiết để xem số liệu đầy đủ'
   },
   okButton: {
     type: String,
-    default: 'Xem báo cáo'
+    default: 'Tải báo cáo'
   },
   handleUnlockReport: {
     type: Function,
