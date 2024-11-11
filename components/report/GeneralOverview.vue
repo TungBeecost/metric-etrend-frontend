@@ -128,6 +128,10 @@ const charts = computed(() => {
     xAxisTitleText = 'Số sản phẩm đã bán';
   }
 
+  const lst_revenue_sale_monthly = props.data.data_analytic.by_overview.lst_revenue_sale_monthly.length > 12 ?
+      props.data.data_analytic.by_overview.lst_revenue_sale_monthly.slice(-12) :
+      props.data.data_analytic.by_overview.lst_revenue_sale_monthly;
+
   return [
     {
       title: {
@@ -201,7 +205,7 @@ const charts = computed(() => {
         }
       },
       xAxis: {
-        categories: props.data.data_analytic.by_overview.lst_revenue_sale_monthly.map(
+        categories: lst_revenue_sale_monthly.map(
             ({begin}: { begin: string }) => `${formatDateFunc(begin, 'MM/YYYY')}`
         ),
         labels: {
@@ -232,8 +236,7 @@ const charts = computed(() => {
           type: 'spline',
           yAxis: 0,
           zIndex: 1,
-          data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
-              .slice(0, 12)
+          data: lst_revenue_sale_monthly
               .map(
                   (monthly: {
                     sale: number,
@@ -251,8 +254,7 @@ const charts = computed(() => {
           type: 'column',
           yAxis: 1,
           borderRadius: 3,
-          data: props.data.data_analytic.by_overview.lst_revenue_sale_monthly
-              .slice(0, 12)
+          data: lst_revenue_sale_monthly
               .map(
                   (monthly: {
                     revenue: number,
@@ -318,7 +320,7 @@ const charts = computed(() => {
           :data="props.data"
       />
     </div>
-    <InsightBlock >
+    <InsightBlock>
       <li>
         <b>
           Doanh số bán {{ data?.name }} trong {{ diffMonths }} đạt:
