@@ -6,7 +6,6 @@ const value = ref('');
 const emit = defineEmits(['selectedOption']);
 
 watch(value, (newValue) => {
-  console.log('newValue', newValue);
   emit('selectedOption', newValue);
 });
 </script>
