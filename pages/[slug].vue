@@ -90,6 +90,7 @@ const handleScroll = () => {
   }
   if (isMobile.value && window.scrollY > 2000) {
     showModalDownloadPdf.value = true;
+    showAdvertisement.value = window.scrollY > scrollThreshold;
   }
 };
 
@@ -171,7 +172,6 @@ const fetchReportData = async (period) => {
 };
 
 const { data } = await useAsyncData(() => {
-  console.log('Fetching report data for period: 2023M9_2022M10');
   return fetchReportData('2023M9_2022M10');
 });
 
@@ -294,6 +294,7 @@ onUnmounted(() => {
       <poster-detail-report :list-suggest="tagSuggestions" :loading="loadingSuggest"/>
       <transition name="fade">
         <div v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category'" class="advertisement">
+
           <scroll-notification
               v-if="data.reportDetail.name"
               :data="data.reportDetail"
