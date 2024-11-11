@@ -53,13 +53,13 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
             transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
           }
           if (transactionResult?.response?.payment_url) {
-            localStorage.setItem('name_payment', `${information.value.name}`);
-            localStorage.setItem('phone_payment', `${information.value.phone}`);
-            localStorage.setItem('emailAccount_payment', `${information.value.emailAccount}`);
-            localStorage.setItem('companyName_payment', `${information.value.companyName}`);
-            localStorage.setItem('taxCode_payment', `${information.value.taxCode}`);
-            localStorage.setItem('email_payment', `${information.value.email}`);
-            localStorage.setItem('address_payment', `${information.value.address}`);
+            sessionStorage.setItem('name_payment', `${information.value.name}`);
+            sessionStorage.setItem('phone_payment', `${information.value.phone}`);
+            sessionStorage.setItem('emailAccount_payment', `${information.value.emailAccount}`);
+            sessionStorage.setItem('companyName_payment', `${information.value.companyName}`);
+            sessionStorage.setItem('taxCode_payment', `${information.value.taxCode}`);
+            sessionStorage.setItem('email_payment', `${information.value.email}`);
+            sessionStorage.setItem('address_payment', `${information.value.address}`);
             window.location.href = transactionResult.response.payment_url;
           } else {
             if(transactionResult.response.status == 'done'){
