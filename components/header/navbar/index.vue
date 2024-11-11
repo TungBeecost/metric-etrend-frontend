@@ -25,9 +25,9 @@
         class="button_login" :visible="currentUserStore.isShowPopupLogin"
         :footer="false"
         style="margin-top: 30px"
+        destroy-on-close
         @ok="currentUserStore.setShowPopupLogin(false)"
         @cancel="currentUserStore.setShowPopupLogin(false)"
-        destroy-on-close
     >
       <login-button/>
     </a-modal>

@@ -52,7 +52,7 @@ header {
     z-index: 9999;
   }
   .logo {
-    margin-right: 64px;
+    margin-right: 16px;
 
     @media (max-width: 1380px) {
       margin-right: 0;
@@ -112,7 +112,7 @@ main {
 
 @media (max-width: 1380px) {
   .logo {
-    width: 150px !important; /* Adjust the width as needed */
+    width: 200px !important; /* Adjust the width as needed */
     height: 40px !important; /* Adjust the height as needed */
   }
 }

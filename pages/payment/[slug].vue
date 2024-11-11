@@ -132,7 +132,9 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
     if (!isCompleted.value) {
       console.log("Transaction not completed within 10 minutes, redirecting to payment page");
       if (intervalId) clearInterval(intervalId);
-      window.location.href = `/ereport/payment/${route.params.slug}`;
+      const domain = window.location.hostname;
+      const basePath = domain === 'metric.vn' ? '/ereport/payment' : '/payment';
+      window.location.href = `${basePath}/${route.params.slug}`;
     }
   }, timeout);
 
@@ -164,7 +166,9 @@ onMounted(async () => {
   await fetchReportData();
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
-  redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/ereport/payment/${route.params.slug}`;
+  const domain = window.location.hostname;
+  const basePath = domain === 'metric.vn' ? '/ereport/payment' : '/payment';
+  redirectUrl.value = `${window.location.protocol}//${domain}${window.location.port ? `:${window.location.port}` : ''}${basePath}/${route.params.slug}`;
   const orderId = route.query.orderId as string;
   if (orderId) {
     openModalWaiting.value = true;

@@ -29,7 +29,7 @@
           <NuxtImg
               :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'"
               class="logo"
-              :width="isMobile ? 113 : 166"
+              :width="isMobile ? 160 : 270"
               :height="isMobile ? 21 : 32"
               style="cursor: pointer; padding-left: 24px"
               @click="navigateToHome"
