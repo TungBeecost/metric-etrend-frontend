@@ -69,9 +69,7 @@ const chartOptions = computed(() => {
       })
       : [];
 
-  const lstPlatform = BY__PRICE_RANGE.length > 0
-      ? BY__PRICE_RANGE[0].lst_platform.map((item) => item.platform_id).reverse()
-      : [];
+  const lstPlatform = props.data.data_analytic.by_marketplace.lst_marketplace.map((item) => item.platform_id).reverse();
 
   return {
     chart: {
@@ -120,8 +118,8 @@ const chartOptions = computed(() => {
       },
     },
     xAxis: {
-      categories: BY__PRICE_RANGE.map(({ begin, end } = {}) => {
-        return formatPriceRange({ begin, end }, ['<', '>']);
+      categories: BY__PRICE_RANGE.map(({begin, end} = {}) => {
+        return formatPriceRange({begin, end}, ['<', '>']);
       }),
       title: {
         text: 'Mức giá (Đồng)',
@@ -206,8 +204,8 @@ const chartOptions = computed(() => {
           borderRadius: 4,
           yAxis: 1,
           data: BY__PRICE_RANGE.map(
-              ({ lst_platform }) => lst_platform.find(
-                  ({ platform_id }) => platform_id === platformId
+              ({lst_platform}) => lst_platform.find(
+                  ({platform_id}) => platform_id === platformId
               )?.revenue || 0
           ),
           tooltip: {
@@ -241,7 +239,8 @@ const chartOptions = computed(() => {
           v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length"
       >
         <li>
-          Trong {{ diffMonths }} qua, phân khúc khách hàng thị trường {{ props.data.name }} thường mua chủ yếu ở mức giá khoảng
+          Trong {{ diffMonths }} qua, phân khúc khách hàng thị trường {{ props.data.name }} thường mua chủ yếu ở mức giá
+          khoảng
           {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
           {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}.
         </li>
@@ -721,7 +720,7 @@ const chartOptions = computed(() => {
 }
 
 @media (max-width: 768px) {
-  #thong-ke-phan-khuc-gia{
+  #thong-ke-phan-khuc-gia {
     border: none;
     padding: 16px;
   }
