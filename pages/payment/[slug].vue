@@ -91,7 +91,6 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
 const fetchReportData = async () => {
   const slug = route.params.slug;
   try {
-    // const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
     let url = `${config.public.API_ENDPOINT}/api/report/detail_payment?slug=${slug}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
@@ -124,20 +123,19 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
   const checkCompletion = async () => {
     const result = await checkTransactionStatus(transactionId);
     if (result && result.is_completed) {
-      console.log("Transaction completed");
       openModal.value = false;
       isCompleted.value = true;
       if (intervalId) clearInterval(intervalId);
       if (timeoutId) clearTimeout(timeoutId);
-      window.location.href = `/${route.params.slug}?transaction_id=${transactionId}`;
-    }
+      const domain = window.location.hostname;
+      const basePath = domain === 'metric.vn' ? '/ereport' : '';
+      window.location.href = `${basePath}/${route.params.slug}?transaction_id=${transactionId}`;    }
   };
 
   intervalId = window.setInterval(checkCompletion, 2000);
 
   timeoutId = window.setTimeout(() => {
     if (!isCompleted.value) {
-      console.log("Transaction not completed within 10 minutes, redirecting to payment page");
       if (intervalId) clearInterval(intervalId);
       const domain = window.location.hostname;
       const basePath = domain === 'metric.vn' ? '/ereport/payment' : '/payment';
