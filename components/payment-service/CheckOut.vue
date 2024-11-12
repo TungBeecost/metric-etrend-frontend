@@ -54,6 +54,39 @@ const handleFinalPrice = (price: number) => {
   finalPrice.value = price;
 };
 
+onMounted(() => {
+  const fields = ['name_payment', 'phone_payment', 'emailAccount_payment', 'companyName_payment', 'taxCode_payment', 'email_payment', 'address_payment'];
+  fields.forEach(field => {
+    const value = sessionStorage.getItem(field);
+    console.log(value);
+    if (value) {
+      switch (field) {
+        case 'name_payment':
+          nameValue.value = value;
+          break;
+        case 'phone_payment':
+          phoneValue.value = value;
+          break;
+        case 'emailAccount_payment':
+          emailAccount.value = value;
+          break;
+        case 'companyName_payment':
+          formVatValues.value.companyName = value;
+          break;
+        case 'taxCode_payment':
+          formVatValues.value.taxCode = value;
+          break;
+        case 'email_payment':
+          formVatValues.value.email = value;
+          break;
+        case 'address_payment':
+          formVatValues.value.address = value;
+          break;
+      }
+    }
+  });
+});
+
 const handlePayment = () => {
   if (!nameValue.value) {
     errors.value.name = 'Bạn cần nhập tên của mình để thanh toán';

@@ -52,6 +52,13 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
           } else {
             transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
           }
+          sessionStorage.setItem('name_payment', `${information.value.name}`);
+          sessionStorage.setItem('phone_payment', `${information.value.phone}`);
+          sessionStorage.setItem('emailAccount_payment', `${information.value.emailAccount}`);
+          sessionStorage.setItem('companyName_payment', `${information.value.companyName}`);
+          sessionStorage.setItem('taxCode_payment', `${information.value.taxCode}`);
+          sessionStorage.setItem('email_payment', `${information.value.email}`);
+          sessionStorage.setItem('address_payment', `${information.value.address}`);
           if (transactionResult?.response?.payment_url) {
             window.location.href = transactionResult.response.payment_url;
           } else {
@@ -84,7 +91,6 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
 const fetchReportData = async () => {
   const slug = route.params.slug;
   try {
-    // const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
     let url = `${config.public.API_ENDPOINT}/api/report/detail_payment?slug=${slug}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
@@ -117,20 +123,19 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
   const checkCompletion = async () => {
     const result = await checkTransactionStatus(transactionId);
     if (result && result.is_completed) {
-      console.log("Transaction completed");
       openModal.value = false;
       isCompleted.value = true;
       if (intervalId) clearInterval(intervalId);
       if (timeoutId) clearTimeout(timeoutId);
-      window.location.href = `/${route.params.slug}?transaction_id=${transactionId}`;
-    }
+      const domain = window.location.hostname;
+      const basePath = domain === 'metric.vn' ? '/ereport' : '';
+      window.location.href = `${basePath}/${route.params.slug}?transaction_id=${transactionId}`;    }
   };
 
   intervalId = window.setInterval(checkCompletion, 2000);
 
   timeoutId = window.setTimeout(() => {
     if (!isCompleted.value) {
-      console.log("Transaction not completed within 10 minutes, redirecting to payment page");
       if (intervalId) clearInterval(intervalId);
       const domain = window.location.hostname;
       const basePath = domain === 'metric.vn' ? '/ereport/payment' : '/payment';
