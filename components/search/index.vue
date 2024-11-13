@@ -15,11 +15,15 @@
       </template>
     </AInputSearch>
 
-    <!-- suggestion -->
     <div v-if="suggestions && suggestions.length" class="suggestions" :class="{ active: isShowSuggestions }">
-      <div v-for="suggestion in suggestions" :key="suggestion" class="suggestion-item"
-           @click="handleSuggestionClick(suggestion)">
-        {{ suggestion }}
+      <div v-for="(suggestion, index) in suggestions" :key="suggestion.name" class="suggestion-item"
+           @click="handleSuggestionClick(suggestion.name, index)">
+        <span v-if="index == 0" style="display: flex; align-items: center; gap: 8px">
+          <img src="/icons/SearchOrange.svg" alt="search"/>
+          Tìm báo cáo "{{ suggestion.name }}"
+        </span>
+        <span v-else> {{ suggestion.name }}</span>
+        <span v-if="index > 0" style="color: #716B95; font-size: 14px">{{ REPORT_TYPE_DISPLAY_NAMES[suggestion.report_type] || '' }}</span>
       </div>
     </div>
 
@@ -29,6 +33,8 @@
 <script setup lang="ts">
 import {vOnClickOutside} from '@vueuse/components';
 import {debounce} from "~/helpers/common";
+import {NAVIGATIONS} from "~/constant/constains";
+import slugify from 'slugify';
 
 const props = defineProps<{
   handleSearch: (value: string) => Promise<any>,
@@ -36,7 +42,18 @@ const props = defineProps<{
   placeholder?: string
 }>()
 
+const REPORT_TYPE_DISPLAY_NAMES: Record<string, string> = {
+  report_product_line: "Nhóm hàng",
+  report_brand: "Thương hiệu",
+  report_category: "Ngành hàng",
+};
+
 const route = useRoute();
+
+type Suggestion = {
+  name: string;
+  report_type: string;
+};
 
 watch(() => route.query, (newQuery) => {
   if (newQuery.search) {
@@ -56,26 +73,34 @@ onMounted(() => {
 
 const searchValue = useState<string>(() => route.query.search as string || "");
 const isShowSuggestions = useState<boolean>(() => false);
-
-const suggestions = useState<Array<string>>(() => []);
+const suggestions = useState<Array<Suggestion>>(() => []);
 const setShowSuggestions = () => {
   isShowSuggestions.value = false;
 }
 
 const handleSearch = async (value: string) => {
   isShowSuggestions.value = false;
-
   if (props.handleSearch) {
     await props.handleSearch(value);
   }
 }
 
-const handleSuggestionClick = async (suggestion: string) => {
+
+const slugifyText = (text: string) => {
+  return slugify(text, {
+    lower: true,
+    locale: 'vi'
+  });
+}
+
+const handleSuggestionClick = async (suggestion: string, index: number) => {
+  const slug = slugifyText(suggestion);
   searchValue.value = suggestion;
   isShowSuggestions.value = false;
-
-  // call click action
-  await props.handleSearch(suggestion);
+  if(index > 0)
+    navigateTo(`${NAVIGATIONS.home}${slug}`);
+  else
+    await props.handleSearch(suggestion);
 }
 
 const onChange = debounce(async (showSuggestions = true) => {
@@ -169,5 +194,10 @@ onMounted(() => {
       }
     }
   }
+}
+.suggestion-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

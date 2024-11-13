@@ -40,7 +40,10 @@ export default function useSearchReport() {
             const data = await searchReport(body);
 
             if (data && data.lst_report) {
-                return data.lst_report.map((item) => item.name);
+                return data.lst_report.map((item) => ({
+                    name: item.name,
+                    report_type: item.report_type
+                }));
             } else {
                 return [];
             }

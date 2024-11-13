@@ -231,6 +231,7 @@ export interface LstReport {
   category_report_id: string;
   lst_category: LstCategory[];
   lst_brand: Array<string>;
+  report_type: string;
 }
 
 export interface LstCategory {
