@@ -2,7 +2,7 @@ import * as AntD from "ant-design-vue";
 import { addComponent } from "@nuxt/kit";
 
 export default defineNuxtConfig({
-    ssr: false,
+    ssr: process.env.SSR === 'true',
     app: {
         head: {
             title: "eReport - Kho báo cáo Ecommerce toàn diện",
