@@ -21,11 +21,14 @@
       </div>
     </div>
 
-    <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"
-             :footer="false"
-             style="margin-top: 30px"
-             @ok="currentUserStore.setShowPopupLogin(false)"
-             @cancel="currentUserStore.setShowPopupLogin(false)">
+    <a-modal
+        class="button_login" :visible="currentUserStore.isShowPopupLogin"
+        :footer="false"
+        style="margin-top: 30px"
+        destroy-on-close
+        @ok="currentUserStore.setShowPopupLogin(false)"
+        @cancel="currentUserStore.setShowPopupLogin(false)"
+    >
       <login-button/>
     </a-modal>
   </div>
@@ -87,7 +90,7 @@ const {fetchedUser, userInfo} = storeToRefs(currentUserStore);
   color: white;
 
   @include tablet {
-    gap: 0px;
+    gap: 0;
   }
 }
 

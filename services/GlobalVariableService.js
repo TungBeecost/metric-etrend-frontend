@@ -48,10 +48,8 @@ const getGlobalVariable = async () => {
         _fbc = getCookie('_fbc')
         _fbp = getCookie('_fbp')
         is_mobile = isMobileDevice()
-        // url_referrer = document.referrer
         url = document.location.href
         route_name = window.location.pathname
-        // console.log('role', role)
     }
     return removeEmpty({
         visitor_id,

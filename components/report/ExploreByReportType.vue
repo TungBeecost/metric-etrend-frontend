@@ -6,9 +6,8 @@ import ListReportType from "~/components/report/ListReportType.vue";
 <template>
   <div class="report_type default_section">
     <div class="title_report_type">
-      <div class="title">Khám phá theo loại báo cáo</div>
-      <div class="content">Cập nhật ngay những báo cáo xu hướng mới nhất giúp bạn nắm bắt kịp thời biến động thị trường
-        và đưa ra quyết định đầu tư chính xác.</div>
+      <div class="title">Khám phá nền tảng 1 triệu báo cáo thị trường bán lẻ TMĐT</div>
+      <div class="content">Tìm kiếm báo cáo theo nhu cầu của bạn để hiểu sâu hơn thị trường và hành vi mua hàng của người tiêu dùng.</div>
     </div>
     <div class="lst_report_type">
       <list-report-type/>

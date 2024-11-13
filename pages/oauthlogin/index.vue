@@ -10,7 +10,7 @@ interface TokenData {
 
 const oAuthGoogleCallback = async (query: LocationQuery): Promise<TokenData | null | undefined> => {
   const runtimeConfig = useRuntimeConfig()
-  const url = `${runtimeConfig.public.apiBase}/api/auth/google/callback`
+  const url = `${runtimeConfig.public.URL_AUTH_SERVICE_API}/auth/google/callback`
   try {
     return await $fetch(url, {
       method: 'GET',
@@ -31,6 +31,7 @@ const oAuthGoogleCallback = async (query: LocationQuery): Promise<TokenData | nu
 
 onMounted(async () => {
   const tokenData = await oAuthGoogleCallback(route.query)
+  console.log('tokenData', tokenData)
   if (!tokenData?.access_token) {
     return
   }

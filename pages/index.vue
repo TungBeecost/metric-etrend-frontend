@@ -4,8 +4,7 @@
       <div class="sectionHeader searchHeader">
         <h1 class="sectionTitle">Kho Báo Cáo <br> Ecommerce Toàn Diện</h1>
         <p class="sectionDescription">
-          Tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu
-          chính xác nhất
+          Tối ưu chi phí, Tiết kiệm thời gian và Giảm thiểu rủi ro kinh doanh với dữ liệu chính xác nhất được thu thập và xử lý bằng Big Data ứng dụng AI.
         </p>
         <img src="/images/background-search.png" class="background">
       </div>
@@ -13,7 +12,12 @@
       <div class="sectionContent searchContent">
         <SearchReport class="searchBox"/>
 
-        <div class="recommendSearch">
+        <div v-if="recommendSearchLoading" class="recommendSearch">
+          <div v-for="(item, index) in listTagSuggestions" :key="index" class="recommendItem">
+            <a-skeleton />
+          </div>
+        </div>
+        <div v-else class="recommendSearch">
           <AButton v-for="(item, index) in listTagSuggestions" :key="index" class="recommendItem"
                    @click="onClickSuggestion(item)">
             {{ item }}
@@ -66,10 +70,8 @@
           </div>
           <div class="title_content_sucess">
             <div class="title_success">Thanh toán thành công</div>
-            <div class="content_success" style="font-size: 16px"><span style="color: #E85912; font-size: 16px">Để được bảo vệ và hỗ trợ</span>
-              trong quá trình xử lý thanh toán và sử dụng dịch vụ, xin vui lòng cập nhật thông tin:
-            </div>
-            <payment-success-form v-if="transactionId" :transaction-id="transactionId" @form-submitted="handdleUpdate"/>
+            <div style="text-align: center; padding-top: 12px; padding-bottom: 32px; font-size: 16px; font-weight: 400;">Cảm ơn bạn đã tin tưởng và sử dụng gói dịch vụ của eReport!</div>
+            <a-button type="primary" style="height: 40px" @click="handdleUpdate">Tôi đã hiểu</a-button>
           </div>
         </div>
       </div>
@@ -89,9 +91,9 @@
       </div>
       <ContactUsForm :source-name="'eReport'" :popup="true" :handle-submit-success="handleSubmitSuccess"/>
     </a-modal>
-    <div class="advertisement">
-      <advertisement @handle-advertisement="handleAdvertisement"/>
-    </div>
+<!--    <div class="advertisement">-->
+<!--      <advertisement @handle-advertisement="handleAdvertisement"/>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -100,7 +102,6 @@ import type SearchReport from '../components/search/search-report.vue';
 import {NAVIGATIONS} from '~/constant/constains';
 import {searchReport, type SearchReportPayload} from "~/services/reports";
 import {ref} from "vue";
-import PaymentSuccessForm from "~/components/payment-service/PaymentSuccessForm.vue";
 import ReportFree from "~/components/ReportFree.vue";
 import Advertisement from "~/components/Advertisement.vue";
 
@@ -112,9 +113,9 @@ const listTagSuggestions = ref<string[]>([]);
 const showModal = ref(false);
 const isMobile = ref(false);
 const isHideContent = ref(true)
+const recommendSearchLoading = ref(true);
 
 const fetchTagSuggest = async (value: string) => {
-  console.log('fetchTagSuggest', value);
   try {
     const result = await fetchSuggest(value);
     if (result.length) {
@@ -124,6 +125,8 @@ const fetchTagSuggest = async (value: string) => {
     }
   } catch (e) {
     console.error(e);
+  } finally {
+    recommendSearchLoading.value = false;
   }
 };
 
@@ -171,6 +174,7 @@ const handleOk = () => {
 
 const handdleUpdate = () => {
   showModal.value = false;
+  navigateTo(`${NAVIGATIONS.home}`);
 };
 
 onMounted(() => {
@@ -294,6 +298,24 @@ const handleAdvertisement = () => {
   line-height: 24px; /* 150% */
   letter-spacing: -0.48px;
   margin: 24px 0;
+}
+
+.recommendSearch {
+  animation: fadeIn 0.5s ease-out forwards;
+  min-height: 100px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.recommendItem {
+  height: 40px;
 }
 
 </style>

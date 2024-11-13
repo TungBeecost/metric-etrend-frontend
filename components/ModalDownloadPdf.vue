@@ -1,43 +1,119 @@
 <script setup lang="ts">
-import { NAVIGATIONS, WALLET } from "~/constant/constains";
-import { defineEmits, defineProps, toRefs, computed } from 'vue';
-import { useCurrentUser } from "~/stores/current-user";
-import { useRouter, useRoute } from "vue-router";
+import {NAVIGATIONS, WALLET} from "~/constant/constains";
+import {computed, defineEmits, defineProps, ref, toRefs} from 'vue';
+import {useCurrentUser} from "~/stores/current-user";
+import {useRoute} from "vue-router";
+import ViewPdfModal from "~/components/ViewPdfModal.vue";
+import ReportPreviewSlide from "~/components/PreviewSlide/ReportPreviewSlide.vue";
+import moment from "moment";
+import {message} from "ant-design-vue";
+import {formatCurrency} from "~/helpers/FormatHelper";
+import {getIndexedDB} from "~/helpers/IndexedDBHelper";
+import LoginButton from "~/components/google/LoginButton.vue";
 
-const router = useRouter();
+const config = useRuntimeConfig();
 const route = useRoute();
+const showAlert = ref(false);
 const currentUserStore = useCurrentUser();
-const { userInfo } = storeToRefs(currentUserStore);
+const {userInfo} = storeToRefs(currentUserStore);
 
 const props = defineProps({
   open: {
     type: Boolean,
     default: false
   },
+  data: {
+    type: Object,
+    default: () => ({})
+  }
 });
 
-const { open } = toRefs(props);
+const {open} = toRefs(props);
 const emits = defineEmits(["update:open"]);
 
-const reports = [
-  {
-    name: 'Báo cáo 1',
-    url_thumbnail: '/images/dept_report_thumbnail/image 6.png',
-  },
-  // Additional reports can be added here
-];
+const downloading = ref(false);
 
-const handleDownload = () => {
+const handleDownload = async () => {
   if (!currentUserStore.authenticated) {
+    emits('update:open', false);
+    localStorage.setItem('loginPayment', `${NAVIGATIONS.payment}/${route.params.slug}`);
     currentUserStore.setShowPopupLogin(true);
     return;
+  }
+  if (props.data.can_download) {
+    const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${props.data.slug}&type=download`;
+    const accessToken = await getIndexedDB("access_token");
+    const visitorId = await getIndexedDB("__visitor");
+
+    try {
+      downloading.value = true;
+      const response: any = await $fetch(
+          url,
+          {
+            headers: {
+              'Authorization': `${accessToken}`,
+              'Visitorid': visitorId.visitor_id,
+            }
+          }
+      );
+      const {url_download} = response;
+      downloading.value = false;
+      if (url_download) {
+        message.success('Bắt đầu tải xuống báo cáo');
+        emits('update:open', false);
+
+        fetch(url_download, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/pdf',
+          },
+        })
+            .then((response) => response.blob())
+            .then((blob) => {
+              // Create blob link to download
+              const url = window.URL.createObjectURL(
+                  new Blob([blob]),
+              );
+              const link = document.createElement('a');
+              link.href = url;
+              const fileName = `Báo cáo chi tiết nhóm hàng ${props.data.name} ${formatDate(props.data.start_date, "DDMMYYYY")}-${formatDate(props.data.end_date, "DDMMYYYY")}.pdf`;
+              link.setAttribute(
+                  'download',
+                  fileName,
+              );
+
+              document.body.appendChild(link);
+              link.click();
+
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              link.parentNode.removeChild(link);
+
+            });
+      }
+    } catch (e) {
+      downloading.value = false;
+      console.log('error', e)
+    }
+    return
   }
   const slug = route.params.slug;
   navigateTo(`${NAVIGATIONS.payment}/${slug}`);
 };
 
-const handleView = () => {
-  router.push(`${NAVIGATIONS.home}/view_pdf/${route.params.slug}`);
+const handleView = async () => {
+  if (!currentUserStore.authenticated) {
+    currentUserStore.setShowPopupLogin(true);
+    return;
+  }
+  emits('update:open', false);
+  if (props.data.is_report_pdf_valid && props.data.can_view) {
+    navigateTo(`${NAVIGATIONS.home}view_pdf/${route.params.slug}`);
+  } else {
+    showAlert.value = true;
+    console.log('showAlert', showAlert.value)
+  }
+
 };
 
 const toggleUnlock = () => {
@@ -47,54 +123,99 @@ const toggleUnlock = () => {
 const canViewReport = computed(() => {
   return (userInfo.value.current_plan?.remain_claim_pdf ?? 0) > 0;
 });
+
+const handleBuyReport = () => {
+  navigateTo(`${NAVIGATIONS.pricing}`);
+};
+
+const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFormat: string = "YYYY-MM-DD[T]HH:mm:ss"): string => {
+  return moment(value, inputFormat).format(format);
+}
+
 </script>
 
 <template>
-  <a-modal :visible="open" width="1000px" :footer="null" @cancel="toggleUnlock" @ok="toggleUnlock">
+<!--  <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"-->
+<!--           :footer="false"-->
+<!--           style="padding-top: 24px; z-index: 1050;"-->
+<!--           @ok="currentUserStore.setShowPopupLogin(false)"-->
+<!--           @cancel="currentUserStore.setShowPopupLogin(false)">-->
+<!--    <login-button/>-->
+<!--  </a-modal>-->
+  <a-modal
+      :visible="open" :width="1000" :footer="null" @cancel="toggleUnlock" @ok="toggleUnlock"
+  >
     <div class="noti_view_dept_report">
       <div class="slide_thumbnail">
-        <Carousel :items-to-show="1" :items-to-scroll="1" :wrap-around="true" style="width: 100%;" :snap-align="'start'">
-          <Slide v-for="report in reports" v-bind="report" :key="report.name">
-            <div class="slide-item">
-              <div class="thumbnail">
-                <img :src="report.url_thumbnail" alt="" style="width: 100%; object-fit: cover">
-              </div>
-            </div>
-          </Slide>
-          <template #addons>
-            <navigation/>
-            <pagination/>
-          </template>
-        </Carousel>
+        <ReportPreviewSlide :data="props.data"/>
       </div>
       <div class="summary">
         <div class="title_container">
-          <div class="title_report">Báo cáo chuyên sâu</div>
+          <div class="title_report">
+            {{ props.data.can_download ? 'Tải báo cáo PDF' : 'Mua báo cáo thị trường' }}
+          </div>
           <div>
-            <p>Nhóm hàng Dép Nam</p>
+            <div style="margin-bottom: 32px;">
+              <div style="text-align: center; margin-bottom: 12px;">Nhóm hàng</div>
+              <p>{{ props.data.name }}</p>
+            </div>
             <ul>
-              <li>• Số liệu sàn: Shopee, Tiki, Lazada</li>
-              <li>• Từ 01-07-2023 đến 30-06-2024</li>
+              <li>Số liệu sàn: Shopee, Tiki, Lazada, Tiktok</li>
+              <li>Từ {{ formatDate(props.data.start_date, "DD-MM-YYYY") }}
+                đến {{ formatDate(props.data.end_date, "DD-MM-YYYY") }}
+              </li>
+              <li>Báo cáo PDF - 50 trang</li>
+              <li>Nhận báo cáo qua email</li>
             </ul>
           </div>
         </div>
         <div class="payment_container">
-          <div class="price">
-            <p class="price_real">1.600.000đ</p>
-            <p class="price_discount">2.500.000đ</p>
-          </div>
-          <div class="note">
-            Nhận báo cáo qua email trong vòng 05 phút
+          <div v-if="!props.data.can_download" class="price">
+            <div style="text-align: center">
+              <span class="price_real">{{ formatCurrency(props.data.price) }}</span>
+            </div>
+            <div style="text-align: center">
+              <span class="price_discount">{{ formatCurrency(props.data.price_before_discount) }}</span>
+            </div>
           </div>
           <div class="button_group">
-            <a-button type="primary" style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center" class="download_report_button" @click="handleDownload">Tải báo cáo</a-button>
-            <a-button v-if="userInfo.current_plan.remain_claim_pdf" :disabled="!canViewReport" style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center" class="download_report_button" @click="handleView">Xem báo cáo</a-button>
+            <a-button
+                type="primary"
+                style="width: 100%;height: 40px; font-size: 14px; box-shadow: 0 2px 0 rgba(0,0,0,.045); filter: drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 4px); font-family: Montserrat,serif;font-weight: 500"
+                class="download_report_button" :loading="downloading"
+                @click="handleDownload">
+              {{ props.data.can_download ? 'Tải xuống báo cáo' : 'Mua báo cáo' }}
+            </a-button>
+            <div v-if="userInfo.current_plan?.remain_claim_pdf && !props.data.can_download" class="button_group_view">
+              <div style="color: #716B95">hoặc</div>
+              <a-button v-if="(userInfo.current_plan?.remain_claim_pdf ?? 0) > 0"
+                        :disabled="!canViewReport"
+                        style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
+                        class="download_report_button" @click="handleView">
+                Xem báo cáo
+                <div
+                    style="position: absolute; top: -12px; right: -12px; background: #241E46; color: #FFFFFF; padding: 2px 4px">
+                  còn {{ userInfo.current_plan?.remain_claim_pdf ?? 0 }} lượt
+                </div>
+                <svg style="position: absolute; top: 15px; right: -12px;" xmlns="http://www.w3.org/2000/svg" width="13"
+                     height="8" viewBox="0 0 13 8" fill="none">
+                  <path d="M0 8L13 0H0V8Z" fill="#120B37"/>
+                </svg>
+              </a-button>
+              <a-button
+                  v-else
+                  style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
+                  @click="handleBuyReport"
+              >
+                Mua gói báo cáo
+              </a-button>
+            </div>
           </div>
-          <div class="wallet_info">
+          <div v-if="!props.data.can_download" class="wallet_info">
             <p>Hỗ trợ thanh toán trực tuyến</p>
             <div style="display: flex">
               <div v-for="wallet in WALLET" :key="wallet.code">
-                <img style="width: 40px; height: 40px" :src="wallet.thumbnail" alt="icon" />
+                <img style="width: 40px; height: 40px" :src="wallet.thumbnail" alt="icon">
               </div>
             </div>
           </div>
@@ -102,23 +223,29 @@ const canViewReport = computed(() => {
       </div>
     </div>
   </a-modal>
+  <view-pdf-modal v-model:showAlert="showAlert"/>
 </template>
+
+
 <style scoped lang="scss">
 .noti_view_dept_report {
   display: flex;
-  align-items: center;
+  padding: 16px;
+
+  font-family: 'Inter', sans-serif;
 
   .slide_thumbnail {
-    padding: 0 40px;
+    display: flex;
     flex: 0.6;
+    justify-content: center;
+    align-items: center;
   }
 
   .summary {
     display: flex;
     flex: 0.4;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 64px;
+    justify-content: center;
 
     .title_container {
       display: flex;
@@ -129,29 +256,30 @@ const canViewReport = computed(() => {
         color: #E85912;
         text-align: center;
         font-size: 24px;
-        font-weight: 700;
+        font-weight: 800;
       }
 
       div {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-
         p {
           color: #241E46;
           text-align: center;
-          font-size: 18px;
-          font-weight: 600;
+          font-size: 28px;
+          font-weight: 700;
           line-height: 20px;
+          margin-bottom: 12px;
         }
 
         ul {
+          list-style-type: none;
+
           li {
+            color: rgb(89, 90, 92);
             text-align: center;
-            color: #716B95;
             font-size: 14px;
+            font-style: normal;
             font-weight: 400;
-            line-height: 16px;
+            line-height: 1.4;
+            margin-bottom: 8px;
           }
         }
       }
@@ -169,16 +297,16 @@ const canViewReport = computed(() => {
         gap: 8px;
 
         .price_real {
-          color: #E85912;
+          color: rgb(237, 75, 0);
           font-size: 36px;
-          font-weight: 700;
+          font-weight: 800;
           text-align: center;
         }
 
         .price_discount {
           color: #716B95;
-          font-size: 14px;
-          font-weight: 400;
+          font-size: 20px;
+          font-weight: 500;
           text-align: center;
           text-decoration-line: line-through;
         }
@@ -186,30 +314,124 @@ const canViewReport = computed(() => {
 
       .note {
         color: #716B95;
-        font-size: 14px;
-        font-weight: 400;
+        font-size: 12px;
+        font-weight: 500;
         text-align: center;
       }
     }
 
     .button_group {
-      width: 80%;
+      width: 300px;
       display: flex;
-      gap: 8px;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+
+      .button_group_view {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
     }
 
     .wallet_info {
       display: flex;
-      flex-direction: column;
       align-items: center;
 
       p {
         color: #716B95;
         font-size: 14px;
-        font-weight: 400;
+        font-weight: 500;
         text-align: center;
       }
     }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+
+    .slide_thumbnail, .summary {
+      flex: 1;
+      width: 100%;
+    }
+
+    .summary {
+      .title_container {
+        margin-bottom: 32px;
+      }
+    }
+
+    .title_container {
+      gap: 10px;
+      margin-bottom: 20px;
+
+      .title_report {
+        font-size: 24px;
+      }
+
+      div {
+        gap: 8px;
+
+        p {
+          font-size: 18px;
+        }
+
+        ul {
+          li {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+    .payment_container {
+      gap: 8px;
+
+      .price {
+        gap: 4px;
+
+        .price_real {
+          font-size: 28px;
+        }
+
+        .price_discount {
+          font-size: 12px;
+        }
+      }
+
+      .note {
+        font-size: 12px;
+      }
+    }
+
+    .button_group {
+      width: 100%;
+      gap: 4px;
+    }
+
+    .wallet_info {
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .noti_view_dept_report {
+    margin-top: 16px;
+    gap: 24px;
+  }
+}
+</style>
+
+<style lang="scss">
+.ant-modal {
+  @media (max-width: 767px) {
+    top: 20px;
   }
 }
 </style>

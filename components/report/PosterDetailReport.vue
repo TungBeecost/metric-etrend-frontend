@@ -11,6 +11,10 @@ const props = defineProps({
     type: Array as () => { name: string }[],
     default: () => [],
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 </script>
@@ -18,11 +22,12 @@ const props = defineProps({
 <template>
   <div class="poster_detail_report">
     <div class="title">
-      Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất
+      Truy cập kho dữ liệu với hàng triệu báo cáo TMĐT ngay bây giờ
     </div>
     <div class="searchContent">
       <SearchReport class="searchBox"/>
-      <div class="recommendSearch">
+      <a-skeleton v-if="loading" :paragraph="{ rows: 1 }"/>
+      <div  v-else class="recommendSearch">
         <div class="content_key">Từ khoá liên quan nổi bật: </div>
         <div style="display: flex; gap: 16px; flex-wrap: wrap;">
           <AButton v-for="(item, index) in props.listSuggest" :key="index" ghost class="recommendItem"
@@ -39,6 +44,19 @@ const props = defineProps({
 </template>
 
 <style scoped lang="scss">
+.recommendItem{
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .poster_detail_report {
   background: linear-gradient(270deg, #4745A5 -67.05%, #241E46 98.36%);
   padding: 60px 120px;

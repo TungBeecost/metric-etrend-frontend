@@ -1,18 +1,29 @@
 <script setup lang="ts">
-import {defineProps} from 'vue'
+import {defineProps, computed} from 'vue';
 import moment from "moment/moment";
 import allReports from "public/file_json/list_category.json";
+
+type Breadcrumb = {
+  name: string;
+  value: string | null;
+};
 
 const props = defineProps({
   data: {
     type: Object,
     default: () => ({})
   },
-})
+  breadcrumbs: {
+    type: Array as () => Breadcrumb[],
+    default: () => [],
+  },
+});
+
+const showDetailPopup = ref(false);
 
 const reportFilterDisplayFields = computed(() => {
   if (!props.data) {
-    return []
+    return [];
   }
 
   if (props.data.report_type === 'report_category') {
@@ -20,116 +31,98 @@ const reportFilterDisplayFields = computed(() => {
       'lst_platform_id',
       'date_range',
       'lst_bee_category_base_id',
-      'is_smart_queries',
       'is_remove_fake_sale',
-      'lst_keyword_exclude',
-    ]
+    ];
   }
 
   return [
     'lst_platform_id',
     'date_range',
+    'category',
     'lst_keyword',
-    'is_smart_queries',
+    'lst_keyword_required',
+    // 'lst_keyword_exclude',
     'is_remove_fake_sale',
-    'lst_keyword_exclude',
-  ]
-})
+  ];
+});
 
 type FieldLabels = {
   [key: string]: string;
-}
+};
 
 type FieldValueParsers = {
   [key: string]: (value: any) => string;
-}
+};
 
 const fieldLabel: FieldLabels = {
   lst_platform_id: 'Kênh bán hàng',
+  category: 'Ngành hàng',
   lst_bee_category_base_id: 'Ngành hàng',
   lst_category_base_id: 'Ngành hàng',
   lst_keyword: 'Từ khóa',
-  is_smart_queries: 'Tìm thông minh',
+  lst_keyword_required: 'Từ khóa bắt buộc',
+  // lst_keyword_exclude: 'Từ khóa loại trừ',
   is_remove_fake_sale: 'Lọc bỏ sản phẩm ảo/bất thường',
   date_range: 'Dữ liệu phân tích trong khoảng',
-  lst_keyword_exclude: 'Từ khóa loại trừ',
-}
-
+};
 
 const PLATFORMS: Record<number, string> = {
   1: 'Shopee',
   2: 'Lazada',
   3: 'Tiki',
   4: 'Sendo',
-}
+};
 
 const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
   return moment(value, inputFormat).format(format);
-}
-
-const isExpanded = ref(false);
+};
 
 const fieldValueParse: FieldValueParsers = {
   lst_platform_id: (value: number[]) => {
     if (!value || value.length === 4) {
-      return 'Tất cả'
+      return 'Shopee, Tiktok, Lazada, Tiki';
     }
-    return value.map((platformId: number) => PLATFORMS[platformId]).join(', ')
+    return value.map((platformId: number) => PLATFORMS[platformId]).join(', ');
   },
   lst_bee_category_base_id: (lst_bee_category: string[]) => lst_bee_category ? (lst_bee_category.map(bee_category => allReports.find(cat => cat.value === bee_category)?.label)).join(', ') : '',
-  lst_keyword: (value: string[]) => value ? (value).join(', ') : '',
+  lst_keyword: (value: string[]) => value && value.length > 0 ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : 'không có',
+  lst_keyword_required: (value: string[]) => value && value.length > 0 ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : 'không có',
   is_smart_queries: (value: boolean) => value ? 'Có' : 'Không',
   is_remove_fake_sale: (value: boolean) => value ? 'Loại trừ sản phẩm có tỉ lệ đánh giá / lượt bán thấp hơn 5%' : 'Không',
   date_range: () => {
     const {start_date, end_date} = props.data.filter_custom;
-    return `${formatDate(start_date, 'DD/MM/YYYY')} - ${formatDate(end_date, 'DD/MM/YYYY')}`
+    return `${formatDate(start_date, 'DD/MM/YYYY')} - ${formatDate(end_date, 'DD/MM/YYYY')}`;
   },
-  lst_keyword_exclude: (value: string[]) => value ? (!isExpanded.value ? value.slice(0, 3) : value).join(', ') : '',
-}
-
+  category: () => {
+    const breadcrumbs = props.breadcrumbs.slice(1, -1);
+    return breadcrumbs.map((breadcrumb: Breadcrumb) => breadcrumb.name).join(' / ');
+  },
+};
 </script>
 
 <template>
   <div class="report-filter">
-
     <div class="report-filter-title">
-      <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
-           xmlns="http://www.w3.org/2000/svg">
-        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
-      </svg>
-      <div class="title">
-        Chi tiết bộ lọc nhóm hàng
-      </div>
+      <h2 class="title">
+        Phạm vi báo cáo
+      </h2>
     </div>
     <div class="report-filter-content">
-      <div
-          v-for="field in reportFilterDisplayFields"
-          :key="field"
-      >
+      <div v-for="field in reportFilterDisplayFields" :key="field">
         <div class="report-filter-field">
           <div class="report-filter-field-title">
             {{ fieldLabel[field] }}
           </div>
           <div class="report-filter-field-value">
-<!--            {{ props.data.data_filter_report[field] }}-->
-            {{ fieldValueParse[field](props.data.data_filter_report[field]) }}
+            {{ props.data.data_filter_report && fieldValueParse[field] ? fieldValueParse[field](props.data.data_filter_report[field]) : 'N/A' }}
           </div>
         </div>
       </div>
-      <div>
-        <a-button style="color: #E85912" type="link" size="small" @click="isExpanded = !isExpanded">
-          {{ isExpanded ? 'Thu gọn' : 'Xem thêm' }}
-          <svg
-              xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"
-              style="margin-left: 4px;"
-              :style="{ transform: isExpanded ? 'rotate(180deg) translateY(-3px)' : 'rotate(0deg) translateY(3px)' }"
-          >
-            <path d="M11.7949 6.17627L8.04492 9.67627L4.29492 6.17627" stroke="#E85912" stroke-width="1.3"
-                  stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a-button>
-      </div>
     </div>
+
+    <a-modal v-model:visible="showDetailPopup" title="Chi tiết báo cáo" width="800px">
+      <pre>{{ props.data.data_filter_report }}</pre>
+    </a-modal>
   </div>
 </template>
 
@@ -144,15 +137,16 @@ const fieldValueParse: FieldValueParsers = {
 
 
   .report-filter-title {
-    display: flex;
-    gap: 8px;
+    //display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+
 
     .title {
       font-family: 'Inter', sans-serif;
       font-weight: 700;
-      font-size: 20px;
+      font-size: 24px;
       line-height: 28px;
-      margin-bottom: 16px;
     }
   }
 

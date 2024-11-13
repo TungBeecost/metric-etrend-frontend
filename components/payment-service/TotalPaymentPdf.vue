@@ -3,6 +3,10 @@ import { formatCurrency } from "~/helpers/FormatHelper";
 import { toRefs, computed, watch, onMounted, ref, nextTick } from 'vue';
 
 const props = defineProps({
+  report: {
+    type: Object,
+    required: true
+  },
   statusApplyCode: {
     type: Boolean,
     default: false
@@ -13,11 +17,6 @@ const props = defineProps({
   }
 });
 
-const report = ref({
-  price: 2500000,
-  priceDiscount: 2000000
-});
-
 const {
   discountInfo,
   statusApplyCode
@@ -25,14 +24,11 @@ const {
 const emit = defineEmits(['finalPrice']);
 
 const calculateDiscountAmount = (planPriceDiscount: number, discount: any) => {
-  if (!discount || !discount.discount) {
-    console.log('No discount info available.');
+  if (!discount || !discount.discount || !statusApplyCode.value) {
     return 0;
   }
 
   const { discount_type, discount_value, maximum_discount } = discount.discount;
-  console.log('Discount Details:', { discount_type, discount_value, maximum_discount });
-
   let discountAmount = 0;
 
   if (discount_type === 'percentage') {
@@ -48,20 +44,23 @@ const calculateDiscountAmount = (planPriceDiscount: number, discount: any) => {
 };
 
 const discountAmount = ref(0);
-const promotionalDiscount = ref(report.value.priceDiscount - report.value.price);
+const promotionalDiscount = ref(props.report.price - props.report.price);
 
 const updateValues = async () => {
   await nextTick();
   if (statusApplyCode.value) {
-    discountAmount.value = calculateDiscountAmount(report.value.priceDiscount, discountInfo.value);
+    discountAmount.value = calculateDiscountAmount(props.report.price, discountInfo.value);
     promotionalDiscount.value = 0;
   } else {
     discountAmount.value = 0;
-    promotionalDiscount.value = report.value.priceDiscount - report.value.price;
+    promotionalDiscount.value = props.report.price - props.report.price;
   }
 };
 
-const finalPrice = computed(() => report.value.priceDiscount - discountAmount.value - promotionalDiscount.value);
+const finalPrice = computed(() => {
+  const price = props.report.price - discountAmount.value - promotionalDiscount.value;
+  return price < 0 ? 0 : price;
+});
 
 watch([discountInfo, statusApplyCode], updateValues);
 
@@ -77,7 +76,7 @@ onMounted(() => {
   <div class="calculate">
     <div class="calculate_item">
       <div class="money">Số tiền</div>
-      <div class="money">2.500.000đ</div>
+      <div class="money">{{ formatCurrency(props.report.price) }}</div>
     </div>
     <div class="calculate_item">
       <div class="promotional_program">Chương trình khuyến mại</div>
@@ -94,10 +93,13 @@ onMounted(() => {
     </div>
     <div class="calculate_item">
       <div class="total">Thành tiền</div>
-      <div class="total_price">{{ formatCurrency(finalPrice) }}</div>
+      <div class="total_price">
+        {{ finalPrice === 0 ? '0đ' : formatCurrency(finalPrice) }}
+      </div>
     </div>
   </div>
 </template>
+
 <style scoped lang="scss">
 .calculate {
   display: flex;

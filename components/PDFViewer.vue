@@ -2,7 +2,7 @@
 import {createLoadingTask, VuePdf} from 'vue3-pdfjs';
 import axios from "axios";
 
-const {data, isHideContent, openContactForm} = defineProps({
+const {data, isHideContent} = defineProps({
   data: {
     type: Object,
     required: true,
@@ -37,17 +37,6 @@ const onChangePage = (change) => {
   }
 }
 
-const handleInputPage = e => {
-  const page = parseInt(e.target.value)
-  console.log(page, numOfPages.value)
-  if (page < 1) {
-    currentPage.value = numOfPages.value
-  } else if (page > numOfPages.value) {
-    currentPage.value = 1
-  } else {
-    currentPage.value = page
-  }
-}
 
 const fetchPdf = async (newValue) => {
   isLoading.value = true

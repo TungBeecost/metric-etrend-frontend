@@ -1,9 +1,26 @@
 <script setup lang="ts">
-const {plan} = defineProps({
+import { ref, computed } from 'vue';
+import {CaretDownOutlined, CaretUpOutlined} from "#components";
+
+const { plan } = defineProps({
   plan: {
     type: Object,
     required: true
   }
+});
+
+const showMore = ref(plan.autoShowDetail || false);
+
+const toggleShowMore = () => {
+  showMore.value = !showMore.value;
+};
+
+const toggleIcon = computed(() => showMore.value ? CaretUpOutlined : CaretDownOutlined);
+
+
+const specialOfferLink = computed(() => {
+  const specialPlans = ['e_basic_lite', 'e_pro_lite', 'e_starter'];
+  return specialPlans.includes(plan.plan_code) ? 'https://dangky.metric.vn/ereport_doi-goi-dich-vu' : '/pricing';
 });
 </script>
 
@@ -18,36 +35,42 @@ const {plan} = defineProps({
           <rect width="16" height="32" rx="4" fill="#EEEBFF"/>
         </svg>
         <div>
-          <div class="title_content">Dịch vụ</div>
+          <div class="title_content">Thông tin đơn hàng</div>
         </div>
       </div>
       <div class="title_link">
-        <a href="/pricing">Đổi gói dịch vụ</a>
+        <a :href="specialOfferLink">Đổi gói dịch vụ</a>
       </div>
     </div>
     <div class="statistic-item__content">
       <div class="content">
         <div class="summary">
-          <div class="planType"> Gói {{ plan.type }}</div>
-          <div class="planDesc">{{ plan.description }}</div>
+          <div class="planType"> {{ plan.type }}</div>
+          <div class="planDesc" v-html="plan.description"></div>
         </div>
 
         <div class="divider"/>
 
         <div class="permission">
-          <p class="includeLabel">Bao gồm:</p>
-          <div class="permissionList">
-            <div v-for="permission in plan.permissions" class="permissionItem">
+<!--          <p class="includeLabel">Bao gồm:</p>-->
+          <div v-show="showMore" class="permissionList">
+            <div v-for="(permission, index) in plan.permissions" :key="index" class="permissionItem">
               <div class="perm">
                 <CustomIcon :type="permission.icon as any" :is-custom-size="true" class="permissionIcon"/>
                 <div>{{ permission.label }}</div>
               </div>
-              <div v-for="subPerm in permission.sub" class="perm subPerm">
+              <div v-for="(subPerm, subIndex) in permission.sub" :key="subIndex" class="perm subPerm">
                 <CustomIcon type="Tick" :is-custom-size="true" class="permissionIcon"/>
                 <div>{{ subPerm }}</div>
               </div>
             </div>
           </div>
+        </div>
+        <div style="display: flex; justify-content: center">
+          <a-button style="width: fit-content; border: none; color: #716B95" @click="toggleShowMore">
+            {{ showMore ? 'Ẩn bớt' : 'Xem thêm' }}
+            <component :is="toggleIcon" />
+          </a-button>
         </div>
       </div>
     </div>
@@ -55,7 +78,7 @@ const {plan} = defineProps({
 </template>
 
 <style scoped lang="scss">
-#pack_service{
+#pack_service {
   display: flex;
   flex-direction: column;
   align-self: stretch;
@@ -63,19 +86,18 @@ const {plan} = defineProps({
   border: 1px solid #EEEBFF;
   background-color: #FFF;
 
-  .statistic-item__title{
+  .statistic-item__title {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #EEEBFF;
     padding: 24px;
 
-
-    .title{
+    .title {
       display: flex;
       align-items: center;
       gap: 16px;
 
-      .title_content{
+      .title_content {
         font-size: 24px;
         color: #241E46;
         font-weight: bold;
@@ -83,11 +105,11 @@ const {plan} = defineProps({
       }
     }
 
-    .title_link{
+    .title_link {
       display: flex;
       align-items: center;
 
-      a{
+      a {
         font-size: 16px;
         color: #1890FF;
         font-weight: 400;
@@ -97,13 +119,12 @@ const {plan} = defineProps({
     }
   }
 
-  .statistic-item__content{
+  .statistic-item__content {
     padding: 24px;
     .content {
       height: 100%;
       display: flex;
       flex-direction: column;
-      //padding: 30px 24px 24px 24px;
       align-items: stretch;
       gap: 24px;
       flex: 1 0 0;
@@ -125,24 +146,6 @@ const {plan} = defineProps({
           font-size: 14px;
           font-weight: 400;
           line-height: 22px;
-        }
-
-        .planPrice {
-          font-size: 36px;
-          font-weight: 700;
-          line-height: 48px;
-
-          @include mobile {
-            font-size: 24px;
-            line-height: 38px;
-          }
-
-          .priceUnit {
-            color: $lighter_text_color;
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 24px;
-          }
         }
       }
 
@@ -196,18 +199,6 @@ const {plan} = defineProps({
             }
           }
         }
-      }
-
-      .not_user_plan{
-        background: #E85912;
-        color: #FFF;
-        width: 100%;
-      }
-
-      .user_plan{
-        background: #DEDEE4;
-        color: #9D9BB0;
-        width: 100%;
       }
     }
   }

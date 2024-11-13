@@ -13,6 +13,7 @@ import MenuBlack from "~/public/icons/Menu-Black.svg";
 import Phone from "~/public/icons/Phone.svg";
 import Search from "~/public/icons/Search.svg";
 import SearchFilled from "~/public/icons/Search-Filled.svg";
+import Download from "~/public/icons/Download.svg";
 import SocialFB from "~/public/icons/Social-FB.svg";
 import SocialLinkedIn from "~/public/icons/Social-Linkedin.svg";
 import SocialYoutube from "~/public/icons/Social-Ytb.svg";
@@ -23,7 +24,8 @@ import ContactUs from "~/public/icons/Contact-Us.svg";
 import SuccessTick from "~/public/icons/Success-Tick.svg";
 import Chart from "~/public/icons/Chart.svg";
 import Docs from "~/public/icons/Docs.svg";
-import ProjectorScreenChart from "~/public/icons/ProjectorScreenChart.svg"
+import ProjectorScreenChart from "~/public/icons/ProjectorScreenChart.svg";
+import ViewCount from "~/public/icons/ViewCount.svg";
 import Tick from "~/public/icons/Tick.svg";
 import Unlock from "~/public/icons/Unlock.svg";
 import UnlockDocumentFailure from "~/public/icons/Unlock-Document-Failure.svg";
@@ -36,6 +38,9 @@ import Logout from "~/public/icons/Logout.svg";
 import Industry from "~/public/icons/Industry.svg";
 import Commodity from "~/public/icons/Commodity.svg";
 import Other from "~/public/icons/Other.svg";
+import Ticket from "~/public/icons/Ticket.svg";
+import InternalTicket from "~/public/icons/InternalTicket.svg";
+import Bell from "public/icons/Bell.svg";
 
 
 export type TypeIcon =
@@ -48,6 +53,7 @@ export type TypeIcon =
     | "Phone"
     | "Search"
     | "SearchFilled"
+    | "Download"
     | "SocialFB"
     | "SocialLinkedIn"
     | "SocialYoutube"
@@ -59,6 +65,7 @@ export type TypeIcon =
     | "Chart"
     | "Docs"
     | "ProjectorScreenChart"
+    | "ViewCount"
     | "House"
     | "Tick"
     | "Unlock"
@@ -72,7 +79,9 @@ export type TypeIcon =
     | "Industry"
     | "Commodity"
     | "Other"
-
+    | "Ticket"
+    | "InternalTicket"
+    | "Bell";
 defineProps<{
   type: TypeIcon,
   isCustomSize?: boolean
@@ -89,6 +98,7 @@ const iconMappings = {
   "Phone": Phone,
   "Search": Search,
   "SearchFilled": SearchFilled,
+  "Download": Download,
   "SocialFB": SocialFB,
   "SocialLinkedIn": SocialLinkedIn,
   "SocialYoutube": SocialYoutube,
@@ -100,6 +110,7 @@ const iconMappings = {
   "Chart": Chart,
   "Docs": Docs,
   "ProjectorScreenChart": ProjectorScreenChart,
+  "ViewCount": ViewCount,
   "Tick": Tick,
   "Unlock": Unlock,
   "UnlockDocumentFailure": UnlockDocumentFailure,
@@ -111,7 +122,10 @@ const iconMappings = {
   "Logout": Logout,
   "Industry": Industry,
   "Commodity": Commodity,
-  "Other": Other
+  "Other": Other,
+  "Ticket": Ticket,
+  "InternalTicket": InternalTicket,
+  "Bell": Bell,
 }
 
 // Something wrong with lazy import in Nuxt, this below code made page unable to re-load when redirect

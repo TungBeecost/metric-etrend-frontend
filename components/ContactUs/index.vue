@@ -26,12 +26,30 @@ const rules = {
 
 
 const mktLeadSourceOptions = [
-  {label: 'Đây là lần đầu tiên tôi biết tới Metric', value: 'Đây là lần đầu tiên tôi biết tới Metric'},
-  {label: 'Báo cáo thị trường Thương mại Điện tử', value: 'Báo cáo thị trường Thương mại Điện tử'},
-  {label: 'Tham gia sự kiện liên quan tới Ecommerce', value: 'Tham gia sự kiện liên quan tới Ecommerce'},
-  {label: 'Social Media (Facebook, LinkedIn?, Zalo…)', value: 'Social Media (Facebook, LinkedIn?, Zalo…)'},
-  {label: 'Báo chí', value: 'Báo chí'},
-  {label: 'Khác', value: 'Khác'},
+  {
+    label: "Chưa từng biết",
+    value: "Chưa từng biết"
+  },
+  {
+    label: "Báo cáo thị trường",
+    value: "Báo cáo thị trường"
+  },
+  {
+    label: "Sự kiện event",
+    value: "Sự kiện event"
+  },
+  {
+    label: "Social media, MXH",
+    value: "Social media, MXH"
+  },
+  {
+    label: "Báo chí",
+    value: "Báo chí"
+  },
+  {
+    label: "Google",
+    value: "Google"
+  }
 ]
 
 const mktUserDemandOptions = [
@@ -67,15 +85,7 @@ const isSubmitFormLoading = useState('LandingPage.isSubmitFormLoading', () => fa
 
 const handleSubmitLeadForm = async () => {
   isSubmitFormLoading.value = true
-  // const userProfile = authStore.userProfile
   const variables = await getGlobalVariable();
-
-  console.log('variables', variables);
-  // console.log('formData', formData.value);
-  //
-  // isSubmitFormLoading.value = false
-  // return
-
   const utm_source = variables?.utm_source || ''
   const utm_medium = variables?.utm_medium || ''
   const utm_campaign = variables?.utm_campaign || ''
@@ -115,7 +125,7 @@ const handleSubmitLeadForm = async () => {
     organization_name: formData.value.company,
     note,
     label_init: 'Nóng',
-    source_name: 'eReport',
+    source_name: 'Website eReport',
     campaign: 'eReport',
     additional_info: {
       ...variables,
@@ -158,9 +168,9 @@ const handleSubmitLeadForm = async () => {
 
     <div class="content default_section">
       <div class="info">
-        <h2 class="header">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</h2>
-        <p class="desc">Thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến thông minh hơn. Ngay
-          bây giờ!</p>
+        <h2 class="header">Truy cập kho dữ liệu với hàng triệu báo cáo TMĐT ngay bây giờ</h2>
+        <p class="desc">Nắm bắt nhanh nhạy, toàn diện thị trường bán lẻ trực tuyến để xây dựng chiến lược kinh doanh
+          thông minh hơn.</p>
       </div>
 
       <a-form ref="leadForm" style="flex: 1; max-width: 450px; margin: auto;" :model="formData" :rules="rules"
@@ -201,7 +211,7 @@ const handleSubmitLeadForm = async () => {
               :max-tag-count="3"
               :max-tag-text-length="6"
               :options="mktLeadSourceOptions"
-              placeholder="Bạn biến đến Metric từ kênh nào?"
+              placeholder="Bạn biết tới Metric từ kênh nào?"
           />
         </a-form-item>
         <a-form-item name="mktUserDemand">
@@ -235,7 +245,8 @@ const handleSubmitLeadForm = async () => {
   </div>
 
   <SuccessNotification v-model:visible="isShowSuccessNotification" class-name="submit-form-marketing-success"/>
-  <SuccessNotificationPopup v-model:visible="isShowSuccessNotificationPopup" class-name="submit-form-marketing-success"/>
+  <SuccessNotificationPopup v-model:visible="isShowSuccessNotificationPopup"
+                            class-name="submit-form-marketing-success"/>
   <ErrorNotification v-model:visible="isShowErrorNotification" class-name="submit-form-marketing-success"/>
 </template>
 

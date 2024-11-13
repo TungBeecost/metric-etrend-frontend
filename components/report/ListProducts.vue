@@ -1,12 +1,12 @@
 <script setup>
-import {computed, defineProps, ref} from 'vue';
+import {computed, defineProps} from 'vue';
 
 const props = defineProps({
   isHideContent: {
     type: Boolean,
     default: true,
   },
-  isHide:{
+  isHide: {
     type: Boolean,
     default: true,
   },
@@ -19,60 +19,148 @@ const props = defineProps({
 const config = useRuntimeConfig();
 
 const isHideContentBasic = computed(() => {
-  console.log('isHideContentBasic', config.public.SSR);
   if (config.public.SSR === 'true') {
     return false;
   }
-  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_trial');
+  if (props.data?.tier_report === 'e_basic' || props.data?.tier_report === 'e_basic_lite') {
+    return true;
+  }
+  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_pro_lite' || props.data?.tier_report === 'e_trial' || props.data?.tier_report === 'pt50' || props.data?.tier_report === 'pt100');
 });
 
 </script>
 
 <template>
-  <div
-      v-if="
+  <div>
+    <div
+        v-if="
       props.data.data_analytic &&
       props.data.data_analytic.by_product &&
       props.data.data_analytic.by_product.lst_product_revenue_30d &&
       props.data.data_analytic.by_product.lst_product_revenue_30d.length > 0
     "
-      id="list-products"
-      class="border statistic-block"
-      style="margin-bottom: 16px;"
-  >
-    <div class="statistic-item__title" style="margin-bottom: 16px;">
-      <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
-           xmlns="http://www.w3.org/2000/svg">
-        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
-      </svg>
-      <div>
-        <div class="statistic-item__title">Sản phẩm bán chạy</div>
-        <div
-            v-if="
+        id="list-products"
+        class="border statistic-block"
+        style="margin-bottom: 16px;"
+    >
+      <div class="statistic-item__title" style="margin-bottom: 16px;">
+        <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
+             xmlns="http://www.w3.org/2000/svg">
+          <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
+        </svg>
+        <div>
+          <h3 class="statistic-item__title">Sản phẩm bán chạy</h3>
+          <div
+              v-if="
             props.data.data_analytic &&
             props.data.data_analytic.by_product &&
             props.data.data_analytic.by_product.lst_product_revenue_30d &&
             props.data.data_analytic.by_product.lst_product_revenue_30d.length > 0
           "
-            class="statistic-item__subtitle"
-        >Top sản phẩm doanh số cao nhất 365 ngày qua
+              class="statistic-item__subtitle"
+          >Top sản phẩm doanh số cao nhất 30 ngày qua
+          </div>
         </div>
       </div>
+      <div class="products-grid">
+        <ProductItem
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContentBasic ? 5 : 5)"
+            :key="product.product_base_id"
+            :product-item="product"
+            :product="product"
+            :is-hide-content="isHideContent || isHideContentBasic"
+        />
+        <ChartMask
+            v-if="isHideContent || isHideContentBasic"
+            subtitle="Bạn cần mở khoá để xem số liệu đầy đủ"
+            ok-button="Mua báo cáo"
+            :report="data"
+        />
+      </div>
+      <div class="products-grid">
+        <ProductItem
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(5, isHideContentBasic ? 10 : 10)"
+            :key="product.product_base_id"
+            :product-item="product"
+            :product="product"
+            :loading="loading"
+            :is-hide-content="false"
+        />
+      </div>
+      <div class="products-grid">
+        <ProductItem
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(10, isHideContentBasic ? 20 : 20)"
+            :key="product.product_base_id"
+            :product-item="product"
+            :product="product"
+            :loading="loading"
+            :is-hide-content="isHideContent || isHideContentBasic"
+        />
+        <ChartMask
+            v-if="isHideContent || isHideContentBasic"
+            subtitle="Bạn cần mở khoá để xem số liệu đầy đủ"
+            ok-button="Mua báo cáo"
+            :report="data"
+        />
+      </div>
+      <a-skeleton v-if="loading" :paragraph="{ rows: 17 }"/>
     </div>
-    <div class="products-grid">
-      <ProductItem
-          v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContent ? 6 : 12)"
-          :key="product.product_base_id"
-          :product-item="product"
-          :product="product"
-          :is-hide-content="isHideContent"
-      />
-      <ChartMask
-          v-if="isHideContentBasic"
-          :subtitle="isHideContentBasic ? 'Nâng cấp tài khoản để xem số liệu' :'Bạn cần mở khoá để xem số liệu đầy đủ'"
-          :ok-button="isHideContentBasic ? '' :'Xem báo cáo'"
-          :report="data"
-      />
+    <div
+        v-if="
+          props.data.data_analytic &&
+          props.data.data_analytic.by_product &&
+          props.data.data_analytic.by_product.lst_product_new_30d &&
+          props.data.data_analytic.by_product.lst_product_new_30d.length > 0
+        "
+        id="list-products"
+        class="border statistic-block"
+        style="margin-bottom: 16px;"
+    >
+      <div class="statistic-item__title" style="margin-bottom: 16px;">
+        <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
+             xmlns="http://www.w3.org/2000/svg">
+          <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
+        </svg>
+        <div>
+          <h3 class="statistic-item__title">Sản phẩm trending</h3>
+          <div
+              v-if="
+            props.data.data_analytic &&
+            props.data.data_analytic.by_product &&
+            props.data.data_analytic.by_product.lst_product_new_30d &&
+            props.data.data_analytic.by_product.lst_product_new_30d.length > 0
+          "
+              class="statistic-item__subtitle"
+          >Top sản phẩm mới tạo trong 30 ngày có doanh số cao
+          </div>
+        </div>
+      </div>
+      <div class="products-grid">
+        <ProductItem
+            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(0, isHideContentBasic ? 5 : 5)"
+            :key="product.product_base_id"
+            :product-item="product"
+            :product="product"
+            :loading="loading"
+            :is-hide-content="isHideContent || isHideContentBasic"
+        />
+        <ChartMask
+            v-if="isHideContent || isHideContentBasic"
+            subtitle="Bạn cần mở khoá để xem số liệu đầy đủ"
+            ok-button="Mua báo cáo"
+            :report="data"
+        />
+      </div>
+      <div class="products-grid">
+        <ProductItem
+            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(5, isHideContentBasic ? 10 : 10)"
+            :key="product.product_base_id"
+            :product-item="product"
+            :product="product"
+            :loading="loading"
+            :is-hide-content="false"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -81,11 +169,6 @@ const isHideContentBasic = computed(() => {
 .highcharts-credits {
   display: none !important;
 }
-
-//.highcharts-container {
-//  width: 100% !important;
-//  height: 100% !important;
-//}
 
 .ant-collapse > .ant-collapse-item {
   border: none;
@@ -485,7 +568,7 @@ const isHideContentBasic = computed(() => {
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 16px;
   margin-bottom: 16px;
 
@@ -497,11 +580,12 @@ const isHideContentBasic = computed(() => {
 
 #list-products {
   padding: 24px 24px 0 24px;
-  border-radius: 8px;
+  border-radius: 16px;
   border: 1px solid #EEEBFF;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  background: #fff;
 
   .line {
     border: 1px solid #EEEBFF;
@@ -521,6 +605,13 @@ const isHideContentBasic = computed(() => {
   line-height: 28px;
   color: #241E46;
   gap: 16px;
+}
+
+.statistic-item__subtitle {
+  color: #716b95;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
 }
 
 @media (min-width: 768px) {
@@ -564,11 +655,11 @@ const isHideContentBasic = computed(() => {
   .products-grid {
     grid-template-columns: repeat(1, 1fr);
 
-    .product-item{
+    .product-item {
       display: flex;
     }
   }
-  #list-products{
+  #list-products {
     padding: 16px;
     border: none;
   }

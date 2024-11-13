@@ -61,7 +61,7 @@ const itemsToShow = computed(() => {
           <div class="content" style="text-align: left;">
             <div class="category_date" style="text-align: left;">
               {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span>
-              {{ dayjs(report.start_date).format('DD/MM/YYYY') }}
+              {{ dayjs(report.end_date).format('DD/MM/YYYY') }}
             </div>
             <div class="title" style="text-align: left;">
               Báo cáo nhóm hàng {{ report.name }}
@@ -102,7 +102,7 @@ const itemsToShow = computed(() => {
                 <BlurContent>
                   {{ formatAndRoundSortTextCurrencyWithMinValue(report.shop) }}
                 </BlurContent>
-              </span> - nhà bán
+              </span> nhà bán
               </div>
               <div class="info_item">
                 <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -123,12 +123,12 @@ const itemsToShow = computed(() => {
                 <BlurContent>
                   {{ formatAndRoundSortTextCurrencyWithMinValue(report.product) }}
                 </BlurContent>
-              </span> - sản phẩm
+              </span> sản phẩm
               </div>
             </div>
             <div class="description line-clamp__2" style="text-align: left;">
               Thương hiệu bán chạy:
-              {{ report.lst_brand?.slice(5)?.join(', ') }}.
+              {{ report.lst_brand?.slice(0, 5)?.join(', ') }}.
             </div>
           </div>
         </div>
@@ -286,7 +286,7 @@ const itemsToShow = computed(() => {
   .report-slide {
     .carousel__slide {
       .slide-item {
-        height: auto;
+        height: 600px !important;
         flex-direction: column;
 
         .thumbnail {
@@ -336,7 +336,7 @@ const itemsToShow = computed(() => {
   .report-slide {
     .carousel__slide {
       .slide-item {
-        height: 630px;
+        height: 750px;
       }
     }
 

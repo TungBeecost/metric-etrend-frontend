@@ -19,44 +19,46 @@ const displayTableOfContent = computed(() => {
   if (data?.report_type === 'report_category') {
     return [
       {
-        title: 'Tổng quan',
+        title: `I. Tổng quan thị trường`,
         children: [
-          {title: 'Quy mô thị trường'},
-          {title: 'Doanh số, sản phẩm đã bán theo tháng'},
-          {title: 'Tỷ trọng doanh số theo sàn'},
+          {title: `Quy mô thị trường`},
+          {title: 'Thống kê theo sàn'},
+          {title: 'Thống kê theo tháng'},
+          {title: 'Thống kê theo phân khúc giá'},
+          {title: 'Doanh số, sản phẩm đã bán theo phân khúc giá'},
+
         ],
       },
       {
-        title: 'Nhóm hàng',
+        title: 'II. Thống kê thương hiệu',
         children: [
-          {title: 'Tỷ trọng doanh số theo top 5 nhóm hàng'},
-          {title: 'Tỷ trọng sản lượng bán theo top 5 nhóm hàng'}
+          {title: 'Thống kê thương hiệu toàn thị trường'},
+          {title: 'Top thương hiệu sàn Shopee, Tiktok, Lazada, Tiki'},
         ],
       },
       {
-        title: 'Phân khúc giá',
+        title: 'III. Thống kê shop',
         children: [
-          {title: 'Doanh số, sản phẩm đã bán theo phân khúc giá'}
+          {title: 'Thị phần doanh số theo loại shop'},
+          {title: 'Thị phần doanh số theo khu vực của shop'},
+          {title: 'Thống kê shop bán chạy toàn thị trường'},
+          {title: 'Thống kê shop bán chạy từng sàn Shopee, Tiktok. Lazada, Tiki'},
+          {title: 'Chi tiết 20 shop bán chạy'},
         ],
       },
       {
-        title: 'Thương hiệu',
+        title: 'IV. Thống kê sản phẩm bán chạy',
         children: [
-          {title: 'Top thương hiệu theo doanh số'},
-          {title: 'Top thương hiệu theo sản lượng bán'},
+          {title: 'Sản phẩm bán chạy toàn thị trường'},
+          {title: 'Sản phẩm bán chạy từng sàn Shopee, Tiktok, Lazada, Tiki'},
+          {title: 'Sản phẩm trending bán chạy'},
         ],
       },
       {
-        title: 'Gian hàng hàng đầu',
+        title: 'V. Thống kê đánh giá',
         children: [
-          {title: 'Tỷ trọng doanh số theo loại gian hàng'},
-          {title: 'Thống kê top gian hàng hàng đầu'},
-        ],
-      },
-      {
-        title: 'Sản phẩm bán chạy',
-        children: [
-          {title: 'Top sản phẩm bán chạy'},
+          {title: 'Thống kê shop có đánh giá tốt'},
+          {title: 'Thống kê sản phẩm có đánh giá tốt'},
         ],
       },
     ]
@@ -69,41 +71,49 @@ const displayTableOfContent = computed(() => {
 
   return [
     {
-      title: 'Tổng quan',
+      title: `I. Tổng quan thị trường`,
       children: [
-        {title: 'Quy mô thị trường'},
-        {title: 'Doanh số, sản phẩm đã bán theo tháng'},
-        {title: 'Tỷ trọng doanh số theo sàn'},
+        {title: `Quy mô thị trường`},
+        {title: 'Thống kê theo sàn'},
+        {title: 'Thống kê theo tháng'},
+        {title: 'Thống kê theo phân khúc giá'},
+        {title: 'Doanh số, sản phẩm đã bán theo phân khúc giá'},
+
       ],
     },
     {
-      title: 'Phân khúc giá',
+      title: 'II. Thống kê thương hiệu',
       children: [
-        {title: 'Doanh số, sản phẩm đã bán theo phân khúc giá'}
+        {title: 'Thống kê thương hiệu toàn thị trường'},
+        {title: 'Top thương hiệu sàn Shopee, Tiktok, Lazada, Tiki'},
       ],
     },
     {
-      title: 'Thương hiệu',
+      title: 'III. Thống kê shop',
       children: [
-        {title: 'Top thương hiệu theo doanh số'},
-        {title: 'Top thương hiệu theo sản lượng bán'},
+        {title: 'Thị phần doanh số theo loại shop'},
+        {title: 'Thị phần doanh số theo khu vực của shop'},
+        {title: 'Thống kê shop bán chạy toàn thị trường'},
+        {title: 'Thống kê shop bán chạy từng sàn Shopee, Tiktok. Lazada, Tiki'},
+        {title: 'Chi tiết 20 shop bán chạy'},
       ],
     },
     {
-      title: 'Gian hàng hàng đầu',
+      title: 'IV. Thống kê sản phẩm bán chạy',
       children: [
-        {title: 'Tỷ trọng doanh số theo loại gian hàng'},
-        {title: 'Thống kê top gian hàng hàng đầu'},
+        {title: 'Sản phẩm bán chạy toàn thị trường'},
+        {title: 'Sản phẩm bán chạy từng sàn Shopee, Tiktok, Lazada, Tiki'},
+        {title: 'Sản phẩm trending bán chạy'},
       ],
     },
     {
-      title: 'Sản phẩm bán chạy',
+      title: 'V. Thống kê đánh giá',
       children: [
-        {title: 'Top sản phẩm bán chạy'},
+        {title: 'Thống kê shop có đánh giá tốt'},
+        {title: 'Thống kê sản phẩm có đánh giá tốt'},
       ],
     },
   ]
-
 })
 
 </script>
@@ -111,12 +121,12 @@ const displayTableOfContent = computed(() => {
 <template>
   <div class="report_content">
     <div class="statistic-item__title">
-      <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
-           xmlns="http://www.w3.org/2000/svg">
-        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
-      </svg>
+      <!--      <svg width="16" height="32" viewBox="0 0 16 32" fill="none"-->
+      <!--           xmlns="http://www.w3.org/2000/svg">-->
+      <!--        <rect width="16" height="32" rx="4" fill="#F9D7C6"/>-->
+      <!--      </svg>-->
       <div>
-        <div class="statistic-item__title">Nội dung báo cáo</div>
+        <h2 class="statistic-item__title">Nội dung báo cáo</h2>
       </div>
     </div>
     <div class="content">
@@ -136,17 +146,18 @@ const displayTableOfContent = computed(() => {
 <style scoped lang="scss">
 .report_content {
   padding: 24px;
-  border-radius: 8px;
+  border-radius: 16px;
   border: 1px solid #EEEBFF;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+
+  background: #fff;
 }
 
 .statistic-item__title {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
   font-size: 24px;
   font-weight: 700;
   color: #241E46;
@@ -155,21 +166,24 @@ const displayTableOfContent = computed(() => {
 .content {
   font-size: 14px;
   line-height: 24px;
+  //padding-left: 24px;
+  padding-top: 8px;
 }
 
 .title {
   font-size: 16px;
   font-weight: 600;
-  margin-top: 8px;
+  margin-top: 10px;
   color: #241E46;
 }
 
 ul {
-  padding-left: 16px;
+  padding-left: 2em;
+  list-style-type: decimal;
 }
 
 li {
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 @media (max-width: 768px) {

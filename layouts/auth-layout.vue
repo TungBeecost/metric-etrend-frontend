@@ -26,7 +26,6 @@ import {NAVIGATIONS} from '~/constant/constains';
 const {fetchCurrentUser} = useCurrentUser();
 const {userInfo, fetchedUser} = storeToRefs(useCurrentUser());
 const route = useRoute();
-const headerRef = ref(null);
 const isScrolled = ref(false);
 
 if (!userInfo.value.id) {
@@ -52,10 +51,6 @@ const menuDarkBlue = [NAVIGATIONS.home, NAVIGATIONS.pricing];
 const isDarkBlueHeader = useState(() => false);
 const recheckHeader = () => {
   if (isDarkBlueHeader.value !== !!menuDarkBlue.includes(route.path)) isDarkBlueHeader.value = !isDarkBlueHeader.value;
-}
-
-const navigateToHome = () => {
-  navigateTo(NAVIGATIONS.home);
 }
 // recheck header color when change route
 watch(() => route.path, () => {

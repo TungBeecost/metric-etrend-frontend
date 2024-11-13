@@ -1,11 +1,33 @@
 <script setup lang="ts">
+import {computed} from 'vue';
+import {useRoute} from 'vue-router';
+import allReports from '@/public/file_json/list_category.json';
 
+const route = useRoute();
+
+const props = defineProps({
+  content: {
+    type: String,
+    default: () => '',
+  },
+});
+
+const displayContent = computed(() => {
+  if (props.content) {
+    return props.content;
+  }
+  const hash = route.hash;
+  const categoryIdMatch = hash.match(/#id=([^&]*)/);
+  const categoryId = categoryIdMatch ? categoryIdMatch[1] : '';
+  const category = categoryId ? allReports.find(cat => cat.value === categoryId) : null;
+  return category ? category.label : 'Danh sách báo cáo';
+});
 </script>
 
 <template>
   <div class="banner">
     <div class="title">
-      <div class="content default_section">Danh sách báo cáo</div>
+      <div class="content default_section">{{ displayContent }}</div>
     </div>
   </div>
 </template>

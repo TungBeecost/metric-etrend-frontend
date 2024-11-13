@@ -24,6 +24,7 @@ export const extractDomain = (url) => {
     return hostname;
 };
 
+
 export const formatSortTextCurrencyWithMinValue = (price, isShortest = false, min = 1000) => {
     if (!!+price === false) {
         return price;
@@ -63,7 +64,7 @@ export const formatSortTextCurrencyWithMinValuePlan = (price, isShortest = false
     if (price - (price % 1000) !== 0 && price >= min) {
         result = price / 1000;
         result = result % 1 !== 0 ? result.toFixed(1).replace('.', ',') : Math.round(result);
-        return `${formatNumber(result)}${isShortest ? " ng" : " nghìn"}`;
+        return `${formatNumber(result)}${isShortest ? " ng" : ".000đ"}`;
     }
     return formatNumber(price);
 };
@@ -81,6 +82,11 @@ export const formatSortTextCurrencyPlan = (price, isShortest = false) => {
     }
     return formatSortTextCurrencyWithMinValuePlan(price, isShortest);
 };
+
+
+export const upperFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 export const getUrlImageOption = (urlImage, type = "thumbnail") => {
     if (

@@ -14,14 +14,14 @@ const {data, isHideContent} = defineProps({
 });
 
 const top5KeywordsByRevenue = computed(() => {
-  if (!data.data_analytic.by_keyword || !data.data_analytic.by_keyword.lst_keyword) {
+  if (!data?.data_analytic?.by_keyword || !data.data_analytic?.by_keyword?.lst_keyword) {
     return [];
   }
 
   return [
     ...data.data_analytic.by_keyword.lst_keyword
   ].sort((a, b) => b.revenue - a.revenue)
-      .slice(5)
+      .slice(0, 5)
       .map(({name, ...rest}) => ({
         // upper case first letter
         name: name.charAt(0).toUpperCase() + name.slice(1),
@@ -30,14 +30,14 @@ const top5KeywordsByRevenue = computed(() => {
 });
 
 const top5KeywordsBySale = computed(() => {
-  if (!data.data_analytic.by_keyword || !data.data_analytic.by_keyword.lst_keyword) {
+  if (!data.data_analytic?.by_keyword || !data.data_analytic?.by_keyword?.lst_keyword) {
     return [];
   }
 
   return [
     ...data.data_analytic.by_keyword.lst_keyword
   ].sort((a, b) => b.sale - a.sale)
-      .slice(5)
+      .slice(0, 5)
       .map(({name, ...rest}) => ({
         // upper case first letter
         name: name.charAt(0).toUpperCase() + name.slice(1),
@@ -64,7 +64,7 @@ const totalSale = computed(() => {
 
 <template>
   <div
-      v-if="top5KeywordsByRevenue.length > 0"
+      v-if="top5KeywordsByRevenue.length > 0 && data?.report_type === 'report_category'"
       id="thong-ke-thuong-hieu"
       class="border statistic-block"
   >

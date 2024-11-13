@@ -6,7 +6,6 @@ const value = ref('');
 const emit = defineEmits(['selectedOption']);
 
 watch(value, (newValue) => {
-  console.log('newValue', newValue);
   emit('selectedOption', newValue);
 });
 </script>
@@ -28,7 +27,10 @@ watch(value, (newValue) => {
       <div class="option">
         <a-radio-group v-model:value="value" class="radio-group" name="radioGroup">
           <a-radio v-for="wallet in WALLET" :key="wallet.code" :style="{ border: wallet.code === value ? '1px solid #E85912' : '1px solid #EEEBFF', borderRadius: '12px', padding: '0 12px', alignItems: 'center', display: 'flex' }" :value="wallet.code">
-            <img style="width: 100px; height: 100px" :src="wallet.thumbnail" alt="icon" />
+            <div style="display: flex; align-items: center; gap: 24px; font-size: 16px">
+              <img style="width: 100px; height: 100px" :src="wallet.thumbnail" alt="icon" />
+              <span style="font-weight: 500">{{wallet.name}}</span>
+            </div>
           </a-radio>
         </a-radio-group>
       </div>
@@ -66,6 +68,7 @@ watch(value, (newValue) => {
     flex-direction: column;
     border-radius: 0 0 16px 16px;
     border: 1px solid #EEEBFF;
+    border-top: none;
     padding: 24px;
 
     .content{

@@ -61,8 +61,10 @@ const handleChange = (value: SelectValue) => {
 };
 
 onMounted(() => {
-  if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
-    selectedOption.value = route.query.category_report_id;
+  const hash = route.hash;
+  const categoryIdMatch = hash.match(/#id=([^&]*)/);
+  if (categoryIdMatch && categoryIdMatch[1]) {
+    selectedOption.value = categoryIdMatch[1];
   }
   if(route.query.report_type && typeof route.query.report_type === 'string') {
     selectedReportType.value = [route.query.report_type];
@@ -76,7 +78,7 @@ const reportTypes = ref([
   {label: 'Tất cả', value: 'all'},
   {label: 'Báo cáo ngành hàng', value: 'report_category'},
   {label: 'Báo cáo nhóm hàng', value: 'report_product_line'},
-  {label: 'Báo cáo khác', value: 'other'},
+  {label: 'Báo cáo Metric phát hành', value: 'other'},
 ]);
 
 watch(selectedReportType, (newVal) => {

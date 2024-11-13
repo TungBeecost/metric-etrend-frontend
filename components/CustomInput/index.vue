@@ -1,5 +1,5 @@
 <template>
-  <div class="inputWrapper">
+  <div class="inputWrapper" id="inputCustom">
     <label v-if="label" for="" class="label">{{ label }} <span v-if="isRequired" class="requiredDot"> * </span> </label>
     <AInput v-bind="inputProps"
             v-model:value="inputModel"
@@ -32,7 +32,9 @@ const inputModel = defineModel<string>("input");
 </style>
 
 <style lang="scss">
-.ant-input{
-  height: 40px;
+#inputCustom{
+  .ant-input{
+    height: 40px;
+  }
 }
 </style>

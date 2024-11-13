@@ -1,4 +1,5 @@
 import axios from "axios";
+import {getIndexedDB} from "~/helpers/IndexedDBHelper";
 
 const request = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
@@ -9,12 +10,16 @@ const request = axios.create({
 });
 
 request.interceptors.request.use(
-    function (config) {
-        const accessToken = localStorage.getItem("access_token");
-        if (!accessToken) {
-            return config;
+    async function (config) {
+        const accessToken = await getIndexedDB("access_token");
+        const visitorId = await getIndexedDB("__visitor");
+
+        if (accessToken) {
+            config.headers.Authorization = `${accessToken}`;
         }
-        config.headers.Authorization = `Bearer ${accessToken}`;
+        if (visitorId) {
+            config.headers.VisitorId = visitorId.visitor_id;
+        }
 
         return config;
     },
@@ -22,6 +27,5 @@ request.interceptors.request.use(
         return Promise.reject(err.response?.data?.detail || err.message || err);
     }
 );
-
 
 export default request;

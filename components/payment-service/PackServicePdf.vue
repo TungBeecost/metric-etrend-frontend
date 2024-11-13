@@ -1,10 +1,30 @@
 <script setup lang="ts">
-// const {plan} = defineProps({
-//   plan: {
-//     type: Object,
-//     required: true
-//   }
-// });
+import { defineProps } from 'vue';
+
+const { report } = defineProps({
+  report: {
+    type: Object,
+    required: true
+  }
+});
+
+interface Marketplace {
+  platform_id: string;
+  name: string;
+  ratio_revenue: number;
+  ratio_sale: number;
+}
+
+function formatDate(dateStr: string): string {
+  const year = dateStr.substring(0, 4);
+  const month = dateStr.substring(4, 6);
+  const day = dateStr.substring(6, 8);
+  return `${day}-${month}-${year}`;
+}
+
+const formattedStartDate = formatDate(report.start_date);
+const formattedEndDate = formatDate(report.end_date);
+
 </script>
 
 <template>
@@ -18,11 +38,8 @@
           <rect width="16" height="32" rx="4" fill="#EEEBFF"/>
         </svg>
         <div>
-          <div class="title_content">Chi tiết đơn hàng</div>
+          <div class="title_content">Thông tin đơn hàng</div>
         </div>
-      </div>
-      <div class="title_link">
-        <a href="/pricing">Đổi gói dịch vụ</a>
       </div>
     </div>
     <div class="statistic-item__content">
@@ -30,11 +47,11 @@
         <div class="summary">
           <div class="report_type">
             <p>Loại báo cáo</p>
-            <p style="font-size: 16px; color: #E85912; font-weight: 700;">Báo cáo chuyên sâu</p>
+            <p style="font-size: 16px; color: #E85912; font-weight: 700;">Báo cáo PDF</p>
           </div>
           <div class="report_group">
             <p>Nhóm hàng</p>
-            <p style="font-size: 16px; color: #241E46; font-weight: 700;">Thời trang nam</p>
+            <p style="font-size: 16px; color: #241E46; font-weight: 700;">{{ report.name }}</p>
           </div>
         </div>
 
@@ -43,8 +60,8 @@
         <div class="permission">
           <p class="includeLabel">Thông tin chi tiết</p>
           <div class="permissionList">
-            <p>• Số liệu sàn: Shopee, Tiki, Lazada</p>
-            <p>• Từ 01-07-2023 đến 30-06-2024</p>
+            <p>• Số liệu sàn: Shopee, Tiktok, Lazada, Tiki</p>
+            <p>• Từ {{ formattedStartDate }} đến {{ formattedEndDate }}</p>
           </div>
         </div>
       </div>

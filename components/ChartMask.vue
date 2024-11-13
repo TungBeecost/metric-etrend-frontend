@@ -1,6 +1,7 @@
 <script setup>
 import {onMounted, ref} from 'vue';
 import { NAVIGATIONS } from "~/constant/constains";
+import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
 
 const isDesktop = ref(true);
 const currentUserStore = useCurrentUser();
@@ -13,15 +14,15 @@ const {report, title, subtitle, okButton, handleUnlockReport} = defineProps({
   },
   title: {
     type: String,
-    default: 'Số liệu bị khoá'
+    default: 'Số liệu bị ẩn'
   },
   subtitle: {
     type: String,
-    default: 'Bạn cần mở khoá để xem số liệu đầy đủ'
+    default: 'Tải báo cáo chi tiết để xem số liệu đầy đủ'
   },
   okButton: {
     type: String,
-    default: 'Xem báo cáo'
+    default: 'Tải báo cáo'
   },
   handleUnlockReport: {
     type: Function,
@@ -40,17 +41,11 @@ const handleButtonClick = () => {
   if (handleUnlockReport) {
     return handleUnlockReport();
   }
-
-  console.log('userInfo', userInfo.value);
-  if (userInfo.value.id) {
-    if(okButton === 'Nâng cấp ngay'){
-      navigateTo(`${NAVIGATIONS.pricing}`);
-    }
-    else{
-      toggleUnlock();
-    }
-  } else {
-    currentUserStore.setShowPopupLogin(true);
+  if(okButton === 'Nâng cấp ngay'){
+    navigateTo(`${NAVIGATIONS.pricing}`);
+  }
+  else{
+    toggleUnlock();
   }
 };
 
@@ -106,8 +101,7 @@ const toggleUnlock = () => {
       </div>
     </div>
   </div>
-
-  <ModalUnlock v-model:showUnlock="showUnlock" :report="report"/>
+  <modal-download-pdf v-model:open="showUnlock" :data="report"/>
 </template>
 
 <style lang="scss" scoped>

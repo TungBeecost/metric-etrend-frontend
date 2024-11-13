@@ -1,5 +1,7 @@
 <script setup>
-import {defineProps} from 'vue';
+import {computed, defineProps, ref, onMounted, watchEffect} from 'vue';
+import Highcharts from 'highcharts';
+import {formatNumber} from "~/helpers/FormatHelper.js";
 
 const props = defineProps({
   data: {
@@ -12,10 +14,264 @@ const props = defineProps({
   },
 });
 
-const formatNumber = (value = 0) => {
-  const formatWithLocale = (val) => val.toLocaleString("vi-VN");
-  return formatWithLocale(value);
-};
+const renderChartSales = ref(false);
+const renderChartOutput = ref(false);
+const windowWidth = ref(0);
+const isMobile = ref(false);
+
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    windowWidth.value = window.innerWidth;
+    isMobile.value = window.innerWidth < 768;
+    window.addEventListener('resize', () => {
+      windowWidth.value = window.innerWidth;
+      isMobile.value = window.innerWidth < 768;
+    });
+  }
+  renderChartSales.value = true;
+  renderChartOutput.value = true;
+});
+
+
+const chartWidth = computed(() => {
+  if (windowWidth.value < 1200) {
+    return 300;
+  } else if (windowWidth.value < 1500) {
+    return 400;
+  } else {
+    return 600;
+  }
+});
+
+const chartHeight = computed(() => {
+  if (windowWidth.value < 1200) {
+    return 300;
+  } else {
+    return 400;
+  }
+});
+
+const colors = [
+  "#9254DE",
+  "#FF7A45",
+  "#FF4D4F",
+  "#597EF7",
+  "#241E46",
+  "#F15D25",
+  "#1890FF",
+  "#36CFC9",
+  "#AEC986",
+  "#FFC53D"
+]
+
+const tooltipSales = ref({});
+const tooltipOutput = ref({});
+const dataLabels = ref({});
+
+watchEffect(() => {
+  tooltipSales.value = props.isHideContent
+      ? {
+        enabled: true,
+        formatter: function () {
+          const name = ![5, 7, 9].includes(this.point.index)
+              ? `Đã bị ẩn`
+              : this.point.name;
+          return `${name}<br/>
+            <svg width="10" height="10">
+              <rect width="10" height="10" style="fill:${this.point.color};stroke-width:3;stroke:rgb(0,0,0)" />
+            </svg> ${this.series.name}: <strong>Đã bị ẩn</strong>`;
+        },
+      }
+      : {
+        enabled: true,
+        formatter: function () {
+          return `<b>${this.point.name}</b><br/>Doanh số: ${Highcharts.numberFormat(this.point.y, 0, ',', '.')} đ`;
+        },
+      };
+
+  tooltipOutput.value = props.isHideContent
+      ? {
+        enabled: true,
+        formatter: function () {
+          const name = ![5, 7, 9].includes(this.point.index)
+              ? `Đã bị ẩn`
+              : this.point.name;
+          return `${name}<br/>
+            <svg width="10" height="10">
+              <rect width="10" height="10" style="fill:${this.point.color};stroke-width:3;stroke:rgb(0,0,0)" />
+            </svg> ${this.series.name}: <strong>Đã bị ẩn</strong>`;
+        },
+      }
+      : {
+        enabled: true,
+        formatter: function () {
+          return `<b>${this.point.name}</b><br/>Sản lượng: ${Highcharts.numberFormat(this.point.y, 0, ',', '.')}`;
+        },
+      };
+
+  dataLabels.value = props.isHideContent
+      ? {
+        enabled: true,
+        formatter: function () {
+          if (isMobile.value) {
+            return '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>';
+          }
+          return ![5, 7, 9].includes(this.point.index)
+              ? '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span> ' + '<span style="color: #9D97BF; filter: blur(4px)">đã ẩn</span>'
+              : '<span style="font-weight: bold">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+        },
+      }
+      : {
+        enabled: true,
+        formatter: function () {
+          if (isMobile.value) {
+            return '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          }
+          return '<span style="font-weight: bold">' + this.point.name + '</span>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+        },
+      };
+});
+
+const chartOptionsSales = computed(() => ({
+  chart: {
+    type: "pie",
+    width: chartWidth.value || 500,
+    height: chartHeight.value || 400,
+    style: {
+      fontFamily: "Inter",
+    },
+  },
+  title: {
+    text: `<div style="text-align: center;"><h4>Top 10 thương hiệu theo doanh số</h4></div>`,    useHTML: true,
+    style: {
+      fontSize: '16px',
+      color: '#241E46',
+      fontWeight: 700,
+      fontFamily: "Inter",
+    }
+  },
+  subtitle: {
+    text: `Chỉ thống kê sàn Shopee, Lazada, Tiki`,
+    style: {
+      fontSize: '13px',
+      color: '#716B95',
+      fontWeight: 400,
+      fontFamily: 'Inter'
+    }
+  },
+  legend: {
+    enabled: false,
+  },
+  tooltip: tooltipSales.value,
+  plotOptions: {
+    pie: {
+      cursor: "pointer",
+      showInLegend: true,
+      innerSize: '50%',
+      dataLabels: {
+        ...dataLabels.value,
+        connectorShape: 'crookedLine',
+        style: {
+          fontSize: '12px',
+          color: '#241E46',
+          fontWeight: 400,
+          fontFamily: "Inter",
+        },
+      }
+    },
+    series: {
+      enableMouseTracking: true
+    }
+  },
+  series: [
+    {
+      name: 'Doanh số (Đồng)',
+      data: props.data.data_analytic.by_brand.lst_top_brand_revenue.slice(0, 10).map(({name, revenue, ratio_revenue}, index) => ({
+        name: name,
+        y: revenue || ratio_revenue,
+        color: colors[index % colors.length]
+      })).sort((a, b) => b.y - a.y),
+    }
+  ]
+}));
+
+const chartOptionsOutput = computed(() => ({
+  chart: {
+    type: "pie",
+    width: chartWidth.value || 500,
+    height: chartHeight.value || 400,
+    style: {
+      fontFamily: "Inter",
+    },
+  },
+  title: {
+    text: `<div style="text-align: center;"><h4>Top 10 thương hiệu theo sản lượng</h4></div>`,    useHTML: true,
+    style: {
+      fontSize: '16px',
+      color: '#241E46',
+      fontWeight: 700,
+      fontFamily: "Inter",
+    }
+  },
+  subtitle: {
+    text: `Chỉ thống kê sàn Shopee, Lazada, Tiki`,
+    style: {
+      fontSize: '13px',
+      color: '#716B95',
+      fontWeight: 400,
+      fontFamily: 'Inter'
+    }
+  },
+  legend: {
+    enabled: false, // Hide the legend
+    layout: 'vertical',
+    align: 'left',
+    verticalAlign: 'middle',
+    symbolHeight: 10,
+    symbolWidth: 10,
+    itemStyle: {
+      fontSize: '12px',
+      color: '#241E46',
+      fontWeight: 400,
+      fontFamily: 'Inter'
+    }
+  },
+  tooltip: tooltipOutput.value,
+  plotOptions: {
+    pie: {
+      cursor: "pointer",
+      showInLegend: true,
+      innerSize: '50%',
+      dataLabels: {
+        ...dataLabels.value,
+        connectorShape: 'crookedLine',
+        style: {
+          fontSize: '12px',
+          color: '#241E46',
+          fontWeight: 400,
+          fontFamily: 'Inter'
+        },
+      }
+    },
+    series: {
+      enableMouseTracking: true
+    }
+  },
+  series: [
+    {
+      name: 'Sản lượng (Đồng)',
+      data: props.data.data_analytic.by_brand.lst_top_brand_sale.slice(0, 10).map(({name, sale, ratio_sale}, index) => ({
+        name: name,
+        y: sale || ratio_sale,
+        color: colors[index % colors.length]
+      })).sort((a, b) => b.y - a.y),
+    }
+  ]
+}));
+
+const formattedBrandCount = computed(() => {
+  return formatNumber(props.data.data_analytic.by_brand.ratio?.brand.brand || 0);
+});
 </script>
 
 <template>
@@ -29,88 +285,20 @@ const formatNumber = (value = 0) => {
       class="border statistic-block"
   >
     <div class="statistic-item__title">
-      <svg width="16" height="32" viewBox="0 0 16 32" fill="none"
-           xmlns="http://www.w3.org/2000/svg">
+      <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
       </svg>
       <div>
-        <div class="statistic-item__title">Thương hiệu</div>
+        <h3 class="statistic-item__title">Thương hiệu</h3>
+        <!--        <div style="font-size: 14px; color: #716B95">Chỉ thống kê số liệu sàn Shopee, Lazada, Tiki</div>-->
       </div>
     </div>
-    <div class="pie_chart">
-      <div class="pie_chart_item">
-        <div class="chart-title">
-          Top thương hiệu theo Doanh số
-        </div>
-        <a-table
-            :columns="[
-            {
-              title: 'STT',
-              dataIndex: 'stt',
-              key: 'stt',
-              width: 100,
-              align: 'center',
-              slots: {customRender: 'stt'}
-            },
-            {
-              title: 'Thương hiệu',
-              dataIndex: 'brand_name',
-              key: 'brand_name',
-              align: 'center',
-              slots: {customRender: 'brand_name'}
-            },
-          ]"
-            :pagination="false"
-            :data-source="props.data.data_analytic.by_brand.lst_top_brand_revenue.map(
-            ({ name = '' } = {}, idx=0) => ({
-              stt: idx + 1,
-              brand_name: name,
-            })
-          )"
-        >
-          <template #brand_name="{text}">
-            <BlurContent :is-blurred="isHideContent">
-              {{ text }}
-            </BlurContent>
-          </template>
-        </a-table>
+    <div class="chart_item">
+      <div>
+        <highchart v-if="renderChartSales" :options="chartOptionsSales"/>
       </div>
-      <div class="pie_chart_item">
-        <div class="chart-title">
-          Top thương hiệu theo Số sản phẩm đã bán
-        </div>
-        <a-table
-            :columns="[
-            {
-              title: 'STT',
-              dataIndex: 'stt',
-              key: 'stt',
-              width: 100,
-              align: 'center',
-              slots: {customRender: 'stt'}
-            },
-            {
-              title: 'Thương hiệu',
-              dataIndex: 'brand_name',
-              key: 'brand_name',
-              align: 'center',
-              slots: {customRender: 'brand_name'}
-            },
-          ]"
-            :pagination="false"
-            :data-source="props.data.data_analytic.by_brand.lst_top_brand_sale.map(
-            ({ name = '' } = {}, idx=0) => ({
-              stt: idx + 1,
-              brand_name: name,
-            })
-          )"
-        >
-          <template #brand_name="{text}">
-            <BlurContent :is-blurred="isHideContent">
-              {{ text }}
-            </BlurContent>
-          </template>
-        </a-table>
+      <div>
+        <highchart v-if="renderChartOutput" :options="chartOptionsOutput"/>
       </div>
     </div>
     <InsightBlock
@@ -121,32 +309,80 @@ const formatNumber = (value = 0) => {
       "
     >
       <li>
-        Về doanh số,
-        <BlurContent :is-blurred="props.isHideContent">
-          {{ props.data.data_analytic.by_brand.lst_top_brand_revenue[0].name }}
-        </BlurContent>
-        là thương hiệu chiếm thị phần cao nhất,
-        theo sau lần lượt là
-        <BlurContent v-for="(brand, index) in props.data.data_analytic.by_brand.lst_top_brand_revenue.slice(1)"
-                     :key="brand.name"
-                     :is-blurred="props.isHideContent">
-          {{ brand.name }}<span v-if="index !== props.data.data_analytic.by_brand.lst_top_brand_revenue.length - 2">,
-          </span>
-        </BlurContent>.
-      </li>
-      <li>
-        Về số sản phẩm đã bán, thương hiệu dẫn đầu là
-        <BlurContent :is-blurred="props.isHideContent">
-          {{ props.data.data_analytic.by_brand.lst_top_brand_revenue[0].name }}
-        </BlurContent>
-        các thương hiệu
-        <BlurContent v-for="(brand, index) in props.data.data_analytic.by_brand.lst_top_brand_revenue.slice(1)"
-                     :key="brand.name"
-                     :is-blurred="props.isHideContent">
-          {{ brand.name }}<span v-if="index !== props.data.data_analytic.by_brand.lst_top_brand_revenue.length - 2">,
+        Phân tích thị trường {{ data.name }} có hơn
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{ formattedBrandCount }}
           </span>
         </BlurContent>
-        lần lượt giữ vị trí tiếp theo.
+
+        thương hiệu chiếm
+        {{
+          Number(
+              data.data_analytic.by_brand.ratio?.brand.ratio_revenue * 100 || 0
+          ).toFixed(1)
+        }}% tổng doanh thu. So sánh giữa 10 thương hiệu hàng đầu,
+        <b class="text-bold">{{
+            data.data_analytic.by_brand.lst_top_brand_revenue[0].name
+          }}</b>
+        đang chiếm
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{
+              Number(
+                  data.data_analytic.by_brand.lst_top_brand_revenue[0]
+                      .ratio_revenue * 100
+              ).toFixed(2)
+            }}
+          </span>
+        </BlurContent>
+        % thị phần về doanh thu{{
+          data.data_analytic.by_brand.lst_top_brand_revenue[0].ratio_sale
+              ? " và " +
+              Number(
+                  data.data_analytic.by_brand.lst_top_brand_revenue[0].ratio_sale
+              ).toFixed(2) +
+              "% thị phần về sản lượng"
+              : ""
+        }}.
+        <template
+            v-if="
+            data.data_analytic.by_brand &&
+            data.data_analytic.by_brand.lst_top_brand_revenue &&
+            data.data_analytic.by_brand.lst_top_brand_revenue.length > 2
+          "
+        >Tiếp theo đó là
+          <b class="text-bold">
+            {{ data.data_analytic.by_brand.lst_top_brand_revenue[1].name }}
+          </b>
+          và
+          <b class="text-bold">{{
+              data.data_analytic.by_brand.lst_top_brand_revenue[2].name
+            }}</b>
+          tương ứng thị phần {{ data.name }} với doanh thu là
+          <BlurContent :is-hide-content="isHideContent">
+            <span>
+              {{
+                Number(
+                    data.data_analytic.by_brand.lst_top_brand_revenue[1]
+                        .ratio_revenue * 100
+                ).toFixed(2)
+              }}
+            </span>
+          </BlurContent>
+          % và
+          <BlurContent :is-hide-content="isHideContent">
+            <span>
+              {{
+                Number(
+                    data.data_analytic.by_brand.lst_top_brand_revenue[2]
+                        .ratio_revenue * 100
+                ).toFixed(2)
+              }}
+            </span>
+          </BlurContent>
+          %.
+        </template>
       </li>
     </InsightBlock>
   </div>
@@ -561,6 +797,11 @@ const formatNumber = (value = 0) => {
   }
 }
 
+.chart_item {
+  display: flex;
+  justify-content: space-between;
+}
+
 @media (min-width: 768px) {
   .main {
     padding: 24px;
@@ -623,13 +864,17 @@ const formatNumber = (value = 0) => {
   }
 }
 
+
 .statistic-item__title {
   display: flex;
   align-items: center;
+
   gap: 16px;
   font-size: 20px;
+
   font-weight: 700;
-  line-height: 32px;
+  line-height: 28px;
+
   color: #241E46;
 }
 
@@ -640,6 +885,7 @@ const formatNumber = (value = 0) => {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  background: #fff;
 }
 
 @media (max-width: 768px) {
@@ -648,7 +894,13 @@ const formatNumber = (value = 0) => {
     border: none;
   }
 
-  .pie_chart{
+  .chart_item {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .pie_chart {
     flex-direction: column;
   }
 }

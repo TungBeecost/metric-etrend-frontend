@@ -9,7 +9,7 @@ import useBEEndpoint from "~/composables/useBEEndpoint";
 
 const route = useRoute()
 const {fetchListRecommendMarketing} = useSearchReport()
-
+const currentUserStore = useCurrentUser();
 const data = ref({})
 
 const slug = route.params.slug;
@@ -77,8 +77,12 @@ const handleSubmitSuccess = () => {
 
 onMounted(() => {
   const unlockedMktReports = localStorage.getItem('report_mkt_unlocked');
-  if (unlockedMktReports === 'true') {
+  if (currentUserStore.authenticated) {
     isHideContent.value = false;
+  } else {
+    if (unlockedMktReports === 'true') {
+      isHideContent.value = false;
+    }
   }
   fetchReportData();
 });
@@ -86,6 +90,14 @@ onMounted(() => {
 </script>
 
 <template>
+  <Head>
+    <Title>{{ data?.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
+    <Meta hid="og:title" property="og:title" :content="`eReport - ${data?.name}`"/>
+    <Meta hid="description" name="description" :content="data?.introduction"/>
+    <Meta hid="og:description" name="og:description" :content="data?.introduction"/>
+    <Meta hid="og:image" property="og:image" :content="data?.url_cover || data?.url_thumbnail"/>
+    <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.name}`"/>
+  </Head>
   <div v-if="loading" class="container_content">
     <div class="title default_section">
       <div class="loading-skeleton">
@@ -122,7 +134,7 @@ onMounted(() => {
   <div v-else class="container_content">
     <div class="title default_section">
       <div v-if="data" class="breadcrumbs">
-        <Breadcrumb :breadcrumbs="[{name: 'Báo cáo miễn phí', value: ''}, {name: 'Báo cáo thị trường'}]"/>
+        <Breadcrumb :breadcrumbs="[{name: 'Báo cáo Metric phát hành', value: ''}, {name: 'Báo cáo thị trường'}]"/>
       </div>
       <h1 v-if="data" class="report-title">
         {{ data.name }} - Báo cáo xu hướng thị trường sàn TMĐT

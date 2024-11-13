@@ -11,7 +11,11 @@ const {data, isHideContent} = defineProps({
   isHideContent: {
     type: Boolean,
     default: false
-  }
+  },
+  loading: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const $t = (text) => {
@@ -83,7 +87,7 @@ const $t = (text) => {
             {{ $t('Sản phẩm có lượt bán') }}
           </div>
           <div class="summary-statistic-item__value">
-            {{ formatNumberHuman(data.data_analytic.by_overview.product) }}
+            {{ formatNumberHuman(data?.data_analytic?.by_overview?.product) }}
           </div>
         </div>
       </div>
@@ -110,7 +114,7 @@ const $t = (text) => {
             {{ $t('Shop có lượt bán') }}
           </div>
           <div class="summary-statistic-item__value">
-            {{ formatNumberHuman(data.data_analytic.by_overview.shop) }}
+            {{ formatNumberHuman(data?.data_analytic?.by_overview?.shop) }}
           </div>
         </div>
       </div>

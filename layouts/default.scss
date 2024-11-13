@@ -4,14 +4,14 @@
   flex-direction: column;
   justify-content: space-evenly;
   position: relative;
-  padding-top: 120px;
+  padding-top: 88px;
 
   @media (max-width: 1380px) {
     padding-top: 80px;
   }
 
   @media (max-width: 768px) {
-    padding-top: 110px;
+    padding-top: 60px;
   }
 
   .darkBlueHeader {
@@ -52,7 +52,7 @@ header {
     z-index: 9999;
   }
   .logo {
-    margin-right: 64px;
+    margin-right: 16px;
 
     @media (max-width: 1380px) {
       margin-right: 0;
@@ -84,7 +84,7 @@ main {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 99999;
+  z-index: 999;
   padding: 4px 12px;
   background: linear-gradient(109.46deg, #FF9839 17.1%, #FF6931 78.86%);
   transition: top 0.3s;
@@ -112,7 +112,7 @@ main {
 
 @media (max-width: 1380px) {
   .logo {
-    width: 150px !important; /* Adjust the width as needed */
+    width: 200px !important; /* Adjust the width as needed */
     height: 40px !important; /* Adjust the height as needed */
   }
 }
