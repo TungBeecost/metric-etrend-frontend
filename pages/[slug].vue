@@ -86,7 +86,7 @@ const handleScroll = () => {
 
 const fetchReportData = async () => {
   const slug = route.params.slug;
-  if (!slug) {
+  if (process.env.SSR === 'true') {
     console.error('Slug parameter is missing');
     return {};
   }
