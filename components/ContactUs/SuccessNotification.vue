@@ -29,7 +29,7 @@ const isVisible = computed({
 </script>
 
 <template>
-  <a-modal v-model:visible="isVisible"
+  <a-modal v-model:open="isVisible"
            :wrap-class-name="'popup-success-notification ' + props.className"
            :footer="false"
            centered

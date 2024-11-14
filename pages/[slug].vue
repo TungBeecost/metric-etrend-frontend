@@ -301,7 +301,7 @@ onUnmounted(() => {
         </div>
       </transition>
     </div>
-    <a-modal v-if="showModal" v-model:visible="showModal" width="600px" :footer="null" @ok="handleOk">
+    <a-modal v-if="showModal" v-model:open="showModal" width="600px" :footer="null" @ok="handleOk">
       <div class="modal_content">
         <div class="alert_success">
           <div class="icon_success">

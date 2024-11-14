@@ -387,7 +387,7 @@ useSeoMeta({
         </div>
       </div>
     </div>
-    <a-modal v-model:visible="isModalVisible" style="position: absolute;" title="Filter and Sort" @ok="handleOk"
+    <a-modal v-model:open="isModalVisible" style="position: absolute;" title="Filter and Sort" @ok="handleOk"
              @cancel="handleCancel">
       <sort-report class="sort_report"
                    style="margin-bottom: 16px"
