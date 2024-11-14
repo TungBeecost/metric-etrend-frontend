@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {defineProps, onMounted, ref} from 'vue'
+import {onMounted, ref} from 'vue'
 import {NAVIGATIONS} from "~/constant/constains";
 import BlurContent from "~/components/BlurContent.vue";
 import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper";

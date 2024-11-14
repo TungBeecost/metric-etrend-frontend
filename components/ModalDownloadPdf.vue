@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {NAVIGATIONS, WALLET} from "~/constant/constains";
-import {computed, defineEmits, defineProps, ref, toRefs} from 'vue';
+// import {computed, defineEmits, defineProps, ref, toRefs} from 'vue';
+import {computed, ref, toRefs} from 'vue';
 import {useCurrentUser} from "~/stores/current-user";
 import {useRoute} from "vue-router";
 import ViewPdfModal from "~/components/ViewPdfModal.vue";

@@ -3,7 +3,6 @@ import { CalendarOutlined } from "@ant-design/icons-vue";
 import AppTag from "~/components/ticket/AppTag.vue";
 import { getPriorityColor, getPriorityText } from "~/utils/ticket.js";
 import dayjs from "dayjs";
-import { defineProps } from 'vue';
 
 defineProps({
   tickets: {

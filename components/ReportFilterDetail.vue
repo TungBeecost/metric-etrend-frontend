@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {defineProps, computed} from 'vue';
+import {computed} from 'vue';
 import moment from "moment/moment";
 import allReports from "public/file_json/list_category.json";
 

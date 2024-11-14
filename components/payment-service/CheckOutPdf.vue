@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import CustomInputDiscount from "~/components/CustomInputDiscount.vue";
 import useDiscount from "~/composables/useDiscount";
-import { defineEmits, ref, defineProps } from 'vue';
 import { formatCurrency } from "~/helpers/FormatHelper";
 import TotalPaymentPdf from "~/components/payment-service/TotalPaymentPdf.vue";
 import FormVat from "~/components/payment-service/FormVat.vue";

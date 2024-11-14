@@ -1,5 +1,4 @@
 <script setup>
-import {defineProps} from 'vue';
 import PieChart from "~/components/report/PieChart.vue";
 
 const {data, isHideContent} = defineProps({

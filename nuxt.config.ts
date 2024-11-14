@@ -1,6 +1,3 @@
-import * as AntD from "ant-design-vue";
-import { addComponent } from "@nuxt/kit";
-
 export default defineNuxtConfig({
     ssr: process.env.SSR === 'true', // Bật chế độ SSR
 
@@ -157,11 +154,10 @@ export default defineNuxtConfig({
         id: 'GTM-522F9NZ',
     },
 
-    site: {
-        url: 'https://ereport.staging.muadee.vn',
-        name: 'eReport',
-    },
-
+    // site: {
+    //     url: 'https://ereport.staging.muadee.vn',
+    //     name: 'eReport',
+    // },
     compatibilityDate: "2024-09-22",
     build: {
         transpile: ['tslib']

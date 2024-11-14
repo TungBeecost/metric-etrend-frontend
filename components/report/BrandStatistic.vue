@@ -1,5 +1,5 @@
 <script setup>
-import {computed, defineProps, ref, onMounted, watchEffect} from 'vue';
+import {computed, ref, onMounted, watchEffect} from 'vue';
 import Highcharts from 'highcharts';
 import {formatNumber} from "~/helpers/FormatHelper.js";
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {defineProps} from 'vue';
 import {formatCurrency, formatNumberHuman} from "~/helpers/FormatHelper";
 import moment from "moment/moment";
 import {openProductUrl, openShopProductUrl} from "~/helpers/DataNormalize";

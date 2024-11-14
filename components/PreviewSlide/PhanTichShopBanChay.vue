@@ -106,7 +106,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';  // Import useRoute from vue-router
 import moment from 'moment';
 import Highcharts from 'highcharts';

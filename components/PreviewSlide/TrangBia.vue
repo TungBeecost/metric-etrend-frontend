@@ -40,7 +40,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
 import moment from 'moment';
 import BeeMetricLogo from '@/components/svg/BeeMetricLogo';
 

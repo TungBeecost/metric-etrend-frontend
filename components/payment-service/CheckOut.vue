@@ -2,11 +2,13 @@
 import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import CustomInputDiscount from "~/components/CustomInputDiscount.vue";
 import useDiscount from "~/composables/useDiscount";
-import {defineEmits, defineProps, ref, watch} from 'vue';
+// import {defineEmits, defineProps, ref, watch} from 'vue';
+import {ref, watch} from 'vue';
 import {formatCurrency} from "~/helpers/FormatHelper";
 import FormVat from "~/components/payment-service/FormVat.vue";
+
 const currentUserStore = useCurrentUser();
-const { userInfo } = storeToRefs(currentUserStore);
+const {userInfo} = storeToRefs(currentUserStore);
 
 export interface IFormValue {
   companyName?: string;
@@ -127,8 +129,8 @@ const handlePayment = () => {
     return;
   }
 
-  if (!nameValue.value || !phoneValue.value || errors.value.name || errors.value.phone ) {
-    if(!userInfo.value.email && errors.value.emailAccount){
+  if (!nameValue.value || !phoneValue.value || errors.value.name || errors.value.phone) {
+    if (!userInfo.value.email && errors.value.emailAccount) {
       return;
     }
     return;

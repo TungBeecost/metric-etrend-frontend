@@ -5,18 +5,17 @@ import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
 import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
-import { ref, onMounted, onUnmounted } from "vue";
-import { REPORT_ENDPOINTS } from "~/constant/endpoints";
+import {onMounted, onUnmounted, ref} from "vue";
+import {REPORT_ENDPOINTS} from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
-import { useGTM } from '~/composables/useGTM';
+import {useGTM} from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
 import RelateReport from "~/components/RelateReport.vue";
 import ScrollNotification from "~/components/ScrollNotification.vue";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
-import { useHead } from 'unhead'
 import {useCurrentUser} from "~/stores/current-user.js";
 
 
@@ -35,18 +34,6 @@ const loading = ref(true); // Add loading state
 const showModalDownloadPdf = ref(false);
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
-
-useHead({
-  title: 'My App',
-  meta: [
-    { name: 'description', content: 'My amazing site.' }
-  ],
-  bodyAttrs: {
-    class: 'test'
-  },
-  script: [ { innerHTML: 'console.log(\'Hello world LDC\')' } ]
-})
-
 
 const fetchSuggest = async (value = '', options = {}) => {
   try {
