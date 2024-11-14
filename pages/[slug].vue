@@ -97,14 +97,14 @@ const handleScroll = () => {
   }
 };
 
-const fetchReportData = async (period) => {
+const fetchReportData = async () => {
   const slug = route.params.slug;
   try {
     let isHideContent = true;
 
     const accessToken = await getIndexedDB("access_token").catch(() => null);
     const visitorId = await getIndexedDB("__visitor").catch(() => null);
-    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}&period=${period}`;
+    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug} `;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
     }
@@ -175,7 +175,7 @@ const fetchReportData = async (period) => {
 };
 
 const { data } = await useAsyncData(() => {
-  return fetchReportData('2023M9_2022M10');
+  return fetchReportData();
 });
 
 const { data: tagSuggestions } = await useAsyncData(

@@ -20,7 +20,7 @@
            @click="handleSuggestionClick(suggestion.name, index)">
         <span v-if="index == 0" style="display: flex; align-items: center; gap: 8px">
           <img src="/icons/SearchOrange.svg" alt="search"/>
-          Tìm báo cáo "{{ suggestion.name }}"
+          Tìm báo cáo "{{ searchKeyWord }}"
         </span>
         <span v-else> {{ suggestion.name }}</span>
         <span v-if="index > 0" style="color: #716B95; font-size: 14px">{{ REPORT_TYPE_DISPLAY_NAMES[suggestion.report_type] || '' }}</span>
@@ -74,6 +74,7 @@ onMounted(() => {
 const searchValue = useState<string>(() => route.query.search as string || "");
 const isShowSuggestions = useState<boolean>(() => false);
 const suggestions = useState<Array<Suggestion>>(() => []);
+const searchKeyWord = ref<string>('');
 const setShowSuggestions = () => {
   isShowSuggestions.value = false;
 }
@@ -84,7 +85,6 @@ const handleSearch = async (value: string) => {
     await props.handleSearch(value);
   }
 }
-
 
 const slugifyText = (text: string) => {
   return slugify(text, {
@@ -103,18 +103,21 @@ const handleSuggestionClick = async (suggestion: string, index: number) => {
     await props.handleSearch(suggestion);
 }
 
+watch(searchValue, async (newValue) => {
+  searchKeyWord.value = newValue;
+});
+
 const onChange = debounce(async (showSuggestions = true) => {
   if (!props.handleChange) return;
-
   const result = await props.handleChange(searchValue.value);
   isShowSuggestions.value = showSuggestions;
   if (result) {
-    suggestions.value = result;
+    suggestions.value = [{ name: searchKeyWord.value, report_type: '' }, ...result];
   }
 }, 300);
 
 onMounted(() => {
-  onChange(false); // Call onChange with false to not show suggestions
+  onChange(false);
 });
 </script>
 
