@@ -19,7 +19,7 @@
       <div v-for="(suggestion, index) in suggestions" :key="suggestion.name" class="suggestion-item"
            @click="handleSuggestionClick(suggestion.name, index)">
         <span v-if="index == 0" style="display: flex; align-items: center; gap: 8px">
-          <img src="/icons/SearchOrange.svg" alt="search"/>
+          <img src="~public/icons/SearchOrange.svg" alt="search"/>
           Tìm báo cáo "{{ searchKeyWord }}"
         </span>
         <span v-else> {{ suggestion.name }}</span>

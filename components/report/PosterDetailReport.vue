@@ -38,7 +38,7 @@ const props = defineProps({
       </div>
     </div>
     <div class="big_logo_metric">
-      <img src="/images/big_logo_metric.svg" alt="">
+      <img src="~public/images/big_logo_metric.svg" alt="">
     </div>
   </div>
 </template>

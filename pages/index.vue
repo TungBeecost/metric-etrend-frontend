@@ -105,7 +105,6 @@ import {ref} from "vue";
 import ReportFree from "~/components/ReportFree.vue";
 
 const transactionId = ref<string | null>(null);
-console.log(`This is gg tag:`, process.env.NUXT_PUBLIC_GTAG_ID);
 const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotificationPopup', () => false);
 const openContactForm = ref(false)
 const listTagSuggestions = ref<string[]>([]);

@@ -13,7 +13,6 @@ import {
 import AppDrawer from "~/components/ticket/AppDrawer.vue";
 import AppSection from "~/components/ticket/AppSection.vue";
 import AppTitle from "~/components/ticket/AppTitle.vue";
-import AppTicketList from "~/components/ticket/AppTicketList.vue";
 import IconEdit from "~/components/ticket/IconEdit.vue";
 import IconSend from "~/components/ticket/IconSend.vue";
 import AppListComment from "~/components/ticket/AppListComment.vue";
@@ -250,102 +249,110 @@ const wrapperCol = computed(() => {
         </div>
         <div class="content">
           <table class="ticket-metadata">
-            <tr class="ticket-metadata__item">
-              <td class="ticket-metadata__item__label">Ngày gửi yêu cầu</td>
-              <td class="ticket-metadata__item__value">{{ formatDateTime(ticket.data?.created_at) }}</td>
-            </tr>
-            <tr class="ticket-metadata__item">
-              <td class="ticket-metadata__item__label">Trạng thái</td>
-              <td class="ticket-metadata__item__value">
-                <app-tag :type="getStatusColor(ticket.data?.status)">{{ getStatusText(ticket.data?.status) }}</app-tag>
-              </td>
-            </tr>
-            <tr class="ticket-metadata__item">
-              <td class="ticket-metadata__item__label">Phân loại hỗ trợ</td>
-              <td class="ticket-metadata__item__value">{{ getSupportDepartmentName(ticket.data?.support_department) }}</td>
-            </tr>
-            <tr class="ticket-metadata__item">
-              <td class="ticket-metadata__item__label">Link báo cáo</td>
-              <td class="ticket-metadata__item__value">{{ ticket.data?.report_link }}</td>
-            </tr>
+            <tbody>
+              <tr class="ticket-metadata__item">
+                <td class="ticket-metadata__item__label">Ngày gửi yêu cầu</td>
+                <td class="ticket-metadata__item__value">{{ formatDateTime(ticket.data?.created_at) }}</td>
+              </tr>
+              <tr class="ticket-metadata__item">
+                <td class="ticket-metadata__item__label">Trạng thái</td>
+                <td class="ticket-metadata__item__value">
+                  <app-tag :type="getStatusColor(ticket.data?.status)">{{ getStatusText(ticket.data?.status) }}</app-tag>
+                </td>
+              </tr>
+              <tr class="ticket-metadata__item">
+                <td class="ticket-metadata__item__label">Phân loại hỗ trợ</td>
+                <td class="ticket-metadata__item__value">{{ getSupportDepartmentName(ticket.data?.support_department) }}</td>
+              </tr>
+              <tr class="ticket-metadata__item">
+                <td class="ticket-metadata__item__label">Link báo cáo</td>
+                <td class="ticket-metadata__item__value">{{ ticket.data?.report_link }}</td>
+              </tr>
+            </tbody>
           </table>
           <a-divider/>
           <a-flex v-if="!isMobile" gap="middle">
             <table class="ticket-metadata">
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Ưu tiên</td>
-                <td class="ticket-metadata__item__value">
-                  <app-tag :type="getPriorityColor(ticket.data?.priority)">{{ getPriorityText(ticket.data?.priority) }}</app-tag>
-                </td>
-              </tr>
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Người báo cáo</td>
-                <td class="ticket-metadata__item__value">{{ ticket.data?.reporter }}</td>
-              </tr>
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Khách hàng</td>
-                <td class="ticket-metadata__item__value">{{ ticket.data?.customer_email }}</td>
-              </tr>
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Người sở hữu</td>
-                <td class="ticket-metadata__item__value">{{ ticket.data?.owner }}</td>
-              </tr>
+              <tbody>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Ưu tiên</td>
+                  <td class="ticket-metadata__item__value">
+                    <app-tag :type="getPriorityColor(ticket.data?.priority)">{{ getPriorityText(ticket.data?.priority) }}</app-tag>
+                  </td>
+                </tr>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Người báo cáo</td>
+                  <td class="ticket-metadata__item__value">{{ ticket.data?.reporter }}</td>
+                </tr>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Khách hàng</td>
+                  <td class="ticket-metadata__item__value">{{ ticket.data?.customer_email }}</td>
+                </tr>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Người sở hữu</td>
+                  <td class="ticket-metadata__item__value">{{ ticket.data?.owner }}</td>
+                </tr>
+              </tbody>
             </table>
             <table class="ticket-metadata">
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Phụ trách</td>
-                <td class="ticket-metadata__item__value">{{ ticket.data?.person_incharge }}</td>
-              </tr>
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Ngày đến hạn</td>
-                <td class="ticket-metadata__item__value">{{ formatDateTime(ticket.data?.due_date) }}</td>
-              </tr>
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">MKT Giới thiệu</td>
-                <td class="ticket-metadata__item__value">{{ ticket.data?.mkt_tagline }}</td>
-              </tr>
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Cc</td>
-                <td class="ticket-metadata__item__value">{{ ticket.data?.cc?.join(', ') }}</td>
-              </tr>
+              <tbody>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Phụ trách</td>
+                  <td class="ticket-metadata__item__value">{{ ticket.data?.person_incharge }}</td>
+                </tr>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Ngày đến hạn</td>
+                  <td class="ticket-metadata__item__value">{{ formatDateTime(ticket.data?.due_date) }}</td>
+                </tr>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">MKT Giới thiệu</td>
+                  <td class="ticket-metadata__item__value">{{ ticket.data?.mkt_tagline }}</td>
+                </tr>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Cc</td>
+                  <td class="ticket-metadata__item__value">{{ ticket.data?.cc?.join(', ') }}</td>
+                </tr>
+              </tbody>
             </table>
           </a-flex>
           <a-flex v-else gap="middle">
             <table class="ticket-metadata">
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Ưu tiên</td>
-                <td class="ticket-metadata__item__value">
-                  <app-tag :type="getPriorityColor(ticket.data?.priority)">{{ getPriorityText(ticket.data?.priority) }}</app-tag>
-                </td>
-              </tr>
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Người báo cáo</td>
-                <td class="ticket-metadata__item__value">{{ ticket.data?.reporter }}</td>
-              </tr>
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Khách hàng</td>
-                <td class="ticket-metadata__item__value">{{ ticket.data?.customer_email }}</td>
-              </tr>
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Người sở hữu</td>
-                <td class="ticket-metadata__item__value">{{ ticket.data?.owner }}</td>
-              </tr>
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Phụ trách</td>
-                <td class="ticket-metadata__item__value">{{ ticket.data?.person_incharge }}</td>
-              </tr>
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Ngày đến hạn</td>
-                <td class="ticket-metadata__item__value">{{ formatDateTime(ticket.data?.due_date) }}</td>
-              </tr>
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">MKT Giới thiệu</td>
-                <td class="ticket-metadata__item__value">{{ ticket.data?.mkt_tagline }}</td>
-              </tr>
-              <tr class="ticket-metadata__item">
-                <td class="ticket-metadata__item__label">Cc</td>
-                <td class="ticket-metadata__item__value">{{ ticket.data?.cc?.join(', ') }}</td>
-              </tr>
+              <tbody>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Ưu tiên</td>
+                  <td class="ticket-metadata__item__value">
+                    <app-tag :type="getPriorityColor(ticket.data?.priority)">{{ getPriorityText(ticket.data?.priority) }}</app-tag>
+                  </td>
+                </tr>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Người báo cáo</td>
+                  <td class="ticket-metadata__item__value">{{ ticket.data?.reporter }}</td>
+                </tr>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Khách hàng</td>
+                  <td class="ticket-metadata__item__value">{{ ticket.data?.customer_email }}</td>
+                </tr>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Người sở hữu</td>
+                  <td class="ticket-metadata__item__value">{{ ticket.data?.owner }}</td>
+                </tr>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Phụ trách</td>
+                  <td class="ticket-metadata__item__value">{{ ticket.data?.person_incharge }}</td>
+                </tr>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Ngày đến hạn</td>
+                  <td class="ticket-metadata__item__value">{{ formatDateTime(ticket.data?.due_date) }}</td>
+                </tr>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">MKT Giới thiệu</td>
+                  <td class="ticket-metadata__item__value">{{ ticket.data?.mkt_tagline }}</td>
+                </tr>
+                <tr class="ticket-metadata__item">
+                  <td class="ticket-metadata__item__label">Cc</td>
+                  <td class="ticket-metadata__item__value">{{ ticket.data?.cc?.join(', ') }}</td>
+                </tr>
+              </tbody>
             </table>
           </a-flex>
           <a-divider/>
