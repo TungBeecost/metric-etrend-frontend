@@ -12,12 +12,17 @@ import {NAVIGATIONS, PAGE_TITLES} from "~/constant/constains";
 import allReports from '@/public/file_json/list_category.json';
 import {useSearchReport} from "#imports";
 
+interface TagSuggestion {
+  name: string;
+  report_type: string;
+}
+
 const {fetchSearch, fetchListRecommend, fetchSuggest} = useSearchReport()
 const route = useRoute();
 const router = useRouter();
 const data = ref<SearchReportRes | null>(null);
 const listRecommend = ref<LstRecommed[] | null>(null);
-const listTagSuggestions = ref<string[]>([]);
+const listTagSuggestions = ref<TagSuggestion[]>([]);
 const displaySortReport = ref(false);
 const isModalVisible = ref(false);
 const selectedCategory = ref<string>();
