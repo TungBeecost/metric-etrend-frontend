@@ -1342,7 +1342,7 @@
   resolved "https://registry.npmjs.org/@nuxt/devalue/-/devalue-2.0.2.tgz"
   integrity sha512-GBzP8zOc7CGWyFQS6dv1lQz8VVpz5C2yRszbXufwG/9zhStTIH50EtD87NmWbTMwXDvZLNg8GIpb1UFdH93JCA==
 
-"@nuxt/devtools-kit@1.3.9", "@nuxt/devtools-kit@^1.3.1", "@nuxt/devtools-kit@^1.3.9":
+"@nuxt/devtools-kit@1.3.9", "@nuxt/devtools-kit@^1.3.1":
   version "1.3.9"
   resolved "https://registry.npmjs.org/@nuxt/devtools-kit/-/devtools-kit-1.3.9.tgz"
   integrity sha512-tgr/F+4BbI53/JxgaXl3cuV9dMuCXMsd4GEXN+JqtCdAkDbH3wL79GGWx0/6I9acGzRsB6UZ1H6U96nfgcIrAw==
@@ -1478,7 +1478,7 @@
   optionalDependencies:
     ipx "^2.1.0"
 
-"@nuxt/kit@3.12.4", "@nuxt/kit@^3.11.0", "@nuxt/kit@^3.11.2", "@nuxt/kit@^3.12.1", "@nuxt/kit@^3.12.2", "@nuxt/kit@^3.12.3", "@nuxt/kit@^3.4.0", "@nuxt/kit@^3.5.0", "@nuxt/kit@^3.5.1", "@nuxt/kit@^3.7.3":
+"@nuxt/kit@3.12.4", "@nuxt/kit@^3.11.0", "@nuxt/kit@^3.11.2", "@nuxt/kit@^3.12.1", "@nuxt/kit@^3.12.2", "@nuxt/kit@^3.4.0", "@nuxt/kit@^3.5.0", "@nuxt/kit@^3.5.1", "@nuxt/kit@^3.7.3":
   version "3.12.4"
   resolved "https://registry.npmjs.org/@nuxt/kit/-/kit-3.12.4.tgz"
   integrity sha512-aNRD1ylzijY0oYolldNcZJXVyxdGzNTl+Xd0UYyFQCu9f4wqUZqQ9l+b7arCEzchr96pMK0xdpvLcS3xo1wDcw==
@@ -1628,27 +1628,6 @@
   dependencies:
     chalk "^4.1.0"
     semver "^7.3.2"
-
-"@nuxtjs/sitemap@^6.0.0-beta.1":
-  version "6.0.0-beta.1"
-  resolved "https://registry.npmjs.org/@nuxtjs/sitemap/-/sitemap-6.0.0-beta.1.tgz"
-  integrity sha512-qLpMWAGr4vyTt2F1WYiA4Cv5ubxvjvd7LNW8Zt917O50Jcs3qSNiGPjFuDYDf9mTNGbkxtDyRti0/uESa5WP2A==
-  dependencies:
-    "@nuxt/devtools-kit" "^1.3.9"
-    "@nuxt/kit" "^3.12.3"
-    chalk "^5.3.0"
-    defu "^6.1.4"
-    h3-compression "^0.3.2"
-    nuxt-site-config "^2.2.15"
-    nuxt-site-config-kit "^2.2.15"
-    ofetch "^1.3.4"
-    pathe "^1.1.2"
-    pkg-types "^1.1.3"
-    radix3 "^1.1.2"
-    semver "^7.6.2"
-    sirv "^2.0.4"
-    site-config-stack "^2.2.15"
-    ufo "^1.5.3"
 
 "@one-ini/wasm@0.1.1":
   version "0.1.1"
@@ -5064,11 +5043,6 @@ gzip-size@^7.0.0:
   dependencies:
     duplexer "^0.1.2"
 
-h3-compression@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.npmjs.org/h3-compression/-/h3-compression-0.3.2.tgz"
-  integrity sha512-B+yCKyDRnO0BXSfjAP4tCXJgJwmnKp3GyH5Yh66mY9KuOCrrGQSPk/gBFG2TgH7OyB/6mvqNZ1X0XNVuy0qRsw==
-
 h3@^1.10.0, h3@^1.10.2, h3@^1.11.1, h3@^1.12.0:
   version "1.12.0"
   resolved "https://registry.npmjs.org/h3/-/h3-1.12.0.tgz"
@@ -6468,33 +6442,6 @@ nuxt-highcharts@^3.0.9:
     highcharts "^11.1.0"
   optionalDependencies:
     "@highcharts/map-collection" "^2.0.0"
-
-nuxt-site-config-kit@2.2.15, nuxt-site-config-kit@^2.2.15:
-  version "2.2.15"
-  resolved "https://registry.npmjs.org/nuxt-site-config-kit/-/nuxt-site-config-kit-2.2.15.tgz"
-  integrity sha512-uN+JOijDt0u35rBhI3GhRHvPKncm2Nu/P3QMRIi+mwt4F/tQtlvLa1XUANkeEy8InTnPTVgs6dSDSqHP4sBXzg==
-  dependencies:
-    "@nuxt/kit" "^3.12.3"
-    "@nuxt/schema" "^3.12.3"
-    pkg-types "^1.1.3"
-    site-config-stack "2.2.15"
-    std-env "^3.7.0"
-    ufo "^1.5.3"
-
-nuxt-site-config@^2.2.15:
-  version "2.2.15"
-  resolved "https://registry.npmjs.org/nuxt-site-config/-/nuxt-site-config-2.2.15.tgz"
-  integrity sha512-V/gsWAeSWQi7FGoy6vicf6DXaaNJ/akail54dMWnrkcBre4PpBSwP7arZqmZZzj1mc0v7LoYqISr9qeXhcT1NA==
-  dependencies:
-    "@nuxt/devtools-kit" "^1.3.9"
-    "@nuxt/kit" "^3.12.3"
-    "@nuxt/schema" "^3.12.3"
-    nuxt-site-config-kit "2.2.15"
-    pathe "^1.1.2"
-    pkg-types "^1.1.3"
-    sirv "^2.0.4"
-    site-config-stack "2.2.15"
-    ufo "^1.5.3"
 
 nuxt-svgo@^4.0.1:
   version "4.0.1"
@@ -8301,13 +8248,6 @@ sisteransi@^1.0.5:
   version "1.0.5"
   resolved "https://registry.npmjs.org/sisteransi/-/sisteransi-1.0.5.tgz"
   integrity sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==
-
-site-config-stack@2.2.15, site-config-stack@^2.2.15:
-  version "2.2.15"
-  resolved "https://registry.npmjs.org/site-config-stack/-/site-config-stack-2.2.15.tgz"
-  integrity sha512-Ykh1X+puUlGoM/HX7bV7xZMKd4mQTm0KtB/9ChHKSIknCJ6pEwIRKuDiEnImtOTG+HUhuFJGW8lV8CkAB58tXw==
-  dependencies:
-    ufo "^1.5.3"
 
 slash@^3.0.0:
   version "3.0.0"

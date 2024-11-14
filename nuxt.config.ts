@@ -142,18 +142,7 @@ export default defineNuxtConfig({
         "@nuxt/image",
         "vue3-carousel-nuxt",
         '@zadigetvoltaire/nuxt-gtm',
-        '@nuxtjs/sitemap',
         ["nuxt-highcharts", {}],
-        async function () {
-            for (const key in AntD) {
-                if (["version", "install"].includes(key)) continue;
-                await addComponent({
-                    filePath: "ant-design-vue",
-                    name: `A${key}`,
-                    export: key,
-                });
-            }
-        },
         "nuxt-svgo",
         "@ant-design-vue/nuxt",
         "@pinia/nuxt",
