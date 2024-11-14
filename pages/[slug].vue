@@ -284,7 +284,7 @@ onUnmounted(() => {
           <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail"
                              :is-hide-content="data.isHideContent"/>
           <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+          <brand-statistic v-if="data?.report_type !== 'report_brand'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
           <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
           <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         </div>

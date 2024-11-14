@@ -65,8 +65,8 @@ const chartOptions = computed(() => {
         if (!a.begin) {
           return -1;
         }
-        return a.begin - b.end;
-      })
+        return a.begin - b.begin;
+      }).filter(({revenue}) => revenue / props.data.data_analytic?.by_overview?.revenue > 0.03)
       : [];
 
   const lstPlatform = props.data.data_analytic.by_marketplace.lst_marketplace.map((item) => item.platform_id).reverse();
