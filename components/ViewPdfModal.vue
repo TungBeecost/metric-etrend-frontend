@@ -61,7 +61,7 @@ const isViewReportDisabled = computed(() => userInfo.value.current_plan.remain_c
 
 <template>
   <a-modal
-      :visible="showAlert"
+      :open="showAlert"
       :footer="null"
       @cancel="toggleUnlock"
       @ok="toggleUnlock"

@@ -143,7 +143,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
   <!--    <login-button/>-->
   <!--  </a-modal>-->
   <a-modal
-      :visible="open" :width="1000" :footer="null" @cancel="toggleUnlock" @ok="toggleUnlock"
+      :open="open" :width="1000" :footer="null" @cancel="toggleUnlock" @ok="toggleUnlock"
   >
     <div class="noti_view_dept_report">
       <div class="slide_thumbnail">

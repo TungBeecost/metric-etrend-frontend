@@ -77,7 +77,7 @@
       </div>
     </a-modal>
     <a-modal
-        :visible="openContactForm"
+        :open="openContactForm"
         :footer="false"
         :style="modalStyle"
         @cancel="openContactForm = false"
