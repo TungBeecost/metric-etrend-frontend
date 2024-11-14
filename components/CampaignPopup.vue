@@ -44,7 +44,6 @@ const checkPopupVisibility = () => {
   const userPlan = PLANS.find(plan => plan.plan_code === userInfo.value?.current_plan?.plan_code);
   const isPaidUser = !!userPlan?.plan_code;
 
-  console.log(1111, userPlan?.plan_code)
   if (!isPaidUser) {
     // get from session storage
     const isPopupClosed = !showPopupCampaign.value;

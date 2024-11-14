@@ -22,12 +22,16 @@ const navigateToPayment = (plan: any) => {
   }
 };
 
-const isMobile = computed(() => windowWidth?.value < 768);
-
-const windowWidth = ref(window.innerWidth);
+const windowWidth = ref(0);
+const isMobile = ref(false);
 
 onMounted(() => {
   windowWidth.value = window.innerWidth;
+  isMobile.value = window.innerWidth < 768;
+  window.addEventListener('resize', () => {
+    windowWidth.value = window.innerWidth;
+    isMobile.value = window.innerWidth < 768;
+  });
 });
 
 const getIsShowActiveButton = (user_plan_code: string, plan: any) => {
