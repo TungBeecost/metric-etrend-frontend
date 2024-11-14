@@ -48,7 +48,7 @@ const onTagClick = (tag: string) => {
           class="keyword"
           @click="onTagClick(keyword)"
       >
-        {{ keyword }}
+        {{ keyword.name }}
       </div>
     </div>
   </div>
