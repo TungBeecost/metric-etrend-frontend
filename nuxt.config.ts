@@ -94,20 +94,21 @@ export default defineNuxtConfig({
         },
     },
 
-    typescript: {
-        typeCheck: true,
-    },
-
     plugins: [
         "~/plugins/antd.ts",
+        "~/plugins/vue3-carousel.client.ts",
         {
             src: "~/plugins/analytics.js",
             ssr: false,
         },
-        "~/plugins/vue3-carousel.client.ts",
-        "~/plugins/nuxt-gtm.js",
-        "~/plugins/gtm-tracking.js",
-        "~/plugins/vue-gtm.client.js",
+        {
+            src:   "~/plugins/gtm-tracking.js",
+            ssr: true,
+        },
+        {
+            src:  "~/plugins/nuxt-gtm.js",
+            ssr: true,
+        },
     ],
 
     css: [
