@@ -86,27 +86,29 @@ const handleScroll = () => {
 
 const fetchReportData = async () => {
   const slug = route.params.slug;
+  if (!slug) {
+    console.error('Slug parameter is missing');
+    return {};
+  }
   try {
     let isHideContent = true;
 
     const accessToken = await getIndexedDB("access_token").catch(() => null);
     const visitorId = await getIndexedDB("__visitor").catch(() => null);
-    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug} `;
+    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
     }
-    const response = await $fetch(
-        url,
-        {
-          headers: {
-            'Authorization': accessToken ? `${accessToken}` : '',
-            'Visitorid': visitorId ? visitorId.visitor_id : '',
-          }
-        }
-    );
+    const response = await $fetch(url, {
+      headers: {
+        'Authorization': accessToken ? `${accessToken}` : '',
+        'Visitorid': visitorId ? visitorId.visitor_id : '',
+      }
+    });
 
     if (!response) {
       await router.push('/search');
+      return {};
     }
 
     const category = listCategory.find(cat => cat.value === response.category_report_id);
@@ -301,7 +303,7 @@ onUnmounted(() => {
         </div>
       </transition>
     </div>
-    <a-modal v-if="showModal" v-model:visible="showModal" width="600px" :footer="null" @ok="handleOk">
+    <a-modal v-if="showModal" v-model:open="showModal" width="600px" :footer="null" @ok="handleOk">
       <div class="modal_content">
         <div class="alert_success">
           <div class="icon_success">

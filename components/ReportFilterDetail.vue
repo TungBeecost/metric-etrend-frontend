@@ -119,10 +119,6 @@ const fieldValueParse: FieldValueParsers = {
         </div>
       </div>
     </div>
-
-    <a-modal v-model:visible="showDetailPopup" title="Chi tiết báo cáo" width="800px">
-      <pre>{{ props.data.data_filter_report }}</pre>
-    </a-modal>
   </div>
 </template>
 
