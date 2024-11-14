@@ -2,19 +2,18 @@
 
 const emit = defineEmits(['tagClicked']);
 
-// const tags = defineModel<string[]>("tags");
-
 const props = defineProps({
   tags: {
-    type: Array as () => string[],
+    type: Array as () => { name: string }[],
     default: () => [],
   },
 });
 
-const onTagClick = (tag: string) => {
-  emit('tagClicked', tag);
+const onTagClick = (tagName: string) => {
+  emit('tagClicked', tagName);
 };
 </script>
+
 <template>
   <div class="popular_relate_keywords">
     <div class="title">
@@ -43,10 +42,10 @@ const onTagClick = (tag: string) => {
     </div>
     <div class="list_keywords">
       <div
-          v-for="keyword in tags"
-          :key="keyword"
+          v-for="keyword in props.tags"
+          :key="keyword.name"
           class="keyword"
-          @click="onTagClick(keyword)"
+          @click="onTagClick(keyword.name)"
       >
         {{ keyword.name }}
       </div>
