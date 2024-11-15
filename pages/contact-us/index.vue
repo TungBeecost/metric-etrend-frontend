@@ -55,13 +55,13 @@
           </a-button>
         </div>
         <div class="big_logo_metric">
-          <img src="~public/images/big_logo_metric.svg" alt="ig_logo_metric">
+          <NuxtImg src="/images/big_logo_metric.svg" alt="ig_logo_metric"/>
         </div>
         <div class="chart_image">
-          <img src="~public/images/chart_image.svg" alt="ig_logo_metric">
+          <NuxtImg src="/images/chart_image.svg" alt="ig_logo_metric"/>
         </div>
         <div class="line_styling_image">
-          <img src="~public/images/line_styling_image.svg" alt="ig_logo_metric">
+          <NuxtImg src="/images/line_styling_image.svg" alt="ig_logo_metric"/>
         </div>
       </div>
     </div>
