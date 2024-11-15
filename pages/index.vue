@@ -48,7 +48,7 @@
       <ContactUs/>
 
     </div>
-    <a-modal v-if="showModal" v-model:visible="showModal" width="600px" :footer="null" @ok="handleOk">
+    <a-modal v-if="showModal" v-model:open="showModal" width="600px" :footer="null" @ok="handleOk">
       <div class="modal_content">
         <div class="alert_success">
           <div class="icon_success">
@@ -77,7 +77,7 @@
       </div>
     </a-modal>
     <a-modal
-        :visible="openContactForm"
+        :open="openContactForm"
         :footer="false"
         :style="modalStyle"
         @cancel="openContactForm = false"
@@ -105,7 +105,6 @@ import {ref} from "vue";
 import ReportFree from "~/components/ReportFree.vue";
 
 const transactionId = ref<string | null>(null);
-console.log(`This is gg tag:`, process.env.NUXT_PUBLIC_GTAG_ID);
 const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotificationPopup', () => false);
 const openContactForm = ref(false)
 const listTagSuggestions = ref<string[]>([]);
@@ -315,6 +314,10 @@ const handleAdvertisement = () => {
 
 .recommendItem {
   height: 40px;
+}
+
+.sectionDescription{
+  width: 70%;
 }
 
 </style>

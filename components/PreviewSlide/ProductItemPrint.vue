@@ -84,7 +84,7 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { getUrlImageOption } from '~/helpers/utils.js';
 import {formatCurrency, formatNumber} from '~/helpers/FormatHelper.js';
 

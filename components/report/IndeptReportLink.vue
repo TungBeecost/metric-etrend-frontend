@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
-import {defineProps, ref, onMounted, watch} from "vue";
+import {ref, onMounted, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import ReportPreviewSlide from "~/components/PreviewSlide/ReportPreviewSlide.vue";
 

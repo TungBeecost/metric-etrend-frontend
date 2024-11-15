@@ -45,29 +45,6 @@ useHead({
   link: [
     {key: "canonical", rel: "canonical", href: `${config.public.BASE_URL}${route.fullPath}`},
   ],
-  // script: [
-  //   {
-  //     type: "application/ld+json",
-  //     json: {
-  //       "@context": "https://schema.org",
-  //       "@type": "BreadcrumbList",
-  //       itemListElement: [
-  //         {
-  //           "@type": "ListItem",
-  //           position: 1,
-  //           name: "Metric",
-  //           item: "https://metric.vn/ereport",
-  //         },
-  //         ...(props.data.lst_category || []).map((item: any, index: any) => ({
-  //           "@type": "ListItem",
-  //           position: index + 2,
-  //           name: item.name,
-  //           item: `https://metric.vn/ereport/${item.slug}`,
-  //         })),
-  //       ],
-  //     },
-  //   },
-  // ],
 });
 
 

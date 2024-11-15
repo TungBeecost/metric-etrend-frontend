@@ -2,9 +2,10 @@
 import TotalPayment from "~/components/payment-service/TotalPayment.vue";
 import CustomInputDiscount from "~/components/CustomInputDiscount.vue";
 import useDiscount from "~/composables/useDiscount";
-import {defineEmits, defineProps, ref, watch} from 'vue';
-import {formatCurrency} from "~/helpers/FormatHelper";
+import { ref, watch, onMounted } from 'vue';
+import { formatCurrency } from "~/helpers/FormatHelper";
 import FormVat from "~/components/payment-service/FormVat.vue";
+
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
 
@@ -28,10 +29,10 @@ const discountInfo = ref<any>({});
 const finalPrice = ref<number>(0);
 const checked = ref(false);
 const emit = defineEmits(['payment', 'updateContact']);
-const {getVoucher} = useDiscount();
+const { getVoucher } = useDiscount();
 const statusApplyCode = ref<boolean>(false);
 
-const {plan, discountValueRouter} = defineProps({
+const { plan, discountValueRouter } = defineProps({
   plan: {
     type: Object,
     required: true
@@ -44,11 +45,11 @@ const {plan, discountValueRouter} = defineProps({
 
 const formVatValues = ref<IFormValue>({});
 
-watch(plan, (newPlan) => {
+watch(() => plan, (newPlan) => {
   if (newPlan && newPlan.price) {
     finalPrice.value = newPlan.price;
   }
-}, {immediate: true});
+}, { immediate: true });
 
 const handleFinalPrice = (price: number) => {
   finalPrice.value = price;
@@ -127,8 +128,8 @@ const handlePayment = () => {
     return;
   }
 
-  if (!nameValue.value || !phoneValue.value || errors.value.name || errors.value.phone ) {
-    if(!userInfo.value.email && errors.value.emailAccount){
+  if (!nameValue.value || !phoneValue.value || errors.value.name || errors.value.phone) {
+    if (!userInfo.value.email && errors.value.emailAccount) {
       return;
     }
     return;
@@ -187,9 +188,6 @@ const fetchDiscount = async () => {
 
     if (response) {
       const {discount} = response;
-      console.log(discount);
-      console.log(plan.price);
-
       discountInfo.value = response;
 
       const now = new Date();

@@ -1,6 +1,5 @@
 // Update `ListTicket.vue` to handle pagination
 <script setup lang="ts">
-import { defineProps, defineEmits } from "vue";
 import dayjs from "dayjs";
 import { getStatusColor, getStatusText, getSupportDepartmentName } from "~/utils/ticket";
 import AppTag from "~/components/ticket/AppTag.vue";

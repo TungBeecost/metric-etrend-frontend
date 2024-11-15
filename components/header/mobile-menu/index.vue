@@ -54,7 +54,7 @@
     </NuxtLink>
 
     <!-- Login Modal -->
-    <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"
+    <a-modal class="button_login" :open="currentUserStore.isShowPopupLogin"
              :footer="false"
              style="padding-top: 24px"
              @ok="currentUserStore.setShowPopupLogin(false)"

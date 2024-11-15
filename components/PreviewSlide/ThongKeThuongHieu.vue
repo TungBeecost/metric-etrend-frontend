@@ -83,7 +83,7 @@
 
 
 <script setup>
-import {computed, defineProps} from 'vue';
+import {computed} from 'vue';
 import Highcharts from 'highcharts';
 import {formatNumber} from '~/helpers/FormatHelper.js';
 

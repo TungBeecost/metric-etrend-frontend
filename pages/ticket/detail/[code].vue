@@ -113,24 +113,26 @@ const handleDeleteComment = async ({commentId}) => {
       </div>
       <div class="content">
         <table class="ticket-metadata">
-          <tr class="ticket-metadata__item">
-            <td class="ticket-metadata__item__label">Ngày gửi yêu cầu</td>
-            <td class="ticket-metadata__item__value">{{ formatDateTime(ticket.data?.created_at) }}</td>
-          </tr>
-          <tr class="ticket-metadata__item">
-            <td class="ticket-metadata__item__label">Trạng thái</td>
-            <td class="ticket-metadata__item__value">
-              <app-tag :type="getStatusColor(ticket.data?.status)">{{ getStatusText(ticket.data?.status) }}</app-tag>
-            </td>
-          </tr>
-          <tr class="ticket-metadata__item">
-            <td class="ticket-metadata__item__label">Phân loại hỗ trợ</td>
-            <td class="ticket-metadata__item__value">{{ getSupportDepartmentName(ticket.data?.support_department) }}</td>
-          </tr>
-          <tr class="ticket-metadata__item">
-            <td class="ticket-metadata__item__label">Link báo cáo</td>
-            <td class="ticket-metadata__item__value">{{ ticket.data?.report_link }}</td>
-          </tr>
+          <tbody>
+            <tr class="ticket-metadata__item">
+              <td class="ticket-metadata__item__label">Ngày gửi yêu cầu</td>
+              <td class="ticket-metadata__item__value">{{ formatDateTime(ticket.data?.created_at) }}</td>
+            </tr>
+            <tr class="ticket-metadata__item">
+              <td class="ticket-metadata__item__label">Trạng thái</td>
+              <td class="ticket-metadata__item__value">
+                <app-tag :type="getStatusColor(ticket.data?.status)">{{ getStatusText(ticket.data?.status) }}</app-tag>
+              </td>
+            </tr>
+            <tr class="ticket-metadata__item">
+              <td class="ticket-metadata__item__label">Phân loại hỗ trợ</td>
+              <td class="ticket-metadata__item__value">{{ getSupportDepartmentName(ticket.data?.support_department) }}</td>
+            </tr>
+            <tr class="ticket-metadata__item">
+              <td class="ticket-metadata__item__label">Link báo cáo</td>
+              <td class="ticket-metadata__item__value">{{ ticket.data?.report_link }}</td>
+            </tr>
+          </tbody>
         </table>
         <a-divider/>
         <div class="description" v-html="ticket.data?.description"></div>

@@ -432,17 +432,17 @@ useSeoMeta({
           <a-button style="height: 40px" @click="onClickViewPrice">Xem báo giá</a-button>
         </div>
         <div class="big_logo_metric">
-          <img src="/images/big_logo_metric.svg" alt="">
+          <img src="~public/images/big_logo_metric.svg" alt="">
         </div>
         <div class="chart_image">
-          <img src="/images/chart_image.svg" alt="">
+          <img src="~public/images/chart_image.svg" alt="">
         </div>
         <div class="line_styling_image">
-          <img src="/images/line_styling_image.svg" alt="">
+          <img src="~public/images/line_styling_image.svg" alt="">
         </div>
       </div>
     </div>
-    <a-modal v-model:visible="isModalVisible" style="position: absolute;" title="Filter and Sort" @ok="handleOk"
+    <a-modal v-model:open="isModalVisible" style="position: absolute;" title="Filter and Sort" @ok="handleOk"
              @cancel="handleCancel">
       <sort-report class="sort_report"
                    style="margin-bottom: 16px"

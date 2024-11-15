@@ -46,7 +46,7 @@ const toggleUnlock = () => {
 
 <template>
   <a-modal
-      :visible="showUnlock"
+      :open="showUnlock"
       :footer="null"
       @cancel="toggleUnlock"
       @ok="toggleUnlock"

@@ -1,6 +1,6 @@
 FROM node:22.2.0-alpine3.20 as build-stage
 WORKDIR /app
-COPY package*.json package-lock.json /app/
+COPY package*.json /app/
 RUN npm install
 
 FROM node:22.2.0-alpine3.20 as runner

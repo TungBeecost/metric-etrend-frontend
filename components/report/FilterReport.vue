@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {defineEmits, defineProps, onMounted, ref} from 'vue';
+// import {defineEmits, defineProps, onMounted, ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import allReports from '@/public/file_json/list_category.json';
 import {TreeSelect} from 'ant-design-vue';
 import type {SelectValue} from "ant-design-vue/es/select";

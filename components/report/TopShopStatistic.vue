@@ -1,5 +1,5 @@
 <script setup>
-import {defineProps, computed, ref, onMounted, watchEffect} from 'vue';
+import {computed, ref, onMounted, watchEffect} from 'vue';
 import {getUrlImageOption} from '~/helpers/utils.js';
 import Highcharts from "highcharts";
 

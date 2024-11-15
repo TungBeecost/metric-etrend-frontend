@@ -22,7 +22,7 @@
     </div>
 
     <a-modal
-        class="button_login" :visible="currentUserStore.isShowPopupLogin"
+        class="button_login" :open="currentUserStore.isShowPopupLogin"
         :footer="false"
         style="margin-top: 30px"
         destroy-on-close

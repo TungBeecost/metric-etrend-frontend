@@ -5,18 +5,17 @@ import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
 import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
-import { ref, onMounted, onUnmounted } from "vue";
-import { REPORT_ENDPOINTS } from "~/constant/endpoints";
+import {onMounted, onUnmounted, ref} from "vue";
+import {REPORT_ENDPOINTS} from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
-import { useGTM } from '~/composables/useGTM';
+import {useGTM} from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
 import RelateReport from "~/components/RelateReport.vue";
 import ScrollNotification from "~/components/ScrollNotification.vue";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
-import { useHead } from 'unhead'
 import {useCurrentUser} from "~/stores/current-user.js";
 
 
@@ -35,18 +34,6 @@ const loading = ref(true); // Add loading state
 const showModalDownloadPdf = ref(false);
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
-
-useHead({
-  title: 'My App',
-  meta: [
-    { name: 'description', content: 'My amazing site.' }
-  ],
-  bodyAttrs: {
-    class: 'test'
-  },
-  script: [ { innerHTML: 'console.log(\'Hello world LDC\')' } ]
-})
-
 
 const fetchSuggest = async (value = '', options = {}) => {
   try {
@@ -99,27 +86,29 @@ const handleScroll = () => {
 
 const fetchReportData = async () => {
   const slug = route.params.slug;
+  if (!slug) {
+    console.error('Slug parameter is missing');
+    return {};
+  }
   try {
     let isHideContent = true;
 
     const accessToken = await getIndexedDB("access_token").catch(() => null);
     const visitorId = await getIndexedDB("__visitor").catch(() => null);
-    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug} `;
+    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
     }
-    const response = await $fetch(
-        url,
-        {
-          headers: {
-            'Authorization': accessToken ? `${accessToken}` : '',
-            'Visitorid': visitorId ? visitorId.visitor_id : '',
-          }
-        }
-    );
+    const response = await $fetch(url, {
+      headers: {
+        'Authorization': accessToken ? `${accessToken}` : '',
+        'Visitorid': visitorId ? visitorId.visitor_id : '',
+      }
+    });
 
     if (!response) {
       await router.push('/search');
+      return {};
     }
 
     const category = listCategory.find(cat => cat.value === response.category_report_id);
@@ -295,7 +284,7 @@ onUnmounted(() => {
           <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail"
                              :is-hide-content="data.isHideContent"/>
           <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <brand-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+          <brand-statistic v-if="data?.report_type !== 'report_brand'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
           <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
           <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         </div>
@@ -314,7 +303,7 @@ onUnmounted(() => {
         </div>
       </transition>
     </div>
-    <a-modal v-if="showModal" v-model:visible="showModal" width="600px" :footer="null" @ok="handleOk">
+    <a-modal v-if="showModal" v-model:open="showModal" width="600px" :footer="null" @ok="handleOk">
       <div class="modal_content">
         <div class="alert_success">
           <div class="icon_success">

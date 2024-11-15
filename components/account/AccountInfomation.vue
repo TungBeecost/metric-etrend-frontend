@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { PLANCARD } from '~/constant/constains';
 import moment from 'moment/moment';
 import PlanCard from '~/components/account/PlanCard.vue';

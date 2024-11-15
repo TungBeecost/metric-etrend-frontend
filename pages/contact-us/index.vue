@@ -55,13 +55,13 @@
           </a-button>
         </div>
         <div class="big_logo_metric">
-          <img src="/images/big_logo_metric.svg" alt="">
+          <img src="~public/images/big_logo_metric.svg" alt="ig_logo_metric">
         </div>
         <div class="chart_image">
-          <img src="/images/chart_image.svg" alt="">
+          <img src="~public/images/chart_image.svg" alt="ig_logo_metric">
         </div>
         <div class="line_styling_image">
-          <img src="/images/line_styling_image.svg" alt="">
+          <img src="~public/images/line_styling_image.svg" alt="ig_logo_metric">
         </div>
       </div>
     </div>

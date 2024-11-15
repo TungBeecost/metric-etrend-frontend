@@ -344,7 +344,7 @@ onMounted(() => {
     <ReportFeaturedReport/>
 
     <a-modal
-        :visible="openContactForm"
+        :open="openContactForm"
         :footer="false"
         @cancel="openContactForm = false"
     >

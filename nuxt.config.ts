@@ -1,9 +1,5 @@
-import * as AntD from "ant-design-vue";
-import { addComponent } from "@nuxt/kit";
-
 export default defineNuxtConfig({
-    ssr: process.env.SSR === 'true', // Bật chế độ SSR
-
+    ssr: process.env.SSR === 'true', // Bật chế độ SSR\
     app: {
         buildAssetsDir: '/ereport_nuxt/',
         baseURL:  process.env.BASE_PATH || '/',
@@ -97,27 +93,28 @@ export default defineNuxtConfig({
         },
     },
 
-    typescript: {
-        typeCheck: true,
-    },
-
     plugins: [
         "~/plugins/antd.ts",
+        "~/plugins/vue3-carousel.client.ts",
         {
             src: "~/plugins/analytics.js",
             ssr: false,
         },
-        "~/plugins/vue3-carousel.client.ts",
-        "~/plugins/nuxt-gtm.js",
-        "~/plugins/gtm-tracking.js",
-        "~/plugins/vue-gtm.client.js",
+        {
+            src:   "~/plugins/gtm-tracking.js",
+            ssr: true,
+        },
+        {
+            src:  "~/plugins/nuxt-gtm.js",
+            ssr: true,
+        },
     ],
 
     css: [
         "~/assets/reset.css",
         "~/assets/antd.css",
         "~/assets/variables.less",
-        "normalize.css",
+        // "normalize.css",
     ],
 
     vite: {
@@ -136,26 +133,15 @@ export default defineNuxtConfig({
     },
 
     modules: [
-        "@nuxt/eslint",
+        "@nuxt/eslint",//use
         "@nuxt/test-utils/module",
         "@nuxtjs/device",
-        "@nuxt/image",
+        "@nuxt/image",//use
         "vue3-carousel-nuxt",
         '@zadigetvoltaire/nuxt-gtm',
-        '@nuxtjs/sitemap',
         ["nuxt-highcharts", {}],
-        async function () {
-            for (const key in AntD) {
-                if (["version", "install"].includes(key)) continue;
-                await addComponent({
-                    filePath: "ant-design-vue",
-                    name: `A${key}`,
-                    export: key,
-                });
-            }
-        },
         "nuxt-svgo",
-        "@ant-design-vue/nuxt",
+        "@ant-design-vue", //use
         "@pinia/nuxt",
         "nuxt-gtag",
     ],
@@ -168,11 +154,10 @@ export default defineNuxtConfig({
         id: 'GTM-522F9NZ',
     },
 
-    site: {
-        url: 'https://ereport.staging.muadee.vn',
-        name: 'eReport',
-    },
-
+    // site: {
+    //     url: 'https://ereport.staging.muadee.vn',
+    //     name: 'eReport',
+    // },
     compatibilityDate: "2024-09-22",
     build: {
         transpile: ['tslib']

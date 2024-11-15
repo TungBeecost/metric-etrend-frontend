@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {defineProps, computed} from 'vue';
+import {computed} from 'vue';
 import moment from "moment/moment";
 import allReports from "public/file_json/list_category.json";
 
@@ -119,10 +119,6 @@ const fieldValueParse: FieldValueParsers = {
         </div>
       </div>
     </div>
-
-    <a-modal v-model:visible="showDetailPopup" title="Chi tiết báo cáo" width="800px">
-      <pre>{{ props.data.data_filter_report }}</pre>
-    </a-modal>
   </div>
 </template>
 

@@ -62,48 +62,29 @@ export default defineNuxtPlugin({
             }
 
             if (document?.referrer?.length > 0) {
-                let domain = extractDomain(document.referrer)
-                let domainWebsite = extractDomain(document.location.href)
-                let lstIgnoreDomain = ['momo.vn', 'payment.momo.vn']
+                let domain = extractDomain(document.referrer);
+                let domainWebsite = extractDomain(document.location.href);
+                let lstIgnoreDomain = ['momo.vn', 'payment.momo.vn'];
                 if (domain?.length > 0 && domain !== domainWebsite && !isInclude(domain, lstIgnoreDomain)) {
-                    setCookie('url_referrer', decodeURIComponent(document.referrer))
+                    setCookie('url_referrer', decodeURIComponent(document.referrer));
                     if (getCookie('utm_campaign') === null) {
-                        setCookie('utm_campaign', domain)
+                        setCookie('utm_campaign', domain);
                     }
                     if (isInclude(domain, ['metric', 'localhost'])) {
-                        //  ignore
-                    }
-                    // if (['coccoc.com', 'google.com', 'google.com.vn'].includes(domain)) {
-                    else if (isInclude(domain, ['coccoc', 'google', 'yahoo', 'yandex'])) {
-                        // filter ads: ads
-                        // if (isInclude(url, ['gclid', 'fbclid'])) {
-                        // if (isInclude(url, ['ads'])) {
-                        //   source_traffic_current = 'ads'
-                        // } else {
-                        source_traffic_current = 'organic_search'
-                        // }
-                    }
-                    // if (['facebook.com', 'fb.com', 'fb.me', 'facebook.net', 'facebook.net.vn', 'chat.zalo.me'].includes(domain)) {
-                    else if (isInclude(domain, ['facebook', 'fb', 'messenger', 'zalo', 'linkedin', 'twitter', 'instagram'])) {
-                        source_traffic_current = 'social'
+                        source_traffic_current = 'organic_search';
+                    } else if (isInclude(domain, ['facebook', 'fb', 'messenger', 'zalo', 'linkedin', 'twitter', 'instagram'])) {
+                        source_traffic_current = 'social';
                     } else {
-                        source_traffic_current = 'referral'
+                        source_traffic_current = 'referral';
                     }
-
                 }
-
-                if (domain === domainWebsite || isInclude(domain, ['metric'])) {
-                    //  ignore
-                }
-
             } else {
-                source_traffic_current = 'direct'
+                source_traffic_current = 'direct';
             }
 
             if (source_traffic_current?.length > 0) {
                 setCookie('source_traffic', source_traffic_current, 5)
             }
-            // console.log(source_traffic_current)
 
             getIndexedDB('first_visit').then((first_visit) => {
                 if (first_visit === null) {
@@ -128,7 +109,6 @@ export default defineNuxtPlugin({
         }
     },
     env: {
-        // Set this value to `false` if you don't want the plugin to run when rendering server-only or island components.
         islands: true
     }
 })

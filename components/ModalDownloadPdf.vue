@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {NAVIGATIONS, WALLET} from "~/constant/constains";
-import {computed, defineEmits, defineProps, ref, toRefs} from 'vue';
+// import {computed, defineEmits, defineProps, ref, toRefs} from 'vue';
+import {computed, ref, toRefs} from 'vue';
 import {useCurrentUser} from "~/stores/current-user";
 import {useRoute} from "vue-router";
 import ViewPdfModal from "~/components/ViewPdfModal.vue";
@@ -9,7 +10,6 @@ import moment from "moment";
 import {message} from "ant-design-vue";
 import {formatCurrency} from "~/helpers/FormatHelper";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper";
-import LoginButton from "~/components/google/LoginButton.vue";
 
 const config = useRuntimeConfig();
 const route = useRoute();
@@ -135,15 +135,15 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
 </script>
 
 <template>
-<!--  <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"-->
-<!--           :footer="false"-->
-<!--           style="padding-top: 24px; z-index: 1050;"-->
-<!--           @ok="currentUserStore.setShowPopupLogin(false)"-->
-<!--           @cancel="currentUserStore.setShowPopupLogin(false)">-->
-<!--    <login-button/>-->
-<!--  </a-modal>-->
+  <!--  <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"-->
+  <!--           :footer="false"-->
+  <!--           style="padding-top: 24px; z-index: 1050;"-->
+  <!--           @ok="currentUserStore.setShowPopupLogin(false)"-->
+  <!--           @cancel="currentUserStore.setShowPopupLogin(false)">-->
+  <!--    <login-button/>-->
+  <!--  </a-modal>-->
   <a-modal
-      :visible="open" :width="1000" :footer="null" @cancel="toggleUnlock" @ok="toggleUnlock"
+      :open="open" :width="1000" :footer="null" @cancel="toggleUnlock" @ok="toggleUnlock"
   >
     <div class="noti_view_dept_report">
       <div class="slide_thumbnail">
@@ -435,3 +435,4 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
   }
 }
 </style>
+

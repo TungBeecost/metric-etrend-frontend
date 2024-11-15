@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, defineEmits, defineProps } from 'vue';
+import { ref, watch} from 'vue';
 
 export interface IFormValue {
   companyName?: string;
