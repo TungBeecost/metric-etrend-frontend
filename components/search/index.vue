@@ -17,11 +17,17 @@
 
     <div v-if="suggestions && suggestions.length" class="suggestions" :class="{ active: isShowSuggestions }">
       <div v-for="(suggestion, index) in suggestions" :key="suggestion.name" class="suggestion-item"
-           @click="handleSuggestionClick(suggestion.name, index)">
-        <span v-if="index == 0" style="display: flex; align-items: center; gap: 8px">
-          <img src="~public/icons/SearchOrange.svg" alt="search"/>
-          Tìm báo cáo "{{ searchKeyWord }}"
-        </span>
+           @click="handleSuggestionClick(suggestion.name, index)"
+           :style="{ display: index == 0 && !searchKeyWord ? 'none' : 'flex' }">
+    <span v-if="index == 0 && searchKeyWord" style="display: flex; align-items: center; gap: 8px">
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="Icon/Outline/Search">
+              <path id="Vector" d="M14 24C19.5228 24 24 19.5228 24 14C24 8.47715 19.5228 4 14 4C8.47715 4 4 8.47715 4 14C4 19.5228 8.47715 24 14 24Z" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path id="Vector_2" d="M21.0713 21.0713L28 28" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+      </svg>
+      Tìm báo cáo "{{ searchKeyWord }}"
+    </span>
         <span v-else> {{ suggestion.name }}</span>
         <span v-if="index > 0" style="color: #716B95; font-size: 14px">{{ REPORT_TYPE_DISPLAY_NAMES[suggestion.report_type] || '' }}</span>
       </div>

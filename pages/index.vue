@@ -316,4 +316,8 @@ const handleAdvertisement = () => {
   height: 40px;
 }
 
+.sectionDescription{
+  width: 70%;
+}
+
 </style>

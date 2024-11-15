@@ -1,6 +1,5 @@
 export default defineNuxtConfig({
-    ssr: process.env.SSR === 'true', // Bật chế độ SSR
-
+    ssr: process.env.SSR === 'true', // Bật chế độ SSR\
     app: {
         buildAssetsDir: '/ereport_nuxt/',
         baseURL:  process.env.BASE_PATH || '/',
@@ -115,7 +114,7 @@ export default defineNuxtConfig({
         "~/assets/reset.css",
         "~/assets/antd.css",
         "~/assets/variables.less",
-        "normalize.css",
+        // "normalize.css",
     ],
 
     vite: {
@@ -134,15 +133,15 @@ export default defineNuxtConfig({
     },
 
     modules: [
-        "@nuxt/eslint",
+        "@nuxt/eslint",//use
         "@nuxt/test-utils/module",
         "@nuxtjs/device",
-        "@nuxt/image",
+        "@nuxt/image",//use
         "vue3-carousel-nuxt",
         '@zadigetvoltaire/nuxt-gtm',
         ["nuxt-highcharts", {}],
         "nuxt-svgo",
-        "@ant-design-vue/nuxt",
+        "@ant-design-vue", //use
         "@pinia/nuxt",
         "nuxt-gtag",
     ],
