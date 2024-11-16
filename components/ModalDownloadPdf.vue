@@ -156,7 +156,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
           </div>
           <div>
             <div style="margin-bottom: 32px;">
-              <div style="text-align: center; margin-bottom: 12px;">Nhóm hàng</div>
+              <div v-if="props.data.report_type !== 'report_brand'" style="text-align: center; margin-bottom: 12px;">Nhóm hàng</div>
               <p>{{ props.data.name }}</p>
             </div>
             <ul>

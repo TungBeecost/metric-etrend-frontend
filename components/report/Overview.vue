@@ -121,12 +121,12 @@ const diffRevenueLatestQuarterPercent = computed(() => {
         dành cho nhà bán hàng <b> từ tháng
         {{
           props.data.filter_custom
-              ? props.data.filter_custom.start_date.slice(4, 6) + '/' + props.data.filter_custom.start_date.slice(0, 4)
+              ? props.data.start_date.slice(4, 6) + '/' + props.data.start_date.slice(0, 4)
               : 'N/A'
         }}
         đến tháng {{
           props.data.filter_custom
-              ? props.data.filter_custom.end_date.slice(4, 6) + '/' + props.data.filter_custom.end_date.slice(0, 4)
+              ? props.data.end_date.slice(4, 6) + '/' + props.data.end_date.slice(0, 4)
               : 'N/A'
         }}</b>,
         được thực hiện bởi
@@ -139,7 +139,9 @@ const diffRevenueLatestQuarterPercent = computed(() => {
         <span class="text-bold">
           Báo cáo doanh thu {{ props.data.name }} trên sàn TMĐT đạt
           <BlurContent :is-hide-content="isHideContent">
-            <b>{{ props.data.data_analytic && props.data.data_analytic.by_overview ? formatSortTextCurrency(props.data.data_analytic.by_overview.revenue) : 'N/A' }} đồng</b>
+            <b>{{
+                props.data.data_analytic && props.data.data_analytic.by_overview ? formatSortTextCurrency(props.data.data_analytic.by_overview.revenue) : 'N/A'
+              }} đồng</b>
           </BlurContent>
         </span>
         trong {{ diffMonths }} và so với quý gần nhất
@@ -157,11 +159,13 @@ const diffRevenueLatestQuarterPercent = computed(() => {
           priceRangesSortBy("revenue")[0]
               ? formatCurrency(priceRangesSortBy("revenue")[0].end)
               : 'N/A'
-        }}
-        . Những thương hiệu {{ props.data.name }} được phân phối và
-        bán chạy nhất là
-        <b>{{ top5Shops().join(', ') }}</b>
-        v.v...
+        }}.
+        <span v-if="props.data.report_type !== 'report_brand'">
+          Những thương hiệu {{ props.data.name }} được phân phối và
+          bán chạy nhất là
+          <b>{{ top5Shops().join(', ') }}</b>
+          v.v...
+        </span>
       </div>
     </div>
   </div>

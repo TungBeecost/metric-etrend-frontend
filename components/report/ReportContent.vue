@@ -62,7 +62,47 @@ const displayTableOfContent = computed(() => {
         ],
       },
     ]
+  }
 
+  if (data?.report_type === 'report_brand') {
+    return [
+      {
+        title: `I. Tổng quan thị trường`,
+        children: [
+          {title: `Quy mô thị trường`},
+          {title: 'Thống kê theo sàn'},
+          {title: 'Thống kê theo tháng'},
+          {title: 'Thống kê theo phân khúc giá'},
+          {title: 'Doanh số, sản phẩm đã bán theo phân khúc giá'},
+
+        ],
+      },
+      {
+        title: 'II. Thống kê shop',
+        children: [
+          {title: 'Thị phần doanh số theo loại shop'},
+          {title: 'Thị phần doanh số theo khu vực của shop'},
+          {title: 'Thống kê shop bán chạy toàn thị trường'},
+          {title: 'Thống kê shop bán chạy từng sàn Shopee, Tiktok. Lazada, Tiki'},
+          {title: 'Chi tiết 20 shop bán chạy'},
+        ],
+      },
+      {
+        title: 'III. Thống kê sản phẩm bán chạy',
+        children: [
+          {title: 'Sản phẩm bán chạy toàn thị trường'},
+          {title: 'Sản phẩm bán chạy từng sàn Shopee, Tiktok, Lazada, Tiki'},
+          {title: 'Sản phẩm trending bán chạy'},
+        ],
+      },
+      {
+        title: 'IV. Thống kê đánh giá',
+        children: [
+          {title: 'Thống kê shop có đánh giá tốt'},
+          {title: 'Thống kê sản phẩm có đánh giá tốt'},
+        ],
+      },
+    ]
   }
 
   if (data.report_type !== 'report_category' && data.report_type !== 'report_product_line') {
