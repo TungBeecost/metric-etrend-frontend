@@ -78,6 +78,7 @@ onMounted(() => {
 const reportTypes = ref([
   {label: 'Tất cả', value: 'all'},
   {label: 'Báo cáo ngành hàng', value: 'report_category'},
+  {label: 'Báo cáo thương hiệu', value: 'report_brand'},
   {label: 'Báo cáo nhóm hàng', value: 'report_product_line'},
   {label: 'Báo cáo Metric phát hành', value: 'other'},
 ]);

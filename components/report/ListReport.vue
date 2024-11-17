@@ -45,7 +45,8 @@ const getDisplayedCategories = (item: any) => {
             <span class="report_type">
               {{
                 item.report_type === 'report_product_line' ? 'Báo cáo nhóm hàng' : item.report_type ===
-                'report_category' ? 'Báo cáo ngành hàng' : 'Báo cáo Metric phát hành'
+                'report_category' ? 'Báo cáo ngành hàng' : item.report_type ===
+                'report_brand' ? 'Báo cáo thương hiệu' : 'Báo cáo Metric phát hành'
               }} |
             </span>
             <span v-if="item.report_type === 'report_product_line'">
@@ -152,6 +153,9 @@ const getDisplayedCategories = (item: any) => {
           </div>
           <div v-if="item.introduction" class="description line-clamp__3">
             {{ item.introduction }}
+          </div>
+          <div v-else-if="item.report_type === 'report_brand' && item?.lst_shop?.length" class="description line-clamp__3">Báo cáo thị phần thương hiệu hàng đầu như
+            {{ item.lst_brand ? item.lst_brand.join(', ') : '' }} v.v
           </div>
           <div v-else-if="item?.lst_brand?.length" class="description line-clamp__3">Báo cáo thị phần thương hiệu hàng đầu như
             {{ item.lst_brand ? item.lst_brand.join(', ') : '' }} v.v

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { report } = defineProps({
+const {report} = defineProps({
   report: {
     type: Object,
     required: true
@@ -68,7 +68,7 @@ const formattedEndDate = formatDate(report.end_date);
 </template>
 
 <style scoped lang="scss">
-#pack_service{
+#pack_service {
   display: flex;
   flex-direction: column;
   align-self: stretch;
@@ -76,19 +76,19 @@ const formattedEndDate = formatDate(report.end_date);
   border: 1px solid #EEEBFF;
   background-color: #FFF;
 
-  .statistic-item__title{
+  .statistic-item__title {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #EEEBFF;
     padding: 24px;
 
 
-    .title{
+    .title {
       display: flex;
       align-items: center;
       gap: 16px;
 
-      .title_content{
+      .title_content {
         font-size: 24px;
         color: #241E46;
         font-weight: bold;
@@ -96,11 +96,11 @@ const formattedEndDate = formatDate(report.end_date);
       }
     }
 
-    .title_link{
+    .title_link {
       display: flex;
       align-items: center;
 
-      a{
+      a {
         font-size: 16px;
         color: #1890FF;
         font-weight: 400;
@@ -110,8 +110,9 @@ const formattedEndDate = formatDate(report.end_date);
     }
   }
 
-  .statistic-item__content{
+  .statistic-item__content {
     padding: 24px;
+
     .content {
       height: 100%;
       display: flex;
@@ -207,13 +208,13 @@ const formattedEndDate = formatDate(report.end_date);
         }
       }
 
-      .not_user_plan{
+      .not_user_plan {
         background: #E85912;
         color: #FFF;
         width: 100%;
       }
 
-      .user_plan{
+      .user_plan {
         background: #DEDEE4;
         color: #9D9BB0;
         width: 100%;

@@ -446,7 +446,7 @@ const chartOptionsOutput = computed(() => ({
       </div>
     </div>
     <h4 style="color: #241E46; font-weight: 700; line-height: 22px; text-align: center">
-      Danh sách shop phổ biến của nhóm hàng {{ props.data.name }} trên sàn TMĐT
+      Danh sách shop phổ biến của {{ props.data.name }} trên sàn TMĐT
     </h4>
     <div class="logo-grid">
       <div

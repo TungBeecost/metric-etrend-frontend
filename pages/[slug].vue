@@ -33,7 +33,7 @@ const showButton = ref(false);
 const loading = ref(true); // Add loading state
 const showModalDownloadPdf = ref(false);
 const currentUserStore = useCurrentUser();
-const { userInfo } = storeToRefs(currentUserStore);
+const {userInfo} = storeToRefs(currentUserStore);
 
 const fetchSuggest = async (value = '', options = {}) => {
   try {
@@ -45,7 +45,7 @@ const fetchSuggest = async (value = '', options = {}) => {
       lst_query: value ? [value] : [],
       ...options
     };
-    const { lst_report } = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
+    const {lst_report} = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
       method: 'POST',
       body
     });
@@ -59,7 +59,7 @@ const fetchSuggest = async (value = '', options = {}) => {
 
 const trackEvent = (event, data) => {
   if (gtm) {
-    gtm.push({ event, ...data });
+    gtm.push({event, ...data});
   }
 };
 
@@ -120,13 +120,18 @@ const fetchReportData = async () => {
       }
     }
 
-    const { tier_report } = response;
+    const {tier_report} = response;
     if (tier_report !== 'e_community' || config.public.SSR === 'true') {
       isHideContent = false;
     }
     const [listRecommend] = await Promise.all([
       fetchRecommend(response.category_report_id)
     ]);
+    let name = response.name;
+
+    if (response?.report_type === 'report_brand') {
+      name = 'Thương hiệu ' + name
+    }
 
     let breadcrumbs = [
       {
@@ -143,13 +148,14 @@ const fetchReportData = async () => {
     ];
     if (response?.report_type === 'report_product_line') {
       breadcrumbs = [...breadcrumbs, {
-        name: response.name,
+        name,
         value: null,
       }];
     }
 
+
     return {
-      reportDetail: response,
+      reportDetail: {...response, name},
       listRecommend,
       isHideContent,
       breadcrumbs
@@ -163,14 +169,14 @@ const fetchReportData = async () => {
   }
 };
 
-const { data } = await useAsyncData(() => {
+const {data} = await useAsyncData(() => {
   return fetchReportData();
 });
 
-const { data: tagSuggestions } = await useAsyncData(
+const {data: tagSuggestions} = await useAsyncData(
     'fetchSuggest',
     async () => {
-      return await fetchSuggest(data?.reportDetail?.name, { limit: 5 });
+      return await fetchSuggest(data?.reportDetail?.name, {limit: 5});
     }
 );
 
@@ -187,7 +193,7 @@ onMounted(() => {
     if (userInfo.value?.current_plan !== 'e_community')
       navigateTo(loginPayment);
   }
-  trackEvent('page_view', { page: route.path });
+  trackEvent('page_view', {page: route.path});
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
@@ -284,7 +290,8 @@ onUnmounted(() => {
           <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail"
                              :is-hide-content="data.isHideContent"/>
           <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <brand-statistic v-if="data?.report_type !== 'report_brand'" :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+          <brand-statistic v-if="data?.reportDetail?.report_type !== 'report_brand'" :data="data?.reportDetail"
+                           :is-hide-content="data.isHideContent"/>
           <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
           <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
         </div>
@@ -351,19 +358,19 @@ onUnmounted(() => {
       gap: 10px;
     }
 
-    .container_report_detail{
+    .container_report_detail {
       display: flex;
       gap: 24px;
 
-      .container_report_detail_left{
-        flex:0.7;
+      .container_report_detail_left {
+        flex: 0.7;
         display: flex;
         flex-direction: column;
         gap: 16px
       }
 
-      .container_report_detail_right{
-        flex:0.3;
+      .container_report_detail_right {
+        flex: 0.3;
         display: flex;
         flex-direction: column;
         gap: 16px
@@ -426,7 +433,7 @@ onUnmounted(() => {
   }
 }
 
-.title_main{
+.title_main {
   font-size: 36px;
   font-weight: 700;
   line-height: 48px;
@@ -436,11 +443,12 @@ onUnmounted(() => {
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s;
 }
+
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
 
-.relate_report{
+.relate_report {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
@@ -454,7 +462,7 @@ onUnmounted(() => {
 }
 
 @media (max-width: 768px) {
-  .container_report_detail{
+  .container_report_detail {
     flex-direction: column;
     gap: 16px;
   }
@@ -467,12 +475,12 @@ onUnmounted(() => {
     order: 2;
   }
 
-  .title_main{
+  .title_main {
     font-size: 24px;
     line-height: 32px;
   }
 
-  .title{
+  .title {
     padding-bottom: 16px !important;
   }
 }
