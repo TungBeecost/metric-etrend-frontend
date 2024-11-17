@@ -4,6 +4,7 @@ import {NAVIGATIONS} from "~/constant/constains";
 import BlurContent from "~/components/BlurContent.vue";
 import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper";
 import moment from "moment";
+import {upperFirst} from "scule";
 
 const props = defineProps({
   data: {
@@ -61,13 +62,13 @@ const getDisplayedCategories = (item: any) => {
             {{ item.name }}
           </div>
           <div v-else-if="item.report_type === 'report_category'" class="name">
-            {{ 'Báo cáo Ngành hàng ' + item.name }}
+            {{ 'Báo cáo Ngành hàng ' + upperFirst(item.name) }}
           </div>
           <div v-else-if="item.report_type === 'report_brand'" class="name">
-            {{ 'Báo cáo Thương hiệu ' + item.name }}
+            {{ 'Báo cáo Thương hiệu ' + upperFirst(item.name) }}
           </div>
           <div v-else class="name">
-            {{ 'Báo cáo ' + item.name[0].toUpperCase() + item.name.slice(1) }}
+            {{ 'Báo cáo ' + upperFirst(item.name) }}
           </div>
           <div v-if="item.shop" class="summary-info">
             <div class="info_item">
