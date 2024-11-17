@@ -376,21 +376,23 @@ useSeoMeta({
             </svg>
             <div>
               <div style="font-size: 24px; font-weight: bold; margin-bottom: 40px;">Không có kết quả</div>
-              <div style="margin-bottom: 16px; color: #716B95;">Phân tích thông minh với từ khoá <span
-                  style="color: #241E46">"{{ searchValueSearch }}"</span></div>
-              <a-button
-                  type="primary"
-                  size="large"
-                  @click="router.push(`${NAVIGATIONS.smart_analytic}?keyword=${searchValueSearch}`)"
-              >
-                Phân tích ngay
-              </a-button>
+              <div v-if="searchValueSearch">
+                <div style="margin-bottom: 16px; color: #716B95;">Phân tích thông minh với từ khoá <span
+                    style="color: #241E46">"{{ searchValueSearch }}"</span></div>
+                <a-button
+                    type="primary"
+                    size="large"
+                    @click="router.push(`${NAVIGATIONS.smart_analytic}?keyword=${searchValueSearch}`)"
+                >
+                  Phân tích ngay
+                </a-button>
+              </div>
             </div>
           </div>
         </div>
         <template v-else>
           <list-report :class="{ 'hidden-list': isLoading, 'visible-list': !isLoading }" :data="data?.lst_report"/>
-          <div>
+          <div v-if="searchValueSearch">
             Không có báo cáo bạn cần? Phân tích thông minh với từ khóa
             "<nuxt-link
                 :to="`${NAVIGATIONS.smart_analytic}?keyword=${searchValueSearch}`"
