@@ -63,6 +63,9 @@ const getDisplayedCategories = (item: any) => {
           <div v-else-if="item.report_type === 'report_category'" class="name">
             {{ 'Báo cáo Ngành hàng ' + item.name }}
           </div>
+          <div v-else-if="item.report_type === 'report_brand'" class="name">
+            {{ 'Báo cáo Thương hiệu ' + item.name }}
+          </div>
           <div v-else class="name">
             {{ 'Báo cáo ' + item.name[0].toUpperCase() + item.name.slice(1) }}
           </div>
