@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import EmptyReport from "~/components/account/EmptyReport.vue";
-import ListReport from "~/components/report/ListReport.vue";
 import type {ListClaimed} from "~/services/reports";
 import {ref} from "vue";
+import ListReportDetail from "~/components/report/ListReportDetail.vue";
 
 const props = defineProps({
   data: {
@@ -23,7 +23,7 @@ const props = defineProps({
   },
   pageSizes: {
     type: Number,
-    default: 5,
+    default: 4,
   },
 });
 
@@ -49,7 +49,7 @@ const onChange = async (page: number) => {
     <a-skeleton v-if="loading" class="default_section" :paragraph="{ rows: 20 }"/>
     <div v-else class="detailed_reports_viewed_content default_section">
       <div v-if="props.data?.length" style="display: flex; flex-direction: column; gap: 24px; margin: 24px">
-        <list-report :data="props.data"/>
+        <list-report-detail :data="props.data"/>
         <div class="page">
           <a-pagination v-model:current="current" :total="props.total" :page-size="pageSizes" show-less-items @change="onChange" />
         </div>

@@ -32,39 +32,39 @@
 
       </div>
     </div>
-
-    <div class="background_poster">
-      <div class="poster default_section">
-        <div class="default_section">
-        </div>
-        <div class="info ">
-          <div class="content">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</div>
-          <a-button
-              style="
-              background-color: #241E46;
-              color: #FFF;
-              border: 1px solid #241E46;
-              display: flex;
-              height: 40px;
-              justify-content: center;
-              align-items: center
-            "
-              @click="navigateTo(NAVIGATIONS.pricing)"
-          >
-            Xem báo giá
-          </a-button>
-        </div>
-        <div class="big_logo_metric">
-          <NuxtImg src="/images/big_logo_metric.svg" alt="ig_logo_metric"/>
-        </div>
-        <div class="chart_image">
-          <NuxtImg src="/images/chart_image.svg" alt="ig_logo_metric"/>
-        </div>
-        <div class="line_styling_image">
-          <NuxtImg src="/images/line_styling_image.svg" alt="ig_logo_metric"/>
-        </div>
-      </div>
-    </div>
+    <affiliate-component/>
+<!--    <div class="background_poster">-->
+<!--      <div class="poster default_section">-->
+<!--        <div class="default_section">-->
+<!--        </div>-->
+<!--        <div class="info ">-->
+<!--          <div class="content">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</div>-->
+<!--          <a-button-->
+<!--              style="-->
+<!--              background-color: #241E46;-->
+<!--              color: #FFF;-->
+<!--              border: 1px solid #241E46;-->
+<!--              display: flex;-->
+<!--              height: 40px;-->
+<!--              justify-content: center;-->
+<!--              align-items: center-->
+<!--            "-->
+<!--              @click="navigateTo(NAVIGATIONS.pricing)"-->
+<!--          >-->
+<!--            Xem báo giá-->
+<!--          </a-button>-->
+<!--        </div>-->
+<!--        <div class="big_logo_metric">-->
+<!--          <NuxtImg src="/images/big_logo_metric.svg" alt="ig_logo_metric"/>-->
+<!--        </div>-->
+<!--        <div class="chart_image">-->
+<!--          <NuxtImg src="/images/chart_image.svg" alt="ig_logo_metric"/>-->
+<!--        </div>-->
+<!--        <div class="line_styling_image">-->
+<!--          <NuxtImg src="/images/line_styling_image.svg" alt="ig_logo_metric"/>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </template>
 

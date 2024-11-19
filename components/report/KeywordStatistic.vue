@@ -62,7 +62,6 @@ const totalSale = computed(() => {
 </script>
 
 <template>
-  {{top5KeywordsBySale}}
   <div
       v-if="top5KeywordsByRevenue.length > 0 && data?.report_type === 'report_category'"
       id="thong-ke-thuong-hieu"

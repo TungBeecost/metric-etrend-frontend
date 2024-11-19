@@ -1,5 +1,7 @@
 <script setup lang="ts">
-
+const redirectToGoogleDoc = () => {
+  window.location.href = 'https://docs.google.com/document/d/1rXu1RykUpWYDEX69M4-3A2YNnjNi-Lw5tFvTt9U_PLw';
+};
 </script>
 
 <template>
@@ -10,7 +12,11 @@
     </div>
     <div class="button">
       <a-button style="width: 386px; height: 64px; background: #241E46; border-radius: 8px; font-size: 20px;
-      color: #FFF; font-weight: 600; line-height: 28px; border: 1px #241E46">Đăng ký ngay</a-button>
+                color: #FFF; font-weight: 600; line-height: 28px; border: 1px #241E46"
+                @click="redirectToGoogleDoc"
+      >
+        Đăng ký ngay
+      </a-button>
     </div>
   </div>
 </template>

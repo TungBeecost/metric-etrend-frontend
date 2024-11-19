@@ -38,7 +38,7 @@ export const MENUS = [
   {
     label: "Kiếm 1 tỷ ngay trong Tháng 12",
     icon: "Store",
-    to: NAVIGATIONS.pricing
+    to: 'https://docs.google.com/document/d/1rXu1RykUpWYDEX69M4-3A2YNnjNi-Lw5tFvTt9U_PLw'
   },
 ];
 
@@ -138,7 +138,7 @@ export const LABEL_PERMISSION_PLAN = {
   },
   rightToParticipate: {
     label: "Quyền tham gia chương trình Tiếp thị liên kết\n" +
-        "<a style='color: #E85912'>“Kiếm 1 tỷ ngay trong Tháng 12”</a>",
+        "<a href='https://docs.google.com/document/d/1rXu1RykUpWYDEX69M4-3A2YNnjNi-Lw5tFvTt9U_PLw' style='color: #E85912'>“Kiếm 1 tỷ ngay trong Tháng 12”</a>",
     icon: "Coin"
   },
   analysis: {
@@ -327,7 +327,7 @@ export const PLANCARD = [
   {
     code: 'eReport12',
     name: 'Khai trương Tháng 12',
-    description: 'Bạn đang sử dụng gói Khai trương Tháng 12 và không bị giới hạn hiển thị dữ liệu của báo cáo',
+    description: 'Bạn đang sử dụng gói Khai trương Tháng 12 và không bị giới hạn báo cáo',
     background: 'linear-gradient(90.12deg, #FCA14E 1.09%, #FF733F 99.22%)',
     textColor: '#FFFFFF',
     textColorButton: '#E85912',
@@ -503,17 +503,13 @@ export const PARTERS = [
 
 export const TERM_AND_POLICIES = [
   {
+    label: "Hướng dẫn sử dụng",
+    link: 'https://hotro.metric.vn/ereport'
+  },
+  {
     label: "Chính sách bảo mật thông tin",
     link: NAVIGATIONS.informationPolicy
   },
-  // {
-  //   label: "Hình thức thanh toán",
-  //   link: NAVIGATIONS.paymentMethod
-  // },
-  // {
-  //   label: "Chính sách đổi trả sản phẩm",
-  //   link: NAVIGATIONS.refundPolicy
-  // },
   {
     label: "Chính sách đặt hàng",
     link: NAVIGATIONS.placeOrderPolicy
