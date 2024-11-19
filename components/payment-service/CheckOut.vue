@@ -208,6 +208,9 @@ const fetchDiscount = async () => {
       } else if (discount.usage_count >= discount.max_usage) {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá đã hết lượt sử dụng';
+      } else if (userInfo.value.list_personal_discount.includes(discount.code)) {
+        statusApplyCode.value = false;
+        errors.value.discount = 'Bạn không thể áp dụng mã giảm gái này';
       } else {
         statusApplyCode.value = true;
         errors.value.discount = 'Đã áp dụng mã giảm giá';

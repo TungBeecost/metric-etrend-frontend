@@ -81,7 +81,7 @@ onMounted(() => {
   <div class="calculate">
     <div v-if="!isHidePromotionInput" class="calculate_item">
       <div class="money">Số tiền</div>
-      <div class="money">{{ formatCurrency(plan.priceDiscount ?? plan.price) }}</div>
+      <div class="money">{{ formatCurrency(plan.priceDiscount) }}</div>
     </div>
     <div v-if="!isHidePromotionInput" class="calculate_item">
       <div class="promotional_program">Chương trình khuyến mại</div>

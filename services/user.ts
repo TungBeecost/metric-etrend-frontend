@@ -9,6 +9,7 @@ interface ProfileRes {
     first_name: string;
     last_name: string;
     avatar: string;
+    list_personal_discount: any[];
     current_plan: CurrentPlan;
 }
 

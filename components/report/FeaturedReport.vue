@@ -498,8 +498,7 @@ const lstReport = [
         <div class="tittle">Báo Cáo Nổi Bật</div>
         <div class="content">
           <div>
-            Khám phá ngay các báo cáo đón đầu xu hướng bán hàng hiện nay giúp bạn nắm bắt kịp thời biến động thị trường
-            và đưa ra quyết định đầu tư chính xác.
+            Chi tiết tăng trưởng, doanh số, sản lượng, mức giá, thị phần, sản phẩm trending... của mọi nhóm hàng, thương hiệu và nhà bán
           </div>
         </div>
       </div>

@@ -86,6 +86,17 @@ watch(() => props.userInfo.current_plan.plan_code, (newPlanCode) => {
             <div class="detail_info_title">Số lượt xem báo cáo chi tiết</div>
             <div class="detail_info_value">{{ props.userInfo.current_plan.remain_claim_pdf || 0 }} lượt</div>
           </div>
+          <div class="account_detail_item">
+            <div class="detail_info_title">Mã giới thiệu</div>
+            <div class="detail_info_value">
+              <template v-if="props.userInfo.list_personal_discount.length <= 3">
+                {{ props.userInfo.list_personal_discount.join(', ') || 'Không tồn tại' }}
+              </template>
+              <template v-else>
+                {{ props.userInfo.list_personal_discount.slice(0, 3).join(', ') + '...' }}
+              </template>
+            </div>
+          </div>
         </div>
         <div class="service_info">
           <plan-card :plan="plan_card" />

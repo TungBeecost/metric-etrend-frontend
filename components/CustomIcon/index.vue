@@ -26,6 +26,7 @@ import Chart from "~/public/icons/Chart.svg";
 import Docs from "~/public/icons/Docs.svg";
 import ProjectorScreenChart from "~/public/icons/ProjectorScreenChart.svg";
 import ViewCount from "~/public/icons/ViewCount.svg";
+import Coin from "~/public/icons/Coin.svg";
 import Tick from "~/public/icons/Tick.svg";
 import Unlock from "~/public/icons/Unlock.svg";
 import UnlockDocumentFailure from "~/public/icons/Unlock-Document-Failure.svg";
@@ -41,7 +42,6 @@ import Other from "~/public/icons/Other.svg";
 import Ticket from "~/public/icons/Ticket.svg";
 import InternalTicket from "~/public/icons/InternalTicket.svg";
 import Bell from "public/icons/Bell.svg";
-
 
 export type TypeIcon =
     | "Building"
@@ -66,6 +66,7 @@ export type TypeIcon =
     | "Docs"
     | "ProjectorScreenChart"
     | "ViewCount"
+    | "Coin"
     | "House"
     | "Tick"
     | "Unlock"
@@ -111,6 +112,7 @@ const iconMappings = {
   "Docs": Docs,
   "ProjectorScreenChart": ProjectorScreenChart,
   "ViewCount": ViewCount,
+  "Coin": Coin,
   "Tick": Tick,
   "Unlock": Unlock,
   "UnlockDocumentFailure": UnlockDocumentFailure,

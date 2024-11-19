@@ -2,9 +2,9 @@
   <div>
     <div class="section sectionSearch">
       <div class="sectionHeader searchHeader">
-        <h1 class="sectionTitle">Kho Báo Cáo <br> Ecommerce Toàn Diện</h1>
+        <h1 class="sectionTitle">Khai thác 1 Triệu báo cáo E-commerce</h1>
         <p class="sectionDescription">
-          Tối ưu chi phí, Tiết kiệm thời gian và Giảm thiểu rủi ro kinh doanh với dữ liệu chính xác nhất được thu thập và xử lý bằng Big Data ứng dụng AI.
+          Nắm giữ mọi xu hướng và dữ liệu hàng hóa, thương hiệu chỉ với 5 giây
         </p>
         <img src="/images/background-search.png" class="background">
       </div>
@@ -45,9 +45,10 @@
     </div>
 
     <div class="">
-      <ContactUs/>
-
+<!--      <ContactUs/>-->
+    <affiliate-component/>
     </div>
+
     <a-modal v-if="showModal" v-model:open="showModal" width="600px" :footer="null" @ok="handleOk">
       <div class="modal_content">
         <div class="alert_success">
@@ -91,9 +92,6 @@
       </div>
       <ContactUsForm :source-name="'eReport'" :popup="true" :handle-submit-success="handleSubmitSuccess"/>
     </a-modal>
-<!--    <div class="advertisement">-->
-<!--      <advertisement @handle-advertisement="handleAdvertisement"/>-->
-<!--    </div>-->
   </div>
 </template>
 

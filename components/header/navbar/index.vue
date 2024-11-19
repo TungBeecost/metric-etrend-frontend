@@ -8,15 +8,12 @@
       </nuxt-link>
     </div>
     <div v-if="fetchedUser" id="headButtonLogin" class="headerNavbarCallButton">
-      <div v-if="!userInfo.email" style="display: flex; gap: 16px">
+      <div v-if="!userInfo.email" style="display: flex;">
         <a-button style="height: 40px" @click="currentUserStore.setShowPopupLogin(true)">
           Đăng nhập
         </a-button>
-        <AButton style="height: 40px" type="primary" @click="navigateTo(NAVIGATIONS.contactUs)">Liên hệ tư vấn</AButton>
       </div>
-      <div v-else style="display: flex; gap: 16px; align-items: center">
-        <AButton style="height: 40px" type="primary" @click="navigateTo(NAVIGATIONS.contactUs)">Liên hệ tư vấn</AButton>
-        <span style="color: #EEEBFF">|</span>
+      <div v-else style="display: flex; align-items: center">
         <user-profile :is-dark-blue-header="isDarkBlueHeader"/>
       </div>
     </div>

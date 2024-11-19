@@ -52,6 +52,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
                 first_name: undefined,
                 last_name: undefined,
                 avatar: undefined,
+                list_personal_discount: [],
                 current_plan: {
                     plan_id: undefined,
                     plan_name: undefined,
