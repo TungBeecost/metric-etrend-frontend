@@ -326,8 +326,8 @@ export const PLANCARD = [
   },
   {
     code: 'eReport12',
-    name: 'Khai trương Tháng 12',
-    description: 'Bạn đang sử dụng gói Khai trương Tháng 12 và không bị giới hạn báo cáo',
+    name: 'Gói ra mắt',
+    description: 'Bạn đang sử dụng gói Gói ra mắt và không bị giới hạn báo cáo',
     background: 'linear-gradient(90.12deg, #FCA14E 1.09%, #FF733F 99.22%)',
     textColor: '#FFFFFF',
     textColorButton: '#E85912',
@@ -416,7 +416,7 @@ export const PLANS: Array<IPLAN> = [
     ]
   },
   {
-    type: "Khai trương Tháng 12",
+    type: "Gói ra mắt",
     plan_code: "eReport12",
     type_package: "incentive",
     description: "Duy nhất cho dịp ra mắt Metric eReport",

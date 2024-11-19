@@ -95,18 +95,18 @@ onMounted(async () => {
             />
           </div>
         </a-tab-pane>
-        <a-tab-pane key="2" tab="Giao dịch tiếp thị liên kết">
-          <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 24px">
-            <general-transaction/>
-            <statistical-transaction/>
-          </div>
-        </a-tab-pane>
-        <a-tab-pane key="3" tab="Thống kê mã giảm giá">
-          <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 24px">
-            <general-transaction/>
-            <statistical-discount-code/>
-          </div>
-        </a-tab-pane>
+  <!--        <a-tab-pane key="2" tab="Giao dịch tiếp thị liên kết">-->
+  <!--          <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 24px">-->
+  <!--            <general-transaction/>-->
+  <!--            <statistical-transaction/>-->
+  <!--          </div>-->
+  <!--        </a-tab-pane>-->
+  <!--        <a-tab-pane key="3" tab="Thống kê mã giảm giá">-->
+  <!--          <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 24px">-->
+  <!--            <general-transaction/>-->
+  <!--            <statistical-discount-code/>-->
+  <!--          </div>-->
+  <!--        </a-tab-pane>-->
       </a-tabs>
     </div>
   </div>

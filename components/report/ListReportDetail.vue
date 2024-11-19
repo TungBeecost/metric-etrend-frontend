@@ -20,9 +20,6 @@ const props = defineProps({
             <img :src="item.url_thumbnail" alt="">
           </div>
           <div class="info">
-            <div class="breadcrumb">
-              <span :class="(item.report_type === 'report_product_line' || item.report_type === 'report_category') ? 'display_none' : 'display'">{{ formatDate(item.end_date) }}</span>
-            </div>
             <div v-if="item.slug.startsWith('bao-cao')" class="name">
               {{ item.name }}
             </div>
@@ -75,8 +72,17 @@ const props = defineProps({
       .info {
         display: flex;
         flex-direction: column;
+        color: var(--Dark-blue-dark-blue-5, #716B95);
+
+        .title{
+          color: var(--Dark-blue-dark-blue-8, #241E46);
+          font-size: 20px;
+          font-weight: bold;
+          line-height: 28px;
+        }
       }
     }
   }
 }
+
 </style>
