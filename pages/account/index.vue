@@ -140,7 +140,7 @@ onMounted(async () => {
               <statistical-transaction :loading="loadingStatisticalTransaction" :data="dataGeneralTransactionStatistic"/>
             </div>
           </a-tab-pane>
-          <a-tab-pane key="3" tab="Thống kê mã giảm giá">
+          <a-tab-pane v-if="dataGeneralTransactionDiscountCode.length > 1" key="3" tab="Thống kê mã giảm giá">
             <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 24px">
               <general-transaction :loading="loadingStatisticalDiscountCode" :data="dataGeneral"/>
               <statistical-discount-code :loading="loadingStatisticalDiscountCode" :data="dataGeneralTransactionDiscountCode"/>
