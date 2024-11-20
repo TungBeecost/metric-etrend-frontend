@@ -175,8 +175,8 @@ const plan = computed(() => PLANS.find(p => p.plan_code === planCode.value));
 onMounted(() => {
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
-
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}${window.location.hostname === 'metric.vn' ? '/ereport' : ''}/payment`;
+  console.log('window.location.hostname', window.location.hostname);
   const orderId = route.query.orderId as string;
   if (orderId) {
     openModalWaiting.value = true;

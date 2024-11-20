@@ -24,7 +24,9 @@ export const PAYMENT_ENDPOINTS: { [key: string]: { endpoint: string; method: MET
     payment_pdf: {endpoint: `/api/payment/create-transaction_pdf`, method: "POST"},
     payment_pdf_guest: {endpoint: `/api/payment/create_transaction_pdf_guest`, method: "POST"},
     checkTransaction: {endpoint: `/api/payment/transaction/check`, method: "GET"},
-    leadInformation: {endpoint: `/api/payment/lead_information`, method: "POST"}
+    leadInformation: {endpoint: `/api/payment/lead_information`, method: "POST"},
+    list_statistical_transaction: {endpoint: `/api/payment/get_statistical_transaction`, method: "GET"},
+    list_statistical_discount_code: {endpoint: `/api/payment/get_statistical_discount_code`, method: "GET"},
 }
 
 export const DISCOUNT_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {

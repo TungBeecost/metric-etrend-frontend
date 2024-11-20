@@ -16,12 +16,15 @@ let formatNumberHuman = (number) => {
 }
 
 const formatCurrency = (price) => {
-    if (price == null || price === '' || price === '0' || price === 0) {
-        return ''
+    if (price == null || price === '') {
+        return '';
     }
-    let priceNormalize = String(Number.parseInt(price))
-    return formatNumber(priceNormalize) + '₫'
-}
+    if (price === '0' || price === 'None' || price === 0) {
+        return '0₫';
+    }
+    let priceNormalize = String(Number.parseInt(price));
+    return formatNumber(priceNormalize) + '₫';
+};
 
 const roundAndFormat = (price, divisor, unit, $t) => {
     price = Math.floor(price / divisor);

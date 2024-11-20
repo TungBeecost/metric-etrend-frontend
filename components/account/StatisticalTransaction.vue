@@ -1,4 +1,17 @@
 <script setup lang="ts">
+import { formatCurrency } from "../../helpers/FormatHelper";
+
+const props = defineProps({
+  data: {
+    type: Object,
+    default: () => ({})
+  },
+  loading: {
+    type: Boolean,
+    default: true
+  }
+});
+
 const columns = [
   {
     title: 'Mã giao dịch',
@@ -31,36 +44,6 @@ const columns = [
     key: 'time',
   },
 ];
-
-const data = [
-  {
-    key: '1',
-    transactionId: 'TX123456',
-    email: 'john@example.com',
-    discountCode: 'DISCOUNT10',
-    transactionValue: '1000',
-    commissionAmount: '100',
-    time: '2023-10-01 10:00:00',
-  },
-  {
-    key: '2',
-    transactionId: 'TX123457',
-    email: 'jane@example.com',
-    discountCode: 'DISCOUNT20',
-    transactionValue: '2000',
-    commissionAmount: '200',
-    time: '2023-10-01 11:00:00',
-  },
-  {
-    key: '3',
-    transactionId: 'TX123458',
-    email: 'doe@example.com',
-    discountCode: 'DISCOUNT30',
-    transactionValue: '3000',
-    commissionAmount: '300',
-    time: '2023-10-01 12:00:00',
-  },
-];
 </script>
 
 <template>
@@ -73,11 +56,18 @@ const data = [
         <div class="title">Thống kê giao dịch</div>
       </div>
     </div>
-    <div class="container_content">
-      <a-table :columns="columns" :data-source="data">
+    <a-skeleton v-if="loading" class="default_section" :paragraph="{ rows: 20 }"/>
+    <div v-else class="container_content">
+      <a-table :columns="columns" :data-source="props.data">
         <template #bodyCell="{ column, text }">
-          <template v-if="column.dataIndex === 'name'">
-            <a>{{ text }}</a>
+          <template v-if="column.dataIndex === 'transactionValue'">
+            <span>{{ formatCurrency(text) }}</span>
+          </template>
+          <template v-else-if="column.dataIndex === 'commissionAmount'">
+            <span>{{ formatCurrency(text) }}</span>
+          </template>
+          <template v-else>
+            <span>{{ text }}</span>
           </template>
         </template>
       </a-table>

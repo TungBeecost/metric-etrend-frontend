@@ -1,7 +1,7 @@
 import {
     fetchClaimedListReport, fetchClaimedPDFListReport,
     fetchListRecommendReport,
-    fetchListRecommendReportMarketing,
+    fetchListRecommendReportMarketing, fetchListStatisticalDiscountCode, fetchListStatisticalTransaction,
     searchReport,
     type SearchReportPayload
 } from "~/services/reports";
@@ -99,5 +99,24 @@ export default function useSearchReport() {
         }
     }
 
-    return {fetchSearch, fetchSuggest, fetchListRecommend, fetchListRecommendMarketing, fetchClaimedList, fetchClaimedPDFList};
+    const fetchApiListStatisticalTransaction = async () => {
+        try {
+            return await fetchListStatisticalTransaction();
+        } catch (error) {
+            console.error("fetchListStatisticalTransaction error: ", error);
+            return null;
+        }
+    }
+
+    const fetchApiListStatisticalDiscountCode = async () => {
+        try {
+            return await fetchListStatisticalDiscountCode();
+        } catch (error) {
+            console.error("fetchListStatisticalTransaction error: ", error);
+            return null;
+        }
+    }
+
+    return {fetchSearch, fetchSuggest, fetchListRecommend, fetchListRecommendMarketing, fetchClaimedList,
+        fetchClaimedPDFList, fetchApiListStatisticalTransaction, fetchApiListStatisticalDiscountCode};
 }

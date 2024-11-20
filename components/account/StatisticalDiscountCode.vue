@@ -1,4 +1,17 @@
 <script setup lang="ts">
+import {formatCurrency, formatNumber} from "../../helpers/FormatHelper";
+
+const props = defineProps({
+  data: {
+    type: Object,
+    default: () => ({})
+  },
+  loading: {
+    type: Boolean,
+    default: true
+  }
+});
+
 const columns = [
   {
     title: 'Mã giảm giá',
@@ -31,36 +44,6 @@ const columns = [
     key: 'totalCommissionAmount',
   },
 ];
-
-const data = [
-  {
-    key: '1',
-    discountCode: 'DISCOUNT10',
-    discountRate: '10%',
-    expiryDate: '2023-12-31',
-    transactionCount: 5,
-    totalTransactionValue: '5000',
-    totalCommissionAmount: '500',
-  },
-  {
-    key: '2',
-    discountCode: 'DISCOUNT20',
-    discountRate: '20%',
-    expiryDate: '2023-11-30',
-    transactionCount: 10,
-    totalTransactionValue: '10000',
-    totalCommissionAmount: '1000',
-  },
-  {
-    key: '3',
-    discountCode: 'DISCOUNT30',
-    discountRate: '30%',
-    expiryDate: '2023-10-31',
-    transactionCount: 15,
-    totalTransactionValue: '15000',
-    totalCommissionAmount: '1500',
-  },
-];
 </script>
 
 <template>
@@ -73,11 +56,24 @@ const data = [
         <div class="title">Thống kê mã giảm giá</div>
       </div>
     </div>
-    <div class="container_content">
-      <a-table :columns="columns" :data-source="data">
+    <a-skeleton v-if="loading" class="default_section" :paragraph="{ rows: 20 }"/>
+    <div v-else class="container_content">
+      <a-table :columns="columns" :data-source="props.data">
         <template #bodyCell="{ column, text }">
-          <template v-if="column.dataIndex === 'name'">
-            <a>{{ text }}</a>
+          <template v-if="column.dataIndex === 'discountRate'">
+            <span>{{ text }}</span>
+          </template>
+          <template v-else-if="column.dataIndex === 'transactionCount'">
+            <span>{{ formatNumber(text) }}</span>
+          </template>
+          <template v-else-if="column.dataIndex === 'totalTransactionValue'">
+            <span>{{ formatCurrency(text) }}</span>
+          </template>
+          <template v-else-if="column.dataIndex === 'totalCommissionAmount'">
+            <span>{{ formatCurrency(text) }}</span>
+          </template>
+          <template v-else>
+            <span>{{ text }}</span>
           </template>
         </template>
       </a-table>

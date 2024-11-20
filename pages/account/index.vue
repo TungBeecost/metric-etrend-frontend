@@ -1,22 +1,28 @@
 <script setup lang="ts">
 import AccountInfomation from "~/components/account/AccountInfomation.vue";
 import DetailedReportsViewed from "~/components/account/DetailedReportsViewed.vue";
-import {onMounted, ref} from "vue";
-import {useSearchReport} from "#imports";
+import { onMounted, ref } from "vue";
+import { useSearchReport } from "#imports";
 import { PAGE_TITLES } from "~/constant/constains";
-import type {ListClaimed} from "~/services/reports";
+import type { ListClaimed } from "~/services/reports";
 import GeneralTransaction from "~/components/account/GeneralTransaction.vue";
 import StatisticalTransaction from "~/components/account/StatisticalTransaction.vue";
 import StatisticalDiscountCode from "~/components/account/StatisticalDiscountCode.vue";
+
 const currentUserStore = useCurrentUser();
-const {userInfo} = storeToRefs(currentUserStore);
+const { userInfo } = storeToRefs(currentUserStore);
 const data = ref<{ total: number; reports: ListClaimed[] } | null>(null);
 const dataPdf = ref<{ total: number; reports: ListClaimed[] } | null>(null);
+const dataGeneral = ref<Record<string, any>>({});
+const dataGeneralTransactionStatistic = ref<Record<string, any>>({});
+const dataGeneralTransactionDiscountCode = ref<Record<string, any>>({});
 const loading = ref(true);
 const loadingpdf = ref(true);
+const loadingStatisticalTransaction = ref(true);
+const loadingStatisticalDiscountCode = ref(true);
 const loadingUser = ref(true);
 const activeKey = ref('1');
-const {fetchClaimedList, fetchClaimedPDFList} = useSearchReport()
+const { fetchClaimedList, fetchClaimedPDFList, fetchApiListStatisticalTransaction, fetchApiListStatisticalDiscountCode } = useSearchReport();
 
 const fetchTableData = async (page: number = 0, limit: number = 4) => {
   try {
@@ -48,9 +54,41 @@ const fetchTableDataPDF = async (page: number = 0, limit: number = 4) => {
   }
 };
 
+const fetchListStatisticalTransaction = async () => {
+  try {
+    const response = await fetchApiListStatisticalTransaction();
+    if (response) {
+      dataGeneral.value = response.general;
+      dataGeneralTransactionStatistic.value = response.transaction_statistics;
+    } else {
+      console.error("No dataPdf received from fetchClaimedList");
+    }
+  } catch (error) {
+    console.error("Error fetching claimed list:", error);
+  } finally {
+    loadingStatisticalTransaction.value = false;
+  }
+};
+
+const fetchListStatisticalDiscountCode = async () => {
+  try {
+    const response = await fetchApiListStatisticalDiscountCode();
+    if (response) {
+      dataGeneral.value = response.general;
+      dataGeneralTransactionDiscountCode.value = response.transaction_discount_code;
+    } else {
+      console.error("No dataPdf received from fetchClaimedList");
+    }
+  } catch (error) {
+    console.error("Error fetching claimed list:", error);
+  } finally {
+    loadingStatisticalDiscountCode.value = false;
+  }
+};
+
 useSeoMeta({
   title: PAGE_TITLES.account
-})
+});
 
 const handlePage = (page: number) => {
   loading.value = true;
@@ -65,9 +103,10 @@ const handlePagePDF = (page: number) => {
 onMounted(async () => {
   await fetchTableData();
   await fetchTableDataPDF();
+  await fetchListStatisticalTransaction();
+  await fetchListStatisticalDiscountCode();
   loadingUser.value = false;
 });
-
 </script>
 
 <template>
@@ -97,14 +136,14 @@ onMounted(async () => {
         </a-tab-pane>
           <a-tab-pane key="2" tab="Giao dịch tiếp thị liên kết">
             <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 24px">
-              <general-transaction/>
-              <statistical-transaction/>
+              <general-transaction :loading="loadingStatisticalTransaction" :data="dataGeneral"/>
+              <statistical-transaction :loading="loadingStatisticalTransaction" :data="dataGeneralTransactionStatistic"/>
             </div>
           </a-tab-pane>
           <a-tab-pane key="3" tab="Thống kê mã giảm giá">
             <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 24px">
-              <general-transaction/>
-              <statistical-discount-code/>
+              <general-transaction :loading="loadingStatisticalDiscountCode" :data="dataGeneral"/>
+              <statistical-discount-code :loading="loadingStatisticalDiscountCode" :data="dataGeneralTransactionDiscountCode"/>
             </div>
           </a-tab-pane>
       </a-tabs>

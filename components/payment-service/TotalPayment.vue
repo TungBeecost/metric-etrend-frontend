@@ -22,7 +22,6 @@ const props = defineProps({
 });
 
 const {plan, discountInfo, statusApplyCode} = toRefs(props);
-console.log('plan', plan)
 const emit = defineEmits(['finalPrice']);
 
 const calculateDiscountAmount = (finalPrice: number, discount: any) => {

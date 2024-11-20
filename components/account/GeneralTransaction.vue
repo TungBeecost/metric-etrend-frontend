@@ -1,20 +1,32 @@
 <script setup lang="ts">
+import {formatCurrency, formatNumber} from "../../helpers/FormatHelper";
 
+const props = defineProps({
+  data: {
+    type: Object,
+    default: () => ({})
+  },
+  loading: {
+    type: Boolean,
+    default: true
+  }
+});
 </script>
 
 <template>
-  <div class="general_transaction">
+  <a-skeleton v-if="loading" class="default_section" :paragraph="{ rows: 2 }"/>
+  <div v-else class="general_transaction">
     <div class="item bdr">
-      <div class="label">Số lần click</div>
-      <div class="value">0</div>
+      <div class="label">Số giao dịch</div>
+      <div class="value">{{props.data.number_of_transactions}}</div>
     </div>
     <div class="item bdr">
-      <div class="label">Số lần mua</div>
-      <div class="value">0</div>
+      <div class="label">Tổng giá trị giao dịch</div>
+      <div class="value">{{formatCurrency(props.data.total_transaction_value)}}</div>
     </div>
     <div class="item">
-      <div class="label">Số lần hoàn thành</div>
-      <div class="value">0</div>
+      <div class="label">Tổng hoa hồng</div>
+      <div class="value">{{formatCurrency(props.data.total_commission_amount)}}</div>
     </div>
   </div>
 </template>

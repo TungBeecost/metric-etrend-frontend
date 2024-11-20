@@ -46,8 +46,8 @@ const { plan, discountValueRouter } = defineProps({
 const formVatValues = ref<IFormValue>({});
 
 watch(() => plan, (newPlan) => {
-  if (newPlan && newPlan.price) {
-    finalPrice.value = newPlan.price;
+  if (newPlan && newPlan.priceValue) {
+    finalPrice.value = newPlan.priceValue;
   }
 }, { immediate: true });
 
@@ -59,7 +59,6 @@ onMounted(() => {
   const fields = ['name_payment', 'phone_payment', 'emailAccount_payment', 'companyName_payment', 'taxCode_payment', 'email_payment', 'address_payment'];
   fields.forEach(field => {
     const value = sessionStorage.getItem(field);
-    console.log(value);
     if (value) {
       switch (field) {
         case 'name_payment':

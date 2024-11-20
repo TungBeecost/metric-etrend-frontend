@@ -1,4 +1,4 @@
-import { REPORT_ENDPOINTS } from "~/constant/endpoints";
+import {PAYMENT_ENDPOINTS, REPORT_ENDPOINTS} from "~/constant/endpoints";
 import axios from "./axios-wrapper";
 
 export const searchReport = async (body: SearchReportPayload) => {
@@ -45,6 +45,43 @@ export const fetchPdfReport = async (slug: string) => {
   return true;
 };
 
+export const fetchListStatisticalTransaction = async () => {
+  try {
+    const response = await axios.get(useBEEndpoint(PAYMENT_ENDPOINTS.list_statistical_transaction.endpoint), {
+      method: PAYMENT_ENDPOINTS.list_statistical_transaction.method,
+    });
+
+    if (response.status !== 200) {
+      throw new Error(`Something went wrong: ${response.statusText}`);
+    }
+
+    const data = response.data.response;
+
+    return data;
+  } catch (error) {
+    console.error("fetchListStatisticalTransaction error: ", error);
+    return null;
+  }
+};
+
+export const fetchListStatisticalDiscountCode = async () => {
+  try {
+    const response = await axios.get(useBEEndpoint(PAYMENT_ENDPOINTS.list_statistical_discount_code.endpoint), {
+      method: PAYMENT_ENDPOINTS.list_statistical_discount_code.method,
+    });
+
+    if (response.status !== 200) {
+      throw new Error(`Something went wrong: ${response.statusText}`);
+    }
+
+    const data = response.data.response;
+
+    return data;
+  } catch (error) {
+    console.error("fetchListStatisticalTransaction error: ", error);
+    return null;
+  }
+};
 
 export const fetchListRecommendReport = async (categoryReportId: string, numberOfReports: number) => {
   try {
