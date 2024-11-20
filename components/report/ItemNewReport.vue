@@ -61,7 +61,7 @@ const itemsToShow = computed(() => {
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
             <img v-if="report.url_thumbnail" :src="report.url_thumbnail" alt="" />
-            <img src="/images/default_thumbnail_report.png" class="default_thumbnail">
+            <img v-else src="/images/default_thumbnail_report.png" class="default_thumbnail" />
           </div>
           <div class="content" style="text-align: left;">
             <div v-if="report.lst_category" class="category_date" style="text-align: left;">

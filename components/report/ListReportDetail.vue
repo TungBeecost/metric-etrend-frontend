@@ -17,7 +17,8 @@ const props = defineProps({
                  :to="`${NAVIGATIONS.home}${item.source ==='marketing' ? 'insight/' + item.slug : item.slug}`">
         <div class="item">
           <div class="image">
-            <img :src="item.url_thumbnail" alt="">
+            <img v-if="item.url_thumbnail" :src="item.url_thumbnail" alt="">
+            <img v-else src="/images/default_thumbnail_report.png" class="default_thumbnail" />
           </div>
           <div class="info">
             <div v-if="item.slug.startsWith('bao-cao')" class="name">
