@@ -130,7 +130,7 @@ const handdleCoppy = () => {
               <template v-else>
                 {{ props.userInfo.list_personal_discount.slice(0, 3).join(', ') + '...' }}
               </template>
-              <span style="padding-left: 4px" @click="handdleCoppy">
+              <span style="padding-left: 4px; cursor: pointer" @click="handdleCoppy">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <g clip-path="url(#clip0_8829_53923)">
                     <path d="M10.5 10.5H13.5V2.5H5.5V5.5" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>

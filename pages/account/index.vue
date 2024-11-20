@@ -101,6 +101,15 @@ const handlePagePDF = (page: number) => {
 };
 
 onMounted(async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('history')) {
+    activeKey.value = '1';
+  } else if (urlParams.has('affiliate_transaction')) {
+    activeKey.value = '2';
+  } else if (urlParams.has('affiliate_discount_code')) {
+    activeKey.value = '3';
+  }
+
   await fetchTableData();
   await fetchTableDataPDF();
   await fetchListStatisticalTransaction();

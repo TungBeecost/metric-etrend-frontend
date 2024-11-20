@@ -141,7 +141,8 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
       isCompleted.value = true;
       if (intervalId) clearInterval(intervalId);
       if (timeoutId) clearTimeout(timeoutId);
-      window.location.href = `/?transaction_id=${transactionId}`;
+      const redirectUrl = window.location.hostname === 'metric.vn' ? '/ereport' : '/';
+      window.location.href = `${redirectUrl}?transaction_id=${transactionId}`;
     }
   };
 
