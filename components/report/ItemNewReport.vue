@@ -57,9 +57,11 @@ const itemsToShow = computed(() => {
     <Carousel v-else :items-to-show="itemsToShow" :items-to-scroll="itemsToShow" :wrap-around="true"
               style="width: 100%;" :snap-align="'start'">
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
+        {{report.url_thumbnail}}
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
-            <img :src="report.url_thumbnail" alt="" >
+            <img v-if="report.url_thumbnail" :src="report.url_thumbnail" alt="" />
+            <img src="/images/default_thumbnail_report.png" class="default_thumbnail">
           </div>
           <div class="content" style="text-align: left;">
             <div v-if="report.lst_category" class="category_date" style="text-align: left;">
@@ -93,7 +95,7 @@ const itemsToShow = computed(() => {
             >
               {{ 'Báo cáo ' + report.name[0].toUpperCase() + report.name.slice(1) }}
             </nuxt-link>
-            <div v-if="report.revenue_monthly" class="summary-info">
+            <div v-if="report.revenue_monthly || report.revenue" class="summary-info">
               <div class="info_item">
                 <svg data-v-f4382b3b="" width="16" height="16" viewBox="0 0 16 16" fill="none"
                      xmlns="http://www.w3.org/2000/svg" style="transform: translateY(0px); margin-right: 4px;">
@@ -153,8 +155,14 @@ const itemsToShow = computed(() => {
               </span> sản phẩm
               </div>
             </div>
-            <div v-else-if="report.introduction" class="summary-info line-clamp__2">
+            <div v-if="report.introduction" class="description line-clamp__3">
               {{ report.introduction }}
+            </div>
+            <div v-else-if="report.report_type === 'report_brand' && report?.lst_shop?.length" class="description line-clamp__3">Báo cáo thị phần thương hiệu hàng đầu như
+              {{ report.lst_brand ? report.lst_brand.join(', ') : '' }} v.v
+            </div>
+            <div v-else-if="report?.lst_brand?.length" class="description line-clamp__3">Báo cáo thị phần thương hiệu hàng đầu như
+              {{ report.lst_brand ? report.lst_brand.join(', ') : '' }} v.v
             </div>
           </div>
         </div>
