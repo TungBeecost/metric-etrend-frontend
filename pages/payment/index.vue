@@ -147,12 +147,13 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
   };
 
   intervalId = window.setInterval(checkCompletion, 2000);
+  const redirectUrl = window.location.hostname === 'metric.vn' ? '/ereport' : '/';
 
   timeoutId = window.setTimeout(() => {
     if (!isCompleted.value) {
       console.log("Transaction not completed within the timeout period, redirecting to payment page");
       if (intervalId) clearInterval(intervalId);
-      window.location.href = `/`;
+      window.location.href = redirectUrl;
     }
   }, timeout);
 
