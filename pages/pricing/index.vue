@@ -9,7 +9,8 @@
     <div class="section sectionPartner">
       <Parters />
     </div>
-    <ContactUs />
+<!--    <ContactUs />-->
+    <affiliate-component/>
   </div>
 </template>
 

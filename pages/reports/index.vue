@@ -27,7 +27,6 @@ const fetchReport = async () => {
       method: 'POST',
       body
     });
-    console.log('lst_report', lst_report);
     lstReport.value = lst_report;
   } catch (e) {
     console.log(e);
@@ -73,7 +72,8 @@ useSeoMeta({
     <report-free/>
     <discover/>
     <featured-report/>
-    <ContactUs/>
+<!--    <ContactUs/>-->
+    <affiliate-component/>
   </div>
 </template>
 

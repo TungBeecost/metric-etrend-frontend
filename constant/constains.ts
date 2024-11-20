@@ -13,7 +13,6 @@ export const NAVIGATIONS = {
   category: "/c",
   informationPolicy: "/chinh-sach-bao-mat-thong-tin",
   paymentMethod: "/hinh-thuc-thanh-toan",
-  // refundPolicy: "/chinh-sach-doi-tra-san-pham",
   placeOrderPolicy: "/chinh-sach-dat-hang",
   commonTerm: "/dieu-kien-giao-dich-chung",
   requestSupport: "/ticket/my-ticket",
@@ -21,11 +20,6 @@ export const NAVIGATIONS = {
 };
 
 export const MENUS = [
-  {
-    label: "Trang chủ",
-    icon: "Homepage",
-    to: NAVIGATIONS.home
-  },
   {
     label: "Báo cáo",
     icon: "Report",
@@ -35,6 +29,16 @@ export const MENUS = [
     label: "Bảng giá dịch vụ",
     icon: "Store",
     to: NAVIGATIONS.pricing
+  },
+  {
+    label: "Liên hệ",
+    icon: "Store",
+    to: NAVIGATIONS.contactUs
+  },
+  {
+    label: "Kiếm 1 tỷ ngay trong Tháng 12",
+    icon: "Store",
+    to: 'https://docs.google.com/document/d/1rXu1RykUpWYDEX69M4-3A2YNnjNi-Lw5tFvTt9U_PLw'
   },
 ];
 
@@ -132,6 +136,11 @@ export const LABEL_PERMISSION_PLAN = {
     label: "15 lượt xem báo cáo chi tiết",
     icon: "ViewCount"
   },
+  rightToParticipate: {
+    label: "Quyền tham gia chương trình Tiếp thị liên kết\n" +
+        "<a href='https://docs.google.com/document/d/1rXu1RykUpWYDEX69M4-3A2YNnjNi-Lw5tFvTt9U_PLw' style='color: #E85912'>“Kiếm 1 tỷ ngay trong Tháng 12”</a>",
+    icon: "Coin"
+  },
   analysis: {
     label: "Mở xem và phân tích nhiều báo cáo:",
     icon: "Unlock",
@@ -139,6 +148,15 @@ export const LABEL_PERMISSION_PLAN = {
       unlimitedView: "Không giới hạn xem lại báo cáo trong 24h",
       expiry: "Truy cập báo cáo Community trong thời gian sử dụng",
       expiry1: "Thời hạn sử dụng: 6 tháng",
+    }
+  },
+  incentive: {
+    label: "Mở xem báo cáo không giới hạn:",
+    icon: "Unlock",
+    sub: {
+      unlimitedView: "Truy cập kho báo cáo Community",
+      expiry: "Thời hạn sử dụng: 01/01/2026",
+      expiry1: "Metric GPT: Hỏi đáp chuyên sâu trên báo cáo",
     }
   },
   smartReporting: {
@@ -306,6 +324,17 @@ export const PLANCARD = [
     textButton: 'Danh sách gói',
     svg: '<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"> <g filter="url(#filter0_d_7028_11121)"> <rect x="16" y="10" width="48" height="48" rx="24" fill="white" shape-rendering="crispEdges"/> <rect x="16.5" y="10.5" width="47" height="47" rx="23.5" stroke="#F9D7C6" shape-rendering="crispEdges"/> <g clip-path="url(#clip0_7028_11121)"> <path opacity="0.2" d="M32.2104 41.5C32.2104 41.5 35 39.8333 40 39.8333C45 39.8333 47.7896 41.5 47.7896 41.5L51.6438 29.6885C51.6719 29.6083 51.6753 29.5215 51.6537 29.4392C51.6321 29.357 51.5863 29.2831 51.5223 29.2271C51.4584 29.1711 51.3791 29.1355 51.2948 29.1249C51.2104 29.1143 51.1248 29.1292 51.049 29.1677L45.4833 31.9427C45.387 31.9903 45.2762 32 45.1731 31.9699C45.0699 31.9399 44.9817 31.8721 44.926 31.7802L40.3667 24.2083C40.3285 24.1458 40.275 24.0942 40.2111 24.0583C40.1473 24.0225 40.0753 24.0037 40.0021 24.0037C39.9289 24.0037 39.8569 24.0225 39.793 24.0583C39.7292 24.0942 39.6756 24.1458 39.6375 24.2083L35.074 31.7833C35.0185 31.8757 34.9301 31.9438 34.8266 31.9739C34.7231 32.004 34.6121 31.994 34.5156 31.9458L28.9583 29.1729C28.8825 29.1347 28.7969 29.1199 28.7126 29.1306C28.6283 29.1413 28.5491 29.1768 28.4851 29.2328C28.4211 29.2887 28.3753 29.3624 28.3535 29.4445C28.3316 29.5266 28.3348 29.6134 28.3625 29.6937L32.2104 41.5Z" fill="#E85912"/> <path d="M32.2104 41.5C32.2104 41.5 35 39.8333 40 39.8333C45 39.8333 47.7896 41.5 47.7896 41.5L51.6438 29.6885C51.6719 29.6083 51.6753 29.5215 51.6537 29.4392C51.6321 29.357 51.5863 29.2831 51.5223 29.2271C51.4584 29.1711 51.3791 29.1355 51.2948 29.1249C51.2104 29.1143 51.1248 29.1292 51.049 29.1677L45.4833 31.9427C45.387 31.9903 45.2762 32 45.1731 31.9699C45.0699 31.9399 44.9817 31.8721 44.926 31.7802L40.3667 24.2083C40.3285 24.1458 40.275 24.0942 40.2111 24.0583C40.1473 24.0225 40.0753 24.0037 40.0021 24.0037C39.9289 24.0037 39.8569 24.0225 39.793 24.0583C39.7292 24.0942 39.6756 24.1458 39.6375 24.2083L35.074 31.7833C35.0185 31.8757 34.9301 31.9438 34.8266 31.9739C34.7231 32.004 34.6121 31.994 34.5156 31.9458L28.9583 29.1729C28.8825 29.1347 28.7969 29.1199 28.7126 29.1306C28.6283 29.1413 28.5491 29.1768 28.4851 29.2328C28.4211 29.2887 28.3753 29.3624 28.3535 29.4445C28.3316 29.5266 28.3348 29.6134 28.3625 29.6937L32.2104 41.5Z" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g> </g> <defs> <filter id="filter0_d_7028_11121" x="0" y="0" width="80" height="80" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"> <feFlood flood-opacity="0" result="BackgroundImageFix"/> <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/> <feOffset dy="6"/> <feGaussianBlur stdDeviation="8"/> <feComposite in2="hardAlpha" operator="out"/> <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.545098 0 0 0 0 0.211765 0 0 0 0.16 0"/> <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_7028_11121"/> <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_7028_11121" result="shape"/> </filter> <clipPath id="clip0_7028_11121"> <rect width="26.6667" height="26.6667" fill="white" transform="translate(26.6667 20.6666)"/> </clipPath> </defs> </svg>'
   },
+  {
+    code: 'eReport12',
+    name: 'Gói ra mắt',
+    description: 'Bạn đang sử dụng gói Gói ra mắt và không bị giới hạn báo cáo',
+    background: 'linear-gradient(90.12deg, #FCA14E 1.09%, #FF733F 99.22%)',
+    textColor: '#FFFFFF',
+    textColorButton: '#E85912',
+    backgroundButton: '#FFFFFF',
+    textButton: 'Danh sách gói',
+    svg: '<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"> <g filter="url(#filter0_d_7028_11121)"> <rect x="16" y="10" width="48" height="48" rx="24" fill="white" shape-rendering="crispEdges"/> <rect x="16.5" y="10.5" width="47" height="47" rx="23.5" stroke="#F9D7C6" shape-rendering="crispEdges"/> <g clip-path="url(#clip0_7028_11121)"> <path opacity="0.2" d="M32.2104 41.5C32.2104 41.5 35 39.8333 40 39.8333C45 39.8333 47.7896 41.5 47.7896 41.5L51.6438 29.6885C51.6719 29.6083 51.6753 29.5215 51.6537 29.4392C51.6321 29.357 51.5863 29.2831 51.5223 29.2271C51.4584 29.1711 51.3791 29.1355 51.2948 29.1249C51.2104 29.1143 51.1248 29.1292 51.049 29.1677L45.4833 31.9427C45.387 31.9903 45.2762 32 45.1731 31.9699C45.0699 31.9399 44.9817 31.8721 44.926 31.7802L40.3667 24.2083C40.3285 24.1458 40.275 24.0942 40.2111 24.0583C40.1473 24.0225 40.0753 24.0037 40.0021 24.0037C39.9289 24.0037 39.8569 24.0225 39.793 24.0583C39.7292 24.0942 39.6756 24.1458 39.6375 24.2083L35.074 31.7833C35.0185 31.8757 34.9301 31.9438 34.8266 31.9739C34.7231 32.004 34.6121 31.994 34.5156 31.9458L28.9583 29.1729C28.8825 29.1347 28.7969 29.1199 28.7126 29.1306C28.6283 29.1413 28.5491 29.1768 28.4851 29.2328C28.4211 29.2887 28.3753 29.3624 28.3535 29.4445C28.3316 29.5266 28.3348 29.6134 28.3625 29.6937L32.2104 41.5Z" fill="#E85912"/> <path d="M32.2104 41.5C32.2104 41.5 35 39.8333 40 39.8333C45 39.8333 47.7896 41.5 47.7896 41.5L51.6438 29.6885C51.6719 29.6083 51.6753 29.5215 51.6537 29.4392C51.6321 29.357 51.5863 29.2831 51.5223 29.2271C51.4584 29.1711 51.3791 29.1355 51.2948 29.1249C51.2104 29.1143 51.1248 29.1292 51.049 29.1677L45.4833 31.9427C45.387 31.9903 45.2762 32 45.1731 31.9699C45.0699 31.9399 44.9817 31.8721 44.926 31.7802L40.3667 24.2083C40.3285 24.1458 40.275 24.0942 40.2111 24.0583C40.1473 24.0225 40.0753 24.0037 40.0021 24.0037C39.9289 24.0037 39.8569 24.0225 39.793 24.0583C39.7292 24.0942 39.6756 24.1458 39.6375 24.2083L35.074 31.7833C35.0185 31.8757 34.9301 31.9438 34.8266 31.9739C34.7231 32.004 34.6121 31.994 34.5156 31.9458L28.9583 29.1729C28.8825 29.1347 28.7969 29.1199 28.7126 29.1306C28.6283 29.1413 28.5491 29.1768 28.4851 29.2328C28.4211 29.2887 28.3753 29.3624 28.3535 29.4445C28.3316 29.5266 28.3348 29.6134 28.3625 29.6937L32.2104 41.5Z" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g> </g> <defs> <filter id="filter0_d_7028_11121" x="0" y="0" width="80" height="80" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"> <feFlood flood-opacity="0" result="BackgroundImageFix"/> <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/> <feOffset dy="6"/> <feGaussianBlur stdDeviation="8"/> <feComposite in2="hardAlpha" operator="out"/> <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.545098 0 0 0 0 0.211765 0 0 0 0.16 0"/> <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_7028_11121"/> <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_7028_11121" result="shape"/> </filter> <clipPath id="clip0_7028_11121"> <rect width="26.6667" height="26.6667" fill="white" transform="translate(26.6667 20.6666)"/> </clipPath> </defs> </svg>'
+  },
 ];
 
 
@@ -314,7 +343,7 @@ export const PLANS: Array<IPLAN> = [
     type: "Báo cáo lẻ",
     plan_code: "pdf_report",
     type_package: "report",
-    description: "Quan tâm <b>ít nhóm hàng</b>",
+    description: "Mua hoặc theo dõi 1 số ít báo cáo",
     price: 'Từ 249K',
     priceValue: "249000",
     priceDiscount: "300K",
@@ -332,7 +361,7 @@ export const PLANS: Array<IPLAN> = [
     type: "Báo cáo lẻ",
     plan_code: "smart_report",
     type_package: "report",
-    description: "Quan tâm <b>ít nhóm hàng</b>",
+    description: "Xem nhiều báo cáo, số liệu cập nhật hàng tháng",
     price: 'Từ 300K',
     priceValue: "300000",
     priceDiscount: "500K",
@@ -354,7 +383,7 @@ export const PLANS: Array<IPLAN> = [
     type: "Gói xem nhanh",
     plan_code: "pt50",
     type_package: "analysis",
-    description: "Quan tâm <b>nhiều nhóm hàng</b>",
+    description: "Xem nhiều báo cáo, số liệu cập nhật hàng tháng",
     price: '1.99 triệu',
     priceValue: "1990000",
     priceDiscount: "3000000",
@@ -372,7 +401,7 @@ export const PLANS: Array<IPLAN> = [
     type: "Gói xem nhanh",
     plan_code: "pt100",
     type_package: "analysis",
-    description: "Quan tâm <b>nhiều nhóm hàng</b>",
+    description: "Xem nhiều báo cáo, số liệu cập nhật hàng tháng",
     price: '2.99 triệu',
     priceValue: "2990000",
     priceDiscount: "5000000",
@@ -383,6 +412,28 @@ export const PLANS: Array<IPLAN> = [
       {
         ...LABEL_PERMISSION_PLAN.analysis,
         sub: Object.values(LABEL_PERMISSION_PLAN.analysis.sub)
+      },
+    ]
+  },
+  {
+    type: "Gói ra mắt",
+    plan_code: "eReport12",
+    type_package: "incentive",
+    description: "Duy nhất cho dịp ra mắt Metric eReport",
+    price: '1.2 triệu',
+    priceValue: "1200000",
+    priceDiscount: "1200000",
+    discountPercent: "Ưu đãi",
+    unit: " năm",
+    isHighlight: true,
+    permissions: [
+      {
+        ...LABEL_PERMISSION_PLAN.incentive,
+        sub: Object.values(LABEL_PERMISSION_PLAN.incentive.sub)
+      },
+      {
+        label: LABEL_PERMISSION_PLAN.rightToParticipate.label,
+        icon: LABEL_PERMISSION_PLAN.rightToParticipate.icon
       },
     ]
   },
@@ -452,17 +503,13 @@ export const PARTERS = [
 
 export const TERM_AND_POLICIES = [
   {
+    label: "Hướng dẫn sử dụng",
+    link: 'https://hotro.metric.vn/ereport'
+  },
+  {
     label: "Chính sách bảo mật thông tin",
     link: NAVIGATIONS.informationPolicy
   },
-  // {
-  //   label: "Hình thức thanh toán",
-  //   link: NAVIGATIONS.paymentMethod
-  // },
-  // {
-  //   label: "Chính sách đổi trả sản phẩm",
-  //   link: NAVIGATIONS.refundPolicy
-  // },
   {
     label: "Chính sách đặt hàng",
     link: NAVIGATIONS.placeOrderPolicy
