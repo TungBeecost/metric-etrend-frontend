@@ -112,7 +112,7 @@ const handdleCoppy = () => {
                   <div style="color: black">Mã giới thiệu</div>
                   <div style="color: #716B95; border-top: 1px solid #EEEBFF; padding-top: 6px; margin-top: 6px">Mã giới thiệu có giá trị tương đương mã giảm giá 100.000đ
                     cho chương trình tiếp thị liên kết. Thông tin chi tiết
-                    <a style="color:#E85912;" href="https://docs.google.com/document/d/1rXu1RykUpWYDEX69M4-3A2YNnjNi-Lw5tFvTt9U_PLw">
+                    <a style="color:#E85912;" href="https://kiem1ty.metric.vn/">
                       tại đây
                     </a>
                   </div>

@@ -38,7 +38,7 @@ export const MENUS = [
   {
     label: "Kiếm 1 tỷ ngay trong Tháng 12",
     icon: "Store",
-    to: 'https://docs.google.com/document/d/1rXu1RykUpWYDEX69M4-3A2YNnjNi-Lw5tFvTt9U_PLw'
+    to: 'https://kiem1ty.metric.vn/'
   },
 ];
 
@@ -138,7 +138,7 @@ export const LABEL_PERMISSION_PLAN = {
   },
   rightToParticipate: {
     label: "Quyền tham gia chương trình Tiếp thị liên kết\n" +
-        "<a href='https://docs.google.com/document/d/1rXu1RykUpWYDEX69M4-3A2YNnjNi-Lw5tFvTt9U_PLw' style='color: #E85912'>“Kiếm 1 tỷ ngay trong Tháng 12”</a>",
+        "<a href='https://kiem1ty.metric.vn/' style='color: #E85912'>“Kiếm 1 tỷ ngay trong Tháng 12”</a>",
     icon: "Coin"
   },
   analysis: {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const redirectToGoogleDoc = () => {
-  window.location.href = 'https://docs.google.com/document/d/1rXu1RykUpWYDEX69M4-3A2YNnjNi-Lw5tFvTt9U_PLw';
+  window.location.href = 'https://kiem1ty.metric.vn/';
 };
 </script>
 
