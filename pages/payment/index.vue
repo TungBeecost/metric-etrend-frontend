@@ -77,8 +77,7 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
     const currentPlan = plan.value;
 
     if (currentPlan) {
-      const itemCode = `${currentPlan.plan_code}__6m`;
-      try {
+      const itemCode = currentPlan.plan_code === 'eReport12' ? `${currentPlan.plan_code}__12m` : `${currentPlan.plan_code}__6m`;      try {
         let transactionResult = null;
         if (information.value.emailAccount) {
           transactionResult = await createPaymentTransactionGuest(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
