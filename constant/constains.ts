@@ -451,54 +451,54 @@ export const WALLET: Array<IWALLET> = [
     code: "momo",
     label: "Momo",
     name: "Ví Momo",
-    thumbnail: "/images/wallet/momo.png"
+    thumbnail: "/ereport/images/wallet/momo.png"
   },
   {
     code: "vnpay",
     label: "VnPay",
     name: "VNPay QR",
-    thumbnail: "/images/wallet/vnpay.png"
+    thumbnail: "/ereport/images/wallet/vnpay.png"
   }
 ];
 
 export const TESTIMONIAL_BRANDS = [
-  "/images/brand_news/Cafef.png",
-  "/images/brand_news/Dan-tri.png",
-  "/images/brand_news/Dau-tu-online.png",
-  "/images/brand_news/Deal-Street-ASIA.png",
-  "/images/brand_news/Dien-dan-doanh-nghiep.png",
-  "/images/brand_news/Kinh-te-SG-online.png",
-  "/images/brand_news/Phap-luat-07.png",
-  "/images/brand_news/Thanh-nien.png",
-  "/images/brand_news/Thoi-bao-tai-chinh.png",
-  "/images/brand_news/Tien-phong.png",
-  "/images/brand_news/Truyen-hinh-quoc-hoi-vn.png",
-  "/images/brand_news/Vietnam-net.png",
-  "/images/brand_news/Vn-Economy.png",
-  "/images/brand_news/Vn-Express.png",
-  "/images/brand_news/VTC-2.png",
-  "/images/brand_news/VTV.png"
+  "/ereport/images/brand_news/Cafef.png",
+  "/ereport/images/brand_news/Dan-tri.png",
+  "/ereport/images/brand_news/Dau-tu-online.png",
+  "/ereport/images/brand_news/Deal-Street-ASIA.png",
+  "/ereport/images/brand_news/Dien-dan-doanh-nghiep.png",
+  "/ereport/images/brand_news/Kinh-te-SG-online.png",
+  "/ereport/images/brand_news/Phap-luat-07.png",
+  "/ereport/images/brand_news/Thanh-nien.png",
+  "/ereport/images/brand_news/Thoi-bao-tai-chinh.png",
+  "/ereport/images/brand_news/Tien-phong.png",
+  "/ereport/images/brand_news/Truyen-hinh-quoc-hoi-vn.png",
+  "/ereport/images/brand_news/Vietnam-net.png",
+  "/ereport/images/brand_news/Vn-Economy.png",
+  "/ereport/images/brand_news/Vn-Express.png",
+  "/ereport/images/brand_news/VTC-2.png",
+  "/ereport/images/brand_news/VTV.png"
 ];
 
 export const PARTERS = [
-  "/images/brand/1.Logo_Bộ_Thông_tin_và_Truyền_thông.svg.png",
-  "/images/brand/2.Idea.png",
-  "/images/brand/3.Ecomviet.png",
-  "/images/brand/4vecom.png",
-  "/images/brand/5.Shopee.png",
-  "/images/brand/6.logo-lazada-1.png",
-  "/images/brand/7.Tiktok.png",
-  "/images/brand/8.tiki.png",
-  "/images/brand/9.unilever.png",
-  "/images/brand/10.AMOREPACIFIC_logo.svg.png",
-  "/images/brand/11.Coway.png",
-  "/images/brand/12.Novaon.png",
-  "/images/brand/13.DKSH.png",
-  "/images/brand/14.Thegioididong.png",
-  "/images/brand/15.Guardian.png",
-  "/images/brand/16.Shisedo.png",
-  "/images/brand/17.Canifa.png",
-  "/images/brand/18.Thiênlong.png",
+  "/ereport/images/brand/1.Logo_Bộ_Thông_tin_và_Truyền_thông.svg.png",
+  "/ereport/images/brand/2.Idea.png",
+  "/ereport/images/brand/3.Ecomviet.png",
+  "/ereport/images/brand/4vecom.png",
+  "/ereport/images/brand/5.Shopee.png",
+  "/ereport/images/brand/6.logo-lazada-1.png",
+  "/ereport/images/brand/7.Tiktok.png",
+  "/ereport/images/brand/8.tiki.png",
+  "/ereport/images/brand/9.unilever.png",
+  "/ereport/images/brand/10.AMOREPACIFIC_logo.svg.png",
+  "/ereport/images/brand/11.Coway.png",
+  "/ereport/images/brand/12.Novaon.png",
+  "/ereport/images/brand/13.DKSH.png",
+  "/ereport/images/brand/14.Thegioididong.png",
+  "/ereport/images/brand/15.Guardian.png",
+  "/ereport/images/brand/16.Shisedo.png",
+  "/ereport/images/brand/17.Canifa.png",
+  "/ereport/images/brand/18.Thiênlong.png",
 ];
 
 export const TERM_AND_POLICIES = [
