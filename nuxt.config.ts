@@ -2,15 +2,15 @@ export default defineNuxtConfig({
     ssr: process.env.SSR === 'true', // Bật chế độ SSR\
     app: {
         buildAssetsDir: '/ereport_nuxt/',
-        baseURL:  process.env.BASE_PATH || '/',
+        baseURL: process.env.BASE_PATH || '/',
         head: {
             // title: "eReport - Kho báo cáo Ecommerce toàn diện",
             htmlAttrs: {
                 lang: "vi",
             },
             meta: [
-                { charset: "utf-8" },
-                { name: "viewport", content: "width=device-width, initial-scale=1" },
+                {charset: "utf-8"},
+                {name: "viewport", content: "width=device-width, initial-scale=1"},
                 {
                     hid: "description",
                     name: "description",
@@ -22,8 +22,8 @@ export default defineNuxtConfig({
                     property: "og:image",
                     content: "https://lh3.googleusercontent.com/pw/AP1GczMTZp0lf_VW7W_Y6n3qg602m-LlqfpCIeVX_i4D3pnqT6FiloK5hY86XfTsqVHd4xRRs9tSKppP6FZdEPWO_V8D_UEsfj8KEnChoiU7zyiwDlHzZaTeAePmGxcqzG98qDJ9bahok5MhwtDzp3EKTiI_=w1600-h900-s-no-gm?authuser=0",
                 },
-                { name: "google-site-verification", content: "-A5h4Bx3cBpC9vnJxfRvxvegNFZgMorMQlE6M76uLbc" },
-                { name: "zalo-platform-site-verification", content: "N8Qw0ApqOJbHzja6h_fi0bwDtIIo-mrwD3arc" },
+                {name: "google-site-verification", content: "-A5h4Bx3cBpC9vnJxfRvxvegNFZgMorMQlE6M76uLbc"},
+                {name: "zalo-platform-site-verification", content: "N8Qw0ApqOJbHzja6h_fi0bwDtIIo-mrwD3arc"},
             ],
             link: [
                 {
@@ -65,12 +65,12 @@ export default defineNuxtConfig({
 
     $production: {
         routeRules: {
-            "/**": { ssr: true },
+            "/**": {ssr: true},
         },
     },
 
     $development: {
-        devtools: { enabled: true },
+        devtools: {enabled: true},
     },
 
     runtimeConfig: {
@@ -101,11 +101,11 @@ export default defineNuxtConfig({
             ssr: false,
         },
         {
-            src:   "~/plugins/gtm-tracking.js",
+            src: "~/plugins/gtm-tracking.js",
             ssr: true,
         },
         {
-            src:  "~/plugins/nuxt-gtm.js",
+            src: "~/plugins/nuxt-gtm.js",
             ssr: true,
         },
     ],
