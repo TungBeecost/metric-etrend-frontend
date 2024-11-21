@@ -101,6 +101,10 @@ const handlePagePDF = (page: number) => {
 };
 
 onMounted(async () => {
+  if (!currentUserStore.authenticated) {
+    currentUserStore.setShowPopupLogin(true);
+    return;
+  }
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('history')) {
     activeKey.value = '1';
