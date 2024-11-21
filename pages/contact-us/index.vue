@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-metric">
     <div class="section bannerSection">
       <div class="background">
         <div class="left" />

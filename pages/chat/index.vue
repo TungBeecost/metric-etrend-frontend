@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-metric">
     <div class="chat-container">
 
       <div class="chat-messages">
@@ -147,7 +147,7 @@ const sendMessage = async () => {
 </script>
 
 <style lang="scss" scoped>
-.container {
+.container-metric {
   max-width: 1400px;
   margin: 0 auto;
 }

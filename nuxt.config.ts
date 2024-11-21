@@ -114,6 +114,7 @@ export default defineNuxtConfig({
         "~/assets/reset.css",
         "~/assets/antd.css",
         "~/assets/variables.less",
+        // "~/assets/tailwind.less",
         // "normalize.css",
     ],
 
@@ -133,6 +134,7 @@ export default defineNuxtConfig({
     },
 
     modules: [
+        '@nuxt/ui',
         "@nuxt/eslint",//use
         "@nuxt/test-utils/module",
         "@nuxtjs/device",
@@ -152,6 +154,9 @@ export default defineNuxtConfig({
 
     gtm: {
         id: 'GTM-522F9NZ',
+    },
+    colorMode: {
+        preference: 'light'
     },
 
     // site: {
