@@ -31,7 +31,7 @@
 
       <div>
         <div class="text-sm text-gray-600 mb-2 font-bold">Gợi ý câu hỏi:</div>
-        <div class="inline-flex space-x-3 items-start overflow-x-auto">
+        <div class="inline-flex space-x-3 items-start overflow-x-auto overflow-hidden w-full">
           <UButton
               :disabled="isTyping"
               v-for="question in lstSuggestion"
