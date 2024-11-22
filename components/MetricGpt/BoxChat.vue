@@ -39,7 +39,7 @@
 
       </div>
       <UDivider class="my-4" size="2xs"/>
-      <div class="" v-if="!isTyping">
+      <div class="" v-if="!isTyping && lstSuggestion?.length > 0">
         <div class="text-sm text-gray-800 mb-2">Gợi ý câu hỏi:</div>
         <div class="inline-flex space-x-3 flex-wrap items-start">
           <UButton v-for="question in lstSuggestion" :key="question" color="blue" variant="outline" class="mb-2"
