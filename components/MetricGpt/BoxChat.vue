@@ -1,21 +1,15 @@
 <template>
   <div class="">
     <div class="bg-white rounded-lg shadow-md p-4">
-      <!-- Chat Header -->
-<!--      <div class="flex items-center">-->
-<!--        <div class="ml-3">-->
-<!--          <p class="text-xl font-medium">Metric GPT</p>-->
-<!--          &lt;!&ndash;              <p class="text-gray-500 mt-1">Hỏi về báo cáo Kem dưỡng ẩm</p>&ndash;&gt;-->
-<!--        </div>-->
-<!--      </div>-->
-      <!--          <UDivider class="my-3" size="2xs" />-->
-
       <!-- Chat Messages -->
-      <div class="space-y-4 mt-4 height_box_chat">
+      <div
+          class="space-y-4 mt-4 height_box_chat"
+          :class="fullScreen ? 'full-screen-chat' : ''"
+          :style="{ height: fullScreen ? 'calc(100vh - 400px)' : '300px' }"
+      >
         <div class="" v-for="item in messages" :key="item.id">
           <div v-if="item.sender === 'bot'" class="flex items-start">
             <NuxtImg src="/images/logo-square.svg" alt="MetricGPT" class="w-8 h-8 rounded-full"/>
-
             <div class="ml-3 bg-gray-100 p-3 rounded-lg inline-flex items-end">
               <div class="text-sm text-gray-800 prose" v-html="micromark(item.text)"></div>
             </div>
@@ -25,29 +19,33 @@
             <div class="bg-blue-500 p-3 rounded-lg">
               <div class="text-sm text-white prose" v-html="micromark(item.text)"></div>
             </div>
-            <!--                              <img src="https://pbs.twimg.com/profile_images/1707101905111990272/Z66vixO-_normal.jpg"-->
-            <!--                                   alt="Other User Avatar" class="w-8 h-8 rounded-full ml-3"/>-->
           </div>
 
         </div>
         <div class="flex space-x-1 ml-6" v-if="isTyping">
           <span v-for="dot in 3" :key="dot" class="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></span>
         </div>
-
       </div>
+
       <UDivider class="my-4" size="2xs"/>
-      <div class="" v-if="!isTyping && lstSuggestion?.length > 0">
+
+      <div v-if="!isTyping && lstSuggestion?.length > 0">
         <div class="text-sm text-gray-600 mb-2 font-bold">Gợi ý câu hỏi:</div>
         <div class="inline-flex space-x-3 flex-wrap items-start">
-          <UButton v-for="question in lstSuggestion" :key="question" color="blue" variant="outline" class="mb-2"
-                   @click="onClickSuggestion(question)">{{ question }}
+          <UButton
+              v-for="question in lstSuggestion"
+              :key="question"
+              color="blue"
+              variant="outline"
+              class="mb-2"
+              @click="onClickSuggestion(question)"
+          >
+            {{ question }}
           </UButton>
         </div>
-
       </div>
-      <!-- Chat Input -->
+
       <div class="mt-4 flex items-start space-x-3">
-        <!--            @keyup.enter="sendMessage"-->
         <UTextarea
             v-model="inputMessage"
             @keydown.enter.exact.prevent="sendMessage"
@@ -72,7 +70,6 @@
             :trailing="false"
             @click="sendMessage"
         />
-
       </div>
     </div>
   </div>
@@ -87,6 +84,9 @@ const props = defineProps({
   },
   id: {
     type: Number,
+  },
+  fullScreen: {
+    type: Boolean,
   },
 });
 
@@ -132,7 +132,6 @@ const updateBotMessage = (text, isComplete) => {
     } else {
       messages.value.push({id: Date.now(), text, sender: "bot", complete: true});
     }
-
   } else {
     const botMessage = messages.value.find((msg) => msg.sender === "bot" && !msg.complete);
     if (botMessage) {
@@ -146,7 +145,6 @@ const updateBotMessage = (text, isComplete) => {
 // Hàm xử lý streaming từ API
 const invokeMetricGPT = async (lstChatHistory = null) => {
   isTyping.value = true;
-  // console.log(lstChatHistory)
   const options = {
     method: "POST",
     headers: {
@@ -167,53 +165,40 @@ const invokeMetricGPT = async (lstChatHistory = null) => {
     // const urlApi = "http://localhost:8000/chat";
     const urlApi = `${config.public.API_ENDPOINT}/api/metricgpt/chat`;
     const response = await $fetch(urlApi, options);
-    // console.log(`prepare to read stream ${response}`);
-    // Xử lý stream từ API
     const reader = response.pipeThrough(new TextDecoderStream()).getReader();
 
     let botMessage = "";
     while (true) {
       const {done, value} = await reader.read();
-      if (done) {
-        // console.log("Stream done");
-        break
-      }
-      // chunk message by pattern data: json
-      console.log(`value: ${value}`)
+      if (done) break;
       const chunks = value.trim().split("\n");
       for (const chunk of chunks) {
-        // console.log(`chunk: ${chunk}`);
         if (chunk.startsWith("data:")) {
-          // console.log(chunk.slice(5).trim());
-          const data = JSON.parse(chunk.slice(5).trim()); // Bỏ prefix "data:"
+          const data = JSON.parse(chunk.slice(5).trim());
           if (data !== null) {
             const {event, chunk_message, output_message} = data;
-            // console.log(`${event}`);
             if (event === 'on_chat_model_stream') {
-              // console.log(chunk_message);
               botMessage += chunk_message;
-              updateBotMessage(botMessage, false)
+              updateBotMessage(botMessage, false);
             } else if (event === 'on_chat_model_end') {
               botMessage = output_message || botMessage;
-              updateBotMessage(botMessage, true)
+              updateBotMessage(botMessage, true);
               isTyping.value = false;
-              // console.log(output_message);
-              break
+              break;
             }
           }
         }
       }
     }
   } catch (error) {
-    // todo: handle error not update bot message
     console.error("Error invoking Metric GPT:", error);
-    updateBotMessage("Lỗi khi gọi API. Vui lòng thử lại.", true)
+    updateBotMessage("Lỗi khi gọi API. Vui lòng thử lại.", true);
     isTyping.value = false;
   }
 };
 
 const sendMessage = async () => {
-  const text = inputMessage.value
+  const text = inputMessage.value;
   if (text) {
     inputMessage.value = '';
     await sendQuestion(text);
@@ -222,7 +207,7 @@ const sendMessage = async () => {
 
 const sendQuestion = async (text) => {
   messages.value.push({id: Date.now(), text: text, sender: 'user'});
-  let lstChatHistory = []
+  let lstChatHistory = [];
   for (let i = 1; i < messages.value.length; i++) {
     const message = messages.value[i];
     if (message.sender === 'user') {
@@ -237,13 +222,12 @@ const sendQuestion = async (text) => {
 
 const onClickSuggestion = async (question) => {
   lstSuggestionClicked.value.push(question);
-  // console.log(lstSuggestionClicked.value)
   await sendQuestion(question);
 }
-
 </script>
 
-<style lang="scss" scoped>
+
+<style scoped lang="scss">
 .container-metric {
   max-width: 1400px;
   margin: 0 auto;
@@ -271,7 +255,6 @@ const onClickSuggestion = async (question) => {
 
 .chat-message {
   display: flex;
-
 }
 
 .bot-message {
@@ -283,8 +266,6 @@ const onClickSuggestion = async (question) => {
   padding-right: 8px;
   border-radius: 4px;
   margin-bottom: 8px;
-  word-wrap: break-word;
-  //white-space: pre-wrap;
 }
 
 .user-message {
@@ -297,11 +278,15 @@ const onClickSuggestion = async (question) => {
   padding-right: 8px;
   border-radius: 4px;
   margin-bottom: 8px;
-  word-wrap: break-word;
-  //white-space: pre-wrap;
 }
 
+.height_box_chat {
+  height: 300px;
+  overflow-y: auto;
+  transition: height 0.3s ease;
+}
 </style>
+
 
 <style lang="scss">
 .md-gpt {
@@ -369,9 +354,8 @@ const onClickSuggestion = async (question) => {
 }
 
 .height_box_chat{
-
-  //height: 300px;
   height: max(300px, calc(80vh - 250px));
+  //height: 300px;
   overflow-y: auto;
 }
 </style>
