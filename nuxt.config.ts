@@ -158,7 +158,6 @@ export default defineNuxtConfig({
     colorMode: {
         preference: 'light'
     },
-
     // site: {
     //     url: 'https://ereport.staging.muadee.vn',
     //     name: 'eReport',

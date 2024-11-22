@@ -1,43 +1,141 @@
 <template>
-  <div class="container-metric">
-    <div class="chat-container">
+  <div class="">
+    <div class="">
+      <div class="max-w-lg mx-auto p-4">
+        <!-- Chat Container -->
+        <div class="bg-white rounded-lg shadow-md p-4">
+          <!-- Chat Header -->
+          <div class="flex items-center">
+            <div class="ml-3">
+              <p class="text-xl font-medium">Metric GPT</p>
+              <!--              <p class="text-gray-500 mt-1">Hỏi về báo cáo Kem dưỡng ẩm</p>-->
+            </div>
+          </div>
+          <!--          <UDivider class="my-3" size="2xs" />-->
 
-      <div class="chat-messages">
-        <div v-for="item in messages" :key="item.id" :class="item.sender === 'bot' ? 'bot-message' : 'user-message'">
-          <div :class="item.sender === 'bot' ? 'bot-content' : 'user-content'">
-            <div class="md-gpt" v-html="micromark(item.text)"></div>
+          <!-- Chat Messages -->
+          <div class="space-y-4 mt-4">
+            <div class="" v-for="item in messages" :key="item.id">
+              <div v-if="item.sender === 'bot'" class="flex items-start">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 100 100"
+                    width="100"
+                    height="100"
+                    fill="#009688"
+                    class="w-8 h-8 rounded-full"
+                >
+
+                  <!-- Robot Face -->
+                  <circle cx="50" cy="50" r="20" fill="#009688"/>
+                  <circle cx="50" cy="40" r="2" fill="#fff"/>
+                  <rect x="47" y="45" width="6" height="10" fill="#fff"/>
+                  <circle cx="50" cy="65" r="3" fill="#009688"/>
+
+                  <!-- Robot Eyes -->
+                  <circle cx="45" cy="45" r="3" fill="#fff"/>
+                  <circle cx="55" cy="45" r="3" fill="#fff"/>
+                  <circle cx="45" cy="45" r="1" fill="#000"/>
+                  <circle cx="55" cy="45" r="1" fill="#000"/>
+
+                  <!-- Robot Antennas -->
+                  <line x1="50" y1="30" x2="40" y2="20" stroke="#009688" stroke-width="2"/>
+                  <line x1="50" y1="30" x2="60" y2="20" stroke="#009688" stroke-width="2"/>
+                </svg>
+                <div class="ml-3 bg-gray-100 p-3 rounded-lg inline-flex items-end">
+                  <div class="text-sm text-gray-800 prose" v-html="micromark(item.text)"></div>
+                </div>
+              </div>
+
+              <div v-else-if="item.sender === 'user'" class="flex items-end justify-end">
+                <div class="bg-blue-500 p-3 rounded-lg">
+                  <div class="text-sm text-white prose" v-html="micromark(item.text)"></div>
+                </div>
+                <!--                              <img src="https://pbs.twimg.com/profile_images/1707101905111990272/Z66vixO-_normal.jpg"-->
+                <!--                                   alt="Other User Avatar" class="w-8 h-8 rounded-full ml-3"/>-->
+              </div>
+
+            </div>
+            <div class="flex space-x-1 ml-6" v-if="isTyping">
+              <span v-for="dot in 3" :key="dot" class="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></span>
+            </div>
+
+          </div>
+          <UDivider class="my-4" size="2xs"/>
+          <div class="" v-if="!isTyping">
+            <div class="text-sm text-gray-800 mb-2">Gợi ý câu hỏi:</div>
+            <div class="inline-flex space-x-3 flex-wrap items-start">
+              <UButton v-for="question in lstSuggestion" :key="question" color="blue" variant="outline" class="mb-2"
+                       @click="onClickSuggestion(question)">{{ question }}
+              </UButton>
+            </div>
+
+          </div>
+          <!-- Chat Input -->
+          <div class="mt-4 flex items-start space-x-3">
+            <!--            @keyup.enter="sendMessage"-->
+            <UTextarea
+                v-model="inputMessage"
+                @keydown.enter.exact.prevent="sendMessage"
+                size="lg"
+                variant="none"
+                type="text"
+                :rows="1"
+                :maxrows="5"
+                autoresize
+                placeholder="Đặt câu hỏi cho Metric GPT"
+                class="flex-1 py-2 px-3 rounded-lg bg-gray-100 focus:outline-none"
+            />
+
+            <UButton
+                icon="i-material-symbols-send"
+                size="lg"
+                color="primary"
+                variant="solid"
+                label="Gửi"
+                :trailing="false"
+                @click="sendMessage"
+            />
+
           </div>
         </div>
       </div>
-
-      <a-input
-          v-model:value="inputMessage"
-          @pressEnter="sendMessage"
-          placeholder="Đặt câu hỏi cho Metric GPT"
-      />
     </div>
+
   </div>
 </template>
 
 <script setup>
 import {micromark} from 'micromark'
 
-const reportName = 'Kem dưỡng ẩm';
-const messages = ref([
+const reportName = 'Nồi chiên không dầu';
+const reportId = 4008;
+let messages = ref([
   {
     id: 1,
     text: `Xin chào, Metric GPT mời bạn đặt câu hỏi về báo cáo thị trường ${reportName}?`,
-    // text: `Thị trường kem dưỡng ẩm tại Việt Nam đang phát triển mạnh mẽ, song song với sự gia tăng nhận thức về chăm sóc da và sự bùng nổ của thương mại điện tử.  Để có cái nhìn tổng quan, chúng ta cần phân tích theo nhiều khía cạnh:\n\n**1. Phân khúc thị trường:**\n\n* **Theo giá:** Thị trường có sự phân chia rõ rệt giữa các sản phẩm bình dân, tầm trung và cao cấp.  Mỗi phân khúc nhắm đến nhóm khách hàng khác nhau với nhu cầu và khả năng chi trả khác nhau.  Phân khúc bình dân có sức cạnh tranh cao, trong khi phân khúc cao cấp tập trung vào chất lượng và thành phần đặc biệt.\n* **Theo loại da:** Kem dưỡng ẩm được phân loại theo từng loại da: da khô, da dầu, da hỗn hợp, da nhạy cảm.  Sự đa dạng này đáp ứng nhu cầu cá nhân hóa ngày càng cao của người tiêu dùng.\n* **Theo chức năng:** Ngoài chức năng dưỡng ẩm cơ bản, kem dưỡng ẩm còn được bổ sung thêm nhiều chức năng khác như chống lão hóa, làm trắng da, trị mụn, chống nắng…  Sự kết hợp nhiều chức năng trong một sản phẩm đang là xu hướng.\n* **Theo thương hiệu:** Thị trường có sự hiện diện của cả thương hiệu nội địa và quốc tế. Thương hiệu quốc tế thường chiếm lĩnh phân khúc cao cấp với công nghệ và chất lượng được đánh giá cao, trong khi thương hiệu nội địa đang dần khẳng định vị thế với giá cả cạnh tranh và hiểu biết sâu sắc về làn da người Việt.\n* **Theo kênh phân phối:**  Kênh phân phối chính là các cửa hàng mỹ phẩm, siêu thị, cửa hàng tiện lợi và đặc biệt là thương mại điện tử (Shopee, Lazada, Tiki...).  Thương mại điện tử đang đóng vai trò ngày càng quan trọng trong việc tiếp cận khách hàng và thúc đẩy doanh số.\n\n\n**2. Xu hướng thị trường:**\n\n* **Nhận thức về chăm sóc da tăng cao:** Người tiêu dùng ngày càng quan tâm đến việc chăm sóc da và sẵn sàng đầu tư vào các sản phẩm chất lượng cao.\n* **Cá nhân hóa sản phẩm:**  Xu hướng cá nhân hóa sản phẩm đang ngày càng được chú trọng.  Các sản phẩm được thiết kế riêng cho từng loại da và nhu cầu cụ thể.\n* **Thành phần tự nhiên và hữu cơ:**  Người tiêu dùng ngày càng ưa chuộng các sản phẩm có thành phần tự nhiên và hữu cơ, an toàn cho da và môi trường.\n* **Sự phát triển của thương mại điện tử:**  Thương mại điện tử đóng vai trò quan trọng trong việc phân phối và tiếp cận khách hàng.\n* **Marketing online:** Các chiến dịch marketing online như quảng cáo trên mạng xã hội, influencer marketing đang được các thương hiệu sử dụng rộng rãi.\n\n\n**3. Thách thức thị trường:**\n\n* **Cạnh tranh khốc liệt:** Thị trường kem dưỡng ẩm có tính cạnh tranh rất cao, đặc biệt là ở phân khúc bình dân.\n* **Hàng giả, hàng nhái:**  Việc kiểm soát hàng giả, hàng nhái trên thị trường vẫn là một thách thức lớn.\n* **Thay đổi xu hướng nhanh chóng:**  Người tiêu dùng dễ bị ảnh hưởng bởi các xu hướng mới, đòi hỏi các thương hiệu phải liên tục đổi mới sản phẩm và chiến lược.\n\n\n**4.  Dữ liệu cần thiết để phân tích sâu hơn:**\n\nĐể có phân tích chi tiết hơn, cần có dữ liệu về:\n\n* Doanh số bán hàng của các sản phẩm kem dưỡng ẩm theo từng phân khúc.\n* Thị phần của các thương hiệu kem dưỡng ẩm.\n* Xu hướng tìm kiếm sản phẩm kem dưỡng ẩm trên các công cụ tìm kiếm.\n* Phản hồi của khách hàng về các sản phẩm kem dưỡng ẩm trên các trang thương mại điện tử.\n* Chi phí quảng cáo và marketing của các thương hiệu kem dưỡng ẩm.\n\n\n**Kết luận:**\n\nThị trường kem dưỡng ẩm tại Việt Nam đang phát triển mạnh mẽ với nhiều cơ hội và thách thức.  Việc hiểu rõ phân khúc thị trường, xu hướng tiêu dùng và cạnh tranh là rất quan trọng đối với các doanh nghiệp hoạt động trong lĩnh vực này.  Để có phân tích chi tiết hơn, cần thu thập và phân tích dữ liệu cụ thể hơn.\n`,
     sender: 'bot',
     complete: true
   },
 ]);
-// console.log(micromark('**Hello**'))
 const isTyping = ref(false);
 const inputMessage = ref('');
 
-const data = ref([]);
-const error = ref(null);
+const lstSuggestionAll = [
+  'Đánh giá tổng quan thị trường',
+  'Quy mô sàn Shopee, Tiktok',
+  'Phân khúc giá phổ biến',
+  'Top 5 thương hiệu bán chạy',
+  'Top 5 thương hiệu trên TikTok',
+  'Top 5 sản phẩm bán chạy',
+  'Phân tích insight khách hàng',
+  'Phân nhóm khách hàng phù hợp',
+  'Chiến lược marketing hiệu quả',
+  'Các chủ đề nội dung phù hợp để trên Tiktok',
+]
+const lstSuggestionClicked = ref([])
+
+const lstSuggestion = computed(() => lstSuggestionAll.filter((question) => !lstSuggestionClicked.value.includes(question)).slice(0, 2))
 
 
 // Hàm cập nhật giao diện theo từng chunk
@@ -65,23 +163,28 @@ const updateBotMessage = (text, isComplete) => {
 // Hàm xử lý streaming từ API
 const invokeMetricGPT = async (lstChatHistory = null) => {
   isTyping.value = true;
-  console.log(lstChatHistory)
+  // console.log(lstChatHistory)
   const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Accept: "text/event-stream",
+      "transfer-encoding": "chunked",
+      "Accept": "text/event-stream",
     },
     body: {
       thread_id: "test-kem-duong-am",
-      // query: query,
       lst_chat_history: lstChatHistory,
+      report_id: reportId
     },
     responseType: "stream",
   };
 
   try {
-    const response = await $fetch("http://localhost:8000/chat", options);
+    // const urlApi = "http://localhost:8000/api/metricgpt/chat";
+    // const urlApi = "http://localhost:8000/chat";
+    const urlApi = "https://api-ereport.staging.muadee.vn/api/metricgpt/chat";
+    const response = await $fetch(urlApi, options);
+    // console.log(`prepare to read stream ${response}`);
     // Xử lý stream từ API
     const reader = response.pipeThrough(new TextDecoderStream()).getReader();
 
@@ -89,20 +192,20 @@ const invokeMetricGPT = async (lstChatHistory = null) => {
     while (true) {
       const {done, value} = await reader.read();
       if (done) {
-        console.log("Stream done");
+        // console.log("Stream done");
         break
       }
       // chunk message by pattern data: json
-
+      console.log(`value: ${value}`)
       const chunks = value.trim().split("\n");
       for (const chunk of chunks) {
-        // console.log(chunk);
+        // console.log(`chunk: ${chunk}`);
         if (chunk.startsWith("data:")) {
-          console.log(chunk.slice(5).trim());
+          // console.log(chunk.slice(5).trim());
           const data = JSON.parse(chunk.slice(5).trim()); // Bỏ prefix "data:"
           if (data !== null) {
             const {event, chunk_message, output_message} = data;
-            // console.log(event);
+            // console.log(`${event}`);
             if (event === 'on_chat_model_stream') {
               // console.log(chunk_message);
               botMessage += chunk_message;
@@ -110,7 +213,7 @@ const invokeMetricGPT = async (lstChatHistory = null) => {
             } else if (event === 'on_chat_model_end') {
               botMessage = output_message || botMessage;
               updateBotMessage(botMessage, true)
-              isTyping.value = true;
+              isTyping.value = false;
               // console.log(output_message);
               break
             }
@@ -122,28 +225,39 @@ const invokeMetricGPT = async (lstChatHistory = null) => {
     // todo: handle error not update bot message
     console.error("Error invoking Metric GPT:", error);
     updateBotMessage("Lỗi khi gọi API. Vui lòng thử lại.", true)
-    isTyping.value = true;
+    isTyping.value = false;
   }
 };
 
 const sendMessage = async () => {
-
-  if (inputMessage.value.trim()) {
-    messages.value.push({id: Date.now(), text: inputMessage.value.trim(), sender: 'user'});
+  const text = inputMessage.value
+  if (text) {
     inputMessage.value = '';
-    let lstChatHistory = []
-    for (let i = 1; i < messages.value.length; i++) {
-      const message = messages.value[i];
-      if (message.sender === 'user') {
-        lstChatHistory.push({sender: 'user', text: message.text});
-      } else {
-        lstChatHistory.push({sender: 'bot', text: message.text});
-      }
-    }
-
-    await invokeMetricGPT(lstChatHistory);
+    await sendQuestion(text);
   }
 };
+
+const sendQuestion = async (text) => {
+  messages.value.push({id: Date.now(), text: text, sender: 'user'});
+  let lstChatHistory = []
+  for (let i = 1; i < messages.value.length; i++) {
+    const message = messages.value[i];
+    if (message.sender === 'user') {
+      lstChatHistory.push({sender: 'user', text: message.text});
+    } else {
+      lstChatHistory.push({sender: 'bot', text: message.text});
+    }
+  }
+
+  await invokeMetricGPT(lstChatHistory);
+}
+
+const onClickSuggestion = async (question) => {
+  lstSuggestionClicked.value.push(question);
+  // console.log(lstSuggestionClicked.value)
+  await sendQuestion(question);
+}
+
 </script>
 
 <style lang="scss" scoped>
