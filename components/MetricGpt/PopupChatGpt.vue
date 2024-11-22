@@ -33,18 +33,10 @@ onBeforeRouteLeave(() => {
       <div class="notification-content">
         <div class="notification-header">
           <img src="/images/Logo-black.svg" alt="MetricGPT" class="w-48"/>
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"
-               style="cursor: pointer;" @click="closeNotification">
-            <rect width="40" height="40" rx="20" fill="#FAF9FF"/>
-            <g clip-path="url(#clip0_6821_308869)">
-              <path d="M11.75 20H28.25" stroke="black" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-            </g>
-            <defs>
-              <clipPath id="clip0_6821_308869">
-                <rect width="24" height="24" fill="white" transform="translate(8 8)"/>
-              </clipPath>
-            </defs>
-          </svg>
+          <div class="icon_chat_box flex space-x-3">
+            <UIcon name="i-material-symbols-pan-zoom" class="w-5 h-5 hover:text-primary hover:ring-1 hover:rounded-full hover:ring-primary/50" />
+            <UIcon name="ic-outline-minus" class="w-5 h-5" @click="closeNotification"/>
+          </div>
         </div>
         <metric-gpt-box-chat
           :name="props?.name"
