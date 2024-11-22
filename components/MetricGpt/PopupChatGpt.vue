@@ -95,7 +95,7 @@ onBeforeRouteLeave(() => {
   position: fixed;
   bottom: 0;
   right: 0;
-  width: 100%;
+  width: min(100%, 1000px);
   height: calc(100vh - 80px);
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);

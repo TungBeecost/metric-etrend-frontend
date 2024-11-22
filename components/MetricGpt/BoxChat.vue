@@ -11,13 +11,13 @@
           <div v-if="item.sender === 'bot'" class="flex items-start">
             <NuxtImg src="/images/logo-square.svg" alt="MetricGPT" class="w-8 h-8 rounded-full"/>
             <div class="ml-3 bg-gray-100 p-3 rounded-lg inline-flex items-end">
-              <div class="text-sm text-gray-800 prose" v-html="micromark(item.text)"></div>
+              <div class="text-sm text-gray-800 prose max-ch-80" v-html="micromark(item.text)"></div>
             </div>
           </div>
 
           <div v-else-if="item.sender === 'user'" class="flex items-end justify-end">
             <div class="bg-blue-500 p-3 rounded-lg">
-              <div class="text-sm text-white prose" v-html="micromark(item.text)"></div>
+              <div class="text-sm text-white prose max-ch-80" v-html="micromark(item.text)"></div>
             </div>
           </div>
 
@@ -29,10 +29,11 @@
 
       <UDivider class="my-4" size="2xs"/>
 
-      <div v-if="!isTyping && lstSuggestion?.length > 0">
+      <div>
         <div class="text-sm text-gray-600 mb-2 font-bold">Gợi ý câu hỏi:</div>
-        <div class="inline-flex space-x-3 flex-wrap items-start">
+        <div class="inline-flex space-x-3 items-start overflow-x-auto">
           <UButton
+              :disabled="isTyping"
               v-for="question in lstSuggestion"
               :key="question"
               color="blue"
@@ -357,5 +358,9 @@ const onClickSuggestion = async (question) => {
   height: max(300px, calc(80vh - 250px));
   //height: 300px;
   overflow-y: auto;
+}
+
+.max-ch-80{
+  max-width: 80ch;
 }
 </style>
