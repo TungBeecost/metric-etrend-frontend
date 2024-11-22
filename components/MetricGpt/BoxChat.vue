@@ -90,6 +90,7 @@ const props = defineProps({
 
 const reportName = props.name;
 const reportId = props.id;
+const config = useRuntimeConfig();
 let messages = ref([
   {
     id: 1,
@@ -162,7 +163,7 @@ const invokeMetricGPT = async (lstChatHistory = null) => {
   try {
     // const urlApi = "http://localhost:8000/api/metricgpt/chat";
     // const urlApi = "http://localhost:8000/chat";
-    const urlApi = "https://api-ereport.staging.muadee.vn/api/metricgpt/chat";
+    const urlApi = `${config.public.API_ENDPOINT}/api/metricgpt/chat`;
     const response = await $fetch(urlApi, options);
     // console.log(`prepare to read stream ${response}`);
     // Xử lý stream từ API
