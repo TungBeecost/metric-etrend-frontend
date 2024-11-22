@@ -162,9 +162,9 @@ const invokeMetricGPT = async (lstChatHistory = null) => {
   };
 
   try {
-    // const urlApi = "http://localhost:8000/api/metricgpt/chat";
+    const urlApi = "http://localhost:8000/api/metricgpt/chat";
     // const urlApi = "http://localhost:8000/chat";
-    const urlApi = `${config.public.API_ENDPOINT}/api/metricgpt/chat`;
+    // const urlApi = `${config.public.API_ENDPOINT}/api/metricgpt/chat`;
     const response = await $fetch(urlApi, options);
     const reader = response.pipeThrough(new TextDecoderStream()).getReader();
 

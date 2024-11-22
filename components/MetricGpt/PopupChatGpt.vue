@@ -37,7 +37,7 @@ onBeforeRouteLeave(() => {
         <div class="icon_chat_box flex space-x-2">
           <div class="bg-gray-100 hover:bg-orange-100 hover:text-orange-600 text-gray-400 cursor-pointer rounded-full w-8 h-8 flex items-center justify-center">
             <UIcon
-                name="i-material-symbols-pan-zoom"
+                :name="fullScreen ? 'mdi-arrow-collapse' : 'i-material-symbols-pan-zoom'"
                 @click="handleFullScreen"
                 class="w-5 h-5"
                 aria-label="Toggle Full Screen"
