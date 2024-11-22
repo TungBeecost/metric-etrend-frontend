@@ -51,6 +51,7 @@
         <UTextarea
             v-model="inputMessage"
             @keydown.enter.exact.prevent="sendMessage"
+            :disabled="isTyping"
             size="lg"
             variant="none"
             type="text"
@@ -62,6 +63,7 @@
         />
 
         <UButton
+            :disabled="isTyping"
             icon="i-material-symbols-send"
             size="lg"
             color="primary"
