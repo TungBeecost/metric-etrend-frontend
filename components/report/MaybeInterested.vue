@@ -57,7 +57,7 @@ const handleItemClick = (item: LstRecommed) => {
         <div v-if="item.url_thumbnail" class="image-metric">
           <img :src="getUrlImageThumbnail(item.url_thumbnail)" alt="">
         </div>
-        <div class="info">
+        <div class="info flex-1">
           <div class="line-clamp__1">
             <span class="report_type">
               <span v-if="item.category_report_name === null">Báo cáo Metric phát hành</span>
@@ -77,7 +77,7 @@ const handleItemClick = (item: LstRecommed) => {
         <div v-if="item.url_thumbnail" class="image-metric">
           <img :src="getUrlImageThumbnail(item.url_thumbnail)" alt="">
         </div>
-        <div class="info">
+        <div class="info flex-1">
           <div class="line-clamp__1">
             <span class="report_type">
               <span v-if="item.category_report_name === null">Báo cáo Metric phát hành</span>
