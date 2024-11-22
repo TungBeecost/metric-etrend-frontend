@@ -35,7 +35,7 @@ onBeforeRouteLeave(() => {
       <div class="chat-box-header">
         <img src="/images/logo-gpt.svg" alt="MetricGPT" class="w-32 ml-3"/>
         <div class="icon_chat_box flex space-x-2">
-          <div class="bg-gray-100 hover:bg-orange-100 hover:text-orange-600 text-gray-400 cursor-pointer rounded-full w-8 h-8 flex items-center justify-center">
+          <div class="mobile-icon-hover bg-gray-100 hover:bg-orange-100 hover:text-orange-600 text-gray-400 cursor-pointer rounded-full w-8 h-8 flex items-center justify-center sm:hover:bg">
             <UIcon
                 :name="fullScreen ? 'mdi-arrow-collapse' : 'i-material-symbols-pan-zoom'"
                 @click="handleFullScreen"
@@ -43,7 +43,7 @@ onBeforeRouteLeave(() => {
                 aria-label="Toggle Full Screen"
             />
           </div>
-          <div class="bg-gray-100 hover:bg-orange-100 hover:text-orange-600 text-gray-400 cursor-pointer rounded-full w-8 h-8 flex items-center justify-center">
+          <div class="mobile-icon-hover bg-gray-100 hover:bg-orange-100 hover:text-orange-600 text-gray-400 cursor-pointer rounded-full w-8 h-8 flex items-center justify-center">
             <UIcon
                 name="ic-outline-minus"
                 class="w-5 h-5"
@@ -158,6 +158,11 @@ onBeforeRouteLeave(() => {
     width: 95%;
     margin: 10px;
     bottom: 0;
+  }
+
+  .mobile-icon-hover {
+    background-color: #f0f0f0 !important;
+    color: #666666 !important;
   }
 }
 </style>
