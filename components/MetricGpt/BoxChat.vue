@@ -5,7 +5,7 @@
       <div
           class="space-y-4 mt-4 height_box_chat"
           :class="fullScreen ? 'full-screen-chat' : ''"
-          :style="{ height: fullScreen ? 'calc(100vh - 400px)' : '' }"
+          :style="{ height: fullScreen ? 'calc(100vh - 360px)' : '' }"
       >
         <div class="" v-for="item in messages" :key="item.id">
           <div v-if="item.sender === 'bot'" class="flex items-start">

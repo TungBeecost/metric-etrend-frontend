@@ -96,7 +96,7 @@ onBeforeRouteLeave(() => {
   bottom: 0;
   right: 0;
   width: min(100%, 1000px);
-  height: calc(100vh - 80px);
+  height: calc(100vh - 90px);
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
@@ -108,7 +108,7 @@ onBeforeRouteLeave(() => {
 
 
 .chat-box-content{
-  height: calc(100% - 60px);
+  height: calc(100%);
   overflow-y: auto;
 
 }
