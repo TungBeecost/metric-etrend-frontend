@@ -368,7 +368,8 @@ const onClickSuggestion = async (question) => {
 
 .height_box_chat{
 
-  height: 300px;
+  //height: 300px;
+  height: max(300px, calc(80vh - 250px));
   overflow-y: auto;
 }
 </style>
