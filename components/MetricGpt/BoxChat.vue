@@ -5,7 +5,7 @@
       <div
           class="space-y-4 mt-4 height_box_chat"
           :class="fullScreen ? 'full-screen-chat' : ''"
-          :style="{ height: fullScreen ? 'calc(100vh - 400px)' : '300px' }"
+          :style="{ height: fullScreen ? 'calc(100vh - 400px)' : '' }"
       >
         <div class="" v-for="item in messages" :key="item.id">
           <div v-if="item.sender === 'bot'" class="flex items-start">
@@ -282,85 +282,13 @@ const onClickSuggestion = async (question) => {
 }
 
 .height_box_chat {
-  height: 300px;
+  //height: 300px;
+  height: max(300px, calc(80vh - 250px));
   overflow-y: auto;
   transition: height 0.3s ease;
 }
-</style>
 
-
-<style lang="scss">
-.md-gpt {
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  //color: #333;
-  //background-color: #f9f9f9;
-  //padding-left: 10px;
-  //padding-right: 10px;
-  border-radius: 5px;
-
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 10px;
-  }
-
-  p {
-    margin: 10px 0;
-  }
-
-  ul, ol {
-    margin: 10px 0;
-    padding-left: 20px;
-  }
-
-  li {
-    margin-bottom: 5px;
-  }
-
-  a {
-    color: #1890ff;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  code {
-    font-family: 'Courier New', Courier, monospace;
-    background-color: #f4f4f4;
-    padding: 2px 4px;
-    border-radius: 3px;
-  }
-
-  pre {
-    background-color: #f4f4f4;
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: auto;
-  }
-
-  blockquote {
-    border-left: 4px solid #ccc;
-    padding-left: 10px;
-    color: #666;
-    margin: 10px 0;
-  }
-
-  strong {
-    font-weight: bold;
-  }
-}
-
-.height_box_chat{
-  height: max(300px, calc(80vh - 250px));
-  //height: 300px;
-  overflow-y: auto;
-}
-
-.max-ch-80{
+.max-ch-80 {
   max-width: 80ch;
 }
 </style>
