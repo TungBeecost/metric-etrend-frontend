@@ -276,7 +276,7 @@ async function handleAnalyticKeyword() {
     }
   }
 
-  .container {
+  .container-metric {
     display: flex;
     gap: 20px;
 

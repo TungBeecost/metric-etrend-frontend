@@ -107,7 +107,7 @@ onMounted(() => {
         <div style="display: flex; justify-content: space-between;width: 100%; margin-bottom: 24px;">
           <a-skeleton-input size="small" active style="width: max(30%, 300px); "/>
         </div>
-        <div class="container">
+        <div class="container-metric">
           <div class="general_overview_container" style="display: flex; width: 100%; gap: 24px">
             <div style="flex: 1; box-shadow: 0 0 0 1px #EEEBFF; padding: 24px; border-radius: 16px 0 0 16px">
               <a-skeleton active size="large"/>
@@ -140,7 +140,7 @@ onMounted(() => {
         {{ data.name }} - Báo cáo xu hướng thị trường sàn TMĐT
       </h1>
     </div>
-    <div class="container default_section" style="padding-bottom: 120px;">
+    <div class="container-metric default_section" style="padding-bottom: 120px;">
       <div class="general_overview_container">
         <client-only v-if="data">
           <PDFViewer v-model:openContactForm="openContactForm" :data="data" :is-hide-content="isHideContent"/>
@@ -388,7 +388,7 @@ onMounted(() => {
     }
   }
 
-  .container {
+  .container-metric {
     display: flex;
     gap: 20px;
 

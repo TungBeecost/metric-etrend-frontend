@@ -52,7 +52,7 @@ onMounted(() => {
     <div class="category">
       Báo cáo chi tiết
     </div>
-    <div class="container">
+    <div class="container-metric">
       <div class="title">Nhóm hàng {{reportName}}</div>
       <div v-if="numOfPages" class="page_content"><b>Trang</b>: {{ currentPage }}/{{ numOfPages }}</div>
       <div class="time">
@@ -81,7 +81,7 @@ onMounted(() => {
     color: #716B95;
   }
 
-  .container{
+  .container-metric{
     display: flex;
     gap: 24px;
     align-items: center;
@@ -118,7 +118,7 @@ onMounted(() => {
 }
 @media (max-width: 768px) {
   .header-dept-report{
-    .container{
+    .container-metric{
       .title{
         font-size: 20px;
         line-height: 28px;

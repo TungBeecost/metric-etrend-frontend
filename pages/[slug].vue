@@ -243,7 +243,7 @@ onUnmounted(() => {
           </div>
         </div>
       </div>
-      <div class="container default_section">
+      <div class="container-metric default_section">
         <div class="general_overview_container">
           <relate-report class="relate_report" :recomends="data?.listRecommend"/>
           <h2 class="title_main ">
@@ -342,7 +342,7 @@ onUnmounted(() => {
     }
   }
 
-  .container {
+  .container-metric {
     display: flex;
     gap: 20px;
 

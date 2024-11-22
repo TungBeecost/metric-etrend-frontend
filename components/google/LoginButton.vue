@@ -42,7 +42,7 @@ onMounted(() => {
         </defs>
       </svg>
     </div>
-    <div class="container">
+    <div class="container-metric">
       <div class="title_login">
         <div class="title">
           Đăng nhập
@@ -94,7 +94,7 @@ onMounted(() => {
   align-items: center;
   gap: 24px;
 
-  .container{
+  .container-metric{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -137,7 +137,7 @@ onMounted(() => {
   .login_container {
     gap: 16px;
 
-    .container {
+    .container-metric {
       gap: 16px;
 
       .title_login {

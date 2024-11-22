@@ -1,2 +1,6 @@
 // Define build time config here
-export default defineAppConfig({});
+export default defineAppConfig({
+    ui: {
+        primary: 'orange',
+    },
+});

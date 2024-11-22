@@ -240,7 +240,7 @@ onUnmounted(() => {
         <HeaderDeptReport v-if="remainingTime" :num-of-pages="numOfPages" :current-page="currentPage"
                           :remaining-time="calculateTargetDate(remainingTime)" :report-name="reportName"/>
       </div>
-      <div class="container default_section">
+      <div class="container-metric default_section">
         <div class="mini_map">
           <div
               v-for="index in numOfPages"
@@ -302,7 +302,7 @@ onUnmounted(() => {
     width: 100%;
   }
 
-  .container {
+  .container-metric {
     margin-top: 94px;
     display: flex;
 
@@ -405,7 +405,7 @@ onUnmounted(() => {
 }
 @media (max-width: 768px) {
   .view_pdf {
-    .container {
+    .container-metric {
       flex-direction: column;
 
       .mini_map {

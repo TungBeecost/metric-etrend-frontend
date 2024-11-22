@@ -44,7 +44,7 @@ watch(() => props.showModalDownloadPdf, (newVal) => {
 
 <template>
   <div class="dept_report_link">
-    <div class="container">
+    <div class="container-metric">
       <div class="border_slide_thumbnail">
         <ReportPreviewSlide :data="props.data" :is-slug-page="true"/>
       </div>
@@ -142,7 +142,7 @@ watch(() => props.showModalDownloadPdf, (newVal) => {
 
   overflow: hidden;
 
-  .container {
+  .container-metric {
     display: flex;
     flex-direction: column;
     //gap: 24px;

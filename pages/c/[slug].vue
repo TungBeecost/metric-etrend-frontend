@@ -294,7 +294,7 @@ useSeoMeta({
         <SearchReport class="default_section" :handle-search="handleSearch"/>
       </div>
     </div>
-    <div class="container default_section">
+    <div class="container-metric default_section">
       <div class="list_report_industry">
         <div class="general">
           <div></div>
@@ -428,7 +428,7 @@ useSeoMeta({
     }
   }
 
-  .container {
+  .container-metric {
     display: flex;
     gap: 32px;
     padding-top: 40px;

@@ -133,7 +133,7 @@ watch(selectedReportTypeBuy, (newVal) => {
       </svg>
       <div class="title_word">Bộ lọc</div>
     </div>
-    <div class="container" style="padding: 8px;">
+    <div class="container-metric" style="padding: 8px;">
       <a-collapse :bordered="false" style="background: rgb(255, 255, 255); padding: 0;" :active-key="[1, 2, 3]">
           <a-collapse-panel :key="1" header="Loại báo cáo">
             <a-checkbox-group v-model:value="selectedReportType">
@@ -199,7 +199,7 @@ watch(selectedReportTypeBuy, (newVal) => {
     }
   }
 
-  .container {
+  .container-metric {
     width: 100%;
 
     .filter_industry {
