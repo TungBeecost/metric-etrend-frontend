@@ -57,7 +57,6 @@ const itemsToShow = computed(() => {
     <Carousel v-else :items-to-show="itemsToShow" :items-to-scroll="itemsToShow" :wrap-around="true"
               style="width: 100%;" :snap-align="'start'">
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
-        {{report.url_thumbnail}}
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
             <img v-if="report.url_thumbnail" :src="report.url_thumbnail" alt="" />
