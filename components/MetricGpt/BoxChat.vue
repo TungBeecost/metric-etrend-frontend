@@ -119,7 +119,7 @@ const lstSuggestionAll = [
 ]
 const lstSuggestionClicked = ref([])
 
-const lstSuggestion = computed(() => lstSuggestionAll.filter((question) => !lstSuggestionClicked.value.includes(question)).slice(0, 2))
+const lstSuggestion = computed(() => lstSuggestionAll.filter((question) => !lstSuggestionClicked.value.includes(question)))
 
 
 // Hàm cập nhật giao diện theo từng chunk
