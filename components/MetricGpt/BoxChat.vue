@@ -40,7 +40,7 @@
       </div>
       <UDivider class="my-4" size="2xs"/>
       <div class="" v-if="!isTyping && lstSuggestion?.length > 0">
-        <div class="text-sm text-gray-800 mb-2">Gợi ý câu hỏi:</div>
+        <div class="text-sm text-gray-600 mb-2 font-bold">Gợi ý câu hỏi:</div>
         <div class="inline-flex space-x-3 flex-wrap items-start">
           <UButton v-for="question in lstSuggestion" :key="question" color="blue" variant="outline" class="mb-2"
                    @click="onClickSuggestion(question)">{{ question }}
@@ -96,7 +96,7 @@ const reportId = props.id;
 let messages = ref([
   {
     id: 1,
-    text: `Xin chào, Metric GPT mời bạn đặt câu hỏi về báo cáo thị trường ${reportName}?`,
+    text: `Xin chào, Metric GPT mời bạn đặt câu hỏi về báo cáo thị trường **${reportName}** ?`,
     sender: 'bot',
     complete: true
   },
