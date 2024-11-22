@@ -4,18 +4,22 @@ import {onBeforeRouteLeave} from 'vue-router';
 
 const emit = defineEmits(['showNotification']);
 
-// const isMobile = computed(() => window.innerWidth <= 768);
+const props = defineProps({
+  name: {
+    type: String,
+  },
+  id: {
+    type: Number,
+  },
+});
 
-const showChatBox = ref(true);
-const showButton = ref(false);
+const showChatBox = ref(false);
 const closeNotification = () => {
   showChatBox.value = false;
-  showButton.value = true;
 };
 
 const openChatBox = () => {
   showChatBox.value = true;
-  showButton.value = false;
 };
 
 onBeforeRouteLeave(() => {
@@ -28,6 +32,7 @@ onBeforeRouteLeave(() => {
     <div v-if="showChatBox" class="custom-notification">
       <div class="notification-content">
         <div class="notification-header">
+          <img src="/images/Logo-black.svg" alt="MetricGPT" class="w-48"/>
           <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"
                style="cursor: pointer;" @click="closeNotification">
             <rect width="40" height="40" rx="20" fill="#FAF9FF"/>
@@ -41,11 +46,14 @@ onBeforeRouteLeave(() => {
             </defs>
           </svg>
         </div>
-        <metric-gpt-box-chat/>
+        <metric-gpt-box-chat
+          :name="props?.name"
+          :id="props?.id"
+        />
       </div>
     </div>
   </div>
-  <div v-if="showButton" @click="openChatBox" class="button-notification">
+  <div v-if="!showChatBox" @click="openChatBox" class="button-notification">
     <div class="fixed bottom-4 right-4 z-50 inline-flex items-center justify-center w-14 h-14 rounded-full bg-white ring ring-orange-100">
       <div class="absolute z-10 top-0 left-0 w-full h-full rounded-full bg-orange-100 animate-[ping_2s_ease-in-out_infinite]"></div>
       <div class="relative z-20">

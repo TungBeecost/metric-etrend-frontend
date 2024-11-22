@@ -274,7 +274,10 @@ onUnmounted(() => {
       </transition>
       <transition name="fade">
         <div v-if="userInfo.current_plan.plan_code === 'eReport12'" class="chat_gpt">
-          <popup-chat-gpt/>
+          <popup-chat-gpt
+            :name="data?.reportDetail?.name"
+            :id="data?.reportDetail?.id"
+          />
         </div>
       </transition>
     </div>

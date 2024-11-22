@@ -2,16 +2,16 @@
   <div class="">
     <div class="bg-white rounded-lg shadow-md p-4">
       <!-- Chat Header -->
-      <div class="flex items-center">
-        <div class="ml-3">
-          <p class="text-xl font-medium">Metric GPT</p>
-          <!--              <p class="text-gray-500 mt-1">Hỏi về báo cáo Kem dưỡng ẩm</p>-->
-        </div>
-      </div>
+<!--      <div class="flex items-center">-->
+<!--        <div class="ml-3">-->
+<!--          <p class="text-xl font-medium">Metric GPT</p>-->
+<!--          &lt;!&ndash;              <p class="text-gray-500 mt-1">Hỏi về báo cáo Kem dưỡng ẩm</p>&ndash;&gt;-->
+<!--        </div>-->
+<!--      </div>-->
       <!--          <UDivider class="my-3" size="2xs" />-->
 
       <!-- Chat Messages -->
-      <div class="space-y-4 mt-4" style="min-height: 300px;">
+      <div class="space-y-4 mt-4 height_box_chat">
         <div class="" v-for="item in messages" :key="item.id">
           <div v-if="item.sender === 'bot'" class="flex items-start">
             <NuxtImg src="/icons/LogoIcon.svg" alt="MetricGPT" class="w-8 h-8 rounded-full"/>
@@ -82,8 +82,17 @@
 <script setup>
 import {micromark} from 'micromark'
 
-const reportName = 'Nồi chiên không dầu';
-const reportId = 4008;
+const props = defineProps({
+  name: {
+    type: String,
+  },
+  id: {
+    type: Number,
+  },
+});
+
+const reportName = props.name;
+const reportId = props.id;
 let messages = ref([
   {
     id: 1,
@@ -357,5 +366,11 @@ const onClickSuggestion = async (question) => {
   strong {
     font-weight: bold;
   }
+}
+
+.height_box_chat{
+
+  height: 300px;
+  overflow-y: auto;
 }
 </style>
