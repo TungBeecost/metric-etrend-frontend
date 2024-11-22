@@ -83,7 +83,6 @@ const isHideContentBasic = computed(() => {
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
-            :loading="loading"
             :is-hide-content="false"
         />
       </div>
@@ -93,7 +92,6 @@ const isHideContentBasic = computed(() => {
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
-            :loading="loading"
             :is-hide-content="isHideContent || isHideContentBasic"
         />
         <ChartMask
@@ -103,7 +101,7 @@ const isHideContentBasic = computed(() => {
             :report="data"
         />
       </div>
-      <a-skeleton v-if="loading" :paragraph="{ rows: 17 }"/>
+<!--      <a-skeleton v-if="loading" :paragraph="{ rows: 17 }"/>-->
     </div>
     <div
         v-if="
@@ -141,7 +139,7 @@ const isHideContentBasic = computed(() => {
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
-            :loading="loading"
+
             :is-hide-content="isHideContent || isHideContentBasic"
         />
         <ChartMask
@@ -157,7 +155,7 @@ const isHideContentBasic = computed(() => {
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
-            :loading="loading"
+
             :is-hide-content="false"
         />
       </div>
