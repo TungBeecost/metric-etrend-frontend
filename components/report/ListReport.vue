@@ -43,7 +43,7 @@ const getDisplayedCategories = (item: any) => {
           <img v-if="item.url_thumbnail" :src="getUrlImageThumbnail(item.url_square || item.url_thumbnail)" alt="">
           <img v-else src="/images/default_thumbnail_report.png" class="default_thumbnail"/>
         </div>
-        <div class="info">
+        <div class="info flex-1">
           <div class="breadcrumb">
             <span class="report_type">
               {{
