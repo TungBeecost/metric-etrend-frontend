@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="report-thumbnail">
-          <img :src="props.data.url_thumbnail" alt="" width="300" height="300">
+          <img :src="getUrlImageThumbnail(props.data.url_thumbnail)" alt="" width="300" height="300">
         </div>
       </div>
       <div class="sub-info">
@@ -40,6 +40,7 @@
 </template>
 
 <script setup>
+import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
 import moment from 'moment';
 import BeeMetricLogo from '@/components/svg/BeeMetricLogo';
 

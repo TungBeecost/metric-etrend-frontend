@@ -37,9 +37,9 @@ const props = defineProps({
         </div>
       </div>
     </div>
-    <div class="big_logo_metric">
-      <NuxtImg src="/images/big_logo_metric.svg" alt=""/>
-    </div>
+<!--    <div class="big_logo_metric">-->
+<!--      <NuxtImg src="/images/big_logo_metric.svg" alt=""/>-->
+<!--    </div>-->
   </div>
 </template>
 

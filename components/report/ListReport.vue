@@ -5,6 +5,7 @@ import BlurContent from "~/components/BlurContent.vue";
 import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper";
 import moment from "moment";
 import {upperFirst} from "scule";
+import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
 
 const props = defineProps({
   data: {
@@ -39,7 +40,7 @@ const getDisplayedCategories = (item: any) => {
                :to="`${NAVIGATIONS.home}${item.source ==='marketing' ? 'insight/' + item.slug : item.slug}`">
       <div class="item">
         <div class="image">
-          <img v-if="item.url_thumbnail" :src="item.url_thumbnail" alt="">
+          <img v-if="item.url_thumbnail" :src="getUrlImageThumbnail(item.url_thumbnail)" alt="">
           <img v-else src="/images/default_thumbnail_report.png" class="default_thumbnail" />
         </div>
         <div class="info">

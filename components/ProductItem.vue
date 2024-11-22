@@ -3,6 +3,8 @@ import {formatCurrency, formatNumberHuman} from "~/helpers/FormatHelper";
 import moment from "moment/moment";
 import {openProductUrl, openShopProductUrl} from "~/helpers/DataNormalize";
 import {getPlatformById} from "~/helpers/PermissionPlatformHelper";
+import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
+
 
 const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
   return moment(value, inputFormat).format(format);
@@ -45,7 +47,7 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
     <div class="product-thumbnail">
       <img
           v-if="props.product.url_thumbnail"
-          :src="props.product.url_thumbnail"
+          :src="getUrlImageThumbnail(props.product.url_thumbnail)"
           :alt="props.product.product_name"
           @click="openProductUrl(props.product)"
       />

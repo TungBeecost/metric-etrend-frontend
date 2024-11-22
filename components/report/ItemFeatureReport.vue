@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import {NAVIGATIONS} from "~/constant/constains";
 import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper";
 import BlurContent from "~/components/BlurContent.vue";
+import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
 
 const {reports, loading} = defineProps({
   reports: {
@@ -56,7 +57,7 @@ const itemsToShow = computed(() => {
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
-            <img :src="report.url_thumbnail" alt="" style="width: 100%; object-fit: cover">
+            <img :src="getUrlImageThumbnail(report.url_thumbnail)" alt="" style="width: 100%; object-fit: cover">
           </div>
           <div class="content" style="text-align: left;">
             <div class="category_date" style="text-align: left;">

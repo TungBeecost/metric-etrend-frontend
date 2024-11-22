@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type {LstRecommed} from "~/services/reports";
 import {NAVIGATIONS} from "~/constant/constains";
+import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
 
 const props = defineProps({
   recomends: {
@@ -54,7 +55,7 @@ const handleItemClick = (item: LstRecommed) => {
     <div v-if="props.recomends.length > 5" class="grid">
       <div v-for="item in props.recomends" :key="item.id" class="item" @click="handleItemClick(item)">
         <div v-if="item.url_thumbnail" class="image">
-          <img :src="item.url_thumbnail" alt="">
+          <img :src="getUrlImageThumbnail(item.url_thumbnail)" alt="">
         </div>
         <div class="info">
           <div class="line-clamp__1">
@@ -74,7 +75,7 @@ const handleItemClick = (item: LstRecommed) => {
     <div v-else>
       <div v-for="item in props.recomends" :key="item.id" class="item" @click="handleItemClick(item)">
         <div v-if="item.url_thumbnail" class="image">
-          <img :src="item.url_thumbnail" alt="">
+          <img :src="getUrlImageThumbnail(item.url_thumbnail)" alt="">
         </div>
         <div class="info">
           <div class="line-clamp__1">

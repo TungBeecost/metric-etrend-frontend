@@ -5,6 +5,7 @@ import {NAVIGATIONS} from "~/constant/constains";
 import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper";
 import BlurContent from "~/components/BlurContent.vue";
 import moment from "moment/moment";
+import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
 
 const {reports, loading} = defineProps({
   reports: {
@@ -59,7 +60,7 @@ const itemsToShow = computed(() => {
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
-            <img v-if="report.url_thumbnail" :src="report.url_thumbnail" alt="" />
+            <img v-if="report.url_thumbnail" :src="getUrlImageThumbnail(report.url_thumbnail)" alt="" />
             <img v-else src="/images/default_thumbnail_report.png" class="default_thumbnail" />
           </div>
           <div class="content" style="text-align: left;">

@@ -433,9 +433,9 @@ useSeoMeta({
           <div class="content">Truy cập kho dữ liệu với hàng trăm báo cáo và xu hướng mới nhất</div>
           <a-button style="height: 40px" @click="onClickViewPrice">Xem báo giá</a-button>
         </div>
-        <div class="big_logo_metric">
-          <NuxtImg src="/images/big_logo_metric.svg" alt=""/>
-        </div>
+<!--        <div class="big_logo_metric">-->
+<!--          <NuxtImg src="/images/big_logo_metric.svg" alt=""/>-->
+<!--        </div>-->
         <div class="chart_image">
           <NuxtImg src="/images/chart_image.svg" alt=""/>
         </div>
