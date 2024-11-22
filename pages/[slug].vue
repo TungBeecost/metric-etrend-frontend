@@ -17,6 +17,7 @@ import RelateReport from "~/components/RelateReport.vue";
 import ScrollNotification from "~/components/ScrollNotification.vue";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
 import {useCurrentUser} from "~/stores/current-user.js";
+import PopupChatGpt from "~/components/MetricGpt/PopupChatGpt.vue";
 
 
 const route = useRoute();
@@ -261,8 +262,7 @@ onUnmounted(() => {
       </div>
       <poster-detail-report :list-suggest="tagSuggestions" :loading="loadingSuggest"/>
       <transition name="fade">
-        <div v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category'" class="advertisement">
-
+        <div v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category' && userInfo.current_plan.plan_code !== 'eReport12'" class="advertisement">
           <scroll-notification
               v-if="data.reportDetail.name"
               :data="data.reportDetail"
@@ -270,6 +270,11 @@ onUnmounted(() => {
               :show-button="showButton"
               @show-notification="handleShowNotification"
           />
+        </div>
+      </transition>
+      <transition name="fade">
+        <div v-if="userInfo.current_plan.plan_code === 'eReport12'" class="chat_gpt">
+          <popup-chat-gpt/>
         </div>
       </transition>
     </div>

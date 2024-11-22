@@ -1,14 +1,5 @@
 <template>
   <div class="">
-    <a href="#" target="_blank" rel="noreferrer noopener"
-       class="fixed bottom-4 right-4 z-50 inline-flex items-center justify-center w-14 h-14 rounded-full bg-white ring ring-orange-100">
-<!--      <div class="absolute z-10 top-0 left-0 w-full h-full rounded-full bg-orange-100 animate-ping"></div>-->
-      <div class="absolute z-10 top-0 left-0 w-full h-full rounded-full bg-orange-100 animate-[ping_2s_ease-in-out_infinite]"></div>
-      <div class="relative z-20">
-        <NuxtImg src="/icons/LogoFloat.svg" alt="MetricGPT" class="rounded-full"/>
-      </div>
-    </a>
-
     <div class="bg-white rounded-lg shadow-md p-4">
       <!-- Chat Header -->
       <div class="flex items-center">

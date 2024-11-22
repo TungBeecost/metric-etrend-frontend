@@ -10,7 +10,6 @@ const isLoading = ref(true);
 const lstReport = ref([]);
 
 const fetchReport = async () => {
-  console.log('fetchReport');
   try {
     const body: SearchReportPayload = {
       limit: 10,

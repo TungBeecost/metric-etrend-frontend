@@ -223,7 +223,7 @@ onBeforeRouteLeave(() => {
   <modal-download-pdf v-model:open="open" :data="props.data"/>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 .custom-notification {
