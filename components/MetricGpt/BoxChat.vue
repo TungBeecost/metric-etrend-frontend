@@ -14,11 +14,8 @@
       <div class="space-y-4 mt-4 height_box_chat">
         <div class="" v-for="item in messages" :key="item.id">
           <div v-if="item.sender === 'bot'" class="flex items-start">
-            <NuxtImg src="/icons/LogoIcon.svg" alt="MetricGPT" class="w-8 h-8 rounded-full"/>
+            <NuxtImg src="/images/logo-square.svg" alt="MetricGPT" class="w-8 h-8 rounded-full"/>
 
-            <!--            <div class="w-8 h-8 rounded-full ring-2 ring-gray-300 flex items-center">-->
-            <!--              <NuxtImg src="/icons/LogoIcon.svg" alt="MetricGPT" class="w-5 h-5"/>-->
-            <!--            </div>-->
             <div class="ml-3 bg-gray-100 p-3 rounded-lg inline-flex items-end">
               <div class="text-sm text-gray-800 prose" v-html="micromark(item.text)"></div>
             </div>
