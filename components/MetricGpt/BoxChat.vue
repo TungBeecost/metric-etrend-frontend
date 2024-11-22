@@ -288,7 +288,7 @@ const onClickSuggestion = async (question) => {
   transition: height 0.3s ease;
 }
 
-.max-ch-80 {
-  max-width: 80ch;
-}
+//.max-ch-80 {
+//  max-width: 80ch;
+//}
 </style>
