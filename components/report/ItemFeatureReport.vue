@@ -57,7 +57,7 @@ const itemsToShow = computed(() => {
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
-            <img :src="getUrlImageThumbnail(report.url_thumbnail)" alt="" style="width: 100%; object-fit: cover">
+            <img :src="getUrlImageThumbnail(report.url_square || report.url_thumbnail)" :alt="report.name" style="width: 100%; object-fit: cover">
           </div>
           <div class="content" style="text-align: left;">
             <div class="category_date" style="text-align: left;">

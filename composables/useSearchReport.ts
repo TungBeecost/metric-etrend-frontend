@@ -11,7 +11,7 @@ export default function useSearchReport() {
         try {
             const body: SearchReportPayload = {
                 limit: 10,
-                lst_field: ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop"],
+                lst_field: ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop", "url_square"],
                 lst_query: value ? [value] : [],
                 offset: 0,
                 sort: "popularity",

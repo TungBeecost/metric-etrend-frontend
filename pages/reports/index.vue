@@ -15,7 +15,7 @@ const fetchReport = async () => {
   try {
     const body: SearchReportPayload = {
       limit: 6,
-      lst_field: ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop", "created_at"],
+      lst_field: ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop", "created_at", "url_square"],
       lst_query: [],
       lst_category_report_id: [],
       offset: 0,
@@ -43,7 +43,7 @@ useSeoMeta({
 
 <template>
   <div class="title_report">
-    <div class="image">
+    <div class="image-metric">
       <div class="default_section">
         <div class="title">
           <div class="content">
@@ -81,7 +81,7 @@ useSeoMeta({
   width: 100%;
   height: 100%;
 
-  .image {
+  .image-metric {
     display: flex;
     padding-top: 60px;
     flex-direction: column;
@@ -164,7 +164,7 @@ useSeoMeta({
 
 @media (min-width: 1919px) {
   .title_report {
-    .image {
+    .image-metric {
       .title {
         .content {
           .report_title {
@@ -182,7 +182,7 @@ useSeoMeta({
 
 @media (max-width: 1919px) {
   .title_report {
-    .image {
+    .image-metric {
       .title {
         .content {
           .report_title {
@@ -201,7 +201,7 @@ useSeoMeta({
 
 @media (max-width: 1380px) {
   .title_report {
-    .image {
+    .image-metric {
       .title {
         .content {
           .report_title {
@@ -219,7 +219,7 @@ useSeoMeta({
 }
 @media (max-width: 1023px) {
   .title_report {
-    .image {
+    .image-metric {
       .title {
         .content {
           .report_title {
@@ -238,7 +238,7 @@ useSeoMeta({
 
 @media (max-width: 767px) {
   .title_report {
-    .image {
+    .image-metric {
       height: 565px;
       .title {
         gap: 40px;
@@ -260,7 +260,7 @@ useSeoMeta({
 
 @media (max-width: 460px) {
   .title_report {
-    .image {
+    .image-metric {
       .title {
         padding-top: 20px;
         gap: 40px;

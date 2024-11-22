@@ -96,7 +96,7 @@ const reportId = props.id;
 let messages = ref([
   {
     id: 1,
-    text: `Xin chào, Metric GPT mời bạn đặt câu hỏi về báo cáo thị trường **${reportName}** ?`,
+    text: `Xin chào, **Metric GPT** mời bạn đặt câu hỏi về báo cáo thị trường **${reportName}** ?`,
     sender: 'bot',
     complete: true
   },

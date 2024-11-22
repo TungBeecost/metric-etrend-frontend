@@ -33,7 +33,7 @@ onBeforeRouteLeave(() => {
       <div class="notification-content">
         <div class="notification-header">
           <img src="/images/Logo-black.svg" alt="MetricGPT" class="w-48"/>
-          <div class="icon_chat_box flex space-x-3">
+          <div class="icon_chat_box flex space-x-2">
             <div class="bg-gray-100 hover:bg-orange-100 hover:text-orange-600 text-gray-400 cursor-pointer rounded-full w-8 h-8 flex items-center justify-center">
               <UIcon name="i-material-symbols-pan-zoom" class="w-5 h-5"/>
             </div>

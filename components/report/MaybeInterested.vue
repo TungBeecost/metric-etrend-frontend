@@ -54,7 +54,7 @@ const handleItemClick = (item: LstRecommed) => {
     </div>
     <div v-if="props.recomends.length > 5" class="grid">
       <div v-for="item in props.recomends" :key="item.id" class="item" @click="handleItemClick(item)">
-        <div v-if="item.url_thumbnail" class="image">
+        <div v-if="item.url_thumbnail" class="image-metric">
           <img :src="getUrlImageThumbnail(item.url_thumbnail)" alt="">
         </div>
         <div class="info">
@@ -74,7 +74,7 @@ const handleItemClick = (item: LstRecommed) => {
     </div>
     <div v-else>
       <div v-for="item in props.recomends" :key="item.id" class="item" @click="handleItemClick(item)">
-        <div v-if="item.url_thumbnail" class="image">
+        <div v-if="item.url_thumbnail" class="image-metric">
           <img :src="getUrlImageThumbnail(item.url_thumbnail)" alt="">
         </div>
         <div class="info">
@@ -135,7 +135,7 @@ const handleItemClick = (item: LstRecommed) => {
     gap: 16px;
     cursor: pointer;
 
-    .image {
+    .image-metric {
       img {
         width: 60px;
         height: 60px;

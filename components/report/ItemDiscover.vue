@@ -31,7 +31,7 @@ const displayedReports = computed(() => {
         :to="{ path: '/search', query: { category_report_id: report.value }}"
         class="item_discover"
     >
-      <div class="image">
+      <div class="image-metric">
         <component :is="report.icon"/>
       </div>
       <div class="title">{{ report.label }}</div>
@@ -66,7 +66,7 @@ const displayedReports = computed(() => {
     color: var(--Volcano-volcano-6, #E85912);
   }
 
-  .image {
+  .image-metric {
     width: 40px;
     height: 40px;
 
@@ -94,7 +94,7 @@ const displayedReports = computed(() => {
   .item_discover {
     gap: 16px;
     padding: 16px;
-    .image {
+    .image-metric {
       width: 24px;
       height: 24px;
 

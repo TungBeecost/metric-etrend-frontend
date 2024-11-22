@@ -10,7 +10,7 @@ function handleClick(report: any) {
 <template>
   <div class="report-list">
     <div v-for="(report, index) in LIST_REPORT_TYPES" :key="index" class="report-item" @click="handleClick(report)">
-      <div class="image">
+      <div class="image-metric">
         <CustomIcon :type="report.icon as TypeIcon" :is-custom-size="false"/>
       </div>
       <div style="display: flex; gap: 8px; flex-direction: column">

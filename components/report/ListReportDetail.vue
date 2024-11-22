@@ -17,7 +17,7 @@ const props = defineProps({
       <nuxt-link v-for="item in props.data" :key="item.id" class="lst_item"
                  :to="`${NAVIGATIONS.home}${item.source ==='marketing' ? 'insight/' + item.slug : item.slug}`">
         <div class="item">
-          <div class="image">
+          <div class="image-metric">
             <img v-if="item.url_thumbnail" :src="getUrlImageThumbnail(item.url_thumbnail)" alt="">
             <img v-else src="/images/default_thumbnail_report.png" class="default_thumbnail" />
           </div>
@@ -62,7 +62,7 @@ const props = defineProps({
       width: 100%;
       cursor: pointer;
 
-      .image {
+      .image-metric {
         img {
           width: 100%;
           height: auto;
