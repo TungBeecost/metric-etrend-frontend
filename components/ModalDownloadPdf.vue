@@ -12,6 +12,7 @@ import {formatCurrency} from "~/helpers/FormatHelper";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper";
 
 const config = useRuntimeConfig();
+const prefixResource = config.public.BASE_PATH !== '/' ? config.public.BASE_PATH : '';
 const route = useRoute();
 const showAlert = ref(false);
 const currentUserStore = useCurrentUser();
@@ -215,7 +216,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
             <p>Hỗ trợ thanh toán trực tuyến</p>
             <div style="display: flex">
               <div v-for="wallet in WALLET" :key="wallet.code">
-                <img style="width: 40px; height: 40px" :src="wallet.thumbnail" alt="icon">
+                <img style="width: 40px; height: 40px" :src="prefixResource + wallet.thumbnail" alt="icon">
               </div>
             </div>
           </div>
