@@ -7,7 +7,7 @@
     <div class="default_section" style="overflow: hidden;">
       <div class="brand-list">
         <div v-for="(brand, index) in TESTIMONIAL_BRANDS" :key="index" class="brand-item loop">
-          <img :src="brand" alt="brand_logo">
+          <img :src="prefixResource + brand" alt="brand_logo">
         </div>
       </div>
     </div>
@@ -16,6 +16,9 @@
 <script setup>
 import {gsap} from 'gsap';
 import {TESTIMONIAL_BRANDS} from "~/constant/constains"
+
+const config = useRuntimeConfig();
+const prefixResource = config.public.BASE_PATH !== '/' ? config.public.BASE_PATH : '';
 
 onMounted(() => {
   const boxes = gsap.utils.toArray('.brand-item.loop')

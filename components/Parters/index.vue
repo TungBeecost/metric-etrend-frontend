@@ -6,7 +6,7 @@
     <div class="default_section" style="overflow: hidden;">
       <div class="brand-list">
         <div v-for="(brand, index) in PARTERS" :key="index" class="brand-item loop">
-          <img :src="brand" alt="brand_logo">
+          <img :src="prefixResource + brand" alt="brand_logo">
         </div>
       </div>
     </div>
@@ -16,6 +16,9 @@
 import {gsap} from 'gsap';
 import {PARTERS} from "~/constant/constains"
 
+const config = useRuntimeConfig();
+const prefixResource = config.public.BASE_PATH !== '/' ? config.public.BASE_PATH : '';
+
 onMounted(() => {
   const boxes = gsap.utils.toArray('.brand-item.loop')
   horizontalLoop(boxes, {
@@ -24,6 +27,7 @@ onMounted(() => {
     repeat: -1,
     paddingRight: 32,
   })
+
   function horizontalLoop(items, config) {
     items = gsap.utils.toArray(items)
     config = config || {}
@@ -32,7 +36,7 @@ onMounted(() => {
       paused: config.paused,
       defaults: {ease: 'none'},
       onReverseComplete: () =>
-        tl.totalTime(tl.rawTime() + tl.duration() * 100),
+          tl.totalTime(tl.rawTime() + tl.duration() * 100),
     });
     const length = items.length;
     const startX = items[0].offsetLeft;
@@ -42,7 +46,7 @@ onMounted(() => {
     // const curIndex = 0;
     const pixelsPerSecond = (config.speed || 1) * 100;
     const snap =
-      config.snap === false ? (v) => v : gsap.utils.snap(config.snap || 1); // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
+        config.snap === false ? (v) => v : gsap.utils.snap(config.snap || 1); // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
     // const totalWidth;
     let curX;
     let distanceToStart;
@@ -55,20 +59,20 @@ onMounted(() => {
       xPercent: (i, el) => {
         const w = (widths[i] = parseFloat(gsap.getProperty(el, 'width', 'px')))
         xPercents[i] = snap(
-          (parseFloat(gsap.getProperty(el, 'x', 'px')) / w) * 100 +
-          gsap.getProperty(el, 'xPercent')
+            (parseFloat(gsap.getProperty(el, 'x', 'px')) / w) * 100 +
+            gsap.getProperty(el, 'xPercent')
         )
         return xPercents[i]
       },
     })
     gsap.set(items, {x: 0})
     const totalWidth =
-      items[length - 1].offsetLeft +
-      (xPercents[length - 1] / 100) * widths[length - 1] -
-      startX +
-      items[length - 1].offsetWidth *
-      gsap.getProperty(items[length - 1], 'scaleX') +
-      (parseFloat(config.paddingRight) || 0)
+        items[length - 1].offsetLeft +
+        (xPercents[length - 1] / 100) * widths[length - 1] -
+        startX +
+        items[length - 1].offsetWidth *
+        gsap.getProperty(items[length - 1], 'scaleX') +
+        (parseFloat(config.paddingRight) || 0)
 
     for (i = 0; i < length; i++) {
       item = items[i]
@@ -76,32 +80,32 @@ onMounted(() => {
 
       distanceToStart = item.offsetLeft + curX - startX
       distanceToLoop =
-        distanceToStart + widths[i] * gsap.getProperty(item, 'scaleX')
+          distanceToStart + widths[i] * gsap.getProperty(item, 'scaleX')
 
       tl.to(
-        item,
-        {
-          xPercent: snap(((curX - distanceToLoop) / widths[i]) * 100),
-          duration: distanceToLoop / pixelsPerSecond,
-        },
-        0
-      )
-        .fromTo(
           item,
           {
-            xPercent: snap(
-              ((curX - distanceToLoop + totalWidth) / widths[i]) * 100
-            ),
+            xPercent: snap(((curX - distanceToLoop) / widths[i]) * 100),
+            duration: distanceToLoop / pixelsPerSecond,
           },
-          {
-            xPercent: xPercents[i],
-            duration:
-              (curX - distanceToLoop + totalWidth - curX) / pixelsPerSecond,
-            immediateRender: false,
-          },
-          distanceToLoop / pixelsPerSecond
-        )
-        .add('label' + i, distanceToStart / pixelsPerSecond)
+          0
+      )
+          .fromTo(
+              item,
+              {
+                xPercent: snap(
+                    ((curX - distanceToLoop + totalWidth) / widths[i]) * 100
+                ),
+              },
+              {
+                xPercent: xPercents[i],
+                duration:
+                    (curX - distanceToLoop + totalWidth - curX) / pixelsPerSecond,
+                immediateRender: false,
+              },
+              distanceToLoop / pixelsPerSecond
+          )
+          .add('label' + i, distanceToStart / pixelsPerSecond)
       times[i] = distanceToStart / pixelsPerSecond
     }
     tl.times = times
