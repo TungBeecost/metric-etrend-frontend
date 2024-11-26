@@ -19,7 +19,7 @@ const handleItemClick = (item: LstRecommed) => {
 };
 
 const getRandomReplacement = () => {
-  const replacements = ["Báo cáo thị trường", "Nghiên cứu thị trường"];
+  const replacements = ["Báo cáo", "Thị trường"];
   return replacements[Math.floor(Math.random() * replacements.length)];
 };
 </script>

@@ -180,6 +180,7 @@ const {data: tagSuggestions} = await useAsyncData(
       return await fetchSuggest(data?.reportDetail?.name, {limit: 5});
     }
 );
+// console.log(data);
 
 const isMobile = ref(window?.innerWidth <= 768);
 
@@ -227,7 +228,7 @@ onUnmounted(() => {
           <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
         </div>
         <h1 class="title_main">
-          Báo cáo {{ data.reportDetail.name }} - Báo cáo xu hướng thị trường sàn TMĐT
+          Báo cáo {{ data.reportDetail.name }} - Nghiên cứu thị trường sàn TMĐT
         </h1>
         <div class="container_report_detail">
           <div class="container_report_detail_left">
@@ -250,6 +251,20 @@ onUnmounted(() => {
           <h2 class="title_main ">
             Báo cáo tổng quan thị trường {{ data?.reportDetail.name }} trên sàn TMĐT
           </h2>
+          <div class="">
+            Từ tháng
+            <b>{{
+              data?.reportDetail.filter_custom
+                  ? data.reportDetail.start_date.slice(4, 6) + '/' + data.reportDetail.start_date.slice(0, 4)
+                  : 'N/A'
+            }}</b>
+            đến tháng <b>{{
+              data?.
+                  reportDetail.filter_custom
+                  ? data.reportDetail.end_date.slice(4, 6) + '/' + data.reportDetail.end_date.slice(0, 4)
+                  : 'N/A'
+            }}</b>
+          </div>
           <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
           <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail"
                              :is-hide-content="data.isHideContent"/>
@@ -262,7 +277,9 @@ onUnmounted(() => {
       </div>
       <poster-detail-report :list-suggest="tagSuggestions" :loading="loadingSuggest"/>
       <transition name="fade">
-        <div v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category' && userInfo.current_plan.plan_code !== 'eReport12'" class="advertisement">
+        <div
+            v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category' && userInfo.current_plan.plan_code !== 'eReport12'"
+            class="advertisement">
           <scroll-notification
               v-if="data.reportDetail.name"
               :data="data.reportDetail"
@@ -275,8 +292,8 @@ onUnmounted(() => {
       <transition name="fade">
         <div v-if="userInfo.current_plan.plan_code === 'eReport12'" class="chat_gpt">
           <popup-chat-gpt
-            :name="data?.reportDetail?.name"
-            :id="data?.reportDetail?.id"
+              :name="data?.reportDetail?.name"
+              :id="data?.reportDetail?.id"
           />
         </div>
       </transition>
