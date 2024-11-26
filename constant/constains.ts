@@ -460,7 +460,7 @@ export const PLANS: Array<IPLAN> = [
     type: "Gói ra mắt",
     plan_code: "eReport12",
     type_package: "incentive",
-    description: "Duy nhất cho dịp ra mắt Metric eReport <br> Lưu ý: Không hỗ trợ hoàn tiền đối với gói dịch vụ ưu đãi đặt biệt này",
+    description: "Duy nhất cho dịp ra mắt Metric eReport <br> Lưu ý: Không hỗ trợ hoàn tiền đối với gói dịch vụ ưu đãi đặc biệt này",
     price: '1.2 triệu',
     priceValue: "1200000",
     priceDiscount: "1200000",
