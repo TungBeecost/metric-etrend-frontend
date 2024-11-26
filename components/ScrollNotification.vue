@@ -178,6 +178,7 @@ onBeforeRouteLeave(() => {
           <p>Thống kê 60 sản phẩm {{ props.data.name }} đang bán chạy trên các sàn TMĐT</p>
         </div>
         <AButton
+            v-if="!data.is_unsellable"
             style="width: 100%;font-size: 14px; font-weight: 600; text-align: center; margin: 12px 0; font-family: Montserrat, sans-serif;"
             type="primary"
             size="large"

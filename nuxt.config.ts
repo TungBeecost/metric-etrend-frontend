@@ -4,7 +4,7 @@ export default defineNuxtConfig({
         buildAssetsDir: '/ereport_nuxt/',
         baseURL: process.env.BASE_PATH || '/',
         head: {
-            // title: "eReport - Kho báo cáo Ecommerce toàn diện",
+            title: "eReport - Kho báo cáo Ecommerce toàn diện",
             htmlAttrs: {
                 lang: "vi",
             },
@@ -13,12 +13,14 @@ export default defineNuxtConfig({
                 {name: "viewport", content: "width=device-width, initial-scale=1"},
                 {
                     hid: "description",
+                    key: "description",
                     name: "description",
                     content:
                         "eReport là Kho báo cáo thị trường Ecommerce toàn diện giúp Doanh nghiệp, Thương hiệu và Nhà bán tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu chính xác nhất.",
                 },
                 {
                     hid: "og:image",
+                    key: "og:image",
                     property: "og:image",
                     content: "https://lh3.googleusercontent.com/pw/AP1GczMTZp0lf_VW7W_Y6n3qg602m-LlqfpCIeVX_i4D3pnqT6FiloK5hY86XfTsqVHd4xRRs9tSKppP6FZdEPWO_V8D_UEsfj8KEnChoiU7zyiwDlHzZaTeAePmGxcqzG98qDJ9bahok5MhwtDzp3EKTiI_=w1600-h900-s-no-gm?authuser=0",
                 },
@@ -115,6 +117,7 @@ export default defineNuxtConfig({
         "~/assets/reset.css",
         "~/assets/antd.css",
         "~/assets/variables.less",
+        "~/assets/style.css",
         // "~/assets/tailwind.less",
         // "normalize.css",
     ],
