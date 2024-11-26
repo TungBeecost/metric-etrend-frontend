@@ -155,13 +155,13 @@ const itemsToShow = computed(() => {
               </span> sản phẩm
               </div>
             </div>
-            <div v-if="report.introduction" class="description line-clamp__3">
+            <div v-if="report.introduction" class="description line-clamp__2">
               {{ report.introduction }}
             </div>
-            <div v-else-if="report.report_type === 'report_brand' && report?.lst_shop?.length" class="description line-clamp__3">Báo cáo thị phần thương hiệu hàng đầu như
+            <div v-else-if="report.report_type === 'report_brand' && report?.lst_shop?.length" class="description line-clamp__2">Báo cáo thị phần thương hiệu hàng đầu như
               {{ report.lst_brand ? report.lst_brand.join(', ') : '' }} v.v
             </div>
-            <div v-else-if="report?.lst_brand?.length" class="description line-clamp__3">Báo cáo thị phần thương hiệu hàng đầu như
+            <div v-else-if="report?.lst_brand?.length" class="description line-clamp__2">Báo cáo thị phần thương hiệu hàng đầu như
               {{ report.lst_brand ? report.lst_brand.join(', ') : '' }} v.v
             </div>
           </div>
