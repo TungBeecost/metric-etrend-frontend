@@ -4,6 +4,7 @@ import {computed} from "vue";
 import dayjs from "dayjs";
 import {formatCurrency} from "~/helpers/FormatHelper";
 import {useHead} from "unhead";
+import moment from "moment";
 
 const props = defineProps({
   data: {
@@ -18,35 +19,6 @@ const props = defineProps({
 
 const config = useRuntimeConfig();
 const route = useRoute();
-
-useHead({
-  title: `Báo cáo chi tiết thị trường ${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`,
-  meta: [
-    {charset: "utf-8"},
-    {name: "viewport", content: "width=device-width, initial-scale=1"},
-    {
-      key: "description",
-      name: "description",
-      content: `Báo cáo chi tiết thị trường ${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`
-    },
-    {key: "og:title", property: "og:title", content: `${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`},
-    {
-      key: "og:description",
-      property: "og:description",
-      content: `Báo cáo chi tiết thị trường ${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`
-    },
-    {key: "og:image", property: "og:image", content: props.data?.url_cover || props.data?.url_thumbnail},
-    {
-      key: "og:image:alt",
-      property: "og:image:alt",
-      content: `${props.data.name} - Báo cáo xu hướng thị trường sàn TMĐT`
-    },
-  ],
-  link: [
-    {key: "canonical", rel: "canonical", href: `${config.public.BASE_URL}${route.fullPath}`},
-  ],
-});
-
 
 const diffMonths = computed(() => {
   const filterCustom = props.data.filter_custom;
@@ -82,7 +54,8 @@ const top5Shops = (): string[] => {
   const dataAnalytic = props.data.data_analytic;
   if (!dataAnalytic || !dataAnalytic.by_brand) return [];
   const shops: Shop[] = dataAnalytic.by_brand.lst_top_brand_revenue;
-  return shops.slice(0, 5).map(brand => brand.name);
+  return shops.filter(brand => brand.name.toLowerCase() !== 'no brand')
+      .slice(0, 5).map(brand => brand.name);
 };
 
 interface RevenueItem {
@@ -106,6 +79,46 @@ const diffRevenueLatestQuarterPercent = computed(() => {
   const diff = revenueLatestQuarter - revenuePreviousQuarter;
   return parseFloat(((diff / revenuePreviousQuarter) * 100).toFixed(2));
 });
+
+
+const listTopBrandNames = top5Shops().join(', ');
+let description = `Thị trường ${props.data.name} trên TMĐT đạt quy mô ${formatSortTextCurrency(props.data.data_analytic.by_overview.revenue)} đồng và tăng trưởng ${diffRevenueLatestQuarterPercent.value}% so với quý trước`;
+if (props.data.report_type !== 'report_brand') {
+  description += `với thương hiệu nổi bật gồm ${listTopBrandNames}`;
+}
+
+useHead({
+  title: `Báo cáo thị trường ${props.data.name} - Nghiên cứu thị trường sàn TMĐT cập nhật tháng ${moment().format("MM/YYYY")}`,
+  meta: [
+    {charset: "utf-8"},
+    {name: "viewport", content: "width=device-width, initial-scale=1"},
+    {
+      key: "description",
+      name: "description",
+      content: description
+    },
+    {
+      key: "og:title",
+      property: "og:title",
+      content: `Báo cáo nghiên cứu thị trường ${props.data.name} TMĐT, cập nhật tháng ${moment().format("MM/YYYY")}`
+    },
+    {
+      key: "og:description",
+      property: "og:description",
+      content: description
+    },
+    {key: "og:image", property: "og:image", content: props.data?.url_cover || props.data?.url_thumbnail},
+    {
+      key: "og:image:alt",
+      property: "og:image:alt",
+      content: `${props.data.name} - Báo cáo tổng quan thị trường sàn TMĐT`
+    },
+  ],
+  link: [
+    {key: "canonical", rel: "canonical", href: `${config.public.BASE_URL}${route.fullPath}`},
+  ],
+});
+
 </script>
 
 <template>
