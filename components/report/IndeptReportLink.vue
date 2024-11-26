@@ -110,6 +110,7 @@ watch(() => props.showModalDownloadPdf, (newVal) => {
             type="primary" class="btn"
             @click="handleClick"
             size="large"
+            v-if="!data.is_unsellable"
         >
           <i aria-label="icon: download" class="anticon anticon-download">
             <svg viewBox="64 64 896 896" data-icon="download" width="1em" height="1em" fill="currentColor"
@@ -121,6 +122,7 @@ watch(() => props.showModalDownloadPdf, (newVal) => {
           Tải báo cáo PDF chi tiết
         </a-button>
         <div
+            v-if="!data.is_unsellable"
             style="text-align: center;font-family: Montserrat,sans-serif; font-weight: 500; color: #666;font-size: 14px;">
           (Nhận báo cáo qua Email trong 5 - 30 phút)
         </div>

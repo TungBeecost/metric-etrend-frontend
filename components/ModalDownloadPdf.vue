@@ -157,7 +157,9 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
           </div>
           <div>
             <div style="margin-bottom: 32px;">
-              <div v-if="props.data.report_type !== 'report_brand'" style="text-align: center; margin-bottom: 12px;">Nhóm hàng</div>
+              <div v-if="props.data.report_type !== 'report_brand'" style="text-align: center; margin-bottom: 12px;">
+                Nhóm hàng
+              </div>
               <p>{{ props.data.name }}</p>
             </div>
             <ul>
@@ -181,6 +183,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
           </div>
           <div class="button_group">
             <a-button
+                v-if="!data.is_unsellable"
                 type="primary"
                 style="width: 100%;height: 40px; font-size: 14px; box-shadow: 0 2px 0 rgba(0,0,0,.045); filter: drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 4px); font-family: Montserrat,serif;font-weight: 500"
                 class="download_report_button" :loading="downloading"
@@ -189,10 +192,11 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
             </a-button>
             <div v-if="userInfo.current_plan?.remain_claim_pdf && !props.data.can_download" class="button_group_view">
               <div style="color: #716B95">hoặc</div>
-              <a-button v-if="(userInfo.current_plan?.remain_claim_pdf ?? 0) > 0"
-                        :disabled="!canViewReport"
-                        style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
-                        class="download_report_button" @click="handleView">
+              <a-button
+                  v-if="(userInfo.current_plan?.remain_claim_pdf ?? 0) > 0"
+                  :disabled="!canViewReport"
+                  style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
+                  class="download_report_button" @click="handleView">
                 Xem báo cáo
                 <div
                     style="position: absolute; top: -12px; right: -12px; background: #241E46; color: #FFFFFF; padding: 2px 4px">
