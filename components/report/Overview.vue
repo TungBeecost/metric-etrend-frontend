@@ -88,7 +88,7 @@ if (props.data.report_type !== 'report_brand') {
 }
 
 useHead({
-  title: `Báo cáo thị trường ${props.data.name} - Nghiên cứu thị trường sàn TMĐT cập nhật tháng ${moment().format("MM/YYYY")}`,
+  title: `Báo cáo thị trường ${props.data.name} sàn TMĐT cập nhật tháng ${moment().format("MM/YYYY")}`,
   meta: [
     {charset: "utf-8"},
     {name: "viewport", content: "width=device-width, initial-scale=1"},
