@@ -46,7 +46,7 @@
     <PracticalApplication/>
 
 
-    <div class="section planSection">
+    <div class="planSection">
       <Plans :is-dark-title="true"/>
     </div>
 
