@@ -18,6 +18,8 @@ import ScrollNotification from "~/components/ScrollNotification.vue";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
 import {useCurrentUser} from "~/stores/current-user.js";
 import PopupChatGpt from "~/components/MetricGpt/PopupChatGpt.vue";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService.js";
+import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
 
 
 const route = useRoute();
@@ -106,6 +108,9 @@ const fetchReportData = async () => {
         'Visitorid': visitorId ? visitorId.visitor_id : '',
       }
     });
+
+    trackEventCommon(EVENT_TYPE.VIEW_REPORT, slug, response?.name);
+    trackEventCommon(EVENT_TYPE.VIEW_ANY_REPORT, slug, response?.name);
 
     if (!response) {
       await router.push('/search');

@@ -36,7 +36,7 @@ const itemsToShow = computed(() => {
   } else if (windowWidth.value <= 1380) {
     return 2;
   } else {
-    return 4;
+    return 5;
   }
 });
 </script>
@@ -65,7 +65,7 @@ const itemsToShow = computed(() => {
               {{ dayjs(report.end_date).format('DD/MM/YYYY') }}
             </div>
             <div class="title" style="text-align: left;">
-              Báo cáo nhóm hàng {{ report.name }}
+              Báo cáo {{ report.name }}
             </div>
             <div v-if="report.shop" class="summary-info">
               <div class="info_item">
@@ -172,8 +172,6 @@ const itemsToShow = computed(() => {
       background: var(--Neutral-neutral-1, #FFF);
       cursor: pointer;
       border: 1px solid #f0f0f0;
-
-      height: 600px;
       overflow: hidden;
 
       .thumbnail {
@@ -192,6 +190,9 @@ const itemsToShow = computed(() => {
           line-height: 22px; /* 157.143% */
           margin-bottom: 16px;
           flex: 1;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .title {
@@ -287,7 +288,6 @@ const itemsToShow = computed(() => {
   .report-slide {
     .carousel__slide {
       .slide-item {
-        height: 600px !important;
         flex-direction: column;
 
         .thumbnail {
@@ -337,7 +337,6 @@ const itemsToShow = computed(() => {
   .report-slide {
     .carousel__slide {
       .slide-item {
-        height: 750px;
       }
     }
 

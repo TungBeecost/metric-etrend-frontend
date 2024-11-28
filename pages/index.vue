@@ -31,6 +31,8 @@
       <Parters/>
     </div>
 
+    <Highlights/>
+
     <ReportFeaturedReport/>
 
     <ReportFree />
