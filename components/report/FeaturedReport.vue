@@ -495,7 +495,7 @@ const lstReport = [
   <div class="featured_report">
     <div class="default_section">
       <div class="title_content">
-        <div class="tittle">Báo cáo thị trường nổi bật</div>
+        <div class="tittle">Báo cáo xu hướng mới nhất</div>
         <div class="content">
           <div>
             Chi tiết tăng trưởng, doanh số, sản lượng, mức giá, thị phần, sản phẩm trending... của mọi nhóm hàng, thương hiệu và nhà bán
@@ -517,7 +517,7 @@ const lstReport = [
   gap: 64px;
   padding-top: 60px;
   height: 100%;
-  padding-bottom: 100px;
+  padding-bottom: 60px;
 }
 
 .title_content {
@@ -530,7 +530,7 @@ const lstReport = [
 
 .tittle {
   text-align: center;
-  font-size: 36px;
+  font-size: 44px;
   font-weight: bold;
   color: #241E46;
 

@@ -36,16 +36,13 @@ onMounted(() => {
   fetchReport();
 });
 
-const handleButtonFree = () => {
-  navigateTo(`${NAVIGATIONS.search}?price_type=marketing`);
-};
 </script>
 
 <template>
   <div class="report_free">
     <div class="tile_report_free default_section">
-      <div class="title">Báo Cáo Miễn Phí</div>
-      <div class="content">Truy cập ngay lập tức và không giới hạn kho báo cáo thị trường Thương mại điện tử.</div>
+      <div class="title">Ứng dụng thực tiễn</div>
+      <div class="content">Các tình huống sử dụng Metric eReport hiệu quả.</div>
     </div>
     <div v-if="isLoading" class="detail_report_free default_section">
       <a-skeleton />
@@ -54,7 +51,6 @@ const handleButtonFree = () => {
       <item-feature-report-free :reports="lstReport.slice(0, 10)" />
     </div>
     <img src="/images/background-search.png" class="background">
-    <a-button style="height: 40px; z-index: 2; padding: 9px 16px; font-weight: 500; margin-top: 24px" @click="handleButtonFree">Xem thêm</a-button>
   </div>
 </template>
 
@@ -124,7 +120,7 @@ const handleButtonFree = () => {
 
 @media (max-width: 768px) {
   .report_free {
-    padding: 5px 0;
+    padding: 40px 0;
     gap: 24px;
 
     .tile_report_free {
@@ -138,6 +134,10 @@ const handleButtonFree = () => {
         line-height: 24px;
       }
     }
+  }
+
+  .detail_report_free {
+    padding: 5px 0;
   }
 }
 </style>

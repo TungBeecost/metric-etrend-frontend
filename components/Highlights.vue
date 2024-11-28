@@ -3,55 +3,62 @@
 
 <template>
 <div class="highlight_container">
-  <div class="highlight_image">
-    <img src="~/public/images/image_highlight.png" alt="highlight_image">
-  </div>
-  <div class="highlight_content">
-    <p class="title">Các số liệu nổi bật của eReport</p>
-    <div class="content">
-      <p>
-        <span class="data_content">4 sàn </span>
-        <span>TMĐT lớn nhất VN</span>
-      </p>
-      <p>
-        <span class="data_content">3 triệu + </span>
-        <span>Nhà bán hoạt động</span>
-      </p>
-      <p>
-        <span class="data_content">150 nghìn + </span>
-        <span>Thương hiệu</span>
-      </p>
+  <div class="highlight_format default_section">
+    <div class="highlight_image">
+      <img src="~/public/images/image_highlight.png" alt="highlight_image">
+    </div>
+    <div class="highlight_content">
+      <p class="title">Các số liệu nổi bật của eReport</p>
+      <div class="content">
+        <p>
+          <span class="data_content">4 sàn </span>
+          <span>TMĐT lớn nhất VN</span>
+        </p>
+        <p>
+          <span class="data_content">3 triệu + </span>
+          <span>Nhà bán hoạt động</span>
+        </p>
+        <p>
+          <span class="data_content">150 nghìn + </span>
+          <span>Thương hiệu</span>
+        </p>
+      </div>
     </div>
   </div>
+
 </div>
 </template>
 
 <style scoped lang="scss">
 .highlight_container{
-  display: flex;
-  padding: 80px 80px 80px 0px;
-  gap: 100px;
-  align-items: center;
   background: linear-gradient(73deg, #FFF4EF 0%, rgba(255, 244, 239, 0.00) 100%);
 
-  .highlight_content{
+  .highlight_format{
     display: flex;
-    flex-direction: column;
-    gap: 60px;
+    padding: 80px 80px 80px 0px;
+    gap: 100px;
+    align-items: center;
 
-    .title{
-      color: var(--Dark-blue-dark-blue-8, #241E46);
-      font-size: 44px;
-      font-weight: 700;
-      line-height: 56px;
-    }
-
-    .content{
+    .highlight_content{
       display: flex;
       flex-direction: column;
-      gap: 40px;
+      gap: 60px;
+
+      .title{
+        color: var(--Dark-blue-dark-blue-8, #241E46);
+        font-size: 44px;
+        font-weight: 700;
+        line-height: 56px;
+      }
+
+      .content{
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
     }
   }
+
 }
 
 .data_content{
@@ -66,26 +73,7 @@
 
 @media (max-width: 767px) {
   .highlight_container{
-    padding: 40px 40px 40px 40px;
-    gap: 40px;
-
-    .highlight_image{
-      display: none;
-    }
-
-    .highlight_content{
-      .title{
-        font-size: 36px;
-        line-height: 44px;
-      }
-
-      .content{
-        .data_content{
-          font-size: 36px;
-          line-height: 44px;
-        }
-      }
-    }
+    display: none;
   }
 }
 </style>

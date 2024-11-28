@@ -31,15 +31,19 @@
       <Parters/>
     </div>
 
-    <Highlights/>
+<!--    <Highlights/>-->
 
     <ReportFeaturedReport/>
 
-    <ReportFree />
+<!--    <ReportFree />-->
 
-    <div class="section">
-      <Testimonials/>
-    </div>
+    <MetricRelease/>
+
+    <DataCollection />
+
+    <Testimonials/>
+
+    <PracticalApplication/>
 
 
     <div class="section planSection">
@@ -103,6 +107,7 @@ import {NAVIGATIONS} from '~/constant/constains';
 import {searchReport, type SearchReportPayload} from "~/services/reports";
 import {ref} from "vue";
 import ReportFree from "~/components/ReportFree.vue";
+import DataCollection from "~/components/DataCollection.vue";
 
 const transactionId = ref<string | null>(null);
 const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotificationPopup', () => false);
