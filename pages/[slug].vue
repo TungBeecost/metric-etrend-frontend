@@ -283,7 +283,8 @@ onUnmounted(() => {
       <poster-detail-report :list-suggest="tagSuggestions" :loading="loadingSuggest"/>
       <transition name="fade">
         <div
-            v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category' && userInfo.current_plan.plan_code !== 'eReport12'"
+            v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category'
+            && userInfo.current_plan.plan_code !== 'eReport12' && userInfo.current_plan.plan_code !== 'eReport12_partner'"
             class="advertisement">
           <scroll-notification
               v-if="data.reportDetail.name"
@@ -295,7 +296,7 @@ onUnmounted(() => {
         </div>
       </transition>
       <transition name="fade">
-        <div v-if="userInfo.current_plan.plan_code === 'eReport12'" class="chat_gpt">
+        <div v-if="userInfo.current_plan.plan_code === 'eReport12' || userInfo.current_plan.plan_code === 'eReport12_partner'" class="chat_gpt">
           <popup-chat-gpt
               :name="data?.reportDetail?.name"
               :id="data?.reportDetail?.id"
