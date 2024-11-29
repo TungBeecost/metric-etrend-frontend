@@ -4,7 +4,9 @@ import OptionPayment from "~/components/payment-service/OptionPayment.vue";
 import PackService from "~/components/payment-service/PackService.vue";
 import { ref, onMounted, watch, computed } from "vue";
 import { usePayment } from "#imports";
-import QRCode from "qrcode.vue";
+// import QRCode from "qrcode.vue";
+import QRCode from "qrcode-vue3";
+
 import { message } from 'ant-design-vue';
 import {PAGE_TITLES, PLANS} from "~/constant/constains";
 const redirectUrl = ref('');
