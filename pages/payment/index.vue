@@ -87,13 +87,13 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
         } else {
           transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
         }
-        console.log('transactionResult', transactionResult);
-        if(transactionResult.status != "success") {
-          if(transactionResult.response.data.detail == "Invalid email account") {
-            message.error('Email không phải là địa chỉ email hợp lệ của google vui lòng nhập địa chỉ email khác', 15);
-            return;
-          }
-        }
+        // console.log('transactionResult', transactionResult);
+        // if(transactionResult.status != "success") {
+        //   if(transactionResult.response.data.detail == "Invalid email account") {
+        //     message.error('Email không phải là địa chỉ email hợp lệ của google vui lòng nhập địa chỉ email khác', 15);
+        //     return;
+        //   }
+        // }
         sessionStorage.setItem('name_payment', `${information.value.name}`);
         sessionStorage.setItem('phone_payment', `${information.value.phone}`);
         sessionStorage.setItem('emailAccount_payment', `${information.value.emailAccount}`);

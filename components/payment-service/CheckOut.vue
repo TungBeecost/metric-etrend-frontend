@@ -5,6 +5,7 @@ import useDiscount from "~/composables/useDiscount";
 import { ref, watch, onMounted } from 'vue';
 import { formatCurrency } from "~/helpers/FormatHelper";
 import FormVat from "~/components/payment-service/FormVat.vue";
+import {NAVIGATIONS} from "~/constant/constains";
 
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
@@ -88,6 +89,10 @@ onMounted(() => {
 });
 
 const handlePayment = () => {
+  if (!currentUserStore.authenticated) {
+    currentUserStore.setShowPopupLogin(true);
+    return;
+  }
   if (!nameValue.value) {
     errors.value.name = 'Bạn cần nhập tên của mình để thanh toán';
   } else {
