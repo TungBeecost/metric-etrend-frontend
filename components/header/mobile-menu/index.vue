@@ -67,6 +67,7 @@
 <script setup lang="ts">
 import { MENUS, NAVIGATIONS } from '~/constant/constains';
 import LoginButton from "~/components/google/LoginButton.vue";
+import {message} from "ant-design-vue";
 defineProps<{
   active: boolean;
 }>()
@@ -86,8 +87,15 @@ const handleClickInfo = () => {
 }
 
 const handleLoginClick = () => {
-  currentUserStore.setShowPopupLogin(true);
-  setShowMenu(false);
+  const userAgent = window.navigator.userAgent;
+  const isFacebookApp = userAgent.includes("FBAN") || userAgent.includes("FBAV");
+
+  if (isFacebookApp) {
+    message.warn("Vui lòng đăng nhập thông qua trình duyệt web.");
+  } else {
+    currentUserStore.setShowPopupLogin(true);
+    setShowMenu(false);
+  }
 }
 </script>
 
