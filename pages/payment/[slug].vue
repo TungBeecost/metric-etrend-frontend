@@ -193,9 +193,14 @@ onMounted(async () => {
   const basePath = domain === 'metric.vn' ? '/ereport/payment' : '/payment';
   redirectUrl.value = `${window.location.protocol}//${domain}${window.location.port ? `:${window.location.port}` : ''}${basePath}/${route.params.slug}`;
   const orderId = route.query.orderId as string;
+  const vnp_OrderInfo = route.query.vnp_OrderInfo as string;
   if (orderId) {
     openModalWaiting.value = true;
     useCheckTransactionCompletion(orderId, 3000);
+  }
+  if (vnp_OrderInfo) {
+    openModalWaiting.value = true;
+    useCheckTransactionCompletion(vnp_OrderInfo, 3000);
   }
 });
 

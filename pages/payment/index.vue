@@ -135,16 +135,6 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
   const isCompleted = ref(false);
   let intervalId: number | undefined = undefined;
   let timeoutId: number | undefined = undefined;
-  const route = useRoute();
-  const vnp_TransactionStatus = route.query.vnp_TransactionStatus as string;
-
-  //test
-  if(vnp_TransactionStatus == '00'){
-    console.log("Transaction completed");
-    const redirectUrl = window.location.hostname === 'metric.vn' ? '/ereport' : '/';
-    window.location.href = `${redirectUrl}?transaction_id=${transactionId}`;
-  }
-
   const checkCompletion = async () => {
     const result = await checkTransactionStatus(transactionId);
     if (result && result.is_completed) {
