@@ -47,7 +47,8 @@ export const createTransaction = async (
         const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment.endpoint)}?${params.toString()}`, {}, {
             headers: {
                 'accept': 'application/json',
-            }
+            },
+            withCredentials: true
         });
 
         return response.data;
@@ -109,11 +110,10 @@ export const createTransactionGuest = async (
                 'accept': 'application/json',
             }
         });
-
+        console.log("createTransactionGuest response: ", response);
         return response.data;
-    } catch (error) {
-        console.error("createTransaction error: ", error);
-        return null;
+    } catch (error: any) {
+        return error;
     }
 };
 

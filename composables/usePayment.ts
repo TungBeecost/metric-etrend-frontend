@@ -22,7 +22,7 @@ export default function usePayment() {
             return await createTransactionGuest(paymentMethod, itemCode, redirectUrl, totalPrice, discountCode, name, phone, emailAccount, company, tax_code, receive_email, address);
         } catch (error) {
             console.error("createPaymentTransaction error: ", error);
-            return null;
+            return error;
         }
     };
 
