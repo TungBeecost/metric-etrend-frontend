@@ -2,8 +2,8 @@
 import { ref, onMounted } from 'vue';
 import type { SearchReportPayload } from '~/services/reports';
 import { REPORT_ENDPOINTS } from '~/constant/endpoints';
-import ItemFeatureReportFree from '~/components/ItemFeatureReportFree.vue';
 import { NAVIGATIONS } from '~/constant/constains';
+import ItemMetricRelease from "~/components/ItemMetricRelease.vue";
 
 const config = useRuntimeConfig();
 const isLoading = ref(true);
@@ -44,17 +44,15 @@ const handleButtonFree = () => {
 <template>
   <div class="report_free">
     <div class="tile_report_free default_section">
-      <div class="title">Báo Cáo Miễn Phí</div>
-      <div class="content">Truy cập ngay lập tức và không giới hạn kho báo cáo thị trường Thương mại điện tử.</div>
+      <div class="title">Báo cáo Metric phát hành</div>
+      <div class="content">Truy cập ngay lập tức và không giới hạn kho báo cáo thị trường Thương mại điện tử</div>
     </div>
     <div v-if="isLoading" class="detail_report_free default_section">
       <a-skeleton />
     </div>
     <div v-else class="detail_report_free default_section">
-      <item-feature-report-free :reports="lstReport.slice(0, 10)" />
+      <item-metric-release :reports="lstReport.slice(0, 6)" />
     </div>
-    <img src="/images/background-search.png" class="background">
-    <a-button style="height: 40px; z-index: 2; padding: 9px 16px; font-weight: 500; margin-top: 24px" @click="handleButtonFree">Xem thêm</a-button>
   </div>
 </template>
 
@@ -65,8 +63,6 @@ const handleButtonFree = () => {
   flex-direction: column;
   align-items: center;
   gap: 36px;
-  background: var(--Gradient, linear-gradient(270deg, #4745A5 0%, #241E46 98.36%));
-  position: relative;
 
   .tile_report_free {
     display: flex;
@@ -79,9 +75,8 @@ const handleButtonFree = () => {
     .title {
       text-align: center;
       line-height: 48px;
-      font-size: 36px;
+      font-size: 44px;
       font-weight: 700;
-      color: #FFFFFF;
     }
 
     .content {
@@ -89,7 +84,6 @@ const handleButtonFree = () => {
       line-height: 32px;
       font-size: 20px;
       font-weight: 400;
-      color: #FFFFFF;
     }
   }
 
@@ -124,7 +118,7 @@ const handleButtonFree = () => {
 
 @media (max-width: 768px) {
   .report_free {
-    padding: 5px 0;
+    padding: 4px 0;
     gap: 24px;
 
     .tile_report_free {

@@ -51,7 +51,9 @@ const isHideContentBasic = computed(() => {
   }
   return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_pro_lite'
       || props.data?.tier_report === 'e_trial' || props.data?.tier_report === 'pt50'
-      || props.data?.tier_report === 'pt100' || props.data?.tier_report === 'eReport12');
+      || props.data?.tier_report === 'pt100' || props.data?.tier_report === 'eReport12'
+      || props.data?.tier_report === 'eReport12_partner'
+  );
 });
 
 const formatNumber = (value = "") => value.toLocaleString("vi-VN");
@@ -479,22 +481,27 @@ const chartOptionsOutput = computed(() => ({
           </span>
         </BlurContent>
         shop mall chiếm
+        <BlurContent :is-hide-content="isHideContent">
         {{
           Number(
               data.data_analytic.by_shop.ratio.mall.ratio_revenue * 100
           ).toFixed(1)
         }}% và hơn
+        </BlurContent>
         <BlurContent :is-hide-content="isHideContent">
           <span>
             {{ formatNumber(data.data_analytic.by_shop.ratio.normal.shop) }}
           </span>
         </BlurContent>
         shop thường chiếm
+        <BlurContent :is-hide-content="isHideContent">
         {{
           Number(
               data.data_analytic.by_shop.ratio.normal.ratio_revenue * 100
           ).toFixed(1)
-        }}% doanh số. Báo cáo về {{ data.name }} của 10 shop bán chạy hàng đầu,
+        }}%
+        </BlurContent>
+          doanh số. Báo cáo về {{ data.name }} của 10 shop bán chạy hàng đầu,
         Shop
         <span class="text-bold">{{
             data.data_analytic.by_shop.lst_top_shop[0].name

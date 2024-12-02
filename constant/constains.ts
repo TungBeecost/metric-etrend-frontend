@@ -212,6 +212,11 @@ interface IPLAN {
   }>;
 }
 
+interface IVIDEO {
+    title: string;
+    url: string;
+}
+
 // constants/plans.js
 export const PLANCARD = [
   {
@@ -335,7 +340,43 @@ export const PLANCARD = [
     textButton: 'Danh sách gói',
     svg: '<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"> <g filter="url(#filter0_d_7028_11121)"> <rect x="16" y="10" width="48" height="48" rx="24" fill="white" shape-rendering="crispEdges"/> <rect x="16.5" y="10.5" width="47" height="47" rx="23.5" stroke="#F9D7C6" shape-rendering="crispEdges"/> <g clip-path="url(#clip0_7028_11121)"> <path opacity="0.2" d="M32.2104 41.5C32.2104 41.5 35 39.8333 40 39.8333C45 39.8333 47.7896 41.5 47.7896 41.5L51.6438 29.6885C51.6719 29.6083 51.6753 29.5215 51.6537 29.4392C51.6321 29.357 51.5863 29.2831 51.5223 29.2271C51.4584 29.1711 51.3791 29.1355 51.2948 29.1249C51.2104 29.1143 51.1248 29.1292 51.049 29.1677L45.4833 31.9427C45.387 31.9903 45.2762 32 45.1731 31.9699C45.0699 31.9399 44.9817 31.8721 44.926 31.7802L40.3667 24.2083C40.3285 24.1458 40.275 24.0942 40.2111 24.0583C40.1473 24.0225 40.0753 24.0037 40.0021 24.0037C39.9289 24.0037 39.8569 24.0225 39.793 24.0583C39.7292 24.0942 39.6756 24.1458 39.6375 24.2083L35.074 31.7833C35.0185 31.8757 34.9301 31.9438 34.8266 31.9739C34.7231 32.004 34.6121 31.994 34.5156 31.9458L28.9583 29.1729C28.8825 29.1347 28.7969 29.1199 28.7126 29.1306C28.6283 29.1413 28.5491 29.1768 28.4851 29.2328C28.4211 29.2887 28.3753 29.3624 28.3535 29.4445C28.3316 29.5266 28.3348 29.6134 28.3625 29.6937L32.2104 41.5Z" fill="#E85912"/> <path d="M32.2104 41.5C32.2104 41.5 35 39.8333 40 39.8333C45 39.8333 47.7896 41.5 47.7896 41.5L51.6438 29.6885C51.6719 29.6083 51.6753 29.5215 51.6537 29.4392C51.6321 29.357 51.5863 29.2831 51.5223 29.2271C51.4584 29.1711 51.3791 29.1355 51.2948 29.1249C51.2104 29.1143 51.1248 29.1292 51.049 29.1677L45.4833 31.9427C45.387 31.9903 45.2762 32 45.1731 31.9699C45.0699 31.9399 44.9817 31.8721 44.926 31.7802L40.3667 24.2083C40.3285 24.1458 40.275 24.0942 40.2111 24.0583C40.1473 24.0225 40.0753 24.0037 40.0021 24.0037C39.9289 24.0037 39.8569 24.0225 39.793 24.0583C39.7292 24.0942 39.6756 24.1458 39.6375 24.2083L35.074 31.7833C35.0185 31.8757 34.9301 31.9438 34.8266 31.9739C34.7231 32.004 34.6121 31.994 34.5156 31.9458L28.9583 29.1729C28.8825 29.1347 28.7969 29.1199 28.7126 29.1306C28.6283 29.1413 28.5491 29.1768 28.4851 29.2328C28.4211 29.2887 28.3753 29.3624 28.3535 29.4445C28.3316 29.5266 28.3348 29.6134 28.3625 29.6937L32.2104 41.5Z" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g> </g> <defs> <filter id="filter0_d_7028_11121" x="0" y="0" width="80" height="80" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"> <feFlood flood-opacity="0" result="BackgroundImageFix"/> <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/> <feOffset dy="6"/> <feGaussianBlur stdDeviation="8"/> <feComposite in2="hardAlpha" operator="out"/> <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.545098 0 0 0 0 0.211765 0 0 0 0.16 0"/> <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_7028_11121"/> <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_7028_11121" result="shape"/> </filter> <clipPath id="clip0_7028_11121"> <rect width="26.6667" height="26.6667" fill="white" transform="translate(26.6667 20.6666)"/> </clipPath> </defs> </svg>'
   },
+  {
+    code: 'eReport12_partner',
+    name: 'eReport T12 Partner',
+    description: 'Bạn đang sử dụng gói eReport T12 Partner và không bị giới hạn báo cáo',
+    background: 'linear-gradient(90.12deg, #FCA14E 1.09%, #FF733F 99.22%)',
+    textColor: '#FFFFFF',
+    textColorButton: '#E85912',
+    backgroundButton: '#FFFFFF',
+    textButton: 'Danh sách gói',
+    svg: '<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"> <g filter="url(#filter0_d_7028_11121)"> <rect x="16" y="10" width="48" height="48" rx="24" fill="white" shape-rendering="crispEdges"/> <rect x="16.5" y="10.5" width="47" height="47" rx="23.5" stroke="#F9D7C6" shape-rendering="crispEdges"/> <g clip-path="url(#clip0_7028_11121)"> <path opacity="0.2" d="M32.2104 41.5C32.2104 41.5 35 39.8333 40 39.8333C45 39.8333 47.7896 41.5 47.7896 41.5L51.6438 29.6885C51.6719 29.6083 51.6753 29.5215 51.6537 29.4392C51.6321 29.357 51.5863 29.2831 51.5223 29.2271C51.4584 29.1711 51.3791 29.1355 51.2948 29.1249C51.2104 29.1143 51.1248 29.1292 51.049 29.1677L45.4833 31.9427C45.387 31.9903 45.2762 32 45.1731 31.9699C45.0699 31.9399 44.9817 31.8721 44.926 31.7802L40.3667 24.2083C40.3285 24.1458 40.275 24.0942 40.2111 24.0583C40.1473 24.0225 40.0753 24.0037 40.0021 24.0037C39.9289 24.0037 39.8569 24.0225 39.793 24.0583C39.7292 24.0942 39.6756 24.1458 39.6375 24.2083L35.074 31.7833C35.0185 31.8757 34.9301 31.9438 34.8266 31.9739C34.7231 32.004 34.6121 31.994 34.5156 31.9458L28.9583 29.1729C28.8825 29.1347 28.7969 29.1199 28.7126 29.1306C28.6283 29.1413 28.5491 29.1768 28.4851 29.2328C28.4211 29.2887 28.3753 29.3624 28.3535 29.4445C28.3316 29.5266 28.3348 29.6134 28.3625 29.6937L32.2104 41.5Z" fill="#E85912"/> <path d="M32.2104 41.5C32.2104 41.5 35 39.8333 40 39.8333C45 39.8333 47.7896 41.5 47.7896 41.5L51.6438 29.6885C51.6719 29.6083 51.6753 29.5215 51.6537 29.4392C51.6321 29.357 51.5863 29.2831 51.5223 29.2271C51.4584 29.1711 51.3791 29.1355 51.2948 29.1249C51.2104 29.1143 51.1248 29.1292 51.049 29.1677L45.4833 31.9427C45.387 31.9903 45.2762 32 45.1731 31.9699C45.0699 31.9399 44.9817 31.8721 44.926 31.7802L40.3667 24.2083C40.3285 24.1458 40.275 24.0942 40.2111 24.0583C40.1473 24.0225 40.0753 24.0037 40.0021 24.0037C39.9289 24.0037 39.8569 24.0225 39.793 24.0583C39.7292 24.0942 39.6756 24.1458 39.6375 24.2083L35.074 31.7833C35.0185 31.8757 34.9301 31.9438 34.8266 31.9739C34.7231 32.004 34.6121 31.994 34.5156 31.9458L28.9583 29.1729C28.8825 29.1347 28.7969 29.1199 28.7126 29.1306C28.6283 29.1413 28.5491 29.1768 28.4851 29.2328C28.4211 29.2887 28.3753 29.3624 28.3535 29.4445C28.3316 29.5266 28.3348 29.6134 28.3625 29.6937L32.2104 41.5Z" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g> </g> <defs> <filter id="filter0_d_7028_11121" x="0" y="0" width="80" height="80" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"> <feFlood flood-opacity="0" result="BackgroundImageFix"/> <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/> <feOffset dy="6"/> <feGaussianBlur stdDeviation="8"/> <feComposite in2="hardAlpha" operator="out"/> <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.545098 0 0 0 0 0.211765 0 0 0 0.16 0"/> <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_7028_11121"/> <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_7028_11121" result="shape"/> </filter> <clipPath id="clip0_7028_11121"> <rect width="26.6667" height="26.6667" fill="white" transform="translate(26.6667 20.6666)"/> </clipPath> </defs> </svg>'
+  },
 ];
+
+
+export const VIDEO: Array<IVIDEO> = [
+    {
+        title: "X5 hiệu quả: Tìm sản phẩm HOT kinh doanh cực nhanh với Metric eReport!",
+        url: "https://www.youtube.com/watch?v=bXQXqZidFg0",
+    },
+    {
+        title: "X3 Tốc Độ Viết Content Marketing Chuẩn Đỉnh Nhờ Metric eReport!",
+        url: "https://www.youtube.com/watch?v=dMw-5cmnqug",
+    },
+    {
+        title: "Bí kíp x5 tốc độ họp nhóm & lập kế hoạch Marketing siêu nhanh với Metric eReport!",
+        url: "https://www.youtube.com/watch?v=bkYO_uLc3Ew",
+    },
+    {
+        title: "Thông minh & hiệu quả hơn khi gặp khách hàng và đối tác - Trợ lý số liệu Metric eReport.",
+        url: "https://www.youtube.com/watch?v=sJvTpijYR_I",
+    },
+    {
+      title: "Tăng tốc x10 lần: Bí quyết duyệt kế hoạch & báo cáo kinh doanh từ Metric eReport",
+      url: "https://www.youtube.com/watch?v=hRjIFmREmic",
+    },
+    ];
+
 
 
 export const PLANS: Array<IPLAN> = [

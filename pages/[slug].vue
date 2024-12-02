@@ -18,6 +18,8 @@ import ScrollNotification from "~/components/ScrollNotification.vue";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
 import {useCurrentUser} from "~/stores/current-user.js";
 import PopupChatGpt from "~/components/MetricGpt/PopupChatGpt.vue";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService.js";
+import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
 
 
 const route = useRoute();
@@ -106,6 +108,9 @@ const fetchReportData = async () => {
         'Visitorid': visitorId ? visitorId.visitor_id : '',
       }
     });
+
+    trackEventCommon(EVENT_TYPE.VIEW_REPORT, slug, response?.name);
+    trackEventCommon(EVENT_TYPE.VIEW_ANY_REPORT, slug, response?.name);
 
     if (!response) {
       await router.push('/search');
@@ -278,7 +283,8 @@ onUnmounted(() => {
       <poster-detail-report :list-suggest="tagSuggestions" :loading="loadingSuggest"/>
       <transition name="fade">
         <div
-            v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category' && userInfo.current_plan.plan_code !== 'eReport12'"
+            v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category'
+            && userInfo.current_plan.plan_code !== 'eReport12' && userInfo.current_plan.plan_code !== 'eReport12_partner'"
             class="advertisement">
           <scroll-notification
               v-if="data.reportDetail.name"
@@ -290,7 +296,7 @@ onUnmounted(() => {
         </div>
       </transition>
       <transition name="fade">
-        <div v-if="userInfo.current_plan.plan_code === 'eReport12'" class="chat_gpt">
+        <div v-if="userInfo.current_plan.plan_code === 'eReport12' || userInfo.current_plan.plan_code === 'eReport12_partner'" class="chat_gpt">
           <popup-chat-gpt
               :name="data?.reportDetail?.name"
               :id="data?.reportDetail?.id"

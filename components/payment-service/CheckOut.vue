@@ -183,7 +183,7 @@ const handleDiscount = () => {
 
 const fetchDiscount = async () => {
   try {
-    const response = await getVoucher(discountValue.value, plan.plan_code);
+    const response = await getVoucher(discountValue.value.toUpperCase(), plan.plan_code);
 
     if (response) {
       const {discount} = response;
@@ -209,7 +209,7 @@ const fetchDiscount = async () => {
         errors.value.discount = 'Mã giảm giá đã hết lượt sử dụng';
       } else if (userInfo.value.list_personal_discount.includes(discount.code)) {
         statusApplyCode.value = false;
-        errors.value.discount = 'Bạn không thể áp dụng mã giảm gái này';
+        errors.value.discount = 'Bạn không thể áp dụng mã giảm gói này';
       } else {
         statusApplyCode.value = true;
         errors.value.discount = 'Đã áp dụng mã giảm giá';

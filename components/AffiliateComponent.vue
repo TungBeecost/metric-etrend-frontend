@@ -53,4 +53,13 @@ const redirectToGoogleDoc = () => {
     }
   }
 }
+
+@media (max-width: 767px) {
+  .affiliate{
+    padding: 40px 20px;
+  }
+  .content{
+    text-align: center;
+  }
+}
 </style>

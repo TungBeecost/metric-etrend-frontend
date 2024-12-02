@@ -74,9 +74,7 @@ const filteredPlans = computed(() => {
 <template>
   <div class="wrapper">
     <p :class="{ header: true, dark: isDarkTitle }">
-      Các gói tính năng khai thác
-      <template v-if="!isMobile"><br/></template>
-      1 Triệu báo cáo E-commerce
+      Các gói dịch vụ khai thác 1 triệu báo cáo thị trường TMĐT
     </p>
 
     <div class="pricings">
