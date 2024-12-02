@@ -91,7 +91,7 @@ const handleLoginClick = () => {
   const isFacebookApp = userAgent.includes("FBAN") || userAgent.includes("FBAV");
 
   if (isFacebookApp) {
-    message.warn("Vui lòng đăng nhập thông qua trình duyệt web.");
+    message.warn("Hệ thống không hỗ trợ đăng nhập qua Facebook! Vui lòng đăng nhập thông qua trình duyệt web.", 120);
   } else {
     currentUserStore.setShowPopupLogin(true);
     setShowMenu(false);
