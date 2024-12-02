@@ -87,12 +87,10 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
         } else {
           transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
         }
-        if(transactionResult.status != 200) {
-          if(transactionResult.response.data.detail == "Invalid email account"){
+        console.log('transactionResult', transactionResult);
+        if(transactionResult.status != "success") {
+          if(transactionResult.response.data.detail == "Invalid email account") {
             message.error('Email không phải là địa chỉ email hợp lệ của google vui lòng nhập địa chỉ email khác', 15);
-            return;
-          } else{
-            message.error('Đã xảy ra lỗi khi tạo giao dịch. Vui lòng thử lại.');
             return;
           }
         }
