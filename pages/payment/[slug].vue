@@ -23,6 +23,7 @@ const reportDetail = ref<any>(null);
 const information = ref({name: '', phone: '', emailAccount: '', companyName: '', taxCode: '', email: '', address: ''});
 const slug = route.params.slug;
 const reportLink = `https://ereport.vn/${slug}`;
+const currentUserStore = useCurrentUser();
 
 interface ErrorResponse {
   response: {
@@ -50,12 +51,12 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
     if (reportDetail.value && reportDetail.value.id) {
       try {
         let transactionResult = null;
-        if (information.value.emailAccount) {
-          console.log('information', information.value);
-          transactionResult = await createPaymentTransactionPdfGuest(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
-        } else {
-          transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
-        }
+        // if (information.value.emailAccount) {
+        //   console.log('information', information.value);
+        //   transactionResult = await createPaymentTransactionPdfGuest(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        // } else {
+        transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        // }
         sessionStorage.setItem('name_payment', `${information.value.name}`);
         sessionStorage.setItem('phone_payment', `${information.value.phone}`);
         sessionStorage.setItem('emailAccount_payment', `${information.value.emailAccount}`);
@@ -186,6 +187,10 @@ const handleUpdateContact = (contact: {
 };
 
 onMounted(async () => {
+  if (!currentUserStore.authenticated) {
+    currentUserStore.setShowPopupLogin(true);
+    return;
+  }
   await fetchReportData();
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';

@@ -165,7 +165,8 @@ export const createTransactionPdf = async (
         const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment_pdf.endpoint)}?${params.toString()}`, {}, {
             headers: {
                 'accept': 'application/json',
-            }
+            },
+            withCredentials: true
         });
         return response.data;
     } catch (error) {

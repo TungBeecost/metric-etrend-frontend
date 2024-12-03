@@ -273,15 +273,15 @@ const isHidePromotionInput = hideShowPromotionInputPlans.includes(plan.plan_code
               :is-required="true"
               :input-props="{ placeholder: 'Nhập SĐT' }"
           />
-          <CustomInput
-              v-if="!userInfo.id"
-              v-model:input="emailAccount"
-              class="emailAccount"
-              :error-message="errors.emailAccount"
-              label="Email tài khoản mua hàng"
-              :is-required="true"
-              :input-props="{ placeholder: 'Nhập email' }"
-          />
+<!--          <CustomInput-->
+<!--              v-if="!userInfo.id"-->
+<!--              v-model:input="emailAccount"-->
+<!--              class="emailAccount"-->
+<!--              :error-message="errors.emailAccount"-->
+<!--              label="Email tài khoản mua hàng"-->
+<!--              :is-required="true"-->
+<!--              :input-props="{ placeholder: 'Nhập email' }"-->
+<!--          />-->
           <CustomInputDiscount
               v-if="!isHidePromotionInput"
               v-model:input="discountValue" :discount-value-router="discountValueRouter"

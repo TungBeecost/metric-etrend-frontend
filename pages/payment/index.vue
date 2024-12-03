@@ -4,7 +4,6 @@ import OptionPayment from "~/components/payment-service/OptionPayment.vue";
 import PackService from "~/components/payment-service/PackService.vue";
 import { ref, onMounted, watch, computed } from "vue";
 import { usePayment } from "#imports";
-// import QRCode from "qrcode.vue";
 import QRCode from "qrcode-vue3";
 
 import { message } from 'ant-design-vue';
@@ -14,6 +13,7 @@ const discountValue = ref<any>({});
 const { createPaymentTransaction, verifyTransaction, createPaymentTransactionGuest } = usePayment()
 const selectedWalletOption = ref('');
 const qrCodeData = ref('');
+const currentUserStore = useCurrentUser();
 
 const statusApplyCode = ref<boolean>(false);
 const openModal = ref<boolean>(false);
@@ -80,13 +80,14 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
     const currentPlan = plan.value;
 
     if (currentPlan) {
-      const itemCode = currentPlan.plan_code === 'eReport12' ? `${currentPlan.plan_code}__12m` : `${currentPlan.plan_code}__6m`;      try {
+      const itemCode = currentPlan.plan_code === 'eReport12' ? `${currentPlan.plan_code}__12m` : `${currentPlan.plan_code}__6m`;
+      try {
         let transactionResult = null;
-        if (information.value.emailAccount) {
-          transactionResult = await createPaymentTransactionGuest(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
-        } else {
-          transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
-        }
+        // if (information.value.emailAccount) {
+        //   transactionResult = await createPaymentTransactionGuest(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        // } else {
+        transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        // }
         // console.log('transactionResult', transactionResult);
         // if(transactionResult.status != "success") {
         //   if(transactionResult.response.data.detail == "Invalid email account") {
@@ -125,7 +126,6 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
     message.error('Vui lòng chọn phương thức thanh toán trước khi thanh toán');
   }
 };
-
 
 const checkTransactionStatus = async (transactionId: string) => {
   try {
@@ -182,6 +182,10 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
 const plan = computed(() => PLANS.find(p => p.plan_code === planCode.value));
 
 onMounted(() => {
+  if (!currentUserStore.authenticated) {
+    currentUserStore.setShowPopupLogin(true);
+    return;
+  }
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}${window.location.hostname === 'metric.vn' ? '/ereport' : ''}/payment`;
