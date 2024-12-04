@@ -176,7 +176,7 @@ const handleDiscount = () => {
 
 const fetchDiscount = async () => {
   try {
-    const response = await getVoucher(discountValue.value);
+    const response = await getVoucher(discountValue.value, '');
 
     if (response) {
       const { discount } = response;
