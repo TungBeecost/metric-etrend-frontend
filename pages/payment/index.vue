@@ -4,6 +4,7 @@ import OptionPayment from "~/components/payment-service/OptionPayment.vue";
 import PackService from "~/components/payment-service/PackService.vue";
 import { ref, onMounted, watch, computed } from "vue";
 import { usePayment } from "#imports";
+// import QRCode from "qrcode.vue";
 import QRCode from "qrcode-vue3";
 
 import { message } from 'ant-design-vue';
@@ -13,7 +14,6 @@ const discountValue = ref<any>({});
 const { createPaymentTransaction, verifyTransaction, createPaymentTransactionGuest } = usePayment()
 const selectedWalletOption = ref('');
 const qrCodeData = ref('');
-const currentUserStore = useCurrentUser();
 
 const statusApplyCode = ref<boolean>(false);
 const openModal = ref<boolean>(false);
@@ -80,21 +80,19 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
     const currentPlan = plan.value;
 
     if (currentPlan) {
-      const itemCode = currentPlan.plan_code === 'eReport12' ? `${currentPlan.plan_code}__12m` : `${currentPlan.plan_code}__6m`;
-      try {
+      const itemCode = currentPlan.plan_code === 'eReport12' ? `${currentPlan.plan_code}__12m` : `${currentPlan.plan_code}__6m`;      try {
         let transactionResult = null;
-        // if (information.value.emailAccount) {
-        //   transactionResult = await createPaymentTransactionGuest(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
-        // } else {
-        transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
-        // }
-        // console.log('transactionResult', transactionResult);
-        // if(transactionResult.status != "success") {
-        //   if(transactionResult.response.data.detail == "Invalid email account") {
-        //     message.error('Email không phải là địa chỉ email hợp lệ của google vui lòng nhập địa chỉ email khác', 15);
-        //     return;
-        //   }
-        // }
+        if (information.value.emailAccount) {
+          transactionResult = await createPaymentTransactionGuest(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        } else {
+          transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        }
+        if(transactionResult.message === "Invalid email account")
+        {
+          message.error('Hệ thống chỉ hỗ trợ đăng nhập bằng tài khoản Google Email. Vui lòng nhập lại email khác.', 5);
+          return;
+        }
+        console.log('transactionResult', transactionResult);
         sessionStorage.setItem('name_payment', `${information.value.name}`);
         sessionStorage.setItem('phone_payment', `${information.value.phone}`);
         sessionStorage.setItem('emailAccount_payment', `${information.value.emailAccount}`);
@@ -112,6 +110,7 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
           isCompleted.value && (window.location.href = '/');
         }
       } catch (error) {
+        console.error("Error creating transaction:", error);
         const typedError = error as ErrorResponse;
         if (typedError.response && typedError.response.data && typedError.response.data.detail === "User already has a subscription" && typedError.response.data.status_code === 400) {
           message.error('Bạn đã có một đăng ký. Không thể thực hiện thêm.');
@@ -126,6 +125,7 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
     message.error('Vui lòng chọn phương thức thanh toán trước khi thanh toán');
   }
 };
+
 
 const checkTransactionStatus = async (transactionId: string) => {
   try {
@@ -182,10 +182,6 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
 const plan = computed(() => PLANS.find(p => p.plan_code === planCode.value));
 
 onMounted(() => {
-  if (!currentUserStore.authenticated) {
-    currentUserStore.setShowPopupLogin(true);
-    return;
-  }
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}${window.location.hostname === 'metric.vn' ? '/ereport' : ''}/payment`;

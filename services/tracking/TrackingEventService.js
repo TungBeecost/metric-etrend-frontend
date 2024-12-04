@@ -30,11 +30,7 @@ const setUserProperties = (options) => {
 };
 
 const trackEventCommon = async (eventName, eventCategory, eventLabel = '', value = 1, params = null, isStoreApi = true) => {
-  console.log('trackEventCommon called with:', { eventName, eventCategory, eventLabel, value, params, isStoreApi });
-
   if (shouldTrack()) {
-    console.log('Tracking is enabled');
-
     const eventDetails = {
       'event_category': eventCategory,
       'event_label': eventLabel,

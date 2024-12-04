@@ -5,7 +5,6 @@ import useDiscount from "~/composables/useDiscount";
 import { ref, watch, onMounted } from 'vue';
 import { formatCurrency } from "~/helpers/FormatHelper";
 import FormVat from "~/components/payment-service/FormVat.vue";
-import {NAVIGATIONS} from "~/constant/constains";
 
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
@@ -89,10 +88,6 @@ onMounted(() => {
 });
 
 const handlePayment = () => {
-  if (!currentUserStore.authenticated) {
-    currentUserStore.setShowPopupLogin(true);
-    return;
-  }
   if (!nameValue.value) {
     errors.value.name = 'Bạn cần nhập tên của mình để thanh toán';
   } else {
@@ -111,7 +106,7 @@ const handlePayment = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!userInfo.value.id && !emailAccount.value) {
-    errors.value.emailAccount = 'Bạn cần nhập email tài khoản mua hàng';
+    errors.value.emailAccount = 'Bạn cần nhập email đăng nhập';
   } else if (!emailRegex.test(emailAccount.value)) {
     errors.value.emailAccount = 'Email không hợp lệ';
   } else {
@@ -273,15 +268,15 @@ const isHidePromotionInput = hideShowPromotionInputPlans.includes(plan.plan_code
               :is-required="true"
               :input-props="{ placeholder: 'Nhập SĐT' }"
           />
-<!--          <CustomInput-->
-<!--              v-if="!userInfo.id"-->
-<!--              v-model:input="emailAccount"-->
-<!--              class="emailAccount"-->
-<!--              :error-message="errors.emailAccount"-->
-<!--              label="Email tài khoản mua hàng"-->
-<!--              :is-required="true"-->
-<!--              :input-props="{ placeholder: 'Nhập email' }"-->
-<!--          />-->
+          <CustomInput
+              v-if="!userInfo.id"
+              v-model:input="emailAccount"
+              class="emailAccount"
+              :error-message="errors.emailAccount"
+              label="Email đăng nhập (Google email)"
+              :is-required="true"
+              :input-props="{ placeholder: 'Nhập Google email' }"
+          />
           <CustomInputDiscount
               v-if="!isHidePromotionInput"
               v-model:input="discountValue" :discount-value-router="discountValueRouter"
