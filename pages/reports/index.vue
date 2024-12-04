@@ -68,7 +68,8 @@ useSeoMeta({
       </div>
     </div>
     <explore-by-report-type/>
-    <report-free/>
+<!--    <report-free/>-->
+    <PracticalApplication/>
     <discover/>
     <featured-report/>
 <!--    <ContactUs/>-->

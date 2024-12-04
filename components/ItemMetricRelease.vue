@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {ref, computed, onMounted} from 'vue';
 import moment from "moment/moment";
+import {NAVIGATIONS} from "~/constant/constains";
 
 const { reports } = defineProps({
   reports: {
@@ -8,7 +9,7 @@ const { reports } = defineProps({
     default: () => []
   }
 });
-
+const router = useRouter();
 const showMore = ref(false);
 
 const windowWidth = ref(0);
@@ -39,12 +40,16 @@ const splitReports = computed(() => {
 const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFormat: string = "YYYY-MM-DD HH:mm:ss"): string => {
   return moment(value, inputFormat).format(format);
 }
+
+const navigateToReport = (report: any) => {
+  router.push(`${NAVIGATIONS.home}insight/${report.slug}`);
+};
 </script>
 
 <template>
   <div class="item_metric_release">
     <div class="column" v-for="(columnReports, index) in splitReports" :key="index">
-      <div v-for="report in columnReports" :key="report.id" class="item">
+      <div v-for="report in columnReports" :key="report.id" class="item" @click="navigateToReport(report)">
         <div class="image">
           <img :src="report.url_thumbnail" alt="url_thumbnail" />
         </div>
@@ -71,6 +76,7 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
   display: flex;
   border-radius: 12px;
   border: 1px solid #EEEBFF;
+  cursor: pointer;
   .image {
     height: 124px;
     width: 180px;
