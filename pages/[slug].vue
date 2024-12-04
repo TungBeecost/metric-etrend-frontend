@@ -284,7 +284,7 @@ onUnmounted(() => {
       <transition name="fade">
         <div
             v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category'
-            && userInfo.current_plan.plan_code !== 'eReport12' && userInfo.current_plan.plan_code !== 'eReport12_partner'"
+            && userInfo.current_plan.plan_code !== 'eReport12' && userInfo.current_plan.plan_code !== 'eReport12_partner' && !data?.reportDetail?.is_unsellable"
             class="advertisement">
           <scroll-notification
               v-if="data.reportDetail.name"
