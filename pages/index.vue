@@ -108,6 +108,8 @@ import {searchReport, type SearchReportPayload} from "~/services/reports";
 import {ref} from "vue";
 import ReportFree from "~/components/ReportFree.vue";
 import DataCollection from "~/components/DataCollection.vue";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const transactionId = ref<string | null>(null);
 const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotificationPopup', () => false);
@@ -177,6 +179,7 @@ const handleOk = () => {
 
 const handdleUpdate = () => {
   showModal.value = false;
+  trackEventCommon(EVENT_TYPE.PAYMENT_SUCCESS_PACKAGE, 'payment_success_package', '');
   navigateTo(`${NAVIGATIONS.home}`);
 };
 

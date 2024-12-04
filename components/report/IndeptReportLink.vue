@@ -3,11 +3,14 @@ import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
 import {ref, onMounted, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import ReportPreviewSlide from "~/components/PreviewSlide/ReportPreviewSlide.vue";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const open = ref(false);
 const route = useRoute();
 const router = useRouter();
 const handleClick = () => {
+  trackEventCommon(EVENT_TYPE.DOWNLOAD_REPORT, 'download_report', '');
   open.value = true;
 };
 

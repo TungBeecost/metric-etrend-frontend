@@ -8,6 +8,8 @@ import {PAGE_TITLES} from "~/constant/constains";
 import PackServicePdf from "~/components/payment-service/PackServicePdf.vue";
 import CheckOutPdf from "~/components/payment-service/CheckOutPdf.vue";
 import {upperFirst} from "scule";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
@@ -192,6 +194,8 @@ onMounted(async () => {
     return;
   }
   await fetchReportData();
+  trackEventCommon(EVENT_TYPE.VIEW_AFF_TRANSACTION, 'payment', '');
+  trackEventCommon(EVENT_TYPE.VIEW_CHECKOUT_REPORT, 'view_checkout_report', '');
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
   const domain = window.location.hostname;

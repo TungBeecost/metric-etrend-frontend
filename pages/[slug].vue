@@ -218,6 +218,7 @@ onMounted(() => {
 
 const handleOk = () => {
   showModal.value = false;
+  trackEventCommon(EVENT_TYPE.PAYMENT_SUCCESS_REPORT, 'payment_success_report', '');
   navigateTo(`${NAVIGATIONS.home}${route.params.slug}`);
 };
 

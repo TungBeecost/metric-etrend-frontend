@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {NAVIGATIONS, WALLET} from "~/constant/constains";
 // import {computed, defineEmits, defineProps, ref, toRefs} from 'vue';
-import {computed, ref, toRefs} from 'vue';
+import {computed, onMounted, ref, toRefs} from 'vue';
 import {useCurrentUser} from "~/stores/current-user";
 import {useRoute} from "vue-router";
 import ViewPdfModal from "~/components/ViewPdfModal.vue";
@@ -10,6 +10,8 @@ import moment from "moment";
 import {message} from "ant-design-vue";
 import {formatCurrency} from "~/helpers/FormatHelper";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const config = useRuntimeConfig();
 const prefixResource = config.public.BASE_PATH !== '/' ? config.public.BASE_PATH : '';
@@ -114,8 +116,11 @@ const handleView = async () => {
     showAlert.value = true;
     console.log('showAlert', showAlert.value)
   }
-
 };
+
+onMounted(() => {
+  trackEventCommon(EVENT_TYPE.SHOW_POPUP_BUY_REPORT, 'show_popup_buy_report', '');
+});
 
 const toggleUnlock = () => {
   emits('update:open', false);
@@ -136,13 +141,6 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
 </script>
 
 <template>
-  <!--  <a-modal class="button_login" :visible="currentUserStore.isShowPopupLogin"-->
-  <!--           :footer="false"-->
-  <!--           style="padding-top: 24px; z-index: 1050;"-->
-  <!--           @ok="currentUserStore.setShowPopupLogin(false)"-->
-  <!--           @cancel="currentUserStore.setShowPopupLogin(false)">-->
-  <!--    <login-button/>-->
-  <!--  </a-modal>-->
   <a-modal
       :open="open" :width="1000" :footer="null" @cancel="toggleUnlock" @ok="toggleUnlock"
   >

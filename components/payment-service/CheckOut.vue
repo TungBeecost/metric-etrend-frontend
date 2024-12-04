@@ -5,6 +5,8 @@ import useDiscount from "~/composables/useDiscount";
 import { ref, watch, onMounted } from 'vue';
 import { formatCurrency } from "~/helpers/FormatHelper";
 import FormVat from "~/components/payment-service/FormVat.vue";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
@@ -88,6 +90,7 @@ onMounted(() => {
 });
 
 const handlePayment = () => {
+  trackEventCommon(EVENT_TYPE.CLICK_PAYNOW_PACKAGE, 'click_paynow_package', '');
   if (!nameValue.value) {
     errors.value.name = 'Bạn cần nhập tên của mình để thanh toán';
   } else {

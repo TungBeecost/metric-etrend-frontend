@@ -9,6 +9,8 @@ import QRCode from "qrcode-vue3";
 
 import { message } from 'ant-design-vue';
 import {PAGE_TITLES, PLANS} from "~/constant/constains";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
 const { createPaymentTransaction, verifyTransaction, createPaymentTransactionGuest } = usePayment()
@@ -185,7 +187,8 @@ onMounted(() => {
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}${window.location.hostname === 'metric.vn' ? '/ereport' : ''}/payment`;
-  console.log('window.location.hostname', window.location.hostname);
+  trackEventCommon(EVENT_TYPE.VIEW_CHECKOUT_PACKAGE, 'view_checkout_package', '');
+  trackEventCommon(EVENT_TYPE.VIEW_AFF_TRANSACTION, 'payment', '');
   const orderId = route.query.orderId as string;
   const vnp_OrderInfo = route.query.vnp_OrderInfo as string;
   if (orderId) {

@@ -3,6 +3,8 @@ import { ref, watch } from 'vue';
 import { PLANCARD } from '~/constant/constains';
 import moment from 'moment/moment';
 import PlanCard from '~/components/account/PlanCard.vue';
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 interface Plan {
   code: string;
@@ -60,6 +62,7 @@ const showPersonalDiscount = computed(() => {
 });
 
 const handdleCoppy = () => {
+  trackEventCommon(EVENT_TYPE.COPY_REFERRAL_CODE, 'copy_referral_code', '');
   const el = document.createElement('textarea');
   el.value = props.userInfo.list_personal_discount.join(', ');
   document.body.appendChild(el);

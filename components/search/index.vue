@@ -48,6 +48,8 @@ import {debounce} from "~/helpers/common";
 import {NAVIGATIONS} from "~/constant/constains";
 import slugify from 'slugify';
 import {upperFirst} from "scule";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const props = defineProps<{
   handleSearch: (value: string) => Promise<any>,
@@ -107,8 +109,7 @@ const slugifyText = (text: string) => {
 }
 
 const handleSuggestionClick = async (suggestion: string, index: number) => {
-  console.log(suggestion);
-
+  trackEventCommon(EVENT_TYPE.CLICK_RELATED_REPORT, 'related_report', '');
   const {name, report_type} = suggestion;
   const slug = report_type === 'report_brand' ? `thuong-hieu-${slugifyText(name)}` : slugifyText(name);
   searchValue.value = name;

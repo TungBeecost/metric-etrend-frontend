@@ -5,10 +5,14 @@ import { formatAndRoundSortTextCurrencyWithMinValue } from "~/helpers/FormatHelp
 import BlurContent from "~/components/BlurContent.vue";
 import { useRouter } from 'vue-router';
 import { VIDEO } from '~/constant/constains';
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const router = useRouter();
 
 const handleItemClick = (report: any) => {
+  trackEventCommon(EVENT_TYPE.VIDEO_START, 'video_start', '');
+
 };
 
 const windowWidth = ref(1024);
