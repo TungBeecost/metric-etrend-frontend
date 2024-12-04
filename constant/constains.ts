@@ -626,3 +626,32 @@ export const LIST_REPORT_TYPES = [
     content: 'Cung cấp thông tin về thương hiệu, giúp doanh nghiệp hiểu rõ vị thế cạnh tranh, chiến lược marketing, và hành vi người tiêu dùng đối với thương hiệu.'
   }
 ]
+
+export const DATACOLLECTION = [
+  {
+    thumbnail: '/icons/home/data_collection/Icon1.svg',
+    title: '1. Thu thập dữ liệu',
+    content: 'Thu thập dữ liệu lớn (Big data) từ các sàn và website TMĐT'
+  },
+  {
+      thumbnail: '/icons/home/data_collection/Icon2.svg',
+      title: '2. Làm sạch dữ liệu',
+      content: 'Làm sạch, phân tích & hệ thống các điểm dữ liệu'
+  },
+  {
+      thumbnail: '/icons/home/data_collection/Icon3.svg',
+      title: '3. Phân tích dữ liệu',
+      content: 'Tính toán các chỉ số thống kê cơ bản. Phân tích phân loại theo ngành hàng, nhóm sản phẩm, (SKUs),..'
+  },
+  {
+      thumbnail: '/icons/home/data_collection/Icon4.svg',
+      title: '4. Trực quan hoá dữ liệu',
+      content: 'Chuyển đổi dữ liệu từ dạng số sang bảng biểu để dễ dàng nhận diện các xu hướng và thông tin quan trọng'
+  },
+  {
+      thumbnail: '/icons/home/data_collection/Icon5.svg',
+      title: '5. Báo cáo thị trường ',
+      content: 'Báo cáo thị trường phân tích chi tiết và toàn diện theo ngành hàng, nhóm hàng, thương hiệu'
+  }
+]
+

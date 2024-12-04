@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
+import ListDataColectionComponent from "~/components/home/ListDataColectionComponent.vue";
 
 const windowWidth = ref(0);
 const isMobile = ref(false);
@@ -18,7 +19,9 @@ onMounted(() => {
 <div class="data_collection default_section">
   <p class="title">Phương pháp thu thập và xử lý dữ liệu</p>
   <img v-if="!isMobile" src="~/public/images/Data_collect.png" alt="data_collect" class="data_collect_img">
-  <img v-else src="~/public/images/OPT3.png" alt="data_collect" class="data_collect_img_mobile">
+  <div v-else>
+    <list-data-colection-component />
+  </div>
 </div>
 </template>
 
@@ -29,6 +32,7 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   gap: 60px;
+
 
   .title{
     color: var(--Dark-blue-dark-blue-8, #241E46);
@@ -43,6 +47,7 @@ onMounted(() => {
   .data_collection{
     padding: 16px;
     gap: 30px;
+    background: var(--BG, #FBFAFC);
 
     .title{
       font-size: 24px;
