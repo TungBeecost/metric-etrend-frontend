@@ -108,16 +108,14 @@ const fetchReportData = async () => {
         'Visitorid': visitorId ? visitorId.visitor_id : '',
       }
     });
-    // Ví dụ sử dụng trong một trang
-    if(response.report_type === "report_product_line"){
-      await trackEventCommon(EVENT_TYPE.VIEW_REPORT_KEYWORD, slug, response?.name);
-    }else if (response.report_type === "report_category"){
-      await trackEventCommon(EVENT_TYPE.VIEW_REPORT_CATEGORY, slug, response?.name);
-    }else if (response.report_type === "report_brand"){
-      await trackEventCommon(EVENT_TYPE.VIEW_REPORT_BRAND, slug, response?.name);
+    if (response.report_type === "report_product_line") {
+      trackEventCommon(EVENT_TYPE.VIEW_REPORT_KEYWORD, slug, response?.name);
+    } else if (response.report_type === "report_category") {
+      trackEventCommon(EVENT_TYPE.VIEW_REPORT_CATEGORY, slug, response?.name);
+    } else if (response.report_type === "report_category") {
+      trackEventCommon(EVENT_TYPE.VIEW_REPORT_BRAND, slug, response?.name);
     }
-
-    await trackEventCommon(EVENT_TYPE.VIEW_ANY_REPORT, slug, response?.name);
+    trackEventCommon(EVENT_TYPE.VIEW_ANY_REPORT, slug, response?.name);
 
 
     if (!response) {
@@ -268,13 +266,12 @@ onUnmounted(() => {
           <div class="">
             Từ tháng
             <b>{{
-              data?.reportDetail.filter_custom
-                  ? data.reportDetail.start_date.slice(4, 6) + '/' + data.reportDetail.start_date.slice(0, 4)
-                  : 'N/A'
-            }}</b>
+                data?.reportDetail.filter_custom
+                    ? data.reportDetail.start_date.slice(4, 6) + '/' + data.reportDetail.start_date.slice(0, 4)
+                    : 'N/A'
+              }}</b>
             đến tháng <b>{{
-              data?.
-                  reportDetail.filter_custom
+              data?.reportDetail.filter_custom
                   ? data.reportDetail.end_date.slice(4, 6) + '/' + data.reportDetail.end_date.slice(0, 4)
                   : 'N/A'
             }}</b>
@@ -305,7 +302,9 @@ onUnmounted(() => {
         </div>
       </transition>
       <transition name="fade">
-        <div v-if="userInfo.current_plan.plan_code === 'eReport12' || userInfo.current_plan.plan_code === 'eReport12_partner'" class="chat_gpt">
+        <div
+            v-if="userInfo.current_plan.plan_code === 'eReport12' || userInfo.current_plan.plan_code === 'eReport12_partner'"
+            class="chat_gpt">
           <popup-chat-gpt
               :name="data?.reportDetail?.name"
               :id="data?.reportDetail?.id"
