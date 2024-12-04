@@ -544,10 +544,6 @@ export const PARTERS = [
 
 export const TERM_AND_POLICIES = [
   {
-    label: "Liên hệ",
-    link: NAVIGATIONS.contactUs
-  },
-  {
     label: "Chính sách bảo mật thông tin",
     link: NAVIGATIONS.informationPolicy
   },
@@ -558,7 +554,11 @@ export const TERM_AND_POLICIES = [
   {
     label: "Điều kiện giao dịch chung",
     link: NAVIGATIONS.commonTerm
-  }
+  },
+  {
+    label: "Liên hệ",
+    link: NAVIGATIONS.contactUs
+  },
 ];
 
 export const COMPANY_INFOS = {
