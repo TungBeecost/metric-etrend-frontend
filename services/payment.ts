@@ -108,7 +108,8 @@ export const createTransactionGuest = async (
         const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment_guest.endpoint)}?${params.toString()}`, {}, {
             headers: {
                 'accept': 'application/json',
-            }
+            },
+            withCredentials: true
         });
         console.log("response", response);
         return response.data;
