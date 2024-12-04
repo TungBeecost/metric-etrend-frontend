@@ -14,6 +14,7 @@
               :loading="loading"
               :disabled="!data.keyword || data.keyword === data.analyticResult.keyword"
               @click="handleAnalyticKeyword"
+              class="flex"
           >
             <template #icon>
               <svg width="21" height="18" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -28,8 +29,8 @@
             Phân tích
           </a-button>
         </div>
-        <div v-if="userInfo?.current_plan?.plan_code" style="color: #575F71;">
-          <svg style="transform: translateY(2px)" width="14" height="14" viewBox="0 0 14 14" fill="none"
+        <div v-if="userInfo?.current_plan?.plan_code" style="color: #575F71;" class="flex items-center gap-2">
+          <svg style="transform: translateY(0px)" width="14" height="14" viewBox="0 0 14 14" fill="none"
                xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_7885_227398)">
               <path
@@ -48,10 +49,14 @@
               </clipPath>
             </defs>
           </svg>
-
-          Lưu ý: 1 lượt phân tích được tính là
-          <span style="font-weight: bold">1 lượt xem</span> báo cáo,
-          bạn còn lại <span style="font-weight: bold">{{ userInfo.current_plan.remain_claim }}</span> lượt
+          <div v-if="userInfo?.current_plan?.plan_code === 'eReport12'">
+            Tính năng này không áp dụng cho gói {{ userInfo?.current_plan?.plan_name }}
+          </div>
+          <div v-else>
+            Lưu ý: 1 lượt phân tích được tính là
+            <span style="font-weight: bold">1 lượt xem</span> báo cáo,
+            bạn còn lại <span style="font-weight: bold">{{ userInfo.current_plan.remain_claim }}</span> lượt
+          </div>
         </div>
       </div>
       <div v-if="loading" class="loading-skeleton" style="padding: 24px 0;">
@@ -153,7 +158,13 @@ function formatDate(dateStr) {
 
 async function handleAnalyticKeyword() {
   console.log(data)
+  console.log(userInfo)
   const keyword = data.keyword;
+
+  if (userInfo?.value?.current_plan?.plan_code === "eReport12") {
+    message.error('Tính năng này không áp dụng cho gói ' + userInfo?.value?.current_plan?.plan_name);
+    return;
+  }
 
   if (!keyword) {
     return;
