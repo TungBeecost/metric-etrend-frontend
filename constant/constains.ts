@@ -621,8 +621,8 @@ export const LIST_REPORT_TYPES = [
   },
   {
     icon: "Other",
-    value: "other",
-    title: 'Báo cáo Metric phát hành',
-    content: 'Báo cáo định kỳ phân tích về hành vi khách hàng, các xu hướng thị trường mới và cơ hội tiềm năng, giúp doanh nghiệp mở rộng góc nhìn và tận dụng cơ hội kinh doanh.'
+    value: "report_brand",
+    title: 'Báo cáo thương hiệu',
+    content: 'Cung cấp thông tin về thương hiệu, giúp doanh nghiệp hiểu rõ vị thế cạnh tranh, chiến lược marketing, và hành vi người tiêu dùng đối với thương hiệu.'
   }
 ]
