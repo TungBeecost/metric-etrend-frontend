@@ -109,10 +109,12 @@ export const createTransactionGuest = async (
                 'accept': 'application/json',
             }
         });
-
+        console.log("response", response);
         return response.data;
     } catch (error) {
-        console.error("createTransaction error: ", error);
+        if ((error as any)?.response?.data?.detail === "Invalid email account") {
+            return {message: "Invalid email account"};
+        }
         return null;
     }
 };

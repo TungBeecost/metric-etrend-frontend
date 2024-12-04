@@ -87,6 +87,12 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
         } else {
           transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
         }
+        if(transactionResult.message === "Invalid email account")
+        {
+          message.error('Hệ thống chỉ hỗ trợ đăng nhập bằng tài khoản Google Email. Vui lòng nhập lại email khác.', 5);
+          return;
+        }
+        console.log('transactionResult', transactionResult);
         sessionStorage.setItem('name_payment', `${information.value.name}`);
         sessionStorage.setItem('phone_payment', `${information.value.phone}`);
         sessionStorage.setItem('emailAccount_payment', `${information.value.emailAccount}`);

@@ -106,7 +106,7 @@ const handlePayment = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!userInfo.value.id && !emailAccount.value) {
-    errors.value.emailAccount = 'Bạn cần nhập email tài khoản mua hàng';
+    errors.value.emailAccount = 'Bạn cần nhập email đăng nhập';
   } else if (!emailRegex.test(emailAccount.value)) {
     errors.value.emailAccount = 'Email không hợp lệ';
   } else {
@@ -273,9 +273,9 @@ const isHidePromotionInput = hideShowPromotionInputPlans.includes(plan.plan_code
               v-model:input="emailAccount"
               class="emailAccount"
               :error-message="errors.emailAccount"
-              label="Email tài khoản mua hàng"
+              label="Email đăng nhập (Google email)"
               :is-required="true"
-              :input-props="{ placeholder: 'Nhập email' }"
+              :input-props="{ placeholder: 'Nhập Google email' }"
           />
           <CustomInputDiscount
               v-if="!isHidePromotionInput"
