@@ -135,20 +135,29 @@ const trackEventCommon = async (eventName, eventCategory, eventLabel = '', value
 // }
 
 const trackEventCustom = async (eventName, params, isStoreApi = true) => {
+  console.log('trackEventCustom called with:', { eventName, params, isStoreApi });
+
   if (shouldTrack()) {
-    let variables = getGlobalVariable()
-    const paramsEvent = {...params, ...variables}
-    gtag?.('event', eventName, paramsEvent)
-    mixpanel?.track?.(eventName, paramsEvent)
-    window?.clarity?.("set", "event", eventName)
+    console.log('Tracking is enabled');
+
+    let variables = getGlobalVariable();
+    const paramsEvent = { ...params, ...variables };
+    console.log('Event details:', paramsEvent);
+
+    gtag?.('event', eventName, paramsEvent);
+    mixpanel?.track?.(eventName, paramsEvent);
+    window?.clarity?.("set", "event", eventName);
+
     if (isStoreApi) {
-      await sendTrackingBehavior(paramsEvent, eventName)
+      await sendTrackingBehavior(paramsEvent, eventName);
     }
   } else {
+    console.log('Tracking is disabled');
+
     if (isClient) {
-      let variables = getGlobalVariable()
-      const paramsEvent = {...params, ...variables}
-      console.log('[dev] event', eventName, paramsEvent)
+      let variables = getGlobalVariable();
+      const paramsEvent = { ...params, ...variables };
+      console.log('[dev] event', eventName, paramsEvent);
     }
   }
 }
