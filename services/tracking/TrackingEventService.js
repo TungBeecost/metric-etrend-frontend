@@ -58,16 +58,26 @@ const setUserProperties = (options) => {
 }
 
 const trackEventCommon = async (eventName, eventCategory, eventLabel = '', value = 1, params = null, isStoreApi = true) => {
+  console.log('trackEventCommon called with:', { eventName, eventCategory, eventLabel, value, params, isStoreApi });
+
   if (shouldTrack()) {
-    await trackEventCustom(eventName, {
+    console.log('Tracking is enabled');
+
+    const eventDetails = {
       'event_category': eventCategory,
       'event_label': eventLabel,
       'value': value,
       ...params
-    }, isStoreApi)
+    };
+    console.log('Event details:', eventDetails);
+
+    await trackEventCustom(eventName, eventDetails, isStoreApi);
+
     mixpanel?.people?.increment({
       eventName: value
     });
+  } else {
+    console.log('Tracking is disabled');
   }
 }
 

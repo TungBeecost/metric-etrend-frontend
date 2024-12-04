@@ -6,6 +6,8 @@ import {useSearchReport} from "#imports";
 import UnlockReportMarketing from "~/components/report/UnlockReportMarketing.vue";
 import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
 import useBEEndpoint from "~/composables/useBEEndpoint";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService.js";
+import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
 
 const route = useRoute()
 const {fetchListRecommendMarketing} = useSearchReport()
@@ -48,7 +50,8 @@ const fetchReportData = async () => {
           }
         },
     );
-    console.log(response.data);
+    trackEventCommon(EVENT_TYPE.VIEW_REPORT_COMMUNITY, slug, response?.name);
+    trackEventCommon(EVENT_TYPE.VIEW_ANY_REPORT, slug, response?.name);
     const {tier_report} = response.data;
     if (tier_report !== 'e_community') {
       isHideContent.value = false;

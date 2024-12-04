@@ -11,6 +11,8 @@ import type {LstRecommed, SearchReportRes} from "~/services/reports";
 import {NAVIGATIONS, PAGE_TITLES} from "~/constant/constains";
 import allReports from '@/public/file_json/list_category.json';
 import {useSearchReport} from "#imports";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 interface TagSuggestion {
   name: string;
@@ -207,6 +209,8 @@ onMounted(() => {
   if (route.query.price_type && typeof route.query.price_type === 'string') {
     selecteReportTypeBuy.value = [route.query.price_type];
   }
+  const valueTracking = Array.isArray(route.query.search) ? route.query.search.join(',') : route.query.search || '';
+  trackEventCommon(EVENT_TYPE.VIEW_SEARCH_RESULTS, 'search', valueTracking);
   fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
 });
 
