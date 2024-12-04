@@ -77,7 +77,7 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         public: {
-            gtagId: 'GTM-522F9NZ',
+            gtagId: 'G-D94S7754SL',
             apiBase: process.env.API_ENDPOINT,
             API_ENDPOINT: process.env.API_ENDPOINT,
             URL_AUTH_SERVICE_API: process.env.URL_AUTH_SERVICE_API,

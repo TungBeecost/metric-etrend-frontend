@@ -1,14 +1,10 @@
-// Update TrackingEventService.js to import the gtag function correctly
 import mixpanel from 'mixpanel-browser';
 import { getIndexedDB } from '~/helpers/IndexedDBHelper.js';
 import { removeEmpty } from '~/helpers/ObjectHelper.js';
 import { extractDomain } from '~/helpers/utils.js';
 import { getGlobalVariable } from '~/services/GlobalVariableService.js';
 import { apiSendTrackingData } from '~/services/tracking/ApiTrackingData.js';
-import { useNuxtApp } from '#app';
 import { isClient } from '~/helpers/BrowserHelper.ts';
-
-const { $gtag: gtag } = useNuxtApp();
 
 const shouldTrack = () => {
   if (isClient) {
@@ -24,6 +20,7 @@ const shouldTrack = () => {
 const setUserProperties = (options) => {
   if (shouldTrack()) {
     let optionsMerged = removeEmpty(options);
+    // Cập nhật user_properties cho Google Analytics và Mixpanel
     gtag('set', 'user_properties', optionsMerged);
     mixpanel?.people?.set?.(optionsMerged);
   }
@@ -41,6 +38,7 @@ const trackEventCommon = async (eventName, eventCategory, eventLabel = '', value
 
     await trackEventCustom(eventName, eventDetails, isStoreApi);
 
+    // Thêm tăng giá trị cho sự kiện trong Mixpanel
     mixpanel?.people?.increment({
       eventName: value
     });
@@ -59,16 +57,20 @@ const trackEventCustom = async (eventName, params, isStoreApi = true) => {
     const paramsEvent = { ...params, ...variables };
     console.log('Event details:', paramsEvent);
 
-    if (typeof gtag === 'function') {
+    // Sử dụng trackEvent từ plugin đã cung cấp vào Nuxt context
+    const trackEvent = useNuxtApp().$trackEvent;
+    if (trackEvent) {
       console.log('Calling gtag with event:', eventName, paramsEvent);
-      gtag('event', eventName, paramsEvent);
+      trackEvent(eventName, paramsEvent);  // Gọi trackEvent từ plugin
     } else {
-      console.warn('gtag function is not defined');
+      console.warn('trackEvent function is not defined');
     }
 
+    // Cập nhật sự kiện vào Mixpanel
     mixpanel?.track?.(eventName, paramsEvent);
     window?.clarity?.("set", "event", eventName);
 
+    // Gửi dữ liệu tracking nếu cần
     if (isStoreApi) {
       await sendTrackingBehavior(paramsEvent, eventName);
     }

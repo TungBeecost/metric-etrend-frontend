@@ -108,14 +108,17 @@ const fetchReportData = async () => {
         'Visitorid': visitorId ? visitorId.visitor_id : '',
       }
     });
+    // Ví dụ sử dụng trong một trang
     if(response.report_type === "report_product_line"){
-      trackEventCommon(EVENT_TYPE.VIEW_REPORT_KEYWORD, slug, response?.name);
+      await trackEventCommon(EVENT_TYPE.VIEW_REPORT_KEYWORD, slug, response?.name);
     }else if (response.report_type === "report_category"){
-      trackEventCommon(EVENT_TYPE.VIEW_REPORT_CATEGORY, slug, response?.name);
-    }else if (response.report_type === "report_category"){
-      trackEventCommon(EVENT_TYPE.VIEW_REPORT_BRAND, slug, response?.name);
+      await trackEventCommon(EVENT_TYPE.VIEW_REPORT_CATEGORY, slug, response?.name);
+    }else if (response.report_type === "report_brand"){
+      await trackEventCommon(EVENT_TYPE.VIEW_REPORT_BRAND, slug, response?.name);
     }
-    trackEventCommon(EVENT_TYPE.VIEW_ANY_REPORT, slug, response?.name);
+
+    await trackEventCommon(EVENT_TYPE.VIEW_ANY_REPORT, slug, response?.name);
+
 
     if (!response) {
       await router.push('/search');

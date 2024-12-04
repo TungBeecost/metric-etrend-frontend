@@ -1411,7 +1411,7 @@
     unimport "^3.13.1"
     untyped "^1.5.1"
 
-"@nuxt/kit@^3.14.0", "@nuxt/kit@^3.14.159":
+"@nuxt/kit@^3.14.0", "@nuxt/kit@^3.14.159", "@nuxt/kit@^3.14.1592":
   version "3.14.1592"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.14.1592.tgz#f959a269424c1ee313585a46112e474b6ccab3bc"
   integrity sha512-r9r8bISBBisvfcNgNL3dSIQHSBe0v5YkX5zwNblIC2T0CIEgxEVoM5rq9O5wqgb5OEydsHTtT2hL57vdv6VT2w==
@@ -6337,15 +6337,15 @@ nuxi@^3.12.0:
   optionalDependencies:
     fsevents "~2.3.3"
 
-nuxt-gtag@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.npmjs.org/nuxt-gtag/-/nuxt-gtag-2.0.6.tgz"
-  integrity sha512-KjHujiwX4mtmgtHLMQB25NP3vxAuzsEqmZDkUoq9ZUSRLXly6FaPT97BTM4slr72eSfaoPGDeFyFxVvJhN4LVg==
+nuxt-gtag@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/nuxt-gtag/-/nuxt-gtag-3.0.2.tgz#1ea9f2ae747ef46fcf85debdff9c4e40535725b3"
+  integrity sha512-0Spu/rffPxW7REebkjE22qQOuVZIQuyIuvd61InDdJU+d+gRIqWhrUuKBWdk43N/J1elj+cTK2kEdk5FQX7vdQ==
   dependencies:
-    "@nuxt/kit" "^3.11.2"
+    "@nuxt/kit" "^3.14.1592"
     defu "^6.1.4"
     pathe "^1.1.2"
-    ufo "^1.5.3"
+    ufo "^1.5.4"
 
 nuxt-highcharts@^3.1.1:
   version "3.1.1"
@@ -8778,6 +8778,11 @@ vue-eslint-parser@^9.4.2:
     esquery "^1.4.0"
     lodash "^4.17.21"
     semver "^7.3.6"
+
+vue-gtag@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/vue-gtag/-/vue-gtag-2.0.1.tgz#d4dc1b9cf79809c37ce844824c0f7fa97af520dd"
+  integrity sha512-aM4A58FVL0wV2ptYi+xzAjeg+pQVRyUcfBc5UkXAwQrR4t3WBhor50Izp2I+3Oo7+l+vWJ7u78DGcNzReb8S/A==
 
 vue-highcharts@^0.2.0:
   version "0.2.0"
