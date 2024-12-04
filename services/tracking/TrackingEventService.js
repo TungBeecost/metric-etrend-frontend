@@ -7,14 +7,17 @@ import { apiSendTrackingData } from '~/services/tracking/ApiTrackingData.js';
 import { isClient } from '~/helpers/BrowserHelper.ts';
 
 const shouldTrack = () => {
+  // Điều chỉnh để kiểm tra có gửi sự kiện không
+  return true;  // Bật theo dõi mọi lúc
+  // Hoặc kiểm tra dựa trên điều kiện cụ thể
   if (isClient) {
     let domain = extractDomain(document.location.href);
     let variables = getGlobalVariable();
     if (domain !== 'localhost' && !variables?.user_email?.includes('@metric.vn')) {
-      return true;
+      return true; // Cho phép theo dõi sự kiện
     }
   }
-  return false;
+  return false;  // Không theo dõi sự kiện
 };
 
 const setUserProperties = (options) => {
@@ -84,6 +87,7 @@ const trackEventCustom = async (eventName, params, isStoreApi = true) => {
     }
   }
 };
+
 
 const sendTrackingBehavior = async (dataTracking = {}, type = 'default') => {
   const timestamp = Date.now();

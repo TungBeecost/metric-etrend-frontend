@@ -206,8 +206,8 @@ onMounted(() => {
     if (userInfo.value?.current_plan !== 'e_community')
       navigateTo(loginPayment);
   }
-  trackEvent('page_view', {page: route.path});
-  trackEvent('view_any_report', {page: route.path});
+  trackEventCommon('test_event', 'Test Category', 'Test Label', 1, { custom_param: 'value' });
+
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
