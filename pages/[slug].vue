@@ -206,6 +206,7 @@ onMounted(() => {
       navigateTo(loginPayment);
   }
   trackEvent('page_view', {page: route.path});
+  trackEvent('view_any_report', {page: route.path});
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
