@@ -31,9 +31,9 @@ export const MENUS = [
     to: NAVIGATIONS.pricing
   },
   {
-    label: "Liên hệ",
+    label: "Hướng dẫn sử dụng",
     icon: "Store",
-    to: NAVIGATIONS.contactUs
+    to: 'https://hotro.metric.vn/ereport'
   },
   {
     label: "Kiếm 1 tỷ ngay trong Tháng 12",
@@ -544,8 +544,8 @@ export const PARTERS = [
 
 export const TERM_AND_POLICIES = [
   {
-    label: "Hướng dẫn sử dụng",
-    link: 'https://hotro.metric.vn/ereport'
+    label: "Liên hệ",
+    link: NAVIGATIONS.contactUs
   },
   {
     label: "Chính sách bảo mật thông tin",
