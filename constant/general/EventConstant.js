@@ -1,18 +1,30 @@
 const EVENT_TYPE = {
     PAGE_VIEW: 'page_view',
     VIEW_ANY_REPORT: 'view_any_report',
-    VIEW_REPORT: 'view_report',
+    VIEW_REPORT_KEYWORD: 'view_report_keyword',
     VIEW_REPORT_CATEGORY: 'view_report_category',
     VIEW_REPORT_BRAND: 'view_report_brand',
-    VIEW_REPORT_TAOBAO: 'view_report_taobao',
-    VIEW_SEARCH_REPORT: 'view_search_report',
-    SUBMIT_FORM: 'submit_form',
-    CLICK_DOWNLOAD_PDF: 'click_download_pdf',
+    VIEW_REPORT_COMMUNITY: 'view_report_community',
+    VIEW_SEARCH_RESULTS: 'view_search_results',
+    VIEW_AFF_TRANSACTION: 'view_aff_transaction',
+    CLICK_RELATED_REPORT: 'click_related_report',
+    CLICK_FAST_ANALYZE: 'click_fast_analyze',
+    FAST_ANALYZE: 'fast_analyze',
     SHOW_POPUP_BUY_REPORT: 'show_popup_buy_report',
-    VIEW_CHECKOUT: 'view_checkout',
-    CLICK_OPEN_FORM_SUBSCRIPTION: 'click_open_form_subscription',
-}
+    VIEW_CHECKOUT_REPORT: 'view_checkout_report',
+    CLICK_PAYNOW_REPORT: 'click_paynow_report',
+    DOWNLOAD_REPORT: 'download_report',
+    PAYMENT_SUCCESS_REPORT: 'payment_success_report',
+    CLICK_PRICING_PLAN: 'click_pricing_plan',
+    VIEW_CHECKOUT_PACKAGE: 'view_checkout_package',
+    CLICK_PAYNOW_PACKAGE: 'click_paynow_package',
+    PAYMENT_SUCCESS_PACKAGE: 'payment_success_package',
+    SUBMIT_FORM: 'submit_form',
+    SUBMIT_FORM_COMMUNITY_REPORT: 'submit_form_community_report',
+    COPY_REFERRAL_CODE: 'copy_referral_code',
+    VIDEO_START: 'video_start',
+};
 
 export {
     EVENT_TYPE
-}
+};

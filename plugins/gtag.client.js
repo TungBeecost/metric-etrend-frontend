@@ -1,3 +1,4 @@
+// Update gtag.client.js to export the gtag function
 export default defineNuxtPlugin(() => {
     const { gtagId } = useRuntimeConfig().public;
 
@@ -18,4 +19,10 @@ export default defineNuxtPlugin(() => {
             },
         ],
     });
+
+    return {
+        provide: {
+            gtag
+        }
+    };
 });
