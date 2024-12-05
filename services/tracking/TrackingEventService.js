@@ -7,9 +7,6 @@ import { apiSendTrackingData } from '~/services/tracking/ApiTrackingData.js';
 import { isClient } from '~/helpers/BrowserHelper.ts';
 
 const shouldTrack = () => {
-  // Điều chỉnh để kiểm tra có gửi sự kiện không
-  return true;  // Bật theo dõi mọi lúc
-  // Hoặc kiểm tra dựa trên điều kiện cụ thể
   if (isClient) {
     let domain = extractDomain(document.location.href);
     let variables = getGlobalVariable();
@@ -118,6 +115,7 @@ const sendTrackingBehavior = async (dataTracking = {}, type = 'default') => {
       ...dataTracking
     }
   };
+  console.log('Tracking payload:', payload);
 
   const [_, err] = await apiSendTrackingData(payload);
   if (err) {
