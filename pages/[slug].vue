@@ -206,19 +206,23 @@ onMounted(() => {
     if (userInfo.value?.current_plan !== 'e_community')
       navigateTo(loginPayment);
   }
-  trackEventCommon('test_event', 'Test Category', 'Test Label', 1, { custom_param: 'value' });
 
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
   if (transactionId) {
     showModal.value = true;
+  }showModal
+});
+
+watch(showModal, (newVal) => {
+  if (newVal) {
+    trackEventCommon(EVENT_TYPE.PAYMENT_SUCCESS_REPORT, 'payment_success_report', '');
   }
 });
 
 const handleOk = () => {
   showModal.value = false;
-  trackEventCommon(EVENT_TYPE.PAYMENT_SUCCESS_REPORT, 'payment_success_report', '');
   navigateTo(`${NAVIGATIONS.home}${route.params.slug}`);
 };
 

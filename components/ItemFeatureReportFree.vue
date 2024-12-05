@@ -7,7 +7,6 @@ import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const handleItemClick = (report: any) => {
   trackEventCommon(EVENT_TYPE.VIDEO_START, 'video_start', '');
-
 };
 
 const windowWidth = ref(1024);
@@ -34,9 +33,8 @@ const itemsToShow = computed(() => {
   <div class="report-slide">
     <Carousel :items-to-show="itemsToShow" :items-to-scroll="itemsToShow" :wrap-around="true" style="width: 100%;" :snap-align="'start'">
       <Slide v-for="report in VIDEO" v-bind="report" :key="report.title">
-        <div class="slide-item" @click="handleItemClick(report)">
-          <div class="thumbnail">
-            <!-- Thay đổi src của iframe để lấy video từ URL của từng item -->
+        <div class="slide-item">
+          <div @click="handleItemClick(report)" class="thumbnail">
             <iframe width="200" height="200" :src="'https://www.youtube.com/embed/' + report.url.split('v=')[1] + '?modestbranding=1&rel=0&controls=0'"
                     title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

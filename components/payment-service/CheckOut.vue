@@ -90,7 +90,6 @@ onMounted(() => {
 });
 
 const handlePayment = () => {
-  trackEventCommon(EVENT_TYPE.CLICK_PAYNOW_PACKAGE, 'click_paynow_package', '');
   if (!nameValue.value) {
     errors.value.name = 'Bạn cần nhập tên của mình để thanh toán';
   } else {

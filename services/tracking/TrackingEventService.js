@@ -7,6 +7,7 @@ import { apiSendTrackingData } from '~/services/tracking/ApiTrackingData.js';
 import { isClient } from '~/helpers/BrowserHelper.ts';
 
 const shouldTrack = () => {
+  return true;
   if (isClient) {
     let domain = extractDomain(document.location.href);
     let variables = getGlobalVariable();
@@ -34,8 +35,6 @@ const trackEventCommon = async (eventName, eventCategory, eventLabel = '', value
       'value': value,
       ...params
     };
-    console.log('Event details:', eventDetails);
-
     await trackEventCustom(eventName, eventDetails, isStoreApi);
 
     // Thêm tăng giá trị cho sự kiện trong Mixpanel
@@ -51,16 +50,10 @@ const trackEventCustom = async (eventName, params, isStoreApi = true) => {
   console.log('trackEventCustom called with:', { eventName, params, isStoreApi });
 
   if (shouldTrack()) {
-    console.log('Tracking is enabled');
-
     let variables = getGlobalVariable();
     const paramsEvent = { ...params, ...variables };
-    console.log('Event details:', paramsEvent);
-
-    // Sử dụng trackEvent từ plugin đã cung cấp vào Nuxt context
     const trackEvent = useNuxtApp().$trackEvent;
     if (trackEvent) {
-      console.log('Calling gtag with event:', eventName, paramsEvent);
       trackEvent(eventName, paramsEvent);  // Gọi trackEvent từ plugin
     } else {
       console.warn('trackEvent function is not defined');

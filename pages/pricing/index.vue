@@ -16,15 +16,9 @@
 
 <script setup lang="ts">
 import { PAGE_TITLES } from '~/constant/constains';
-import {trackEventCommon} from "~/services/tracking/TrackingEventService";
-import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 useSeoMeta({
   title: PAGE_TITLES.pricing
-})
-
-onMounted(() => {
-  trackEventCommon(EVENT_TYPE.CLICK_PRICING_PLAN, 'click_pricing_plan', '');
 })
 </script>
 

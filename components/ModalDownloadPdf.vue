@@ -47,7 +47,7 @@ const handleDownload = async () => {
     const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${props.data.slug}&type=download`;
     const accessToken = await getIndexedDB("access_token");
     const visitorId = await getIndexedDB("__visitor");
-
+    trackEventCommon(EVENT_TYPE.DOWNLOAD_REPORT, 'download_report', '');
     try {
       downloading.value = true;
       const response: any = await $fetch(
@@ -118,8 +118,10 @@ const handleView = async () => {
   }
 };
 
-onMounted(() => {
-  trackEventCommon(EVENT_TYPE.SHOW_POPUP_BUY_REPORT, 'show_popup_buy_report', '');
+watch(open, (newVal) => {
+  if (newVal) {
+    trackEventCommon(EVENT_TYPE.SHOW_POPUP_BUY_REPORT, 'show_popup_buy_report', '');
+  }
 });
 
 const toggleUnlock = () => {

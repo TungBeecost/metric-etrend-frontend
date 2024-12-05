@@ -67,6 +67,7 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
         sessionStorage.setItem('email_payment', `${information.value.email}`);
         sessionStorage.setItem('address_payment', `${information.value.address}`);
         if (transactionResult?.response?.payment_url) {
+          trackEventCommon(EVENT_TYPE.CLICK_CHECKOUT_REPORT, 'click_checkout_report', '');
           window.location.href = transactionResult.response.payment_url;
         } else {
           if (transactionResult.response.status == 'done') {
@@ -194,7 +195,6 @@ onMounted(async () => {
     return;
   }
   await fetchReportData();
-  trackEventCommon(EVENT_TYPE.VIEW_AFF_TRANSACTION, 'payment', '');
   trackEventCommon(EVENT_TYPE.VIEW_CHECKOUT_REPORT, 'view_checkout_report', '');
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';

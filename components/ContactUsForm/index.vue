@@ -68,6 +68,8 @@ import type {TypeModal} from "~/components/modal/status/index.vue";
 import axios from "axios";
 import {generateHash, getGlobalVariable} from "~/services/GlobalVariableService";
 import {useCurrentUser} from "~/stores/current-user";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const currentUserStore = useCurrentUser();
 
@@ -264,6 +266,9 @@ const validateForm = async () => {
 
     console.log("Response from server:", response.data);
     isOpenModal.value = true;
+    if(isOpenModal.value){
+      trackEventCommon(EVENT_TYPE.PAYMENT_SUCCESS_PACKAGE, 'payment_success_package', '');
+    }
   } catch (error) {
     loading.value = false
     console.error("Error submitting form:", error);

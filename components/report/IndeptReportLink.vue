@@ -10,7 +10,6 @@ const open = ref(false);
 const route = useRoute();
 const router = useRouter();
 const handleClick = () => {
-  trackEventCommon(EVENT_TYPE.DOWNLOAD_REPORT, 'download_report', '');
   open.value = true;
 };
 

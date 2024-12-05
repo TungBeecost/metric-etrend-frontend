@@ -103,6 +103,7 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
         sessionStorage.setItem('email_payment', `${information.value.email}`);
         sessionStorage.setItem('address_payment', `${information.value.address}`);
         if (transactionResult?.response?.payment_url) {
+          trackEventCommon(EVENT_TYPE.CLICK_CHECKOUT_PACKAGE, 'click_checkout_package', '');
           window.location.href = transactionResult.response.payment_url;
         } else {
           qrCodeData.value = transactionResult.response.qrcode;
@@ -188,7 +189,6 @@ onMounted(() => {
   planCode.value = route.query.plan_code as string || '';
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}${window.location.hostname === 'metric.vn' ? '/ereport' : ''}/payment`;
   trackEventCommon(EVENT_TYPE.VIEW_CHECKOUT_PACKAGE, 'view_checkout_package', '');
-  trackEventCommon(EVENT_TYPE.VIEW_AFF_TRANSACTION, 'payment', '');
   const orderId = route.query.orderId as string;
   const vnp_OrderInfo = route.query.vnp_OrderInfo as string;
   if (orderId) {

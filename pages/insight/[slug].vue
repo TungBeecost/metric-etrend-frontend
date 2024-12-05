@@ -68,11 +68,12 @@ const fetchReportData = async () => {
 };
 
 const handleSubmitSuccess = () => {
-  // message.success('Đăng ký nhận báo cáo thành công');
-
   localStorage.setItem('report_mkt_unlocked', 'true');
 
   isShowSuccessNotification.value = true;
+  if(isShowSuccessNotification.value){
+    trackEventCommon(EVENT_TYPE.SUBMIT_FORM_COMMUNITY_REPORT, 'submit_form_community_report', '');
+  }
 
   openContactForm.value = false;
   isHideContent.value = false;

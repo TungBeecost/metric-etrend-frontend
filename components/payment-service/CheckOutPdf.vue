@@ -44,7 +44,6 @@ const handleFinalPrice = (price: number) => {
 };
 
 const handlePayment = () => {
-  trackEventCommon(EVENT_TYPE.CLICK_PAYNOW_REPORT, 'click_paynow_report', '');
   if (!nameValue.value) {
     errors.value.name = 'Bạn cần nhập tên của mình để thanh toán';
   } else {
@@ -96,7 +95,6 @@ const handlePayment = () => {
   } else if (!finalPrice.value) {
     finalPrice.value = report.price;
   }
-
   emit('payment', { finalPrice: finalPrice.value, discountInfo: discountInfo.value });
 };
 

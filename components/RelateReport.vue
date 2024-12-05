@@ -13,7 +13,7 @@ const props = defineProps({
 });
 
 const handleItemClick = (item: LstRecommed) => {
-  trackEventCommon(EVENT_TYPE.CLICK_FAST_ANALYZE, 'fast_analyze', '');
+  trackEventCommon(EVENT_TYPE.CLICK_RELATED_REPORT, 'related_report', '');
   if (item.source === 'marketing') {
     navigateTo(`${NAVIGATIONS.home}/insight/${item.slug}`);
     return;

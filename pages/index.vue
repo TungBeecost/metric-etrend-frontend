@@ -159,6 +159,12 @@ const fetchSuggest = async (value: string | null, options?: SearchReportPayload)
   }
 };
 
+watch(showModal, (newVal) => {
+  if (newVal) {
+    trackEventCommon(EVENT_TYPE.SUBMIT_FORM_CONTACT, 'submit_form_contact', '');
+  }
+});
+
 const handleSubmitSuccess = () => {
   localStorage.setItem('report_mkt_unlocked', 'true');
 
@@ -179,7 +185,6 @@ const handleOk = () => {
 
 const handdleUpdate = () => {
   showModal.value = false;
-  trackEventCommon(EVENT_TYPE.PAYMENT_SUCCESS_PACKAGE, 'payment_success_package', '');
   navigateTo(`${NAVIGATIONS.home}`);
 };
 
