@@ -7,7 +7,6 @@ import { apiSendTrackingData } from '~/services/tracking/ApiTrackingData.js';
 import { isClient } from '~/helpers/BrowserHelper.ts';
 
 const shouldTrack = () => {
-  return true;
   if (isClient) {
     let domain = extractDomain(document.location.href);
     let variables = getGlobalVariable();
