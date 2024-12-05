@@ -39,17 +39,17 @@ export default defineNuxtConfig({
             ],
             script: [
                 {
-                    src: "https://www.googletagmanager.com/gtag/js?id=G-D94S7754SL",
+                    src: "https://www.googletagmanager.com/gtag/js?id=G-GC4KKGMFXN",
                     async: true,
                 },
                 {
                     hid: "gtag",
                     innerHTML: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-D94S7754SL');
-          `,
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-GC4KKGMFXN');
+                      `,
                     type: "text/javascript",
                 },
                 {
@@ -77,7 +77,7 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         public: {
-            gtagId: 'G-D94S7754SL',
+            gtagId: 'G-GC4KKGMFXN',
             apiBase: process.env.API_ENDPOINT,
             API_ENDPOINT: process.env.API_ENDPOINT,
             URL_AUTH_SERVICE_API: process.env.URL_AUTH_SERVICE_API,
