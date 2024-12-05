@@ -267,7 +267,7 @@ const validateForm = async () => {
     console.log("Response from server:", response.data);
     isOpenModal.value = true;
     if(isOpenModal.value){
-      trackEventCommon(EVENT_TYPE.PAYMENT_SUCCESS_PACKAGE, 'payment_success_package', '');
+      trackEventCommon(EVENT_TYPE.SUBMIT_FORM_CONTACT, 'submit_form_contact', '');
     }
   } catch (error) {
     loading.value = false

@@ -62,5 +62,14 @@ export default function usePayment() {
         }
     };
 
-    return { createPaymentTransaction, verifyTransaction, submitLeadInformation, createPaymentTransactionPdf, createPaymentTransactionGuest, createPaymentTransactionPdfGuest };
+    // const getInfoTransaction = async (transactionId: string) => {
+    //     try {
+    //         return await getInfoTransactionPayment(transactionId);
+    //     } catch (error) {
+    //         console.error("getInfoTransaction error: ", error);
+    //         return { message: "Failed to get info transaction", code: "GET_INFO_TRANSACTION_ERROR" };
+    //
+    // }
+
+    return { createPaymentTransaction, verifyTransaction, submitLeadInformation, createPaymentTransactionPdf, createPaymentTransactionGuest, createPaymentTransactionPdfGuest, getInfoTransaction };
 }

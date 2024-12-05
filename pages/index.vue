@@ -159,16 +159,21 @@ const fetchSuggest = async (value: string | null, options?: SearchReportPayload)
   }
 };
 
-watch(showModal, (newVal) => {
-  if (newVal) {
-    trackEventCommon(EVENT_TYPE.SUBMIT_FORM_CONTACT, 'submit_form_contact', '');
+const fetchInfoTransaction = async (transactionId: string) => {
+  try {
+    const response = await getInfoTransaction(transactionId);
+    return response.data;
+  } catch (error) {
+    console.error('fetchInfoTransaction error: ', error);
+    return null;
   }
-});
+};
 
 const handleSubmitSuccess = () => {
   localStorage.setItem('report_mkt_unlocked', 'true');
 
   isShowSuccessNotification.value = true;
+  trackEventCommon(EVENT_TYPE.SUBMIT_FORM_CONTACT, 'submit_form_contact', '');
 
   openContactForm.value = false;
   isHideContent.value = false;
@@ -191,7 +196,10 @@ const handdleUpdate = () => {
 onMounted(() => {
   const urlParams = new URLSearchParams(window.location.search);
   transactionId.value = urlParams.get('transaction_id');
+  console.log('transactionId', transactionId.value);
   if (transactionId.value) {
+    const response = fetchInfoTransaction(transactionId.value);
+    trackEventCommon(EVENT_TYPE.PAYMENT_SUCCESS_PACKAGE, 'payment_success_package', '');
     showModal.value = true;
   }
   const unlockedMktReports = localStorage.getItem('report_mkt_unlocked');
