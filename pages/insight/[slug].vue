@@ -6,7 +6,7 @@ import {useSearchReport} from "#imports";
 import UnlockReportMarketing from "~/components/report/UnlockReportMarketing.vue";
 import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
 import useBEEndpoint from "~/composables/useBEEndpoint";
-import {trackEventCommon} from "~/services/tracking/TrackingEventService.js";
+import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService.js";
 import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
 
 const route = useRoute()
@@ -52,26 +52,24 @@ const fetchReportData = async () => {
     );
     trackEventCommon(EVENT_TYPE.VIEW_REPORT_COMMUNITY, slug, response?.name);
     trackEventCommon(EVENT_TYPE.VIEW_ANY_REPORT, slug, response?.name);
-    if (response?.name) {
-      trackEventConversionPixel(
-          'ViewContent',
-          response?.lst_category?.[0]?.['name'],
-          [`${response?.id}-${response?.slug}`],
-          `Thương hiệu ${response?.name}`,
-          'product',
-          [
-            {
-              id: response?.slug,
-              quantity: 1,
-            }
-          ],
-          'VND',
-          1,
-          null,
-          null,
-          _price
-      )
-    }
+    trackEventConversionPixel(
+        'ViewContent',
+        response?.lst_category?.[0]?.['name'],
+        [`${response?.id}-${response?.slug}`],
+        `Thương hiệu ${response?.name}`,
+        'product',
+        [
+          {
+            id: response?.slug,
+            quantity: 1,
+          }
+        ],
+        'VND',
+        1,
+        null,
+        null,
+        _price
+    )
     const {tier_report} = response.data;
     if (tier_report !== 'e_community') {
       isHideContent.value = false;

@@ -8,6 +8,7 @@ import { isClient } from '~/helpers/BrowserHelper.ts';
 import {formatPhoneVN} from "~/helpers/JsonHelper.js";
 
 const shouldTrack = () => {
+  return true;
   if (isClient) {
     let domain = extractDomain(document.location.href);
     let variables = getGlobalVariable();
@@ -79,6 +80,7 @@ const trackEventCustom = async (eventName, params, isStoreApi = true) => {
 };
 
 const trackEventConversionPixel = async (eventName, content_category, content_ids, content_name, content_type, contents, currency, num_items, search_string, status, value = 1, phone = null, params = null, isStoreApi = true) => {
+  console.log('trackEventConversionPixel called with:', { eventName, content_category, content_ids, content_name, content_type, contents, currency, num_items, search_string, status, value, phone, params, isStoreApi });
   if (shouldTrack()) {
     let trackParams = {}
     if (content_category) {

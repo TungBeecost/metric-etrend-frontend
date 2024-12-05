@@ -18,7 +18,7 @@ import ScrollNotification from "~/components/ScrollNotification.vue";
 import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
 import {useCurrentUser} from "~/stores/current-user.js";
 import PopupChatGpt from "~/components/MetricGpt/PopupChatGpt.vue";
-import {trackEventCommon} from "~/services/tracking/TrackingEventService.js";
+import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService.js";
 import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
 
 
@@ -116,7 +116,24 @@ const fetchReportData = async () => {
       trackEventCommon(EVENT_TYPE.VIEW_REPORT_BRAND, slug, response?.name);
     }
     trackEventCommon(EVENT_TYPE.VIEW_ANY_REPORT, slug, response?.name);
-
+    trackEventConversionPixel(
+        'ViewContent',
+        response?.lst_category?.[0]?.['name'],
+        [`${response?.id}-${response?.slug}`],
+        `Thương hiệu ${response?.name}`,
+        'product',
+        [
+          {
+            id: response?.slug,
+            quantity: 1,
+          }
+        ],
+        'VND',
+        1,
+        null,
+        null,
+        response?.price
+    )
 
     if (!response) {
       await router.push('/search');

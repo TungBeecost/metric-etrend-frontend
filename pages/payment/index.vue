@@ -9,7 +9,7 @@ import QRCode from "qrcode-vue3";
 
 import { message } from 'ant-design-vue';
 import {PAGE_TITLES, PLANS} from "~/constant/constains";
-import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService";
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
@@ -104,6 +104,9 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
         sessionStorage.setItem('address_payment', `${information.value.address}`);
         if (transactionResult?.response?.payment_url) {
           trackEventCommon(EVENT_TYPE.CLICK_CHECKOUT_PACKAGE, 'click_checkout_package', '');
+          trackEventConversionPixel(
+              'AddPaymentInfo'
+          )
           window.location.href = transactionResult.response.payment_url;
         } else {
           qrCodeData.value = transactionResult.response.qrcode;
@@ -189,6 +192,9 @@ onMounted(() => {
   planCode.value = route.query.plan_code as string || '';
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}${window.location.hostname === 'metric.vn' ? '/ereport' : ''}/payment`;
   trackEventCommon(EVENT_TYPE.VIEW_CHECKOUT_PACKAGE, 'view_checkout_package', '');
+  trackEventConversionPixel(
+      'IniatiateCheckout'
+  )
   const orderId = route.query.orderId as string;
   const vnp_OrderInfo = route.query.vnp_OrderInfo as string;
   if (orderId) {
