@@ -27,6 +27,7 @@ export const PAYMENT_ENDPOINTS: { [key: string]: { endpoint: string; method: MET
     leadInformation: {endpoint: `/api/payment/lead_information`, method: "POST"},
     list_statistical_transaction: {endpoint: `/api/payment/get_statistical_transaction`, method: "GET"},
     list_statistical_discount_code: {endpoint: `/api/payment/get_statistical_discount_code`, method: "GET"},
+    infoTransaction: {endpoint: `/api/payment/get_info_transaction`, method: "GET"},
 }
 
 export const DISCOUNT_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {

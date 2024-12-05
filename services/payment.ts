@@ -269,3 +269,17 @@ export const sendLeadInformation = async (name: string, email: string, phone: st
     }
 };
 
+export const getInfoTransactionPayment = async (transactionId: string) => {
+    try {
+        const response = await axios.get(`${useBEEndpoint(PAYMENT_ENDPOINTS.infoTransaction.endpoint)}?transaction_id=${transactionId}`, {
+            headers: {
+                'accept': 'application/json',
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error checking transaction status:", error);
+        return null;
+    }
+};
+

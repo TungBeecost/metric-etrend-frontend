@@ -380,50 +380,50 @@ export const VIDEO: Array<IVIDEO> = [
 
 
 export const PLANS: Array<IPLAN> = [
-  {
-    type: "Báo cáo lẻ",
-    plan_code: "pdf_report",
-    type_package: "report",
-    description: "Mua hoặc theo dõi 1 số ít báo cáo",
-    price: 'Từ 249K',
-    priceValue: "249000",
-    priceDiscount: "300K",
-    // discountPercent: "Sắp ra mắt",
-    unit: " báo cáo",
-    isHighlight: true,
-    permissions: [
-      {
-        ...LABEL_PERMISSION_PLAN.pdfReporting,
-        sub: Object.values(LABEL_PERMISSION_PLAN.pdfReporting.sub)
-      },
-    ]
-  },
-  {
-    type: "Báo cáo lẻ",
-    plan_code: "smart_report",
-    type_package: "report",
-    description: "Xem nhiều báo cáo, số liệu cập nhật hàng tháng",
-    price: 'Từ 300K',
-    priceValue: "300000",
-    priceDiscount: "500K",
-    discountPercent: "Sắp ra mắt",
-    unit: " báo cáo / 1 tháng",
-    isHighlight: true,
-    permissions: [
-      {
-        ...LABEL_PERMISSION_PLAN.smartReporting,
-        sub: Object.values(LABEL_PERMISSION_PLAN.smartReporting.sub)
-      },
-      {
-        label: LABEL_PERMISSION_PLAN.updatedWeekly.label,
-        icon: LABEL_PERMISSION_PLAN.updatedWeekly.icon
-      },
-    ]
-  },
+  // {
+  //   type: "Báo cáo lẻ",
+  //   plan_code: "pdf_report",
+  //   type_package: "report",
+  //   description: "Mua hoặc theo dõi 1 số ít báo cáo",
+  //   price: 'Từ 249K',
+  //   priceValue: "249000",
+  //   priceDiscount: "300K",
+  //   // discountPercent: "Sắp ra mắt",
+  //   unit: " báo cáo",
+  //   isHighlight: true,
+  //   permissions: [
+  //     {
+  //       ...LABEL_PERMISSION_PLAN.pdfReporting,
+  //       sub: Object.values(LABEL_PERMISSION_PLAN.pdfReporting.sub)
+  //     },
+  //   ]
+  // },
+  // {
+  //   type: "Báo cáo lẻ",
+  //   plan_code: "smart_report",
+  //   type_package: "report",
+  //   description: "Xem nhiều báo cáo, số liệu cập nhật hàng tháng",
+  //   price: 'Từ 300K',
+  //   priceValue: "300000",
+  //   priceDiscount: "500K",
+  //   discountPercent: "Sắp ra mắt",
+  //   unit: " báo cáo / 1 tháng",
+  //   isHighlight: true,
+  //   permissions: [
+  //     {
+  //       ...LABEL_PERMISSION_PLAN.smartReporting,
+  //       sub: Object.values(LABEL_PERMISSION_PLAN.smartReporting.sub)
+  //     },
+  //     {
+  //       label: LABEL_PERMISSION_PLAN.updatedWeekly.label,
+  //       icon: LABEL_PERMISSION_PLAN.updatedWeekly.icon
+  //     },
+  //   ]
+  // },
   {
     type: "Gói xem nhanh",
     plan_code: "pt50",
-    type_package: "analysis",
+    type_package: "analysis50",
     description: "Xem nhiều báo cáo, số liệu cập nhật hàng tháng",
     price: '1.99 triệu',
     priceValue: "1990000",
@@ -441,7 +441,7 @@ export const PLANS: Array<IPLAN> = [
   {
     type: "Gói xem nhanh",
     plan_code: "pt100",
-    type_package: "analysis",
+    type_package: "analysis100",
     description: "Xem nhiều báo cáo, số liệu cập nhật hàng tháng",
     price: '2.99 triệu',
     priceValue: "2990000",
@@ -460,7 +460,7 @@ export const PLANS: Array<IPLAN> = [
     type: "Gói ra mắt",
     plan_code: "eReport12",
     type_package: "incentive",
-    description: "Duy nhất cho dịp ra mắt Metric eReport <br> Lưu ý: Không hỗ trợ hoàn tiền đối với gói dịch vụ ưu đãi đặc biệt này",
+    description: "Duy nhất cho dịp ra mắt Metric eReport <br> Lưu ý: Gói đặc biệt không hỗ trợ dùng chung và không hỗ trợ hoàn tiền sau thanh toán",
     price: '1.2 triệu',
     priceValue: "1200000",
     priceDiscount: "1200000",

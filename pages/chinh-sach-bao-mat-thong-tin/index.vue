@@ -3,11 +3,11 @@
     <template #detail>
       <div class="detail">
         <div class="summary">
-          Metric.vn là website cung cấp (bán) phần mềm phân tích thị trường và quản lý bán hàng cho những người có nhu
-          cầu đăng ký sử dụng dịch vụ. Chính sách này mô tả thông tin mà chúng tôi xử lý để hỗ trợ Metric.vn nhằm nâng
-          cao chất lượng sản phẩm cũng như đảm bảo dịch vụ được cung cấp một cách tối ưu nhất cho bạn và những người khác.
-          Để cung cấp Sản phẩm của Metric.vn, chúng tôi phải xử lý các thông tin bạn cung cấp hoặc chia sẻ. Các loại thông
-          tin mà chúng tôi xử lý phụ thuộc vào cách bạn sử dụng sản phẩm của chúng tôi.
+          Metric eReport là nền tảng cung cấp báo cáo thị trường cho những người có nhu cầu đăng ký sử dụng dịch vụ.
+          Chính sách này mô tả thông tin mà chúng tôi xử lý để hỗ trợ nhằm nâng cao chất lượng sản phẩm cũng như đảm
+          bảo dịch vụ được cung cấp một cách tối ưu nhất cho bạn và những người khác. Để cung cấp Sản phẩm của Metric,
+          chúng tôi phải xử lý các thông tin bạn cung cấp hoặc chia sẻ. Các loại thông tin mà chúng tôi xử lý phụ thuộc
+          vào cách bạn sử dụng sản phẩm của chúng tôi.
         </div>
         <div class="clause">
           <div class="header">
@@ -16,54 +16,67 @@
           </div>
 
           <ul class="statement">
-            ereport.vn thu thập các thông tin sau của người sử dụng dịch vụ:
+            Metric thu thập các thông tin sau của người sử dụng dịch vụ:
             <li>
-              <b>Thông tin và nội dung bạn cung cấp:</b> Chúng tôi thu thập nội dung, thông tin liên lạc và các thông tin khác mà bạn cung cấp khi sử dụng sản phẩm của
-              chúng tôi, bao gồm cả khi bạn đăng ký một tài khoản, tạo hoặc chia sẻ nội dung và nhắn tin hay liên lạc với người khác bằng các nền tảng mà chúng tôi cung
-              cấp. Thông tin này cũng có thể bao gồm nội dung bạn nhìn thấy thông qua các tính năng chúng tôi cung cấp.
+              <b>Thông tin và nội dung bạn cung cấp:</b> Chúng tôi thu thập nội dung, thông tin liên lạc và các thông
+              tin khác mà bạn cung cấp khi sử dụng sản phẩm của chúng tôi, bao gồm cả khi bạn đăng ký một tài khoản,
+              tạo hoặc chia sẻ nội dung và nhắn tin hay liên lạc với người khác bằng các nền tảng mà chúng tôi cung cấp.
+              Thông tin này cũng có thể bao gồm nội dung bạn nhìn thấy thông qua các tính năng chúng tôi cung cấp.
             </li>
             <li>
-              <b>Mạng và kết nối:</b> Chúng tôi thu thập thông tin về những người, trang, tài khoản, hashtag và nhóm mà bạn kết nối cũng như cách bạn tương tác với họ trên
-              các Sản phẩm của chúng tôi. Ngoài ra, chúng tôi còn thu thập thông tin liên hệ nếu bạn thực hiện tải lên thông tin của bạn (chẳng hạn như số địa chỉ, nhật ký
-              cuộc gọi hoặc nhật ký SMS).
+              <b>Mạng và kết nối:</b> Chúng tôi thu thập thông tin về những người, trang, tài khoản, hashtag và nhóm mà
+              bạn kết nối cũng như cách bạn tương tác với họ trên các Sản phẩm của chúng tôi. Ngoài ra, chúng tôi còn thu
+              thập thông tin liên hệ nếu bạn thực hiện tải lên thông tin của bạn (chẳng hạn như số địa chỉ, nhật ký cuộc
+              gọi hoặc nhật ký SMS).
             </li>
             <li>
-              <b>Lưu trữ dữ liệu bạn hoặc khách hàng của bạn chia sẻ:</b> Trong một số trường hợp, nhằm cung cấp đầy đủ dịch vụ của mình, chúng tôi có thể cần lưu trữ dữ
-              liệu của bạn hoặc khách hàng của bạn đã cung cấp qua hệ thống ereport.vn. Ví dụ như dữ liệu về số điện thoại khách hàng đã để lại trong tin nhắn trên
-              trang của bạn sẽ được lưu về hệ thống Quản lý khách hàng của bạn trên hệ thống ereport.vn.
+              <b>Lưu trữ dữ liệu bạn hoặc khách hàng của bạn chia sẻ:</b> Trong một số trường hợp, nhằm cung cấp đầy đủ
+              dịch vụ của mình, chúng tôi có thể cần lưu trữ dữ liệu của bạn hoặc khách hàng của bạn đã cung cấp qua hệ
+              thống ereport.metric.vn. Ví dụ như dữ liệu về số điện thoại khách hàng đã để lại trong tin nhắn trên trang
+              của bạn sẽ được lưu về hệ thống Quản lý khách hàng của bạn trên hệ thống ereport.metric.vn.
             </li>
             <li>
-              <b>Thông tin về thiết bị:</b> Như mô tả bên dưới, chúng tôi thu thập thông tin từ và về máy tính, điện thoại được kết nối cũng như các thiết bị kết nối web
-              khác mà bạn dùng để tích hợp Sản phẩm của chúng tôi. Chúng tôi cũng kết hợp thông tin này trên các thiết bị khác nhau mà bạn sử dụng. Ví dụ: chúng tôi sử dụng
-              thông tin thu thập được về cách bạn dùng Sản phẩm của chúng tôi trên điện thoại để cá nhân hóa tốt hơn nội dung hoặc tính năng bạn thấy khi sử dụng Sản phẩm
-              của chúng tôi trên một thiết bị khác, chẳng hạn như máy tính xách tay, máy tính bảng, hoặc để đo lường xem liệu bạn có thực hiện các tính năng chúng tôi cung
-              cấp trên các thiết bị di động hay không. Thông tin chúng tôi thu được từ các thiết bị này bao gồm:
+              <b>Thông tin về thiết bị:</b> Chúng tôi thu thập thông tin từ và về máy tính, điện thoại được kết nối cũng
+              như các thiết bị kết nối web khác mà bạn dùng để tích hợp Sản phẩm của chúng tôi. Chúng tôi cũng kết hợp
+              thông tin này trên các thiết bị khác nhau mà bạn sử dụng. Ví dụ: chúng tôi sử dụng thông tin thu thập được
+              về cách bạn dùng Sản phẩm của chúng tôi trên điện thoại để cá nhân hóa tốt hơn nội dung hoặc tính năng bạn
+              thấy khi sử dụng Sản phẩm của chúng tôi trên một thiết bị khác, chẳng hạn như máy tính xách tay, máy tính
+              bảng, hoặc để đo lường xem liệu bạn có thực hiện các tính năng chúng tôi cung cấp trên các thiết bị di động
+              hay không. Thông tin chúng tôi thu được từ các thiết bị này bao gồm:
             </li>
             <li>
-              <b>Các thuộc tính thiết bị:</b> Những thông tin như hệ điều hành, phiên bản phần cứng và phần mềm, mức pin, cường độ tín hiệu, dung lượng bộ nhớ trống,
-              plugin, loại trình duyệt, tên cũng như loại của tệp và ứng dụng.
+              <b>Các thuộc tính thiết bị:</b> Những thông tin như hệ điều hành, phiên bản phần cứng và phần mềm, mức
+              pin, cường độ tín hiệu, dung lượng bộ nhớ trống, plugin, loại trình duyệt, tên cũng như loại của tệp và
+              ứng dụng.
             </li>
             <li>
-              <b>Hoạt động trên thiết bị:</b> Thông tin về các hoạt động và hành vi được thực hiện trên thiết bị, chẳng hạn như liệu một cửa sổ ở nền trước hay nền sau hoặc
-              các hoạt động của chuột (thông tin này có thể giúp phân biệt người thật với các bot).
+              <b>Hoạt động trên thiết bị:</b> Thông tin về các hoạt động và hành vi được thực hiện trên thiết bị, chẳng
+              hạn như liệu một cửa sổ ở nền trước hay nền sau hoặc các hoạt động của chuột (thông tin này có thể giúp
+              phân biệt người thật với các bot).
             </li>
             <li>
-              <b>Số nhận dạng:</b> Số nhận dạng duy nhất, ID thiết bị và các số nhận dạng khác, chẳng hạn như từ trò chơi, ứng dụng hoặc tài khoản bạn dùng, cũng như ID
-              thiết bị gia đình.
+              <b>Số nhận dạng:</b> Số nhận dạng duy nhất, ID thiết bị và các số nhận dạng khác, chẳng hạn như từ trò
+              chơi, ứng dụng hoặc tài khoản bạn dùng, cũng như ID thiết bị gia đình. Tín hiệu thiết bị: Tín hiệu
+              Bluetooth và thông tin về các cột phát sóng, đèn hiệu và điểm truy cập Wifi ở gần.
             </li>
-            <li><b>Tín hiệu thiết bị:</b> Tín hiệu Bluetooth và thông tin về các cột phát sóng, đèn hiệu và điểm truy cập Wi-Fi ở gần.</li>
             <li>
-              <b>Dữ liệu từ cài đặt thiết bị:</b> thông tin bạn cho phép chúng tôi nhận thông qua cài đặt thiết bị mà bạn bật, chẳng hạn như quyền truy cập vào vị trí GPS,
+              <b>Dữ liệu từ cài đặt thiết bị:</b> thông tin bạn cho phép chúng tôi nhận thông qua cài đặt thiết bị mà
+              bạn bật, chẳng hạn như quyền truy cập vào vị trí GPS, máy ảnh hoặc ảnh của bạn.</li>
+            <li>
+              <b>Dữ liệu từ cài đặt thiết bị:</b> thông tin bạn cho phép chúng tôi nhận thông qua cài đặt thiết bị mà
+              bạn bật, chẳng hạn như quyền truy cập vào vị trí GPS,
               máy ảnh hoặc ảnh của bạn.
             </li>
-            <li><b>Mạng và kết nối:</b> thông tin như tên của nhà mạng di động hoặc ISP, ngôn ngữ, múi giờ, số điện thoại di động, địa chỉ IP, tốc độ kết nối.</li>
             <li>
-              <b>Dữ liệu cookie:</b> Dữ liệu từ các cookie được lưu trữ trên thiết bị của bạn, bao gồm cả cài đặt và ID cookie. Hãy tìm hiểu thêm về cách chúng tôi sử dụng
-              cookie trong Chính sách cookie của ereport.vn.
+              <b>Mạng và kết nối:</b> thông tin như tên của nhà mạng di động hoặc ISP, ngôn ngữ, múi giờ, số điện thoại
+              di động, địa chỉ IP, tốc độ kết nối.</li>
+            <li>
+              <b>Dữ liệu cookie:</b> Dữ liệu từ các cookie được lưu trữ trên thiết bị của bạn, bao gồm cả cài đặt và ID
+              cookie. Hãy tìm hiểu thêm về cách chúng tôi sử dụng cookie trong Chính sách cookie của website.
             </li>
             <li>
-              <b>Thông tin từ đối tác:</b> Nhà quảng cáo, nhà phát triển ứng dụng và nhà phát hành có thể gửi thông tin cho chúng tôi qua Công cụ kinh doanh trên
-              ereport.vn mà họ sử dụng.
+              <b>Thông tin từ đối tác:</b>Nhà quảng cáo, nhà phát triển ứng dụng và nhà phát hành có thể gửi thông tin
+              cho chúng tôi qua Công cụ kinh doanh trên ereport.metric.vn mà họ sử dụng.
             </li>
           </ul>
 

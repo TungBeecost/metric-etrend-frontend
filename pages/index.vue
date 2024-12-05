@@ -106,9 +106,9 @@ import type SearchReport from '../components/search/search-report.vue';
 import {NAVIGATIONS} from '~/constant/constains';
 import {searchReport, type SearchReportPayload} from "~/services/reports";
 import {ref} from "vue";
-import ReportFree from "~/components/ReportFree.vue";
 import DataCollection from "~/components/DataCollection.vue";
-import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService";
+const { getInfoTransaction } = usePayment()
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const transactionId = ref<string | null>(null);
@@ -159,16 +159,15 @@ const fetchSuggest = async (value: string | null, options?: SearchReportPayload)
   }
 };
 
-// const fetchInfoTransaction = async (transactionId: string) => {
-//   try {
-//     const response = await getInfoTransaction(transactionId);
-//     return response.data;
-//   } catch (error) {
-//     console.error('fetchInfoTransaction error: ', error);
-//     return null;
-//   }
-// };
-
+const fetchInfoTransaction = async (transactionId: string) => {
+  try {
+    const response = await getInfoTransaction(transactionId);
+    return response;
+  } catch (error) {
+    console.error('fetchInfoTransaction error: ', error);
+    return null;
+  }
+};
 const handleSubmitSuccess = () => {
   localStorage.setItem('report_mkt_unlocked', 'true');
 
@@ -193,13 +192,28 @@ const handdleUpdate = () => {
   navigateTo(`${NAVIGATIONS.home}`);
 };
 
-onMounted(() => {
+onMounted(async () => {
   const urlParams = new URLSearchParams(window.location.search);
   transactionId.value = urlParams.get('transaction_id');
   console.log('transactionId', transactionId.value);
   if (transactionId.value) {
-    // const response = fetchInfoTransaction(transactionId.value);
+    const response = await fetchInfoTransaction(transactionId.value);
+    console.log('response', response);
+
     trackEventCommon(EVENT_TYPE.PAYMENT_SUCCESS_PACKAGE, 'payment_success_package', '');
+    trackEventConversionPixel(
+        'Purchase',
+        'package',
+        response?.response.plan_code,
+        null,
+        response?.response.product,
+        null,
+        'VND',
+        null,
+        null,
+        null,
+        Number(response?.response.value),
+    );
     showModal.value = true;
   }
   const unlockedMktReports = localStorage.getItem('report_mkt_unlocked');

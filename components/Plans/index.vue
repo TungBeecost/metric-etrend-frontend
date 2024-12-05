@@ -10,8 +10,8 @@ defineProps<{
   isDarkTitle?: boolean,
 }>()
 
-const value1 = ref('pdf_report');
-const value2 = ref('pt50');
+const value1 = ref('pt50');
+const value2 = ref('pt100');
 const value3 = ref('eReport12');
 
 const navigateToPayment = (plan: any) => {
@@ -105,11 +105,11 @@ const filteredPlans = computed(() => {
                   <a-select-option value="pt100">100 lượt mở xem báo cáo</a-select-option>
                   <a-select-option value="pt50">50 lượt mở xem báo cáo</a-select-option>
                 </a-select>
-                <div v-if="plan.type_package === 'incentive'">
-                  <div class="incentive_box">
-                    Không giới hạn lượt xem báo cáo
-                  </div>
-                </div>
+<!--                <div v-if="plan.type_package === 'incentive'">-->
+<!--                  <div class="incentive_box">-->
+<!--                    Không giới hạn lượt xem báo cáo-->
+<!--                  </div>-->
+<!--                </div>-->
               </div>
               <div v-if="plan.priceValue !== plan.priceDiscount" class="planDiscountPrice">{{ formatSortTextCurrencyPlan(plan.priceDiscount) }}</div>
               <div class="planPrice">

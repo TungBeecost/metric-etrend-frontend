@@ -4,7 +4,7 @@ import {
     createTransactionPdf,
     sendLeadInformation,
     createTransactionGuest,
-    createTransactionPdfGuest
+    createTransactionPdfGuest, getInfoTransactionPayment
 } from "~/services/payment";
 
 export default function usePayment() {
@@ -62,14 +62,15 @@ export default function usePayment() {
         }
     };
 
-    // const getInfoTransaction = async (transactionId: string) => {
-    //     try {
-    //         return await getInfoTransactionPayment(transactionId);
-    //     } catch (error) {
-    //         console.error("getInfoTransaction error: ", error);
-    //         return { message: "Failed to get info transaction", code: "GET_INFO_TRANSACTION_ERROR" };
-    //
-    // }
+    const getInfoTransaction = async (transactionId: string) => {
+        try {
+            const response = await getInfoTransactionPayment(transactionId);
+            return response;
+        } catch (error) {
+            console.error("getInfoTransaction error: ", error);
+            return { message: "Failed to get info transaction", code: "GET_INFO_TRANSACTION_ERROR" };
+        }
+    };
 
-    return { createPaymentTransaction, verifyTransaction, submitLeadInformation, createPaymentTransactionPdf, createPaymentTransactionGuest, createPaymentTransactionPdfGuest };
+    return { createPaymentTransaction, verifyTransaction, submitLeadInformation, createPaymentTransactionPdf, createPaymentTransactionGuest, createPaymentTransactionPdfGuest, getInfoTransaction };
 }
