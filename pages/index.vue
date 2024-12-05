@@ -159,15 +159,15 @@ const fetchSuggest = async (value: string | null, options?: SearchReportPayload)
   }
 };
 
-const fetchInfoTransaction = async (transactionId: string) => {
-  try {
-    const response = await getInfoTransaction(transactionId);
-    return response.data;
-  } catch (error) {
-    console.error('fetchInfoTransaction error: ', error);
-    return null;
-  }
-};
+// const fetchInfoTransaction = async (transactionId: string) => {
+//   try {
+//     const response = await getInfoTransaction(transactionId);
+//     return response.data;
+//   } catch (error) {
+//     console.error('fetchInfoTransaction error: ', error);
+//     return null;
+//   }
+// };
 
 const handleSubmitSuccess = () => {
   localStorage.setItem('report_mkt_unlocked', 'true');
@@ -198,7 +198,7 @@ onMounted(() => {
   transactionId.value = urlParams.get('transaction_id');
   console.log('transactionId', transactionId.value);
   if (transactionId.value) {
-    const response = fetchInfoTransaction(transactionId.value);
+    // const response = fetchInfoTransaction(transactionId.value);
     trackEventCommon(EVENT_TYPE.PAYMENT_SUCCESS_PACKAGE, 'payment_success_package', '');
     showModal.value = true;
   }

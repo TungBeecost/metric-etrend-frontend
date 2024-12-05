@@ -71,5 +71,5 @@ export default function usePayment() {
     //
     // }
 
-    return { createPaymentTransaction, verifyTransaction, submitLeadInformation, createPaymentTransactionPdf, createPaymentTransactionGuest, createPaymentTransactionPdfGuest, getInfoTransaction };
+    return { createPaymentTransaction, verifyTransaction, submitLeadInformation, createPaymentTransactionPdf, createPaymentTransactionGuest, createPaymentTransactionPdfGuest };
 }
