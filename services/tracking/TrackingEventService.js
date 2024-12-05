@@ -5,6 +5,7 @@ import { extractDomain } from '~/helpers/utils.js';
 import { getGlobalVariable } from '~/services/GlobalVariableService.js';
 import { apiSendTrackingData } from '~/services/tracking/ApiTrackingData.js';
 import { isClient } from '~/helpers/BrowserHelper.ts';
+import {formatPhoneVN} from "~/helpers/JsonHelper.js";
 
 const shouldTrack = () => {
   if (isClient) {
@@ -77,6 +78,52 @@ const trackEventCustom = async (eventName, params, isStoreApi = true) => {
   }
 };
 
+const trackEventConversionPixel = async (eventName, content_category, content_ids, content_name, content_type, contents, currency, num_items, search_string, status, value = 1, phone = null, params = null, isStoreApi = true) => {
+  if (shouldTrack()) {
+    let trackParams = {}
+    if (content_category) {
+      trackParams.content_category = content_category
+    }
+    if (content_ids) {
+      trackParams.content_ids = content_ids
+    }
+    if (content_name) {
+      trackParams.content_name = content_name
+    }
+    if (content_type) {
+      trackParams.content_type = content_type
+    }
+    if (contents) {
+      trackParams.contents = contents
+    }
+    if (currency) {
+      trackParams.currency = currency
+    }
+    if (num_items) {
+      trackParams.num_items = num_items
+    }
+    if (search_string) {
+      trackParams.search_string = search_string
+    }
+    if (status) {
+      trackParams.status = status
+    }
+    if (value) {
+      trackParams.value = value
+    }
+    let variables = getGlobalVariable()
+    if (variables?.user_email) {
+      trackParams.em = variables.user_email
+    }
+    if (phone) {
+      trackParams.ph = formatPhoneVN(phone)
+    }
+    console.log('fbq: ', eventName, trackParams)
+
+    fbq?.('track', eventName, trackParams)
+  }
+}
+
 
 const sendTrackingBehavior = async (dataTracking = {}, type = 'default') => {
   const timestamp = Date.now();
@@ -119,5 +166,6 @@ const sendTrackingBehavior = async (dataTracking = {}, type = 'default') => {
 
 export {
   trackEventCommon,
-  setUserProperties
+  setUserProperties,
+  trackEventConversionPixel
 };
