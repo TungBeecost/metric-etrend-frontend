@@ -77,7 +77,8 @@
 </template>
 
 <script setup>
-import {micromark} from 'micromark'
+import { micromark } from 'micromark';
+import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
 
 const props = defineProps({
   name: {
@@ -146,12 +147,18 @@ const updateBotMessage = (text, isComplete) => {
 // Hàm xử lý streaming từ API
 const invokeMetricGPT = async (lstChatHistory = null) => {
   isTyping.value = true;
+  const accessToken = await getIndexedDB("access_token");
+  console.log("accessToken", accessToken);
+  const visitorId = await getIndexedDB("__visitor");
+  console.log("visitorId", visitorId);
   const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "transfer-encoding": "chunked",
       "Accept": "text/event-stream",
+      'Authorization': `${accessToken}`,
+      'Visitorid': visitorId.visitor_id,
     },
     body: {
       thread_id: "test-kem-duong-am",
@@ -170,14 +177,14 @@ const invokeMetricGPT = async (lstChatHistory = null) => {
 
     let botMessage = "";
     while (true) {
-      const {done, value} = await reader.read();
+      const { done, value } = await reader.read();
       if (done) break;
       const chunks = value.trim().split("\n");
       for (const chunk of chunks) {
         if (chunk.startsWith("data:")) {
           const data = JSON.parse(chunk.slice(5).trim());
           if (data !== null) {
-            const {event, chunk_message, output_message} = data;
+            const { event, chunk_message, output_message } = data;
             if (event === 'on_chat_model_stream') {
               botMessage += chunk_message;
               updateBotMessage(botMessage, false);
@@ -224,7 +231,7 @@ const sendQuestion = async (text) => {
 const onClickSuggestion = async (question) => {
   lstSuggestionClicked.value.push(question);
   await sendQuestion(question);
-}
+};
 </script>
 
 
