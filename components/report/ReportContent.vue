@@ -64,7 +64,7 @@ const displayTableOfContent = computed(() => {
     ]
   }
 
-  if (data?.report_type === 'report_brand') {
+  if (data?.report_type === 'report_brand' || data?.report_type === 'report_brand_keyword') {
     return [
       {
         title: `I. Tổng quan thị trường`,
