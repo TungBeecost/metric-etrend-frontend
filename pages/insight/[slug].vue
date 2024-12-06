@@ -68,7 +68,7 @@ const fetchReportData = async () => {
         1,
         null,
         null,
-        _price
+        null
     )
     const {tier_report} = response.data;
     if (tier_report !== 'e_community') {
