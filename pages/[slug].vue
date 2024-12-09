@@ -36,6 +36,7 @@ const showButton = ref(false);
 const loading = ref(true); // Add loading state
 const showModalDownloadPdf = ref(false);
 const currentUserStore = useCurrentUser();
+const { getInfoTransaction } = usePayment()
 const {userInfo} = storeToRefs(currentUserStore);
 
 const fetchSuggest = async (value = '', options = {}) => {
@@ -216,7 +217,17 @@ const updateWindowSize = () => {
   isMobile.value = window?.innerWidth <= 768;
 };
 
-onMounted(() => {
+const fetchInfoTransaction = async (transactionId) => {
+  try {
+    const response = await getInfoTransaction(transactionId);
+    return response;
+  } catch (error) {
+    console.error('fetchInfoTransaction error: ', error);
+    return null;
+  }
+};
+
+onMounted(async () => {
   const loginPayment = localStorage.getItem('loginPayment');
   if (loginPayment) {
     localStorage.removeItem('loginPayment');
@@ -227,9 +238,30 @@ onMounted(() => {
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
+  console.log('data.reportDetail.id', data);
+  const response = await fetchInfoTransaction(transactionId);
   if (transactionId) {
+    trackEventConversionPixel(
+        'Purchase',
+        null,
+        data.value.reportDetail.id,
+        null,
+        'product',
+        [
+          {
+            "id": data.value.reportDetail.id,
+            "item_price": data.value.reportDetail.price,
+            "quantity": 1,
+          }
+        ],
+        'VND',
+        null,
+        null,
+        null,
+        Number(response?.response.value),
+    );
     showModal.value = true;
-  }showModal
+  }
 });
 
 watch(showModal, (newVal) => {

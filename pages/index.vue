@@ -103,7 +103,7 @@
 
 <script setup lang="ts">
 import type SearchReport from '../components/search/search-report.vue';
-import {NAVIGATIONS} from '~/constant/constains';
+import {NAVIGATIONS, PLANS} from '~/constant/constains';
 import {searchReport, type SearchReportPayload} from "~/services/reports";
 import {ref} from "vue";
 import DataCollection from "~/components/DataCollection.vue";
@@ -168,6 +168,7 @@ const fetchInfoTransaction = async (transactionId: string) => {
     return null;
   }
 };
+
 const handleSubmitSuccess = () => {
   localStorage.setItem('report_mkt_unlocked', 'true');
 
@@ -192,6 +193,12 @@ const handdleUpdate = () => {
   navigateTo(`${NAVIGATIONS.home}`);
 };
 
+const getPlanPrice = (planCode: string): string | null => {
+  console.log('planCode', planCode);
+  const plan = PLANS.find(plan => plan.plan_code === planCode);
+  return plan && plan.priceValue !== undefined ? plan.priceValue : null;
+};
+
 onMounted(async () => {
   const urlParams = new URLSearchParams(window.location.search);
   transactionId.value = urlParams.get('transaction_id');
@@ -199,15 +206,21 @@ onMounted(async () => {
   if (transactionId.value) {
     const response = await fetchInfoTransaction(transactionId.value);
     console.log('response', response);
-
+    const planPrice = getPlanPrice(response?.response?.plan_code);
     trackEventCommon(EVENT_TYPE.PAYMENT_SUCCESS_PACKAGE, 'payment_success_package', '');
     trackEventConversionPixel(
         'Purchase',
-        'package',
+        null,
         response?.response.plan_code,
         null,
-        response?.response.product,
-        null,
+        'product',
+        [
+          {
+            "id": response?.response?.plan_code,
+            "item_price": planPrice,
+            "quantity": 1,
+          }
+        ],
         'VND',
         null,
         null,

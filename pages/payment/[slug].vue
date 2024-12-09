@@ -8,7 +8,7 @@ import {PAGE_TITLES} from "~/constant/constains";
 import PackServicePdf from "~/components/payment-service/PackServicePdf.vue";
 import CheckOutPdf from "~/components/payment-service/CheckOutPdf.vue";
 import {upperFirst} from "scule";
-import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService";
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const redirectUrl = ref('');
@@ -68,6 +68,25 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
         sessionStorage.setItem('address_payment', `${information.value.address}`);
         if (transactionResult?.response?.payment_url) {
           trackEventCommon(EVENT_TYPE.CLICK_CHECKOUT_REPORT, 'click_checkout_report', '');
+          trackEventConversionPixel(
+              'AddPaymentInfo',
+              null,
+              reportDetail.value.id,
+              null,
+              'product',
+              [
+                {
+                  "id": reportDetail.value.id,
+                  "item_price": reportDetail.value.price,
+                  "quantity": 1,
+                }
+              ],
+              'VND',
+              1,
+              null,
+              null,
+              Number(finalPrice),
+          );
           window.location.href = transactionResult.response.payment_url;
         } else {
           if (transactionResult.response.status == 'done') {
@@ -195,6 +214,24 @@ onMounted(async () => {
     return;
   }
   await fetchReportData();
+  trackEventConversionPixel(
+      'InitiateCheckout',
+      null,
+      reportDetail.value.id,
+      null,
+      null,
+      [
+        {
+          "id": reportDetail.value.id,
+          "item_price": reportDetail.value.price,
+          "quantity": 1,
+        }
+      ],
+      null,
+      1,
+      null,
+      null,
+  )
   trackEventCommon(EVENT_TYPE.VIEW_CHECKOUT_REPORT, 'view_checkout_report', '');
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';

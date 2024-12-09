@@ -106,13 +106,19 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
           trackEventCommon(EVENT_TYPE.CLICK_CHECKOUT_PACKAGE, 'click_checkout_package', '');
           trackEventConversionPixel(
               'AddPaymentInfo',
-              'package',
+              null,
               currentPlan.plan_code,
               null,
-              currentPlan.type,
-              null,
+              'product',
+              [
+                {
+                  "id": currentPlan?.plan_code,
+                  "item_price": currentPlan?.priceValue,
+                  "quantity": 1,
+                }
+              ],
               'VND',
-              null,
+              1,
               null,
               null,
               Number(finalPrice),
@@ -204,7 +210,20 @@ onMounted(() => {
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}${window.location.hostname === 'metric.vn' ? '/ereport' : ''}/payment`;
   trackEventCommon(EVENT_TYPE.VIEW_CHECKOUT_PACKAGE, 'view_checkout_package', '');
   trackEventConversionPixel(
-      'InitiateCheckout'
+      'InitiateCheckout',
+      null,
+      currentPlan?.plan_code,
+      null,
+      null,
+      [
+        {
+          "id": currentPlan?.plan_code,
+          "item_price": currentPlan?.priceValue,
+          "quantity": 1,
+        }
+      ],
+      null,
+      1,
   )
   const orderId = route.query.orderId as string;
   const vnp_OrderInfo = route.query.vnp_OrderInfo as string;
