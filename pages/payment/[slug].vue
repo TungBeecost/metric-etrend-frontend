@@ -13,7 +13,7 @@ import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
-const {createPaymentTransactionPdf, verifyTransaction, createPaymentTransactionPdfGuest} = usePayment();
+const {createPaymentTransactionPdf, verifyTransaction} = usePayment();
 const selectedWalletOption = ref('');
 const qrCodeData = ref('');
 const openModal = ref<boolean>(false);

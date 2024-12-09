@@ -33,3 +33,7 @@ export const PAYMENT_ENDPOINTS: { [key: string]: { endpoint: string; method: MET
 export const DISCOUNT_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {
     discountInfo: {endpoint: `/api/discount/get_voucher_info`, method: "GET"}
 }
+
+export const PLAN_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {
+    planInfo: {endpoint: `/api/plan/get_plan_info_by_code`, method: "GET"}
+}

@@ -9,6 +9,7 @@ import QRCode from "qrcode-vue3";
 
 import { message } from 'ant-design-vue';
 import {PAGE_TITLES, PLANS} from "~/constant/constains";
+const {getPlanInfo} = usePlan();
 import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService";
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
 const redirectUrl = ref('');
@@ -159,6 +160,16 @@ const checkTransactionStatus = async (transactionId: string) => {
   }
 };
 
+const getPlanInfoByCode = async (planCode: string) => {
+  try {
+    const response = await getPlanInfo(planCode);
+    return response;
+  } catch (error) {
+    console.error('Error fetching plan info:', error);
+    return null;
+  }
+};
+
 const useCheckTransactionCompletion = (transactionId: string, timeout: number = 300000) => {
   const isCompleted = ref(false);
   let intervalId: number | undefined = undefined;
@@ -207,6 +218,8 @@ onMounted(() => {
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
   const currentPlan = plan.value;
+  const planInfo = getPlanInfoByCode(planCode.value);
+  console.log('planInfo', planInfo);
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}${window.location.hostname === 'metric.vn' ? '/ereport' : ''}/payment`;
   trackEventCommon(EVENT_TYPE.VIEW_CHECKOUT_PACKAGE, 'view_checkout_package', '');
   trackEventConversionPixel(
