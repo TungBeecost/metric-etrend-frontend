@@ -34,7 +34,7 @@ const selecteReportType = ref<string[]>([]);
 const selecteReportTypeBuy = ref<string[]>([]);
 const page = ref(1);
 const isLoading = ref(true);
-const sortSelect = ref('popularity');
+const sortSelect = ref('default');
 const mostFrequentCategoryReportId = ref<string>();
 
 watchEffect(async () => {
