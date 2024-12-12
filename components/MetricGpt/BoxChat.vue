@@ -168,11 +168,20 @@ const invokeMetricGPT = async (lstChatHistory = null) => {
     responseType: "stream",
   };
 
+  const timeoutPromise = (ms) => {
+    return new Promise((_, reject) => {
+      setTimeout(() => {
+        reject(new Error("Request timed out"));
+      }, ms);
+    });
+  };
+
   try {
-    // const urlApi = "http://localhost:8000/chat";
-    // const urlApi = "http://localhost:8000/api/metricgpt/chat";
     const urlApi = `${config.public.API_ENDPOINT}/api/metricgpt/chat`;
-    const response = await $fetch(urlApi, options);
+    const response = await Promise.race([
+      $fetch(urlApi, options),
+      timeoutPromise(180000)
+    ]);
     const reader = response.pipeThrough(new TextDecoderStream()).getReader();
 
     let botMessage = "";
