@@ -29,12 +29,10 @@ const getCookie = (name: string, defaultValue = null) => {
 const setCookie = (name: string, value: string, days = 30, path = '/') => {
   // @ts-ignore
   if (process.env.SSR !== 'true') {
-    const domain = '.ereport.vn';
-
-    const expires = new Date(Date.now() + days * 864e5).toUTCString()
-    // document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=' + path
-    // document.cookie = name + '=' + value + '; expires=' + expires + '; path=' + path
-    document.cookie = name + '=' + value + '; expires=' + expires + '; path=' + path + '; domain=' + domain;
+    const domain =  document.location.hostname;
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    const cookieString = `${name}=${value}; expires=${expires}; path=${path}; domain=${domain}`;
+    document.cookie = cookieString;
   }
 }
 
