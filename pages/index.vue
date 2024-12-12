@@ -54,7 +54,12 @@
 <!--      <ContactUs/>-->
     <affiliate-component/>
     </div>
-
+    <transition name="fade">
+      <div
+          class="chat_gpt">
+        <popup-chat-gpt/>
+      </div>
+    </transition>
     <a-modal v-if="showModal" v-model:open="showModal" width="600px" :footer="null" @ok="handleOk">
       <div class="modal_content">
         <div class="alert_success">
@@ -110,6 +115,7 @@ import DataCollection from "~/components/DataCollection.vue";
 import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService";
 const { getInfoTransaction } = usePayment()
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
+import PopupChatGpt from "~/components/MetricGpt/PopupChatGpt.vue";
 
 const transactionId = ref<string | null>(null);
 const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotificationPopup', () => false);
