@@ -357,7 +357,7 @@ onUnmounted(() => {
       </transition>
       <transition name="fade">
         <div
-            v-if="userInfo.current_plan.plan_code === 'eReport12' || userInfo.current_plan.plan_code === 'eReport12_partner'"
+            v-if="(userInfo.current_plan.plan_code === 'eReport12' || userInfo.current_plan.plan_code === 'eReport12_partner') && !data?.reportDetail?.is_unsellable"
             class="chat_gpt">
           <popup-chat-gpt
               :name="data?.reportDetail?.name"
