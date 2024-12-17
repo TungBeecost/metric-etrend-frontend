@@ -11,10 +11,10 @@
   >
 
     <Head>
-<!--      <Title>eReport - Kho báo cáo Ecommerce toàn diện</Title>-->
-<!--      <Meta hid="og:title" property="og:title" :content="`eReport - Kho báo cáo Ecommerce toàn diện`"/>-->
-<!--      <Meta hid="og:description" name="og:description" :content="`eReport là Kho báo cáo thị trường Ecommerce toàn diện giúp Doanh nghiệp, Thương hiệu và Nhà bán tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu chính xác nhất.`"/>-->
-<!--      <Meta hid="og:image" property="og:image" :content="'https://lh3.googleusercontent.com/pw/AP1GczMTZp0lf_VW7W_Y6n3qg602m-LlqfpCIeVX_i4D3pnqT6FiloK5hY86XfTsqVHd4xRRs9tSKppP6FZdEPWO_V8D_UEsfj8KEnChoiU7zyiwDlHzZaTeAePmGxcqzG98qDJ9bahok5MhwtDzp3EKTiI_=w1600-h900-s-no-gm'"/>-->
+      <!--      <Title>eReport - Kho báo cáo Ecommerce toàn diện</Title>-->
+      <!--      <Meta hid="og:title" property="og:title" :content="`eReport - Kho báo cáo Ecommerce toàn diện`"/>-->
+      <!--      <Meta hid="og:description" name="og:description" :content="`eReport là Kho báo cáo thị trường Ecommerce toàn diện giúp Doanh nghiệp, Thương hiệu và Nhà bán tiết kiệm thời gian nghiên cứu thị trường, giảm thiểu rủi ro đầu tư với dữ liệu chính xác nhất.`"/>-->
+      <!--      <Meta hid="og:image" property="og:image" :content="'https://lh3.googleusercontent.com/pw/AP1GczMTZp0lf_VW7W_Y6n3qg602m-LlqfpCIeVX_i4D3pnqT6FiloK5hY86XfTsqVHd4xRRs9tSKppP6FZdEPWO_V8D_UEsfj8KEnChoiU7zyiwDlHzZaTeAePmGxcqzG98qDJ9bahok5MhwtDzp3EKTiI_=w1600-h900-s-no-gm'"/>-->
     </Head>
     <div class="container-metric">
       <div v-if="showTopBar" class="top-bar" @click="navigateToPricing">
@@ -114,6 +114,28 @@ const recheckHeader = () => {
   isDarkBlueHeader.value = menuDarkBlue.includes(route.path);
 };
 
+watchEffect(() => {
+  useHead({
+    script: !['index', 'slug'].includes(route.name) ? [{
+      hid: 'chat-plugin-script',
+      src: 'https://chat-plugin.pancake.vn/main/auto?page_id=web_metricplatform',
+      type: 'text/javascript',
+      async: true,
+      defer: true,
+    }] : []
+  });
+
+  const chatElClass = 'pkcp-parent-container';
+
+  const isHideRoute = ['index', 'slug'].includes(route.name);
+
+  if (isHideRoute && document.getElementsByClassName(chatElClass).length > 0) {
+    document.getElementsByClassName(chatElClass)[0].style.display = 'none';
+  } else if (!isHideRoute && document.getElementsByClassName(chatElClass).length > 0) {
+    document.getElementsByClassName(chatElClass)[0].style.display = 'block';
+  }
+});
+
 const navigateToHome = () => {
   navigateTo(NAVIGATIONS.home);
 };
@@ -125,7 +147,7 @@ const navigateToPricing = () => {
 };
 
 // Track GTM events
-const trackEvent = (event: string, data: any) => {
+const trackEvent = (event, data) => {
   if (gtm) {
     gtm.push({event, ...data});
   }
@@ -140,7 +162,7 @@ onMounted(() => {
   trackEvent('page_view', {page: route.path});
 
   let lastScrollTop = 0;
-  const header = document.querySelector('header') as HTMLElement | null;
+  const header = document.querySelector('header');
 
   const handleScroll = () => {
     if (!header) return; // Ensure header is not null

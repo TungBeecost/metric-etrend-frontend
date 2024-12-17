@@ -54,12 +54,12 @@
 <!--      <ContactUs/>-->
     <affiliate-component/>
     </div>
-<!--    <transition name="fade">-->
-<!--      <div-->
-<!--          class="chat_gpt">-->
-<!--        <popup-chat-gpt/>-->
-<!--      </div>-->
-<!--    </transition>-->
+    <transition name="fade">
+      <div
+          class="chat_gpt">
+        <popup-chat-gpt/>
+      </div>
+    </transition>
     <a-modal v-if="showModal" v-model:open="showModal" width="600px" :footer="null" @ok="handleOk">
       <div class="modal_content">
         <div class="alert_success">
