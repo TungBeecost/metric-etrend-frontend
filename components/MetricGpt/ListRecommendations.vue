@@ -8,14 +8,14 @@ const props = defineProps({
   }
 });
 
-const handleClick = (event) => {
-  console.log(event);
-}
+const handleClick = (recommendation) => {
+  window.location.href = `https://metric.vn/ereport/${recommendation.slug}`;
+};
 </script>
 
 <template>
   <div class="recommendations">
-    <div v-for="recommendation in recommendations" :key="recommendation.slug" class="recommendation-item" @click="handleClick">
+    <div v-for="recommendation in recommendations" :key="recommendation.slug" class="recommendation-item" @click="handleClick(recommendation)">
       <img :src="recommendation.url_thumbnail" :alt="recommendation.name_report" class="thumbnail"/>
       <div>
         <p class="name">{{ recommendation.name_report }}</p>
