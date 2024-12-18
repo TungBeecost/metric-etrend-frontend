@@ -396,10 +396,8 @@ useSeoMeta({
 </style>
 <style lang="scss">
 @media (max-width: 768px) {
-
   .payment_info {
     flex-direction: column;
   }
-
 }
 </style>
