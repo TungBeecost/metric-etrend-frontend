@@ -227,7 +227,7 @@ const itemsToShow = computed(() => {
       cursor: pointer;
       border: 1px solid #f0f0f0;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
+      align-items: center;
       display: flex;
       flex-direction: row;
       overflow: hidden;
