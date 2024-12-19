@@ -6,10 +6,6 @@ import {getPlatformById} from "~/helpers/PermissionPlatformHelper";
 import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
 
 
-const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
-  return moment(value, inputFormat).format(format);
-}
-
 const props = defineProps({
   product: {
     type: Object,
@@ -37,9 +33,14 @@ const displayPrice = computed(() => {
 });
 
 const $t = (text: string) => text;
-const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
-  return formatDate(new Date(timestamp), format)
+const formatDate = (value: string | Date, format: string, inputFormat: string = "YYYYMMDD"): string => {
+  return moment(value, inputFormat).format(format);
 };
+
+const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
+  return formatDate(new Date(timestamp * 1000), format); // Nhân với 1000 để chuyển timestamp sang mili-giây
+};
+
 </script>
 
 <template>
