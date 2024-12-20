@@ -101,7 +101,7 @@ const handlePayment = () => {
 const isFormVatValid = () => {
   let isValid = true;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const taxCodeRegex = /^\d{10}$/;
+  const taxCodeRegex = /^(?:\d{10}|\d{10}-\d{3})$/;
   if (!formVatValues.value.companyName) {
     errors.value.companyName = 'Bạn cần nhập tên công ty';
     isValid = false;
@@ -112,7 +112,7 @@ const isFormVatValid = () => {
     errors.value.taxCode = 'Bạn cần nhập mã số thuế';
     isValid = false;
   } else if (!taxCodeRegex.test(formVatValues.value.taxCode)) {
-    errors.value.taxCode = 'Mã số thuế phải có 10 chữ số';
+    errors.value.taxCode = 'Mã số thuế không hợp lệ';
     isValid = false;
   } else {
     errors.value.taxCode = '';

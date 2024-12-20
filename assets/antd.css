@@ -7,3 +7,7 @@
     align-items: center;
     justify-content: center;
 }
+
+.ant-input-affix-wrapper{
+   height: 40px;
+}

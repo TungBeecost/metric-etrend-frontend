@@ -69,6 +69,7 @@ console.log('data', props.data);
       </div>
     </div>
     <a-pagination
+        id="list_ticket_pagination"
         :page-size="props.pagination.pageSize"
         :current="props.pagination.current"
         :total="props.pagination.total"
