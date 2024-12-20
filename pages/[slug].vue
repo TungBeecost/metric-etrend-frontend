@@ -239,28 +239,30 @@ onMounted(async () => {
   window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
   console.log('data.reportDetail.id', data);
-  const response = await fetchInfoTransaction(transactionId);
-  if (transactionId) {
-    trackEventConversionPixel(
-        'Purchase',
-        null,
-        data.value.reportDetail.id,
-        null,
-        'product',
-        [
-          {
-            "id": data.value.reportDetail.id,
-            "item_price": data.value.reportDetail.price,
-            "quantity": 1,
-          }
-        ],
-        'VND',
-        null,
-        null,
-        null,
-        Number(response?.response.value),
-    );
-    showModal.value = true;
+  if(transactionId){
+    const response = await fetchInfoTransaction(transactionId);
+    if (transactionId) {
+      trackEventConversionPixel(
+          'Purchase',
+          null,
+          data.value.reportDetail.id,
+          null,
+          'product',
+          [
+            {
+              "id": data.value.reportDetail.id,
+              "item_price": data.value.reportDetail.price,
+              "quantity": 1,
+            }
+          ],
+          'VND',
+          null,
+          null,
+          null,
+          Number(response?.response.value),
+      );
+      showModal.value = true;
+    }
   }
 });
 

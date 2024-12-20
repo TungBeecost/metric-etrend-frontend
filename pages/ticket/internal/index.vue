@@ -132,7 +132,7 @@ const {
 const isMobile = ref(window?.innerWidth <= 768);
 
 const handleTicketTableChange = async (page) => {
-  currentPage.value = page;
+  currentPage.value = page.current;
   await refreshTickets();
 };
 
