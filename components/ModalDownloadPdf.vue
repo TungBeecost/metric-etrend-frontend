@@ -140,6 +140,13 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
   return moment(value, inputFormat).format(format);
 }
 
+const platforms = computed(() => {
+  const basePlatforms = ['Shopee', 'Tiki', 'Lazada'];
+  if (props.data.report_type !== 'report_category') {
+    basePlatforms.push('Tiktok');
+  }
+  return basePlatforms;
+});
 </script>
 
 <template>
@@ -160,10 +167,10 @@ const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFo
               <div v-if="props.data.report_type !== 'report_brand'" style="text-align: center; margin-bottom: 12px;">
                 Nhóm hàng
               </div>
-              <p>{{ props.data.name }}</p>
+              <p style="font-size: 28px; line-height: 32px">{{ props.data.name }}</p>
             </div>
             <ul>
-              <li>Số liệu sàn: Shopee, Tiki, Lazada, Tiktok</li>
+              <li>Số liệu sàn: {{ platforms.join(', ') }}</li>
               <li>Từ {{ formatDate(props.data.start_date, "DD-MM-YYYY") }}
                 đến {{ formatDate(props.data.end_date, "DD-MM-YYYY") }}
               </li>

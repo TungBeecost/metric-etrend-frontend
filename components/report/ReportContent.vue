@@ -33,7 +33,7 @@ const displayTableOfContent = computed(() => {
         title: 'II. Thống kê thương hiệu',
         children: [
           {title: 'Thống kê thương hiệu toàn thị trường'},
-          {title: 'Top thương hiệu sàn Shopee, Tiktok, Lazada, Tiki'},
+          {title: 'Top thương hiệu sàn Shopee, Lazada, Tiki'},
         ],
       },
       {
@@ -42,7 +42,7 @@ const displayTableOfContent = computed(() => {
           {title: 'Thị phần doanh số theo loại shop'},
           {title: 'Thị phần doanh số theo khu vực của shop'},
           {title: 'Thống kê shop bán chạy toàn thị trường'},
-          {title: 'Thống kê shop bán chạy từng sàn Shopee, Tiktok. Lazada, Tiki'},
+          {title: 'Thống kê shop bán chạy từng sàn Shopee, Lazada, Tiki'},
           {title: 'Chi tiết 20 shop bán chạy'},
         ],
       },
@@ -50,7 +50,7 @@ const displayTableOfContent = computed(() => {
         title: 'IV. Thống kê sản phẩm bán chạy',
         children: [
           {title: 'Sản phẩm bán chạy toàn thị trường'},
-          {title: 'Sản phẩm bán chạy từng sàn Shopee, Tiktok, Lazada, Tiki'},
+          {title: 'Sản phẩm bán chạy từng sàn Shopee, Lazada, Tiki'},
           {title: 'Sản phẩm trending bán chạy'},
         ],
       },

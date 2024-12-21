@@ -25,7 +25,6 @@ const reportFilterDisplayFields = computed(() => {
   if (!props.data) {
     return [];
   }
-
   if (props.data.report_type === 'report_category') {
     return [
       'lst_platform_id',
@@ -80,7 +79,9 @@ const formatDate = (value: string | Date, format: string, inputFormat: string = 
 const fieldValueParse: FieldValueParsers = {
   lst_platform_id: (value: number[]) => {
     if (!value || value.length === 4) {
-      return 'Shopee, Tiktok, Lazada, Tiki';
+      if(props.data.report_type === 'report_category')
+        return 'Shopee, Lazada, Tiki';
+      else return 'Shopee, Tiktok, Lazada, Tiki';
     }
     return value.map((platformId: number) => PLATFORMS[platformId]).join(', ');
   },

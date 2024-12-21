@@ -356,6 +356,7 @@ const wrapperCol = computed(() => {
             </table>
           </a-flex>
           <a-divider/>
+          {{ ticket.data?.description}}
           <div class="description" v-html="ticket.data?.description"></div>
         </div>
       </app-section>
