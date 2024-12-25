@@ -356,8 +356,7 @@ const wrapperCol = computed(() => {
             </table>
           </a-flex>
           <a-divider/>
-          {{ ticket.data?.description}}
-          <div class="description" v-html="ticket.data?.description"></div>
+          <div id="description_style" class="description" v-html="ticket.data?.description"></div>
         </div>
       </app-section>
     </a-spin>
@@ -520,6 +519,10 @@ const wrapperCol = computed(() => {
         font-weight: 400;
         line-height: 22px;
 
+        ul {
+          display: none;
+        }
+
         img {
           cursor: pointer;
         }
@@ -575,6 +578,20 @@ const wrapperCol = computed(() => {
     &__header {
       padding: 1rem;
     }
+  }
+}
+
+
+</style>
+<style lang="scss">
+#description_style {
+  ul {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+  ol {
+    list-style-type: decimal;
+    margin-left: 20px;
   }
 }
 </style>
