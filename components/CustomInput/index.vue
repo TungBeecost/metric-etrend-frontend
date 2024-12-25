@@ -33,8 +33,6 @@ const inputModel = defineModel<string>("input");
 
 <style lang="scss">
 #inputCustom{
-  .ant-input{
-    height: 40px;
-  }
+
 }
 </style>

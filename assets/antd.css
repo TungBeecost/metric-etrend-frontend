@@ -9,5 +9,12 @@
 }
 
 .ant-input-affix-wrapper{
-   height: 40px;
+   display: flex !important;
+   align-items: center !important;
+   overflow: hidden;
+}
+
+.ant-input{
+    height: 40px !important;
+    line-height: 40px !important;
 }
