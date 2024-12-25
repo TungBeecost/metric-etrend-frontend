@@ -99,7 +99,7 @@ const localContent = ref(props.comment.content);
           <span class="action-button delete-button" @click="handleClickDelete"><delete-filled /> Xoá</span>
         </div>
       </div>
-      <div class="comment-item__content" v-html="props.comment.content"></div>
+      <div id="comment-item__content_style" class="comment-item__content" v-html="props.comment.content"></div>
     </div>
   </template>
 </template>
@@ -177,6 +177,18 @@ const localContent = ref(props.comment.content);
     .action {
       display: flex;
     }
+  }
+}
+</style>
+<style lang="scss">
+#comment-item__content_style {
+  ul {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+  ol {
+    list-style-type: decimal;
+    margin-left: 20px;
   }
 }
 </style>
