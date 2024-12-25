@@ -22,8 +22,32 @@ const statusApplyCode = ref<boolean>(false);
 const openModal = ref<boolean>(false);
 const openModalWaiting = ref<boolean>(false);
 const planCode = ref('');
+let planInfo = ref<PlanInfo | null>(null);
 const discountValueRouter = ref<string>('');
 const information = ref({ name: '', phone: '', emailAccount: '', companyName: '', taxCode: '', email: '', address: '' });
+
+interface PlanInfo {
+  name: string;
+  plan_code: string;
+  quota_claim: number;
+  id: number;
+  quota_claim_trial: number | null;
+  created_at: string;
+  view_permission: number;
+  price_value: number;
+  duration: number | null;
+  quota_claim_pdf: number;
+  config: {
+    price: {
+      [key: string]: number;
+    };
+  };
+  is_deprecated: boolean;
+  updated_at: string;
+  plan_type: string;
+  price_discount?: number;
+  [key: string]: any; // Add other properties as needed
+}
 
 interface ErrorResponse {
   response: {
@@ -83,12 +107,13 @@ const handlePayment = async ({ finalPrice, discountInfo }: { finalPrice: string;
     const currentPlan = plan.value;
 
     if (currentPlan) {
-      const itemCode = currentPlan.plan_code === 'eReport12' ? `${currentPlan.plan_code}__12m` : `${currentPlan.plan_code}__6m`;      try {
+      const itemCode = currentPlan.plan_code === 'eReport12' ? `${currentPlan.plan_code}__12m` : `${currentPlan.plan_code}__6m`;
+      try {
         let transactionResult = null;
         if (information.value.emailAccount) {
-          transactionResult = await createPaymentTransactionGuest(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+          transactionResult = await createPaymentTransactionGuest(paymentMethod, itemCode, redirectUrl.value, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
         } else {
-          transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+          transactionResult = await createPaymentTransaction(paymentMethod, itemCode, redirectUrl.value, discountInfo.discount?.code || null, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
         }
         if(transactionResult.message === "Invalid email account")
         {
@@ -214,11 +239,11 @@ const useCheckTransactionCompletion = (transactionId: string, timeout: number = 
 
 const plan = computed(() => PLANS.find(p => p.plan_code === planCode.value));
 
-onMounted(() => {
+onMounted(async () => {
   const route = useRoute();
   planCode.value = route.query.plan_code as string || '';
   const currentPlan = plan.value;
-  const planInfo = getPlanInfoByCode(planCode.value);
+  planInfo = await getPlanInfoByCode(planCode.value);
   console.log('planInfo', planInfo);
   redirectUrl.value = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}${window.location.hostname === 'metric.vn' ? '/ereport' : ''}/payment`;
   trackEventCommon(EVENT_TYPE.VIEW_CHECKOUT_PACKAGE, 'view_checkout_package', '');
@@ -237,7 +262,7 @@ onMounted(() => {
       ],
       null,
       1,
-  )
+  );
   const orderId = route.query.orderId as string;
   const vnp_OrderInfo = route.query.vnp_OrderInfo as string;
   if (orderId) {

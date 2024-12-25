@@ -5,7 +5,6 @@ export const createTransaction = async (
     paymentMethod: string,
     itemCode: string,
     redirectUrl: string,
-    totalPrice: string,
     discountCode: string | null,
     name: string | null,
     phone: string | null,
@@ -19,7 +18,6 @@ export const createTransaction = async (
             payment_method: paymentMethod,
             item_code: itemCode,
             redirect_url: redirectUrl,
-            total_price: totalPrice
         });
 
         if (discountCode) {
@@ -62,7 +60,6 @@ export const createTransactionGuest = async (
     paymentMethod: string,
     itemCode: string,
     redirectUrl: string,
-    totalPrice: string,
     discountCode: string | null,
     name: string | null,
     phone: string | null,
@@ -77,7 +74,6 @@ export const createTransactionGuest = async (
             payment_method: paymentMethod,
             item_code: itemCode,
             redirect_url: redirectUrl,
-            total_price: totalPrice
         });
 
         if (discountCode) {
@@ -125,7 +121,6 @@ export const createTransactionPdf = async (
     paymentMethod: string,
     report_id: string,
     redirectUrl: string,
-    totalPrice: string,
     discountCode: string | null,
     reportLink: string,
     name: string | null,
@@ -140,7 +135,6 @@ export const createTransactionPdf = async (
             payment_method: paymentMethod,
             report_id: report_id,
             redirect_url: redirectUrl,
-            total_price: totalPrice,
             report_link: reportLink
         });
 

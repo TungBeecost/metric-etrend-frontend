@@ -57,7 +57,7 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
         //   console.log('information', information.value);
         //   transactionResult = await createPaymentTransactionPdfGuest(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
         // } else {
-        transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
         // }
         sessionStorage.setItem('name_payment', `${information.value.name}`);
         sessionStorage.setItem('phone_payment', `${information.value.phone}`);
