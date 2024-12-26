@@ -94,9 +94,13 @@ const props = defineProps({
   fullScreen: {
     type: Boolean,
   },
+  period: {
+    type: String,
+  },
 });
 const reportName = props.name;
 const reportId = props.id;
+const period = props.period;
 const config = useRuntimeConfig();
 let messages = ref([
   {
@@ -166,7 +170,8 @@ const invokeMetricGPT = async (lstChatHistory = null) => {
     body: {
       thread_id: "test-kem-duong-am",
       lst_chat_history: lstChatHistory,
-      report_id: reportId
+      report_id: reportId,
+      period: period,
     },
     responseType: "stream",
   };
@@ -181,7 +186,7 @@ const invokeMetricGPT = async (lstChatHistory = null) => {
 
   try {
     let urlApi = reportId
-        ? `${config.public.API_ENDPOINT}/api/metricgpt/chat`
+        ? `${config.public.API_ENDPOINT}/api/metricgpt/chat_v2`
         : `${config.public.API_ENDPOINT}/api/metricgpt/chat_suggest_report`;
 
     const response = await Promise.race([

@@ -8,6 +8,9 @@ const props = defineProps({
   id: {
     type: Number,
   },
+  period: {
+    type: String,
+  },
 });
 
 const showChatBox = ref(false);
@@ -56,6 +59,7 @@ onBeforeRouteLeave(() => {
       <metric-gpt-box-chat
         :name="props?.name"
         :id="props?.id"
+        :period="props?.period"
         :fullScreen="fullScreen"
       />
     </div>
