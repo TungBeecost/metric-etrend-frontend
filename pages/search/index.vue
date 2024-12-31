@@ -240,11 +240,15 @@ function generateSlug(categoryName: string): string {
 
 const handleReportTypeChange = async (selectedReportType: string[]) => {
   selecteReportType.value = selectedReportType;
+  if (selectedReportType.includes('report_brand')) {
+    selectedReportType.push('report_brand_keyword');
+  }
   const list_category_report_id = [];
   if (route.query.category_report_id && typeof route.query.category_report_id === 'string') {
     list_category_report_id.push(route.query.category_report_id);
     selectedCategory.value = route.query.category_report_id;
   }
+
   await fetchData(searchValueSearch.value, list_category_report_id, sortSelect.value, page.value);
 };
 
