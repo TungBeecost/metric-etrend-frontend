@@ -186,7 +186,7 @@ const invokeMetricGPT = async (lstChatHistory = null) => {
 
   try {
     let urlApi = reportId
-        ? `${config.public.API_ENDPOINT}/api/metricgpt/chat`
+        ? `${config.public.API_ENDPOINT}/api/metricgpt/chat_v2`
         : `${config.public.API_ENDPOINT}/api/metricgpt/chat_suggest_report`;
 
     const response = await Promise.race([

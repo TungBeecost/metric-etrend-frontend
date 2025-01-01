@@ -12,7 +12,7 @@ defineProps<{
 
 const value1 = ref('pt50');
 const value2 = ref('pt100');
-const value3 = ref('eReport12');
+// const value3 = ref('eReport12');
 
 const navigateToPayment = (plan: any) => {
   if (plan.type_package === 'report') {
@@ -58,7 +58,7 @@ const getIsShowActiveButton = (user_plan_code: string, plan: any) => {
 };
 
 const filteredPlans = computed(() => {
-  const selectedPlanCodes = [value1.value, value2.value, value3.value];
+  const selectedPlanCodes = [value1.value, value2.value];
   const uniquePlans = new Map();
 
   PLANS.forEach(plan => {
