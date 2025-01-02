@@ -171,6 +171,7 @@ const invokeMetricGPT = async (lstChatHistory = null) => {
       thread_id: "test-kem-duong-am",
       lst_chat_history: lstChatHistory,
       report_id: reportId,
+      report_name: reportName,
       period: period,
     },
     responseType: "stream",
