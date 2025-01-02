@@ -60,7 +60,7 @@ const getDisplayedCategories = (item: any) => {
             </span>
             <span
                 :class="(item.report_type === 'report_product_line' || item.report_type === 'report_category') ? 'display_none' : 'display'">{{
-                formatDate(item.end_date)
+                formatDate(item.end_date || item.created_at)
               }}</span>
           </div>
           <div v-if="item.slug.startsWith('bao-cao')" class="name">
