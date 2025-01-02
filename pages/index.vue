@@ -51,8 +51,8 @@
     </div>
 
     <div class="">
-<!--      <ContactUs/>-->
-    <affiliate-component/>
+      <ContactUs/>
+<!--    <affiliate-component/>-->
     </div>
         <transition name="fade">
           <div

@@ -72,8 +72,8 @@ useSeoMeta({
     <PracticalApplication/>
     <discover/>
     <featured-report/>
-<!--    <ContactUs/>-->
-    <affiliate-component/>
+    <ContactUs/>
+<!--    <affiliate-component/>-->
   </div>
 </template>
 
