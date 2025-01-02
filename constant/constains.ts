@@ -35,11 +35,6 @@ export const MENUS = [
     icon: "Store",
     to: 'https://hotro.metric.vn/ereport'
   },
-  {
-    label: "Kiếm 1 tỷ ngay trong Tháng 12",
-    icon: "Store",
-    to: 'https://kiem1ty.metric.vn/'
-  },
 ];
 
 export const CATEGORIES: Array<CommonOptionItem> = [
