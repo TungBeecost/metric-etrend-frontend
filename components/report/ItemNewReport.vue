@@ -60,19 +60,19 @@ const itemsToShow = computed(() => {
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
-            <img v-if="report.url_thumbnail" :src="getUrlImageThumbnail(report.url_thumbnail)" alt="" />
-            <img v-else src="/images/default_thumbnail_report.png" class="default_thumbnail" />
+            <img v-if="report.url_thumbnail" :src="getUrlImageThumbnail(report.url_thumbnail)" alt=""/>
+            <img v-else src="/images/default_thumbnail_report.png" class="default_thumbnail"/>
           </div>
           <div class="content" style="text-align: left;">
             <div v-if="report.lst_category" class="category_date" style="text-align: left;">
               {{ report.lst_category?.[0]?.name }} <span style="color: #EEEBFF">|</span>
-              {{ formatDate(report.end_date, 'DD/MM/YYYY') }}
+              {{ formatDate(report.end_date || report.created_at, 'DD-MM-YYYY') }}
             </div>
             <div v-else class="category_date" style="text-align: left;">
               {{
                 report.report_type === 'report_category' ? 'Báo cáo ngành hàng' : report.report_type
-              }}  <span style="color: #EEEBFF">|</span>
-              {{ formatDate(report.end_date, 'DD/MM/YYYY') }}
+              }} <span style="color: #EEEBFF">|</span>
+              {{ formatDate(report.end_date || report.created_at, 'DD-MM-YYYY') }}
             </div>
             <nuxt-link
                 v-if="report.source === 'marketing'"
@@ -136,10 +136,15 @@ const itemsToShow = computed(() => {
               <div class="info_item">
                 <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_5418_146435)">
-                    <path d="M2.04297 5.30762L7.99922 8.56762L13.9555 5.30762" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 8.56836V14.9984" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M13.74 11.9273L8.24 14.9386C8.16641 14.9789 8.08388 15 8 15C7.91612 15 7.83359 14.9789 7.76 14.9386L2.26 11.9273C2.18147 11.8844 2.11591 11.8211 2.07017 11.7441C2.02444 11.6672 2.0002 11.5794 2 11.4898V5.51109C2.0002 5.42157 2.02444 5.33375 2.07017 5.25679C2.11591 5.17983 2.18147 5.11656 2.26 5.07359L7.76 2.06234C7.83359 2.02208 7.91612 2.00098 8 2.00098C8.08388 2.00098 8.16641 2.02208 8.24 2.06234L13.74 5.07359C13.8185 5.11656 13.8841 5.17983 13.9298 5.25679C13.9756 5.33375 13.9998 5.42157 14 5.51109V11.4886C14 11.5783 13.9759 11.6664 13.9301 11.7436C13.8844 11.8208 13.8187 11.8843 13.74 11.9273Z" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M5.09766 3.51953L11.0002 6.75016V10.0002" stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2.04297 5.30762L7.99922 8.56762L13.9555 5.30762" stroke="#716B95" stroke-width="1.3"
+                          stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 8.56836V14.9984" stroke="#716B95" stroke-width="1.3" stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                    <path
+                        d="M13.74 11.9273L8.24 14.9386C8.16641 14.9789 8.08388 15 8 15C7.91612 15 7.83359 14.9789 7.76 14.9386L2.26 11.9273C2.18147 11.8844 2.11591 11.8211 2.07017 11.7441C2.02444 11.6672 2.0002 11.5794 2 11.4898V5.51109C2.0002 5.42157 2.02444 5.33375 2.07017 5.25679C2.11591 5.17983 2.18147 5.11656 2.26 5.07359L7.76 2.06234C7.83359 2.02208 7.91612 2.00098 8 2.00098C8.08388 2.00098 8.16641 2.02208 8.24 2.06234L13.74 5.07359C13.8185 5.11656 13.8841 5.17983 13.9298 5.25679C13.9756 5.33375 13.9998 5.42157 14 5.51109V11.4886C14 11.5783 13.9759 11.6664 13.9301 11.7436C13.8844 11.8208 13.8187 11.8843 13.74 11.9273Z"
+                        stroke="#716B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5.09766 3.51953L11.0002 6.75016V10.0002" stroke="#716B95" stroke-width="1.3"
+                          stroke-linecap="round" stroke-linejoin="round"/>
                   </g>
                   <defs>
                     <clipPath id="clip0_5418_146435">
@@ -158,10 +163,12 @@ const itemsToShow = computed(() => {
             <div v-if="report.introduction" class="description line-clamp__2">
               {{ report.introduction }}
             </div>
-            <div v-else-if="report.report_type === 'report_brand' && report?.lst_shop?.length" class="description line-clamp__2">Báo cáo thị phần thương hiệu hàng đầu như
+            <div v-else-if="report.report_type === 'report_brand' && report?.lst_shop?.length"
+                 class="description line-clamp__2">Báo cáo thị phần thương hiệu hàng đầu như
               {{ report.lst_brand ? report.lst_brand.join(', ') : '' }} v.v
             </div>
-            <div v-else-if="report?.lst_brand?.length" class="description line-clamp__2">Báo cáo thị phần thương hiệu hàng đầu như
+            <div v-else-if="report?.lst_brand?.length" class="description line-clamp__2">Báo cáo thị phần thương hiệu
+              hàng đầu như
               {{ report.lst_brand ? report.lst_brand.join(', ') : '' }} v.v
             </div>
           </div>
@@ -239,6 +246,7 @@ const itemsToShow = computed(() => {
         border-bottom: 1px solid #f0f0f0;
         width: 180px;
         height: 180px;
+
         img {
           width: 180px;
           object-fit: contain;
@@ -343,6 +351,7 @@ const itemsToShow = computed(() => {
           width: 120px;
           height: 120px;
           border-bottom: none;
+
           img {
             width: 100%;
             height: 100%;
