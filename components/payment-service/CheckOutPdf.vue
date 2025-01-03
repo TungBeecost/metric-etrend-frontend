@@ -193,7 +193,7 @@ const fetchDiscount = async () => {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá đã hết hạn';
       }
-      else if (discount.applicable_to != 'pdf_report') {
+      else if (discount.applicable_to != 'pdf_report' && discount.applicable_to != 'all') {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá không áp dụng cho sản phẩm này';
       }

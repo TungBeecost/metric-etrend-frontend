@@ -197,7 +197,7 @@ const fetchDiscount = async () => {
       if (isExpired) {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá đã hết hạn';
-      } else if (discount.applicable_to != 'subscription_package') {
+      } else if (discount.applicable_to != 'subscription_package' && discount.applicable_to != 'all') {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá không áp dụng cho sản phẩm này';
       } else if (discount.discount_value > plan.price && discount.discount_type === 'amount') {

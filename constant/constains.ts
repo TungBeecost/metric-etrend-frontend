@@ -142,7 +142,7 @@ export const LABEL_PERMISSION_PLAN = {
     sub: {
       unlimitedView: "Không giới hạn xem lại báo cáo trong 24h",
       expiry: "Truy cập báo cáo Community trong thời gian sử dụng",
-      expiry1: "Thời hạn sử dụng: 6 tháng",
+      expiry1: "Thời hạn sử dụng: 1 năm",
       smartAnalysis: "Tính năng phân tích thông minh"
 
     }
