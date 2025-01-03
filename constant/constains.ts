@@ -143,6 +143,8 @@ export const LABEL_PERMISSION_PLAN = {
       unlimitedView: "Không giới hạn xem lại báo cáo trong 24h",
       expiry: "Truy cập báo cáo Community trong thời gian sử dụng",
       expiry1: "Thời hạn sử dụng: 6 tháng",
+      smartAnalysis: "Tính năng phân tích thông minh"
+
     }
   },
   incentive: {
@@ -424,7 +426,7 @@ export const PLANS: Array<IPLAN> = [
     priceValue: "1990000",
     priceDiscount: "3000000",
     // discountPercent: "-50%",
-    unit: " 50 báo cáo / 6 tháng",
+    unit: " 50 báo cáo / 1 năm",
     isHighlight: true,
     permissions: [
       {
@@ -442,34 +444,12 @@ export const PLANS: Array<IPLAN> = [
     priceValue: "2990000",
     priceDiscount: "5000000",
     // discountPercent: "-50%",
-    unit: " 100 báo cáo / 6 tháng",
+    unit: " 100 báo cáo / 1 năm",
     isHighlight: true,
     permissions: [
       {
         ...LABEL_PERMISSION_PLAN.analysis,
         sub: Object.values(LABEL_PERMISSION_PLAN.analysis.sub)
-      },
-    ]
-  },
-  {
-    type: "Gói ra mắt",
-    plan_code: "eReport12",
-    type_package: "incentive",
-    description: "Duy nhất cho dịp ra mắt Metric eReport <br> Lưu ý: Gói đặc biệt không hỗ trợ dùng chung và không hỗ trợ hoàn tiền sau thanh toán",
-    price: '1.2 triệu',
-    priceValue: "1200000",
-    priceDiscount: "1200000",
-    discountPercent: "Ưu đãi",
-    unit: " năm",
-    isHighlight: true,
-    permissions: [
-      {
-        ...LABEL_PERMISSION_PLAN.incentive,
-        sub: Object.values(LABEL_PERMISSION_PLAN.incentive.sub)
-      },
-      {
-        label: LABEL_PERMISSION_PLAN.rightToParticipate.label,
-        icon: LABEL_PERMISSION_PLAN.rightToParticipate.icon
       },
     ]
   },
