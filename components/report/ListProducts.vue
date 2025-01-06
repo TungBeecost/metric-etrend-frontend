@@ -18,16 +18,6 @@ const props = defineProps({
 
 const config = useRuntimeConfig();
 
-const isHideContentBasic = computed(() => {
-  if (config.public.SSR === 'true') {
-    return false;
-  }
-  if (props.data?.tier_report === 'e_basic' || props.data?.tier_report === 'e_basic_lite') {
-    return true;
-  }
-  return !(props.data?.tier_report === 'e_pro' || props.data?.tier_report === 'e_pro_lite' || props.data?.tier_report === 'e_trial' || props.data?.tier_report === 'pt50' || props.data?.tier_report === 'pt100' || props.data?.tier_report === 'eReport12' || props.data?.tier_report === 'eReport12_partner');
-});
-
 </script>
 
 <template>
@@ -64,14 +54,14 @@ const isHideContentBasic = computed(() => {
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, isHideContentBasic ? 5 : 5)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, 5)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
-            :is-hide-content="isHideContent || isHideContentBasic"
+            :is-hide-content="isHideContent"
         />
         <ChartMask
-            v-if="isHideContent || isHideContentBasic"
+            v-if="isHideContent"
             subtitle="Bạn cần mở khoá để xem số liệu đầy đủ"
             ok-button="Mua báo cáo"
             :report="data"
@@ -79,7 +69,7 @@ const isHideContentBasic = computed(() => {
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(5, isHideContentBasic ? 10 : 10)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(5, 10)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
@@ -88,14 +78,14 @@ const isHideContentBasic = computed(() => {
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(10, isHideContentBasic ? 20 : 20)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(10, 20)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
-            :is-hide-content="isHideContent || isHideContentBasic"
+            :is-hide-content="isHideContent"
         />
         <ChartMask
-            v-if="isHideContent || isHideContentBasic"
+            v-if="isHideContent"
             subtitle="Bạn cần mở khoá để xem số liệu đầy đủ"
             ok-button="Mua báo cáo"
             :report="data"
@@ -135,15 +125,15 @@ const isHideContentBasic = computed(() => {
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(0, isHideContentBasic ? 5 : 5)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(0, 5)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
 
-            :is-hide-content="isHideContent || isHideContentBasic"
+            :is-hide-content="isHideContent"
         />
         <ChartMask
-            v-if="isHideContent || isHideContentBasic"
+            v-if="isHideContent"
             subtitle="Bạn cần mở khoá để xem số liệu đầy đủ"
             ok-button="Mua báo cáo"
             :report="data"
@@ -151,7 +141,7 @@ const isHideContentBasic = computed(() => {
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(5, isHideContentBasic ? 10 : 10)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(5, 10)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"

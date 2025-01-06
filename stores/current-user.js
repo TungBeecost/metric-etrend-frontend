@@ -3,7 +3,7 @@ import {fetchPdfReport, fetchUnlockReport} from "~/services/reports";
 import useBEEndpoint from "~/composables/useBEEndpoint";
 import {AUTH_ENDPOINTS} from "~/constant/endpoints";
 import jwt_decode from "jwt-decode";
-import {fetchUserProfile} from "~/services/user";
+import {fetchUserMetricProfile, fetchUserMetricProfileAuth, fetchUserProfile} from "~/services/user";
 import axios from "axios";
 import {getIndexedDB, setIndexedDB} from "~/helpers/IndexedDBHelper.js";
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
@@ -60,6 +60,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
                     remain_claim: undefined,
                     remain_claim_pdf: undefined,
                 },
+                metric_info: {},
             },
         }
     },
@@ -119,13 +120,15 @@ export const useCurrentUser = defineStore("currentUserStore", {
 
                 // console.log(444)
                 const {current_plan, ...userInfo} = await fetchUserProfile(headers);
+                const metricInfo = await fetchUserMetricProfile(headers);
+                const metricInfoAuth = await fetchUserMetricProfileAuth(headers);
+                console.log("Metric Info: ", metricInfo);
                 // console.log(555, userInfo, !userInfo?.id)
                 if (!userInfo?.id) {
                     this.userInfo = {};
                     return;
                 }
-                this.userInfo = {...userInfo, current_plan};
-                // console.log(666, this.userInfo)
+                this.userInfo = { ...userInfo, current_plan, metric_info: metricInfo, metric_info_auth: metricInfoAuth };
                 this.fetchedUser = true;
             } catch (err) {
                 this.fetchedUser = true;
@@ -187,8 +190,10 @@ export const useCurrentUser = defineStore("currentUserStore", {
                                 PlatformId: 1,
                             };
                             const {current_plan, ...userInfo} = await fetchUserProfile(headers);
+                            const metricInfo = await fetchUserMetricProfile(headers);
+                            const metricInfoAuth = await fetchUserMetricProfileAuth(headers);
                             if (userInfo?.id) {
-                                this.userInfo = {...userInfo, current_plan};
+                                this.userInfo = { ...userInfo, current_plan, metric_info: metricInfo, metric_info_auth: metricInfoAuth };
                                 this.fetchedUser = true;
                                 window.location.reload();
                             }

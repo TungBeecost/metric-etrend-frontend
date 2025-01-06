@@ -96,7 +96,6 @@ const fetchReportData = async () => {
   }
   try {
     let isHideContent = true;
-
     const accessToken = await getIndexedDB("access_token").catch(() => null);
     const visitorId = await getIndexedDB("__visitor").catch(() => null);
     let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
@@ -149,9 +148,20 @@ const fetchReportData = async () => {
         response.category_report_id = children[0].value;
       }
     }
-
+    const endQueryTime = new Date(userInfo.value.metric_info.end_query_time);
+    const currentTime = new Date();
     const {tier_report} = response;
     if (tier_report !== 'e_community' || config.public.SSR === 'true') {
+      isHideContent = false;
+    }
+    if (
+        userInfo.value.metric_info.metadata.remaining_quota > 0 &&
+        currentTime < endQueryTime &&
+        !(
+            userInfo.value.metric_info_auth.roles.length === 0 ||
+            (userInfo.value.metric_info_auth.roles.length === 1 && userInfo.value.metric_info_auth.roles[0] === "market_default")
+        )
+    ) {
       isHideContent = false;
     }
     const [listRecommend] = await Promise.all([
@@ -238,7 +248,6 @@ onMounted(async () => {
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
-  console.log('data.reportDetail.id', data);
   if(transactionId){
     const response = await fetchInfoTransaction(transactionId);
     if (transactionId) {
@@ -293,6 +302,7 @@ onUnmounted(() => {
     <div>
       <div class="title default_section">
         <div class="breadcrumbs">
+          {{userInfo.metric_info_auth.roles}}
           <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
         </div>
         <h1 class="title_main">

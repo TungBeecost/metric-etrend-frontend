@@ -15,7 +15,8 @@ export const AUTH_ENDPOINTS: { [key: string]: { endpoint: string; method: METHOD
 }
 
 export const USER_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {
-    profile: {endpoint: `/api/user/profile`, method: "GET"}
+    profile: {endpoint: `/api/user/profile`, method: "GET"},
+    profile_metric: {endpoint: `/market/user/paid/me`, method: "GET"}
 }
 
 export const PAYMENT_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {
