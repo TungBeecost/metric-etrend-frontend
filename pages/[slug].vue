@@ -151,19 +151,22 @@ const fetchReportData = async () => {
     const endQueryTime = new Date(userInfo?.value?.metric_info?.end_query_time);
     const currentTime = new Date();
     const {tier_report} = response;
+    const hasMarketV3Role = userInfo.value.metric_info_auth.roles.some(role => role.startsWith("marketv3"));
+
     if (tier_report !== 'e_community' || config.public.SSR === 'true') {
       isHideContent = false;
     }
-    console.log()
     if (
-        userInfo.value?.metric_info?.metadata?.remaining_quota > 0 &&
+        userInfo.value.metric_info.metadata.remaining_quota > 0 &&
         currentTime < endQueryTime &&
         !(
             userInfo.value.metric_info_auth.roles.length === 0 ||
             (userInfo.value.metric_info_auth.roles.length === 1 && userInfo.value.metric_info_auth.roles[0] === "market_default")
-        )
+        ) || hasMarketV3Role
     ) {
       isHideContent = false;
+    } else {
+      isHideContent = true;
     }
     const [listRecommend] = await Promise.all([
       fetchRecommend(response.category_report_id)
