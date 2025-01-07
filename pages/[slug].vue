@@ -245,7 +245,7 @@ onMounted(async () => {
     if (userInfo.value?.current_plan !== 'e_community')
       navigateTo(loginPayment);
   }
-
+  fetchCurrentUser();
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
