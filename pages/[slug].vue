@@ -62,12 +62,6 @@ const fetchSuggest = async (value = '', options = {}) => {
   }
 };
 
-const trackEvent = (event, data) => {
-  if (gtm) {
-    gtm.push({event, ...data});
-  }
-};
-
 const fetchRecommend = async (categoryReportId, number_of_reports = 18) => {
   try {
     return await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.list_recomend.endpoint}?category_report_id=${categoryReportId}&number_of_reports=${number_of_reports}`);
@@ -151,17 +145,17 @@ const fetchReportData = async () => {
     const endQueryTime = new Date(userInfo?.value?.metric_info?.end_query_time);
     const currentTime = new Date();
     const {tier_report} = response;
-    const hasMarketV3Role = userInfo.value.metric_info_auth.roles.some(role => role.startsWith("marketv3"));
+    const hasMarketV3Role = userInfo?.value?.metric_info_auth?.roles.some(role => role.startsWith("marketv3"));
 
     if (tier_report !== 'e_community' || config.public.SSR === 'true') {
       isHideContent = false;
     }
     if (
-        userInfo.value.metric_info.metadata.remaining_quota > 0 &&
+        userInfo.value?.metric_info?.metadata?.remaining_quota > 0 &&
         currentTime < endQueryTime &&
         !(
-            userInfo.value.metric_info_auth.roles.length === 0 ||
-            (userInfo.value.metric_info_auth.roles.length === 1 && userInfo.value.metric_info_auth.roles[0] === "market_default")
+            userInfo?.value?.metric_info_auth?.roles.length === 0 ||
+            (userInfo?.value?.metric_info_auth?.roles.length === 1 && userInfo?.value?.metric_info_auth?.roles[0] === "market_default")
         ) || hasMarketV3Role
     ) {
       isHideContent = false;
