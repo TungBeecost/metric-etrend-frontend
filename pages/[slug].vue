@@ -36,6 +36,7 @@ const showButton = ref(false);
 const loading = ref(true); // Add loading state
 const showModalDownloadPdf = ref(false);
 const currentUserStore = useCurrentUser();
+const {fetchCurrentUser} = useCurrentUser();
 const { getInfoTransaction } = usePayment()
 const {userInfo} = storeToRefs(currentUserStore);
 
@@ -301,6 +302,10 @@ onUnmounted(() => {
   <div class="container_content">
     <div>
       <div class="title default_section">
+        ereport: {{userInfo.current_plan.remain_claim}}
+        <br/>
+        metric: {{userInfo.metric_info.metadata.remaining_quota}}
+
         <div class="breadcrumbs">
           <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
         </div>
