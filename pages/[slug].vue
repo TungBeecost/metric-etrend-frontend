@@ -302,10 +302,6 @@ onUnmounted(() => {
   <div class="container_content">
     <div>
       <div class="title default_section">
-        ereport: {{userInfo.current_plan.remain_claim}}
-        <br/>
-        metric: {{userInfo.metric_info.metadata.remaining_quota}}
-
         <div class="breadcrumbs">
           <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
         </div>
