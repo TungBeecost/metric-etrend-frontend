@@ -134,7 +134,6 @@ const fetchReportData = async () => {
         null,
         response?.price
     )
-
     if (!response) {
       await router.push('/search');
       return {};
@@ -155,7 +154,7 @@ const fetchReportData = async () => {
       isHideContent = false;
     }
     if (
-        userInfo.value.metric_info.metadata.remaining_quota > 0 &&
+        userInfo.value?.metric_info?.metadata?.remaining_quota > 0 &&
         currentTime < endQueryTime &&
         !(
             userInfo.value.metric_info_auth.roles.length === 0 ||
@@ -201,7 +200,7 @@ const fetchReportData = async () => {
       breadcrumbs
     };
   } catch (error) {
-    console.log(error);
+    console.log('aaaa', error);
     await router.push('/search');
     return {};
   } finally {
