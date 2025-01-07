@@ -147,12 +147,13 @@ const fetchReportData = async () => {
         response.category_report_id = children[0].value;
       }
     }
-    const endQueryTime = new Date(userInfo.value.metric_info.end_query_time);
+    const endQueryTime = new Date(userInfo?.value?.metric_info?.end_query_time);
     const currentTime = new Date();
     const {tier_report} = response;
     if (tier_report !== 'e_community' || config.public.SSR === 'true') {
       isHideContent = false;
     }
+    console.log()
     if (
         userInfo.value?.metric_info?.metadata?.remaining_quota > 0 &&
         currentTime < endQueryTime &&
