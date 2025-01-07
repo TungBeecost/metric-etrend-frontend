@@ -302,7 +302,6 @@ onUnmounted(() => {
     <div>
       <div class="title default_section">
         <div class="breadcrumbs">
-          {{userInfo.metric_info_auth.roles}}
           <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
         </div>
         <h1 class="title_main">
