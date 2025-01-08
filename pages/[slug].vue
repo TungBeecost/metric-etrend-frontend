@@ -145,7 +145,7 @@ const fetchReportData = async () => {
     const endQueryTime = new Date(userInfo?.value?.metric_info?.end_query_time);
     const currentTime = new Date();
     const {tier_report} = response;
-    const hasMarketV3Role = userInfo?.value?.metric_info_auth?.roles.some(role => role.startsWith("marketv3"));
+    const hasMarketV3Role = userInfo?.value?.metric_info_auth?.roles.some(role => role.startsWith("marketv3") || role === "market_staff");
 
     if ((tier_report !== 'e_community' && userInfo?.value?.current_plan?.remain_claim > 0) || config.public.SSR === 'true') {
       isHideContent = false;
