@@ -147,10 +147,10 @@ const fetchReportData = async () => {
     const {tier_report} = response;
     const hasMarketV3Role = userInfo?.value?.metric_info_auth?.roles.some(role => role.startsWith("marketv3"));
 
-    if (tier_report !== 'e_community' || config.public.SSR === 'true') {
+    if ((tier_report !== 'e_community' && userInfo?.value?.current_plan?.remain_claim > 0) || config.public.SSR === 'true') {
       isHideContent = false;
     }
-    if (
+    else if (
         userInfo.value?.metric_info?.metadata?.remaining_quota > 0 &&
         currentTime < endQueryTime &&
         !(
