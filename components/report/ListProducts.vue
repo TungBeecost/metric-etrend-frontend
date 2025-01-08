@@ -97,8 +97,8 @@ const config = useRuntimeConfig();
         v-if="
           props.data.data_analytic &&
           props.data.data_analytic.by_product &&
-          props.data.data_analytic.by_product.lst_product_new_30d &&
-          props.data.data_analytic.by_product.lst_product_new_30d.length > 0
+          props.data.data_analytic.by_product.lst_product_top_revenue_custom &&
+          props.data.data_analytic.by_product.lst_product_top_revenue_custom.length > 0
         "
         id="list-products"
         class="border statistic-block"
@@ -110,22 +110,22 @@ const config = useRuntimeConfig();
           <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
         </svg>
         <div>
-          <h3 class="statistic-item__title">Sản phẩm trending</h3>
+          <h3 class="statistic-item__title">Sản phẩm bán chạy trong 12 tháng</h3>
           <div
               v-if="
             props.data.data_analytic &&
             props.data.data_analytic.by_product &&
-            props.data.data_analytic.by_product.lst_product_new_30d &&
-            props.data.data_analytic.by_product.lst_product_new_30d.length > 0
+            props.data.data_analytic.by_product.lst_product_top_revenue_custom &&
+            props.data.data_analytic.by_product.lst_product_top_revenue_custom.length > 0
           "
               class="statistic-item__subtitle"
-          >Top sản phẩm mới tạo trong 30 ngày có doanh số cao
+          >
           </div>
         </div>
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(0, 5)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_top_revenue_custom.slice(0, 5)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
@@ -141,7 +141,7 @@ const config = useRuntimeConfig();
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_new_30d.slice(5, 10)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_top_revenue_custom.slice(5, 10)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
