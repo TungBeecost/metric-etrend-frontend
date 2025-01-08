@@ -310,19 +310,19 @@ const formattedBrandCount = computed(() => {
     >
       <li>
 
-<!--        Phân tích thị trường {{ data.name }} có hơn-->
-<!--        <BlurContent :is-hide-content="isHideContent">-->
-<!--          <span>-->
-<!--            {{ formattedBrandCount }}-->
-<!--          </span>-->
-<!--        </BlurContent>-->
+        Phân tích thị trường {{ data.name }} có hơn
+        <BlurContent :is-hide-content="isHideContent">
+          <span>
+            {{ formattedBrandCount }}
+          </span>
+        </BlurContent>
 
-<!--        thương hiệu chiếm-->
-<!--        {{-->
-<!--          Number(-->
-<!--              data.data_analytic.by_brand.ratio?.brand.ratio_revenue * 100 || 0-->
-<!--          ).toFixed(1)-->
-<!--        }}% tổng doanh thu. -->
+        thương hiệu chiếm
+        {{
+          Number(
+              data.data_analytic.by_brand.ratio?.brand.ratio_revenue * 100 || 0
+          ).toFixed(1)
+        }}% tổng doanh thu.
         So sánh giữa 10 thương hiệu hàng đầu,
         <b class="text-bold">{{
             data.data_analytic.by_brand.lst_top_brand_revenue[0].name
