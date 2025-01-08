@@ -422,9 +422,6 @@ const chartOptionsOutput = computed(() => ({
         <highchart v-if="renderChartSales" :options="chartOptionsShopType"/>
       </div>
     </div>
-    <!--        <div style="display: flex; justify-content: flex-end; font-style: italic;">* Thị phần theo loại shop chỉ thống-->
-    <!--          kê số liệu sàn Shopee, Lazada-->
-    <!--        </div>-->
     <hr style="border: 1px solid #EEEBFF; margin: 4px 0"/>
     <div>
       <div class="chart_item">

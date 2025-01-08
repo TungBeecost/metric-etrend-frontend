@@ -122,7 +122,6 @@ export const useCurrentUser = defineStore("currentUserStore", {
                 const {current_plan, ...userInfo} = await fetchUserProfile(headers);
                 const metricInfo = await fetchUserMetricProfile(headers);
                 const metricInfoAuth = await fetchUserMetricProfileAuth(headers);
-                console.log("Metric Info: ", metricInfo);
                 // console.log(555, userInfo, !userInfo?.id)
                 if (!userInfo?.id) {
                     this.userInfo = {};

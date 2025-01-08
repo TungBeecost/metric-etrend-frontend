@@ -93,7 +93,7 @@ const fetchReportData = async () => {
     let isHideContent = true;
     const accessToken = await getIndexedDB("access_token").catch(() => null);
     const visitorId = await getIndexedDB("__visitor").catch(() => null);
-    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
+    let url = `${config.public.API_ENDPOINT}/api/report/detail_v2?slug=${slug}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
     }
