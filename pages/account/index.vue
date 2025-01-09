@@ -8,6 +8,7 @@ import type { ListClaimed } from "~/services/reports";
 import GeneralTransaction from "~/components/account/GeneralTransaction.vue";
 import StatisticalTransaction from "~/components/account/StatisticalTransaction.vue";
 import StatisticalDiscountCode from "~/components/account/StatisticalDiscountCode.vue";
+import DetailedReportsViewedPdf from "~/components/account/DetailedReportsViewedPdf.vue";
 
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
@@ -131,13 +132,13 @@ onMounted(async () => {
           <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 24px">
             <detailed-reports-viewed
                 :loading="loading"
-                title="Báo cáo chi tiết đã xem"
+                title="Báo cáo đã xem"
                 :data="data?.reports"
                 :total='data?.total'
                 class="detail-report"
                 @change="handlePage"
             />
-            <detailed-reports-viewed
+            <detailed-reports-viewed-pdf
                 :loading="loadingpdf"
                 title="Báo cáo PDF đã mua"
                 :data="dataPdf?.reports"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {NAVIGATIONS} from "~/constant/constains";
+import {NAVIGATIONS, REPORT_TYPE_MAP} from "~/constant/constains";
 import {formatDate} from "compatx";
 import {upperFirst} from "scule";
 import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
@@ -10,81 +10,149 @@ const props = defineProps({
     default: () => [],
   },
 });
+
+const columns = [
+  {
+    title: 'Tên báo cáo',
+    dataIndex: 'name',
+    key: 'name',
+    width: 600,
+  },
+  {
+    title: 'Thời gian sử dụng',
+    dataIndex: 'time_used',
+    key: 'time_used',
+
+  },
+  {
+    title: 'Gói áp dụng',
+    dataIndex: 'package',
+    key: 'package',
+    ellipsis: true,
+  },
+];
+
+function formatExpiredAt(dateString: string): string {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+  return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
+}
+
+function getPackageClass(packageName: string): string {
+  return packageName === 'eReport' ? 'package_ereport' : 'package_metric';
+}
 </script>
 
 <template>
-    <div id="lst_report_id">
-      <nuxt-link v-for="item in props.data" :key="item.id" class="lst_item"
-                 :to="`${NAVIGATIONS.home}${item.source ==='marketing' ? 'insight/' + item.slug : item.slug}`">
-        <div class="item">
-          <div class="image-metric">
-            <img v-if="item.url_thumbnail" :src="getUrlImageThumbnail(item.url_thumbnail)" alt="">
-            <img v-else src="/images/default_thumbnail_report.png" class="default_thumbnail" />
+  <div id="lst_report_id">
+    <a-table :columns="columns" :data-source="props.data">
+      <template #bodyCell="{ column, text, record }">
+        <template v-if="column.dataIndex === 'name'">
+          <div style="display: flex; align-items: center; gap: 16px">
+            <img
+                :src="record.url_thumbnail ? getUrlImageThumbnail(record.url_thumbnail) : '/images/default_thumbnail_report.png'"
+                alt="thumbnail"
+                style="width: 60px; height: 60px; border-radius: 8px"
+            />
+            <div class="info">
+              <div class="category">{{ REPORT_TYPE_MAP[record.report_type] || REPORT_TYPE_MAP.default }}</div>
+              <div class="title">Báo cáo {{ text }}</div>
+            </div>
           </div>
-          <div class="info">
-            <div v-if="item.slug.startsWith('bao-cao')" class="name">
-              {{ item.name }}
-            </div>
-            <div v-else-if="item.report_type === 'report_category'" class="name">
-              Báo cáo Ngành hàng
-            </div>
-            <div v-else-if="item.report_type === 'report_brand'" class="name">
-              Báo cáo Thương hiệu
-            </div>
-            <div v-else class="name">
-              Báo cáo Nhóm hàng
-            </div>
-            <div class="title">{{item.name}}</div>
+        </template>
+        <template v-else-if="column.dataIndex === 'time_used'">
+          <div style="display: flex; height: 100%; align-items: center; gap: 16px">
+            <span>{{ formatExpiredAt(record.claimed_at) }}</span>
+            <span>{{ text }}</span>
           </div>
-        </div>
-      </nuxt-link>
-    </div>
+        </template>
+        <template v-else-if="column.dataIndex === 'package'">
+          <div style="display: flex; height: 100%; align-items: center; gap: 16px">
+            <div :class="getPackageClass(record.package)">{{ record.package }}</div>
+          </div>
+        </template>
+      </template>
+    </a-table>
+  </div>
 </template>
 
 <style scoped lang="scss">
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  color: #241E46;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.category {
+  color: #716B95;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.package_ereport{
+  display: flex;
+  height: 24px;
+  padding: 2px 8px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: #FDEEE7;
+  color: #E85912;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.package_metric{
+  display: flex;
+  height: 24px;
+  padding: 2px 8px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: #FFF7E8;
+  color: #FAAD14;
+  font-size: 12px;
+  font-weight: 400;
+}
+</style>
+
+<style>
 #lst_report_id {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  .ant-table-wrapper {
+    .ant-spin-container {
+      .ant-table {
+        .ant-table-container {
+          .ant-table-content {
+            table {
+              .ant-table-thead {
+                .ant-table-cell {
+                  background: #EEEBFF;
+                  border-bottom: 1px solid #EEEBFF;
 
-  .lst_item {
-    display: flex;
-    text-decoration: none;
-
-    .item {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      padding: 24px;
-      border: 1px solid #EEEBFF;
-      background-color: #FFF;
-      border-radius: 16px;
-      width: 100%;
-      cursor: pointer;
-
-      .image-metric {
-        img {
-          width: 100%;
-          height: auto;
-          object-fit: contain;
-          border-radius: 8px;
+                }
+              }
+              .ant-table-cell {
+                vertical-align: middle;
+              }
+            }
+          }
         }
       }
-
-      .info {
-        display: flex;
-        flex-direction: column;
-        color: var(--Dark-blue-dark-blue-5, #716B95);
-
-        .title{
-          color: var(--Dark-blue-dark-blue-8, #241E46);
-          font-size: 20px;
-          font-weight: bold;
-          line-height: 28px;
-        }
+      .ant-pagination{
+        display: none;
       }
     }
   }
 }
-
 </style>

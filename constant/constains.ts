@@ -630,3 +630,10 @@ export const DATACOLLECTION = [
   }
 ]
 
+export const REPORT_TYPE_MAP: Record<string, string> = {
+  report_product_line: 'Báo cáo nhóm hàng',
+  report_category: 'Báo cáo ngành hàng',
+  report_brand: 'Báo cáo thương hiệu',
+  default: 'Báo cáo Metric phát hành',
+};
+

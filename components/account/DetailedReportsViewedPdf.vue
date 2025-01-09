@@ -3,6 +3,7 @@ import EmptyReport from "~/components/account/EmptyReport.vue";
 import type {ListClaimed} from "~/services/reports";
 import {ref} from "vue";
 import ListReportDetail from "~/components/report/ListReportDetail.vue";
+import ListReportDetailPdf from "~/components/report/ListReportDetailPdf.vue";
 
 const props = defineProps({
   data: {
@@ -46,10 +47,10 @@ const onChange = async (page: number) => {
       </svg>
       <div class="detailed_reports_viewed_header_title">{{title}}</div>
     </div>
-    <a-skeleton v-if="loading" class="default_section" :paragraph="{ rows: 12 }"/>
+    <a-skeleton v-if="loading" class="default_section" :paragraph="{ rows: 20 }"/>
     <div v-else class="detailed_reports_viewed_content default_section">
       <div v-if="props.data?.length" style="display: flex; flex-direction: column; gap: 24px; margin: 24px">
-        <list-report-detail :data="props.data"/>
+        <list-report-detail-pdf :data="props.data"/>
         <div class="page">
           <a-pagination v-model:current="current" :total="props.total" :page-size="pageSizes" show-less-items @change="onChange" />
         </div>
