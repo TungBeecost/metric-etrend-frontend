@@ -18,3 +18,7 @@
     height: 40px !important;
     line-height: 40px !important;
 }
+
+.ant-tabs-nav-wrap{
+    margin-left: 0;
+}

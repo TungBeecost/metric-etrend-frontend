@@ -21,7 +21,7 @@ const columns = [
     width: 600,
   },
   {
-    title: 'Thời gian sử dụng',
+    title: 'Thời điểm xem báo cáo',
     dataIndex: 'time_used',
     key: 'time_used',
 
