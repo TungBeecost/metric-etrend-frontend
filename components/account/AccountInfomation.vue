@@ -104,8 +104,9 @@ const handdleCoppy = () => {
               Số lượt xem báo cáo tổng quan
               <a-tooltip color=#FFF>
                 <template #title>
-                  <div style="color: black">Lưu ý</div>
-                  <div style="color: #716B95; border-top: 1px solid #EEEBFF; padding-top: 6px; margin-top: 6px"> Mỗi lượt xem báo cáo có hiệu lực 24h
+                  <div style="color: black; max-width: 200px; word-wrap: break-word;">Lưu ý</div>
+                  <div style="color: #716B95; border-top: 1px solid #EEEBFF; padding-top: 6px; margin-top: 6px">
+                    Mỗi lượt xem báo cáo <br/> có hiệu lực 24h
                   </div>
                 </template>
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
