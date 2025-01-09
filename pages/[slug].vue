@@ -142,26 +142,15 @@ const fetchReportData = async () => {
         response.category_report_id = children[0].value;
       }
     }
-    const endQueryTime = new Date(userInfo?.value?.metric_info?.end_query_time);
-    const currentTime = new Date();
-    const {tier_report} = response;
-    const hasMarketV3Role = userInfo?.value?.metric_info_auth?.roles.some(role => role.startsWith("marketv3") || role === "market_staff");
 
-    if ((tier_report !== 'e_community' && userInfo?.value?.current_plan?.remain_claim > 0) || config.public.SSR === 'true') {
+    if(response.has_permission){
       isHideContent = false;
     }
-    else if (
-        userInfo.value?.metric_info?.metadata?.remaining_quota > 0 &&
-        currentTime < endQueryTime &&
-        !(
-            userInfo?.value?.metric_info_auth?.roles.length === 0 ||
-            (userInfo?.value?.metric_info_auth?.roles.length === 1 && userInfo?.value?.metric_info_auth?.roles[0] === "market_default")
-        ) || hasMarketV3Role
-    ) {
-      isHideContent = false;
-    } else {
+    else {
       isHideContent = true;
     }
+
+
     const [listRecommend] = await Promise.all([
       fetchRecommend(response.category_report_id)
     ]);
