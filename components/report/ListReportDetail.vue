@@ -11,6 +11,8 @@ const props = defineProps({
   },
 });
 
+const router = useRouter();
+
 const columns = [
   {
     title: 'Tên báo cáo',
@@ -46,6 +48,12 @@ function formatExpiredAt(dateString: string): string {
 function getPackageClass(packageName: string): string {
   return packageName === 'eReport' ? 'package_ereport' : 'package_metric';
 }
+
+function handleRowClick(record: any) {
+  console.log('record', record);
+  const url = `${NAVIGATIONS.home}${record.source === 'marketing' ? 'insight/' + record.slug : record.slug}`;
+  router.push(url);
+}
 </script>
 
 <template>
@@ -53,7 +61,7 @@ function getPackageClass(packageName: string): string {
     <a-table :columns="columns" :data-source="props.data">
       <template #bodyCell="{ column, text, record }">
         <template v-if="column.dataIndex === 'name'">
-          <div style="display: flex; align-items: center; gap: 16px">
+          <div style="display: flex; align-items: center; gap: 16px; cursor: pointer" @click="handleRowClick(record)">
             <img
                 :src="record.url_thumbnail ? getUrlImageThumbnail(record.url_thumbnail) : '/images/default_thumbnail_report.png'"
                 alt="thumbnail"
