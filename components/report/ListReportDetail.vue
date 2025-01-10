@@ -75,7 +75,7 @@ function handleRowClick(record: any) {
         </template>
         <template v-else-if="column.dataIndex === 'time_used'">
           <div style="display: flex; height: 100%; align-items: center; gap: 16px">
-            <span>{{ formatExpiredAt(record.claimed_at) }}</span>
+            <span>{{ formatExpiredAt(record.created_at) }}</span>
             <span>{{ text }}</span>
           </div>
         </template>
