@@ -84,7 +84,7 @@ const handleScroll = () => {
 };
 
 const fetchReportData = async () => {
-  // const {userInfo} = storeToRefs(currentUserStore);
+  const {userInfo} = storeToRefs(currentUserStore);
   const slug = route.params.slug;
   if (!slug) {
     console.error('Slug parameter is missing');
@@ -94,10 +94,10 @@ const fetchReportData = async () => {
     let isHideContent = true;
     const accessToken = await getIndexedDB("access_token").catch(() => null);
     const visitorId = await getIndexedDB("__visitor").catch(() => null);
-    let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
-    // const remaining_quota_metric = userInfo?.value?.metric_info?.metadata?.remaining_quota || 0;
-    // const roles = userInfo?.value?.metric_info_auth?.roles;
-    // let url = `${config.public.API_ENDPOINT}/api/report/detail_v2?slug=${slug}&remaining_quota_metric=${remaining_quota_metric}&roles=${roles}`;
+    // let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
+    const remaining_quota_metric = userInfo?.value?.metric_info?.metadata?.remaining_quota || 0;
+    const roles = userInfo?.value?.metric_info_auth?.roles;
+    let url = `${config.public.API_ENDPOINT}/api/report/detail_v2?slug=${slug}&remaining_quota_metric=${remaining_quota_metric}&roles=${roles}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
     }
