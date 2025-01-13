@@ -22,3 +22,8 @@
 .ant-tabs-nav-wrap{
     margin-left: 0;
 }
+
+.ant-input-wrapper{
+    display: flex;
+    align-items: center;
+}
