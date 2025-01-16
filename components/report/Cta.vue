@@ -388,4 +388,153 @@ const toggleUnlock = () => {
     font-weight: 700;
   }
 }
+
+@media screen and (max-width: 1200px) {
+  .popup-lead-form-container {
+    svg#background {
+      width: 100%;
+      bottom: -94px;
+    }
+
+    .additional-information {
+      padding: 32px 32px 0 32px;
+      display: block;
+
+      h2.title {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 32px;
+        color: #241E46;
+      }
+
+      p.subtitle {
+        margin-top: 12px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        color: #716B95;
+      }
+
+      .image {
+        margin-top: 40px;
+        max-width: 100%;
+      }
+    }
+
+    .popup-lead-form {
+      width: 100%;
+      padding: 24px;
+
+      .lead-form {
+        width: 100%;
+
+        .form-container {
+          width: 100%;
+          padding: 16px;
+        }
+      }
+
+      .additional-information {
+        padding: 32px 0 32px 0;
+        display: none;
+
+        h2.title {
+          font-style: normal;
+          font-weight: 700;
+          font-size: 24px;
+          line-height: 32px;
+          color: #241E46;
+        }
+
+        p.subtitle {
+          margin-top: 12px;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 24px;
+          color: #716B95;
+        }
+
+        .image {
+          margin-top: 40px;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .popup-lead-form-container {
+    svg#background {
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    .additional-information {
+      padding: 32px 32px 0 32px;
+      display: block;
+
+      h2.title {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 32px;
+        color: #241E46;
+      }
+
+      p.subtitle {
+        margin-top: 12px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        color: #716B95;
+      }
+
+      .image {
+        margin-top: 40px;
+        max-width: 100%;
+      }
+    }
+
+    .popup-lead-form {
+      .lead-form {
+        .form-container {
+          padding: 16px;
+        }
+      }
+
+      .additional-information {
+        padding: 32px 0 32px 0;
+        display: none;
+
+        h2.title {
+          font-style: normal;
+          font-weight: 700;
+          font-size: 24px;
+          line-height: 32px;
+          color: #241E46;
+        }
+
+        p.subtitle {
+          margin-top: 12px;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 24px;
+          color: #716B95;
+        }
+
+        .image {
+          margin-top: 40px;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
 </style>

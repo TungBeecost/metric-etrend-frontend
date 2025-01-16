@@ -4,7 +4,9 @@ import {ref, onMounted, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import ReportPreviewSlide from "~/components/PreviewSlide/ReportPreviewSlide.vue";
 import Cta from "~/components/report/Cta.vue";
-
+import {useCurrentUser} from "~/stores/current-user";
+const currentUserStore = useCurrentUser();
+const {userInfo} = storeToRefs(currentUserStore);
 const open = ref(false);
 const openCta = ref(false);
 const route = useRoute();
@@ -45,6 +47,14 @@ watch(() => props.showModalDownloadPdf, (newVal) => {
   if (newVal) {
     open.value = true;
   }
+});
+
+const showMetricButton = computed(() => {
+  const roles = userInfo?.value?.metric_info_auth.roles;
+  const isRolesValid = !roles || roles.length === 0 || roles[0] === 'market_default';
+  const isEndQueryTimeExpired = new Date() > new Date(userInfo?.value?.metric_info_auth.end_query_time);
+  const isPlanCodeValid = userInfo?.value?.current_plan.plan_code === 'e_community';
+  return isRolesValid && isEndQueryTimeExpired && isPlanCodeValid;
 });
 </script>
 
@@ -132,7 +142,6 @@ watch(() => props.showModalDownloadPdf, (newVal) => {
             class="btn"
             @click="handleClickViewOnMetric"
             size="large"
-            v-if="!data.is_unsellable"
         >
           Xem trên phần mềm metric
         </a-button>
