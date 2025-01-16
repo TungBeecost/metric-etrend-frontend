@@ -17,3 +17,7 @@
 .ant-tabs-nav-wrap{
     margin-left: 0;
 }
+
+.ant-modal-content{
+    padding: 0 !important;
+}

@@ -3,14 +3,18 @@ import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
 import {ref, onMounted, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import ReportPreviewSlide from "~/components/PreviewSlide/ReportPreviewSlide.vue";
-import {trackEventCommon} from "~/services/tracking/TrackingEventService";
-import {EVENT_TYPE} from "~/constant/general/EventConstant";
+import Cta from "~/components/report/Cta.vue";
 
 const open = ref(false);
+const openCta = ref(false);
 const route = useRoute();
 const router = useRouter();
 const handleClick = () => {
   open.value = true;
+};
+
+const handleClickViewOnMetric = () => {
+  openCta.value = true;
 };
 
 const props = defineProps({
@@ -123,15 +127,20 @@ watch(() => props.showModalDownloadPdf, (newVal) => {
           </i>
           Tải báo cáo PDF chi tiết
         </a-button>
-        <div
+        <a-button
+            style="width: 100%; height: 50px; font-family: Montserrat,sans-serif; font-weight: 500;"
+            class="btn"
+            @click="handleClickViewOnMetric"
+            size="large"
             v-if="!data.is_unsellable"
-            style="text-align: center;font-family: Montserrat,sans-serif; font-weight: 500; color: #666;font-size: 14px;">
-          (Nhận báo cáo qua Email trong 5 - 30 phút)
-        </div>
+        >
+          Xem trên phần mềm metric
+        </a-button>
       </div>
     </div>
   </div>
   <modal-download-pdf v-model:open="open" :data="props.data"/>
+  <cta v-model:open="openCta"/>
 </template>
 
 <style scoped lang="scss">

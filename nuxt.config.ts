@@ -81,6 +81,7 @@ export default defineNuxtConfig({
             apiBase: process.env.API_ENDPOINT,
             API_ENDPOINT: process.env.API_ENDPOINT,
             URL_AUTH_SERVICE_API: process.env.URL_AUTH_SERVICE_API,
+            URL_CRM_BACKEND_API: process.env.URL_CRM_BACKEND_API,
             BASE_URL: process.env.BASE_URL,
             BASE_PATH: process.env.BASE_PATH || '/',
             MODE: process.env.MODE,
