@@ -291,6 +291,12 @@ const charts = computed(() => {
     }
   ]
 });
+
+const filteredPlatforms = computed(() => {
+  return props.data?.data_analytic?.by_marketplace?.lst_marketplace.filter((platform: any) => {
+    return parseFloat(Number(platform.ratio_revenue * 100).toFixed(1)) !== 0 || parseFloat(Number(platform.ratio_sale * 100).toFixed(1)) !== 0;
+  });
+});
 </script>
 
 <template>
@@ -356,7 +362,7 @@ const charts = computed(() => {
         mặt hàng.
       </li>
       <li
-          v-for="platform in data?.data_analytic?.by_marketplace?.lst_marketplace"
+          v-for="platform in filteredPlatforms"
           :key="platform.name"
       >
         <b class="text-bold">{{ platform.name }}</b> chiếm

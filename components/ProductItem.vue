@@ -226,6 +226,7 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
 
   .product-thumbnail {
     width: 100%;
+    height: 200px;
     position: relative;
 
     cursor: pointer;
