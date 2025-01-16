@@ -5,7 +5,7 @@ import PriceRangeStatistic from "~/components/report/PriceRangeStatistic.vue";
 import BrandStatistic from "~/components/report/BrandStatistic.vue";
 import TopShopStatistic from "~/components/report/TopShopStatistic.vue";
 import ListProducts from "~/components/report/ListProducts.vue";
-import {onMounted, onUnmounted, ref} from "vue";
+import {onMounted, onUnmounted, ref, watch} from "vue";
 import {REPORT_ENDPOINTS} from "~/constant/endpoints";
 import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
@@ -20,7 +20,6 @@ import {useCurrentUser} from "~/stores/current-user.js";
 import PopupChatGpt from "~/components/MetricGpt/PopupChatGpt.vue";
 import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService.js";
 import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
-
 
 const route = useRoute();
 const router = useRouter();
@@ -38,7 +37,7 @@ const showModalDownloadPdf = ref(false);
 const currentUserStore = useCurrentUser();
 const {fetchCurrentUser} = useCurrentUser();
 const { getInfoTransaction } = usePayment()
-const {userInfo} = storeToRefs(currentUserStore);
+let {userInfo} = storeToRefs(currentUserStore);
 
 const fetchSuggest = async (value = '', options = {}) => {
   try {
@@ -84,7 +83,6 @@ const handleScroll = () => {
 };
 
 const fetchReportData = async () => {
-  const {userInfo} = storeToRefs(currentUserStore);
   const slug = route.params.slug;
   if (!slug) {
     console.error('Slug parameter is missing');
@@ -94,7 +92,6 @@ const fetchReportData = async () => {
     let isHideContent = true;
     const accessToken = await getIndexedDB("access_token").catch(() => null);
     const visitorId = await getIndexedDB("__visitor").catch(() => null);
-    // let url = `${config.public.API_ENDPOINT}/api/report/detail?slug=${slug}`;
     const remaining_quota_metric = userInfo?.value?.metric_info?.metadata?.remaining_quota || 0;
     const roles = userInfo?.value?.metric_info_auth?.roles;
     let url = `${config.public.API_ENDPOINT}/api/report/detail_v2?slug=${slug}&remaining_quota_metric=${remaining_quota_metric}&roles=${roles}`;
@@ -154,7 +151,6 @@ const fetchReportData = async () => {
       isHideContent = true;
     }
 
-
     const [listRecommend] = await Promise.all([
       fetchRecommend(response.category_report_id)
     ]);
@@ -184,7 +180,6 @@ const fetchReportData = async () => {
       }];
     }
 
-
     return {
       reportDetail: {...response, name},
       listRecommend,
@@ -210,7 +205,6 @@ const {data: tagSuggestions} = await useAsyncData(
       return await fetchSuggest(data?.reportDetail?.name, {limit: 5});
     }
 );
-// console.log(data);
 
 const isMobile = ref(window?.innerWidth <= 768);
 
@@ -235,7 +229,8 @@ onMounted(async () => {
     if (userInfo.value?.current_plan !== 'e_community')
       navigateTo(loginPayment);
   }
-  fetchCurrentUser();
+  await fetchCurrentUser();
+  userInfo = storeToRefs(currentUserStore).userInfo;
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
@@ -266,6 +261,12 @@ onMounted(async () => {
   }
 });
 
+watch(() => userInfo.value?.metric_info_auth?.roles, async (newRoles) => {
+  if (newRoles) {
+    await fetchReportData();
+  }
+});
+
 watch(showModal, (newVal) => {
   if (newVal) {
     trackEventCommon(EVENT_TYPE.PAYMENT_SUCCESS_REPORT, 'payment_success_report', '');
@@ -291,6 +292,7 @@ onUnmounted(() => {
 <template>
   <div class="container_content">
     <div>
+      {{userInfo}}
       <div class="title default_section">
         <div class="breadcrumbs">
           <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
