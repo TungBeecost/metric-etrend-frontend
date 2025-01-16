@@ -292,7 +292,6 @@ onUnmounted(() => {
 <template>
   <div class="container_content">
     <div>
-      {{userInfo}}
       <div class="title default_section">
         <div class="breadcrumbs">
           <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
