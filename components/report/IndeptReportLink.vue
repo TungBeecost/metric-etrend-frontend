@@ -142,6 +142,7 @@ const showMetricButton = computed(() => {
             class="btn"
             @click="handleClickViewOnMetric"
             size="large"
+            v-if="showMetricButton"
         >
           Xem trên phần mềm metric
         </a-button>
