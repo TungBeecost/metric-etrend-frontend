@@ -54,7 +54,6 @@ const toggleUnlock = () => {
 </script>
 
 <template>
-  {{popupState}}
   <a-modal
       :open="open"
       :bodyStyle="{ padding: 0 }"
