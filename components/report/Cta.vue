@@ -2,6 +2,7 @@
 
 import TrialRegister from "~/components/report/TrialRegister.vue";
 import LeadFormBackground from "~/components/report/LeadFormBackground.vue";
+import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
 
 const POPUP_STATES = {
   FORM: 'form',
@@ -23,14 +24,29 @@ const POPUP_STATES_WIDTH = {
   verification_success: '629px',
 };
 
+const popupState = ref(POPUP_STATES.FORM)
+const openSuccess = ref(false)
+
 const props = defineProps({
   open: {
     type: Boolean,
     default: false
   },
 });
+
+const handleSubmitStatus = (status: any) => {
+  console.log('status', status)
+  if (status === 'success') {
+    popupState.value = POPUP_STATES.SUCCESSFULLY
+    openSuccess.value = true
+    emits('update:open', false)
+  } else if (status === 'error') {
+    popupState.value = POPUP_STATES.FAILURE
+  } else {
+    popupState.value = POPUP_STATES.FORM
+  }
+}
 const emits = defineEmits(["update:open"]);
-const popupState = ref(POPUP_STATES.FORM);
 const toggleUnlock = () => {
   emits('update:open', false);
 };
@@ -38,6 +54,7 @@ const toggleUnlock = () => {
 </script>
 
 <template>
+  {{popupState}}
   <a-modal
       :open="open"
       :bodyStyle="{ padding: 0 }"
@@ -50,7 +67,7 @@ const toggleUnlock = () => {
       <div class="lead-form">
         <div class="form-wrapper">
           <div class="form-container">
-            <trial-register/>
+            <trial-register @submit-status="handleSubmitStatus"/>
           </div>
         </div>
       </div>
@@ -63,6 +80,7 @@ const toggleUnlock = () => {
       </div>
     </div>
   </a-modal>
+  <success-notification v-model:visible="openSuccess" class-name="submit-form-marketing-success"/>
 </template>
 
 <style scoped lang="scss">

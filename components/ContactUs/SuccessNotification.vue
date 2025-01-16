@@ -33,7 +33,7 @@ const isVisible = computed({
            :wrap-class-name="'popup-success-notification ' + props.className"
            :footer="false"
            centered
-           style="width: 663px;"
+           style="width: 800px"
 
   >
     <div class="content-wrapper">
@@ -68,7 +68,7 @@ const isVisible = computed({
 <style scoped lang="scss">
 .popup-success-notification {
   .content-wrapper {
-    margin: 40px 0;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;

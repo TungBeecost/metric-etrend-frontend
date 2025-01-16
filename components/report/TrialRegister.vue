@@ -4,6 +4,8 @@ const currentUserStore = useCurrentUser();
 const {userInfo} = storeToRefs(currentUserStore);
 import {getGlobalVariable} from "~/services/GlobalVariableService";
 
+const emit = defineEmits(['submitStatus'])
+
 const formData = reactive({
   fullName: '',
   email: '',
@@ -109,11 +111,11 @@ const submitForm = async (values: any) => {
 
     const resp = await createLead(payload)
     console.log('resp', resp)
-    // emit('submitStatus', 'success', formData.email, resp_data?.data?.person_id)
+    emit('submitStatus', 'success')
   } catch (e) {
     console.log("Has error:", e)
     console.error(e)
-    // emit('submitStatus', 'error')
+    emit('submitStatus', 'error')
   } finally {
     loading.value = false
   }
