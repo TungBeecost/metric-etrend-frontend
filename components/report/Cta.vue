@@ -73,7 +73,7 @@ const toggleUnlock = () => {
       <div class="additional-information">
         <h2 class="title">Đăng ký nghe tư vấn để <br> Kinh doanh Bứt phá!</h2>
         <p class="subtitle">
-          Thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến thông minh hơn.Ngay bây giờ!
+          Thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến thông minh hơn. Ngay bây giờ!
         </p>
         <img class="image" src="/icons/form-image.svg" alt="Unlock" />
       </div>
