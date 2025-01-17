@@ -3,6 +3,7 @@
 import {ref, h} from 'vue';
 import {onBeforeRouteLeave} from 'vue-router';
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
+import Cta from "~/components/report/Cta.vue";
 
 const emit = defineEmits(['showNotification']);
 
@@ -30,6 +31,7 @@ const isMobile = computed(() => window.innerWidth <= 768);
 const showNotification = ref(props.showNotification);
 const showButton = ref(props.showButton);
 const open = ref(false);
+const openCta = ref(false);
 
 const svgIcon = () => (
     h('svg', {
@@ -65,6 +67,10 @@ const closeNotification = () => {
 
 const handleOpenModal = () => {
   open.value = true;
+};
+
+const handleOpenCta = () => {
+  openCta.value = true;
 };
 
 onBeforeRouteLeave(() => {
@@ -186,6 +192,14 @@ onBeforeRouteLeave(() => {
         >
           Tải báo cáo PDF
         </AButton>
+        <AButton
+            v-if="!data.is_unsellable"
+            style="width: 100%;font-size: 14px; font-weight: 600; text-align: center; font-family: Montserrat, sans-serif;"
+            size="large"
+            @click="handleOpenCta"
+        >
+          Xem trên phần mềm metric
+        </AButton>
         <div style="font-size: 11px;">
           Được tin dùng bởi hơn 1,000 doanh nghiệp TMĐT hàng đầu
         </div>
@@ -222,6 +236,7 @@ onBeforeRouteLeave(() => {
     </button>
   </div>
   <modal-download-pdf v-model:open="open" :data="props.data"/>
+  <cta v-model:open="openCta"/>
 </template>
 
 <style scoped lang="scss">

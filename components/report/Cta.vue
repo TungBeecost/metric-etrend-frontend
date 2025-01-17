@@ -71,9 +71,9 @@ const toggleUnlock = () => {
         </div>
       </div>
       <div class="additional-information">
-        <h2 class="title">Đăng ký nghe tư vấn để <br> Kinh doanh Bứt phá!</h2>
+        <h2 class="title">Xem tất cả báo cáo Ecom  <br> bằng phần mềm Metric</h2>
         <p class="subtitle">
-          Thấu hiểu thị trường Thương mại Điện tử và bán hàng trực tuyến thông minh hơn. Ngay bây giờ!
+          Đăng ký để được tư vấn sử dụng phần mềm
         </p>
         <img class="image" src="/icons/form-image.svg" alt="Unlock" />
       </div>
@@ -110,7 +110,7 @@ const toggleUnlock = () => {
       font-weight: 400;
       font-size: 16px;
       line-height: 28px;
-      color: #716B95;
+      color: #E85912;
     }
 
     .image {
@@ -152,7 +152,7 @@ const toggleUnlock = () => {
         font-weight: 400;
         font-size: 16px;
         line-height: 28px;
-        color: #716B95;
+        color: #E85912;
       }
 
       .image {
@@ -414,17 +414,20 @@ const toggleUnlock = () => {
         font-weight: 400;
         font-size: 14px;
         line-height: 24px;
-        color: #716B95;
+        color: #E85912;
       }
 
       .image {
         margin-top: 40px;
         max-width: 100%;
+        display: none;
       }
     }
 
     .popup-lead-form {
       width: 100%;
+      flex-direction: column-reverse;
+
       padding: 24px;
 
       .lead-form {
@@ -438,7 +441,6 @@ const toggleUnlock = () => {
 
       .additional-information {
         padding: 32px 0 32px 0;
-        display: none;
 
         h2.title {
           font-style: normal;
@@ -454,12 +456,13 @@ const toggleUnlock = () => {
           font-weight: 400;
           font-size: 14px;
           line-height: 24px;
-          color: #716B95;
+          color: #E85912;
         }
 
         .image {
           margin-top: 40px;
           max-width: 100%;
+          display: none;
         }
       }
     }
@@ -492,12 +495,13 @@ const toggleUnlock = () => {
         font-weight: 400;
         font-size: 14px;
         line-height: 24px;
-        color: #716B95;
+        color: #E85912;
       }
 
       .image {
         margin-top: 40px;
         max-width: 100%;
+        display: none;
       }
     }
 
@@ -509,8 +513,7 @@ const toggleUnlock = () => {
       }
 
       .additional-information {
-        padding: 32px 0 32px 0;
-        display: none;
+        padding: 32px 0 12px 0;
 
         h2.title {
           font-style: normal;
@@ -526,12 +529,13 @@ const toggleUnlock = () => {
           font-weight: 400;
           font-size: 14px;
           line-height: 24px;
-          color: #716B95;
+          color: #E85912;
         }
 
         .image {
           margin-top: 40px;
           max-width: 100%;
+          display: none;
         }
       }
     }
