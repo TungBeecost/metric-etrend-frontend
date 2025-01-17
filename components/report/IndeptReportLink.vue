@@ -54,7 +54,7 @@ const showMetricButton = computed(() => {
   const isRolesValid = !roles || roles.length === 0 || roles[0] === 'market_default';
   const isEndQueryTimeExpired = new Date() > new Date(userInfo?.value?.metric_info_auth.end_query_time);
   const isPlanCodeValid = userInfo?.value?.current_plan.plan_code === 'e_community';
-  return isRolesValid && isEndQueryTimeExpired && isPlanCodeValid;
+  return (isRolesValid || isEndQueryTimeExpired) && isPlanCodeValid;
 });
 </script>
 
