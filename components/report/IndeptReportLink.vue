@@ -50,9 +50,9 @@ watch(() => props.showModalDownloadPdf, (newVal) => {
 });
 
 const showMetricButton = computed(() => {
-  const roles = userInfo?.value?.metric_info_auth.roles;
+  const roles = userInfo?.value?.metric_info_auth?.roles;
   const isRolesValid = !roles || roles.length === 0 || roles[0] === 'market_default';
-  const isEndQueryTimeExpired = new Date() > new Date(userInfo?.value?.metric_info_auth.end_query_time);
+  const isEndQueryTimeExpired = new Date() > new Date(userInfo?.value?.metric_info_auth?.end_query_time);
   const isPlanCodeValid = userInfo?.value?.current_plan.plan_code === 'e_community';
   return (isRolesValid || isEndQueryTimeExpired) && isPlanCodeValid;
 });
