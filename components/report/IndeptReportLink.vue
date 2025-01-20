@@ -147,7 +147,7 @@ const showMetricButton = computed(() => {
             size="large"
             v-if="showMetricButton"
         >
-          Xem trên phần mềm metric
+          Xem trên phần mềm Metric
         </a-button>
       </div>
     </div>
