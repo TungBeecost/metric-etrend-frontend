@@ -198,7 +198,7 @@ onBeforeRouteLeave(() => {
             size="large"
             @click="handleOpenCta"
         >
-          Xem trên phần mềm metric
+          Xem trên phần mềm Metric
         </AButton>
         <div style="font-size: 11px;">
           Được tin dùng bởi hơn 1,000 doanh nghiệp TMĐT hàng đầu
