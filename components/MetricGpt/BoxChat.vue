@@ -94,13 +94,9 @@ const props = defineProps({
   fullScreen: {
     type: Boolean,
   },
-  period: {
-    type: String,
-  },
 });
 const reportName = props.name;
 const reportId = props.id;
-const period = props.period;
 const config = useRuntimeConfig();
 let messages = ref([
   {
@@ -172,7 +168,6 @@ const invokeMetricGPT = async (lstChatHistory = null) => {
       lst_chat_history: lstChatHistory,
       report_id: reportId,
       report_name: reportName,
-      period: period,
     },
     responseType: "stream",
   };
