@@ -17,7 +17,7 @@ const fetchReport = async () => {
       lst_query: [],
       lst_category_report_id: [],
       offset: 0,
-      sort: "popularity",
+      sort: "default",
       source: ["marketing"],
     };
     const { lst_report }: any = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {

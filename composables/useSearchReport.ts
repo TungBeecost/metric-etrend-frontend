@@ -14,7 +14,7 @@ export default function useSearchReport() {
                 lst_field: ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop", "url_square"],
                 lst_query: value ? [value] : [],
                 offset: 0,
-                sort: "popularity",
+                sort: "default",
                 ...options
             };
 
@@ -33,7 +33,7 @@ export default function useSearchReport() {
                 limit: 5,
                 lst_field: ["name", "slug"],
                 offset: 0,
-                sort: "popularity",
+                sort: "default",
                 lst_query: value ? [value] : [],
                 ...options
             };

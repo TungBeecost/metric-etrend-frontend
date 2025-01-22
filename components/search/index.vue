@@ -114,8 +114,9 @@ const handleSuggestionClick = async (suggestion: string, index: number) => {
   const slug = report_type === 'report_brand' ? `thuong-hieu-${slugifyText(name)}` : slugifyText(name);
   searchValue.value = name;
   isShowSuggestions.value = false;
+  const path = ['report_product_line', 'report_category', 'report_brand', 'report_shop', 'report_brand_keyword'].includes(report_type) ? slug : `insight/${slug}`;
   if (index > 0)
-    navigateTo(`${NAVIGATIONS.home}${slug}`);
+    navigateTo(`${NAVIGATIONS.home}${path}`);
   else
     await props.handleSearch(name);
 }
@@ -129,7 +130,7 @@ const onChange = debounce(async (showSuggestions = true) => {
   const result = await props.handleChange(searchValue.value);
   isShowSuggestions.value = showSuggestions;
   if (result) {
-    suggestions.value = [{name: searchKeyWord.value, report_type: ''}, ...result];
+    suggestions.value = [{name: searchKeyWord.value, report_type: '', source: ''}, ...result];
   }
 }, 300);
 
