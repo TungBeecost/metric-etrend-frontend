@@ -365,7 +365,6 @@ onUnmounted(() => {
           <popup-chat-gpt
               :name="data?.reportDetail?.name"
               :id="data?.reportDetail?.id"
-              :period="data?.reportDetail?.period"
           />
         </div>
       </transition>
