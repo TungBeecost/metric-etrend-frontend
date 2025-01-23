@@ -27,6 +27,7 @@ const EVENT_TYPE = {
     CLICK_HOMEPAGE_SEARCH_BAR: 'click_homepage_search_bar',
     CLICK_SUGGESTION_KEYWORD: 'click_suggestion_keyword',
     SHOW_POPUP_CONVERT_TO_ANALYTICS: 'show_popup_convert_to_analytics',
+    CLICK_RELATED_KEYWORD: 'click_related_keyword',
     VIDEO_START: 'video_start',
 };
 
