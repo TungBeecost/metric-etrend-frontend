@@ -5,6 +5,8 @@ import {useRoute, useRouter} from "vue-router";
 import ReportPreviewSlide from "~/components/PreviewSlide/ReportPreviewSlide.vue";
 import Cta from "~/components/report/Cta.vue";
 import {useCurrentUser} from "~/stores/current-user";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 const currentUserStore = useCurrentUser();
 const {userInfo} = storeToRefs(currentUserStore);
 const open = ref(false);
@@ -16,6 +18,7 @@ const handleClick = () => {
 };
 
 const handleClickViewOnMetric = () => {
+  trackEventCommon(EVENT_TYPE.SHOW_POPUP_CONVERT_TO_ANALYTICS, 'show_popup_convert_to_analytics', '');
   openCta.value = true;
 };
 

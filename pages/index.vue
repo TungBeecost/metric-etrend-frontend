@@ -244,6 +244,7 @@ onMounted(async () => {
 });
 
 const onClickSuggestion = (suggestion: string) => {
+  trackEventCommon(EVENT_TYPE.CLICK_SUGGESTION_KEYWORD, 'click_suggestion_keyword', '');
   navigateTo(`${NAVIGATIONS.search}?search=${suggestion}`);
 }
 

@@ -21,6 +21,11 @@ const EVENT_TYPE = {
     SUBMIT_FORM_CONTACT: 'submit_form_contact',
     SUBMIT_FORM_COMMUNITY_REPORT: 'submit_form_community_report',
     COPY_REFERRAL_CODE: 'copy_referral_code',
+    VIEW_REPORT_REPORTS: 'view_report_reports',
+    VIEW_PRICING: 'view_pricing',
+    CLICK_HOMEPAGE_SEARCH_BAR: 'click_homepage_search_bar',
+    CLICK_SUGGESTION_KEYWORD: 'click_suggestion_keyword',
+    SHOW_POPUP_CONVERT_TO_ANALYTICS: 'show_popup_convert_to_analytics',
     VIDEO_START: 'video_start',
 };
 

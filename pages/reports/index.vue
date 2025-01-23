@@ -6,6 +6,9 @@ import { type SearchReportPayload } from "~/services/reports";
 import { PAGE_TITLES } from "~/constant/constains";
 import { REPORT_ENDPOINTS } from "~/constant/endpoints";
 import ExploreByReportType from "~/components/report/ExploreByReportType.vue";
+import {onMounted} from "vue";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const config = useRuntimeConfig();
 const isLoading = ref(true);
@@ -35,6 +38,10 @@ const fetchReport = async () => {
 };
 
 fetchReport();
+
+onMounted(() => {
+  trackEventCommon(EVENT_TYPE.VIEW_REPORT_REPORTS, 'view_report_reports', '');
+});
 
 useSeoMeta({
   title: PAGE_TITLES.reports

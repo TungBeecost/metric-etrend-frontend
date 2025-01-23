@@ -8,7 +8,8 @@
         @change="onChange"
         @search="handleSearch(searchValue)"
         @press-enter="handleSearch(searchValue)"
-        @focus="isShowSuggestions = true"
+        @focus="handleFocus"
+
     >
       <template #enterButton>
         <CustomIcon type="Search" :is-custom-size="true"/>
@@ -85,6 +86,11 @@ onMounted(() => {
     searchValue.value = '';
   }
 });
+
+const handleFocus = () => {
+  isShowSuggestions.value = true;
+  trackEventCommon(EVENT_TYPE.CLICK_HOMEPAGE_SEARCH_BAR, 'click_homepage_search_bar', '');
+}
 
 const searchValue = useState<string>(() => route.query.search as string || "");
 const isShowSuggestions = useState<boolean>(() => false);
