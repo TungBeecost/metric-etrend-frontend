@@ -2,6 +2,8 @@
 import type {LstRecommed} from "~/services/reports";
 import {NAVIGATIONS} from "~/constant/constains";
 import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const props = defineProps({
   recomends: {
@@ -11,6 +13,7 @@ const props = defineProps({
 });
 
 const handleItemClick = (item: LstRecommed) => {
+  trackEventCommon(EVENT_TYPE.CLICK_RELATED_REPORT_SEARCH_RESULT, 'click_related_report_search_result', '');
   if (item.source === 'marketing') {
     navigateTo(`${NAVIGATIONS.home}/insight/${item.slug}`);
     return
