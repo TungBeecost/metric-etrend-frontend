@@ -93,6 +93,7 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   gap: 24px;
+  padding: 24px;
 
   .container-metric{
     display: flex;
