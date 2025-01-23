@@ -16,10 +16,17 @@
 
 <script setup lang="ts">
 import { PAGE_TITLES } from '~/constant/constains';
+import {onMounted} from "vue";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 useSeoMeta({
   title: PAGE_TITLES.pricing
 })
+
+onMounted(() => {
+  trackEventCommon(EVENT_TYPE.VIEW_PRICING, 'view_pricing', '');
+});
 </script>
 
 <style lang="scss" scoped>

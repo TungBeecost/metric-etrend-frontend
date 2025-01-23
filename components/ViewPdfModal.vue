@@ -133,7 +133,7 @@ const isViewReportDisabled = computed(() => userInfo.value.current_plan.remain_c
 
 .unlock-report-modal {
   font-family: Inter, Montserrat, sans-serif;
-
+  padding: 24px;
   .unlock-icon {
     width: 212px;
 

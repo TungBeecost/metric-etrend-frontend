@@ -158,9 +158,6 @@ onMounted(() => {
   handleResize();
   recheckHeader();
 
-  // Track page view
-  trackEvent('page_view', {page: route.path});
-
   let lastScrollTop = 0;
   const header = document.querySelector('header');
 

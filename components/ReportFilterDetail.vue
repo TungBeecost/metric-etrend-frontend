@@ -1,3 +1,25 @@
+<template>
+  <div class="report-filter">
+    <div class="report-filter-title">
+      <h2 class="title">
+        Phạm vi báo cáo
+      </h2>
+    </div>
+    <div class="report-filter-content">
+      <div v-for="field in reportFilterDisplayFields" :key="field" v-if="shouldDisplayField(field)">
+        <div class="report-filter-field">
+          <div class="report-filter-field-title">
+            {{ fieldLabel[field] }}
+          </div>
+          <div class="report-filter-field-value">
+            {{ props.data.data_filter_report && fieldValueParse[field] ? fieldValueParse[field](props.data.data_filter_report[field]) : 'N/A' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import {computed} from 'vue';
 import moment from "moment/moment";
@@ -19,31 +41,37 @@ const props = defineProps({
   },
 });
 
-const showDetailPopup = ref(false);
-
 const reportFilterDisplayFields = computed(() => {
   if (!props.data) {
     return [];
   }
+  let fields = [];
   if (props.data.report_type === 'report_category') {
-    return [
+    fields = [
       'lst_platform_id',
       'date_range',
       'lst_bee_category_base_id',
       'is_remove_fake_sale',
     ];
+  } else {
+    fields = [
+      'lst_platform_id',
+      'date_range',
+      'category',
+      'lst_keyword',
+      'lst_keyword_required',
+      'is_remove_fake_sale',
+    ];
   }
 
-  return [
-    'lst_platform_id',
-    'date_range',
-    'category',
-    'lst_keyword',
-    'lst_keyword_required',
-    // 'lst_keyword_exclude',
-    'is_remove_fake_sale',
-  ];
+  return fields.filter(field => {
+    if (field === 'lst_keyword' || field === 'lst_keyword_required') {
+      return props.data.data_filter_report && props.data.data_filter_report[field] && props.data.data_filter_report[field].length > 0;
+    }
+    return true;
+  });
 });
+
 
 type FieldLabels = {
   [key: string]: string;
@@ -86,8 +114,8 @@ const fieldValueParse: FieldValueParsers = {
     return value.map((platformId: number) => PLATFORMS[platformId]).join(', ');
   },
   lst_bee_category_base_id: (lst_bee_category: string[]) => lst_bee_category ? (lst_bee_category.map(bee_category => allReports.find(cat => cat.value === bee_category)?.label)).join(', ') : '',
-  lst_keyword: (value: string[]) => value && value.length > 0 ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : 'không có',
-  lst_keyword_required: (value: string[]) => value && value.length > 0 ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : 'không có',
+  lst_keyword: (value: string[]) => value && value.length > 0 ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : '',
+  lst_keyword_required: (value: string[]) => value && value.length > 0 ? value.length > 10 ? `${value.slice(0, 10).join(', ')}...` : value.join(', ') : '',
   is_smart_queries: (value: boolean) => value ? 'Có' : 'Không',
   is_remove_fake_sale: (value: boolean) => value ? 'Loại trừ sản phẩm có tỉ lệ đánh giá / lượt bán thấp hơn 5%' : 'Không',
   date_range: () => {
@@ -99,29 +127,14 @@ const fieldValueParse: FieldValueParsers = {
     return breadcrumbs.map((breadcrumb: Breadcrumb) => breadcrumb.name).join(' / ');
   },
 };
-</script>
 
-<template>
-  <div class="report-filter">
-    <div class="report-filter-title">
-      <h2 class="title">
-        Phạm vi báo cáo
-      </h2>
-    </div>
-    <div class="report-filter-content">
-      <div v-for="field in reportFilterDisplayFields" :key="field">
-        <div class="report-filter-field">
-          <div class="report-filter-field-title">
-            {{ fieldLabel[field] }}
-          </div>
-          <div class="report-filter-field-value">
-            {{ props.data.data_filter_report && fieldValueParse[field] ? fieldValueParse[field](props.data.data_filter_report[field]) : 'N/A' }}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
+const shouldDisplayField = (field: string) => {
+  if (field === 'lst_keyword' || field === 'lst_keyword_required') {
+    return props.data.data_filter_report && props.data.data_filter_report[field] && props.data.data_filter_report[field].length > 0;
+  }
+  return true;
+};
+</script>
 
 <style scoped lang="scss">
 .report-filter {
