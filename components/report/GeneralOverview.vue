@@ -193,9 +193,9 @@ const charts = computed(() => {
               fontWeight: 400,
               fontFamily: 'Inter'
             },
-            formatter: function (this: { value: number }): string {
-              return formatSortTextCurrency(this.value);
-            }
+            // formatter: function (this: { value: number }): string {
+            //   return formatSortTextCurrency(this.value, false, true);
+            // }
           }
         },
       ],

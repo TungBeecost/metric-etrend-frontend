@@ -107,7 +107,7 @@ const toggleUnlock = () => {
 
 .unlock-report-modal {
   font-family: Inter, Montserrat, sans-serif;
-
+  padding: 24px;
   .unlock-icon {
     width: 212px;
 
@@ -116,7 +116,6 @@ const toggleUnlock = () => {
 
   .content {
     text-align: center;
-
     margin-bottom: 24px;
 
     display: flex;

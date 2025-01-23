@@ -31,7 +31,7 @@ export const formatSortTextCurrencyWithMinValue = (price, isShortest = false, mi
     }
     price = +price;
     if (price - (price % 1000000000) !== 0) {
-        price = Math.round(price / 1000000000);
+        price = parseFloat((price / 1000000000).toFixed(1));
         return `${formatNumber(price)}${isShortest ? " tỷ" : " tỷ"}`;
     }
     if (price - (price % 1000000) !== 0 && price >= min) {
@@ -69,11 +69,11 @@ export const formatSortTextCurrencyWithMinValuePlan = (price, isShortest = false
     return formatNumber(price);
 };
 
-export const formatSortTextCurrency = (price, isShortest = false) => {
+export const formatSortTextCurrency = (price, isShortest = false, isMilionFloat = false) => {
     if (!!+price === false) {
         return price;
     }
-    return formatSortTextCurrencyWithMinValue(price, isShortest)
+    return formatSortTextCurrencyWithMinValue(price, isShortest, isMilionFloat)
 };
 
 export const formatSortTextCurrencyPlan = (price, isShortest = false) => {

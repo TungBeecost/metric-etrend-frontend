@@ -10,41 +10,41 @@ const props = defineProps({
 });
 
 // State
-const remainingTimeState = ref('');
+// const remainingTimeState = ref('');
 
 // Helper function to format remaining time
-const formatRemainingTime = (diff: number) => {
-  if (diff <= 0) {
-    return '00 ngày 00:00:00';
-  }
-
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-  return `${String(days).padStart(2, '0')} ngày ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-};
+// const formatRemainingTime = (diff: number) => {
+//   if (diff <= 0) {
+//     return '00 ngày 00:00:00';
+//   }
+//
+//   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+//   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+//   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+//   const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+//
+//   return `${String(days).padStart(2, '0')} ngày ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+// };
 
 // Helper function to calculate remaining time
-const calculateRemainingTime = () => {
-  const targetDate = new Date(props.remainingTime as string);
-  if (isNaN(targetDate.getTime())) {
-    console.error('Invalid date format:', props.remainingTime);
-    return 'Invalid date';
-  }
-  const now = new Date();
-  const diff = targetDate.getTime() - now.getTime();
-  return formatRemainingTime(diff);
-};
-// Lifecycle hooks
-onMounted(() => {
-  remainingTimeState.value = calculateRemainingTime();
-  const interval = setInterval(() => {
-    remainingTimeState.value = calculateRemainingTime();
-  }, 1000);
-  onUnmounted(() => clearInterval(interval));
-});
+// const calculateRemainingTime = () => {
+//   const targetDate = new Date(props.remainingTime as string);
+//   if (isNaN(targetDate.getTime())) {
+//     console.error('Invalid date format:', props.remainingTime);
+//     return 'Invalid date';
+//   }
+//   const now = new Date();
+//   const diff = targetDate.getTime() - now.getTime();
+//   return formatRemainingTime(diff);
+// };
+// // Lifecycle hooks
+// onMounted(() => {
+//   remainingTimeState.value = calculateRemainingTime();
+//   const interval = setInterval(() => {
+//     remainingTimeState.value = calculateRemainingTime();
+//   }, 1000);
+//   onUnmounted(() => clearInterval(interval));
+// });
 </script>
 
 <template>
@@ -55,14 +55,14 @@ onMounted(() => {
     <div class="container-metric">
       <div class="title">Nhóm hàng {{reportName}}</div>
       <div v-if="numOfPages" class="page_content"><b>Trang</b>: {{ currentPage }}/{{ numOfPages }}</div>
-      <div class="time">
-        <div class="time_title">
-          Thời gian truy cập còn lại
-        </div>
-        <div class="countdown_time">
-          {{ remainingTimeState }}
-        </div>
-      </div>
+<!--      <div class="time">-->
+<!--        <div class="time_title">-->
+<!--          Thời gian truy cập còn lại-->
+<!--        </div>-->
+<!--        <div class="countdown_time">-->
+<!--          {{ remainingTimeState }}-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
   </div>
 </template>

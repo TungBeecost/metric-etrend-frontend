@@ -115,36 +115,6 @@ const marginTopValue = computed(() => {
 
 let lastScrollTop = 0;
 
-const handleScroll = () => {
-  const headerPdf = document.querySelector('.header_pdf');
-
-  const scrollTop = window.scrollY;
-  const screenWidth = window.innerWidth;
-
-  if (screenWidth <= 768) {
-    // Mobile-specific behavior
-    if (scrollTop > lastScrollTop && scrollTop > 88) {
-      if (headerPdf) headerPdf.style.top = '58px';
-    } else {
-      if (headerPdf) headerPdf.style.top = '120px';
-    }
-  } else if (screenWidth <= 1380) {
-    if (scrollTop > lastScrollTop && scrollTop > 40) {
-      if (headerPdf) headerPdf.style.top = '58px';
-    } else {
-      if (headerPdf) headerPdf.style.top = '100px';
-    }
-  } else {
-    if (scrollTop > lastScrollTop && scrollTop > 33) {
-      if (headerPdf) headerPdf.style.top = '88px';
-    } else {
-      if (headerPdf) headerPdf.style.top = '120px';
-    }
-  }
-
-  lastScrollTop = scrollTop;
-};
-
 const isMobileDevice = computed(() => window.innerWidth <= 1380);
 
 const onChangePage = (direction) => {
@@ -161,13 +131,6 @@ onMounted(() => {
   }
   const slug = route.params.slug;
   getReportPdfUrl(slug);
-
-  window.addEventListener('scroll', handleScroll);
-  handleScroll();
-});
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
 });
 </script>
 
@@ -303,7 +266,6 @@ onUnmounted(() => {
   }
 
   .container-metric {
-    margin-top: 94px;
     display: flex;
 
     .mini_map {
@@ -313,7 +275,7 @@ onUnmounted(() => {
       overflow-y: auto;
       background: #FFF;
       padding-right: 24px;
-      padding-top: 24px;
+      padding-top: 100px;
 
       .mini_map_page {
         position: relative;
@@ -335,6 +297,7 @@ onUnmounted(() => {
     .main_content {
       flex: 1;
       height: fit-content;
+      padding-top: 100px;
     }
   }
 
