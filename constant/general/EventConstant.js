@@ -20,6 +20,7 @@ const EVENT_TYPE = {
     PAYMENT_SUCCESS_PACKAGE: 'payment_success_package',
     SUBMIT_FORM_CONTACT: 'submit_form_contact',
     SUBMIT_FORM_COMMUNITY_REPORT: 'submit_form_community_report',
+    SUBMIT_FORM_HOMEPAGE: 'submit_form_homepage',
     COPY_REFERRAL_CODE: 'copy_referral_code',
     VIEW_REPORT_REPORTS: 'view_report_reports',
     VIEW_PRICING: 'view_pricing',

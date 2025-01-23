@@ -6,6 +6,8 @@ import axios from "axios";
 import {generateHash, getGlobalVariable} from "~/services/GlobalVariableService.js";
 import {useCurrentUser} from "~/stores/current-user";
 import SuccessNotificationPopup from "~/components/ContactUs/SuccessNotificationPopup.vue";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService.js";
+import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
 
 const currentUserStore = useCurrentUser();
 
@@ -139,6 +141,7 @@ const handleSubmitLeadForm = async () => {
   try {
     const urlCreateLead = `https://api-crm.metric.vn/crm/create/lead_form`
     await axios.post(urlCreateLead, payload)
+    trackEventCommon(EVENT_TYPE.SUBMIT_FORM_HOMEPAGE, 'submit_form_homepage', '');
     isShowErrorNotification.value = false
     isShowSuccessNotification.value = true
 
