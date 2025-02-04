@@ -1,6 +1,6 @@
 <script setup>
 import {computed, ref, onMounted, watchEffect} from 'vue';
-import {getUrlImageOption} from '~/helpers/utils.js';
+import {formatSortTextCurrency, getUrlImageOption} from '~/helpers/utils.js';
 import Highcharts from "highcharts";
 
 const config = useRuntimeConfig();
@@ -469,9 +469,9 @@ const chartOptionsOutput = computed(() => ({
         shop mall chiếm
         <BlurContent :is-hide-content="isHideContent">
         {{
-          Number(
+            formatSortTextCurrency(Number(
               data.data_analytic.by_shop.ratio.mall.ratio_revenue * 100
-          ).toFixed(1)
+          ).toFixed(1))
         }}% và hơn
         </BlurContent>
         <BlurContent :is-hide-content="isHideContent">
@@ -482,9 +482,9 @@ const chartOptionsOutput = computed(() => ({
         shop thường chiếm
         <BlurContent :is-hide-content="isHideContent">
         {{
-          Number(
+            formatSortTextCurrency(Number(
               data.data_analytic.by_shop.ratio.normal.ratio_revenue * 100
-          ).toFixed(1)
+          ).toFixed(1))
         }}%
         </BlurContent>
           doanh số. Báo cáo về {{ data.name }} của 10 shop bán chạy hàng đầu,
@@ -497,9 +497,9 @@ const chartOptionsOutput = computed(() => ({
         <BlurContent :is-hide-content="isHideContent">
           <span>
             {{
-              Number(
+              formatSortTextCurrency(Number(
                   data.data_analytic.by_shop.lst_top_shop[0].ratio_revenue * 100
-              ).toFixed(2)
+              ).toFixed(2))
             }}
           </span>
         </BlurContent>
@@ -530,13 +530,13 @@ const chartOptionsOutput = computed(() => ({
           <BlurContent :is-hide-content="isHideContent">
             <span>
               {{
-                Number(
+                formatSortTextCurrency(Number(
                     data.data_analytic.by_shop.lst_top_shop[1].ratio_revenue * 100
-                ).toFixed(2)
+                ).toFixed(2))
               }}
-            </span>
+            </span>%
           </BlurContent>
-          %
+
         </template>
         và
         <template
@@ -549,14 +549,14 @@ const chartOptionsOutput = computed(() => ({
           <BlurContent :is-hide-content="isHideContent">
             <span>
               {{
-                Number(
+                formatSortTextCurrency(Number(
                     data.data_analytic.by_shop.lst_top_shop[2].ratio_revenue * 100
-                ).toFixed(2)
+                ).toFixed(2))
               }}
-            </span>
+            </span>%.
           </BlurContent>
         </template>
-        %.
+
       </li>
     </InsightBlock>
 

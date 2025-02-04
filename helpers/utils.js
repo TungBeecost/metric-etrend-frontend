@@ -30,18 +30,23 @@ export const formatSortTextCurrencyWithMinValue = (price, isShortest = false, mi
         return price;
     }
     price = +price;
+
+    // Kiểm tra trường hợp số lớn hơn hoặc bằng tỷ
     if (price - (price % 1000000000) !== 0) {
         price = parseFloat((price / 1000000000).toFixed(1));
         return `${formatNumber(price)}${isShortest ? " tỷ" : " tỷ"}`;
     }
+
     if (price - (price % 1000000) !== 0 && price >= min) {
         price = Math.round(price / 1000000);
         return `${formatNumber(price)}${isShortest ? " tr" : " triệu"}`;
     }
+
     if (price - (price % 1000) !== 0 && price >= min) {
         price = Math.round(price / 1000);
         return `${formatNumber(price)}${isShortest ? " ng" : " nghìn"}`;
     }
+
     return formatNumber(price);
 };
 

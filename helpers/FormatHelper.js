@@ -3,7 +3,13 @@ export const formatNumber = (number) => {
     if (number == null || isNaN(number)) {
         return '';
     }
-    return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    const parts = number.toString().split('.');
+    parts[0] = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    if (parts[1]) {
+        parts[1] = parts[1].replace('.', ',');
+    }
+
+    return parts.join(',');
 };
 
 // eslint-disable-next-line import/no-mutable-exports
