@@ -228,8 +228,8 @@ export const PLANCARD = [
     svg: '<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="24" fill="#FDEEE7"/><path opacity="0.2" d="M24 27.3338C27.6824 27.3338 30.6675 24.3486 30.6675 20.6663C30.6675 16.9839 27.6824 13.9988 24 13.9988C20.3177 13.9988 17.3325 16.9839 17.3325 20.6663C17.3325 24.3486 20.3177 27.3338 24 27.3338Z" fill="#E85912"/><path d="M24 27.3338C27.6824 27.3338 30.6675 24.3486 30.6675 20.6663C30.6675 16.9839 27.6824 13.9988 24 13.9988C20.3177 13.9988 17.3325 16.9839 17.3325 20.6663C17.3325 24.3486 20.3177 27.3338 24 27.3338Z" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.9988 33.1678C16.0167 29.6809 19.6818 27.3337 24 27.3337C28.3183 27.3337 31.9833 29.6809 34.0013 33.1678" stroke="#E85912" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
   },
   {
-    code: 'e_community',
-    name: 'Gói Community',
+    code: 'e_free',
+    name: 'Gói Miễn Phí',
     description: 'Nâng cấp gói ngay để khám phá số liệu thị trường với hàng trăm báo cáo mới nhất ngay hôm nay',
     background: '#FFF',
     textColor: '#000',

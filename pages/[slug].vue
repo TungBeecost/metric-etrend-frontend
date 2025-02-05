@@ -226,7 +226,7 @@ onMounted(async () => {
   const loginPayment = localStorage.getItem('loginPayment');
   if (loginPayment) {
     localStorage.removeItem('loginPayment');
-    if (userInfo.value?.current_plan !== 'e_community')
+    if (userInfo.value?.current_plan !== 'e_free')
       navigateTo(loginPayment);
   }
   await fetchCurrentUser();

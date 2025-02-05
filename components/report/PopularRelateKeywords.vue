@@ -1,5 +1,8 @@
 <script setup lang="ts">
 
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
+
 const emit = defineEmits(['tagClicked']);
 
 const props = defineProps({
@@ -10,6 +13,7 @@ const props = defineProps({
 });
 
 const onTagClick = (tagName: string) => {
+  trackEventCommon(EVENT_TYPE.CLICK_RELATED_KEYWORD, 'click_related_keyword', '');
   emit('tagClicked', tagName);
 };
 </script>

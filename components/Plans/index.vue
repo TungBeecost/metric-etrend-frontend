@@ -40,7 +40,7 @@ const getIsShowActiveButton = (user_plan_code: string, plan: any) => {
     return 'Tìm báo cáo cần mua';
   }
 
-  if (plan.plan_code === 'e_community' && (user_plan_code === 'e_community' || user_plan_code === 'e_trial')) {
+  if (plan.plan_code === 'e_free' && (user_plan_code === 'e_free' || user_plan_code === 'e_trial')) {
     return '';
   }
 
@@ -48,7 +48,7 @@ const getIsShowActiveButton = (user_plan_code: string, plan: any) => {
     return 'Đang sử dụng';
   }
 
-  if (user_plan_code === 'e_community' || user_plan_code === 'e_trial' || user_plan_code === 'e_starter' ||
+  if (user_plan_code === 'e_free' || user_plan_code === 'e_trial' || user_plan_code === 'e_starter' ||
       !user_plan_code || user_plan_code === 'e_basic_lite' || user_plan_code === 'e_pro_lite' || user_plan_code === 'pt50'
       || user_plan_code === 'pt100') {
     return plan.type_package === 'report' ? 'Tìm báo cáo cần mua' : 'Mua ngay';
@@ -124,7 +124,7 @@ const filteredPlans = computed(() => {
             <div class="divider"/>
 
             <div class="permission">
-              <p v-if="userInfo.current_plan?.plan_code != 'e_community'" class="includeLabel">Bao gồm:</p>
+              <p v-if="userInfo.current_plan?.plan_code != 'e_free'" class="includeLabel">Bao gồm:</p>
               <div class="permissionList">
                 <div v-for="permission in plan.permissions" class="permissionItem">
                   <div class="perm">

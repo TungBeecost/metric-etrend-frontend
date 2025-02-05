@@ -161,7 +161,7 @@ useHead({
         {{
           !isNaN(diffRevenueLatestQuarterPercent) && diffRevenueLatestQuarterPercent > 0 ? "tăng trưởng hơn" : "giảm"
         }}
-        {{ !isNaN(diffRevenueLatestQuarterPercent) ? Math.abs(diffRevenueLatestQuarterPercent) : 'N/A' }}%
+        {{ !isNaN(diffRevenueLatestQuarterPercent) ? formatSortTextCurrency(Math.abs(diffRevenueLatestQuarterPercent)) : 'N/A' }}%
         Đánh giá thị trường {{ props.data.name }}, phân khúc giá có doanh số cao nhất là từ
         {{
           priceRangesSortBy("revenue")[0]

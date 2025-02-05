@@ -366,9 +366,9 @@ const filteredPlatforms = computed(() => {
           :key="platform.name"
       >
         <b class="text-bold">{{ platform.name }}</b> chiếm
-        {{ Number(platform.ratio_revenue * 100).toFixed(1) }}%
+        {{ formatNumber(Number(platform.ratio_revenue * 100).toFixed(1)) }}%
         tổng doanh số và
-        {{ Number(platform.ratio_sale * 100).toFixed(1) }}%
+        {{ formatNumber(Number(platform.ratio_sale * 100).toFixed(1)) }}%
         về sản lượng
       </li>
       <li>
@@ -408,7 +408,7 @@ const filteredPlatforms = computed(() => {
         {{
           diffRevenueMonths.previousMonth?.[0]?.begin ? formatDateFunc(diffRevenueMonths.previousMonth[0].begin, "MM/YYYY") : 'N/A'
         }}
-        là {{ Math.abs(diffRevenueMonths?.diffPercent || 0) }}%.
+        là {{ formatNumber(Math.abs(diffRevenueMonths?.diffPercent || 0)) }}%.
       </li>
       <li>
         <b class="text-bold">Nhận xét trung hạn</b> trong 6 tháng gần
@@ -420,10 +420,10 @@ const filteredPlatforms = computed(() => {
         }}
         <BlurContent :is-hide-content="isHideContent">
         <span>
-          {{ diffHalfYear.diffPercent }}
-        </span>
+          {{ formatNumber(diffHalfYear.diffPercent) }}
+        </span>%
         </BlurContent>
-        % so với 6 tháng liền kề.
+        so với 6 tháng liền kề.
       </li>
     </InsightBlock>
   </div>

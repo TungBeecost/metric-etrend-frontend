@@ -319,9 +319,9 @@ const formattedBrandCount = computed(() => {
 
         thương hiệu chiếm
         {{
-          Number(
+          formatNumber(Number(
               data.data_analytic.by_brand.ratio?.brand.ratio_revenue * 100 || 0
-          ).toFixed(1)
+          ).toFixed(1))
         }}% tổng doanh thu.
         So sánh giữa 10 thương hiệu hàng đầu,
         <b class="text-bold">{{
@@ -331,10 +331,10 @@ const formattedBrandCount = computed(() => {
         <BlurContent :is-hide-content="isHideContent">
           <span>
             {{
-              Number(
+              formatNumber(Number(
                   data.data_analytic.by_brand.lst_top_brand_revenue[0]
                       .ratio_revenue * 100
-              ).toFixed(2)
+              ).toFixed(2))
             }}
           </span>
         </BlurContent>
@@ -365,10 +365,10 @@ const formattedBrandCount = computed(() => {
           <BlurContent :is-hide-content="isHideContent">
             <span>
               {{
-                Number(
+                formatNumber(Number(
                     data.data_analytic.by_brand.lst_top_brand_revenue[1]
                         .ratio_revenue * 100
-                ).toFixed(2)
+                ).toFixed(2))
               }}
             </span>
           </BlurContent>
@@ -376,10 +376,10 @@ const formattedBrandCount = computed(() => {
           <BlurContent :is-hide-content="isHideContent">
             <span>
               {{
-                Number(
+                formatNumber(Number(
                     data.data_analytic.by_brand.lst_top_brand_revenue[2]
                         .ratio_revenue * 100
-                ).toFixed(2)
+                ).toFixed(2))
               }}
             </span>
           </BlurContent>

@@ -29,6 +29,7 @@ const EVENT_TYPE = {
     SHOW_POPUP_CONVERT_TO_ANALYTICS: 'show_popup_convert_to_analytics',
     CLICK_RELATED_REPORT_SEARCH_RESULT: 'click_related_report_search_result',
     VIEW_SMART_ANALYTIC: 'view_smart_analytic',
+    CLICK_RELATED_KEYWORD: 'click_related_keyword',
     VIDEO_START: 'video_start',
 };
 
