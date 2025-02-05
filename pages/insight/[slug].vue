@@ -71,7 +71,7 @@ const fetchReportData = async () => {
         null
     )
     const {tier_report} = response.data;
-    if (tier_report !== 'e_community') {
+    if (tier_report !== 'e_free') {
       isHideContent.value = false;
     }
     data.value = response.data;
