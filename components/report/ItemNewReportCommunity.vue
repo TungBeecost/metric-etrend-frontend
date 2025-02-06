@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
 import 'vue3-carousel/dist/carousel.css';
-import {NAVIGATIONS} from "~/constant/constains";
-import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper";
-import BlurContent from "~/components/BlurContent.vue";
-import moment from "moment/moment";
 import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
-import Cta from "~/components/report/Cta.vue";
-import {trackEventCommon} from "~/services/tracking/TrackingEventService";
-import {EVENT_TYPE} from "~/constant/general/EventConstant";
 import CtaComunity from "~/components/report/CtaComunity.vue";
+import {useRouter} from "#vue-router";
+const currentUserStore = useCurrentUser();
+const {userInfo}: any = storeToRefs(currentUserStore);
 
 const {reports, loading} = defineProps({
   reports: {
@@ -23,9 +19,14 @@ const {reports, loading} = defineProps({
 });
 
 const openCta = ref(false);
+const router = useRouter();
 
-const handleClickViewOnMetric = () => {
-  openCta.value = true;
+const handleClickViewOnMetric = (report: any) => {
+  if (userInfo.value?.current_plan.plan_code === 'e_free' || !userInfo.value?.current_plan.plan_code) {
+    openCta.value = true;
+    return;
+  }
+  router.push(`/insight/${report.slug}`);
 };
 
 const windowWidth = ref(1024);
@@ -56,7 +57,7 @@ const itemsToShow = computed(() => {
     <Carousel v-else :items-to-show="itemsToShow" :items-to-scroll="itemsToShow" :wrap-around="true"
               style="width: 100%;" :snap-align="'start'">
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
-        <div class="slide-item_community" @click="handleClickViewOnMetric">
+        <div class="slide-item_community" @click="handleClickViewOnMetric(report)">
           <div class="thumbnail">
             <img v-if="report.url_thumbnail" :src="getUrlImageThumbnail(report.url_thumbnail)" alt=""/>
             <img v-else src="/images/default_thumbnail_report.png" class="default_thumbnail"/>
@@ -66,6 +67,7 @@ const itemsToShow = computed(() => {
                 v-if="report.source === 'marketing'"
                 class="title" style="text-align: left;text-decoration: none;"
             >
+              {{report.slug}}
               {{ report.name }}
             </div>
             <div style="font-size: 14px">

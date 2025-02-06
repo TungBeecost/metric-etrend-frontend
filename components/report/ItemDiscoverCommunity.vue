@@ -6,7 +6,6 @@ interface Report {
   icon: any;
   label: string;
 }
-const router = useRouter();
 const props = defineProps({
   showMore: {
     type: Boolean,

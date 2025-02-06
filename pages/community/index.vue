@@ -1,11 +1,7 @@
 <script setup lang="ts">
-import Discover from "~/components/report/Discover.vue";
-import FeaturedReport from "~/components/report/FeaturedReport.vue";
-import ItemNewReport from "~/components/report/ItemNewReport.vue";
 import { type SearchReportPayload } from "~/services/reports";
 import { PAGE_TITLES } from "~/constant/constains";
 import { REPORT_ENDPOINTS } from "~/constant/endpoints";
-import ExploreByReportType from "~/components/report/ExploreByReportType.vue";
 import {onMounted} from "vue";
 import {trackEventCommon} from "~/services/tracking/TrackingEventService";
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
@@ -18,23 +14,22 @@ const config = useRuntimeConfig();
 const isLoading = ref(true);
 const lstReport = ref([]);
 const openCta = ref(false);
+const currentUserStore = useCurrentUser();
+const {userInfo}: any = storeToRefs(currentUserStore);
+
+const lstYearlyReports = ref([]);
+const lstQuarterlyReports = ref([]);
+const lstOtherReports = ref([]);
 
 const fetchReport = async () => {
   try {
-    const body: SearchReportPayload = {
-      limit: 10,
-      lst_field: ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop", "created_at", "url_square"],
-      lst_query: [],
-      lst_category_report_id: [],
-      offset: 0,
-      sort: "popularity",
-      source: ["marketing"],
-    };
-    const { lst_report }: any = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search.endpoint}`, {
-      method: 'POST',
-      body
+    const { lst_report }: any = await $fetch(`${config.public.API_ENDPOINT}${REPORT_ENDPOINTS.search_community.endpoint}`, {
+      method: 'GET',
     });
-    lstReport.value = lst_report;
+
+    lstYearlyReports.value = lst_report.filter((report: any) => report.report_type === 'Báo cáo Năm');
+    lstQuarterlyReports.value = lst_report.filter((report: any) => report.report_type === 'Báo cáo Quý');
+    lstOtherReports.value = lst_report.filter((report: any) => report.report_type === 'Báo cáo khác');
   } catch (e) {
     console.log(e);
   } finally {
@@ -68,7 +63,12 @@ useSeoMeta({
               Tổng hợp các báo cáo sàn TMĐT đã phát hành bởi Metric kể từ năm 2022, dữ liệu được trích xuất từ phần mềm
               phân tích dữ liệu Metric Analytics.
             </div>
-            <a-button type="primary" @click="handleClick" class="btn_report">Nhận tổng hợp báo cáo</a-button>
+            <a-button v-if="userInfo.current_plan.plan_code === 'e_free' || !userInfo.current_plan.plan_code" type="primary" @click="handleClick" class="btn_report">
+              Nhận tổng hợp báo cáo
+            </a-button>
+            <div class="text_consumer_community" v-else>
+              <a href="" style="color: #42A4FF">Trở thành khách hàng của Metric</a> để truy cập hơn 1 triệu báo cáo E-commerce.
+            </div>
           </div>
           <div class="new_report">
             <div class="title_new_report">
@@ -77,8 +77,7 @@ useSeoMeta({
             <div v-if="isLoading">
               <a-skeleton />
             </div>
-            <item-new-report-community v-else class="item_new_report_tran" :reports="lstReport" />
-
+            <item-new-report-community v-else class="item_new_report_tran" :reports="lstYearlyReports" />
           </div>
         </div>
       </div>
@@ -90,7 +89,7 @@ useSeoMeta({
       <div v-if="isLoading">
         <a-skeleton />
       </div>
-      <item-new-report-community v-else class="item_new_report_tran" :reports="lstReport" />
+      <item-new-report-community v-else class="item_new_report_tran" :reports="lstQuarterlyReports" />
     </div>
     <div class="new_report default_section">
       <div class="title_new_report_black">
@@ -99,7 +98,7 @@ useSeoMeta({
       <div v-if="isLoading">
         <a-skeleton />
       </div>
-      <item-new-report-community v-else class="item_new_report_tran" :reports="lstReport" />
+      <item-new-report-community v-else class="item_new_report_tran" :reports="lstOtherReports" />
     </div>
     <discover-community />
     <contact-us-community/>
@@ -190,6 +189,12 @@ useSeoMeta({
   border-radius: 8px;
   width: 200px;
   height: 40px;
+}
+
+.text_consumer_community{
+  color: #FFFFFF;
+  font-size: 14px;
+  padding-top: 24px;
 }
 
 @keyframes fadeIn {
