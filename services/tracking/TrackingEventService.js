@@ -23,7 +23,7 @@ const setUserProperties = (options) => {
     let optionsMerged = removeEmpty(options);
     // Cập nhật user_properties cho Google Analytics và Mixpanel
     gtag('set', 'user_properties', optionsMerged);
-    mixpanel?.people?.set?.(optionsMerged);
+    // mixpanel?.people?.set?.(optionsMerged);
   }
 };
 
@@ -38,9 +38,9 @@ const trackEventCommon = async (eventName, eventCategory, eventLabel = '', value
     await trackEventCustom(eventName, eventDetails, isStoreApi);
 
     // Thêm tăng giá trị cho sự kiện trong Mixpanel
-    mixpanel?.people?.increment({
-      eventName: value
-    });
+    // mixpanel?.people?.increment({
+    //   eventName: value
+    // });
   } else {
     console.log('Tracking is disabled');
   }
@@ -60,7 +60,7 @@ const trackEventCustom = async (eventName, params, isStoreApi = true) => {
     }
 
     // Cập nhật sự kiện vào Mixpanel
-    mixpanel?.track?.(eventName, paramsEvent);
+    // mixpanel?.track?.(eventName, paramsEvent);
     window?.clarity?.("set", "event", eventName);
 
     // Gửi dữ liệu tracking nếu cần
