@@ -77,7 +77,6 @@ const itemsToShow = computed(() => {
                 v-if="report.source === 'marketing'"
                 class="title" style="text-align: left;text-decoration: none;"
             >
-              {{report.slug}}
               {{ report.name }}
             </div>
             <div style="font-size: 14px">

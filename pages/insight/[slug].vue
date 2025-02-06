@@ -12,6 +12,7 @@ import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
 const route = useRoute()
 const {fetchListRecommendMarketing} = useSearchReport()
 const currentUserStore = useCurrentUser();
+const { userInfo } = storeToRefs(currentUserStore);
 const data = ref({})
 
 const slug = route.params.slug;
@@ -71,6 +72,7 @@ const fetchReportData = async () => {
         null
     )
     const {tier_report} = response.data;
+    console.log('tier_report', tier_report);
     if (tier_report !== 'e_free') {
       isHideContent.value = false;
     }
@@ -99,7 +101,7 @@ const handleSubmitSuccess = () => {
 
 onMounted(() => {
   const unlockedMktReports = localStorage.getItem('report_mkt_unlocked');
-  if (currentUserStore.authenticated) {
+  if (userInfo.value?.current_plan?.plan_code !== 'e_free' && userInfo.value?.current_plan?.plan_code) {
     isHideContent.value = false;
   } else {
     if (unlockedMktReports === 'true') {
@@ -370,7 +372,7 @@ onMounted(() => {
         :footer="false"
         @cancel="openContactForm = false"
     >
-      <div class="modal-contact-us">
+      <div class="modal-contact-us" style="padding: 0 24px">
         <div class="title">Đăng ký nhận báo cáo</div>
         <div class="description" style="font-size: 16px">
           Vui lòng điền biểu mẫu bên dưới để nhận ngay báo cáo chi tiết

@@ -1,6 +1,7 @@
 <script setup>
 import {createLoadingTask, VuePdf} from 'vue3-pdfjs';
 import axios from "axios";
+import ChartMask from '~/components/ChartMask.vue';
 
 const {data, isHideContent} = defineProps({
   data: {
@@ -37,7 +38,6 @@ const onChangePage = (change) => {
   }
 }
 
-
 const fetchPdf = async (newValue) => {
   isLoading.value = true
   loadingPercentage.value = 0
@@ -67,8 +67,6 @@ const handleUnlockReport = () => {
 onMounted(() => {
   fetchPdf(data.url_report_pdf)
 })
-
-
 </script>
 
 <template>
@@ -89,8 +87,10 @@ onMounted(() => {
           />
           <ChartMask
               v-if="isHideContent && currentPage === index && index >= 9"
-              subtitle="Vui lòng đăng ký để nhận và xem bản đầy đủ của báo cáo"
-              ok-button="Đăng ký nhận báo cáo"
+              :report="data"
+              :title="'Số liệu bị ẩn'"
+              :subtitle="'Vui lòng đăng ký để nhận và xem bản đầy đủ của báo cáo'"
+              :ok-button="'Đăng ký nhận báo cáo'"
               :handle-unlock-report="handleUnlockReport"
           />
           <div
@@ -117,7 +117,6 @@ onMounted(() => {
           </div>
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 8px;justify-content: center; margin-top: 8px;">
-          <!--          <a-tooltip v-for="index in numOfPages">-->
           <div
               v-for="index in numOfPages"
               style="width: 12px; height: 12px; background: #fff; border: 2px solid #fff; cursor: pointer;"
@@ -127,14 +126,6 @@ onMounted(() => {
         </div>
         <div
             style="color: #fff;line-height: 1; margin-top: 12px; user-select: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
-          <!--          <a-input-->
-          <!--              :value="currentPage"-->
-          <!--              style="width: 40px; height: 24px; border-radius: 8px; border: none; padding: 4px; text-align: center;"-->
-          <!--              size="sm"-->
-          <!--              @on-blur="handleInputPage"-->
-          <!--              @blur="handleInputPage"-->
-          <!--              @press-enter="handleInputPage"-->
-          <!--          />-->
           {{ currentPage }} / {{ numOfPages }}
         </div>
       </div>
