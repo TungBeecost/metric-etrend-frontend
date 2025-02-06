@@ -79,7 +79,7 @@ const itemsToShow = computed(() => {
                 :to="`/insight/${report.slug}`"
                 class="title" style="text-align: left;text-decoration: none;"
             >
-              {{ report.name }}
+              <div>{{ report.name }}</div>
             </nuxt-link>
             <nuxt-link
                 v-else-if="report.report_type === 'report_category'"
@@ -310,6 +310,9 @@ const itemsToShow = computed(() => {
           line-height: 28px;
           margin-bottom: 8px;
           text-transform: capitalize;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
     }

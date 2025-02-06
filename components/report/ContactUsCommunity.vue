@@ -100,7 +100,7 @@ const handleSubmitLeadForm = async () => {
   const _fbp = variables?._fbp || ''
   const emailProfile = formData.value.email || userInfo.value?.email || ''
   const first_visit = localStorage.getItem('first_visit') || ''
-  const mktLeadSource = 'eReport'
+  const mktLeadSource = formData.value.mktLeadSource || ''
   const mkUserDemand = formData.value.mktUserDemand || ''
   const mkCompanyType = formData.value.mktCompanyType || ''
   let note = `From: ${window.location.href}\n`
@@ -127,8 +127,8 @@ const handleSubmitLeadForm = async () => {
     organization_name: formData.value.company,
     note,
     label_init: 'Nóng',
-    source_name: 'Website eReport',
-    campaign: 'eReport',
+    source_name: 'eReport - Mua gói',
+    campaign: 'eReport_Community',
     additional_info: {
       ...variables,
       mkLeadSource: mktLeadSource,

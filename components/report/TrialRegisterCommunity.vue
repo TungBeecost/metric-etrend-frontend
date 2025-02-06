@@ -97,7 +97,7 @@ const submitForm = async (values: any) => {
       note,
       label_init: 'Nóng',
       source_name: 'eReport - Mua gói',
-      campaign: 'Đăng ký dùng thử',
+      campaign: 'eReport_Community',
       mkLeadSource,
       mkUserDemand,
       mkCompanyType,

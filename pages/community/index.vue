@@ -9,11 +9,13 @@ import ItemNewReportCommunity from "~/components/report/ItemNewReportCommunity.v
 import DiscoverCommunity from "~/components/report/DiscoverCommunity.vue";
 import ContactUsCommunity from "~/components/report/ContactUsCommunity.vue";
 import CtaComunity from "~/components/report/CtaComunity.vue";
+import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
+import {getCookie} from "~/helpers/CookieHelper";
 
 const config = useRuntimeConfig();
 const isLoading = ref(true);
-const lstReport = ref([]);
 const openCta = ref(false);
+const openSuccess = ref(false);
 const currentUserStore = useCurrentUser();
 const {userInfo}: any = storeToRefs(currentUserStore);
 
@@ -38,7 +40,13 @@ const fetchReport = async () => {
 };
 
 const handleClick = () => {
-  openCta.value = true;
+  const formSubmitted = getCookie('fill_in_the_form') === 'true';
+  if (formSubmitted) {
+    openSuccess.value = true;
+  }
+  else{
+    openCta.value = true;
+  }
 };
 
 fetchReport();
@@ -67,7 +75,7 @@ useSeoMeta({
               Nhận tổng hợp báo cáo
             </a-button>
             <div class="text_consumer_community" v-else>
-              <a href="" style="color: #42A4FF">Trở thành khách hàng của Metric</a> để truy cập hơn 1 triệu báo cáo E-commerce.
+              <a href='https://metric.vn/analytics/pricing' style="color: #42A4FF">Trở thành khách hàng của Metric</a> để truy cập hơn 1 triệu báo cáo E-commerce.
             </div>
           </div>
           <div class="new_report">
@@ -103,6 +111,7 @@ useSeoMeta({
     <discover-community />
     <contact-us-community/>
     <cta-comunity v-model:open="openCta"/>
+    <success-notification v-model:visible="openSuccess" class-name="submit-form-marketing-success"/>
   </div>
 </template>
 

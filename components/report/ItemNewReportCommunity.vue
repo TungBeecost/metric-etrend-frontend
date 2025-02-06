@@ -4,6 +4,8 @@ import 'vue3-carousel/dist/carousel.css';
 import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
 import CtaComunity from "~/components/report/CtaComunity.vue";
 import {useRouter} from "#vue-router";
+import {getCookie} from "~/helpers/CookieHelper";
+import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
 const currentUserStore = useCurrentUser();
 const {userInfo}: any = storeToRefs(currentUserStore);
 
@@ -19,14 +21,22 @@ const {reports, loading} = defineProps({
 });
 
 const openCta = ref(false);
+const openSuccess = ref(false);
 const router = useRouter();
 
 const handleClickViewOnMetric = (report: any) => {
+  const formSubmitted = getCookie('fill_in_the_form') === 'true';
   if (userInfo.value?.current_plan.plan_code === 'e_free' || !userInfo.value?.current_plan.plan_code) {
-    openCta.value = true;
-    return;
+    if (formSubmitted) {
+      openSuccess.value = true;
+    }
+    else{
+      openCta.value = true;
+    }
   }
-  router.push(`/insight/${report.slug}`);
+  else{
+    router.push(`/insight/${report.slug}`);
+  }
 };
 
 const windowWidth = ref(1024);
@@ -82,6 +92,7 @@ const itemsToShow = computed(() => {
       </template>
     </Carousel>
     <cta-comunity v-model:open="openCta"/>
+    <success-notification v-model:visible="openSuccess" class-name="submit-form-marketing-success"/>
   </div>
 </template>
 
