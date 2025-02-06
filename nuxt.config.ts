@@ -39,7 +39,7 @@ export default defineNuxtConfig({
             ],
             script: [
                 {
-                    src: "https://www.googletagmanager.com/gtag/js?id=G-J9J8G873G4",
+                    src: "https://www.googletagmanager.com/gtag/js?id=G-1KSWMFJGH1",
                     async: true,
                 },
                 {
@@ -48,7 +48,7 @@ export default defineNuxtConfig({
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
-                        gtag('config', 'G-J9J8G873G4');
+                        gtag('config', 'G-1KSWMFJGH1');
                       `,
                     type: "text/javascript",
                 },
@@ -77,7 +77,7 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         public: {
-            gtagId: 'G-J9J8G873G4',
+            gtagId: 'G-1KSWMFJGH1',
             apiBase: process.env.API_ENDPOINT,
             API_ENDPOINT: process.env.API_ENDPOINT,
             URL_AUTH_SERVICE_API: process.env.URL_AUTH_SERVICE_API,
@@ -150,7 +150,7 @@ export default defineNuxtConfig({
         "nuxt-svgo",
         "@ant-design-vue", //use
         "@pinia/nuxt",
-        "nuxt-gtag",
+        // "nuxt-gtag",
     ],
 
     antd: {
