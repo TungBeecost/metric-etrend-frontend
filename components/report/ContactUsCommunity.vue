@@ -127,8 +127,8 @@ const handleSubmitLeadForm = async () => {
     organization_name: formData.value.company,
     note,
     label_init: 'Nóng',
-    source_name: 'Website eReport',
-    campaign: 'eReport',
+    source_name: 'eReport - Mua gói',
+    campaign: 'eReport_Community',
     additional_info: {
       ...variables,
       mkLeadSource: mktLeadSource,
@@ -171,9 +171,8 @@ const handleSubmitLeadForm = async () => {
 
     <div class="content default_section">
       <div class="info">
-        <h2 class="header">Truy cập kho dữ liệu với hàng triệu báo cáo TMĐT ngay bây giờ</h2>
-        <p class="desc">Nắm bắt nhanh nhạy, toàn diện thị trường bán lẻ trực tuyến để xây dựng chiến lược kinh doanh
-          thông minh hơn.</p>
+        <h2 class="header">Nhận tổng hợp báo cáo E-commerce các năm 2022, 2023, 2024</h2>
+        <p class="desc">Đăng ký thông tin hoặc trở thành khách hàng của Metric để truy cập không giới hạn tổng hợp báo cáo E-commerce.</p>
       </div>
 
       <a-form ref="leadForm" style="flex: 1; max-width: 450px; margin: auto;" :model="formData" :rules="rules"
@@ -185,6 +184,14 @@ const handleSubmitLeadForm = async () => {
                 class="input-form"
                 size="large"
                 placeholder="Họ và tên"
+            />
+          </a-form-item>
+          <a-form-item name="fullNameCompany">
+            <a-input
+                v-model:value="formData.company"
+                class="input-form"
+                size="large"
+                placeholder="Tên công ty"
             />
           </a-form-item>
         </div>
@@ -306,11 +313,97 @@ const handleSubmitLeadForm = async () => {
 
 
 <style lang="scss" scoped>
-@import url("./index.scss");
+.wrapper {
+  position: relative;
+  display: flex;
+  padding: 40px 0;
+  background: linear-gradient(90deg, #ff6931 1.09%, #ff9839 49.34%);
+  overflow: hidden;
+  // color: white;
+
+  justify-content: space-between;
+  align-items: center;
+
+  @include mobile {
+    padding: 24px 16px;
+  }
+
+  @include tablet {
+    padding: 24px 60px;
+  }
+
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(15deg);
+  }
+
+  .content {
+    z-index: 1;
+    //width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    margin: auto;
+
+    @include mobile {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    @include tablet {
+      width: 100%;
+    }
+
+    .info {
+      flex: 1 0 0;
+      gap: 24px;
+      max-width: 550px;
+
+      .header {
+        color: white;
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 56px;
+
+        @include mobile {
+          font-size: 24px;
+          line-height: 38px;
+        }
+      }
+
+      .desc {
+        color: #f5f5f5;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+
+        @include mobile {
+          font-size: 14px;
+          line-height: 22px;
+        }
+      }
+    }
+  }
+
+  .submitBtnLead {
+    background: #241E46 !important;
+  }
+}
+
 
 .background {
   top: unset !important;
   height: unset !important;
+}
+
+.name-and-company-group {
+  display: flex;
+  gap: 16px;
 }
 
 .email-and-phone-group {

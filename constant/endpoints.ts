@@ -2,6 +2,7 @@ export type METHODS = "POST" | "GET" | "HEAD" | "PATCH" | "PUT" | "DELETE" | "CO
 
 export const REPORT_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {
     search: {endpoint: `/api/report/search`, method: "POST"},
+    search_community: {endpoint: `/api/report/search_community`, method: "GET"},
     list_recomend: {endpoint: `/api/report/recommend`, method: "GET"},
     marketing_report_recommend: {endpoint: `/api/report/marketing_report_recommend`, method: "GET"},
     claim: {endpoint: `/api/report/claim`, method: "GET"},
