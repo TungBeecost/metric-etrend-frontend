@@ -120,7 +120,7 @@ const fieldValueParse: FieldValueParsers = {
   is_remove_fake_sale: (value: boolean) => value ? 'Loại trừ sản phẩm có tỉ lệ đánh giá / lượt bán thấp hơn 5%' : 'Không',
   date_range: () => {
     const {start_date, end_date} = props.data.filter_custom;
-    return `${formatDate(start_date, 'DD/MM/YYYY')} - ${formatDate(end_date, 'DD/MM/YYYY')}`;
+    return `${formatDate(start_date, 'MM/YYYY')} - ${formatDate(end_date, 'MM/YYYY')}`;
   },
   category: () => {
     const breadcrumbs = props.breadcrumbs.slice(1, -1);
