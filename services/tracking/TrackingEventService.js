@@ -28,7 +28,7 @@ const setUserProperties = (options) => {
 };
 
 const trackEventCommon = async (eventName, eventCategory, eventLabel = '', value = 1, params = null, isStoreApi = true) => {
-  if (shouldTrack()) {
+  if (shouldTrack() || true) {
     const eventDetails = {
       'event_category': eventCategory,
       'event_label': eventLabel,
@@ -36,6 +36,7 @@ const trackEventCommon = async (eventName, eventCategory, eventLabel = '', value
       ...params
     };
     await trackEventCustom(eventName, eventDetails, isStoreApi);
+    await postHogTrackEvent(eventName, eventDetails, isStoreApi);
 
     // Thêm tăng giá trị cho sự kiện trong Mixpanel
     mixpanel?.people?.increment({
@@ -77,6 +78,20 @@ const trackEventCustom = async (eventName, params, isStoreApi = true) => {
     }
   }
 };
+
+const postHogTrackEvent = async (eventName, params, isStoreApi) => {
+  console.log('postHogTrackEvent called with:', { eventName, params, isStoreApi });
+  if (shouldTrack()) {
+    const postHog = useNuxtApp().$posthog;
+    if (postHog) {
+      const variables = await getGlobalVariable();
+      debugger
+      const paramEvent = { ...params, ...variables };
+      console.log('[posthog] event', eventName, paramEvent);
+      postHog?.capture(eventName, paramEvent);  
+    }
+  }
+}
 
 const trackEventConversionPixel = async (eventName, content_category, content_ids, content_name, content_type, contents, currency, num_items, search_string, status, value, phone = null, params = null, isStoreApi = true) => {
   console.log('trackEventConversionPixel called with:', { eventName, content_category, content_ids, content_name, content_type, contents, currency, num_items, search_string, status, value, phone, params, isStoreApi });
@@ -168,5 +183,6 @@ const sendTrackingBehavior = async (dataTracking = {}, type = 'default') => {
 export {
   trackEventCommon,
   setUserProperties,
-  trackEventConversionPixel
+  trackEventConversionPixel,
+  shouldTrack
 };

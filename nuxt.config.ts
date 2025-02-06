@@ -89,6 +89,8 @@ export default defineNuxtConfig({
             gtm: {
                 id: 'GTM-522F9NZ',
             },
+            posthogPublicKey: process.env.POSTHOG_PUBLIC_KEY,
+            posthogHost: process.env.POSTHOG_HOST,
         },
         publicRuntimeConfig: {
             gtm: {
