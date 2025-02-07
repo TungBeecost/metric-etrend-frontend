@@ -4,6 +4,8 @@ import {ref, h} from 'vue';
 import {onBeforeRouteLeave} from 'vue-router';
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
 import Cta from "~/components/report/Cta.vue";
+import BackgroundScrollIcon from '~/public/icons/BackgroundScrollIcon.svg';
+import {message} from "ant-design-vue";
 
 const emit = defineEmits(['showNotification']);
 
@@ -58,6 +60,44 @@ const svgIcon = () => (
       ]),
     ])
 );
+
+const downloadReport = () => {
+  const url = 'https://storage.googleapis.com/ereport-static/bao-cao-nganh-hang-sample.pdf'; // URL file cần tải xuống
+  const fileName = 'Báo cáo mẫu.pdf'; // Tên file sẽ được lưu trên máy người dùng
+  if (url) {
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/pdf',
+      },
+    })
+        .then((response) => response.blob())
+        .then((blob) => {
+          // Create blob link to download
+          const url = window.URL.createObjectURL(
+              new Blob([blob]),
+          );
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute(
+              'download',
+              fileName,
+          );
+
+          document.body.appendChild(link);
+          link.click();
+
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          link.parentNode.removeChild(link);
+
+          message.success('Tải xuống báo cáo thành công');
+        })
+        .catch(() => {
+          message.error('Tải xuống báo cáo thất bại');
+        });
+  }
+};
 
 const closeNotification = () => {
   showNotification.value = false;
@@ -160,73 +200,32 @@ onBeforeRouteLeave(() => {
       </div>
       <div class="notification-body">
         <div style="text-align: center; width: 100%;">
-          <p style="color: #E85912; font-size: 20px; font-weight: 700; line-height: 28px;">Nhận số liệu chi tiết</p>
+          <p style="font-size: 24px; font-weight: 700; line-height: 28px;">Bạn vẫn đang cân nhắc?</p>
         </div>
-        <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 24px;">
-          <p style="color: #241E46; font-weight: 400;">
-            Nhóm hàng: <span style="font-weight: 700;">{{ props.data.name }}</span>
+        <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 12px;">
+          <p style="color: #241E46; font-weight: 400; text-align: center; width: 80%;">
+            <span style="color:#716B95; line-height: 22px;">Xem trước nội dung báo cáo mẫu với dữ liệu minh hoạ trước khi mua</span>
           </p>
         </div>
-        <div style="display: flex; align-items: center; margin-bottom: 12px;">
-          <svgIcon/>
-          <p>Số liệu chi tiết về thị trường {{ props.data.name }} trên Shopee, Tiktok, Lazada, Tiki</p>
-        </div>
-        <div style="display: flex; align-items: center; margin-bottom: 12px;">
-          <svgIcon/>
-          <p>Xu hướng tăng trưởng thị trường hàng tháng, hàng quý trong 12 tháng qua</p>
-        </div>
-        <div style="display: flex; align-items: center; margin-bottom: 12px;">
-          <svgIcon/>
-          <p>Danh sách Top 10 thương hiệu từng sàn, phân tích chi tiết số liệu 20 shop bán chạy</p>
-        </div>
-        <div style="display: flex; align-items: center;">
-          <svgIcon/>
-          <p>Thống kê 60 sản phẩm {{ props.data.name }} đang bán chạy trên các sàn TMĐT</p>
-        </div>
         <AButton
             v-if="!data.is_unsellable"
-            style="width: 100%;font-size: 14px; font-weight: 600; text-align: center; margin: 12px 0; font-family: Montserrat, sans-serif;"
+            style="width: 60%; font-size: 14px; font-weight: 600; margin: 12px 0; font-family: Montserrat, sans-serif;"
             type="primary"
             size="large"
-            @click="handleOpenModal"
+            @click="downloadReport"
         >
-          Tải báo cáo PDF
+        Tải báo cáo mẫu ngay
         </AButton>
-        <AButton
-            v-if="!data.is_unsellable"
-            style="width: 100%;font-size: 14px; font-weight: 600; text-align: center; font-family: Montserrat, sans-serif;"
-            size="large"
-            @click="handleOpenCta"
-        >
-          Xem trên phần mềm Metric
-        </AButton>
-        <div style="font-size: 11px;">
-          Được tin dùng bởi hơn 1,000 doanh nghiệp TMĐT hàng đầu
-        </div>
-        <div class="partners-list" style="display: flex;">
-          <div class="partner-item" style="flex: 1;">
-            <img width="100%"
-                 src="https://lh3.googleusercontent.com/pw/AL9nZEWX-I95AHIs09XfCc8QCHJgJGbuOVqC_ngSJMPcxQ275MD4jDfCbpLvPdxV1uDA6oL-jaky8TFJYNixakQuggEj3vuEJFQFUWdzg6L3Rwil5PcK1a0EXIwuKQz20SYcJFbUqcABeomhR_qbkaN-6dXf=w508-h308-no">
-          </div>
-          <div class="partner-item" style="flex: 1;">
-            <img width="100%"
-                 src="https://lh3.googleusercontent.com/pw/AL9nZEVQH5186vExIhbsmjBrDc4pKDpvwHrv_ZQ5VE7xOwKckOkPZw7pgdfgVx1wmuBL6gq2YXX_CwV97yq5OgTCw7JmTZJhbIybcydUHg7cwDHaZpSgjY2mGIaKNOI7K4lJYCLGor7o7olm1W1CMf4Fdp0f=w508-h308-no">
-          </div>
-          <div class="partner-item" style="flex: 1;">
-            <img width="100%"
-                 src="https://lh3.googleusercontent.com/pw/AL9nZEVoX_12JA4IEr4Q8Gkcb9EjJB4T0lmOy8BEDc6xCVWSMpMjhaB0F0qHRoV2ZgJOU2OLUGJ6w3mLTEx9rHQd-5BIdCl2aS0J3KHAiYzjFDLpr_LN0ycgfZ8XTRHQNhFoLS9fv8YAX8HfYyzW7_76Y0wh=w508-h308-no">
-          </div>
-          <div class="partner-item" style="flex: 1;">
-            <img width="100%"
-                 src="https://lh3.googleusercontent.com/pw/AL9nZEUW2APj4dGsBQxDhhPbKtl7YIKRBeGccPWTyN6RJInVsEmTDvT4m9YAVv24rSnIM1335w6HklfriVNT3REm7d-O8vN_1HTzI4V1s262yAmM2we2VGeaHavpgfxPVlPlSKDTRIitcqLFXNUwA7Em1kGc=w508-h308-no">
-          </div>
-          <div class="partner-item" style="flex: 1;">
-            <img width="100%"
-                 src="https://lh3.googleusercontent.com/pw/AL9nZEVZgh86IPYiio62O6ZZND6s4Kw_d4xz0a_WjYkaT-uC5T-3M8ST8HTfI-2b-CSmcfDpjeIdhQgxwopXnS_b2JDeiMBTJPHt_3XCNn0rh0mK-CQIK2B3Pf93-zg31nAsbEdPziOuPOq1YgHkQsP6Z6B0=w508-h308-no">
-          </div>
+        <div style="font-size: 14px; color: #716B95">
+          Bạn cần hỗ trợ thêm?
+          <span style="color: #E85912; cursor: pointer" @click="handleOpenCta">
+            Liên hệ tư vấn
+          </span>
         </div>
       </div>
     </div>
+    <img src="@/public/images/ImageOnBackgroundScroll.png" alt="ImageOnBackgroundScroll" style="position: absolute; bottom: 0; right: 0; width: 100%;"/>
+    <img src="@/public/images/BackgroundScroll.png" alt="BackgroundScrollIcon" style="width: 100%"/>
   </div>
   <div v-else class="button-notification">
     <button
@@ -235,6 +234,7 @@ onBeforeRouteLeave(() => {
       Tải báo cáo chi tiết
     </button>
   </div>
+
   <modal-download-pdf v-model:open="open" :data="props.data"/>
   <cta v-model:open="openCta"/>
 </template>
@@ -289,7 +289,9 @@ onBeforeRouteLeave(() => {
 .notification-body {
   margin-top: 16px;
   font-family: 'Inter', sans-serif;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   p {
     font-size: 14px;
   }

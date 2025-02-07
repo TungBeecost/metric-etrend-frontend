@@ -29,7 +29,7 @@ const setUserProperties = (options) => {
 };
 
 const trackEventCommon = async (eventName, eventCategory, eventLabel = '', value = 1, params = null, isStoreApi = true) => {
-  if (!shouldTrack()) {
+  if (shouldTrack()) {
     const eventDetails = {
       'event_category': eventCategory,
       'event_label': eventLabel,
