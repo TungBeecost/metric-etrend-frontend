@@ -32,9 +32,11 @@ const getGlobalVariable = async () => {
     let first_visit = null
     let pub = null
     if (process.env.SSR !== 'true') {
-        visitor_id = await getIndexedDB('__visitor')?.visitor_id
-        user_id = window?.$nuxt?.$store.getters["user/userProfile"]?.id
-        user_email = window?.$nuxt?.$store.getters["user/userProfile"]?.email
+        // visitor_id = await getIndexedDB('__visitor')?.visitor_id
+        visitor_id = getCookie('visitor_id')
+        const user_store = useCurrentUser();
+        user_id = user_store?.userInfo?.id
+        user_email = user_store?.userInfo?.email
         role = window?.$nuxt?.$store.getters["user/userPlan"]
         first_visit = await getIndexedDB('first_visit')
         utm_source = getCookie('utm_source')
