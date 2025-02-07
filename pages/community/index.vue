@@ -108,7 +108,7 @@ useSeoMeta({
       </div>
       <item-new-report-community v-else class="item_new_report_tran" :reports="lstOtherReports" />
     </div>
-    <discover-community />
+<!--    <discover-community />-->
     <contact-us-community/>
     <cta-comunity v-model:open="openCta"/>
     <success-notification v-model:visible="openSuccess" class-name="submit-form-marketing-success"/>
@@ -332,6 +332,7 @@ useSeoMeta({
     }
     .new_report_2 {
       padding-top: 50px;
+      padding-bottom: 50px;
     }
   }
 }
