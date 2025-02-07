@@ -121,7 +121,9 @@ const handleButtonFree = () => {
     padding: 4px 0;
     gap: 24px;
 
+
     .tile_report_free {
+      padding: 40px 0;
       .title {
         font-size: 24px;
         line-height: 36px;
@@ -131,6 +133,9 @@ const handleButtonFree = () => {
         font-size: 16px;
         line-height: 24px;
       }
+    }
+    .detail_report_free{
+      padding: 0;
     }
   }
 }

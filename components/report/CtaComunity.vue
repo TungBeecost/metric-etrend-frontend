@@ -524,6 +524,10 @@ const toggleUnlock = () => {
         }
       }
 
+      .container_content{
+        padding: 0 0 16px 0;
+      }
+
       .additional-information {
         padding: 32px 0 12px 0;
 

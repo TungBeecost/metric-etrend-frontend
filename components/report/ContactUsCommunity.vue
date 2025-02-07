@@ -24,6 +24,7 @@ const rules = {
     {required: true, message: 'Vui lòng nhập số điện thoại', trigger: 'blur'},
     {pattern: /^0[0-9]{9}$/, message: 'Số điện thoại không hợp lệ', trigger: ['blur', 'change']},
   ],
+  mktLeadSource: [{required: true, message: 'Vui lòng chọn nguồn tìm kiếm', trigger: 'blur'}],
 }
 
 
@@ -425,4 +426,6 @@ const handleSubmitLeadForm = async () => {
     }
   }
 }
+
+
 </style>

@@ -66,7 +66,7 @@ const handleItemClick = (item: LstRecommed) => {
               <span v-if="item.category_report_name === null">Báo cáo Metric phát hành</span>
               <span v-else>{{ item.source === 'marketing'? 'Báo cáo Metric phát hành | ' : 'Báo cáo nhóm hàng | ' }}</span>
             </span>
-            <span v-if="item.category_report_name" class="breadcrumb">{{ item.category_report_name }}</span>
+<!--            <span v-if="item.category_report_name" class="breadcrumb">{{ // item.category_report_name }}</span>-->
           </div>
           <nuxt-link :to="item.source === 'marketing' ? `/insight/${item.slug}` : `/${item.slug}`" class="name">
             {{ item.source === 'marketing' ? '' : 'Báo cáo' }}
@@ -177,6 +177,13 @@ const handleItemClick = (item: LstRecommed) => {
       }
     }
   }
+}
+
+.line-clamp__1 {
+  width: 230px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (max-width: 767px) {

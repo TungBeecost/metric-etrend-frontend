@@ -585,7 +585,7 @@ const lstReport = [
 
 @media (max-width: 1919px) {
   .featured_report {
-    padding-top: 50px;
+    padding-top: 0;
     gap: 50px;
   }
 
@@ -606,7 +606,7 @@ const lstReport = [
 
 @media (max-width: 1550px) {
   .featured_report {
-    padding-top: 45px;
+    padding-top: 0;
     gap: 45px;
   }
 

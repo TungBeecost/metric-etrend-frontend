@@ -48,7 +48,7 @@ onMounted(() => {
 });
 
 const itemsToShow = computed(() => {
-  return windowWidth.value < 1380 ? 1 : 3 ;
+  return windowWidth.value < 1380 ? 2 : 3 ;
 });
 </script>
 
@@ -77,10 +77,9 @@ const itemsToShow = computed(() => {
                 v-if="report.source === 'marketing'"
                 class="title" style="text-align: left;text-decoration: none;"
             >
-              {{report.slug}}
               {{ report.name }}
             </div>
-            <div style="font-size: 14px">
+            <div class="report_type" style="font-size: 14px">
               Báo cáo Community
             </div>
           </div>
@@ -144,6 +143,7 @@ const itemsToShow = computed(() => {
     .slide-item_community {
       width: 100%;
       border-radius: 16px;
+      height: 220px;
       background: var(--Neutral-neutral-1, #FFF);
       cursor: pointer;
       border: 1px solid #f0f0f0;
@@ -152,7 +152,6 @@ const itemsToShow = computed(() => {
       display: flex;
       flex-direction: row;
       overflow: hidden;
-      height: 100%;
       padding: 0 16px;
 
       .thumbnail {
@@ -265,13 +264,15 @@ const itemsToShow = computed(() => {
         align-items: center;
         flex-direction: row;
         overflow: hidden;
-        height: 220px;
+        height: 120px;
+        padding: 0;
 
         .thumbnail {
-          padding-left: 16px;
-          width: 120px;
-          height: 120px;
+          width: 90px;
+          height: 90px;
           border-bottom: none;
+          padding-left: 8px;
+
 
           img {
             width: 100%;
@@ -281,7 +282,7 @@ const itemsToShow = computed(() => {
         }
 
         .content {
-          padding: 16px;
+          padding: 8px;
           flex: 1;
           overflow: hidden;
 
@@ -292,26 +293,31 @@ const itemsToShow = computed(() => {
           }
 
           .title {
-            font-size: 18px;
-            margin-bottom: 8px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            //display: none;
+            font-size: 12px;
+            //margin-bottom: 8px;
+            //white-space: nowrap;
+            //overflow: hidden;
+            //text-overflow: ellipsis;
           }
 
-          .summary-info {
-            .info_item {
-              font-size: 14px;
-
-              span {
-                font-size: 14px;
-              }
-            }
+          .report_type{
+            display: none;
           }
 
-          .description {
-            font-size: 14px;
-          }
+          //.summary-info {
+          //  .info_item {
+          //    font-size: 14px;
+          //
+          //    span {
+          //      font-size: 14px;
+          //    }
+          //  }
+          //}
+          //
+          //.description {
+          //  font-size: 14px;
+          //}
         }
       }
     }
@@ -325,11 +331,11 @@ const itemsToShow = computed(() => {
       cursor: pointer;
       position: absolute;
       top: auto;
-      bottom: -20px;
+      bottom: -40px;
     }
 
     .carousel__prev {
-      left: 40%;
+      left: 45%;
       transform: translateX(-60px);
     }
 
