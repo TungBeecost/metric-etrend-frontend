@@ -90,7 +90,7 @@ useSeoMeta({
         </div>
       </div>
     </div>
-    <div class="new_report default_section" style="padding-top: 130px;">
+    <div class="new_report new_report_1 default_section" >
       <div class="title_new_report_black">
         Báo cáo E-commerce hàng quý
       </div>
@@ -99,7 +99,7 @@ useSeoMeta({
       </div>
       <item-new-report-community v-else class="item_new_report_tran" :reports="lstQuarterlyReports" />
     </div>
-    <div class="new_report default_section">
+    <div class="new_report new_report_2 default_section">
       <div class="title_new_report_black">
         Báo cáo khác
       </div>
@@ -175,14 +175,15 @@ useSeoMeta({
     font-size: 24px;
     font-weight: bold;
   }
-}
-
-.new_report {
   .title_new_report_black {
     margin-bottom: 16px;
     font-size: 24px;
     font-weight: bold;
   }
+}
+
+.new_report_1 {
+  padding-top: 130px;
 }
 
 .item_new_report_tran{
@@ -221,6 +222,10 @@ useSeoMeta({
     gap: 16px;
 
     .title_new_report {
+      font-size: 20px;
+    }
+
+    .title_new_report_black {
       font-size: 20px;
     }
   }
@@ -284,10 +289,13 @@ useSeoMeta({
 @media (max-width: 1023px) {
   .title_report {
     .image-metric {
+      padding-top: 0;
       .title {
         .content {
           .report_title {
-            font-size: 28px;
+            font-size: 24px;
+            line-height: 38px;
+            width: 100%;
           }
 
           .description {
@@ -303,13 +311,13 @@ useSeoMeta({
 @media (max-width: 767px) {
   .title_report {
     .image-metric {
-      height: 565px;
+      height: 400px;
       .title {
         gap: 40px;
 
         .content {
           .report_title {
-            font-size: 36px;
+            font-size: 24px;
           }
 
           .description {
@@ -318,6 +326,12 @@ useSeoMeta({
           }
         }
       }
+    }
+    .new_report_1 {
+      padding-top: 100px;
+    }
+    .new_report_2 {
+      padding-top: 50px;
     }
   }
 }
@@ -331,7 +345,7 @@ useSeoMeta({
 
         .content {
           .report_title {
-            font-size: 36px;
+            font-size: 24px;
           }
 
           .description {
