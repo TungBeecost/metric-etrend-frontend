@@ -10,9 +10,9 @@ defineProps<{
   isDarkTitle?: boolean,
 }>()
 
-const value1 = ref('pt50');
-const value2 = ref('pt100');
-// const value3 = ref('eReport12');
+const value1 = ref('PDF_report');
+const value2 = ref('pt50');
+const value3 = ref('custom_pdf_report');
 
 const navigateToPayment = (plan: any) => {
   if (plan.type_package === 'report') {
@@ -36,9 +36,9 @@ onMounted(() => {
 });
 
 const getIsShowActiveButton = (user_plan_code: string, plan: any) => {
-  if (plan.type_package === 'report') {
-    return 'Tìm báo cáo cần mua';
-  }
+  // if (plan.type_package === 'pdf_report') {
+  //   return 'Tìm báo cáo ngay';
+  // }
 
   if ((plan.plan_code === 'e_free' || plan.plan_code === 'e_community') &&
       (user_plan_code === 'e_free' || user_plan_code === 'e_trial' || user_plan_code === 'e_community')) {
@@ -52,14 +52,14 @@ const getIsShowActiveButton = (user_plan_code: string, plan: any) => {
   if (user_plan_code === 'e_free' || user_plan_code === 'e_trial' || user_plan_code === 'e_starter' ||
       !user_plan_code || user_plan_code === 'e_basic_lite' || user_plan_code === 'e_pro_lite' || user_plan_code === 'pt50'
       || user_plan_code === 'pt100' || user_plan_code === 'e_community') {
-    return plan.type_package === 'report' ? 'Tìm báo cáo cần mua' : 'Mua ngay';
+    return plan.type_package === 'report' ? 'Tìm báo cáo ngay' : 'Mua ngay';
   }
 
   return '';
 };
 
 const filteredPlans = computed(() => {
-  const selectedPlanCodes = [value1.value, value2.value];
+  const selectedPlanCodes = [value1.value, value2.value, value3.value];
   const uniquePlans = new Map();
 
   PLANS.forEach(plan => {
@@ -74,10 +74,14 @@ const filteredPlans = computed(() => {
 
 <template>
   <div class="wrapper">
-    <p :class="{ header: true, dark: isDarkTitle }">
-      Các gói dịch vụ khai thác 1 triệu báo cáo thị trường TMĐT
-    </p>
-
+    <div>
+      <p :class="{ header: true, dark: isDarkTitle }">
+        Các gói dịch vụ đa dạng với mọi nhu cầu
+      </p>
+      <p class = "subHeader">
+        Ra quyết định nhanh chóng với dữ liệu chính xác ngay hôm nay
+      </p>
+    </div>
     <div class="pricings">
       <div v-for="plan in filteredPlans" class="planItem">
 <!--        <div class="focusHeader"/>-->
@@ -112,7 +116,7 @@ const filteredPlans = computed(() => {
 <!--                  </div>-->
 <!--                </div>-->
               </div>
-              <div v-if="plan.priceValue !== plan.priceDiscount" class="planDiscountPrice">{{ formatSortTextCurrencyPlan(plan.priceDiscount) }}</div>
+<!--              <div v-if="plan.priceValue !== plan.priceDiscount" class="planDiscountPrice">{{ formatSortTextCurrencyPlan(plan.priceDiscount) }}</div>-->
               <div class="planPrice">
                 <div v-if="plan.type_package === 'incentive'" class="incentive_text">
                   Thời hạn khuyến mãi: 31/12/2024
@@ -125,7 +129,7 @@ const filteredPlans = computed(() => {
             <div class="divider"/>
 
             <div class="permission">
-              <p v-if="userInfo.current_plan?.plan_code != 'e_free'" class="includeLabel">Bao gồm:</p>
+<!--              <p v-if="userInfo.current_plan?.plan_code != 'e_free'" class="includeLabel">Bao gồm:</p>-->
               <div class="permissionList">
                 <div v-for="permission in plan.permissions" class="permissionItem">
                   <div class="perm">
@@ -137,13 +141,22 @@ const filteredPlans = computed(() => {
                     <div>{{ subPerm }}</div>
                   </div>
                 </div>
+                <div
+                    v-if="plan.type_package === 'analysis50' || plan.type_package === 'pdf_report'"
+                    class="feature-details-button"
+                    style="margin-top: 12px; width: 100%; font-size: 12px; display: flex; align-items: center; cursor: pointer"
+                >
+                  Chi tiết tính năng
+                  <svg width="17" height="36" viewBox="0 0 17 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.0386 16.3237L8.28857 19.8237L4.53857 16.3237" stroke="#241E46" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
               </div>
             </div>
-
           </div>
           <div class="button" style="padding: 24px 24px">
             <AButton
-                v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan)"
+                v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) && plan.type_package === 'analysis50'"
                 :class="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Đang sử dụng' ? 'user_plan' : 'not_user_plan'"
                 :disabled="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) !== 'Mua ngay' && getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) !== 'Tìm báo cáo cần mua'"
                 style="height: 40px"
@@ -151,6 +164,20 @@ const filteredPlans = computed(() => {
             >
               {{ getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) }}
             </AButton>
+            <a-button
+                v-if="plan.type_package === 'pdf_report'"
+                class="find-report-button"
+                style="height: 40px; border: 1px solid #241E46; color: #241E46; width: 100%; border-radius: 8px;"
+            >
+              Tìm báo cáo ngay
+            </a-button>
+            <a-button
+                v-if="plan.type_package === 'custom_pdf_report'"
+                class="find-report-button"
+                style="height: 40px; border: 1px solid #241E46; color: #241E46; width: 100%; border-radius: 8px;"
+            >
+              Liên hệ tư vấn
+            </a-button>
           </div>
         </div>
 
@@ -166,6 +193,15 @@ const filteredPlans = computed(() => {
 
 <style lang="scss" scoped>
 @import url("./index.scss");
+
+.subHeader{
+  font-size: 16px;
+  color: #D7D1F9;
+  line-height: 24px;
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
 
 .incentive_box{
   width: 250px;
@@ -187,5 +223,15 @@ const filteredPlans = computed(() => {
 .incentive-background {
   background: var(--gradient-1, linear-gradient(0deg, #FF6931 0.43%, #FF9839 99.57%));
   color: #FFFFFF;
+}
+
+.find-report-button:hover {
+  border-color: #FF6931;
+  color: #FF6931;
+}
+
+.feature-details-button:hover {
+  border-color: #FF6931;
+  color: #FF6931;
 }
 </style>
