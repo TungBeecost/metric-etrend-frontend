@@ -67,9 +67,7 @@ const downloadReport = () => {
   if (url) {
     fetch(url, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/pdf',
-      },
+      redirect: 'follow',
     })
         .then((response) => response.blob())
         .then((blob) => {
