@@ -4,6 +4,7 @@ import TrialRegister from "~/components/report/TrialRegister.vue";
 import LeadFormBackground from "~/components/report/LeadFormBackground.vue";
 import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
 import TrialRegisterCommunity from "~/components/report/TrialRegisterCommunity.vue";
+import {setCookie} from "~/helpers/CookieHelper";
 
 const POPUP_STATES = {
   FORM: 'form',
@@ -41,6 +42,7 @@ const handleSubmitStatus = (status: any) => {
     popupState.value = POPUP_STATES.SUCCESSFULLY
     openSuccess.value = true
     emits('update:open', false)
+    setCookie('fill_in_the_form', 'true')
   } else if (status === 'error') {
     popupState.value = POPUP_STATES.FAILURE
   } else {
@@ -520,6 +522,10 @@ const toggleUnlock = () => {
         .form-container {
           padding: 16px;
         }
+      }
+
+      .container_content{
+        padding: 0 0 16px 0;
       }
 
       .additional-information {

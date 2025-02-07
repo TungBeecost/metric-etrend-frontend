@@ -9,11 +9,13 @@ import ItemNewReportCommunity from "~/components/report/ItemNewReportCommunity.v
 import DiscoverCommunity from "~/components/report/DiscoverCommunity.vue";
 import ContactUsCommunity from "~/components/report/ContactUsCommunity.vue";
 import CtaComunity from "~/components/report/CtaComunity.vue";
+import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
+import {getCookie} from "~/helpers/CookieHelper";
 
 const config = useRuntimeConfig();
 const isLoading = ref(true);
-const lstReport = ref([]);
 const openCta = ref(false);
+const openSuccess = ref(false);
 const currentUserStore = useCurrentUser();
 const {userInfo}: any = storeToRefs(currentUserStore);
 
@@ -38,7 +40,13 @@ const fetchReport = async () => {
 };
 
 const handleClick = () => {
-  openCta.value = true;
+  const formSubmitted = getCookie('fill_in_the_form') === 'true';
+  if (formSubmitted && !userInfo.value?.current_plan.plan_code || formSubmitted && userInfo.value?.current_plan.plan_code === 'e_free') {
+    openSuccess.value = true;
+  }
+  else{
+    openCta.value = true;
+  }
 };
 
 fetchReport();
@@ -67,7 +75,7 @@ useSeoMeta({
               Nhận tổng hợp báo cáo
             </a-button>
             <div class="text_consumer_community" v-else>
-              <a href="" style="color: #42A4FF">Trở thành khách hàng của Metric</a> để truy cập hơn 1 triệu báo cáo E-commerce.
+              <a href='https://metric.vn/analytics/pricing' style="color: #42A4FF">Trở thành khách hàng của Metric</a> để truy cập hơn 1 triệu báo cáo E-commerce.
             </div>
           </div>
           <div class="new_report">
@@ -82,7 +90,7 @@ useSeoMeta({
         </div>
       </div>
     </div>
-    <div class="new_report default_section" style="padding-top: 130px;">
+    <div class="new_report new_report_1 default_section" >
       <div class="title_new_report_black">
         Báo cáo E-commerce hàng quý
       </div>
@@ -91,7 +99,7 @@ useSeoMeta({
       </div>
       <item-new-report-community v-else class="item_new_report_tran" :reports="lstQuarterlyReports" />
     </div>
-    <div class="new_report default_section">
+    <div class="new_report new_report_2 default_section">
       <div class="title_new_report_black">
         Báo cáo khác
       </div>
@@ -100,9 +108,10 @@ useSeoMeta({
       </div>
       <item-new-report-community v-else class="item_new_report_tran" :reports="lstOtherReports" />
     </div>
-    <discover-community />
+<!--    <discover-community />-->
     <contact-us-community/>
     <cta-comunity v-model:open="openCta"/>
+    <success-notification v-model:visible="openSuccess" class-name="submit-form-marketing-success"/>
   </div>
 </template>
 
@@ -147,6 +156,14 @@ useSeoMeta({
       }
     }
   }
+
+  .new_report_1{
+    padding-top: 220px;
+  }
+  .new_report_2{
+    padding-top: 40px;
+    padding-bottom: 100px;
+  }
 }
 
 .hidden-report {
@@ -166,14 +183,15 @@ useSeoMeta({
     font-size: 24px;
     font-weight: bold;
   }
-}
-
-.new_report {
   .title_new_report_black {
     margin-bottom: 16px;
     font-size: 24px;
     font-weight: bold;
   }
+}
+
+.new_report_1 {
+  padding-top: 130px;
 }
 
 .item_new_report_tran{
@@ -212,6 +230,10 @@ useSeoMeta({
     gap: 16px;
 
     .title_new_report {
+      font-size: 20px;
+    }
+
+    .title_new_report_black {
       font-size: 20px;
     }
   }
@@ -275,10 +297,13 @@ useSeoMeta({
 @media (max-width: 1023px) {
   .title_report {
     .image-metric {
+      padding-top: 0;
       .title {
         .content {
           .report_title {
-            font-size: 28px;
+            font-size: 24px;
+            line-height: 38px;
+            width: 100%;
           }
 
           .description {
@@ -294,13 +319,13 @@ useSeoMeta({
 @media (max-width: 767px) {
   .title_report {
     .image-metric {
-      height: 565px;
+      height: 400px;
       .title {
         gap: 40px;
 
         .content {
           .report_title {
-            font-size: 36px;
+            font-size: 24px;
           }
 
           .description {
@@ -309,6 +334,13 @@ useSeoMeta({
           }
         }
       }
+    }
+    .new_report_1 {
+      padding-top: 160px;
+    }
+    .new_report_2 {
+      padding-top: 50px;
+      padding-bottom: 50px;
     }
   }
 }
@@ -322,7 +354,7 @@ useSeoMeta({
 
         .content {
           .report_title {
-            font-size: 36px;
+            font-size: 24px;
           }
 
           .description {

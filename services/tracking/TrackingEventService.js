@@ -6,6 +6,7 @@ import { getGlobalVariable } from '~/services/GlobalVariableService.js';
 import { apiSendTrackingData } from '~/services/tracking/ApiTrackingData.js';
 import { isClient } from '~/helpers/BrowserHelper.ts';
 import {formatPhoneVN} from "~/helpers/JsonHelper.js";
+import gtag from "~/plugins/gtag.js";
 
 const shouldTrack = async () => {
   if (isClient) {
@@ -23,7 +24,7 @@ const setUserProperties = async (options) => {
     let optionsMerged = removeEmpty(options);
     // Cập nhật user_properties cho Google Analytics và Mixpanel
     gtag('set', 'user_properties', optionsMerged);
-    mixpanel?.people?.set?.(optionsMerged);
+    // mixpanel?.people?.set?.(optionsMerged);
   }
 };
 
@@ -37,11 +38,6 @@ const trackEventCommon = async (eventName, eventCategory, eventLabel = '', value
     };
     await trackEventCustom(eventName, eventDetails, isStoreApi);
     await postHogTrackEvent(eventName, eventDetails, isStoreApi);
-
-    // Thêm tăng giá trị cho sự kiện trong Mixpanel
-    mixpanel?.people?.increment({
-      eventName: value
-    });
   } else {
     console.log('Tracking is disabled');
   }
@@ -50,9 +46,33 @@ const trackEventCommon = async (eventName, eventCategory, eventLabel = '', value
 const trackEventCustom = async (eventName, params, isStoreApi = true) => {
   console.log('trackEventCustom called with:', { eventName, params, isStoreApi });
 
+  const currentUserStore = useCurrentUser();
+  const user = currentUserStore.userInfo;
+
+  if (user && user.id) {
+    // Gửi user_id tới Google Analytics thông qua setUserId
+    const setUserId = useNuxtApp().$setUserId;
+    if (setUserId) {
+      console.log('Setting user_id through setUserId...');
+      setUserId(user.id);
+    } else {
+      console.warn('setUserId is not available');
+    }
+  } else {
+    console.log('No user id found');
+  }
+
   if (await shouldTrack()) {
     let variables = getGlobalVariable();
-    const paramsEvent = { ...params, ...variables };
+
+    // Thêm user_id vào paramsEvent
+    const paramsEvent = {
+      ...params,
+      ...variables,
+      user_id: user ? user.id : null
+    };
+
+    // Truyền event tới các công cụ theo dõi
     const trackEvent = useNuxtApp().$trackEvent;
     if (trackEvent) {
       trackEvent(eventName, paramsEvent);  // Gọi trackEvent từ plugin
@@ -60,11 +80,8 @@ const trackEventCustom = async (eventName, params, isStoreApi = true) => {
       console.warn('trackEvent function is not defined');
     }
 
-    // Cập nhật sự kiện vào Mixpanel
-    mixpanel?.track?.(eventName, paramsEvent);
     window?.clarity?.("set", "event", eventName);
 
-    // Gửi dữ liệu tracking nếu cần
     if (isStoreApi) {
       await sendTrackingBehavior(paramsEvent, eventName);
     }
@@ -73,11 +90,16 @@ const trackEventCustom = async (eventName, params, isStoreApi = true) => {
 
     if (isClient) {
       let variables = getGlobalVariable();
-      const paramsEvent = { ...params, ...variables };
+      const paramsEvent = {
+        ...params,
+        ...variables,
+        user_id: user ? user.id : null // Thêm user_id vào paramsEvent trong dev mode
+      };
       console.log('[dev] event', eventName, paramsEvent);
     }
   }
 };
+
 
 const postHogTrackEvent = async (eventName, params, isStoreApi) => {
   console.log('postHogTrackEvent called with:', { eventName, params, isStoreApi });

@@ -154,11 +154,11 @@ const toggleSeeMore = () => {
 
 @media (max-width: 460px) {
   .discover{
-    padding-top: 200px;
+    padding-top: 80px;
   }
   .lst_item {
     width: calc(100% - 50px);
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
   .title {
     font-size: 24px;
