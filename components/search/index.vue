@@ -9,7 +9,6 @@
         @search="handleSearch(searchValue)"
         @press-enter="handleSearch(searchValue)"
         @focus="handleFocus"
-
     >
       <template #enterButton>
         <CustomIcon type="Search" :is-custom-size="true"/>

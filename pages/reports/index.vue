@@ -43,6 +43,15 @@ onMounted(() => {
   trackEventCommon(EVENT_TYPE.VIEW_REPORT_REPORTS, 'view_report_reports', '');
 });
 
+// Add beforeunload event listener
+if (process.client) {
+  window.addEventListener('beforeunload', async (event) => {
+    console.log(`force send event before page unload`);
+    // Ensure events are sent before the page unloads
+    await trackEventCommon(EVENT_TYPE.VIEW_REPORT_REPORTS, 'view_report_reports', '');
+  })
+}
+
 useSeoMeta({
   title: PAGE_TITLES.reports
 });

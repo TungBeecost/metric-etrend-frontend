@@ -15,12 +15,14 @@ const shouldTrack = () => {
     return false
 }
 
-const initTracking = () => {
+const initTracking = async () => {
     if (shouldTrack()) {
-        let variables = getGlobalVariable()
-        if (variables?.user_id) {
+        let variables = await getGlobalVariable()
+        const posthog = useNuxtApp().$posthog;
+        if (variables.user_id || variables.user_email) {
             // gtag('set', {'user_id': variables.user_id});
-            mixpanel?.identify?.(variables.user_id);
+            // mixpanel?.identify?.(variables.user_id);
+            posthog?.identify(variables.user_email);
             window?.clarity?.("identify", variables.user_id)
         }
         let optionsDefault = {
