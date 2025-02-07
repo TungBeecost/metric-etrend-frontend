@@ -156,6 +156,14 @@ useSeoMeta({
       }
     }
   }
+
+  .new_report_1{
+    padding-top: 220px;
+  }
+  .new_report_2{
+    padding-top: 40px;
+    padding-bottom: 100px;
+  }
 }
 
 .hidden-report {
@@ -328,7 +336,7 @@ useSeoMeta({
       }
     }
     .new_report_1 {
-      padding-top: 100px;
+      padding-top: 160px;
     }
     .new_report_2 {
       padding-top: 50px;
