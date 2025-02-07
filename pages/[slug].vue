@@ -300,7 +300,6 @@ onUnmounted(() => {
     <div>
       <div class="title default_section">
         <div class="breadcrumbs">
-          {{data?.reportDetail?.report_type}}
           <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
         </div>
         <h1 class="title_main">
