@@ -191,7 +191,7 @@ const platforms = computed(() => {
             <a-button
                 v-if="!data.is_unsellable"
                 type="primary"
-                style="width: 100%;height: 40px; font-size: 14px; box-shadow: 0 2px 0 rgba(0,0,0,.045); filter: drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 4px); font-family: Montserrat,serif;font-weight: 500"
+                style="width: 100%;height: 40px; font-size: 14px; box-shadow: 0 2px 0 rgba(0,0,0,.045); filter: font-family: Montserrat,serif;font-weight: 500"
                 class="download_report_button" :loading="downloading"
                 @click="handleDownload">
               {{ props.data.can_download ? 'Tải xuống báo cáo' : 'Mua báo cáo' }}

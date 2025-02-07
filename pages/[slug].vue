@@ -284,6 +284,12 @@ const handleShowNotification = () => {
   showButton.value = true;
 }
 
+const reportTitle = computed(() => {
+  return data.value?.reportDetail?.report_type === 'report_product_line'
+      ? `Báo cáo tổng quan thị trường từ khoá ${data?.value?.reportDetail.name}`
+      : `Báo cáo tổng quan thị trường ${data?.value?.reportDetail.name}`;
+});
+
 onUnmounted(() => {
   window.removeEventListener('resize', updateWindowSize);
   window.removeEventListener('scroll', handleScroll);
@@ -319,7 +325,7 @@ onUnmounted(() => {
         <div class="general_overview_container">
           <relate-report class="relate_report" :recomends="data?.listRecommend"/>
           <h2 class="title_main ">
-            Báo cáo tổng quan thị trường {{ data?.reportDetail.name }} trên sàn TMĐT
+            {{ reportTitle }}
           </h2>
           <div class="">
             Từ tháng
