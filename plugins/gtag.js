@@ -1,4 +1,3 @@
-// plugins/gtag.js
 export default defineNuxtPlugin(nuxtApp => {
     // Lấy Google Analytics ID từ runtimeConfig
     const gtagId = useRuntimeConfig().public.gtagId;
@@ -24,5 +23,15 @@ export default defineNuxtPlugin(nuxtApp => {
 
         // Cung cấp trackEvent vào global context của Nuxt
         nuxtApp.provide('trackEvent', trackEvent);
+
+        // Tạo một hàm để set user_id khi có giá trị user.id
+        nuxtApp.provide('setUserId', (userId) => {
+            if (window.gtag && userId) {
+                console.log('Setting user_id in Google Analytics:', userId);
+                gtag('set', 'user_id', userId);
+            } else {
+                console.warn('user_id or gtag not available');
+            }
+        });
     }
 });
