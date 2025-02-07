@@ -41,7 +41,7 @@ const fetchReport = async () => {
 
 const handleClick = () => {
   const formSubmitted = getCookie('fill_in_the_form') === 'true';
-  if (formSubmitted && !userInfo.value?.current_plan.plan_code) {
+  if (formSubmitted && !userInfo.value?.current_plan.plan_code || formSubmitted && userInfo.value?.current_plan.plan_code === 'e_free') {
     openSuccess.value = true;
   }
   else{
