@@ -128,6 +128,9 @@ import GeneralOverview from "~/components/report/GeneralOverview.vue";
 import {getIndexedDB, setIndexedDB} from "~/helpers/IndexedDBHelper";
 import BannerReport from "~/components/report/BannerReport.vue";
 import MetricLoadingIcon from "~/components/MetricLoadingIcon.vue";
+import {onMounted} from "vue";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService.js";
+import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
 
 const config = useRuntimeConfig();
 
@@ -155,6 +158,10 @@ function formatDate(dateStr) {
   const day = dateStr.substring(6, 8);
   return `${day}-${month}-${year}`;
 }
+
+onMounted(() => {
+  trackEventCommon(EVENT_TYPE.VIEW_SMART_ANALYTIC, 'view_smart_analytic', '');
+});
 
 async function handleAnalyticKeyword() {
   console.log(data)

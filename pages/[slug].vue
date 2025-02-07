@@ -112,6 +112,7 @@ const fetchReportData = async () => {
       trackEventCommon(EVENT_TYPE.VIEW_REPORT_BRAND, slug, response?.name);
     }
     trackEventCommon(EVENT_TYPE.VIEW_ANY_REPORT, slug, response?.name);
+    trackEventCommon(EVENT_TYPE.TEST_LDC, 'test_ldcs', '');
     trackEventConversionPixel(
         'ViewContent',
         response?.lst_category?.[0]?.['name'],

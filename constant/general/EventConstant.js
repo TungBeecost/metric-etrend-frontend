@@ -8,7 +8,7 @@ const EVENT_TYPE = {
     VIEW_SEARCH_RESULTS: 'view_search_results',
     CLICK_RELATED_REPORT: 'click_related_report',
     // CLICK_FAST_ANALYZE: 'click_fast_analyze',
-    // FAST_ANALYZE: 'fast_analyze',
+    TEST_LDC: 'test_ldc',
     SHOW_POPUP_BUY_REPORT: 'show_popup_buy_report',
     VIEW_CHECKOUT_REPORT: 'view_checkout_report',
     CLICK_CHECKOUT_REPORT: 'click_checkout_report',
@@ -27,6 +27,8 @@ const EVENT_TYPE = {
     CLICK_HOMEPAGE_SEARCH_BAR: 'click_homepage_search_bar',
     CLICK_SUGGESTION_KEYWORD: 'click_suggestion_keyword',
     SHOW_POPUP_CONVERT_TO_ANALYTICS: 'show_popup_convert_to_analytics',
+    CLICK_RELATED_REPORT_SEARCH_RESULT: 'click_related_report_search_result',
+    VIEW_SMART_ANALYTIC: 'view_smart_analytic',
     CLICK_RELATED_KEYWORD: 'click_related_keyword',
     VIDEO_START: 'video_start',
 };

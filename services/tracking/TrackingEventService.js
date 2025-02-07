@@ -103,14 +103,13 @@ const trackEventCustom = async (eventName, params, isStoreApi = true) => {
 
 const postHogTrackEvent = async (eventName, params, isStoreApi) => {
   console.log('postHogTrackEvent called with:', { eventName, params, isStoreApi });
-  debugger
   if (await shouldTrack()) {
     const posthog = useNuxtApp().$posthog;
     if (posthog) {
       const variables = await getGlobalVariable();
       const paramEvent = { ...params, ...variables };
       console.log('[posthog] event', eventName, paramEvent);
-      posthog.capture(eventName, paramEvent);  
+      posthog.capture(eventName, paramEvent);
     }
   }
 }
