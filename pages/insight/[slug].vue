@@ -109,8 +109,6 @@ watch(userInfo, (newUserInfo) => {
 
 <template>
   <Head>
-    {{userInfo}}
-    {{isHideContent}}
     <Title>{{ data?.name }} - Báo cáo xu hướng thị trường sàn TMĐT</Title>
     <Meta hid="og:title" property="og:title" :content="`eReport - ${data?.name}`"/>
     <Meta hid="description" name="description" :content="data?.introduction"/>
