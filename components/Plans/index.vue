@@ -13,6 +13,7 @@ const value1 = ref('PDF_report');
 const value2 = ref('pt50');
 const value3 = ref('custom_pdf_report');
 
+
 const navigateToPayment = (plan: any) => {
   if (plan.type_package === 'report') {
     navigateTo(`${NAVIGATIONS.search}`);
@@ -77,6 +78,16 @@ const filteredPlans = computed(() => {
 
   return Array.from(uniquePlans.values());
 });
+
+// Add this method to handle scroll
+const scrollToSpecificPoint = () => {
+  window.scrollTo({
+    top: 1400, // Cuộn đến vị trí 100px cách đỉnh trang
+    left: 0,
+    behavior: 'smooth' // Cuộn mượt mà
+  });
+};
+
 </script>
 
 <template>
@@ -142,6 +153,7 @@ const filteredPlans = computed(() => {
                 <div
                     v-if="plan.type_package === 'analysis' || plan.type_package === 'pdf_report'"
                     class="feature-details-button"
+                    @click="scrollToSpecificPoint"
                     style="margin-top: 12px; width: 100%; font-size: 12px; display: flex; align-items: center; cursor: pointer"
                 >
                   Chi tiết tính năng
