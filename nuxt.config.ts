@@ -140,20 +140,11 @@ export default defineNuxtConfig({
         dirs: ['~/components'],
     },
 
-    modules: [
-        '@nuxt/ui',
-        "@nuxt/eslint",//use
-        "@nuxt/test-utils/module",
-        "@nuxtjs/device",
-        "@nuxt/image",//use
-        "vue3-carousel-nuxt",
-        '@zadigetvoltaire/nuxt-gtm',
-        ["nuxt-highcharts", {}],
-        "nuxt-svgo",
-        "@ant-design-vue", //use
-        "@pinia/nuxt",
-        // "nuxt-gtag",
-    ],
+    modules: ['@nuxt/ui', //use
+    "@nuxt/eslint", "@nuxt/test-utils/module", "@nuxtjs/device", //use
+    "@nuxt/image", "vue3-carousel-nuxt", '@zadigetvoltaire/nuxt-gtm', ["nuxt-highcharts", {}], "nuxt-svgo", //use
+    "@ant-design-vue", // "nuxt-gtag",
+    "@pinia/nuxt", "@nuxt/scripts"],
 
     antd: {
         extractStyle: true,
