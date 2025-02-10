@@ -13,6 +13,9 @@ const value1 = ref('PDF_report');
 const value2 = ref('pt50');
 const value3 = ref('custom_pdf_report');
 
+const hover = ref(false);
+
+const buttonClass = computed(() => hover.value ? 'hover-class' : 'default-class');
 
 const navigateToPayment = (plan: any) => {
   if (plan.type_package === 'report') {
@@ -175,16 +178,18 @@ const scrollToSpecificPoint = () => {
             <a-button
                 v-if="plan.type_package === 'pdf_report'"
                 @click="handleClickFindReport"
-                class="find-report-button"
-                style="height: 40px; border: 1px solid #241E46; color: #241E46; width: 100%; border-radius: 8px;"
+                :class="buttonClass"
+                @mouseenter="hover = true"
+                @mouseleave="hover = false"
             >
               Tìm báo cáo ngay
             </a-button>
             <a-button
                 v-if="plan.type_package === 'custom_pdf_report'"
                 @click="handleClickContactUs"
-                class="find-report-button"
-                style="height: 40px; border: 1px solid #241E46; color: #241E46; width: 100%; border-radius: 8px;"
+                :class="buttonClass"
+                @mouseenter="hover = true"
+                @mouseleave="hover = false"
             >
               Liên hệ tư vấn
             </a-button>
@@ -235,9 +240,20 @@ const scrollToSpecificPoint = () => {
   color: #FFFFFF;
 }
 
-.find-report-button:hover {
-  border-color: #FF6931;
+.default-class {
+  height: 40px;
+  border: 1px solid #241E46;
+  color: #241E46;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.hover-class {
+  height: 40px;
+  border: 1px solid #FF6931;
   color: #FF6931;
+  width: 100%;
+  border-radius: 8px;
 }
 
 .feature-details-button:hover {
