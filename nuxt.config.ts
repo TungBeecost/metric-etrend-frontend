@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-    ssr: process.env.SSR === 'true', // Bật chế độ SSR\
+    ssr: process.env.SSR === 'true', // Bật chế độ SSR
     app: {
         buildAssetsDir: '/ereport_nuxt/',
         baseURL: process.env.BASE_PATH || '/',
@@ -9,8 +9,8 @@ export default defineNuxtConfig({
                 lang: "vi",
             },
             meta: [
-                {charset: "utf-8"},
-                {name: "viewport", content: "width=device-width, initial-scale=1"},
+                { charset: "utf-8" },
+                { name: "viewport", content: "width=device-width, initial-scale=1" },
                 {
                     hid: "description",
                     key: "description",
@@ -24,8 +24,8 @@ export default defineNuxtConfig({
                     property: "og:image",
                     content: "https://lh3.googleusercontent.com/pw/AP1GczMTZp0lf_VW7W_Y6n3qg602m-LlqfpCIeVX_i4D3pnqT6FiloK5hY86XfTsqVHd4xRRs9tSKppP6FZdEPWO_V8D_UEsfj8KEnChoiU7zyiwDlHzZaTeAePmGxcqzG98qDJ9bahok5MhwtDzp3EKTiI_=w1600-h900-s-no-gm?authuser=0",
                 },
-                {name: "google-site-verification", content: "-A5h4Bx3cBpC9vnJxfRvxvegNFZgMorMQlE6M76uLbc"},
-                {name: "zalo-platform-site-verification", content: "N8Qw0ApqOJbHzja6h_fi0bwDtIIo-mrwD3arc"},
+                { name: "google-site-verification", content: "-A5h4Bx3cBpC9vnJxfRvxvegNFZgMorMQlE6M76uLbc" },
+                { name: "zalo-platform-site-verification", content: "N8Qw0ApqOJbHzja6h_fi0bwDtIIo-mrwD3arc" },
             ],
             link: [
                 {
@@ -45,11 +45,11 @@ export default defineNuxtConfig({
                 {
                     hid: "gtag",
                     innerHTML: `
-                        window.dataLayer = window.dataLayer || [];
-                        function gtag(){dataLayer.push(arguments);}
-                        gtag('js', new Date());
-                        gtag('config', 'G-1KSWMFJGH1');
-                      `,
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-1KSWMFJGH1');
+          `,
                     type: "text/javascript",
                 },
                 {
@@ -59,7 +59,7 @@ export default defineNuxtConfig({
             noscript: [
                 {
                     children: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-522F9NZ"
-                  height="0" width="0" style="display:none;visibility:hidden"></iframe>`
+          height="0" width="0" style="display:none;visibility:hidden"></iframe>`
                 }
             ],
         },
@@ -67,12 +67,12 @@ export default defineNuxtConfig({
 
     $production: {
         routeRules: {
-            "/**": {ssr: true},
+            "/**": { ssr: true },
         },
     },
 
     $development: {
-        devtools: {enabled: true},
+        devtools: { enabled: true },
     },
 
     runtimeConfig: {
@@ -121,8 +121,6 @@ export default defineNuxtConfig({
         "~/assets/antd.css",
         "~/assets/variables.less",
         "~/assets/style.css",
-        // "~/assets/tailwind.less",
-        // "normalize.css",
     ],
 
     vite: {
@@ -133,6 +131,16 @@ export default defineNuxtConfig({
                 },
             },
         },
+        build: {
+            rollupOptions: {
+                output: {
+                    manualChunks: {
+                        vendor: ['vue', 'react', 'some-other-lib'], // Cấu hình chia chunk cho các thư viện lớn
+                    },
+                },
+            },
+            chunkSizeWarningLimit: 1000, // Tăng giới hạn cảnh báo chunk size
+        },
     },
 
     components: {
@@ -140,11 +148,12 @@ export default defineNuxtConfig({
         dirs: ['~/components'],
     },
 
-    modules: ['@nuxt/ui', //use
-    "@nuxt/eslint", "@nuxt/test-utils/module", "@nuxtjs/device", //use
-    "@nuxt/image", "vue3-carousel-nuxt", '@zadigetvoltaire/nuxt-gtm', ["nuxt-highcharts", {}], "nuxt-svgo", //use
-    "@ant-design-vue", // "nuxt-gtag",
-    "@pinia/nuxt", "@nuxt/scripts"],
+    modules: [
+        '@nuxt/ui',
+        "@nuxt/eslint", "@nuxt/test-utils/module", "@nuxtjs/device",
+        "@nuxt/image", "vue3-carousel-nuxt", '@zadigetvoltaire/nuxt-gtm', ["nuxt-highcharts", {}], "nuxt-svgo",
+        "@ant-design-vue", "@pinia/nuxt", "@nuxt/scripts"
+    ],
 
     antd: {
         extractStyle: true,
@@ -156,10 +165,6 @@ export default defineNuxtConfig({
     colorMode: {
         preference: 'light'
     },
-    // site: {
-    //     url: 'https://ereport.staging.muadee.vn',
-    //     name: 'eReport',
-    // },
     compatibilityDate: "2024-09-22",
     build: {
         transpile: ['tslib']
@@ -167,6 +172,5 @@ export default defineNuxtConfig({
 
     nitro: {
         compressPublicAssets: true,
-    }
-
+    },
 });
