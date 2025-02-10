@@ -79,12 +79,11 @@ const filteredPlans = computed(() => {
   return Array.from(uniquePlans.values());
 });
 
-// Add this method to handle scroll
 const scrollToSpecificPoint = () => {
   window.scrollTo({
-    top: 1400, // Cuộn đến vị trí 100px cách đỉnh trang
+    top: 1400,
     left: 0,
-    behavior: 'smooth' // Cuộn mượt mà
+    behavior: 'smooth'
   });
 };
 
@@ -102,7 +101,6 @@ const scrollToSpecificPoint = () => {
     </div>
     <div class="pricings">
       <div v-for="plan in filteredPlans" class="planItem">
-<!--        <div class="focusHeader"/>-->
 
         <div class="content">
           <div class="container">
@@ -121,7 +119,7 @@ const scrollToSpecificPoint = () => {
                 <div v-if="plan.type_package === 'incentive'" class="incentive_text">
                   Thời hạn khuyến mãi: 31/12/2024
                 </div>
-                {{ formatSortTextCurrencyPlan(plan.price) }}
+                <span v-if="plan.type_package === 'pdf_report'">Từ </span>{{ formatSortTextCurrencyPlan(plan.price) }}
                 <span v-if="plan.unit" class="priceUnit"> /{{ plan.unit }}</span>
               </div>
               <a-select
