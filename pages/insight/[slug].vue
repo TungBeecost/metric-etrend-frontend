@@ -72,8 +72,7 @@ const fetchReportData = async () => {
         null
     )
     const {tier_report} = response.data;
-    console.log('tier_report', tier_report);
-    if (tier_report !== 'e_free') {
+    if (tier_report !== 'e_free' && userInfo.value?.metric_info_auth.roles[0] !== 'market_default') {
       isHideContent.value = false;
     }
     data.value = response.data;
@@ -101,7 +100,7 @@ const handleSubmitSuccess = () => {
 
 onMounted(() => {
   const unlockedMktReports = localStorage.getItem('report_mkt_unlocked');
-  if (userInfo.value?.current_plan?.plan_code !== 'e_free' && userInfo.value?.current_plan?.plan_code) {
+  if (userInfo.value?.current_plan?.plan_code !== 'e_free' && userInfo.value?.current_plan?.plan_code && userInfo.value?.metric_info_auth.roles[0] !== 'market_default') {
     isHideContent.value = false;
   } else {
     if (unlockedMktReports === 'true') {
@@ -122,6 +121,8 @@ onMounted(() => {
     <Meta hid="og:image" property="og:image" :content="data?.url_cover || data?.url_thumbnail"/>
     <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.name}`"/>
   </Head>
+<!--  {{userInfo.metric_info}}-->
+  {{userInfo.metric_info_auth.roles}}
   <div v-if="loading" class="container_content">
     <div class="title default_section">
       <div class="loading-skeleton">
