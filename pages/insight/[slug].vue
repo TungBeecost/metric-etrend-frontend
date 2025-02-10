@@ -72,7 +72,7 @@ const fetchReportData = async () => {
         null
     )
     const {tier_report} = response.data;
-    if (tier_report !== 'e_free' && userInfo.value?.metric_info_auth.roles[0] !== 'market_default') {
+    if (tier_report !== 'e_free' &&  userInfo.value?.metric_info_auth.roles[0] !== 'market_default' && userInfo.value?.current_plan?.plan_code) {
       isHideContent.value = false;
     }
     data.value = response.data;
@@ -121,9 +121,7 @@ onMounted(() => {
     <Meta hid="og:image" property="og:image" :content="data?.url_cover || data?.url_thumbnail"/>
     <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.name}`"/>
   </Head>
-<!--  {{userInfo.metric_info}}-->
-  {{userInfo.metric_info_auth.roles}}
-  <div v-if="loading" class="container_content">
+    <div v-if="loading" class="container_content">
     <div class="title default_section">
       <div class="loading-skeleton">
         <div>
