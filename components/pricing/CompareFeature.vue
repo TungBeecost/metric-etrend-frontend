@@ -208,6 +208,7 @@ const dataSource = [
     font-size: 40px;
     font-weight: 700;
     line-height: 56px;
+    padding-bottom: 64px;
   }
 
   .note_price{
