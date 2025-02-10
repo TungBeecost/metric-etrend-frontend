@@ -3,7 +3,6 @@ import { ref, onMounted, watch } from 'vue';
 import axios from "~/services/axios-wrapper";
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useCurrentUser } from '~/stores/currentUser';
 import { useSearchReport } from '#imports';
 import { trackEventCommon, trackEventConversionPixel } from '~/services/tracking/TrackingEventService.js';
 import { EVENT_TYPE } from '~/constant/general/EventConstant.js';
