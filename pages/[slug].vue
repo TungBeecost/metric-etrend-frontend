@@ -298,16 +298,6 @@ onUnmounted(() => {
 
 <template>
   <div class="container_content">
-    <div class="scroll_bar default_section">
-      <div class="scroll_bar_">
-        <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
-        <p class="scroll_bar_title">Báo cáo {{ data.reportDetail.name }} - Nghiên cứu thị trường sàn TMĐT</p>
-      </div>
-      <div>
-        <a-button>Tải báo cáo mẫu xem thử</a-button>
-        <a-button>Mua báo cáo PDF chi tiết</a-button>
-      </div>
-    </div>
     <div>
       <div class="title default_section">
         <div class="breadcrumbs">
@@ -423,13 +413,6 @@ onUnmounted(() => {
 .container_content {
   padding-top: 40px;
   padding-bottom: 40px;
-
-  .scroll_bar{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-  }
 
   .title {
     display: flex;
