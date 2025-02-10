@@ -20,14 +20,15 @@ import {useCurrentUser} from "~/stores/current-user.js";
 import PopupChatGpt from "~/components/MetricGpt/PopupChatGpt.vue";
 import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService.js";
 import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
+import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
 
 const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
-const gtm = useGTM();
 const checkLevelCategory = ref(false);
 const showModal = ref(false);
 const showAdvertisement = ref(false);
+const showScrollBar = ref(false);
 const showNotification = ref(true);
 const loadingRecommend = ref(true);
 const loadingSuggest = ref(true);
@@ -37,6 +38,8 @@ const showModalDownloadPdf = ref(false);
 const currentUserStore = useCurrentUser();
 const {fetchCurrentUser} = useCurrentUser();
 const { getInfoTransaction } = usePayment()
+const showModalSuccess = ref(false);
+const open = ref(false);
 let {userInfo} = storeToRefs(currentUserStore);
 
 const fetchSuggest = async (value = '', options = {}) => {
@@ -79,6 +82,16 @@ const handleScroll = () => {
   if (isMobile.value && window.scrollY > 2000) {
     showModalDownloadPdf.value = true;
     showAdvertisement.value = window.scrollY > scrollThreshold;
+  }
+};
+
+const handleScrollBar = () => {
+  const scrollThreshold = isMobile.value ? 2000 : 100;
+  if (!isMobile.value) {
+    showScrollBar.value = window.scrollY > scrollThreshold;
+  }
+  if (isMobile.value && window.scrollY > 2000) {
+    showScrollBar.value = window.scrollY > scrollThreshold;
   }
 };
 
@@ -213,6 +226,15 @@ const updateWindowSize = () => {
   isMobile.value = window?.innerWidth <= 768;
 };
 
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScrollBar);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScrollBar);
+});
+
 const fetchInfoTransaction = async (transactionId) => {
   try {
     const response = await getInfoTransaction(transactionId);
@@ -279,10 +301,49 @@ const handleOk = () => {
   navigateTo(`${NAVIGATIONS.home}${route.params.slug}`);
 };
 
+const downloadSampleReport = () => {
+  const url = 'https://storage.googleapis.com/ereport-static/bao-cao-nganh-hang-sample.pdf'; // URL file cần tải xuống
+  const fileName = 'Báo cáo mẫu.pdf'; // Tên file sẽ được lưu trên máy người dùng
+  if (url) {
+    fetch(url, {
+      method: 'GET',
+      redirect: 'follow',
+    })
+        .then((response) => response.blob())
+        .then((blob) => {
+          const url = window.URL.createObjectURL(
+              new Blob([blob]),
+          );
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute(
+              'download',
+              fileName,
+          );
+
+          document.body.appendChild(link);
+          link.click();
+
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          link.parentNode.removeChild(link);
+
+          showModalSuccess.value = true;
+        })
+        .catch(() => {
+          message.error('Tải xuống báo cáo thất bại');
+        });
+  }
+};
+
 const handleShowNotification = () => {
   showNotification.value = false;
   showButton.value = true;
 }
+
+const handleClickBuyReport = () => {
+  open.value = true;
+};
 
 const reportTitle = computed(() => {
   return data.value?.reportDetail?.report_type === 'report_product_line'
@@ -298,6 +359,24 @@ onUnmounted(() => {
 
 <template>
   <div class="container_content">
+    <div v-if="showScrollBar" class="scroll_bar default_section">
+      <div class="scroll_bar_container default_section">
+        <div class="scroll_bar_content">
+          <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
+          <p class="scroll_bar_title">Báo cáo {{ data.reportDetail.name }} - Nghiên cứu thị trường sàn TMĐT</p>
+        </div>
+        <div class="scroll_bar_button">
+          <a-button style="display: flex; align-items: center; gap: 8px" @click="downloadSampleReport">
+            <img src="/icons/Download.svg" alt="pdf"/>
+            Tải báo cáo mẫu xem thử
+          </a-button>
+          <a-button type="primary" style="display: flex; align-items: center; gap: 8px" @click="handleClickBuyReport">
+            <img src="/icons/CartIconWhite.svg" alt="pdf"/>
+            Mua báo cáo PDF chi tiết
+          </a-button>
+        </div>
+      </div>
+    </div>
     <div>
       <div class="title default_section">
         <div class="breadcrumbs">
@@ -406,18 +485,72 @@ onUnmounted(() => {
         </div>
       </div>
     </a-modal>
+    <a-modal v-model:visible="showModalSuccess" :footer="null" width="550px">
+      <div class="success_modal">
+        <div class="success_modal_container">
+          <img src="@/public/images/SuccessImage.png" alt="SuccessImage" style="width: 100px; height: 100px; margin: 0 auto; display: block;"/>
+          <div class="success_modal_content">
+            <p class="success_modal_content_title">Cảm ơn bạn đã quan tâm!</p>
+            <p>Báo cáo mẫu sẽ tự động được tải xuống trong giây lát.</p>
+          </div>
+        </div>
+        <div class="success_modal_note">
+          <a-alert type="info" show-icon>
+            <template #message>
+              <p><b style="font-weight: bold">Lưu ý:</b> Dữ liệu sử dụng trong báo cáo chỉ mang tính chất minh hoạ</p>
+            </template>
+          </a-alert>
+        </div>
+      </div>
+    </a-modal>
+    <modal-download-pdf v-model:open="open" :data="data.reportDetail"/>
   </div>
 </template>
 
 <style scoped lang="scss">
 .container_content {
-  padding-top: 40px;
   padding-bottom: 40px;
+
+  .scroll_bar{
+    position: fixed;
+    background-color: #FFFFFF;
+    width: 100%;
+    z-index: 100;
+    animation: fadeIn 0.5s ease-out forwards;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    .scroll_bar_container{
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 12px 0;
+      .scroll_bar_content{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        .scroll_bar_title {
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 28px;
+          color: #241E46;
+        }
+      }
+
+      .scroll_bar_button{
+        display: flex;
+        gap: 16px;
+      }
+
+    }
+
+
+  }
 
   .title {
     display: flex;
     flex-direction: column;
     padding-bottom: 16px;
+    padding-top: 40px;
 
     .breadcrumbs {
       display: flex;
@@ -516,6 +649,33 @@ onUnmounted(() => {
 
 .relate_report {
   animation: fadeIn 0.5s ease-out forwards;
+}
+
+.success_modal{
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.success_modal_content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px ;
+}
+
+.success_modal_content_title{
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 38px;
+}
+
+.success_modal_container{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 @keyframes fadeIn {

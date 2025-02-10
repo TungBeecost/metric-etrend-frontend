@@ -29,37 +29,11 @@ const props = defineProps({
 });
 
 const isMobile = computed(() => window.innerWidth <= 768);
-
+const showModalSuccess = ref(false);
 const showNotification = ref(props.showNotification);
 const showButton = ref(props.showButton);
 const open = ref(false);
 const openCta = ref(false);
-
-const svgIcon = () => (
-    h('svg', {
-      xmlns: 'http://www.w3.org/2000/svg',
-      width: '24',
-      height: '24',
-      viewBox: '0 0 16 16',
-      fill: 'none',
-      style: {marginRight: '8px'},
-    }, [
-      h('g', {'clip-path': 'url(#clip0_5203_183660)'}, [
-        h('path', {
-          d: 'M2.5 9L6 12.5L14 4.5',
-          stroke: '#35A855',
-          'stroke-width': '1.3',
-          'stroke-linecap': 'round',
-          'stroke-linejoin': 'round',
-        }),
-      ]),
-      h('defs', [
-        h('clipPath', {id: 'clip0_5203_183660'}, [
-          h('rect', {width: '16', height: '16', fill: 'white'}),
-        ]),
-      ]),
-    ])
-);
 
 const downloadReport = () => {
   const url = 'https://storage.googleapis.com/ereport-static/bao-cao-nganh-hang-sample.pdf'; // URL file cần tải xuống
@@ -71,7 +45,6 @@ const downloadReport = () => {
     })
         .then((response) => response.blob())
         .then((blob) => {
-          // Create blob link to download
           const url = window.URL.createObjectURL(
               new Blob([blob]),
           );
@@ -89,7 +62,7 @@ const downloadReport = () => {
           // @ts-ignore
           link.parentNode.removeChild(link);
 
-          message.success('Tải xuống báo cáo thành công');
+          showModalSuccess.value = true;
         })
         .catch(() => {
           message.error('Tải xuống báo cáo thất bại');
@@ -232,9 +205,26 @@ onBeforeRouteLeave(() => {
       Tải báo cáo chi tiết
     </button>
   </div>
-
   <modal-download-pdf v-model:open="open" :data="props.data"/>
   <cta v-model:open="openCta"/>
+  <a-modal v-model:visible="showModalSuccess" :footer="null" width="550px">
+    <div class="success_modal">
+      <div class="success_modal_container">
+        <img src="@/public/images/SuccessImage.png" alt="SuccessImage" style="width: 100px; height: 100px; margin: 0 auto; display: block;"/>
+        <div class="success_modal_content">
+          <p class="success_modal_content_title">Cảm ơn bạn đã quan tâm!</p>
+          <p>Báo cáo mẫu sẽ tự động được tải xuống trong giây lát.</p>
+        </div>
+      </div>
+      <div class="success_modal_note">
+            <a-alert type="info" show-icon>
+              <template #message>
+                <p><b style="font-weight: bold">Lưu ý:</b> Dữ liệu sử dụng trong báo cáo chỉ mang tính chất minh hoạ</p>
+              </template>
+            </a-alert>
+      </div>
+    </div>
+  </a-modal>
 </template>
 
 <style scoped lang="scss">
@@ -293,6 +283,33 @@ onBeforeRouteLeave(() => {
   p {
     font-size: 14px;
   }
+}
+
+.success_modal{
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.success_modal_content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px ;
+}
+
+.success_modal_content_title{
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 38px;
+}
+
+.success_modal_container{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 @media (max-width: 768px) {

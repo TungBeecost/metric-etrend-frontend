@@ -174,5 +174,74 @@ const submitForm = async (values: any) => {
 </template>
 
 <style scoped lang="scss">
+.custom-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 400px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 999;
+  padding: 12px;
+  font-family: 'Inter', sans-serif;
+}
 
+.button-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 350px;
+  height: 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 999;
+  font-family: 'Inter', sans-serif;
+}
+
+.notification-content {
+  padding: 16px;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.notification-body {
+  margin-top: 16px;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .button-notification {
+    width: 100%;
+    bottom: 4px;
+    right: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .custom-notification {
+    right: 0;
+    width: 95%;
+    bottom: 4px;
+  }
+}
 </style>
