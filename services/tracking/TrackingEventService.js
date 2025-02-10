@@ -9,14 +9,14 @@ import {formatPhoneVN} from "~/helpers/JsonHelper.js";
 import gtag from "~/plugins/gtag.js";
 
 const shouldTrack = async () => {
-  if (isClient) {
-    let domain = extractDomain(document.location.href);
-    let variables = await getGlobalVariable();
-    if (domain !== 'localhost' && !variables?.user_email?.includes('@metric.vn')) {
-      return true; // Cho phép theo dõi sự kiện
-    }
-  }
-  return false;  // Không theo dõi sự kiện
+  // if (isClient) {
+  //   let domain = extractDomain(document.location.href);
+  //   let variables = await getGlobalVariable();
+  //   if (domain !== 'localhost' && !variables?.user_email?.includes('@metric.vn')) {
+  //     return true; // Cho phép theo dõi sự kiện
+  //   }
+  // }
+  return true;  // Không theo dõi sự kiện
 };
 
 const setUserProperties = async (options) => {
