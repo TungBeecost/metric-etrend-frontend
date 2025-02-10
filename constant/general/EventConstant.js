@@ -8,7 +8,6 @@ const EVENT_TYPE = {
     VIEW_SEARCH_RESULTS: 'view_search_results',
     CLICK_RELATED_REPORT: 'click_related_report',
     // CLICK_FAST_ANALYZE: 'click_fast_analyze',
-    TEST_LDC: 'test_ldc',
     SHOW_POPUP_BUY_REPORT: 'show_popup_buy_report',
     VIEW_CHECKOUT_REPORT: 'view_checkout_report',
     CLICK_CHECKOUT_REPORT: 'click_checkout_report',
