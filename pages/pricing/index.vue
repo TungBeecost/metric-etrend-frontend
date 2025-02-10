@@ -9,8 +9,11 @@
     <div class="section sectionPartner">
       <Parters />
     </div>
-    <div class="compareFeature default_section">
+    <div class="compare_feature default_section">
       <CompareFeature />
+    </div>
+    <div class="information_pricing">
+      <InformationPricing />
     </div>
     <ContactUs />
 <!--    <affiliate-component/>-->
@@ -23,6 +26,7 @@ import {onMounted} from "vue";
 import {trackEventCommon} from "~/services/tracking/TrackingEventService";
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
 import CompareFeature from "~/components/pricing/CompareFeature.vue";
+import InformationPricing from "~/components/pricing/InformationPricing.vue";
 
 useSeoMeta({
   title: PAGE_TITLES.pricing

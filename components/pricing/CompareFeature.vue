@@ -1,5 +1,26 @@
 <script setup lang="ts">
 import CheckIcon from "~/components/pricing/CheckIcon.vue";
+import {NAVIGATIONS} from "~/constant/constains";
+const currentUserStore = useCurrentUser();
+const {userInfo}: any = storeToRefs(currentUserStore);
+const value = ref('pt50');
+const price = ref('1,990,000đ');
+
+watch(value, (newValue) => {
+  if (newValue === 'pt50') {
+    price.value = '1,990,000đ';
+  } else if (newValue === 'pt100') {
+    price.value = '2,990,000đ';
+  }
+});
+
+const navigateToPayment = (plan_code: any) => {
+  navigateTo(`${NAVIGATIONS.payment}?plan_code=${plan_code}`);
+};
+
+const handleClickFindReport = () => {
+  navigateTo(`${NAVIGATIONS.report}`);
+};
 
 const columns = [
   {
@@ -129,12 +150,6 @@ const dataSource = [
     pdf_report: 'CheckIcon',
     quick_view: '-',
   },
-  {
-    key: '19',
-    type_compare: '',
-    pdf_report: '<div><div style="color: #716B95">Từ <b style="font-size: 24px; font-weight: 700; line-height: 32px; color: #241E46">399,000đ</b>/báo cáo</div><div style="border: 1px solid; border-radius: 8px; font-size: 16px; padding: 12px 16px;">Tìm báo cáo ngay</div></div>',
-    quick_view: '',
-  },
 ]
 </script>
 
@@ -162,6 +177,26 @@ const dataSource = [
         </template>
       </a-table>
     </div>
+    <div class="note_price">
+      <div></div>
+      <div class="pdf_report">
+        <div></div>
+        <p>Từ  <b>399,000đ</b>/báo cáo</p>
+        <a-button size="large" @click="handleClickFindReport" style="width: 200px">Tìm báo cáo ngay</a-button>
+      </div>
+      <div class="quick_view">
+        <a-select
+            v-model:value="value"
+            style="width: 100%"
+        >
+          <a-select-option value="pt50">50 lượt xem online</a-select-option>
+          <a-select-option value="pt100">100 lượt xem online</a-select-option>
+        </a-select>
+        <p>{{price}}</p>
+        <a-button @click="userInfo.id ? (userInfo.current_plan?.plan_code !== value? navigateToPayment(value) : null) : currentUserStore.setShowPopupLogin(true)"
+                  type="primary" size="large" style="width: 200px">Mua ngay</a-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -174,7 +209,43 @@ const dataSource = [
     font-weight: 700;
     line-height: 56px;
   }
+
+  .note_price{
+    display: flex;
+    justify-content: space-around;
+
+    .pdf_report{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+      padding: 16px 0 16px 150px;
+      p{
+        b{
+          font-size: 24px;
+          font-weight: 700;
+          color: #241E46;
+        }
+      }
+    }
+
+    .quick_view{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+      padding: 16px 0;
+      p{
+        font-size: 24px;
+        font-weight: 700;
+        color: #241E46;
+      }
+    }
+  }
 }
+
 </style>
 
 <style lang="scss">

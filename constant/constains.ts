@@ -466,7 +466,7 @@ export const PLANS: Array<IPLAN> = [
   {
     type: "Tài khoản Xem nhanh",
     plan_code: "pt50",
-    type_package: "analysis50",
+    type_package: "analysis",
     description: "Dành cho nhu cầu khảo sát thị trường TMĐT thường xuyên và đa dạng nhóm hàng",
     price: '1,990,000đ',
     priceValue: "1990000",
@@ -492,6 +492,37 @@ export const PLANS: Array<IPLAN> = [
       },
       {
           ...LABEL_PERMISSION_PLAN.DownloadDetailedPdfReport,
+      }
+    ]
+  },
+  {
+    type: "Tài khoản Xem nhanh",
+    plan_code: "pt100",
+    type_package: "analysis",
+    description: "Dành cho nhu cầu khảo sát thị trường TMĐT thường xuyên và đa dạng nhóm hàng",
+    price: '2,990,000đ',
+    priceValue: "2990000",
+    priceDiscount: "5000000",
+    unit: " 50 lượt xem online",
+    isHighlight: true,
+    permissions: [
+      {
+        ...LABEL_PERMISSION_PLAN.ReportOnECommercePlatforms,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.QuickView50OnlineReport,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.UnlimitedReviewOfReports,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.SmartAnalyticsFeature,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.ExpiryDate,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.DownloadDetailedPdfReport,
       }
     ]
   },
@@ -707,4 +738,22 @@ export const REPORT_TYPE_MAP: Record<string, string> = {
   report_brand: 'Báo cáo thương hiệu',
   default: 'Báo cáo Metric phát hành',
 };
+
+export const INFORMATION_PRICING = [
+  {
+    thumbnail: '/icons/InfoPricing1.svg',
+    title: 'Dữ liệu chính xác',
+    content: 'Cập nhật bằng công nghệ Big Data giúp bạn đưa ra quyết định kinh doanh chính xác'
+  },
+  {
+    thumbnail: '/icons/InfoPricing2.svg',
+    title: 'Dữ liệu chính xác',
+    content: 'Cập nhật bằng công nghệ Big Data giúp bạn đưa ra quyết định kinh doanh chính xác'
+  },
+  {
+    thumbnail: '/icons/InfoPricing3.svg',
+    title: 'Dữ liệu chính xác',
+    content: 'Cập nhật bằng công nghệ Big Data giúp bạn đưa ra quyết định kinh doanh chính xác'
+  },
+]
 

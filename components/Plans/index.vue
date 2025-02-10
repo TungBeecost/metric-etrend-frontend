@@ -2,7 +2,6 @@
 import {computed, onMounted, ref} from 'vue';
 import {NAVIGATIONS, PLANS} from '~/constant/constains';
 import {formatSortTextCurrencyPlan} from "~/helpers/utils";
-
 const currentUserStore = useCurrentUser();
 const {userInfo}: any = storeToRefs(currentUserStore);
 
@@ -58,6 +57,14 @@ const getIsShowActiveButton = (user_plan_code: string, plan: any) => {
   return '';
 };
 
+const handleClickFindReport = () => {
+  navigateTo(`${NAVIGATIONS.report}`);
+};
+
+const handleClickContactUs = () => {
+  navigateTo(`${NAVIGATIONS.contactUs}`);
+};
+
 const filteredPlans = computed(() => {
   const selectedPlanCodes = [value1.value, value2.value, value3.value];
   const uniquePlans = new Map();
@@ -92,24 +99,6 @@ const filteredPlans = computed(() => {
               <p class="planType">{{ plan.type }}</p>
               <p class="planDesc" v-html="plan.description"></p>
               <div class="select_packet">
-                <a-select
-                    v-if="plan.type_package === 'report'"
-                    ref="select"
-                    v-model:value="value1"
-                    style="width: 200px"
-                >
-                  <a-select-option value="smart_report">Báo cáo thông minh</a-select-option>
-                  <a-select-option value="pdf_report">Báo cáo PDF</a-select-option>
-                </a-select>
-                <a-select
-                    v-if="plan.type_package === 'analysis'"
-                    ref="select"
-                    v-model:value="value2"
-                    style="width: 220px"
-                >
-                  <a-select-option value="pt100">100 lượt mở xem báo cáo</a-select-option>
-                  <a-select-option value="pt50">50 lượt mở xem báo cáo</a-select-option>
-                </a-select>
 <!--                <div v-if="plan.type_package === 'incentive'">-->
 <!--                  <div class="incentive_box">-->
 <!--                    Không giới hạn lượt xem báo cáo-->
@@ -124,6 +113,15 @@ const filteredPlans = computed(() => {
                 {{ formatSortTextCurrencyPlan(plan.price) }}
                 <span v-if="plan.unit" class="priceUnit"> /{{ plan.unit }}</span>
               </div>
+              <a-select
+                  v-if="plan.type_package === 'analysis'"
+                  ref="select"
+                  v-model:value="value2"
+                  style="width: 100%; padding-top: 12px"
+              >
+                <a-select-option value="pt100">100 lượt xem online</a-select-option>
+                <a-select-option value="pt50">50 lượt xem online</a-select-option>
+              </a-select>
             </div>
 
             <div class="divider"/>
@@ -142,7 +140,7 @@ const filteredPlans = computed(() => {
                   </div>
                 </div>
                 <div
-                    v-if="plan.type_package === 'analysis50' || plan.type_package === 'pdf_report'"
+                    v-if="plan.type_package === 'analysis' || plan.type_package === 'pdf_report'"
                     class="feature-details-button"
                     style="margin-top: 12px; width: 100%; font-size: 12px; display: flex; align-items: center; cursor: pointer"
                 >
@@ -156,7 +154,7 @@ const filteredPlans = computed(() => {
           </div>
           <div class="button" style="padding: 24px 24px">
             <AButton
-                v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) && plan.type_package === 'analysis50'"
+                v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) && plan.type_package === 'analysis'"
                 :class="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Đang sử dụng' ? 'user_plan' : 'not_user_plan'"
                 :disabled="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) !== 'Mua ngay' && getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) !== 'Tìm báo cáo cần mua'"
                 style="height: 40px"
@@ -166,6 +164,7 @@ const filteredPlans = computed(() => {
             </AButton>
             <a-button
                 v-if="plan.type_package === 'pdf_report'"
+                @click="handleClickFindReport"
                 class="find-report-button"
                 style="height: 40px; border: 1px solid #241E46; color: #241E46; width: 100%; border-radius: 8px;"
             >
@@ -173,6 +172,7 @@ const filteredPlans = computed(() => {
             </a-button>
             <a-button
                 v-if="plan.type_package === 'custom_pdf_report'"
+                @click="handleClickContactUs"
                 class="find-report-button"
                 style="height: 40px; border: 1px solid #241E46; color: #241E46; width: 100%; border-radius: 8px;"
             >
