@@ -135,11 +135,11 @@ export default defineNuxtConfig({
             rollupOptions: {
                 output: {
                     manualChunks: {
-                        vendor: ['vue', 'react', 'some-other-lib'], // Cấu hình chia chunk cho các thư viện lớn
+                        vendor: ['nuxt'],
                     },
                 },
             },
-            chunkSizeWarningLimit: 1000, // Tăng giới hạn cảnh báo chunk size
+            chunkSizeWarningLimit: 1000,
         },
     },
 
