@@ -6,7 +6,7 @@ export default defineNuxtPlugin(nuxtApp => {
     api_host: runtimeConfig.public.posthogHost || 'https://us.i.posthog.com',
     capture_pageview: false, // we add manual pageview capturing below
     loaded: (posthog) => {
-      if (import.meta.env.MODE === 'development') posthog.debug();
+      // if (import.meta.env.MODE === 'development') posthog.debug();
     },
     // Disable automatic sending of events
     send_immediately: false,

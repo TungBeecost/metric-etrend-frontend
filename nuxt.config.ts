@@ -106,14 +106,6 @@ export default defineNuxtConfig({
             src: "~/plugins/analytics.js",
             ssr: false,
         },
-        {
-            src: "~/plugins/gtm-tracking.js",
-            ssr: true,
-        },
-        {
-            src: "~/plugins/nuxt-gtm.js",
-            ssr: true,
-        },
     ],
 
     css: [
