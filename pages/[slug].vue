@@ -302,6 +302,7 @@ const handleOk = () => {
 };
 
 const downloadSampleReport = () => {
+  trackEventCommon(EVENT_TYPE.CLICK_DOWNLOAD_SAMPLE, 'click_download_sample', '');
   const url = 'https://storage.googleapis.com/ereport-static/bao-cao-nganh-hang-sample.pdf'; // URL file cần tải xuống
   const fileName = 'Báo cáo mẫu.pdf'; // Tên file sẽ được lưu trên máy người dùng
   if (url) {
