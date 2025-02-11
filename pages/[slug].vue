@@ -11,7 +11,6 @@ import PosterDetailReport from "~/components/report/PosterDetailReport.vue";
 import KeywordStatistic from "~/components/report/KeywordStatistic.vue";
 import listCategory from '~/public/file_json/list_category.json';
 import IndeptReportLink from "~/components/report/IndeptReportLink.vue";
-import {useGTM} from '~/composables/useGTM';
 import {NAVIGATIONS} from "~/constant/constains";
 import RelateReport from "~/components/RelateReport.vue";
 import ScrollNotification from "~/components/ScrollNotification.vue";
