@@ -33,7 +33,7 @@ onBeforeRouteLeave(() => {
   <div v-show="showChatBox" :class="fullScreen ? 'custom-chat-box-full-screen' : 'custom-chat-box'">
     <div class="chat-box-content">
       <div class="chat-box-header">
-        <img src="/images/logo-gpt.svg" alt="MetricGPT" class="w-32 ml-3"/>
+        <img loading="lazy" src="/images/logo-gpt.svg" alt="MetricGPT" class="w-32 ml-3"/>
         <div class="icon_chat_box flex space-x-2">
           <div class="mobile-icon-hover bg-gray-100 hover:bg-orange-100 hover:text-orange-600 text-gray-400 cursor-pointer rounded-full w-8 h-8 flex items-center justify-center sm:hover:bg">
             <UIcon

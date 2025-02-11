@@ -40,8 +40,8 @@ const getDisplayedCategories = (item: any) => {
                :to="`${NAVIGATIONS.home}${item.source ==='marketing' ? 'insight/' + item.slug : item.slug}`">
       <div class="item">
         <div class="image-metric">
-          <img v-if="item.url_thumbnail" :src="getUrlImageThumbnail(item.url_square || item.url_thumbnail)" alt="">
-          <img v-else src="/images/default_thumbnail_report.png" class="default_thumbnail"/>
+          <img loading="lazy" v-if="item.url_thumbnail" :src="getUrlImageThumbnail(item.url_square || item.url_thumbnail)" alt="">
+          <img loading="lazy" v-else src="/images/default_thumbnail_report.png" class="default_thumbnail"/>
         </div>
         <div class="info flex-1">
           <div class="breadcrumb">
