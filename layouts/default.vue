@@ -71,7 +71,6 @@
 import {NAVIGATIONS} from '~/constant/constains';
 import {useGTM} from '~/composables/useGTM';
 import CampaignPopup from '~/components/CampaignPopup.vue';
-import moment from "moment/moment";
 
 const {fetchCurrentUser} = useCurrentUser();
 const {userInfo, fetchedUser} = storeToRefs(useCurrentUser());

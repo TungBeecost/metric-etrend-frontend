@@ -2,7 +2,7 @@
   <div>
     <div class="section sectionPricing">
       <div class="bg">
-        <img src="/images/background-search.png" class="background">
+        <img loading="lazy" src="/images/background-search.png" class="background">
       </div>
       <Plans />
     </div>

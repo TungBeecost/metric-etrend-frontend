@@ -142,9 +142,17 @@ export default defineNuxtConfig({
 
     modules: ['@nuxt/ui', //use
     "@nuxt/eslint", "@nuxt/test-utils/module", "@nuxtjs/device", //use
-    "@nuxt/image", "vue3-carousel-nuxt", '@zadigetvoltaire/nuxt-gtm', ["nuxt-highcharts", {}], "nuxt-svgo", //use
+    "@nuxt/image", "vue3-carousel-nuxt", ["nuxt-highcharts", {}], "nuxt-svgo", //use
     "@ant-design-vue", // "nuxt-gtag",
     "@pinia/nuxt", "@nuxt/scripts"],
+
+    image: {
+      formats: {
+        webp: {
+          quality: 80
+        }
+      }
+    },
 
     antd: {
         extractStyle: true,
@@ -162,7 +170,7 @@ export default defineNuxtConfig({
     // },
     compatibilityDate: "2024-09-22",
     build: {
-        transpile: ['tslib']
+        transpile: ['tslib'],
     },
 
     nitro: {
