@@ -1,12 +1,12 @@
 <template>
   <div class="wrapper">
     <div class="sectionHeader">
-      <p class="sectionTitle">Hơn 1000+ đối tác tin cậy của Metric</p>
+      <p class="sectionTitle">Hơn 500+ đối tác tin cậy của Metric</p>
     </div>
     <div class="default_section" style="overflow: hidden;">
       <div class="brand-list">
         <div v-for="(brand, index) in PARTERS" :key="index" class="brand-item loop">
-          <img :src="prefixResource + brand" alt="brand_logo">
+          <img loading="lazy" :src="prefixResource + brand" alt="brand_logo">
         </div>
       </div>
     </div>

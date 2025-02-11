@@ -236,7 +236,10 @@ async function handleAnalyticKeyword() {
         ...data_analytic,
       }
     }
-    await currentUserStore.fetchCurrentUser();
+    // await currentUserStore.fetchCurrentUser();
+    if (!userInfo.value) {
+      await currentUserStore.fetchCurrentUser();
+    }
     loading.value = false
   } catch (error) {
     loading.value = false

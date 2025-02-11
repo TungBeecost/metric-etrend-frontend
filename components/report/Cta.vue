@@ -75,7 +75,7 @@ const toggleUnlock = () => {
         <p class="subtitle">
           Đăng ký để được tư vấn sử dụng phần mềm
         </p>
-        <img class="image" src="/icons/form-image.svg" alt="Unlock" />
+        <img loading="lazy" class="image" src="/icons/form-image.svg" alt="Unlock" />
       </div>
     </div>
   </a-modal>

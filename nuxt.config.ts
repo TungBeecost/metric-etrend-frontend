@@ -110,10 +110,10 @@ export default defineNuxtConfig({
             src: "~/plugins/gtm-tracking.js",
             ssr: true,
         },
-        {
-            src: "~/plugins/nuxt-gtm.js",
-            ssr: true,
-        },
+        // {
+        //     src: "~/plugins/nuxt-gtm.js",
+        //     ssr: true,
+        // },
     ],
 
     css: [
@@ -140,20 +140,19 @@ export default defineNuxtConfig({
         dirs: ['~/components'],
     },
 
-    modules: [
-        '@nuxt/ui',
-        "@nuxt/eslint",//use
-        "@nuxt/test-utils/module",
-        "@nuxtjs/device",
-        "@nuxt/image",//use
-        "vue3-carousel-nuxt",
-        '@zadigetvoltaire/nuxt-gtm',
-        ["nuxt-highcharts", {}],
-        "nuxt-svgo",
-        "@ant-design-vue", //use
-        "@pinia/nuxt",
-        // "nuxt-gtag",
-    ],
+    modules: ['@nuxt/ui', //use
+    "@nuxt/eslint", "@nuxt/test-utils/module", "@nuxtjs/device", //use
+    "@nuxt/image", "vue3-carousel-nuxt", ["nuxt-highcharts", {}], "nuxt-svgo", //use
+    "@ant-design-vue", // "nuxt-gtag",
+    "@pinia/nuxt", "@nuxt/scripts"],
+
+    image: {
+      formats: {
+        webp: {
+          quality: 80
+        }
+      }
+    },
 
     antd: {
         extractStyle: true,
@@ -171,7 +170,7 @@ export default defineNuxtConfig({
     // },
     compatibilityDate: "2024-09-22",
     build: {
-        transpile: ['tslib']
+        transpile: ['tslib'],
     },
 
     nitro: {

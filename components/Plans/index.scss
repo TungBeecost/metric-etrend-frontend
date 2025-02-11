@@ -220,11 +220,16 @@
           color: #9D9BB0;
           width: 100%;
         }
+
+        .contact_plan{
+            background: #FFF;
+            width: 100%;
+        }
       }
     }
 
     .highlight {
-      margin: 0px;
+      margin: 0;
 
       .focusHeader {
         background: $primary;
@@ -232,3 +237,4 @@
     }
   }
 }
+
