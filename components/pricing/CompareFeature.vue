@@ -22,6 +22,7 @@ const title = computed(() => {
     if (userInfo.value?.current_plan?.plan_code === 'e_free'
         || userInfo.value?.current_plan?.plan_code === 'e_trial'
         || userInfo.value?.current_plan?.plan_code === 'e_community'
+        || !userInfo.value?.current_plan?.plan_code
     ) {
       return 'Mua ngay';
     } else if (userInfo.value?.current_plan?.plan_code === value.value) {
@@ -30,6 +31,7 @@ const title = computed(() => {
       return 'Liên hệ tư vấn';
     }
   }
+  return 'Mua ngay';
 });
 
 onMounted(() => {
@@ -43,6 +45,11 @@ onMounted(() => {
 const navigateToPayment = (plan_code: any) => {
   navigateTo(`${NAVIGATIONS.payment}?plan_code=${plan_code}`);
 };
+
+const navigateToContactUs = () => {
+  navigateTo(`${NAVIGATIONS.contactUs}`);
+};
+
 
 const handleClickFindReport = () => {
   navigateTo(`${NAVIGATIONS.report}`);
@@ -221,12 +228,31 @@ const dataSource = [
           <a-select-option value="pt100">100 lượt xem online</a-select-option>
         </a-select>
         <p>{{price}}</p>
+        {{title}}
         <a-button
-            @click="userInfo.id ? (title === 'Liên hệ tư vấn' ? navigateTo(NAVIGATIONS.contactUs) : (userInfo.current_plan?.plan_code !== value ? navigateToPayment(value) : null)) : currentUserStore.setShowPopupLogin(true)"
-            size="large" style="width: 200px"
-            :class="[title === 'Đang sử dụng' ? 'user_plan' : title === 'Liên hệ tư vấn' ? 'contact_plan' : 'not_user_plan']"
+            v-if="title === 'Mua ngay'"
+            :class="'not_user_plan'"
+            style="height: 40px"
+            @click="userInfo.id ? navigateToPayment(userInfo.value?.current_plan?.plan_code) : currentUserStore.setShowPopupLogin(true)"
         >
-          {{ title }}
+          Mua ngay
+        </a-button>
+
+        <a-button
+            v-if="title === 'Đang sử dụng'"
+            :class="'user_plan'"
+            style="height: 40px"
+        >
+          Đang sử dụng
+        </a-button>
+
+        <a-button
+            v-if="title === 'Liên hệ tư vấn'"
+            :class="'contact_plan'"
+            style="height: 40px"
+            @click="userInfo.id ? navigateToContactUs : currentUserStore.setShowPopupLogin(true)"
+        >
+          Liên hệ tư vấn
         </a-button>
       </div>
     </div>

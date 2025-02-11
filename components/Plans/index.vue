@@ -23,19 +23,6 @@ const buttonClass3 = computed(() => hover3.value ? 'hover-class' : 'default-clas
 
 const isPricingMetric = ref(false);
 
-const navigateToPayment = (plan: any) => {
-  if (plan.type_package === 'report') {
-    navigateTo(`${NAVIGATIONS.search}`);
-  } else {
-    console.log('Navigate to payment:', plan.plan_code);
-    if(isPricingMetric.value) {
-      window.open(`${NAVIGATIONS.payment}?plan_code=${plan.plan_code}`, '_blank');
-    } else {
-      navigateTo(`${NAVIGATIONS.payment}?plan_code=${plan.plan_code}`);
-    }
-  }
-};
-
 const windowWidth = ref(0);
 const isMobile = ref(false);
 
@@ -52,7 +39,7 @@ onMounted(() => {
 });
 
 const getIsShowActiveButton = (user_plan_code: string, plan: any) => {
-  if(user_plan_code === 'e_free' || user_plan_code === 'e_trial' || user_plan_code === 'e_community') {
+  if(user_plan_code === 'e_free' || user_plan_code === 'e_trial' || user_plan_code === 'e_community' || !user_plan_code) {
     return 'Mua ngay';
   }
   else if (user_plan_code === plan.plan_code) {
@@ -186,12 +173,29 @@ const scrollToSpecificPoint = () => {
           </div>
           <div class="button" style="padding: 24px 24px">
             <a-button
-                v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) && plan.type_package === 'analysis'"
-                :class="[getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Đang sử dụng' ? 'user_plan' : getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Liên hệ tư vấn' ? 'contact_plan' : 'not_user_plan', buttonClass1]"
+                v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Mua ngay' && plan.type_package === 'analysis'"
+                :class="['not_user_plan', buttonClass1]"
                 style="height: 40px"
-                @click="userInfo.id ? (getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Liên hệ tư vấn' ? handleClickContactUs   : (userInfo.current_plan?.plan_code !== plan.plan_code ? handleClickPayment(plan) : null)) : currentUserStore.setShowPopupLogin(true)"
+                @click="userInfo.id ? handleClickPayment(plan) : currentUserStore.setShowPopupLogin(true)"
             >
-              {{ getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) }}
+              Mua ngay
+            </a-button>
+
+            <a-button
+                v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Đang sử dụng' && plan.type_package === 'analysis'"
+                :class="['user_plan', buttonClass1]"
+                style="height: 40px"
+            >
+              Đang sử dụng
+            </a-button>
+
+            <a-button
+                v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Liên hệ tư vấn' && plan.type_package === 'analysis'"
+                :class="['contact_plan', buttonClass1]"
+                style="height: 40px"
+                @click="userInfo.id ? handleClickContactUs() : currentUserStore.setShowPopupLogin(true)"
+            >
+              Liên hệ tư vấn
             </a-button>
             <a-button
                 v-if="plan.type_package === 'pdf_report'"
