@@ -1093,24 +1093,10 @@
   dependencies:
     tslib "^2.4.1"
 
-"@gtm-support/core@^2.0.0":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@gtm-support/core/-/core-2.3.1.tgz#e802f1d60256583d468cf4ccef391f85e33c766d"
-  integrity sha512-eD0hndQjhgKm5f/7IA9fZYujmHiVMY+fnYv4mdZSmz5XJQlS4TiTmpdZx2l7I2A9rI9J6Ysz8LpXYYNo/Xq4LQ==
-
 "@gtm-support/core@^3.0.1":
   version "3.0.1"
   resolved "https://registry.npmjs.org/@gtm-support/core/-/core-3.0.1.tgz"
   integrity sha512-SctcoqvvAbGAgZzOb7DZ4wjbZF3ZS7Las3qIEByv6g7mzPf4E9LpRXcQzjmywYLcUx2jys7PWJAa3s5slvj/0w==
-
-"@gtm-support/vue-gtm@^2.0.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@gtm-support/vue-gtm/-/vue-gtm-2.2.0.tgz#b6b17da2f27ff186aae731c8c32fdcb8a6738f25"
-  integrity sha512-7nhBTRkTG0mD+7r7JvNalJz++YwszZk0oP1HIY6fCgz6wNKxT6LuiXCqdPrZmNPe/WbPIKuqxGZN5s+i6NZqow==
-  dependencies:
-    "@gtm-support/core" "^2.0.0"
-  optionalDependencies:
-    vue-router ">= 4.1.0 < 5.0.0"
 
 "@gtm-support/vue-gtm@^3.0.1":
   version "3.1.0"
@@ -1523,7 +1509,7 @@
     unimport "^3.9.0"
     untyped "^1.4.2"
 
-"@nuxt/kit@^3.12.4", "@nuxt/kit@^3.13.2", "@nuxt/kit@^3.14.1592", "@nuxt/kit@^3.15.0", "@nuxt/kit@^3.15.1", "@nuxt/kit@^3.15.4", "@nuxt/kit@^3.4.0", "@nuxt/kit@^3.5.1", "@nuxt/kit@^3.9.0":
+"@nuxt/kit@^3.12.4", "@nuxt/kit@^3.13.2", "@nuxt/kit@^3.14.1592", "@nuxt/kit@^3.15.0", "@nuxt/kit@^3.15.1", "@nuxt/kit@^3.15.4", "@nuxt/kit@^3.4.0", "@nuxt/kit@^3.9.0":
   version "3.15.4"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.15.4.tgz#122f511e518573320a035b5e24adf0118d51485d"
   integrity sha512-dr7I7eZOoRLl4uxdxeL2dQsH0OrbEiVPIyBHnBpA4co24CBnoJoF+JINuP9l3PAM3IhUzc5JIVq3/YY3lEc3Hw==
@@ -2703,11 +2689,6 @@
   resolved "https://registry.npmjs.org/@vue/devtools-api/-/devtools-api-6.6.3.tgz"
   integrity sha512-0MiMsFma/HqA6g3KLKn+AGpL1kgKhFWszC9U29NfpWK5LE7bjeXxySWJrOJ77hBz+TBrBQ7o4QJqbPbqbs8rJw==
 
-"@vue/devtools-api@^6.6.4":
-  version "6.6.4"
-  resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.6.4.tgz#cbe97fe0162b365edc1dba80e173f90492535343"
-  integrity sha512-sGhTPMuXqZ1rVOk32RylztWkfXTRhuS7vgAKv0zjqk8gbsHkJ7xfFf+jbySxt7tWObEJwyKaHMikV/WGDiQm8g==
-
 "@vue/devtools-core@7.3.3":
   version "7.3.3"
   resolved "https://registry.npmjs.org/@vue/devtools-core/-/devtools-core-7.3.3.tgz"
@@ -2920,16 +2901,6 @@
   version "1.6.5"
   resolved "https://registry.npmjs.org/@xstate/fsm/-/fsm-1.6.5.tgz"
   integrity sha512-b5o1I6aLNeYlU/3CPlj/Z91ybk1gUsKT+5NAJI+2W4UjvS5KLG28K9v5UvNoFVjHV8PajVZ00RH3vnjyQO7ZAw==
-
-"@zadigetvoltaire/nuxt-gtm@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@zadigetvoltaire/nuxt-gtm/-/nuxt-gtm-0.0.13.tgz#f4d6e504ef58a108fde6dc3669ab8861fea51978"
-  integrity sha512-7SgXtIB8uLdLGJaoUAQSGCSbRnNzplNkNVFKIHaVI4We0vqghstBoVPlJCJ9VdwsfdNyk3/C+Lh1uKpzTrtEuw==
-  dependencies:
-    "@gtm-support/vue-gtm" "^2.0.0"
-    "@nuxt/kit" "^3.5.1"
-    defu "^6.1.2"
-    sirv "^2.0.3"
 
 abbrev@1:
   version "1.1.1"
@@ -4117,7 +4088,7 @@ define-properties@^1.2.1:
     has-property-descriptors "^1.0.0"
     object-keys "^1.1.1"
 
-defu@^6.1.2, defu@^6.1.4:
+defu@^6.1.4:
   version "6.1.4"
   resolved "https://registry.npmjs.org/defu/-/defu-6.1.4.tgz"
   integrity sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==
@@ -8451,7 +8422,7 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sirv@^2.0.3, sirv@^2.0.4:
+sirv@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/sirv/-/sirv-2.0.4.tgz#5dd9a725c578e34e449f332703eb2a74e46a29b0"
   integrity sha512-94Bdh3cC2PKrbgSOUqTiGPWVZeSiXfKOVZNJniWoqrWrRkB1CJzBU3NEbiTsPcYy1lDsANA/THzS+9WBiy5nfQ==
@@ -9634,13 +9605,6 @@ vue-qrcode-reader@^5.5.11:
   dependencies:
     barcode-detector "2.2.2"
     webrtc-adapter "8.2.3"
-
-"vue-router@>= 4.1.0 < 5.0.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.5.0.tgz#58fc5fe374e10b6018f910328f756c3dae081f14"
-  integrity sha512-HDuk+PuH5monfNuY+ct49mNmkCRK4xJAV9Ts4z9UFc4rzdDnxQLyCMGGc8pKhZhHTVzfanpNwB/lwqevcBwI4w==
-  dependencies:
-    "@vue/devtools-api" "^6.6.4"
 
 "vue-router@>= 4.4.1 < 5.0.0", vue-router@^4.3.3, vue-router@^4.4.0:
   version "4.4.3"
