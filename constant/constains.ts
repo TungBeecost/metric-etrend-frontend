@@ -186,8 +186,56 @@ export const LABEL_PERMISSION_PLAN = {
   customFilterAnalysis: {
     label: "Phân tích với bộ lọc tùy chỉnh",
     icon: "Chart"
-  }
-};
+  },
+  ReportOnECommerceMarketPlatforms: {
+    label: "Báo cáo toàn diện thị trường các sàn Shopee, Lazada, Tiki",
+    icon: "Tick"
+  },
+  ReportOnECommercePlatforms: {
+    label: "Báo cáo toàn diện trên sàn Shopee, Lazada, Tiki",
+    icon: "Tick"
+  },
+  FiftyPageIndepthdata: {
+    label: "Bao gồm hơn 50 trang dữ liệu chuyên sâu",
+    icon: "Tick"
+  },
+  GetPdfReportByEmail5Minutes: {
+    label: "Nhận ngay báo cáo <b>PDF</b> qua email trong vòng 5 phút",
+    icon: "Tick"
+  },
+  QuickView50OnlineReport:{
+    label: "Xem nhanh <b>50 báo cáo online</b> đa dạng ngành hàng",
+    icon: "Tick"
+  },
+  UnlimitedReviewOfReports:{
+    label: "Không giới hạn xem lại báo cáo trong vòng 24h",
+    icon: "Tick"
+  },
+  SmartAnalyticsFeature:{
+    label: "Tính năng phân tích thông minh",
+    icon: "Tick"
+  },
+  ExpiryDate:{
+    label: "Thời hạn sử dụng: <b>1 năm</b>",
+    icon: "Tick"
+  },
+  DownloadDetailedPdfReport:{
+    label: "Tải báo cáo PDF chi tiết",
+    icon: "Close"
+  },
+  CustomizeDataRange:{
+    label: "Tuỳ chỉnh phạm vi dữ liệu theo yêu cầu",
+    icon: "Tick"
+  },
+  AnalysisByProduct:{
+    label: "Phân tích chuyên sâu theo từng nhóm hàng, ngành hàng, gian hàng",
+    icon: "Tick"
+  },
+  GetPdfReportByEmail: {
+    label: "Nhận ngay báo cáo <b>PDF</b> qua email",
+    icon: "Tick"
+  },
+}
 
 interface IPLAN {
   type: string;
@@ -388,80 +436,123 @@ export const VIDEO: Array<IVIDEO> = [
 
 
 export const PLANS: Array<IPLAN> = [
-  // {
-  //   type: "Báo cáo lẻ",
-  //   plan_code: "pdf_report",
-  //   type_package: "report",
-  //   description: "Mua hoặc theo dõi 1 số ít báo cáo",
-  //   price: 'Từ 249K',
-  //   priceValue: "249000",
-  //   priceDiscount: "300K",
-  //   // discountPercent: "Sắp ra mắt",
-  //   unit: " báo cáo",
-  //   isHighlight: true,
-  //   permissions: [
-  //     {
-  //       ...LABEL_PERMISSION_PLAN.pdfReporting,
-  //       sub: Object.values(LABEL_PERMISSION_PLAN.pdfReporting.sub)
-  //     },
-  //   ]
-  // },
-  // {
-  //   type: "Báo cáo lẻ",
-  //   plan_code: "smart_report",
-  //   type_package: "report",
-  //   description: "Xem nhiều báo cáo, số liệu cập nhật hàng tháng",
-  //   price: 'Từ 300K',
-  //   priceValue: "300000",
-  //   priceDiscount: "500K",
-  //   discountPercent: "Sắp ra mắt",
-  //   unit: " báo cáo / 1 tháng",
-  //   isHighlight: true,
-  //   permissions: [
-  //     {
-  //       ...LABEL_PERMISSION_PLAN.smartReporting,
-  //       sub: Object.values(LABEL_PERMISSION_PLAN.smartReporting.sub)
-  //     },
-  //     {
-  //       label: LABEL_PERMISSION_PLAN.updatedWeekly.label,
-  //       icon: LABEL_PERMISSION_PLAN.updatedWeekly.icon
-  //     },
-  //   ]
-  // },
   {
-    type: "Gói xem nhanh",
-    plan_code: "pt50",
-    type_package: "analysis50",
-    description: "Xem nhiều báo cáo, số liệu cập nhật hàng tháng",
-    price: '1.99 triệu',
-    priceValue: "1990000",
-    priceDiscount: "3000000",
+    type: "Báo cáo PDF chi tiết",
+    plan_code: "PDF_report",
+    type_package: "pdf_report",
+    description: "Dành cho nhu cầu tải báo cáo PDF phân tích chi tiết 1 nhóm hàng",
+    price: '399,000đ',
+    priceValue: "",
+    priceDiscount: "",
     // discountPercent: "-50%",
-    unit: " 50 báo cáo / 1 năm",
+    unit: " báo cáo",
     isHighlight: true,
     permissions: [
       {
-        ...LABEL_PERMISSION_PLAN.analysis,
-        sub: Object.values(LABEL_PERMISSION_PLAN.analysis.sub)
+        ...LABEL_PERMISSION_PLAN.ReportOnECommerceMarketPlatforms,
+        // sub: Object.values(LABEL_PERMISSION_PLAN.analysis.sub)
       },
+      {
+        ...LABEL_PERMISSION_PLAN.ReportOnECommercePlatforms,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.FiftyPageIndepthdata,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.GetPdfReportByEmail5Minutes,
+      }
     ]
   },
   {
-    type: "Gói xem nhanh",
-    plan_code: "pt100",
-    type_package: "analysis100",
-    description: "Xem nhiều báo cáo, số liệu cập nhật hàng tháng",
-    price: '2.99 triệu',
-    priceValue: "2990000",
-    priceDiscount: "5000000",
+    type: "Tài khoản Xem nhanh",
+    plan_code: "pt50",
+    type_package: "analysis",
+    description: "Dành cho nhu cầu khảo sát thị trường TMĐT thường xuyên và đa dạng nhóm hàng",
+    price: '1,990,000đ',
+    priceValue: "1990000",
+    priceDiscount: "3000000",
     // discountPercent: "-50%",
-    unit: " 100 báo cáo / 1 năm",
+    unit: " 50 lượt xem online",
     isHighlight: true,
     permissions: [
       {
-        ...LABEL_PERMISSION_PLAN.analysis,
-        sub: Object.values(LABEL_PERMISSION_PLAN.analysis.sub)
+        ...LABEL_PERMISSION_PLAN.ReportOnECommercePlatforms,
       },
+      {
+        ...LABEL_PERMISSION_PLAN.QuickView50OnlineReport,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.UnlimitedReviewOfReports,
+      },
+      {
+          ...LABEL_PERMISSION_PLAN.SmartAnalyticsFeature,
+      },
+      {
+          ...LABEL_PERMISSION_PLAN.ExpiryDate,
+      },
+      {
+          ...LABEL_PERMISSION_PLAN.DownloadDetailedPdfReport,
+      }
+    ]
+  },
+  {
+    type: "Tài khoản Xem nhanh",
+    plan_code: "pt100",
+    type_package: "analysis",
+    description: "Dành cho nhu cầu khảo sát thị trường TMĐT thường xuyên và đa dạng nhóm hàng",
+    price: '2,990,000đ',
+    priceValue: "2990000",
+    priceDiscount: "5000000",
+    unit: " 50 lượt xem online",
+    isHighlight: true,
+    permissions: [
+      {
+        ...LABEL_PERMISSION_PLAN.ReportOnECommercePlatforms,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.QuickView50OnlineReport,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.UnlimitedReviewOfReports,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.SmartAnalyticsFeature,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.ExpiryDate,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.DownloadDetailedPdfReport,
+      }
+    ]
+  },
+  {
+    type: "Tuỳ chỉnh báo cáo PDF",
+    plan_code: "custom_pdf_report",
+    type_package: "custom_pdf_report",
+    description: "Dành cho nhu cầu báo cáo theo yêu cầu riêng, phù hợp với chiến lược kinh doanh cụ thể",
+    price: 'Liên hệ báo giá',
+    priceValue: "",
+    priceDiscount: "",
+    // discountPercent: "-50%",
+    unit: "",
+    isHighlight: true,
+    permissions: [
+      {
+        ...LABEL_PERMISSION_PLAN.CustomizeDataRange,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.ReportOnECommercePlatforms,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.AnalysisByProduct,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.FiftyPageIndepthdata,
+      },
+      {
+        ...LABEL_PERMISSION_PLAN.GetPdfReportByEmail,
+      }
     ]
   },
 ];
@@ -647,4 +738,22 @@ export const REPORT_TYPE_MAP: Record<string, string> = {
   report_brand: 'Báo cáo thương hiệu',
   default: 'Báo cáo Metric phát hành',
 };
+
+export const INFORMATION_PRICING = [
+  {
+    thumbnail: '/icons/InfoPricing1.svg',
+    title: 'Dữ liệu chính xác',
+    content: 'Cập nhật bằng công nghệ Big Data giúp bạn đưa ra quyết định kinh doanh chính xác'
+  },
+  {
+    thumbnail: '/icons/InfoPricing2.svg',
+    title: 'Dữ liệu chính xác',
+    content: 'Cập nhật bằng công nghệ Big Data giúp bạn đưa ra quyết định kinh doanh chính xác'
+  },
+  {
+    thumbnail: '/icons/InfoPricing3.svg',
+    title: 'Dữ liệu chính xác',
+    content: 'Cập nhật bằng công nghệ Big Data giúp bạn đưa ra quyết định kinh doanh chính xác'
+  },
+]
 
