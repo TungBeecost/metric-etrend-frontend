@@ -9,8 +9,8 @@ export default defineNuxtConfig({
                 lang: "vi",
             },
             meta: [
-                {charset: "utf-8"},
-                {name: "viewport", content: "width=device-width, initial-scale=1"},
+                { charset: "utf-8" },
+                { name: "viewport", content: "width=device-width, initial-scale=1" },
                 {
                     hid: "description",
                     key: "description",
@@ -24,8 +24,8 @@ export default defineNuxtConfig({
                     property: "og:image",
                     content: "https://lh3.googleusercontent.com/pw/AP1GczMTZp0lf_VW7W_Y6n3qg602m-LlqfpCIeVX_i4D3pnqT6FiloK5hY86XfTsqVHd4xRRs9tSKppP6FZdEPWO_V8D_UEsfj8KEnChoiU7zyiwDlHzZaTeAePmGxcqzG98qDJ9bahok5MhwtDzp3EKTiI_=w1600-h900-s-no-gm?authuser=0",
                 },
-                {name: "google-site-verification", content: "-A5h4Bx3cBpC9vnJxfRvxvegNFZgMorMQlE6M76uLbc"},
-                {name: "zalo-platform-site-verification", content: "N8Qw0ApqOJbHzja6h_fi0bwDtIIo-mrwD3arc"},
+                { name: "google-site-verification", content: "-A5h4Bx3cBpC9vnJxfRvxvegNFZgMorMQlE6M76uLbc" },
+                { name: "zalo-platform-site-verification", content: "N8Qw0ApqOJbHzja6h_fi0bwDtIIo-mrwD3arc" },
             ],
             link: [
                 {
@@ -67,12 +67,12 @@ export default defineNuxtConfig({
 
     $production: {
         routeRules: {
-            "/**": {ssr: true},
+            "/**": { ssr: true },
         },
     },
 
     $development: {
-        devtools: {enabled: true},
+        devtools: { enabled: true },
     },
 
     runtimeConfig: {
@@ -125,34 +125,68 @@ export default defineNuxtConfig({
                 },
             },
         },
+        build: {
+            cssCodeSplit: true,
+            rollupOptions: {
+                output: {
+                    manualChunks(_id) {
+                        const chunks = ['ant-design-vue', 'moment', 'axios', 'lodash', 'pdfjs-dist', 'quill']
+                        if (_id.includes('/node_modules/')) {
+                            for (const chunkName of chunks) {
+                            if (_id.includes(chunkName)) {
+                                return chunkName
+                            }
+                            }
+                        }
+                      },
+                }
+            },
+            // Add minification options
+            minify: 'terser',
+            terserOptions: {
+                compress: {
+                    drop_console: process.env.NODE_ENV === 'production',
+                    drop_debugger: process.env.NODE_ENV === 'production'
+                }
+            }
+        },
     },
 
     components: {
         global: true,
         dirs: ['~/components'],
+        loader: true
     },
 
     modules: [
-        '@nuxt/ui',
-        "@nuxt/eslint",//use
+        '@nuxt/ui', //use
+        "@nuxt/eslint",
         "@nuxt/test-utils/module",
-        "@nuxtjs/device",
-        "@nuxt/image",//use
+        "@nuxtjs/device", //use
+        "@nuxt/image",
         "vue3-carousel-nuxt",
-        '@zadigetvoltaire/nuxt-gtm',
-        ["nuxt-highcharts", {}],
-        "nuxt-svgo",
-        "@ant-design-vue", //use
+        ["nuxt-highcharts", {}], "nuxt-svgo", //use
+        "@ant-design-vue", // "nuxt-gtag",
         "@pinia/nuxt",
-        // "nuxt-gtag",
+        "@nuxt/scripts"
     ],
 
+    // Antd optimization
     antd: {
         extractStyle: true,
+        importStyle: false // Only import used components
     },
 
-    gtm: {
-        id: 'GTM-522F9NZ',
+    // Build optimization
+    build: {
+        transpile: ['vue-plugin'],
+        optimization: {
+            splitChunks: {
+                chunks: 'all',
+                automaticNameDelimiter: '.',
+                maxSize: 244000
+            }
+        }
     },
     colorMode: {
         preference: 'light'
@@ -162,12 +196,22 @@ export default defineNuxtConfig({
     //     name: 'eReport',
     // },
     compatibilityDate: "2024-09-22",
-    build: {
-        transpile: ['tslib']
-    },
 
+    // Nitro optimization
     nitro: {
         compressPublicAssets: true,
+        minify: true,
+        timing: false,
+        sourceMap: false,
+        prerender: {
+            crawlLinks: true,
+            routes: ['/']
+        }
+    },
+
+    experimental: {
+        payloadExtraction: true,
+        renderJsonPayloads: true
     }
 
 });
