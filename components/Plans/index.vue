@@ -21,13 +21,18 @@ const buttonClass1 = computed(() => hover1.value ? 'hover-class' : 'default-clas
 const buttonClass2 = computed(() => hover2.value ? 'hover-class' : 'default-class');
 const buttonClass3 = computed(() => hover3.value ? 'hover-class' : 'default-class');
 
+const isPricingMetric = ref(false);
 
 const navigateToPayment = (plan: any) => {
   if (plan.type_package === 'report') {
     navigateTo(`${NAVIGATIONS.search}`);
   } else {
     console.log('Navigate to payment:', plan.plan_code);
-    navigateTo(`${NAVIGATIONS.payment}?plan_code=${plan.plan_code}`);
+    if(isPricingMetric.value) {
+      window.open(`${NAVIGATIONS.payment}?plan_code=${plan.plan_code}`, '_blank');
+    } else {
+      navigateTo(`${NAVIGATIONS.payment}?plan_code=${plan.plan_code}`);
+    }
   }
 };
 
@@ -41,6 +46,9 @@ onMounted(() => {
     windowWidth.value = window.innerWidth;
     isMobile.value = window.innerWidth < 768;
   });
+
+  isPricingMetric.value = window.location.pathname === '/pricing/metric';
+
 });
 
 const getIsShowActiveButton = (user_plan_code: string, plan: any) => {
@@ -56,12 +64,29 @@ const getIsShowActiveButton = (user_plan_code: string, plan: any) => {
 };
 
 const handleClickFindReport = () => {
-  navigateTo(`${NAVIGATIONS.report}`);
+  if(isPricingMetric.value) {
+    window.open(`${NAVIGATIONS.report}`, '_blank');
+  } else {
+    navigateTo(`${NAVIGATIONS.report}`);
+  }
 };
 
 const handleClickContactUs = () => {
-  navigateTo(`${NAVIGATIONS.contactUs}`);
+  if(isPricingMetric.value) {
+    window.open(`${NAVIGATIONS.contactUs}`, '_blank');
+  } else {
+    navigateTo(`${NAVIGATIONS.contactUs}`);
+  }
 };
+
+const handleClickPayment = (plan: any) => {
+  if (isPricingMetric.value) {
+    window.open(`${NAVIGATIONS.payment}?plan_code=${plan.plan_code}`, '_blank');
+  } else {
+    navigateTo(`${NAVIGATIONS.payment}?plan_code=${plan.plan_code}`);
+  }
+};
+
 
 const filteredPlans = computed(() => {
   const selectedPlanCodes = [value1.value, value2.value, value3.value];
@@ -164,7 +189,7 @@ const scrollToSpecificPoint = () => {
                 v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) && plan.type_package === 'analysis'"
                 :class="[getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Đang sử dụng' ? 'user_plan' : getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Liên hệ tư vấn' ? 'contact_plan' : 'not_user_plan', buttonClass1]"
                 style="height: 40px"
-                @click="userInfo.id ? (getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Liên hệ tư vấn' ? navigateTo(NAVIGATIONS.contactUs) : (userInfo.current_plan?.plan_code !== plan.plan_code ? navigateToPayment(plan) : null)) : currentUserStore.setShowPopupLogin(true)"
+                @click="userInfo.id ? (getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Liên hệ tư vấn' ? handleClickContactUs   : (userInfo.current_plan?.plan_code !== plan.plan_code ? handleClickPayment(plan) : null)) : currentUserStore.setShowPopupLogin(true)"
             >
               {{ getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) }}
             </a-button>
