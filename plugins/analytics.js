@@ -23,11 +23,11 @@ export default defineNuxtPlugin({
     enforce: 'pre', // or 'post'
     hooks: {
         // You can directly register Nuxt app runtime hooks here
-        async 'app:mounted'() {
+        'app:mounted'() {
             const url = document.location.href
             const params = getParamsFromUrl(url)
             const userStore = useCurrentUser();
-            await userStore.fetchCurrentUser();
+            userStore.fetchCurrentUser();
 
             let source_traffic_current = null
             // organic_search, direct, social, ads, referral, seeding

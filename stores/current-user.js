@@ -206,10 +206,10 @@ export const useCurrentUser = defineStore("currentUserStore", {
     }
 });
 
-onMounted(async () => {
-    const currentUserStore = useCurrentUser();
-    await currentUserStore.fetchCurrentUser();
-});
+// onMounted(async () => {
+//     const currentUserStore = useCurrentUser();
+//     await currentUserStore.fetchCurrentUser();
+// });
 
 export const camelToSnakeCase = str => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 

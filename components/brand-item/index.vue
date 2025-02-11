@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div style="width: 100%; height: 100%">
-      <img :src="src" class="branch">
+      <img loading="lazy" :src="src" class="branch">
     </div>
   </div>
 </template>

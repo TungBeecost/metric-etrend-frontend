@@ -5,7 +5,7 @@
 <template>
   <div class="empty_report">
     <div class="empty_report_container">
-      <img src="/icons/Empty-report.svg" alt="empty-report" />
+      <img loading="lazy" src="/icons/Empty-report.svg" alt="empty-report" />
       <div class="content">
         <div class="content_noti">Chưa có báo cáo đã xem</div>
         <div class="content_info">Dữ liệu hiện tại đang trống</div>
