@@ -69,10 +69,13 @@
 
 <script setup lang="ts">
 import {NAVIGATIONS} from '~/constant/constains';
+import {useGTM} from '~/composables/useGTM';
 import CampaignPopup from '~/components/CampaignPopup.vue';
+import moment from "moment/moment";
 
 const {fetchCurrentUser} = useCurrentUser();
 const {userInfo, fetchedUser} = storeToRefs(useCurrentUser());
+const gtm = useGTM();
 const route = useRoute();
 const headerRef = ref(null);
 const isScrolled = ref(false);
@@ -141,6 +144,13 @@ const navigateToPricing = () => {
   const CAMPAIGN_URL = 'https://dangky.metric.vn/ereportoffer_300/?utm_source=website&utm_medium=ereport_t9&pub=popup';
   window.open(CAMPAIGN_URL, '_blank');
   // navigateTo(NAVIGATIONS.pricing);
+};
+
+// Track GTM events
+const trackEvent = (event, data) => {
+  if (gtm) {
+    gtm.push({event, ...data});
+  }
 };
 
 onMounted(() => {
