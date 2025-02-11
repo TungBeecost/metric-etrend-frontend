@@ -72,13 +72,18 @@ import {NAVIGATIONS} from '~/constant/constains';
 import {useGTM} from '~/composables/useGTM';
 import CampaignPopup from '~/components/CampaignPopup.vue';
 
-const {fetchedUser} = storeToRefs(useCurrentUser());
+const {fetchCurrentUser} = useCurrentUser();
+const {userInfo, fetchedUser} = storeToRefs(useCurrentUser());
 const gtm = useGTM();
 const route = useRoute();
 const headerRef = ref(null);
 const isScrolled = ref(false);
 const isMobile = ref(false);
 const showTopBar = ref(false); // New reactive property to control top-bar visibility
+
+if (!userInfo.value.id) {
+  fetchCurrentUser();
+}
 
 const showCampaignPopup = ref(false);
 

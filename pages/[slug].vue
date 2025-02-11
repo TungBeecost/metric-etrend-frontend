@@ -215,7 +215,6 @@ const {data} = await useAsyncData(() => {
 const {data: tagSuggestions} = await useAsyncData(
     'fetchSuggest',
     async () => {
-      console.log('call fetchSuggest')
       return await fetchSuggest(data?.reportDetail?.name, {limit: 5});
     }
 );
@@ -252,9 +251,7 @@ onMounted(async () => {
     if (userInfo.value?.current_plan !== 'e_free')
       navigateTo(loginPayment);
   }
-  if (!userInfo.value) {
-    await fetchCurrentUser();
-  }
+  await fetchCurrentUser();
   userInfo = storeToRefs(currentUserStore).userInfo;
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);
