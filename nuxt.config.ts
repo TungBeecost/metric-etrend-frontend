@@ -139,6 +139,7 @@ export default defineNuxtConfig({
         "@nuxtjs/device",
         "@nuxt/image",//use
         "vue3-carousel-nuxt",
+        '@zadigetvoltaire/nuxt-gtm',
         ["nuxt-highcharts", {}],
         "nuxt-svgo",
         "@ant-design-vue", //use
