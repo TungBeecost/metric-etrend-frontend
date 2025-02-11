@@ -2,6 +2,7 @@ import {PAYMENT_ENDPOINTS, REPORT_ENDPOINTS} from "~/constant/endpoints";
 import axios from "./axios-wrapper";
 
 export const searchReport = async (body: SearchReportPayload) => {
+  console.trace()
   try {
     const response = await axios.post(useBEEndpoint(REPORT_ENDPOINTS.search.endpoint), body);
     const result = response.data as SearchReportRes;
