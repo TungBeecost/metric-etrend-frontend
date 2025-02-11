@@ -13,9 +13,14 @@ const value1 = ref('PDF_report');
 const value2 = ref('pt50');
 const value3 = ref('custom_pdf_report');
 
-const hover = ref(false);
+const hover1 = ref(false);
+const hover2 = ref(false);
+const hover3 = ref(false);
 
-const buttonClass = computed(() => hover.value ? 'hover-class' : 'default-class');
+const buttonClass1 = computed(() => hover1.value ? 'hover-class' : 'default-class');
+const buttonClass2 = computed(() => hover2.value ? 'hover-class' : 'default-class');
+const buttonClass3 = computed(() => hover3.value ? 'hover-class' : 'default-class');
+
 
 const navigateToPayment = (plan: any) => {
   if (plan.type_package === 'report') {
@@ -39,26 +44,15 @@ onMounted(() => {
 });
 
 const getIsShowActiveButton = (user_plan_code: string, plan: any) => {
-  // if (plan.type_package === 'pdf_report') {
-  //   return 'Tìm báo cáo ngay';
-  // }
-
-  if ((plan.plan_code === 'e_free' || plan.plan_code === 'e_community') &&
-      (user_plan_code === 'e_free' || user_plan_code === 'e_trial' || user_plan_code === 'e_community')) {
-    return '';
+  if(user_plan_code === 'e_free' || user_plan_code === 'e_trial' || user_plan_code === 'e_community') {
+    return 'Mua ngay';
   }
-
-  if (user_plan_code === plan.plan_code) {
+  else if (user_plan_code === plan.plan_code) {
     return 'Đang sử dụng';
   }
-
-  if (user_plan_code === 'e_free' || user_plan_code === 'e_trial' || user_plan_code === 'e_starter' ||
-      !user_plan_code || user_plan_code === 'e_basic_lite' || user_plan_code === 'e_pro_lite' || user_plan_code === 'pt50'
-      || user_plan_code === 'pt100' || user_plan_code === 'e_community') {
-    return plan.type_package === 'report' ? 'Tìm báo cáo ngay' : 'Mua ngay';
+  else{
+    return 'Liên hệ tư vấn';
   }
-
-  return '';
 };
 
 const handleClickFindReport = () => {
@@ -166,30 +160,29 @@ const scrollToSpecificPoint = () => {
             </div>
           </div>
           <div class="button" style="padding: 24px 24px">
-            <AButton
+            <a-button
                 v-if="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) && plan.type_package === 'analysis'"
-                :class="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Đang sử dụng' ? 'user_plan' : 'not_user_plan'"
-                :disabled="getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) !== 'Mua ngay' && getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) !== 'Tìm báo cáo cần mua'"
+                :class="[getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Đang sử dụng' ? 'user_plan' : getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Liên hệ tư vấn' ? 'contact_plan' : 'not_user_plan', buttonClass1]"
                 style="height: 40px"
-                @click="userInfo.id ? (userInfo.current_plan?.plan_code !== plan.plan_code ? navigateToPayment(plan) : null) : currentUserStore.setShowPopupLogin(true)"
+                @click="userInfo.id ? (getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) === 'Liên hệ tư vấn' ? navigateTo(NAVIGATIONS.contactUs) : (userInfo.current_plan?.plan_code !== plan.plan_code ? navigateToPayment(plan) : null)) : currentUserStore.setShowPopupLogin(true)"
             >
               {{ getIsShowActiveButton(userInfo.current_plan?.plan_code, plan) }}
-            </AButton>
+            </a-button>
             <a-button
                 v-if="plan.type_package === 'pdf_report'"
                 @click="handleClickFindReport"
-                :class="buttonClass"
-                @mouseenter="hover = true"
-                @mouseleave="hover = false"
+                :class="buttonClass2"
+                @mouseenter="hover2 = true"
+                @mouseleave="hover2 = false"
             >
               Tìm báo cáo ngay
             </a-button>
             <a-button
                 v-if="plan.type_package === 'custom_pdf_report'"
                 @click="handleClickContactUs"
-                :class="buttonClass"
-                @mouseenter="hover = true"
-                @mouseleave="hover = false"
+                :class="buttonClass3"
+                @mouseenter="hover3 = true"
+                @mouseleave="hover3 = false"
             >
               Liên hệ tư vấn
             </a-button>
