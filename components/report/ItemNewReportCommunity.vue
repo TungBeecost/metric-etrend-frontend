@@ -69,8 +69,8 @@ const itemsToShow = computed(() => {
       <Slide v-for="report in reports" v-bind="report" :key="report.name">
         <div class="slide-item_community" @click="handleClickViewOnMetric(report)">
           <div class="thumbnail">
-            <img loading="lazy" v-if="report.url_thumbnail" :src="getUrlImageThumbnail(report.url_thumbnail)" alt=""/>
-            <img loading="lazy" v-else src="/images/default_thumbnail_report.png" class="default_thumbnail"/>
+            <NuxtImg format="webp" loading="lazy" v-if="report.url_thumbnail" :src="getUrlImageThumbnail(report.url_thumbnail)" alt=""/>
+            <NuxtImg format="webp" loading="lazy" v-else src="/images/default_thumbnail_report.png" class="default_thumbnail"/>
           </div>
           <div class="content" style="text-align: left;">
             <div

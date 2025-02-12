@@ -62,7 +62,7 @@ function handleRowClick(record: any) {
       <template #bodyCell="{ column, text, record }">
         <template v-if="column.dataIndex === 'name'">
           <div style="display: flex; align-items: center; gap: 16px; cursor: pointer" @click="handleRowClick(record)">
-            <img
+            <NuxtImg format="webp"
                 :src="record.url_thumbnail ? getUrlImageThumbnail(record.url_thumbnail) : '/images/default_thumbnail_report.png'"
                 alt="thumbnail"
                 style="width: 60px; height: 60px; border-radius: 8px"

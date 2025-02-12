@@ -380,10 +380,10 @@ useSeoMeta({
 <!--          <NuxtImg src="/images/big_logo_metric.svg" alt=""/>-->
 <!--        </div>-->
         <div class="chart_image">
-          <NuxtImg src="/images/chart_image.svg" alt=""/>
+          <NuxtImg loading='lazy' format="webp" src="/images/chart_image.svg" alt=""/>
         </div>
         <div class="line_styling_image">
-          <NuxtImg src="/images/line_styling_image.svg" alt=""/>
+          <NuxtImg loading='lazy' format="webp" src="/images/line_styling_image.svg" alt=""/>
         </div>
       </div>
     </div>

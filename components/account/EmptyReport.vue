@@ -5,7 +5,7 @@
 <template>
   <div class="empty_report">
     <div class="empty_report_container">
-      <img loading="lazy" src="/icons/Empty-report.svg" alt="empty-report" />
+      <NuxtImg format="webp" loading="lazy" src="/icons/Empty-report.svg" alt="empty-report" />
       <div class="content">
         <div class="content_noti">Chưa có báo cáo đã xem</div>
         <div class="content_info">Dữ liệu hiện tại đang trống</div>

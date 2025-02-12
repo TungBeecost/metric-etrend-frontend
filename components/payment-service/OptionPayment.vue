@@ -32,7 +32,7 @@ watch(value, (newValue) => {
         <a-radio-group v-model:value="value" class="radio-group" name="radioGroup">
           <a-radio v-for="wallet in WALLET" :key="wallet.code" :style="{ border: wallet.code === value ? '1px solid #E85912' : '1px solid #EEEBFF', borderRadius: '12px', padding: '0 12px', alignItems: 'center', display: 'flex' }" :value="wallet.code">
             <div style="display: flex; align-items: center; gap: 24px; font-size: 16px">
-              <img loading="lazy" style="width: 100px; height: 100px" :src="prefixResource + wallet.thumbnail" alt="icon" />
+              <NuxtImg format="webp" loading="lazy" style="width: 100px; height: 100px" :src="prefixResource + wallet.thumbnail" alt="icon" />
               <span style="font-weight: 500">{{wallet.name}}</span>
             </div>
           </a-radio>

@@ -51,7 +51,7 @@ const navigateToReport = (report: any) => {
     <div class="column" v-for="(columnReports, index) in splitReports" :key="index">
       <div v-for="report in columnReports" :key="report.id" class="item" @click="navigateToReport(report)">
         <div class="image">
-          <img loading="lazy" :src="report.url_thumbnail" alt="url_thumbnail" />
+          <NuxtImg format="webp" loading="lazy" :src="report.url_thumbnail" alt="url_thumbnail" />
         </div>
         <div class="content">
           <div class="title">{{ report.name }}</div>
