@@ -522,7 +522,7 @@ onUnmounted(() => {
     position: fixed;
     background-color: #FFFFFF;
     width: 100%;
-    z-index: 10000;
+    z-index: 1000;
     animation: fadeIn 0.5s ease-out forwards;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
