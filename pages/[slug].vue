@@ -200,7 +200,6 @@ const fetchReportData = async () => {
       breadcrumbs
     };
   } catch (error) {
-    console.log('aaaa', error);
     await router.push('/search');
     return {};
   } finally {
@@ -523,7 +522,7 @@ onUnmounted(() => {
     position: fixed;
     background-color: #FFFFFF;
     width: 100%;
-    z-index: 100;
+    z-index: 10000;
     animation: fadeIn 0.5s ease-out forwards;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
@@ -695,6 +694,12 @@ onUnmounted(() => {
   }
 }
 
+@media (max-width: 13800px) {
+  .scroll_bar{
+    top: 60px
+  }
+}
+
 @media (max-width: 768px) {
   .container_report_detail {
     flex-direction: column;
@@ -716,6 +721,10 @@ onUnmounted(() => {
 
   .title {
     padding-bottom: 16px !important;
+  }
+
+  .scroll_bar{
+    display: none;
   }
 }
 </style>

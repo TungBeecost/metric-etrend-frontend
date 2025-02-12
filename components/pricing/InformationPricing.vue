@@ -55,7 +55,33 @@ import {INFORMATION_PRICING} from "~/constant/constains";
           font-size: 16px;
         }
       }
+    }
+  }
+}
 
+@media (max-width: 768px) {
+  #information_pricing{
+    .information_pricing_container{
+      flex-direction: column;
+      gap: 40px;
+
+      .pricing-item{
+        padding: 16px 40px;
+        gap: 24px;
+
+        .container_content{
+          gap: 12px;
+          .title{
+            font-size: 20px;
+            line-height: 28px;
+          }
+
+          .content{
+            font-size: 14px;
+            line-height: 20px;
+          }
+        }
+      }
     }
   }
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import CheckIcon from "~/components/pricing/CheckIcon.vue";
 import {NAVIGATIONS} from "~/constant/constains";
+import {onMounted, ref} from "vue";
 const currentUserStore = useCurrentUser();
 const {userInfo}: any = storeToRefs(currentUserStore);
 const value = ref('pt50');
@@ -14,9 +15,41 @@ watch(value, (newValue) => {
   }
 });
 
+const windowWidth = ref(0);
+const isMobile = ref(false);
+const title = computed(() => {
+  if (userInfo.value?.id) {
+    if (userInfo.value?.current_plan?.plan_code === 'e_free'
+        || userInfo.value?.current_plan?.plan_code === 'e_trial'
+        || userInfo.value?.current_plan?.plan_code === 'e_community'
+        || !userInfo.value?.current_plan?.plan_code
+    ) {
+      return 'Mua ngay';
+    } else if (userInfo.value?.current_plan?.plan_code === value.value) {
+      return 'Đang sử dụng';
+    } else {
+      return 'Liên hệ tư vấn';
+    }
+  }
+  return 'Mua ngay';
+});
+
+onMounted(() => {
+  windowWidth.value = window.innerWidth;
+  isMobile.value = window.innerWidth < 768;
+  window.addEventListener('resize', () => {
+    windowWidth.value = window.innerWidth;
+    isMobile.value = window.innerWidth < 768;
+  });
+});
 const navigateToPayment = (plan_code: any) => {
   navigateTo(`${NAVIGATIONS.payment}?plan_code=${plan_code}`);
 };
+
+const navigateToContactUs = () => {
+  navigateTo(`${NAVIGATIONS.contactUs}`);
+};
+
 
 const handleClickFindReport = () => {
   navigateTo(`${NAVIGATIONS.report}`);
@@ -41,10 +74,12 @@ const columns = [
   },
 ]
 
+const paddingLeft = computed(() => (isMobile ? '16px' : '32px'));
+
 const dataSource = [
   {
     key: '1',
-    type_compare: '<b style="font-weight: bold; display: flex; color: #E85912">Tổng quan</b>',
+    type_compare: '<b style="font-weight: bold; font-size: 16px; display: flex; color: #E85912">Tổng quan</b>',
     pdf_report: '',
     quick_view: '',
   },
@@ -92,31 +127,31 @@ const dataSource = [
   },
   {
     key: '9',
-    type_compare: '<b style="font-weight: bold; display: flex; padding-left: 32px">Thống kê nhóm hàng</b>',
+    type_compare: `<b style="font-weight: bold; display: flex; padding-left: ${paddingLeft.value}">Thống kê nhóm hàng</b>`,
     pdf_report: 'CheckIcon',
     quick_view: 'CheckIcon',
   },
   {
     key: '10',
-    type_compare: '<b style="font-weight: bold; display: flex; padding-left: 32px">Thống kê gian hàng toàn thị trường</b>',
+    type_compare: `<b style="font-weight: bold; display: flex; padding-left: ${paddingLeft.value}">Thống kê gian hàng toàn thị trường</b>`,
     pdf_report: 'CheckIcon',
     quick_view: 'CheckIcon',
   },
   {
     key: '11',
-    type_compare: '<b style="font-weight: bold; display: flex; padding-left: 32px">Thống kê thương hiệu toàn thị trường</b>',
+    type_compare: `<b style="font-weight: bold; display: flex; padding-left: ${paddingLeft.value}">Thống kê thương hiệu toàn thị trường</b>`,
     pdf_report: 'CheckIcon',
     quick_view: 'CheckIcon',
   },
   {
     key: '12',
-    type_compare: '<b style="font-weight: bold; display: flex; padding-left: 32px">Thống kê sản phẩm bán chạy toàn sàn</b>',
+    type_compare: `<b style="font-weight: bold; display: flex; padding-left: ${paddingLeft.value}">Thống kê sản phẩm bán chạy toàn sàn</b>`,
     pdf_report: 'CheckIcon',
     quick_view: 'CheckIcon',
   },
   {
     key: '13',
-    type_compare: '<b style="font-weight: bold; display: flex; padding-left: 32px">Thống kê đánh giá</b>',
+    type_compare: `<b style="font-weight: bold; display: flex; padding-left: ${paddingLeft.value}">Thống kê đánh giá</b>`,
     pdf_report: 'CheckIcon',
     quick_view: 'CheckIcon',
   },
@@ -128,25 +163,25 @@ const dataSource = [
   },
   {
     key: '15',
-    type_compare: '<b style="font-weight: bold; display: flex">Thống kê thương hiệu từng sàn</b>',
+    type_compare: `<b style="font-weight: bold; display: flex; padding-left: ${paddingLeft.value}">Thống kê thương hiệu từng sàn</b>`,
     pdf_report: 'CheckIcon',
     quick_view: '-',
   },
   {
     key: '16',
-    type_compare: '<b style="font-weight: bold; display: flex">Thống kê gian hàng từng sàn</b>',
+    type_compare: `<b style="font-weight: bold; display: flex; padding-left: ${paddingLeft.value}">Thống kê gian hàng từng sàn</b>`,
     pdf_report: 'CheckIcon',
     quick_view: '-',
   },
   {
     key: '17',
-    type_compare: '<b style="font-weight: bold; display: flex">Thống kê sản phẩm bán chạy từng sàn</b>',
+    type_compare: `<b style="font-weight: bold; display: flex; padding-left: ${paddingLeft.value}">Thống kê sản phẩm bán chạy từng sàn</b>`,
     pdf_report: 'CheckIcon',
     quick_view: '-',
   },
   {
     key: '18',
-    type_compare: '<b style="font-weight: bold; display: flex">Dữ liệu chi tiết của 10 shop hàng đầu</b>',
+    type_compare: `<b style="font-weight: bold; display: flex; padding-left: ${paddingLeft.value}">Dữ liệu chi tiết của 10 shop hàng đầu</b>`,
     pdf_report: 'CheckIcon',
     quick_view: '-',
   },
@@ -193,8 +228,32 @@ const dataSource = [
           <a-select-option value="pt100">100 lượt xem online</a-select-option>
         </a-select>
         <p>{{price}}</p>
-        <a-button @click="userInfo.id ? (userInfo.current_plan?.plan_code !== value? navigateToPayment(value) : null) : currentUserStore.setShowPopupLogin(true)"
-                  type="primary" size="large" style="width: 200px">Mua ngay</a-button>
+        {{title}}
+        <a-button
+            v-if="title === 'Mua ngay'"
+            :class="'not_user_plan'"
+            style="height: 40px"
+            @click="userInfo.id ? navigateToPayment(userInfo.value?.current_plan?.plan_code) : currentUserStore.setShowPopupLogin(true)"
+        >
+          Mua ngay
+        </a-button>
+
+        <a-button
+            v-if="title === 'Đang sử dụng'"
+            :class="'user_plan'"
+            style="height: 40px"
+        >
+          Đang sử dụng
+        </a-button>
+
+        <a-button
+            v-if="title === 'Liên hệ tư vấn'"
+            :class="'contact_plan'"
+            style="height: 40px"
+            @click="userInfo.id ? navigateToContactUs : currentUserStore.setShowPopupLogin(true)"
+        >
+          Liên hệ tư vấn
+        </a-button>
       </div>
     </div>
   </div>
@@ -202,6 +261,7 @@ const dataSource = [
 
 <style scoped lang="scss">
 #compare_feature{
+  padding-bottom: 80px;
   .title{
     color: #241E46;
     text-align: center;
@@ -247,6 +307,34 @@ const dataSource = [
   }
 }
 
+.not_user_plan {
+  background: #E85912;
+  color: #FFF;
+  width: 100%;
+}
+
+.user_plan {
+  background: #DEDEE4;
+  color: #9D9BB0;
+  width: 100%;
+}
+
+.contact_plan{
+  background: #FFF;
+  width: 100%;
+}
+@media (max-width: 768px) {
+  #compare_feature {
+    .title{
+      font-size: 24px;
+      line-height: 32px;
+      padding-bottom: 32px;
+    }
+    .note_price {
+      display: none;
+    }
+  }
+}
 </style>
 
 <style lang="scss">
@@ -295,6 +383,10 @@ const dataSource = [
                       }
                     }
                     tr {
+                      td {
+                        align-content: center;
+                      }
+
                       td:nth-child(2),
                       td:nth-child(3) {
                         text-align: center;

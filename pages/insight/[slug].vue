@@ -1,30 +1,23 @@
 <script setup>
+import { ref, onMounted, watch } from 'vue';
 import axios from "~/services/axios-wrapper";
-// import ReportContent from "~/components/report/ReportContent.vue";
-import MaybeInterested from "~/components/report/MaybeInterested.vue";
-import {useSearchReport} from "#imports";
-import UnlockReportMarketing from "~/components/report/UnlockReportMarketing.vue";
-import SuccessNotification from "~/components/ContactUs/SuccessNotification.vue";
-import useBEEndpoint from "~/composables/useBEEndpoint";
-import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService.js";
-import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
+import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useSearchReport } from '#imports';
+import { trackEventCommon, trackEventConversionPixel } from '~/services/tracking/TrackingEventService.js';
+import { EVENT_TYPE } from '~/constant/general/EventConstant.js';
 
-const route = useRoute()
-const {fetchListRecommendMarketing} = useSearchReport()
+const route = useRoute();
+const { fetchListRecommendMarketing } = useSearchReport();
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
-const data = ref({})
-
+const data = ref({});
 const slug = route.params.slug;
-
-const openContactForm = ref(false)
-
-const loading = ref(true)
-const isHideContent = ref(true)
-const listRecommend = ref([])
-
-const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => false)
-
+const openContactForm = ref(false);
+const loading = ref(true);
+const isHideContent = ref(true);
+const listRecommend = ref([]);
+const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => false);
 
 const fetchDataRecommend = async (report_type) => {
   try {
@@ -37,8 +30,7 @@ const fetchDataRecommend = async (report_type) => {
   } catch (e) {
     console.error(e);
   }
-}
-
+};
 
 const fetchReportData = async () => {
   try {
@@ -70,10 +62,9 @@ const fetchReportData = async () => {
         null,
         null,
         null
-    )
-    const {tier_report} = response.data;
-    console.log('tier_report', tier_report);
-    if (tier_report !== 'e_free') {
+    );
+    const { tier_report } = response.data;
+    if ((tier_report !== 'e_free' && userInfo.value?.current_plan?.plan_code) || (userInfo?.value?.metric_info_auth?.roles[0] !== 'market_default' && userInfo.value?.metric_info_auth?.roles[0])) {
       isHideContent.value = false;
     }
     data.value = response.data;
@@ -89,19 +80,17 @@ const fetchReportData = async () => {
 
 const handleSubmitSuccess = () => {
   localStorage.setItem('report_mkt_unlocked', 'true');
-
   isShowSuccessNotification.value = true;
-  if(isShowSuccessNotification.value){
+  if (isShowSuccessNotification.value) {
     trackEventCommon(EVENT_TYPE.SUBMIT_FORM_COMMUNITY_REPORT, 'submit_form_community_report', '');
   }
-
   openContactForm.value = false;
   isHideContent.value = false;
 };
 
 onMounted(() => {
   const unlockedMktReports = localStorage.getItem('report_mkt_unlocked');
-  if (userInfo.value?.current_plan?.plan_code !== 'e_free' && userInfo.value?.current_plan?.plan_code) {
+  if ((userInfo.value?.current_plan?.plan_code !== 'e_free' && userInfo.value?.current_plan?.plan_code) || (userInfo.value?.metric_info_auth?.roles[0] !== 'market_default' && userInfo.value?.metric_info_auth?.roles[0])) {
     isHideContent.value = false;
   } else {
     if (unlockedMktReports === 'true') {
@@ -111,6 +100,11 @@ onMounted(() => {
   fetchReportData();
 });
 
+watch(userInfo, (newUserInfo) => {
+  if ((newUserInfo?.current_plan?.plan_code !== 'e_free' && newUserInfo?.current_plan?.plan_code) || newUserInfo?.metric_info_auth?.roles[0] !== 'market_default') {
+    isHideContent.value = false;
+  }
+});
 </script>
 
 <template>
@@ -122,7 +116,7 @@ onMounted(() => {
     <Meta hid="og:image" property="og:image" :content="data?.url_cover || data?.url_thumbnail"/>
     <Meta hid="og:image:alt" property="og:image:alt" :content="`Báo cáo thị trường ${data?.name}`"/>
   </Head>
-  <div v-if="loading" class="container_content">
+    <div v-if="loading" class="container_content">
     <div class="title default_section">
       <div class="loading-skeleton">
         <div>
