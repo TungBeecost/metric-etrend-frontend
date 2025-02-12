@@ -54,6 +54,8 @@ export default defineNuxtConfig({
                 },
                 {
                     src: "https://accounts.google.com/gsi/client",
+                    defer: true,
+                    async: true,
                 }
             ],
             noscript: [
@@ -106,14 +108,6 @@ export default defineNuxtConfig({
             src: "~/plugins/analytics.js",
             ssr: false,
         },
-        {
-            src: "~/plugins/gtm-tracking.js",
-            ssr: true,
-        },
-        // {
-        //     src: "~/plugins/nuxt-gtm.js",
-        //     ssr: true,
-        // },
     ],
 
     css: [
@@ -183,22 +177,4 @@ export default defineNuxtConfig({
     nitro: {
         compressPublicAssets: true,
     },
-
-    // Tree shake unused modules
-    analyze: true,
-    babel: {
-      compact: true,
-    },
-    // Remove console logs in production
-    terser: {
-        terserOptions: {
-            compress: {
-                drop_console: true
-            }
-        }
-    },
-    // Minimize CSS
-    extractCSS: true,
-    optimizeCSS: true,
-
 });
