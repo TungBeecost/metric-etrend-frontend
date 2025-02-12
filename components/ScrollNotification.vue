@@ -198,8 +198,8 @@ onBeforeRouteLeave(() => {
         </div>
       </div>
     </div>
-    <img loading="lazy" src="@/public/images/ImageOnBackgroundScroll.png" alt="ImageOnBackgroundScroll" style="position: absolute; bottom: 0; right: 0; width: 100%;"/>
-    <img loading="lazy" src="@/public/images/BackgroundScroll.png" alt="BackgroundScrollIcon" style="width: 100%"/>
+    <NuxtImg format="webp" loading="lazy" src="/images/ImageOnBackgroundScroll.png" alt="ImageOnBackgroundScroll" style="position: absolute; bottom: 0; right: 0; width: 100%;"/>
+    <NuxtImg format="webp" loading="lazy" src="/images/BackgroundScroll.png" alt="BackgroundScrollIcon" style="width: 100%"/>
   </div>
   <div v-else class="button-notification">
     <button
@@ -213,7 +213,7 @@ onBeforeRouteLeave(() => {
   <a-modal v-model:visible="showModalSuccess" :footer="null" width="550px">
     <div class="success_modal">
       <div class="success_modal_container">
-        <img loading="lazy" src="@/public/images/SuccessImage.png" alt="SuccessImage" style="width: 100px; height: 100px; margin: 0 auto; display: block;"/>
+        <NuxtImg format="webp" loading="lazy" src="/images/SuccessImage.png" alt="SuccessImage" style="width: 100px; height: 100px; margin: 0 auto; display: block;"/>
         <div class="success_modal_content">
           <p class="success_modal_content_title">Cảm ơn bạn đã quan tâm!</p>
           <p>Báo cáo mẫu sẽ tự động được tải xuống trong giây lát.</p>

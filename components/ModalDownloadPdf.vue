@@ -226,7 +226,7 @@ const platforms = computed(() => {
             <p>Hỗ trợ thanh toán trực tuyến</p>
             <div style="display: flex">
               <div v-for="wallet in WALLET" :key="wallet.code">
-                <img loading="lazy" style="width: 40px; height: 40px" :src="prefixResource + wallet.thumbnail" alt="icon">
+                <NuxtImg format="webp" loading="lazy" style="width: 40px; height: 40px" :src="prefixResource + wallet.thumbnail" alt="icon"/>
               </div>
             </div>
           </div>

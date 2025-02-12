@@ -2,7 +2,7 @@
 <template>
   <div v-if="showPopup" class="campaign-popup-overlay" @click="closePopup">
     <div class="campaign-popup" @click.stop>
-      <img loading="lazy" :src="CAMPAIGN_IMG" alt="Campaign Image" @click="openCampaignUrl"/>
+      <NuxtImg format="webp" loading="lazy" :src="CAMPAIGN_IMG" alt="Campaign Image" @click="openCampaignUrl"/>
       <a-button class="close-button" @click="closePopup">
         Đóng
       </a-button>

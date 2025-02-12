@@ -6,7 +6,7 @@
         <p class="sectionDescription">
           Nắm giữ mọi xu hướng và dữ liệu hàng hóa, thương hiệu chỉ với 5 giây
         </p>
-        <img loading="lazy" src="/images/background-search.png" class="background">
+        <NuxtImg loading='lazy' format="webp" src="/images/background-search.png" class="background"/>
       </div>
 
       <div class="sectionContent searchContent">

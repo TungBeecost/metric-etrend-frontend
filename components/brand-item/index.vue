@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div style="width: 100%; height: 100%">
-      <img loading="lazy" :src="src" class="branch">
+      <NuxtImg format="webp" loading="lazy" :src="src" class="branch"/>
     </div>
   </div>
 </template>

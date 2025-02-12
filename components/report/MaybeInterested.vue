@@ -58,7 +58,7 @@ const handleItemClick = (item: LstRecommed) => {
     <div v-if="props.recomends.length > 5" class="grid">
       <div v-for="item in props.recomends" :key="item.id" class="item" @click="handleItemClick(item)">
         <div v-if="item.url_thumbnail" class="image-metric">
-          <img loading="lazy" :src="getUrlImageThumbnail(item.url_thumbnail)" alt="">
+          <NuxtImg format="webp" loading="lazy" :src="getUrlImageThumbnail(item.url_thumbnail)" alt=""/>
         </div>
         <div class="info flex-1">
           <div class="line-clamp__1">
@@ -78,7 +78,7 @@ const handleItemClick = (item: LstRecommed) => {
     <div v-else>
       <div v-for="item in props.recomends" :key="item.id" class="item" @click="handleItemClick(item)">
         <div v-if="item.url_thumbnail" class="image-metric">
-          <img loading="lazy" :src="getUrlImageThumbnail(item.url_thumbnail)" alt="">
+          <NuxtImg format="webp" loading="lazy" :src="getUrlImageThumbnail(item.url_thumbnail)" alt=""/>
         </div>
         <div class="info flex-1">
           <div class="line-clamp__1">

@@ -7,7 +7,7 @@ import {INFORMATION_PRICING} from "~/constant/constains";
   <div id="information_pricing">
     <div class="information_pricing_container default_section">
       <div v-for="(item, index) in INFORMATION_PRICING" :key="index" class="pricing-item">
-        <img loading="lazy" :src="item.thumbnail" alt="icon" class="thumbnail" />
+        <NuxtImg format="webp" loading="lazy" :src="item.thumbnail" alt="icon" class="thumbnail" />
         <div class="container_content">
           <h3 class="title">{{ item.title }}</h3>
           <p class="content">{{ item.content }}</p>

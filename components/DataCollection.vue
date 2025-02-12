@@ -18,7 +18,7 @@ onMounted(() => {
 <template>
 <div class="data_collection default_section">
   <p class="title">Phương pháp thu thập và xử lý dữ liệu</p>
-  <img loading="lazy" v-if="!isMobile" src="~/public/images/Data_collect.png" alt="data_collect" class="data_collect_img">
+  <NuxtImg format="webp" loading="lazy" v-if="!isMobile" src="/images/Data_collect.png" alt="data_collect" class="data_collect_img"/>
   <div v-else>
     <list-data-colection-component />
   </div>

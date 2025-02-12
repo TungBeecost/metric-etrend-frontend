@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="report-thumbnail">
-          <img loading="lazy" :src="getUrlImageThumbnail(props.data.url_thumbnail)" alt="" width="300" height="300">
+          <NuxtImg format="webp" loading="lazy" :src="getUrlImageThumbnail(props.data.url_thumbnail)" alt="" width="300" height="300"/>
         </div>
       </div>
       <div class="sub-info">

@@ -6,7 +6,7 @@
     <div class="default_section" style="overflow: hidden;">
       <div class="brand-list">
         <div v-for="(brand, index) in PARTERS" :key="index" class="brand-item loop">
-          <img loading="lazy" :src="prefixResource + brand" alt="brand_logo">
+          <NuxtImg format="webp" loading="lazy" :src="prefixResource + brand" alt="brand_logo"/>
         </div>
       </div>
     </div>

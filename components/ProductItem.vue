@@ -46,7 +46,7 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
 <template>
   <div class="product-item" :class="{'hide-content': isHideContent}">
     <div class="product-thumbnail">
-      <img
+      <NuxtImg format="webp"
           v-if="props.product.url_thumbnail"
           :src="getUrlImageThumbnail(props.product.url_thumbnail)"
           :alt="props.product.product_name"
@@ -100,7 +100,7 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
         </div>
         <div class="product-info-item shop-info">
           <div class="shop-icon">
-            <img
+            <NuxtImg format="webp"
                 :src="getPlatformById(getPlatformIdFromProductBaseId(props.product.product_base_id))?.urlLogo"
                 class="img-platform"
                 alt=""

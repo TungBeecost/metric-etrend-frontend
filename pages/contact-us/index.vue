@@ -3,7 +3,7 @@
     <div class="section bannerSection">
       <div class="background">
         <div class="left" />
-        <NuxtImg src="/images/contact-banner.png" class="background" />
+        <NuxtImg loading='lazy' format="webp" src="/images/contact-banner.png" class="background" />
       </div>
       <p class="title default_section">Liên hệ tư vấn</p>
       <p class="description default_section">Liên hệ với chúng tôi để nhận được tư vấn, hỗ trợ và giải đáp các thắc mắc</p>

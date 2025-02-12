@@ -20,7 +20,7 @@
                 :pagination="false"
             >
               <template #platform="{ _ }">
-                <img
+                <NuxtImg loading='lazy' format="webp"
                     :src="platformLogos[_.platform]"
                     :alt="platformNames[_.platform]"
                     style="height: 20px; margin: auto"

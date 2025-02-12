@@ -2,7 +2,7 @@
   <div>
     <div class="section sectionPricing">
       <div class="bg">
-        <img loading="lazy" src="/images/background-search.png" class="background">
+        <NuxtImg loading='lazy' format="webp" src="/images/background-search.png" class="background"/>
       </div>
       <Plans />
     </div>
