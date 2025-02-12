@@ -190,7 +190,7 @@ export const useCurrentUser = defineStore("currentUserStore", {
                             };
                             const {current_plan, ...userInfo} = await fetchUserProfile(headers);
                             const posthog = useNuxtApp().$posthog;
-                            posthog?.identify(variables.user_email);
+                            posthog?.identify(userInfo.user_email);
                             const metricInfo = await fetchUserMetricProfile(headers);
                             const metricInfoAuth = await fetchUserMetricProfileAuth(headers);
                             if (userInfo?.id) {
