@@ -25,9 +25,8 @@ const config = useRuntimeConfig();
 const reportDetail = ref<any>(null);
 const information = ref({name: '', phone: '', emailAccount: '', companyName: '', taxCode: '', email: '', address: ''});
 const slug = route.params.slug;
-let store = getCookie('m_date', null)
-const startDate = store?.split("_")[0]
-const endDate = store?.split("_")[1]
+const startDate = route.query.startDate
+const endDate = route.query.endDate
 console.log(startDate, endDate)
 const reportLink = `https://ereport.vn/${slug}`;
 const currentUserStore = useCurrentUser();
@@ -100,7 +99,6 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
               Number(finalPrice),
           );
           window.location.href = transactionResult.response.payment_url;
-          removeCookie('m_date')
         } else {
           if (transactionResult.response.status == 'done') {
             openModalWaiting.value = true;

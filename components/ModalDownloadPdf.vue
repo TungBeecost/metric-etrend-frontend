@@ -241,9 +241,9 @@ const handleDownload = async () => {
     return
   }
   const slug = route.params.slug;
-  let store = `${dateRange.value[0].format('YYYYMMDD')}_${dateRange.value[1].format('YYYYMMDD')}`;
-  setCookie('m_date', store)
-  navigateTo(`${NAVIGATIONS.payment}/${slug}`);
+  let startDate = dateRange.value[0].format('YYYYMMDD');
+  let endDate = dateRange.value[1].format('YYYYMMDD'); 
+  navigateTo(`${NAVIGATIONS.payment}/${slug}?startDate=${startDate}&endDate=${endDate}`);
 };
 
 const handleView = async () => {
