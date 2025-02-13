@@ -17,13 +17,12 @@ interface Marketplace {
 function formatDate(dateStr: string): string {
   const year = dateStr.substring(0, 4);
   const month = dateStr.substring(4, 6);
-  const day = dateStr.substring(6, 8);
-  return `${day}-${month}-${year}`;
+  return `${month}-${year}`;
 }
 
-let store = getCookie('m_date', null)
-const startDate = store?.split("_")[0]
-const endDate = store?.split("_")[1]
+const route = useRoute();
+const startDate = route.query.startDate
+const endDate = route.query.endDate
 
 const formattedStartDate = formatDate(startDate ? startDate : report.start_date);
 const formattedEndDate = formatDate(endDate ? endDate : report.end_date);
