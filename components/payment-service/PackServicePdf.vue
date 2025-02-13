@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getCookie } from '~/helpers/CookieHelper';
 const {report} = defineProps({
   report: {
     type: Object,
@@ -20,8 +21,12 @@ function formatDate(dateStr: string): string {
   return `${day}-${month}-${year}`;
 }
 
-const formattedStartDate = formatDate(report.start_date);
-const formattedEndDate = formatDate(report.end_date);
+let store = getCookie('m_date', null)
+const startDate = store?.split("_")[0]
+const endDate = store?.split("_")[1]
+
+const formattedStartDate = formatDate(startDate ? startDate : report.start_date);
+const formattedEndDate = formatDate(endDate ? endDate : report.end_date);
 
 </script>
 

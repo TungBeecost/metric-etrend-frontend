@@ -26,9 +26,23 @@ export default function usePayment() {
         }
     };
 
-    const createPaymentTransactionPdf = async (paymentMethod: string, report_id: string, redirectUrl: string, discountCode: string | null, reportLink: string, name: string | null, phone: string | null, company: string | null, tax_code: string | null, receive_email: string | null, address: string | null) => {
+    const createPaymentTransactionPdf = async (
+      paymentMethod: string, report_id: string, 
+      redirectUrl: string, discountCode: string | null, 
+      reportLink: string, name: string | null, 
+      phone: string | null, company: string | null, 
+      tax_code: string | null, receive_email: string | null, 
+      address: string | null,
+      startDate: string | null,
+      endDate: string | null
+    ) => {
         try {
-            return await createTransactionPdf(paymentMethod, report_id, redirectUrl, discountCode, reportLink, name, phone, company, tax_code, receive_email, address);
+            return await createTransactionPdf(
+              paymentMethod, report_id, redirectUrl, 
+              discountCode, reportLink, name, phone, 
+              company, tax_code, receive_email, address,
+              startDate, endDate
+            );
         } catch (error) {
             console.error("createPaymentTransaction error: ", error);
             return null;
