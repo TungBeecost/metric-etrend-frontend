@@ -26,7 +26,6 @@ const displayTableOfContent = computed(() => {
           {title: 'Thống kê theo tháng'},
           {title: 'Thống kê theo phân khúc giá'},
           {title: 'Doanh số, sản phẩm đã bán theo phân khúc giá'},
-
         ],
       },
       {
@@ -74,7 +73,6 @@ const displayTableOfContent = computed(() => {
           {title: 'Thống kê theo tháng'},
           {title: 'Thống kê theo phân khúc giá'},
           {title: 'Doanh số, sản phẩm đã bán theo phân khúc giá'},
-
         ],
       },
       {
@@ -105,10 +103,7 @@ const displayTableOfContent = computed(() => {
     ]
   }
 
-  if (data.report_type !== 'report_category' && data.report_type !== 'report_product_line') {
-    return data?.data_analytic?.table_of_content || [];
-  }
-
+  // Default return value
   return [
     {
       title: `I. Tổng quan thị trường`,
@@ -118,7 +113,6 @@ const displayTableOfContent = computed(() => {
         {title: 'Thống kê theo tháng'},
         {title: 'Thống kê theo phân khúc giá'},
         {title: 'Doanh số, sản phẩm đã bán theo phân khúc giá'},
-
       ],
     },
     {
@@ -154,7 +148,7 @@ const displayTableOfContent = computed(() => {
       ],
     },
   ]
-})
+});
 
 </script>
 

@@ -395,6 +395,7 @@ onUnmounted(() => {
         <div class="container_report_detail">
           <div class="container_report_detail_left">
             <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
+            <top-shop-info v-if="data?.reportDetail.report_type === 'report_top_shop'" :data="data?.reportDetail"/>
             <report-content :data="data?.reportDetail"/>
           </div>
           <div class="container_report_detail_right">
@@ -519,6 +520,7 @@ onUnmounted(() => {
   padding-bottom: 40px;
 
   .scroll_bar{
+    top: 60px;
     position: fixed;
     background-color: #FFFFFF;
     width: 100%;
