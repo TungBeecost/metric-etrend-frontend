@@ -128,7 +128,9 @@ export const createTransactionPdf = async (
     company: string | null,
     tax_code: string | null,
     receive_email: string | null,
-    address: string | null
+    address: string | null,
+    startDate: string | null,
+    endDate: string | null
 ) => {
     try {
         const params = new URLSearchParams({
@@ -159,7 +161,12 @@ export const createTransactionPdf = async (
         if (address) {
             params.append('address', address);
         }
-
+        if (startDate) {
+            params.append('start_date', startDate);
+        }
+        if (endDate) {
+            params.append('end_date', endDate);
+        }
         const response = await axios.post(`${useBEEndpoint(PAYMENT_ENDPOINTS.payment_pdf.endpoint)}?${params.toString()}`, {}, {
             headers: {
                 'accept': 'application/json',

@@ -10,6 +10,7 @@ import CheckOutPdf from "~/components/payment-service/CheckOutPdf.vue";
 import {upperFirst} from "scule";
 import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService";
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
+import { getCookie, removeCookie } from "~/helpers/CookieHelper";
 
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
@@ -24,6 +25,10 @@ const config = useRuntimeConfig();
 const reportDetail = ref<any>(null);
 const information = ref({name: '', phone: '', emailAccount: '', companyName: '', taxCode: '', email: '', address: ''});
 const slug = route.params.slug;
+let store = getCookie('m_date', null)
+const startDate = store?.split("_")[0]
+const endDate = store?.split("_")[1]
+console.log(startDate, endDate)
 const reportLink = `https://ereport.vn/${slug}`;
 const currentUserStore = useCurrentUser();
 
@@ -57,7 +62,14 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
         //   console.log('information', information.value);
         //   transactionResult = await createPaymentTransactionPdfGuest(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
         // } else {
-        transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        transactionResult = await createPaymentTransactionPdf(
+          paymentMethod, reportDetail.value.id, 
+          redirectUrl.value, discountInfo.discount?.code || null, 
+          reportLink, information.value.name, information.value.phone, 
+          information.value.companyName, information.value.taxCode, 
+          information.value.email, information.value.address,
+          startDate, endDate
+        );
         // }
         sessionStorage.setItem('name_payment', `${information.value.name}`);
         sessionStorage.setItem('phone_payment', `${information.value.phone}`);
@@ -88,6 +100,7 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
               Number(finalPrice),
           );
           window.location.href = transactionResult.response.payment_url;
+          removeCookie('m_date')
         } else {
           if (transactionResult.response.status == 'done') {
             openModalWaiting.value = true;

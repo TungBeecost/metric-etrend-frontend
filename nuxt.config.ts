@@ -93,6 +93,7 @@ export default defineNuxtConfig({
             },
             posthogPublicKey: process.env.POSTHOG_PUBLIC_KEY,
             posthogHost: process.env.POSTHOG_HOST,
+            samplePdfUrl: process.env.SAMPLE_PDF_URL,
         },
         publicRuntimeConfig: {
             gtm: {
