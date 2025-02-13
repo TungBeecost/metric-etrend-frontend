@@ -317,6 +317,10 @@ const handleDateChange = () => {
   }
 };
 
+const disabledMonth = (current: Dayjs) => {
+  return current.isBefore(dayjs('2022-01')) || current.isAfter(dayjs().subtract(1, 'month'));
+};
+
 const downloadSampleReport = () => {
   trackEventCommon(EVENT_TYPE.CLICK_DOWNLOAD_SAMPLE, 'click_download_sample', '');
   const url = config.public.samplePdfUrl;
@@ -412,7 +416,8 @@ const downloadSampleReport = () => {
             v-model:value="dateRange"
             format="YYYY-MM"
             picker="month"
-            style="margin-top: -10px; width: 100%;"
+            :disabledDate="disabledMonth"
+            style="margin-top: 10px; width: 100%;"
             :placeholder="['Tháng bắt đầu', 'Tháng kết thúc']"
             @change="handleDateChange"
           />
@@ -638,6 +643,7 @@ const downloadSampleReport = () => {
       flex-direction: column;
       gap: 16px;
       align-items: center;
+      margin-top: 16px;
 
       .price {
         display: flex;
