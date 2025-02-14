@@ -49,11 +49,11 @@ const formattedEndDate = formatDate(endDate ? endDate : report.end_date);
         <div class="summary">
           <div class="report_type">
             <p>Loại báo cáo</p>
-            <p style="font-size: 16px; color: #E85912; font-weight: 700;">Báo cáo PDF</p>
+            <p style="font-size: 16px; color: #241E46; font-weight: 700;">Báo cáo PDF</p>
           </div>
           <div class="report_group">
             <p>Nhóm hàng</p>
-            <p style="font-size: 16px; color: #241E46; font-weight: 700;">{{ report.name }}</p>
+            <p style="font-size: 16px; color: #E85912; font-weight: 700;">{{ report.name }}</p>
           </div>
         </div>
 
@@ -63,7 +63,7 @@ const formattedEndDate = formatDate(endDate ? endDate : report.end_date);
           <p class="includeLabel">Thông tin chi tiết</p>
           <div class="permissionList">
             <p>• Số liệu sàn: Shopee, Tiktok, Lazada, Tiki</p>
-            <p>• Từ {{ formattedStartDate }} đến {{ formattedEndDate }}</p>
+            <p>• Phạm vi dũ liệu: <span style="color: #E85912; font-weight: bold">Từ {{ formattedStartDate }} đến {{ formattedEndDate }}</span></p>
           </div>
         </div>
       </div>

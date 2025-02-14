@@ -203,9 +203,16 @@ onBeforeRouteLeave(() => {
   </div>
   <div v-else class="button-notification">
     <button
-        style="display: flex; width: 100%; height: 40px; padding: 9px 16px; flex-direction: column; justify-content: center; align-items: center; border-radius: 8px; background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 99.23%); color: #fff; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"
+        style="display: flex; height: 40px; padding: 9px 16px; justify-content: center; align-items: center; border-radius: 8px; background: #FAF9FF; color: #241E46; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"
+        @click="downloadReport">
+      <img src="/icons/Download.svg" alt="DownloadIcon" style="width: 24px; height: 24px; margin-right: 8px;"/>
+      Tải báo cáo mẫu
+    </button>
+    <button
+        style="display: flex; height: 40px; padding: 9px 16px; justify-content: center; align-items: center; border-radius: 8px; background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 99.23%); color: #fff; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"
         @click="handleOpenModal">
-      Tải báo cáo chi tiết
+      <img src="/icons/CartIconWhite.svg" alt="CartIconWhite" style="width: 24px; height: 24px; margin-right: 8px;"/>
+      Mua báo cáo PDF
     </button>
   </div>
   <modal-download-pdf v-model:open="open" :data="props.data"/>
@@ -253,10 +260,10 @@ onBeforeRouteLeave(() => {
   right: 20px;
   width: 350px;
   height: 40px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
   overflow: hidden;
   z-index: 999;
+  gap: 8px;
   font-family: 'Inter', sans-serif;
 }
 

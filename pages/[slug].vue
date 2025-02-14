@@ -441,7 +441,7 @@ onUnmounted(() => {
       <transition name="fade">
         <div
             v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category'
-            && userInfo.current_plan.plan_code !== 'eReport12' && userInfo.current_plan.plan_code !== 'eReport12_partner' && !data?.reportDetail?.is_unsellable"
+            && userInfo?.current_plan?.plan_code !== 'eReport12' && userInfo?.current_plan?.plan_code !== 'eReport12_partner' && !data?.reportDetail?.is_unsellable"
             class="advertisement">
           <scroll-notification
               v-if="data.reportDetail.name"
@@ -454,7 +454,7 @@ onUnmounted(() => {
       </transition>
       <transition name="fade">
         <div
-            v-if="(userInfo.current_plan.plan_code === 'eReport12' || userInfo.current_plan.plan_code === 'eReport12_partner') && !data?.reportDetail?.is_unsellable"
+            v-if="(userInfo?.current_plan?.plan_code === 'eReport12' || userInfo?.current_plan?.plan_code === 'eReport12_partner') && !data?.reportDetail?.is_unsellable"
             class="chat_gpt">
           <popup-chat-gpt
               :name="data?.reportDetail?.name"
