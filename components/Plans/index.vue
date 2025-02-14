@@ -2,6 +2,8 @@
 import {computed, onMounted, ref} from 'vue';
 import {NAVIGATIONS, PLANS} from '~/constant/constains';
 import {formatSortTextCurrencyPlan} from "~/helpers/utils";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 const currentUserStore = useCurrentUser();
 const {userInfo}: any = storeToRefs(currentUserStore);
 
@@ -51,10 +53,11 @@ const getIsShowActiveButton = (user_plan_code: string, plan: any) => {
 };
 
 const handleClickFindReport = () => {
+  trackEventCommon(EVENT_TYPE.CLICK_SEARCH_REPORTS, 'click_search_reports', '');
   if(isPricingMetric.value) {
-    window.open(`${NAVIGATIONS.report}`, '_blank');
+    window.open(`${NAVIGATIONS.search}`, '_blank');
   } else {
-    navigateTo(`${NAVIGATIONS.report}`);
+    navigateTo(`${NAVIGATIONS.search}`);
   }
 };
 

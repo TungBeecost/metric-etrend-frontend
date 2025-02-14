@@ -1,5 +1,5 @@
 /* audit_dashboard_fronend/assets/antd.css */
-.ant-select-selector
+.ant-select-selector, .ant-picker-range
  {
     height: 40px !important;
     line-height: 40px !important;

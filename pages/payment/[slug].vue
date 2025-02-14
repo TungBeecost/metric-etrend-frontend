@@ -10,7 +10,7 @@ import CheckOutPdf from "~/components/payment-service/CheckOutPdf.vue";
 import {upperFirst} from "scule";
 import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService";
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
-import { getCookie, removeCookie } from "~/helpers/CookieHelper";
+import {getCookie, removeCookie, setCookie} from "~/helpers/CookieHelper";
 
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
@@ -98,6 +98,17 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
               null,
               Number(finalPrice),
           );
+          const startDate = Array.isArray(route.query.startDate) ? route.query.startDate[0] : route.query.startDate;
+          const endDate = Array.isArray(route.query.endDate) ? route.query.endDate[0] : route.query.endDate;
+
+          if (startDate) {
+            setCookie('startDate', startDate);
+          }
+
+          if (endDate) {
+            setCookie('endDate', endDate);
+          }
+
           window.location.href = transactionResult.response.payment_url;
         } else {
           if (transactionResult.response.status == 'done') {

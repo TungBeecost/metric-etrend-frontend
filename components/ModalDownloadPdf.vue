@@ -61,7 +61,7 @@ type HorizontalLoopConfig = {
 onMounted(() => {
   nextTick(() => {
     const boxes: HTMLElement[] = gsap.utils.toArray('.brand-item.loop') as HTMLElement[];
-    
+
     if (boxes.length === 0) {
       console.warn("No elements found with selector '.brand-item.loop'");
       return;
@@ -154,7 +154,7 @@ watch(open, (newVal) => {
   if (newVal) {
     nextTick(() => {
       const boxes: HTMLElement[] = gsap.utils.toArray('.brand-item.loop') as HTMLElement[];
-      
+
       if (boxes.length === 0) {
         console.warn("No elements found with selector '.brand-item.loop'");
         return;
@@ -242,7 +242,7 @@ const handleDownload = async () => {
   }
   const slug = route.params.slug;
   let startDate = dateRange.value[0].format('YYYYMMDD');
-  let endDate = dateRange.value[1].format('YYYYMMDD'); 
+  let endDate = dateRange.value[1].format('YYYYMMDD');
   navigateTo(`${NAVIGATIONS.payment}/${slug}?startDate=${startDate}&endDate=${endDate}`);
 };
 
@@ -312,7 +312,7 @@ const handleSelectChange = (value: string | null) => {
 const handleDateChange = () => {
   if (dateRange.value.length === 2) {
     let selectedRange = `Từ ${dateRange.value[0].format('YYYY-MM')} đến ${dateRange.value[1].format('YYYY-MM')}`;
-    selectedReport.value = `${dateRange.value[0].format('YYYYMMDD')}-${dateRange.value[1].format('YYYYMMDD')}`;
+    selectedReport.value = `${dateRange.value[0].format('DD/MM/YYYY')}-${dateRange.value[1].format('DD/MM/YYYY')}`;
     message.success(`Đã chọn: ${selectedRange}`);
   }
 };
@@ -367,7 +367,8 @@ const downloadSampleReport = () => {
       </div>
       <div style="margin-bottom: 16px; margin-top: 4px;">
         <div 
-          v-if="props.data.report_type !== 'report_brand' && props.data.report_type !== 'report_category'" 
+          v-if="props.data.report_type !== 'report_brand' && props.data.report_type !== 'report_category'"
+          class="name_report"
           style="text-align: center; margin-bottom: 12px; color: #706b92;"
           >
           Nhóm hàng: <span style="font-weight: 600; color: #E85912">{{ props.data.name }}</span>
@@ -398,36 +399,38 @@ const downloadSampleReport = () => {
         </div>
         <div class="adjust_time_wrapper">
           <p>Tuỳ chỉnh thời gian</p>
-          <a-select 
-            v-model:value="selectedReport" 
-            placeholder="Chọn báo cáo" 
-            ref="select"
-            @change="handleSelectChange"
-          >
-            <a-select-option v-for="opt in selectOptions" :key="opt.value" :value="opt.value">
-              {{ opt.name }}
-            </a-select-option>
-            <a-select-option :value="null">Tuỳ chọn thời gian</a-select-option>
-          </a-select>
+          <div class="adjust_time_wrapper_select">
+            <a-select
+                v-model:value="selectedReport"
+                placeholder="Chọn báo cáo"
+                ref="select"
+                @change="handleSelectChange"
+            >
+              <a-select-option v-for="opt in selectOptions" :key="opt.value" :value="opt.value">
+                {{ opt.name }}
+              </a-select-option>
+              <a-select-option :value="null">Tuỳ chọn thời gian</a-select-option>
+            </a-select>
 
-          <!-- Month Range Picker Modal -->
-          <a-range-picker
-            v-if="showMonthPicker"
-            v-model:value="dateRange"
-            format="YYYY-MM"
-            picker="month"
-            :disabledDate="disabledMonth"
-            style="margin-top: 10px; width: 100%;"
-            :placeholder="['Tháng bắt đầu', 'Tháng kết thúc']"
-            @change="handleDateChange"
-          />
+            <!-- Month Range Picker Modal -->
+            <a-range-picker
+                v-if="showMonthPicker"
+                v-model:value="dateRange"
+                format="MM/YYYY"
+                picker="month"
+                :disabledDate="disabledMonth"
+                style="margin-top: 10px; width: 100%;"
+                :placeholder="['Tháng bắt đầu', 'Tháng kết thúc']"
+                @change="handleDateChange"
+            />
+          </div>
         </div>
         <div class="payment_container">
           <div v-if="!props.data.can_download" class="price">
             <div style="text-align: center">
               <span class="price_real">{{ formatCurrency(props.data.price) }}</span>
             </div>
-            <div style="text-align: center">
+            <div style="text-align: center; display: flex; align-items: center">
               <span class="price_discount">{{ formatCurrency(props.data.price_before_discount) }}</span>
             </div>
           </div>
@@ -466,7 +469,7 @@ const downloadSampleReport = () => {
               </a-button>
             </div>
           </div>
-          <a style="color: #1890FF;" @click="downloadSampleReport()">Tải báo cáo mẫu</a>
+<!--          <a style="color: #1890FF;" @click="downloadSampleReport()">Tải báo cáo mẫu</a>-->
         </div>
       </div>
     </div>
@@ -474,7 +477,7 @@ const downloadSampleReport = () => {
       <div class="sectionHeader">
         <p class="sectionTitle">Được tin dùng bởi 1000+ doanh nghiệp TMĐT hàng đầu</p>
       </div>
-      <div class="default_section">
+      <div class="">
         <div class="brand-list">
           <div v-for="(brand, index) in PARTERS" :key="index" class="brand-item loop">
             <NuxtImg format="webp" loading="lazy" :src="prefixResource + brand" alt="brand_logo"/>
@@ -551,6 +554,13 @@ const downloadSampleReport = () => {
   }
 }
 
+.name_report{
+  font-size: 16px;
+  color: var(--Dark-blue-dark-blue-5, #716B95);
+  font-weight: 400;
+  line-height: 24px;
+}
+
 .title_report {
   color: #241E46;
   text-align: center;
@@ -558,7 +568,6 @@ const downloadSampleReport = () => {
   font-weight: 700;
   font-family: 'Inter', sans-serif;
   line-height: 32px;
-  letter-spacing: 0%;
   padding-top: 32px;
 }
 .noti_view_dept_report {
@@ -570,7 +579,7 @@ const downloadSampleReport = () => {
     background: #FBFAFC;
     padding: 20px;
     border-radius: 8px;
-    margin-right: 20px;
+    margin-right: 32px;
 
     .slide_thumbnail {
       display: flex;
@@ -625,18 +634,24 @@ const downloadSampleReport = () => {
       gap: 16px;
       align-self: flex-start;
       width: 100%;
+
+      .adjust_time_wrapper_select{
+        width: 100%;
+        .ant-select{
+          width: 100% !important;
+          .ant-select-selector{
+            display: flex;
+            align-items: center;
+            height: 60px;
+          }
+        }
+      }
       p {
         align-self: flex-start;
         font-size: 14px;
         font-weight: 700;
       }
-      .ant-select{
-        .ant-select-selector{
-          display: flex;
-          align-items: center;
-          height: 60px;
-        }
-      }
+
     }
     .payment_container {
       display: flex;

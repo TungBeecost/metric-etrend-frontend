@@ -3,6 +3,8 @@ import {useCurrentUser} from "~/stores/current-user.js";
 const currentUserStore = useCurrentUser();
 const {userInfo} = storeToRefs(currentUserStore);
 import {getGlobalVariable} from "~/services/GlobalVariableService";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const emit = defineEmits(['submitStatus'])
 
@@ -69,6 +71,7 @@ const createLead = async (data: any) => {
 }
 
 const submitForm = async (values: any) => {
+  trackEventCommon(EVENT_TYPE.SUBMIT_FORM_ANY_REPORT, 'submit_form_any_report', '');
   loading.value = true
   try {
     let note = `From: ${window.location.href}\n`

@@ -21,8 +21,8 @@ function formatDate(dateStr: string): string {
 }
 
 const route = useRoute();
-const startDate = route.query.startDate
-const endDate = route.query.endDate
+const startDate = getCookie('startDate') || route.query.startDate;
+const endDate = getCookie('endDate') || route.query.endDate;
 
 const formattedStartDate = formatDate(startDate ? startDate : report.start_date);
 const formattedEndDate = formatDate(endDate ? endDate : report.end_date);
@@ -63,7 +63,7 @@ const formattedEndDate = formatDate(endDate ? endDate : report.end_date);
           <p class="includeLabel">Thông tin chi tiết</p>
           <div class="permissionList">
             <p>• Số liệu sàn: Shopee, Tiktok, Lazada, Tiki</p>
-            <p>• Phạm vi dũ liệu: <span style="color: #E85912; font-weight: bold">Từ {{ formattedStartDate }} đến {{ formattedEndDate }}</span></p>
+            <p>• Phạm vi dữ liệu: <span style="color: #E85912; font-weight: bold">Từ {{ formattedStartDate }} đến {{ formattedEndDate }}</span></p>
           </div>
         </div>
       </div>

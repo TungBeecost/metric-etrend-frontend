@@ -31,6 +31,8 @@ const EVENT_TYPE = {
     CLICK_DOWNLOAD_SAMPLE: 'click_download_sample',
     CLICK_RELATED_KEYWORD: 'click_related_keyword',
     VIDEO_START: 'video_start',
+    SUBMIT_FORM_ANY_REPORT: 'submit_form_any_report',
+    CLICK_SEARCH_REPORTS: 'click_search_reports',
 };
 
 export {
