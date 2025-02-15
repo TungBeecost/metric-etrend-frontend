@@ -26,8 +26,8 @@
       <!-- header section -->
       <header ref="headerRef" :class="{ darkBlueHeader: isDarkBlueHeader, 'shadow': isScrolled }">
         <div :class="['header', { 'default_section': !isMobile }]">
-          <img
-              loading='lazy'
+          <NuxtImg
+              loading='lazy' format="webp"
               :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'"
               class="logo"
               :width="isMobile ? 160 : 270"
