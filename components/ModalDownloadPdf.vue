@@ -305,6 +305,7 @@ const buttonText = computed(() => {
 });
 const splitDefault = selectedReport?.value.split('_');
 const dateRange = ref<[Dayjs, Dayjs]>([dayjs(splitDefault[0], 'YYYYMMDD'), dayjs(splitDefault[1], 'YYYYMMDD')]);
+const lastValidDateRange = ref<[Dayjs, Dayjs]>([...dateRange.value]);
 
 // Handle selection change
 const handleSelectChange = async (value: string | null) => {
@@ -312,31 +313,46 @@ const handleSelectChange = async (value: string | null) => {
     showMonthPicker.value = true;
   } else {
     showMonthPicker.value = false;
-    if (!selectedReport) selectedReport.value = selectOptions[1].value;
-    let splitDate = selectedReport?.value.split('_');
-    dateRange.value = [dayjs(splitDate[0], 'YYYYMMDD'), dayjs(splitDate[1], 'YYYYMMDD')];
+    if (!selectedReport.value) selectedReport.value = selectOptions.value[1].value;
+
+    let splitDate = selectedReport.value.split("_");
+    dateRange.value = [dayjs(splitDate[0], "YYYYMMDD"), dayjs(splitDate[1], "YYYYMMDD")];
+
+    // Save as the last valid range
+    lastValidDateRange.value = [...dateRange.value];
   }
-  if(selectedReport.value) {
-    const dateSplit = selectedReport.value.split('_');
-    const startDate = dateSplit[0];
-    const endDate = dateSplit[1];
-    await getPricing(props.data.slug, startDate, endDate);  
+
+  if (selectedReport.value) {
+    const [startDate, endDate] = selectedReport.value.split("_");
+    await getPricing(props.data.slug, startDate, endDate);
   }
 };
 
 // Update selected report when user picks a date range
 const handleDateChange = async () => {
   let customOne = null;
+
   if (dateRange.value.length === 2) {
-    let selectedRange = `Từ ${dateRange.value[0].format('YYYY-MM')} đến ${dateRange.value[1].format('YYYY-MM')}`;
-    customOne = `${dateRange.value[0].format('YYYYMMDD')}_${dateRange.value[1].format('YYYYMMDD')}`;
+    const start = dateRange.value[0];
+    const end = dateRange.value[1];
+
+    // Check if the selected range exceeds 24 months
+    if (end.diff(start, "month") >= 24) {
+      message.error("Khoảng thời gian không được vượt quá 24 tháng!");
+      dateRange.value = [...lastValidDateRange.value]; // Revert to the last valid selection
+      return;
+    }
+
+    // Save the last valid selection
+    lastValidDateRange.value = [...dateRange.value];
+
+    let selectedRange = `Từ ${start.format("YYYY-MM")} đến ${end.format("YYYY-MM")}`;
+    customOne = `${start.format("YYYYMMDD")}_${end.format("YYYYMMDD")}`;
     message.success(`Đã chọn: ${selectedRange}`);
   }
-  if(customOne) {
-    debugger
-    const dateSplit = customOne.split('_');
-    const startDate = dateSplit[0];
-    const endDate = dateSplit[1];
+
+  if (customOne) {
+    const [startDate, endDate] = customOne.split("_");
     await getPricing(props.data.slug, startDate, endDate);
   }
 };
@@ -353,7 +369,20 @@ const shouldShowPrice = computed(() => {
 });
 
 const disabledMonth = (current: Dayjs) => {
-  return current.isBefore(dayjs('2022-01')) || current.isAfter(dayjs().subtract(1, 'month'));
+  // If no date is selected yet, use default range
+  if (!dateRange.value || dateRange.value.length === 0) {
+    return current.isBefore(dayjs("2022-01")) || current.isAfter(dayjs().subtract(1, "month"));
+  }
+
+  const [startDate] = dateRange.value;
+  if (!startDate) return false;
+
+  const maxEndDate = startDate.add(24, "month");
+  return (
+    current.isBefore(dayjs("2022-01")) || 
+    current.isAfter(dayjs().subtract(1, "month")) || 
+    current.isAfter(maxEndDate, "month")
+  );
 };
 </script>
 
