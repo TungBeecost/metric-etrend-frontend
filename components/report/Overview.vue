@@ -126,11 +126,11 @@ useHead({
     <div class="content">
       <div>
         Báo cáo nghiên cứu thị trường {{ props.data.report_type === 'report_top_shop' ? 'shop ' : '' }}<b style="font-weight: bold">{{ props.data.name }}</b> trên sàn Thương mại điện tử
-        {{
+        <b style="font-weight: bold">{{
           props.data.data_analytic && props.data.data_analytic.by_marketplace
               ? props.data.data_analytic.by_marketplace.lst_marketplace.map((platform: Platform) => platform.name).join(', ')
               : 'N/A'
-        }}
+          }}</b>
         dành cho nhà bán hàng <b style="font-weight: bold"> từ tháng
         {{
           props.data.filter_custom

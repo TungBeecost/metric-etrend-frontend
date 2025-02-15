@@ -25,8 +25,8 @@ const config = useRuntimeConfig();
 const reportDetail = ref<any>(null);
 const information = ref({name: '', phone: '', emailAccount: '', companyName: '', taxCode: '', email: '', address: ''});
 const slug = route.params.slug;
-const startDate = route.query.startDate
-const endDate = route.query.endDate
+const startDate = route.query.startDate || getCookie('startDate') || '';
+const endDate = route.query.endDate || getCookie('endDate') || '';
 console.log(startDate, endDate)
 const reportLink = `https://ereport.vn/${slug}`;
 const currentUserStore = useCurrentUser();
@@ -65,7 +65,7 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
           paymentMethod, reportDetail.value.id, 
           redirectUrl.value, discountInfo.discount?.code || null, 
           reportLink, information.value.name, information.value.phone, 
-          information.value.companyName, information.value.taxCode, 
+          information.value.companyName, information.value.taxCode,
           information.value.email, information.value.address,
           startDate, endDate
         );
@@ -98,8 +98,8 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
               null,
               Number(finalPrice),
           );
-          const startDate = Array.isArray(route.query.startDate) ? route.query.startDate[0] : route.query.startDate;
-          const endDate = Array.isArray(route.query.endDate) ? route.query.endDate[0] : route.query.endDate;
+          const startDate = route.query.startDate || getCookie('startDate') || '';
+          const endDate = route.query.endDate || getCookie('endDate') || '';
 
           if (startDate) {
             setCookie('startDate', startDate);
@@ -331,7 +331,7 @@ useSeoMeta({
       </div>
     </a-modal>
     <a-modal v-model:open="openModalWaiting" width="400px" destroy-on-close :footer="null" @ok="handleOk">
-      <div style="display: flex; flex-direction: column; align-items: center; padding-top: 16px">
+      <div style="display: flex; flex-direction: column; align-items: center; padding: 24px">
         <a-spin size="large"/>
         <div class="title_content" style="font-size: 24px; font-weight: 700; line-height: 38px; padding-top: 24px">Vui
           lòng chờ giây lát

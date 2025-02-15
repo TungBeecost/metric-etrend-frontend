@@ -58,7 +58,7 @@ const backgroundColor = computed(() => {
       <div class="title">
         <img :src="platformLogo" alt="Platform Logo" v-if="platformLogo" style="width: 28px; height: 28px; border-radius: 8px;">
         <b style="font-weight: bold; font-size: 20px; line-height: 28px;">{{props.data.name}}</b>
-        <img src="../public/icons/MallIcon.svg" alt="Mall Logo" v-if="props.data.data_analytic.by_shop.lst_top_shop[0].official_type === 0" style="width: 28px; height: 28px; border: none; border-radius: 0">
+        <img src="/icons/MallIcon.svg" alt="Mall Logo" v-if="props.data.data_analytic.by_shop.lst_top_shop[0].official_type === 0" style="width: 28px; height: 28px; border: none; border-radius: 0">
       </div>
       <div class="content_container">
         <div class="content_container_info">
