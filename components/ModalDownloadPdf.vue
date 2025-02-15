@@ -530,7 +530,7 @@ const disabledMonth = (current: Dayjs) => {
       <div class="">
         <div class="brand-list">
           <div v-for="(brand, index) in PARTERS" :key="index" class="brand-item loop">
-            <NuxtImg format="webp" loading="lazy" :src="prefixResource + brand" alt="brand_logo"/>
+            <img :src="prefixResource + brand" alt="brand_logo">
           </div>
         </div>
       </div>
