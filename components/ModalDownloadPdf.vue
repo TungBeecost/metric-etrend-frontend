@@ -595,13 +595,13 @@ const disabledMonth = (current: Dayjs) => {
   display: flex;
   padding: 16px;
   font-family: 'Inter', sans-serif;
+  gap: 20px;
 
   .preview_wrapper {
     flex: 0.6;
     background: #FBFAFC;
     padding: 20px;
     border-radius: 8px;
-    margin-right: 32px;
 
     .slide_thumbnail {
       display: flex;
