@@ -53,7 +53,7 @@ const handleButtonFree = () => {
     <div v-else class="detail_report_free default_section">
       <item-feature-report-free :reports="lstReport.slice(0, 10)" />
     </div>
-    <NuxtImg format="webp" loading="lazy" src="/images/background-search.png" class="background"/>
+    <img loading="lazy" src="/images/background-search.png" class="background"/>
     <a-button style="height: 40px; z-index: 2; padding: 9px 16px; font-weight: 500; margin-top: 24px" @click="handleButtonFree">Xem thêm</a-button>
   </div>
 </template>

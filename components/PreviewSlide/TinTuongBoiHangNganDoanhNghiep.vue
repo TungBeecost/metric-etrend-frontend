@@ -2,7 +2,7 @@
   <div id="khach-hang-tin-tuong-metric">
     <div class="main-slide">
       <div class="title">TIN DÙNG BỞI<br/> HÀNG NGHÌN DOANH NGHIỆP</div>
-      <NuxtImg loading='lazy' format="webp"
+      <img loading="lazy"
           src="https://lh3.googleusercontent.com/pw/AMWts8B4SDXnMFSi27oltRRqMs_OYS8WQrJ-SnHmIzXHy8QDIH84c_VHLZszNsjnEC2aeVIFL53bMs5qLxlZU6bDT3gEVF1LcMyIeShVeRqtxbqr1ftBXhVaJRVYtK9y9cLD7k3J0lAYWeowNOEq7f8Y8Ifg=w3024-h1560-s-no"
       />
     </div>

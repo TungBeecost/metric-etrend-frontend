@@ -7,7 +7,7 @@ import {DATACOLLECTION} from "~/constant/constains";
   <div>
     <ul>
       <li v-for="(item, index) in DATACOLLECTION" :key="index">
-        <NuxtImg format="webp" loading="lazy" :src="item.thumbnail" alt="Thumbnail" />
+        <img loading="lazy" :src="item.thumbnail" alt="Thumbnail" />
         <div>
           <h3>{{ item.title }}</h3>
           <p>{{ item.content }}</p>

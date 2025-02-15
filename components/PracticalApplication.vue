@@ -50,7 +50,7 @@ onMounted(() => {
     <div v-else class="detail_report_free default_section">
       <item-feature-report-free :reports="lstReport.slice(0, 10)" />
     </div>
-    <NuxtImg format="webp" loading="lazy" src="/images/background-search.png" class="background"/>
+    <img loading="lazy" src="/images/background-search.png" class="background"/>
   </div>
 </template>
 

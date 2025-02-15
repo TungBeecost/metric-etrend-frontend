@@ -69,7 +69,7 @@ const isViewReportDisabled = computed(() => userInfo.value.current_plan.remain_c
     <div class="unlock-report-modal">
       <div v-if="currentUser.remainingUnlockPdf">
         <div style="text-align: center;">
-          <NuxtImg loading='lazy' format="webp" src="/icons/DeptReportAlert.svg" class="unlock-icon"/>
+          <img loading="lazy" src="/icons/DeptReportAlert.svg" class="unlock-icon"/>
         </div>
         <div class="content">
           <div class="view_count">

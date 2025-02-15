@@ -374,11 +374,11 @@ onUnmounted(() => {
         </div>
         <div class="scroll_bar_button">
           <a-button style="display: flex; align-items: center; gap: 8px" @click="downloadSampleReport">
-            <NuxtImg format="webp" loading="lazy" src="/icons/Download.svg" alt="pdf"/>
+            <img loading="lazy" src="/icons/Download.svg" alt="pdf"/>
             Tải báo cáo mẫu xem thử
           </a-button>
           <a-button v-if="!data.reportDetail.is_unsellable" type="primary" style="display: flex; align-items: center; gap: 8px" @click="handleClickBuyReport">
-            <NuxtImg format="webp" loading="lazy" src="/icons/CartIconWhite.svg" alt="pdf"/>
+            <img loading="lazy" src="/icons/CartIconWhite.svg" alt="pdf"/>
             Mua báo cáo PDF chi tiết
           </a-button>
         </div>
@@ -496,7 +496,7 @@ onUnmounted(() => {
     <a-modal v-model:visible="showModalSuccess" :footer="null" width="550px">
       <div class="success_modal">
         <div class="success_modal_container">
-          <NuxtImg format="webp" loading="lazy" src="/images/SuccessImage.png" alt="SuccessImage" style="width: 100px; height: 100px; margin: 0 auto; display: block;"/>
+          <img loading="lazy" src="/images/SuccessImage.png" alt="SuccessImage" style="width: 100px; height: 100px; margin: 0 auto; display: block;"/>
           <div class="success_modal_content">
             <p class="success_modal_content_title">Cảm ơn bạn đã quan tâm!</p>
             <p>Báo cáo mẫu sẽ tự động được tải xuống trong giây lát.</p>

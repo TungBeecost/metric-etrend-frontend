@@ -83,7 +83,7 @@ const handdleCoppy = () => {
     <div v-else class="account_info_content default_section">
       <div class="user_info">
         <div class="basic_info">
-          <NuxtImg format="webp" loading="lazy" :src="props.userInfo.avatar" alt="user-avatar"/>
+          <img loading="lazy" :src="props.userInfo.avatar" alt="user-avatar"/>
           <div class="basic_info_text">
             <div class="name">{{props.userInfo.first_name}} {{props.userInfo.last_name}}</div>
             <div class="email">{{props.userInfo.email}}</div>

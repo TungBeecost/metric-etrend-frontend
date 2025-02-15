@@ -5,9 +5,9 @@
         <div class="shop-index">
           {{ Number(page) + 1 < 10 ? '0' + (Number(page) + 1) : Number(page) + 1 }}
         </div>
-        <NuxtImg format="webp" loading="lazy" v-if="shopDetail.official_type === 0" :src="platformIcons[shopDetail.platform_id].normal"
+        <img loading="lazy" v-if="shopDetail.official_type === 0" :src="platformIcons[shopDetail.platform_id].normal"
              class="platform-icon" style="border-radius: 50%"/>
-        <NuxtImg format="webp" loading="lazy" v-else :src="platformIcons[shopDetail.platform_id]?.mall" class="platform-icon"
+        <img loading="lazy" v-else :src="platformIcons[shopDetail.platform_id]?.mall" class="platform-icon"
              style="border-radius: 500px"/>
         <a :href="shopDetail.url_shop" style="color: #000">
           Chi tiết số liệu 20 Shop hàng đầu

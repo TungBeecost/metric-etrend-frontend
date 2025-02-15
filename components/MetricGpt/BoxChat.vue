@@ -8,7 +8,7 @@
           :style="{ height: fullScreen ? (reportId ? 'calc(100vh - 360px)' : 'calc(100vh - 280px)') : '' }"      >
         <div class="" v-for="item in messages" :key="item.id">
           <div v-if="item.sender === 'bot'" class="flex items-start">
-            <NuxtImg loading='lazy' format="webp" src="/images/logo-square.svg" alt="MetricGPT" class="w-8 h-8 rounded-full"/>
+            <img loading="lazy" src="/images/logo-square.svg" alt="MetricGPT" class="w-8 h-8 rounded-full"/>
             <div class="ml-3 bg-gray-100 p-3 rounded-lg inline-flex items-end">
               <div class="text-sm text-gray-800 prose max-ch-80" v-html="micromark(item.text)"></div>
             </div>
