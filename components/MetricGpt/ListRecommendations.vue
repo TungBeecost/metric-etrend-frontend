@@ -33,8 +33,8 @@ const uniqueRecommendations = getUniqueRecommendations(props.recommendations);
 <template>
   <div class="recommendations">
     <div v-for="recommendation in uniqueRecommendations" :key="recommendation.slug" class="recommendation-item" @click="handleClick(recommendation)">
-      <NuxtImg format="webp" loading="lazy" v-if="recommendation.url_thumbnail" :src="recommendation.url_thumbnail" :alt="recommendation.name_report" class="thumbnail"/>
-      <NuxtImg format="webp" loading="lazy" v-else src="/images/default_thumbnail_report.png" class="thumbnail" />
+      <img loading="lazy" v-if="recommendation.url_thumbnail" :src="recommendation.url_thumbnail" :alt="recommendation.name_report" class="thumbnail"/>
+      <img loading="lazy" v-else src="/images/default_thumbnail_report.png" class="thumbnail" />
       <div>
         <p class="name">{{ formatReportName(recommendation.name_report) }}</p>
       </div>

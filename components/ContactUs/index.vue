@@ -166,7 +166,7 @@ const handleSubmitLeadForm = async () => {
 
 <template>
   <div class="wrapper contact-us">
-    <NuxtImg loading='lazy' format="webp" src="/images/orange-banner-wave.png" class="background"
+    <img loading="lazy" src="/images/orange-banner-wave.png" class="background"
     />
 
     <div class="content default_section">

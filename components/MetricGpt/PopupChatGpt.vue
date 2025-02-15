@@ -33,7 +33,7 @@ onBeforeRouteLeave(() => {
   <div v-show="showChatBox" :class="fullScreen ? 'custom-chat-box-full-screen' : 'custom-chat-box'">
     <div class="chat-box-content">
       <div class="chat-box-header">
-        <NuxtImg format="webp" loading="lazy" src="/images/logo-gpt.svg" alt="MetricGPT" class="w-32 ml-3"/>
+        <img loading="lazy" src="/images/logo-gpt.svg" alt="MetricGPT" class="w-32 ml-3"/>
         <div class="icon_chat_box flex space-x-2">
           <div class="mobile-icon-hover bg-gray-100 hover:bg-orange-100 hover:text-orange-600 text-gray-400 cursor-pointer rounded-full w-8 h-8 flex items-center justify-center sm:hover:bg">
             <UIcon
@@ -64,7 +64,7 @@ onBeforeRouteLeave(() => {
     <div class="fixed bottom-4 right-4 z-50 inline-flex items-center justify-center w-14 h-14 rounded-full bg-white ring ring-orange-100">
       <div class="absolute z-10 top-0 left-0 w-full h-full rounded-full bg-orange-100 animate-[ping_2s_ease-in-out_infinite]"></div>
       <div class="relative z-20">
-        <NuxtImg loading='lazy' format="webp" src="/icons/LogoFloat.svg" alt="MetricGPT" class="rounded-full"/>
+        <img loading="lazy" src="/icons/LogoFloat.svg" alt="MetricGPT" class="rounded-full"/>
       </div>
     </div>
   </div>

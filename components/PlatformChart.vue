@@ -184,7 +184,7 @@ const dataSource = computed(() => {
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'platform'">
             <div class="platform-column">
-              <NuxtImg format="webp" loading="lazy" :src="record.platformIcon" class="platform-icon"/>
+              <img loading="lazy" :src="record.platformIcon" class="platform-icon"/>
               <span>{{ record.platform }}</span>
             </div>
           </template>

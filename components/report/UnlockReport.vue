@@ -136,7 +136,7 @@ const openModalHandle = () => {
     <div class="unlock-report-modal">
       <div v-if="currentUser.remainingUnlock">
         <div style="text-align: center;">
-          <NuxtImg loading='lazy' format="webp" src="/images/Unlock-Document.png" class="unlock-icon"/>
+          <img loading="lazy" src="/images/Unlock-Document.png" class="unlock-icon"/>
         </div>
 
         <div class="content">
@@ -157,7 +157,7 @@ const openModalHandle = () => {
       </div>
       <div v-else>
         <div style="text-align: center;">
-          <NuxtImg loading='lazy' format="webp" src="/images/Unlock-Document-faded.svg" class="unlock-icon"/>
+          <img loading="lazy" src="/images/Unlock-Document-faded.svg" class="unlock-icon"/>
         </div>
 
         <div class="content">

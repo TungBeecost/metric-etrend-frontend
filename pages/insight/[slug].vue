@@ -348,7 +348,7 @@ watch(userInfo, (newUserInfo) => {
               </clipPath>
             </defs>
           </svg>
-          <NuxtImg loading='lazy' format="webp" src="/images/orange-banner-wave.png" class="background"/>
+          <img loading="lazy" src="/images/orange-banner-wave.png" class="background"/>
         </div>
         <report-content
             v-if="data?.data_analytic?.table_of_content.filter(item => item !== 'Không có').length"

@@ -3,9 +3,9 @@
     <div class="footerContent">
       <!-- introduce -->
       <div class="info introduce">
-        <NuxtImg loading='lazy' format="webp" src="/images/Logo-black.svg" width="186" height="36" />
+        <img loading="lazy" src="/images/Logo-black.svg" width="186" height="36" />
         <p style="font-size: 16px">Khai thác hơn 1 triệu báo cáo thị trường Ecommerce dựa trên nền tảng Big Data ứng dụng AI của Metric. Cung cấp cho cá nhân & doanh nghiệp mọi xu hướng và dữ liệu về hàng hóa, thương hiệu, nhà bán... chỉ trong 5 giây. Giúp tăng tốc các hoạt động kinh doanh 5 lần và nắm giữ mọi cơ hội thị trường.</p>
-        <NuxtImg loading='lazy' format="webp" src="/images/gov-mark.png" width="176" height="67" />
+        <img loading="lazy" src="/images/gov-mark.png" width="176" height="67" />
       </div>
 
       <!-- term & policy -->
@@ -32,13 +32,13 @@
       <p class="copyright">© 2024 Metric.vn</p>
       <div class="socialIconList">
         <div onclick="window.location = 'https://www.facebook.com/metricplatform'">
-          <NuxtImg loading='lazy' format="webp" src="/icons/Social-FB.svg" width="24" height="24" class="" />
+          <img loading="lazy" src="/icons/Social-FB.svg" width="24" height="24" class="" />
         </div>
         <div onclick="window.location = 'https://www.linkedin.com/company/metricplatform/mycompany/'">
-          <NuxtImg loading='lazy' format="webp" src="/icons/Social-Linkedin.svg" width="24" height="24" />
+          <img loading="lazy" src="/icons/Social-Linkedin.svg" width="24" height="24" />
         </div>
         <div onclick="window.location = 'https://www.youtube.com/@metricplatform'">
-          <NuxtImg loading='lazy' format="webp" src="/icons/Social-Ytb.svg" width="24" height="24" />
+          <img loading="lazy" src="/icons/Social-Ytb.svg" width="24" height="24" />
         </div>
       </div>
     </div>

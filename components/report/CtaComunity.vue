@@ -82,7 +82,7 @@ const toggleUnlock = () => {
             để truy cập không giới hạn tổng hợp báo cáo E-commerce.
           </p>
         </div>
-        <NuxtImg format="webp" loading="lazy" class="image" src="/icons/FormImageCommunity.svg" alt="form_image" />
+        <img loading="lazy" class="image" src="/icons/FormImageCommunity.svg" alt="form_image" />
       </div>
     </div>
   </a-modal>
