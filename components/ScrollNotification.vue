@@ -40,7 +40,7 @@ const openCta = ref(false);
 const downloadReport = () => {
   trackEventCommon(EVENT_TYPE.CLICK_DOWNLOAD_SAMPLE, 'click_download_sample', '');
   const url = 'https://storage.googleapis.com/ereport-static/bao-cao-nganh-hang-sample.pdf'; // URL file cần tải xuống
-  const fileName = 'Báo cáo mẫu.pdf'; // Tên file sẽ được lưu trên máy người dùng
+  const fileName = 'Báo cáo mẫu.pdf';
   if (url) {
     fetch(url, {
       method: 'GET',
@@ -198,14 +198,23 @@ onBeforeRouteLeave(() => {
         </div>
       </div>
     </div>
-    <img loading="lazy" src="@/public/images/ImageOnBackgroundScroll.png" alt="ImageOnBackgroundScroll" style="position: absolute; bottom: 0; right: 0; width: 100%;"/>
-    <img loading="lazy" src="@/public/images/BackgroundScroll.png" alt="BackgroundScrollIcon" style="width: 100%"/>
+    <NuxtImg format="webp" loading="lazy" src="/images/ImageOnBackgroundScroll.png" alt="ImageOnBackgroundScroll" style="position: absolute; bottom: 0; right: 0; width: 100%;"/>
+    <NuxtImg format="webp" loading="lazy" src="/images/BackgroundScroll.png" alt="BackgroundScrollIcon" style="width: 100%"/>
   </div>
   <div v-else class="button-notification">
     <button
-        style="display: flex; width: 100%; height: 40px; padding: 9px 16px; flex-direction: column; justify-content: center; align-items: center; border-radius: 8px; background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 99.23%); color: #fff; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"
+        style="display: flex; height: 40px; padding: 9px 16px; justify-content: center; align-items: center; border-radius: 8px; background: #FAF9FF; color: #241E46; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"
+        v-if="isMobile"
+        @click="downloadReport">
+      <img src="/icons/Download.svg" alt="DownloadIcon" style="width: 24px; height: 24px; margin-right: 8px;"/>
+      Tải báo cáo mẫu
+    </button>
+    <button
+        :class="{ 'full-width': !isMobile }"
+        style="display: flex; height: 40px; padding: 9px 16px; justify-content: center; align-items: center; border-radius: 8px; background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 99.23%); color: #fff; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"
         @click="handleOpenModal">
-      Tải báo cáo chi tiết
+      <img src="/icons/CartIconWhite.svg" alt="CartIconWhite" style="width: 24px; height: 24px; margin-right: 8px;"/>
+      Mua báo cáo PDF
     </button>
   </div>
   <modal-download-pdf v-model:open="open" :data="props.data"/>
@@ -213,7 +222,7 @@ onBeforeRouteLeave(() => {
   <a-modal v-model:visible="showModalSuccess" :footer="null" width="550px">
     <div class="success_modal">
       <div class="success_modal_container">
-        <img loading="lazy" src="@/public/images/SuccessImage.png" alt="SuccessImage" style="width: 100px; height: 100px; margin: 0 auto; display: block;"/>
+        <NuxtImg format="webp" loading="lazy" src="/images/SuccessImage.png" alt="SuccessImage" style="width: 100px; height: 100px; margin: 0 auto; display: block;"/>
         <div class="success_modal_content">
           <p class="success_modal_content_title">Cảm ơn bạn đã quan tâm!</p>
           <p>Báo cáo mẫu sẽ tự động được tải xuống trong giây lát.</p>
@@ -232,6 +241,9 @@ onBeforeRouteLeave(() => {
 
 <style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+.full-width {
+  width: 100%;
+}
 
 .custom-notification {
   position: fixed;
@@ -253,10 +265,10 @@ onBeforeRouteLeave(() => {
   right: 20px;
   width: 350px;
   height: 40px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
   overflow: hidden;
   z-index: 999;
+  gap: 8px;
   font-family: 'Inter', sans-serif;
 }
 

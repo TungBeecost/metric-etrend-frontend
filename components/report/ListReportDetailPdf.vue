@@ -18,8 +18,8 @@ const props = defineProps({
                :to="`${NAVIGATIONS.home}${item.source ==='marketing' ? 'insight/' + item.slug : item.slug}`">
       <div class="item">
         <div class="image-metric">
-          <img loading="lazy" v-if="item.url_thumbnail" :src="getUrlImageThumbnail(item.url_thumbnail)" alt="">
-          <img loading="lazy" v-else src="/images/default_thumbnail_report.png" class="default_thumbnail" />
+          <NuxtImg format="webp" loading="lazy" v-if="item.url_thumbnail" :src="getUrlImageThumbnail(item.url_thumbnail)" alt=""/>
+          <NuxtImg format="webp" loading="lazy" v-else src="/images/default_thumbnail_report.png" class="default_thumbnail" />
         </div>
         <div class="info">
           <div v-if="item.slug.startsWith('bao-cao')" class="name">

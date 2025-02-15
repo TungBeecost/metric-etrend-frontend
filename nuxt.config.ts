@@ -29,11 +29,11 @@ export default defineNuxtConfig({
             ],
             link: [
                 {
-                    rel: "icon",
+                    rel: "preconnect",
                     href: "https://lh3.googleusercontent.com/pw/AM-JKLVKUzx1GjapZkkkECUXYDk4Vaiguh_oem4OaXJ4pr5xICAgjbRPHZ7QXO4uZ4iHJc97ZnLoTW6sAjkjJr--D14mkA2lHsr4SmVX1d0vshEnjan0WvlOVEoLLrqnpGB_7ypmpyfcKXgm4X6tvRRUO-H_=w52",
                 },
                 {
-                    rel: "stylesheet",
+                    rel: "preconnect",
                     href: "https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap",
                 },
             ],
@@ -54,6 +54,8 @@ export default defineNuxtConfig({
                 },
                 {
                     src: "https://accounts.google.com/gsi/client",
+                    defer: true,
+                    async: true,
                 }
             ],
             noscript: [
@@ -91,6 +93,7 @@ export default defineNuxtConfig({
             },
             posthogPublicKey: process.env.POSTHOG_PUBLIC_KEY,
             posthogHost: process.env.POSTHOG_HOST,
+            samplePdfUrl: process.env.SAMPLE_PDF_URL,
         },
         publicRuntimeConfig: {
             gtm: {
@@ -106,14 +109,6 @@ export default defineNuxtConfig({
             src: "~/plugins/analytics.js",
             ssr: false,
         },
-        {
-            src: "~/plugins/gtm-tracking.js",
-            ssr: true,
-        },
-        // {
-        //     src: "~/plugins/nuxt-gtm.js",
-        //     ssr: true,
-        // },
     ],
 
     css: [
@@ -147,20 +142,27 @@ export default defineNuxtConfig({
     "@pinia/nuxt", "@nuxt/scripts"],
 
     image: {
+      provider: 'ipx',
+      format: ['webp'],
       formats: {
         webp: {
           quality: 80
         }
-      }
+      },
+      domains: [
+        'cf.shopee.vn', 
+        'vn-live-01.slatic.net', 
+        'storage.googleapis.com', 
+        'filebroker-cdn.lazada.vn', 
+        'lh3.googleusercontent.com',
+        'p16-oec-va.ibyteimg.com',
+      ]
     },
 
     antd: {
         extractStyle: true,
     },
 
-    gtm: {
-        id: 'GTM-522F9NZ',
-    },
     colorMode: {
         preference: 'light'
     },
@@ -175,6 +177,5 @@ export default defineNuxtConfig({
 
     nitro: {
         compressPublicAssets: true,
-    }
-
+    },
 });

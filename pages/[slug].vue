@@ -374,11 +374,11 @@ onUnmounted(() => {
         </div>
         <div class="scroll_bar_button">
           <a-button style="display: flex; align-items: center; gap: 8px" @click="downloadSampleReport">
-            <img loading="lazy" src="/icons/Download.svg" alt="pdf"/>
+            <NuxtImg format="webp" loading="lazy" src="/icons/Download.svg" alt="pdf"/>
             Tải báo cáo mẫu xem thử
           </a-button>
-          <a-button type="primary" style="display: flex; align-items: center; gap: 8px" @click="handleClickBuyReport">
-            <img loading="lazy" src="/icons/CartIconWhite.svg" alt="pdf"/>
+          <a-button v-if="!data.reportDetail.is_unsellable" type="primary" style="display: flex; align-items: center; gap: 8px" @click="handleClickBuyReport">
+            <NuxtImg format="webp" loading="lazy" src="/icons/CartIconWhite.svg" alt="pdf"/>
             Mua báo cáo PDF chi tiết
           </a-button>
         </div>
@@ -395,6 +395,7 @@ onUnmounted(() => {
         <div class="container_report_detail">
           <div class="container_report_detail_left">
             <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
+            <top-shop-info v-if="data?.reportDetail.report_type === 'report_top_shop'" :data="data?.reportDetail"/>
             <report-content :data="data?.reportDetail"/>
           </div>
           <div class="container_report_detail_right">
@@ -440,7 +441,7 @@ onUnmounted(() => {
       <transition name="fade">
         <div
             v-if="showAdvertisement && data?.reportDetail.report_type !== 'report_category'
-            && userInfo.current_plan.plan_code !== 'eReport12' && userInfo.current_plan.plan_code !== 'eReport12_partner' && !data?.reportDetail?.is_unsellable"
+            && userInfo?.current_plan?.plan_code !== 'eReport12' && userInfo?.current_plan?.plan_code !== 'eReport12_partner' && !data?.reportDetail?.is_unsellable"
             class="advertisement">
           <scroll-notification
               v-if="data.reportDetail.name"
@@ -453,7 +454,7 @@ onUnmounted(() => {
       </transition>
       <transition name="fade">
         <div
-            v-if="(userInfo.current_plan.plan_code === 'eReport12' || userInfo.current_plan.plan_code === 'eReport12_partner') && !data?.reportDetail?.is_unsellable"
+            v-if="(userInfo?.current_plan?.plan_code === 'eReport12' || userInfo?.current_plan?.plan_code === 'eReport12_partner') && !data?.reportDetail?.is_unsellable"
             class="chat_gpt">
           <popup-chat-gpt
               :name="data?.reportDetail?.name"
@@ -495,7 +496,7 @@ onUnmounted(() => {
     <a-modal v-model:visible="showModalSuccess" :footer="null" width="550px">
       <div class="success_modal">
         <div class="success_modal_container">
-          <img loading="lazy" src="@/public/images/SuccessImage.png" alt="SuccessImage" style="width: 100px; height: 100px; margin: 0 auto; display: block;"/>
+          <NuxtImg format="webp" loading="lazy" src="/images/SuccessImage.png" alt="SuccessImage" style="width: 100px; height: 100px; margin: 0 auto; display: block;"/>
           <div class="success_modal_content">
             <p class="success_modal_content_title">Cảm ơn bạn đã quan tâm!</p>
             <p>Báo cáo mẫu sẽ tự động được tải xuống trong giây lát.</p>
@@ -519,6 +520,7 @@ onUnmounted(() => {
   padding-bottom: 40px;
 
   .scroll_bar{
+    top: 60px;
     position: fixed;
     background-color: #FFFFFF;
     width: 100%;

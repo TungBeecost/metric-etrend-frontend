@@ -1,7 +1,7 @@
 <template>
   <div v-if="props.productItem" class="flex flex-col product-item">
     <div class="relative flex flex-grow-0 justify-between items-start px-2 product-img">
-      <img
+      <NuxtImg format="webp" loading="lazy"
           v-if="props.productItem.url_thumbnail"
           :src="getUrlImageOption(props.productItem.url_thumbnail, 'thumbnail')"
           class="absolute object-cover"
@@ -43,7 +43,7 @@
       >
         <div class="flex items-center">
           <template v-if="props.productItem.shop_platform_name">
-            <img loading="lazy" v-if="platform_logo_url" :src="platform_logo_url" class="img-platform mr-1" />
+            <NuxtImg format="webp" loading="lazy" v-if="platform_logo_url" :src="platform_logo_url" class="img-platform mr-1" />
             <svg v-else width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <!-- SVG paths -->
             </svg>

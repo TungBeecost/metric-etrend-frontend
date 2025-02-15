@@ -10,6 +10,7 @@ import CheckOutPdf from "~/components/payment-service/CheckOutPdf.vue";
 import {upperFirst} from "scule";
 import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService";
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
+import {getCookie, removeCookie, setCookie} from "~/helpers/CookieHelper";
 
 const redirectUrl = ref('');
 const discountValue = ref<any>({});
@@ -24,6 +25,9 @@ const config = useRuntimeConfig();
 const reportDetail = ref<any>(null);
 const information = ref({name: '', phone: '', emailAccount: '', companyName: '', taxCode: '', email: '', address: ''});
 const slug = route.params.slug;
+const startDate = route.query.startDate || getCookie('startDate') || '';
+const endDate = route.query.endDate || getCookie('endDate') || '';
+console.log(startDate, endDate)
 const reportLink = `https://ereport.vn/${slug}`;
 const currentUserStore = useCurrentUser();
 
@@ -57,7 +61,14 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
         //   console.log('information', information.value);
         //   transactionResult = await createPaymentTransactionPdfGuest(paymentMethod, reportDetail.value.id, redirectUrl.value, finalPrice, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.emailAccount, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
         // } else {
-        transactionResult = await createPaymentTransactionPdf(paymentMethod, reportDetail.value.id, redirectUrl.value, discountInfo.discount?.code || null, reportLink, information.value.name, information.value.phone, information.value.companyName, information.value.taxCode, information.value.email, information.value.address);
+        transactionResult = await createPaymentTransactionPdf(
+          paymentMethod, reportDetail.value.id, 
+          redirectUrl.value, discountInfo.discount?.code || null, 
+          reportLink, information.value.name, information.value.phone, 
+          information.value.companyName, information.value.taxCode,
+          information.value.email, information.value.address,
+          startDate, endDate
+        );
         // }
         sessionStorage.setItem('name_payment', `${information.value.name}`);
         sessionStorage.setItem('phone_payment', `${information.value.phone}`);
@@ -87,6 +98,17 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
               null,
               Number(finalPrice),
           );
+          const startDate = route.query.startDate || getCookie('startDate') || '';
+          const endDate = route.query.endDate || getCookie('endDate') || '';
+
+          if (startDate) {
+            setCookie('startDate', startDate);
+          }
+
+          if (endDate) {
+            setCookie('endDate', endDate);
+          }
+
           window.location.href = transactionResult.response.payment_url;
         } else {
           if (transactionResult.response.status == 'done') {
@@ -118,7 +140,7 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
 const fetchReportData = async () => {
   const slug = route.params.slug;
   try {
-    let url = `${config.public.API_ENDPOINT}/api/report/detail_payment?slug=${slug}`;
+    let url = `${config.public.API_ENDPOINT}/api/report/detail_payment?slug=${slug}&start_date=${startDate}&end_date=${endDate}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
     }
@@ -309,7 +331,7 @@ useSeoMeta({
       </div>
     </a-modal>
     <a-modal v-model:open="openModalWaiting" width="400px" destroy-on-close :footer="null" @ok="handleOk">
-      <div style="display: flex; flex-direction: column; align-items: center; padding-top: 16px">
+      <div style="display: flex; flex-direction: column; align-items: center; padding: 24px">
         <a-spin size="large"/>
         <div class="title_content" style="font-size: 24px; font-weight: 700; line-height: 38px; padding-top: 24px">Vui
           lòng chờ giây lát

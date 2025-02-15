@@ -5,7 +5,7 @@
 <div class="highlight_container">
   <div class="highlight_format default_section">
     <div class="highlight_image">
-      <img loading="lazy" src="~/public/images/image_highlight.png" alt="highlight_image">
+      <NuxtImg format="webp" loading="lazy" src="/images/image_highlight.png" alt="highlight_image"/>
     </div>
     <div class="highlight_content">
       <p class="title">Các số liệu nổi bật của eReport</p>

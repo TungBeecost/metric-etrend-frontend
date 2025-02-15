@@ -125,13 +125,13 @@ useHead({
   <div class="overview">
     <div class="content">
       <div>
-        Báo cáo nghiên cứu thị trường <b>{{ props.data.name }}</b> trên sàn Thương mại điện tử
-        {{
+        Báo cáo nghiên cứu thị trường {{ props.data.report_type === 'report_top_shop' ? 'shop ' : '' }}<b style="font-weight: bold">{{ props.data.name }}</b> trên sàn Thương mại điện tử
+        <b style="font-weight: bold">{{
           props.data.data_analytic && props.data.data_analytic.by_marketplace
               ? props.data.data_analytic.by_marketplace.lst_marketplace.map((platform: Platform) => platform.name).join(', ')
               : 'N/A'
-        }}
-        dành cho nhà bán hàng <b> từ tháng
+          }}</b>
+        dành cho nhà bán hàng <b style="font-weight: bold"> từ tháng
         {{
           props.data.filter_custom
               ? props.data.start_date.slice(4, 6) + '/' + props.data.start_date.slice(0, 4)
@@ -150,9 +150,9 @@ useHead({
       <br>
       <div>
         <span class="text-bold">
-          Báo cáo doanh thu {{ props.data.name }} trên sàn TMĐT đạt
+          Báo cáo doanh thu {{ props.data.report_type === 'report_top_shop' ? 'gian hàng ' : '' }} {{ props.data.name }} trên sàn TMĐT đạt
           <BlurContent :is-hide-content="isHideContent">
-            <b>{{
+            <b style="font-weight: bold">{{
                 props.data.data_analytic && props.data.data_analytic.by_overview ? formatSortTextCurrency(props.data.data_analytic.by_overview.revenue) : 'N/A'
               }} đồng</b>
           </BlurContent>
@@ -162,23 +162,36 @@ useHead({
           !isNaN(diffRevenueLatestQuarterPercent) && diffRevenueLatestQuarterPercent > 0 ? "tăng trưởng hơn" : "giảm"
         }}
         {{ !isNaN(diffRevenueLatestQuarterPercent) ? formatSortTextCurrency(Math.abs(diffRevenueLatestQuarterPercent)) : 'N/A' }}%
-        Đánh giá thị trường {{ props.data.name }}, phân khúc giá có doanh số cao nhất là từ
-        {{
-          priceRangesSortBy("revenue")[0]
-              ? formatCurrency(priceRangesSortBy("revenue")[0].begin)
-              : 'N/A'
-        }} -
-        {{
-          priceRangesSortBy("revenue")[0]
-              ? formatCurrency(priceRangesSortBy("revenue")[0].end)
-              : 'N/A'
-        }}.
-        <span v-if="props.data.report_type !== 'report_brand'">
-          Những thương hiệu {{ props.data.name }} được phân phối và
-          bán chạy nhất là
-          <b>{{ top5Shops().join(', ') }}</b>
-          v.v...
-        </span>
+        <div v-if="props.data.report_type !== 'report_top_shop'">
+          Đánh giá thị trường {{ props.data.name }}, phân khúc giá có doanh số cao nhất là từ
+          {{
+            priceRangesSortBy("revenue")[0]
+                ? formatCurrency(priceRangesSortBy("revenue")[0].begin)
+                : 'N/A'
+          }} -
+          {{
+            priceRangesSortBy("revenue")[0]
+                ? formatCurrency(priceRangesSortBy("revenue")[0].end)
+                : 'N/A'
+          }}.
+          <span v-if="props.data.report_type !== 'report_brand'">
+            Những thương hiệu {{ props.data.name }} được phân phối và
+            bán chạy nhất là
+            <b>{{ top5Shops().join(', ') }}</b>
+            v.v...
+          </span>
+        </div>
+        <div v-else>
+          {{ props.data.name }} kinh doanh ngành hàng {{props.data.lst_category[0].name}} với nhóm hàng phổ biến là {{ top5Shops().join(', ') }}... Phân khúc giá sản phẩm {{ props.data.name }} được bán phổ biến từ {{
+            priceRangesSortBy("revenue")[0]
+                ? formatCurrency(priceRangesSortBy("revenue")[0].begin)
+                : 'N/A'
+          }} - {{
+            priceRangesSortBy("revenue")[0]
+                ? formatCurrency(priceRangesSortBy("revenue")[0].end)
+                : 'N/A'
+          }}.
+        </div>
       </div>
     </div>
   </div>

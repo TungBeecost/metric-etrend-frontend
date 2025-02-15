@@ -27,11 +27,12 @@
       <header ref="headerRef" :class="{ darkBlueHeader: isDarkBlueHeader, 'shadow': isScrolled }">
         <div :class="['header', { 'default_section': !isMobile }]">
           <NuxtImg
+              loading='lazy' format="webp"
               :src="isDarkBlueHeader ? '/images/Logo.svg' : '/images/Logo-black.svg'"
               class="logo"
               :width="isMobile ? 160 : 270"
               :height="isMobile ? 21 : 32"
-              style="cursor: pointer; padding-left: 24px"
+              style="cursor: pointer; padding-left: 24px; object-fit: contain"
               @click="navigateToHome"
           />
 

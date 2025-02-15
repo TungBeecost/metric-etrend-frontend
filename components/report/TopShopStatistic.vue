@@ -443,7 +443,7 @@ const chartOptionsOutput = computed(() => ({
           @click="newTabUrl(record.url_shop)"
 
       >
-        <img
+        <NuxtImg format="webp"
             :src="getUrlImageOption(record.url_image, 'thumbnail')"
             :alt="record.name"
             style="width: 64px; height: 64px; border-radius: 8px; background-size: cover;"

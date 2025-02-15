@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const {report} = defineProps({
+import { onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { getCookie, removeCookie } from '~/helpers/CookieHelper';
+
+const { report } = defineProps({
   report: {
     type: Object,
     required: true
@@ -16,12 +20,34 @@ interface Marketplace {
 function formatDate(dateStr: string): string {
   const year = dateStr.substring(0, 4);
   const month = dateStr.substring(4, 6);
-  const day = dateStr.substring(6, 8);
-  return `${day}-${month}-${year}`;
+  return `${month}-${year}`;
 }
 
-const formattedStartDate = formatDate(report.start_date);
-const formattedEndDate = formatDate(report.end_date);
+const route = useRoute();
+const router = useRouter();
+
+onMounted(() => {
+  let startDate = route.query.startDate as string | undefined;
+  let endDate = route.query.endDate as string | undefined;
+
+  if (!startDate || !endDate) {
+    startDate = getCookie('startDate') || undefined;
+    endDate = getCookie('endDate') || undefined;
+
+    if (startDate && endDate) {
+      router.replace({
+        query: {
+          ...route.query,
+          startDate,
+          endDate
+        }
+      });
+    }
+  }
+});
+
+const formattedStartDate = formatDate(route.query.startDate ? route.query.startDate as string : report.start_date);
+const formattedEndDate = formatDate(route.query.endDate ? route.query.endDate as string : report.end_date);
 
 </script>
 
@@ -45,11 +71,11 @@ const formattedEndDate = formatDate(report.end_date);
         <div class="summary">
           <div class="report_type">
             <p>Loại báo cáo</p>
-            <p style="font-size: 16px; color: #E85912; font-weight: 700;">Báo cáo PDF</p>
+            <p style="font-size: 16px; color: #241E46; font-weight: 700;">Báo cáo PDF</p>
           </div>
           <div class="report_group">
             <p>Nhóm hàng</p>
-            <p style="font-size: 16px; color: #241E46; font-weight: 700;">{{ report.name }}</p>
+            <p style="font-size: 16px; color: #E85912; font-weight: 700;">{{ report.name }}</p>
           </div>
         </div>
 
@@ -59,7 +85,7 @@ const formattedEndDate = formatDate(report.end_date);
           <p class="includeLabel">Thông tin chi tiết</p>
           <div class="permissionList">
             <p>• Số liệu sàn: Shopee, Tiktok, Lazada, Tiki</p>
-            <p>• Từ {{ formattedStartDate }} đến {{ formattedEndDate }}</p>
+            <p>• Phạm vi dữ liệu: <span style="color: #E85912; font-weight: bold">Từ {{ formattedStartDate }} đến {{ formattedEndDate }}</span></p>
           </div>
         </div>
       </div>

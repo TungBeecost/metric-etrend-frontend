@@ -34,13 +34,13 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  if (route.query.download === "1") {
+  if (route.query.period_of_time_download) {
     open.value = true;
 
     router.replace({
       query: {
         ...route.query,
-        download: undefined,
+        period_of_time_download: undefined,
       },
     });
   }
@@ -141,7 +141,7 @@ const showMetricButton = computed(() => {
                   d="M505.7 661a8 8 0 0 0 12.6 0l112-141.7c4.1-5.2.4-12.9-6.3-12.9h-74.1V168c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v338.3H400c-6.7 0-10.4 7.7-6.3 12.9l112 141.8zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
             </svg>
           </i>
-          Tải báo cáo PDF chi tiết
+          Mua báo cáo PDF chi tiết
         </a-button>
         <a-button
             style="width: 100%; height: 50px; font-family: Montserrat,sans-serif; font-weight: 500;"
@@ -155,7 +155,7 @@ const showMetricButton = computed(() => {
       </div>
     </div>
   </div>
-  <modal-download-pdf v-model:open="open" :data="props.data"/>
+  <modal-download-pdf v-model:open="open" :data="props.data" :period-of-time-download="route.query.period_of_time_download"/>
   <cta v-model:open="openCta"/>
 </template>
 
