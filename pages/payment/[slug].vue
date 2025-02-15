@@ -140,7 +140,7 @@ const handlePayment = async ({finalPrice, discountInfo}: { finalPrice: string; d
 const fetchReportData = async () => {
   const slug = route.params.slug;
   try {
-    let url = `${config.public.API_ENDPOINT}/api/report/detail_payment?slug=${slug}`;
+    let url = `${config.public.API_ENDPOINT}/api/report/detail_payment?slug=${slug}&start_date=${startDate}&end_date=${endDate}`;
     if (config.public.SSR === 'true') {
       url += `&is_bot=true`;
     }
