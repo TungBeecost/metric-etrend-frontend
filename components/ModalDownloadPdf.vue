@@ -307,7 +307,7 @@ const splitDefault = selectedReport?.value.split('_');
 const dateRange = ref<[Dayjs, Dayjs]>([dayjs(splitDefault[0], 'YYYYMMDD'), dayjs(splitDefault[1], 'YYYYMMDD')]);
 
 // Handle selection change
-const handleSelectChange = (value: string | null) => {
+const handleSelectChange = async (value: string | null) => {
   if (value === null) {
     showMonthPicker.value = true;
   } else {
@@ -316,16 +316,37 @@ const handleSelectChange = (value: string | null) => {
     let splitDate = selectedReport?.value.split('_');
     dateRange.value = [dayjs(splitDate[0], 'YYYYMMDD'), dayjs(splitDate[1], 'YYYYMMDD')];
   }
+  if(selectedReport.value) {
+    const dateSplit = selectedReport.value.split('_');
+    const startDate = dateSplit[0];
+    const endDate = dateSplit[1];
+    await getPricing(props.data.slug, startDate, endDate);  
+  }
 };
 
 // Update selected report when user picks a date range
-const handleDateChange = () => {
+const handleDateChange = async () => {
+  let customOne = null;
   if (dateRange.value.length === 2) {
     let selectedRange = `Từ ${dateRange.value[0].format('YYYY-MM')} đến ${dateRange.value[1].format('YYYY-MM')}`;
-    selectedReport.value = `${dateRange.value[0].format('DD/MM/YYYY')}-${dateRange.value[1].format('DD/MM/YYYY')}`;
+    customOne = `${dateRange.value[0].format('YYYYMMDD')}_${dateRange.value[1].format('YYYYMMDD')}`;
     message.success(`Đã chọn: ${selectedRange}`);
   }
+  if(customOne) {
+    debugger
+    const dateSplit = customOne.split('_');
+    const startDate = dateSplit[0];
+    const endDate = dateSplit[1];
+    await getPricing(props.data.slug, startDate, endDate);
+  }
 };
+
+const getPricing = async (slug: string, startDate: string, endDate: string) => {
+  let url = `${config.public.API_ENDPOINT}/api/report/price?slug=${slug}&start_date=${startDate}&end_date=${endDate}`;
+  const response: number[] = await $fetch(url);
+  props.data.price = response[1];
+  props.data.price_before_discount = response[0];
+}
 
 const shouldShowPrice = computed(() => {
   return !props.data.lst_period_of_time_download.includes(selectedReport.value);
