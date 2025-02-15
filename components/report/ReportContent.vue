@@ -103,6 +103,42 @@ const displayTableOfContent = computed(() => {
     ]
   }
 
+  if (data?.report_type === 'report_top_shop') {
+    return [
+      {
+        title: `I. Tổng quan thị trường`,
+        children: [
+          {title: `Quy mô thị trường`},
+          {title: 'Thống kê theo sàn'},
+          {title: 'Thống kê theo tháng'},
+          {title: 'Thống kê theo phân khúc giá'},
+        ],
+      },
+      {
+        title: 'II. Thống kê gian hàng',
+        children: [
+          {title: 'Thống kê theo kiểu gian hàng'},
+          {title: 'Thống kê theo khu vực của gian hàng'},
+          {title: 'Thống kê gian hàng trên sàn Shopee'},
+          {title: 'Chi tiết gian hàng'},
+        ],
+      },
+      {
+        title: 'III. Thống kê sản phẩm bán chạy',
+        children: [
+          {title: 'Sản phẩm bán chạy trên sàn Shopee'},
+        ],
+      },
+      {
+        title: 'IV. Thống kê đánh giá',
+        children: [
+          {title: 'Thống kê tổng đánh giá gian hàng'},
+          {title: 'Thống kê sản phẩm có đánh giá tốt'},
+        ],
+      },
+    ]
+  }
+
   // Default return value
   return [
     {
