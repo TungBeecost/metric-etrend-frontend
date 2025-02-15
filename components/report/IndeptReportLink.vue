@@ -34,13 +34,13 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  if (route.query.download === "1") {
+  if (route.query.period_of_time_download) {
     open.value = true;
 
     router.replace({
       query: {
         ...route.query,
-        download: undefined,
+        period_of_time_download: undefined,
       },
     });
   }
@@ -155,7 +155,7 @@ const showMetricButton = computed(() => {
       </div>
     </div>
   </div>
-  <modal-download-pdf v-model:open="open" :data="props.data"/>
+  <modal-download-pdf v-model:open="open" :data="props.data" :period-of-time-download="route.query.period_of_time_download"/>
   <cta v-model:open="openCta"/>
 </template>
 

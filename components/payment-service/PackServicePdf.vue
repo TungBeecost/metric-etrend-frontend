@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { getCookie } from '~/helpers/CookieHelper';
-const {report} = defineProps({
+import { onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { getCookie, removeCookie } from '~/helpers/CookieHelper';
+
+const { report } = defineProps({
   report: {
     type: Object,
     required: true
@@ -21,11 +24,33 @@ function formatDate(dateStr: string): string {
 }
 
 const route = useRoute();
-const startDate = getCookie('startDate') || route.query.startDate;
-const endDate = getCookie('endDate') || route.query.endDate;
+const router = useRouter();
 
-const formattedStartDate = formatDate(startDate ? startDate : report.start_date);
-const formattedEndDate = formatDate(endDate ? endDate : report.end_date);
+onMounted(() => {
+  let startDate = route.query.startDate as string | undefined;
+  let endDate = route.query.endDate as string | undefined;
+
+  if (!startDate || !endDate) {
+    startDate = getCookie('startDate') || undefined;
+    endDate = getCookie('endDate') || undefined;
+
+    if (startDate && endDate) {
+      router.replace({
+        query: {
+          ...route.query,
+          startDate,
+          endDate
+        }
+      });
+
+      removeCookie('startDate');
+      removeCookie('endDate');
+    }
+  }
+});
+
+const formattedStartDate = formatDate(route.query.startDate ? route.query.startDate as string : report.start_date);
+const formattedEndDate = formatDate(route.query.endDate ? route.query.endDate as string : report.end_date);
 
 </script>
 

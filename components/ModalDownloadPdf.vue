@@ -26,7 +26,7 @@ const {userInfo} = storeToRefs(currentUserStore);
 const selectOptions = [
   {
     name: 'Báo cáo 2 năm (2023 và 2024)',
-    value: '20230101_20241231'
+      value: '20230101_20241231'
   },
   {
     name: 'Báo cáo năm 2024',
@@ -46,6 +46,10 @@ const props = defineProps({
   data: {
     type: Object,
     default: () => ({})
+  },
+  periodOfTimeDownload: {
+    type: String,
+    default: ''
   }
 });
 
@@ -59,6 +63,18 @@ type HorizontalLoopConfig = {
 };
 
 onMounted(() => {
+  if (Array.isArray(props.data.lst_period_of_time_download)) {
+    const additionalOptions = props.data.lst_period_of_time_download.map(period => {
+      const [start, end] = period.split('_');
+      const startDate = dayjs(start, 'YYYYMMDD').format('MM/YYYY');
+      const endDate = dayjs(end, 'YYYYMMDD').format('MM/YYYY');
+      return {
+        name: `Báo cáo năm tháng ${startDate} - ${endDate}`,
+        value: period
+      };
+    });
+    selectOptions.push(...additionalOptions);
+  }
   nextTick(() => {
     const boxes: HTMLElement[] = gsap.utils.toArray('.brand-item.loop') as HTMLElement[];
 
@@ -183,8 +199,10 @@ const handleDownload = async () => {
     currentUserStore.setShowPopupLogin(true);
     return;
   }
-  if (props.data.can_download) {
-    const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${props.data.slug}&type=download`;
+
+  if (props.data.lst_period_of_time_download.includes(selectedReport.value)) {
+    const [start_date, end_date] = selectedReport.value.split('_');
+    const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${props.data.slug}&type=download&start_date=${start_date}&end_date=${end_date}`;
     const accessToken = await getIndexedDB("access_token");
     const visitorId = await getIndexedDB("__visitor");
     trackEventCommon(EVENT_TYPE.DOWNLOAD_REPORT, 'download_report', '');
@@ -199,7 +217,7 @@ const handleDownload = async () => {
             }
           }
       );
-      const {url_download} = response;
+      const { url_download } = response;
       downloading.value = false;
       if (url_download) {
         message.success('Bắt đầu tải xuống báo cáo');
@@ -213,37 +231,27 @@ const handleDownload = async () => {
         })
             .then((response) => response.blob())
             .then((blob) => {
-              // Create blob link to download
-              const url = window.URL.createObjectURL(
-                  new Blob([blob]),
-              );
+              const url = window.URL.createObjectURL(new Blob([blob]));
               const link = document.createElement('a');
               link.href = url;
               const fileName = `Báo cáo chi tiết nhóm hàng ${props.data.name} ${formatDate(props.data.start_date, "DDMMYYYY")}-${formatDate(props.data.end_date, "DDMMYYYY")}.pdf`;
-              link.setAttribute(
-                  'download',
-                  fileName,
-              );
+              link.setAttribute('download', fileName);
 
               document.body.appendChild(link);
               link.click();
-
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
               link.parentNode.removeChild(link);
-
             });
       }
     } catch (e) {
       downloading.value = false;
-      console.log('error', e)
+      console.log('error', e);
     }
-    return
+  } else {
+    const slug = route.params.slug;
+    let startDate = dateRange.value[0].format('YYYYMMDD');
+    let endDate = dateRange.value[1].format('YYYYMMDD');
+    navigateTo(`${NAVIGATIONS.payment}/${slug}?startDate=${startDate}&endDate=${endDate}`);
   }
-  const slug = route.params.slug;
-  let startDate = dateRange.value[0].format('YYYYMMDD');
-  let endDate = dateRange.value[1].format('YYYYMMDD');
-  navigateTo(`${NAVIGATIONS.payment}/${slug}?startDate=${startDate}&endDate=${endDate}`);
 };
 
 const handleView = async () => {
@@ -290,9 +298,11 @@ const platforms = computed(() => {
   return basePlatforms;
 });
 
-const selectedReport = ref<string|null>(selectOptions[1].value);
+const selectedReport = ref<string | null>(props.periodOfTimeDownload || selectOptions[1].value);
 const showMonthPicker = ref(false);
-
+const buttonText = computed(() => {
+  return props.data.lst_period_of_time_download.includes(selectedReport.value) ? 'Tải xuống báo cáo' : 'Thanh toán ngay';
+});
 const splitDefault = selectedReport?.value.split('_');
 const dateRange = ref<[Dayjs, Dayjs]>([dayjs(splitDefault[0], 'YYYYMMDD'), dayjs(splitDefault[1], 'YYYYMMDD')]);
 
@@ -320,41 +330,6 @@ const handleDateChange = () => {
 const disabledMonth = (current: Dayjs) => {
   return current.isBefore(dayjs('2022-01')) || current.isAfter(dayjs().subtract(1, 'month'));
 };
-
-const downloadSampleReport = () => {
-  trackEventCommon(EVENT_TYPE.CLICK_DOWNLOAD_SAMPLE, 'click_download_sample', '');
-  const url = config.public.samplePdfUrl;
-  const fileName = 'Báo cáo mẫu.pdf'; // Tên file sẽ được lưu trên máy người dùng
-  if (url) {
-    fetch(url, {
-      method: 'GET',
-      redirect: 'follow',
-    })
-        .then((response) => response.blob())
-        .then((blob) => {
-          const url = window.URL.createObjectURL(
-              new Blob([blob]),
-          );
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute(
-              'download',
-              fileName,
-          );
-
-          document.body.appendChild(link);
-          link.click();
-
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          link.parentNode.removeChild(link);
-        })
-        .catch(() => {
-          message.error('Tải xuống báo cáo thất bại');
-        });
-  }
-};
-
 </script>
 
 <template>
@@ -441,7 +416,7 @@ const downloadSampleReport = () => {
                 style="width: 100%;height: 40px; font-size: 14px; box-shadow: 0 2px 0 rgba(0,0,0,.045); filter: font-family: Montserrat,serif;font-weight: 500"
                 class="download_report_button" :loading="downloading"
                 @click="handleDownload">
-              {{ props.data.can_download ? 'Tải xuống báo cáo' : 'Thanh toán ngay' }}
+              {{ buttonText }}
             </a-button>
             <div v-if="userInfo.current_plan?.remain_claim_pdf && !props.data.can_download" class="button_group_view">
               <div style="color: #716B95">hoặc</div>
