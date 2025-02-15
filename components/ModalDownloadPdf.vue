@@ -69,7 +69,7 @@ onMounted(() => {
       const startDate = dayjs(start, 'YYYYMMDD').format('MM/YYYY');
       const endDate = dayjs(end, 'YYYYMMDD').format('MM/YYYY');
       return {
-        name: `Báo cáo năm tháng ${startDate} - ${endDate}`,
+        name: `Báo cáo năm ${startDate} - ${endDate}`,
         value: period
       };
     });
