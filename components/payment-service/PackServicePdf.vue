@@ -42,9 +42,6 @@ onMounted(() => {
           endDate
         }
       });
-
-      removeCookie('startDate');
-      removeCookie('endDate');
     }
   }
 });
