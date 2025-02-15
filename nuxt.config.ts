@@ -141,24 +141,24 @@ export default defineNuxtConfig({
     "@ant-design-vue", // "nuxt-gtag",
     "@pinia/nuxt", "@nuxt/scripts"],
 
-    image: {
-      provider: 'ipx',
-      format: ['webp'],
-      formats: {
-        webp: {
-          quality: 80
-        }
-      },
-      domains: [
-        'cf.shopee.vn', 
-        'vn-live-01.slatic.net', 
-        'storage.googleapis.com', 
-        'filebroker-cdn.lazada.vn', 
-        'lh3.googleusercontent.com',
-        'p16-oec-va.ibyteimg.com',
-      ]
-    },
-
+    // image: {
+    //   provider: 'ipx',
+    //   format: ['webp'],
+    //   formats: {
+    //     webp: {
+    //       quality: 80
+    //     }
+    //   },
+    //   domains: [
+    //     'cf.shopee.vn', 
+    //     'vn-live-01.slatic.net', 
+    //     'storage.googleapis.com', 
+    //     'filebroker-cdn.lazada.vn', 
+    //     'lh3.googleusercontent.com',
+    //     'p16-oec-va.ibyteimg.com',
+    //   ]
+    // },
+    //
     antd: {
         extractStyle: true,
     },
