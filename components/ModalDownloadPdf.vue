@@ -327,6 +327,10 @@ const handleDateChange = () => {
   }
 };
 
+const shouldShowPrice = computed(() => {
+  return !props.data.lst_period_of_time_download.includes(selectedReport.value);
+});
+
 const disabledMonth = (current: Dayjs) => {
   return current.isBefore(dayjs('2022-01')) || current.isAfter(dayjs().subtract(1, 'month'));
 };
@@ -334,7 +338,7 @@ const disabledMonth = (current: Dayjs) => {
 
 <template>
   <a-modal
-      :open="open" :width="950" :footer="null" @cancel="toggleUnlock" @ok="toggleUnlock"
+      :open="open" :width="1000" :footer="null" @cancel="toggleUnlock" @ok="toggleUnlock"
   >
     <div>
       <div class="title_report">
@@ -380,11 +384,32 @@ const disabledMonth = (current: Dayjs) => {
                 placeholder="Chọn báo cáo"
                 ref="select"
                 @change="handleSelectChange"
+                :dropdownStyle="{ maxHeight: '200px', overflowY: 'auto' }"
             >
-              <a-select-option v-for="opt in selectOptions" :key="opt.value" :value="opt.value">
-                {{ opt.name }}
+              <a-select-option style="border-bottom: 1px solid #9D97BF; border-radius: 0" :value="null">
+
+                  <span style="display: inline-flex; justify-content: space-between; align-items: center; width: 100%;">
+                    Tuỳ chọn thời gian
+                    <span>
+                      <img src="/icons/VectorRight.svg" alt="icon_arrow_down" style="width: 20px; height: 20px;"/>
+                    </span>
+                  </span>
+
               </a-select-option>
-              <a-select-option :value="null">Tuỳ chọn thời gian</a-select-option>
+              <a-select-option
+                  v-for="opt in selectOptions"
+                  :key="opt.value"
+                  :value="opt.value"
+                  :style="{ color: props.data.lst_period_of_time_download.includes(opt.value) ? '#9D97BF' : '#000' }"
+              >
+               <span style="display: inline-flex; justify-content: space-between; align-items: center; width: 100%;">
+                  {{ opt.name }}
+                  <span style="background-color: #F5F5F5; color: #667085; padding: 2px 8px; border-radius: 4px" v-if="props.data.lst_period_of_time_download.includes(opt.value)">
+                    Đã mua
+                  </span>
+                </span>
+
+              </a-select-option>
             </a-select>
 
             <!-- Month Range Picker Modal -->
@@ -401,7 +426,7 @@ const disabledMonth = (current: Dayjs) => {
           </div>
         </div>
         <div class="payment_container">
-          <div v-if="!props.data.can_download" class="price">
+          <div v-if="shouldShowPrice" class="price">
             <div style="text-align: center">
               <span class="price_real">{{ formatCurrency(props.data.price) }}</span>
             </div>
@@ -551,6 +576,7 @@ const disabledMonth = (current: Dayjs) => {
   font-family: 'Inter', sans-serif;
 
   .preview_wrapper {
+    flex: 0.6;
     background: #FBFAFC;
     padding: 20px;
     border-radius: 8px;
@@ -558,7 +584,6 @@ const disabledMonth = (current: Dayjs) => {
 
     .slide_thumbnail {
       display: flex;
-      flex: 0.6;
       justify-content: center;
       align-items: center;
     }
