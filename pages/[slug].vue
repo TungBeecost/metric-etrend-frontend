@@ -377,7 +377,7 @@ onUnmounted(() => {
             <NuxtImg format="webp" loading="lazy" src="/icons/Download.svg" alt="pdf"/>
             Tải báo cáo mẫu xem thử
           </a-button>
-          <a-button type="primary" style="display: flex; align-items: center; gap: 8px" @click="handleClickBuyReport">
+          <a-button v-if="!data.reportDetail.is_unsellable" type="primary" style="display: flex; align-items: center; gap: 8px" @click="handleClickBuyReport">
             <NuxtImg format="webp" loading="lazy" src="/icons/CartIconWhite.svg" alt="pdf"/>
             Mua báo cáo PDF chi tiết
           </a-button>

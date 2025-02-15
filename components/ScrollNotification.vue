@@ -40,7 +40,7 @@ const openCta = ref(false);
 const downloadReport = () => {
   trackEventCommon(EVENT_TYPE.CLICK_DOWNLOAD_SAMPLE, 'click_download_sample', '');
   const url = 'https://storage.googleapis.com/ereport-static/bao-cao-nganh-hang-sample.pdf'; // URL file cần tải xuống
-  const fileName = 'Báo cáo mẫu.pdf'; // Tên file sẽ được lưu trên máy người dùng
+  const fileName = 'Báo cáo mẫu.pdf';
   if (url) {
     fetch(url, {
       method: 'GET',
@@ -204,11 +204,13 @@ onBeforeRouteLeave(() => {
   <div v-else class="button-notification">
     <button
         style="display: flex; height: 40px; padding: 9px 16px; justify-content: center; align-items: center; border-radius: 8px; background: #FAF9FF; color: #241E46; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"
+        v-if="isMobile"
         @click="downloadReport">
       <img src="/icons/Download.svg" alt="DownloadIcon" style="width: 24px; height: 24px; margin-right: 8px;"/>
       Tải báo cáo mẫu
     </button>
     <button
+        :class="{ 'full-width': !isMobile }"
         style="display: flex; height: 40px; padding: 9px 16px; justify-content: center; align-items: center; border-radius: 8px; background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 99.23%); color: #fff; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"
         @click="handleOpenModal">
       <img src="/icons/CartIconWhite.svg" alt="CartIconWhite" style="width: 24px; height: 24px; margin-right: 8px;"/>
@@ -239,6 +241,9 @@ onBeforeRouteLeave(() => {
 
 <style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+.full-width {
+  width: 100%;
+}
 
 .custom-notification {
   position: fixed;
