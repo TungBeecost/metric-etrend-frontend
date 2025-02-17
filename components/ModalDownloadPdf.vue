@@ -196,6 +196,9 @@ const handleDownload = async () => {
   if (!currentUserStore.authenticated) {
     emits('update:open', false);
     localStorage.setItem('loginPayment', `${NAVIGATIONS.payment}/${route.params.slug}`);
+    const [start_date, end_date] = selectedReport.value.split('_');
+    setCookie('startDate', start_date)
+    setCookie('endDate', end_date)
     currentUserStore.setShowPopupLogin(true);
     return;
   }
