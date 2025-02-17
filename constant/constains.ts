@@ -747,13 +747,13 @@ export const INFORMATION_PRICING = [
   },
   {
     thumbnail: '/icons/InfoPricing2.svg',
-    title: 'Dữ liệu chính xác',
-    content: 'Cập nhật bằng công nghệ Big Data giúp bạn đưa ra quyết định kinh doanh chính xác'
+    title: 'Báo cáo trực quan',
+    content: 'Biểu đồ trực quan giúp bạn dễ dàng nắm bắt thông tin nhanh chóng'
   },
   {
     thumbnail: '/icons/InfoPricing3.svg',
-    title: 'Dữ liệu chính xác',
-    content: 'Cập nhật bằng công nghệ Big Data giúp bạn đưa ra quyết định kinh doanh chính xác'
+    title: 'Đa dạng ngành hàng',
+    content: 'Cung cấp dữ liệu thị trường chuyên sâu cho nhiều ngành hàng và nền tảng TMĐT'
   },
 ]
 

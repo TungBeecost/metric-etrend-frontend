@@ -57,7 +57,7 @@ const specialOfferLink = computed(() => {
             <div v-for="(permission, index) in plan.permissions" :key="index" class="permissionItem">
               <div class="perm">
                 <CustomIcon :type="permission.icon as any" :is-custom-size="true" class="permissionIcon"/>
-                <div v-html="permission.label"</div>
+                <div v-html="permission.label"></div>
               </div>
               <div v-for="(subPerm, subIndex) in permission.sub" :key="subIndex" class="perm subPerm">
                 <CustomIcon type="Tick" :is-custom-size="true" class="permissionIcon"/>
