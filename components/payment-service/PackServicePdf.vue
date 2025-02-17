@@ -46,8 +46,8 @@ onMounted(() => {
   }
 });
 
-const formattedStartDate = formatDate(route.query.startDate ? route.query.startDate as string : report.start_date);
-const formattedEndDate = formatDate(route.query.endDate ? route.query.endDate as string : report.end_date);
+const formattedStartDate = formatDate(route.query.startDate ? route.query.startDate as string : getCookie("startDate"));
+const formattedEndDate = formatDate(route.query.endDate ? route.query.endDate as string : getCookie("endDate"));
 
 </script>
 
