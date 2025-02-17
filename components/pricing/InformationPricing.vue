@@ -8,7 +8,7 @@ const prefixResource = config.public.BASE_PATH !== '/' ? config.public.BASE_PATH
   <div id="information_pricing">
     <div class="information_pricing_container default_section">
       <div v-for="(item, index) in INFORMATION_PRICING" :key="index" class="pricing-item">
-        <NuxtImg format="webp" loading="lazy" style="width: 64px; height: 64px" :src="prefixResource + item.thumbnail" alt="icon" class="thumbnail" />
+        <img loading="lazy" style="width: 64px; height: 64px" :src="item.thumbnail" alt="icon" class="thumbnail" />
         <div class="container_content">
           <h3 class="title">{{ item.title }}</h3>
           <p class="content">{{ item.content }}</p>

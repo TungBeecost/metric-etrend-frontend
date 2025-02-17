@@ -228,7 +228,6 @@ const dataSource = [
           <a-select-option value="pt100">100 lượt xem online</a-select-option>
         </a-select>
         <p>{{price}}</p>
-        {{title}}
         <a-button
             v-if="title === 'Mua ngay'"
             :class="'not_user_plan'"
