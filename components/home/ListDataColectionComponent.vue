@@ -1,13 +1,16 @@
 <script setup lang="ts">
 
 import {DATACOLLECTION} from "~/constant/constains";
+const config = useRuntimeConfig();
+const prefixResource = config.public.BASE_PATH !== '/' ? config.public.BASE_PATH : '';
+
 </script>
 
 <template>
   <div>
     <ul>
       <li v-for="(item, index) in DATACOLLECTION" :key="index">
-        <img loading="lazy" :src="item.thumbnail" alt="Thumbnail" />
+        <NuxtImg format="webp" loading="lazy" style="width: 64px; height: 64px" :src="prefixResource + item.thumbnail" alt="Thumbnail" />
         <div>
           <h3>{{ item.title }}</h3>
           <p>{{ item.content }}</p>
