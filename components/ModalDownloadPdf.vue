@@ -16,6 +16,8 @@ import {EVENT_TYPE} from "~/constant/general/EventConstant";
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { setCookie } from '~/helpers/CookieHelper';
+import {ALL_PLATFORM_BASE_OBJECT, PLATFORM_ID_OBJECT} from "~/constant/general/GeneralConstant";
+import type {PlatformName} from "compatx";
 
 const config = useRuntimeConfig();
 const prefixResource = config.public.BASE_PATH !== '/' ? config.public.BASE_PATH : '';
@@ -387,6 +389,14 @@ const disabledMonth = (current: Dayjs) => {
     current.isAfter(maxEndDate, "month")
   );
 };
+
+const platformIdToNameMap: Record<number | string, PlatformName> = Object.fromEntries(
+    Object.entries(PLATFORM_ID_OBJECT).map(([key, value]) => [value, key as PlatformName])
+);
+
+const platform_id = props.data.data_filter_report?.lst_shop_base_id[0]?.split('__')[0];
+const platformName = platformIdToNameMap[platform_id];
+const platformLogo = platformName ? ALL_PLATFORM_BASE_OBJECT[platformName]?.urlLogo : undefined;
 </script>
 
 <template>
@@ -397,8 +407,16 @@ const disabledMonth = (current: Dayjs) => {
       <div class="title_report">
         {{ props.data.can_download ? 'Tải báo cáo PDF' : 'Mua báo cáo PDF chi tiết chuyên sâu' }}
       </div>
-      <div style="margin-bottom: 16px; margin-top: 4px;">
-        <div 
+      <div v-if="props.data.report_type" style="display: flex; justify-content: center; align-items: center; margin: 8px; gap: 8px">
+        <p style="color: #716B95">Gian hàng:</p>
+        <div style="display: flex; gap: 4px">
+          <img :src="platformLogo" alt="Platform Logo" v-if="platformLogo" style="width: 20px; height: 20px; border-radius: 8px;">
+          <b style="font-weight: bold; font-size: 14px; line-height: 22px;">{{props.data.name}}</b>
+          <img src="/icons/MallIcon.svg" alt="Mall Logo" v-if="props.data.data_analytic.by_shop.lst_top_shop[0].official_type === 0" style="width: 22px; height: 22px; border: none; border-radius: 0">
+        </div>
+      </div>
+      <div v-else style="margin-bottom: 16px; margin-top: 4px;">
+        <div
           v-if="props.data.report_type !== 'report_brand' && props.data.report_type !== 'report_category'"
           class="name_report"
           style="text-align: center; margin-bottom: 12px; color: #706b92;"
@@ -412,6 +430,7 @@ const disabledMonth = (current: Dayjs) => {
           <span style="font-weight: 600; color: #E85912">{{ props.data.name.split(' ').slice(2).join(' ') }}</span>
         </p>
       </div>
+
     </div>
     <div class="noti_view_dept_report">
       <div class="preview_wrapper">

@@ -46,6 +46,7 @@ const timestampToDate = (timestamp: number, format: string = 'DD/MM/YYYY') => {
 <template>
   <div class="product-item" :class="{'hide-content': isHideContent}">
     <div class="product-thumbnail">
+      {{props.product}}
       <img
           v-if="props.product.url_thumbnail"
           :src="getUrlImageThumbnail(props.product.url_thumbnail)"
