@@ -2,17 +2,26 @@ import { defineNuxtPlugin } from '#app'
 import posthog from 'posthog-js'
 export default defineNuxtPlugin(nuxtApp => {
   const runtimeConfig = useRuntimeConfig();
-  const posthogClient = posthog.init(runtimeConfig.public.posthogPublicKey, {
-    api_host: runtimeConfig.public.posthogHost || 'https://us.i.posthog.com',
-    capture_pageview: false, // we add manual pageview capturing below
-    loaded: (posthog) => {
-      if (import.meta.env.MODE === 'development') posthog.debug();
-    },
-    // Disable automatic sending of events
-    send_immediately: false,
-    flush_at: 1,
-    flush_interval: 0,
-  })
+  const posthogClient = posthog.init(
+    runtimeConfig.public.posthogPublicKey, 
+    {
+      api_host: runtimeConfig.public.posthogHost || 'https://us.i.posthog.com',
+      capture_pageview: false, // we add manual pageview capturing below
+      loaded: (posthog) => {
+        if (import.meta.env.MODE === 'development') posthog.debug();
+      },
+      // Disable automatic sending of events
+      send_immediately: false,
+      flush_at: 1,
+      flush_interval: 0,
+      session_recording: {
+        maskAllInputs: false,
+        maskInputOptions: {
+            password: true,
+        }
+      }
+    }
+  )
 
   // Make sure that pageviews are captured with each route change
   const router = useRouter();
