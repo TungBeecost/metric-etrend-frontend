@@ -21,7 +21,7 @@ const config = useRuntimeConfig();
 const route = useRoute();
 
 const diffMonths = computed(() => {
-  const filterCustom = props.data.filter_custom;
+  const filterCustom = props.data?.filter_custom;
   if (!filterCustom) return "N/A";
   const {start_date, end_date} = filterCustom;
   const startDate = dayjs(start_date);
@@ -36,7 +36,7 @@ interface PriceRange {
 }
 
 const priceRangesSortBy = (field: keyof PriceRange = 'revenue') => {
-  const dataAnalytic = props.data.data_analytic;
+  const dataAnalytic = props.data?.data_analytic;
   if (!dataAnalytic || !dataAnalytic.by_price_range) return [];
   const {lst_price_range} = dataAnalytic.by_price_range;
   return lst_price_range.slice().sort((a: PriceRange, b: PriceRange) => b[field] - a[field]) || [];
@@ -51,7 +51,7 @@ interface Shop {
 }
 
 const top5Shops = (): string[] => {
-  const dataAnalytic = props.data.data_analytic;
+  const dataAnalytic = props.data?.data_analytic;
   if (!dataAnalytic || !dataAnalytic.by_brand) return [];
   const shops: Shop[] = dataAnalytic.by_brand.lst_top_brand_revenue;
   return shops.filter(brand => brand.name.toLowerCase() !== 'no brand')
@@ -63,7 +63,7 @@ interface RevenueItem {
 }
 
 const diffRevenueLatestQuarterPercent = computed(() => {
-  const dataAnalytic = props.data.data_analytic;
+  const dataAnalytic = props.data?.data_analytic;
   if (!dataAnalytic || !dataAnalytic.by_overview) return NaN;
   const {lst_revenue_sale_monthly} = dataAnalytic.by_overview;
   const latestQuarter = lst_revenue_sale_monthly.slice(-3);
@@ -82,13 +82,13 @@ const diffRevenueLatestQuarterPercent = computed(() => {
 
 
 const listTopBrandNames = top5Shops().join(', ');
-let description = `Thị trường ${props.data.name} trên TMĐT đạt quy mô ${formatSortTextCurrency(props.data.data_analytic.by_overview.revenue)} đồng và tăng trưởng ${diffRevenueLatestQuarterPercent.value}% so với quý trước`;
-if (props.data.report_type !== 'report_brand') {
+let description = `Thị trường ${props.data?.name} trên TMĐT đạt quy mô ${formatSortTextCurrency(props.data?.data_analytic?.by_overview.revenue)} đồng và tăng trưởng ${diffRevenueLatestQuarterPercent.value}% so với quý trước`;
+if (props.data?.report_type !== 'report_brand') {
   description += `với thương hiệu nổi bật gồm ${listTopBrandNames}`;
 }
 
 useHead({
-  title: `Báo cáo thị trường ${props.data.name} sàn TMĐT cập nhật tháng ${moment().format("MM/YYYY")}`,
+  title: `Báo cáo thị trường ${props.data?.name} sàn TMĐT cập nhật tháng ${moment().format("MM/YYYY")}`,
   meta: [
     {charset: "utf-8"},
     {name: "viewport", content: "width=device-width, initial-scale=1"},
@@ -100,7 +100,7 @@ useHead({
     {
       key: "og:title",
       property: "og:title",
-      content: `Báo cáo nghiên cứu thị trường ${props.data.name} TMĐT, cập nhật tháng ${moment().format("MM/YYYY")}`
+      content: `Báo cáo nghiên cứu thị trường ${props.data?.name} TMĐT, cập nhật tháng ${moment().format("MM/YYYY")}`
     },
     {
       key: "og:description",
@@ -111,7 +111,7 @@ useHead({
     {
       key: "og:image:alt",
       property: "og:image:alt",
-      content: `${props.data.name} - Báo cáo tổng quan thị trường sàn TMĐT`
+      content: `${props.data?.name} - Báo cáo tổng quan thị trường sàn TMĐT`
     },
   ],
   link: [
@@ -125,21 +125,21 @@ useHead({
   <div class="overview">
     <div class="content">
       <div>
-        Báo cáo nghiên cứu thị trường {{ props.data.report_type === 'report_top_shop' ? 'shop ' : '' }}<b style="font-weight: bold">{{ props.data.name }}</b> trên sàn Thương mại điện tử
+        Báo cáo nghiên cứu thị trường {{ props.data?.report_type === 'report_top_shop' ? 'shop ' : '' }}<b style="font-weight: bold">{{ props.data?.name }}</b> trên sàn Thương mại điện tử
         <b style="font-weight: bold">{{
-          props.data.data_analytic && props.data.data_analytic.by_marketplace
-              ? props.data.data_analytic.by_marketplace.lst_marketplace.map((platform: Platform) => platform.name).join(', ')
-              : 'N/A'
+            props.data?.data_analytic?.by_marketplace
+                ? props.data?.data_analytic.by_marketplace.lst_marketplace.map((platform: Platform) => platform.name).join(', ')
+                : 'N/A'
           }}</b>
         dành cho nhà bán hàng <b style="font-weight: bold"> từ tháng
         {{
-          props.data.filter_custom
-              ? props.data.start_date.slice(4, 6) + '/' + props.data.start_date.slice(0, 4)
+          props.data?.filter_custom
+              ? props.data?.start_date.slice(4, 6) + '/' + props.data?.start_date.slice(0, 4)
               : 'N/A'
         }}
         đến tháng {{
-          props.data.filter_custom
-              ? props.data.end_date.slice(4, 6) + '/' + props.data.end_date.slice(0, 4)
+          props.data?.filter_custom
+              ? props.data?.end_date.slice(4, 6) + '/' + props.data?.end_date.slice(0, 4)
               : 'N/A'
         }}</b>,
         được thực hiện bởi
@@ -150,10 +150,10 @@ useHead({
       <br>
       <div>
         <span class="text-bold">
-          Báo cáo doanh thu {{ props.data.report_type === 'report_top_shop' ? 'gian hàng ' : '' }} {{ props.data.name }} trên sàn TMĐT đạt
+          Báo cáo doanh thu {{ props.data?.report_type === 'report_top_shop' ? 'gian hàng ' : '' }} {{ props.data?.name }} trên sàn TMĐT đạt
           <BlurContent :is-hide-content="isHideContent">
             <b style="font-weight: bold">{{
-                props.data.data_analytic && props.data.data_analytic.by_overview ? formatSortTextCurrency(props.data.data_analytic.by_overview.revenue) : 'N/A'
+                props.data?.data_analytic?.by_overview ? formatSortTextCurrency(props.data?.data_analytic.by_overview.revenue) : 'N/A'
               }} đồng</b>
           </BlurContent>
         </span>
@@ -162,8 +162,8 @@ useHead({
           !isNaN(diffRevenueLatestQuarterPercent) && diffRevenueLatestQuarterPercent > 0 ? "tăng trưởng hơn" : "giảm"
         }}
         {{ !isNaN(diffRevenueLatestQuarterPercent) ? formatSortTextCurrency(Math.abs(diffRevenueLatestQuarterPercent)) : 'N/A' }}%
-        <div v-if="props.data.report_type !== 'report_top_shop'">
-          Đánh giá thị trường {{ props.data.name }}, phân khúc giá có doanh số cao nhất là từ
+        <div v-if="props.data?.report_type !== 'report_top_shop'">
+          Đánh giá thị trường {{ props.data?.name }}, phân khúc giá có doanh số cao nhất là từ
           {{
             priceRangesSortBy("revenue")[0]
                 ? formatCurrency(priceRangesSortBy("revenue")[0].begin)
@@ -174,15 +174,15 @@ useHead({
                 ? formatCurrency(priceRangesSortBy("revenue")[0].end)
                 : 'N/A'
           }}.
-          <span v-if="props.data.report_type !== 'report_brand'">
-            Những thương hiệu {{ props.data.name }} được phân phối và
+          <span v-if="props.data?.report_type !== 'report_brand'">
+            Những thương hiệu {{ props.data?.name }} được phân phối và
             bán chạy nhất là
             <b>{{ top5Shops().join(', ') }}</b>
             v.v...
           </span>
         </div>
         <div v-else>
-          {{ props.data.name }} kinh doanh ngành hàng {{props.data.lst_category[0].name}} với nhóm hàng phổ biến là {{ top5Shops().join(', ') }}... Phân khúc giá sản phẩm {{ props.data.name }} được bán phổ biến từ {{
+          {{ props.data?.name }} kinh doanh ngành hàng {{props.data?.lst_category[0]?.name}} với nhóm hàng phổ biến là {{ top5Shops().join(', ') }}... Phân khúc giá sản phẩm {{ props.data?.name }} được bán phổ biến từ {{
             priceRangesSortBy("revenue")[0]
                 ? formatCurrency(priceRangesSortBy("revenue")[0].begin)
                 : 'N/A'

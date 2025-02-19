@@ -117,7 +117,7 @@ const diffHalfYear = computed(() => {
 
 const charts = computed(() => {
   if (!props.data) return [];
-  const platformId = props.data.filter_custom.lst_platform_id[0];
+  const platformId = props.data?.filter_custom?.lst_platform_id[0];
   const isMobile = screenWidth.value < 768;
 
   let yAxisTitleText = 'Số sản phẩm đã bán';
