@@ -21,6 +21,7 @@
 <script lang="ts" setup>
 import { InfoCircleOutlined } from "@ant-design/icons-vue";
 import type { InputProps } from "ant-design-vue";
+import {getCookie} from "~/helpers/CookieHelper";
 
 const props = defineProps<{
   label?: string,
@@ -40,8 +41,9 @@ const validateDiscount = () => {
 };
 
 onMounted(() => {
-  if (discountValueRouter) {
-    inputModel.value = discountValueRouter;
+  const discountValue = getCookie('affiliate_code');
+  if (discountValue) {
+    inputModel.value = discountValue;
     validateDiscount();
   }
 });

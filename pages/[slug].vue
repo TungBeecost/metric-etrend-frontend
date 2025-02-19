@@ -21,7 +21,7 @@ import PopupChatGpt from "~/components/MetricGpt/PopupChatGpt.vue";
 import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService.js";
 import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
-import ErrorNotification from "~/components/ContactUs/ErrorNotification.vue";
+import { setCookie } from '~/helpers/CookieHelper';
 
 const route = useRoute();
 const router = useRouter();
@@ -286,6 +286,10 @@ onMounted(async () => {
       );
       showModal.value = true;
     }
+  }
+  const affiliateCode = route.query.affiliate_code;
+  if (typeof affiliateCode === 'string' && affiliateCode.trim() !== '') {
+    setCookie('affiliate_code', affiliateCode, 30); // Set cookie for 30 days
   }
 });
 
