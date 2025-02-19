@@ -394,7 +394,7 @@ const platformIdToNameMap: Record<number | string, PlatformName> = Object.fromEn
     Object.entries(PLATFORM_ID_OBJECT).map(([key, value]) => [value, key as PlatformName])
 );
 
-const platform_id = props.data.data_filter_report?.lst_shop_base_id[0]?.split('__')[0];
+const platform_id = props.data?.data_filter_report?.lst_shop_base_id?.[0]?.split('__')[0];
 const platformName = platformIdToNameMap[platform_id];
 const platformLogo = platformName ? ALL_PLATFORM_BASE_OBJECT[platformName]?.urlLogo : undefined;
 </script>
