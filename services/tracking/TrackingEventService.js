@@ -157,7 +157,11 @@ const trackEventConversionPixel = async (eventName, content_category, content_id
     }
     console.log('fbq: ', eventName, trackParams)
 
-    fbq?.('track', eventName, trackParams)
+    if (typeof fbq !== 'undefined') {
+      fbq('track', eventName, trackParams)
+    } else {
+      console.warn('fbq is not defined');
+    }
   }
 }
 
