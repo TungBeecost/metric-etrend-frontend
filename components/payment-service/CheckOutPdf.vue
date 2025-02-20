@@ -177,19 +177,20 @@ const handleDiscount = () => {
 
 const fetchDiscount = async () => {
   try {
-    const response = await getVoucher(discountValue.value, '');
+    const response = await getVoucher(discountValue.value);
 
     if (response) {
       const { discount } = response;
-      console.log(discount);
-
       discountInfo.value = response;
-      console.log('discountInfo', discountInfo.value);
+      console.log('discountInfo', discountInfo.value.error);
 
       const now = new Date();
-      const isExpired = now > new Date(discount.end_date);
-
-      if (isExpired) {
+      const isExpired = now > new Date(discount?.end_date);
+      if (discountInfo.value.error == 'Discount code not applicable to your email') {
+        statusApplyCode.value = false;
+        errors.value.discount = 'Mã giảm giá không áp dụng cho email của bạn';
+      }
+      else if (isExpired) {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá đã hết hạn';
       }
@@ -265,7 +266,6 @@ const fetchDiscount = async () => {
               style="display: flex"
               :error-message="errors.discount"
               label="Nhập mã giảm giá"
-              :is-required="true"
               :input-props="{ placeholder: 'Nhập mã giảm giá' }"
               @apply-discount="handleDiscount"
           />

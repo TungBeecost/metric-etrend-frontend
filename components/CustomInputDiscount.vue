@@ -21,6 +21,9 @@
 <script lang="ts" setup>
 import { InfoCircleOutlined } from "@ant-design/icons-vue";
 import type { InputProps } from "ant-design-vue";
+import {getCookie} from "~/helpers/CookieHelper";
+import useDiscount from "~/composables/useDiscount";
+const { getVoucher } = useDiscount();
 
 const props = defineProps<{
   label?: string,
@@ -39,10 +42,14 @@ const validateDiscount = () => {
   emit("applyDiscount", inputModel.value);
 };
 
-onMounted(() => {
-  if (discountValueRouter) {
-    inputModel.value = discountValueRouter;
-    validateDiscount();
+onMounted(async () => {
+  const discountValue = getCookie('affiliate_code');
+  if (discountValue) {
+    const response = await getVoucher(discountValue);
+    if (response && !response.error) {
+      inputModel.value = discountValue;
+      validateDiscount();
+    }
   }
 });
 

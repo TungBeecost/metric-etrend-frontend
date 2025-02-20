@@ -2,7 +2,7 @@ import {
     fetchClaimedListReport, fetchClaimedPDFListReport,
     fetchListRecommendReport,
     fetchListRecommendReportMarketing, fetchListStatisticalDiscountCode, fetchListStatisticalTransaction,
-    searchReport,
+    searchReport, exportReportSendMail,
     type SearchReportPayload
 } from "~/services/reports";
 
@@ -117,6 +117,15 @@ export default function useSearchReport() {
         }
     }
 
+    const fetchExportReportSendMail = async (slug: string, email: string, name: string, phone: string, companyName: string) => {
+        try {
+            return await exportReportSendMail(slug, email, name, phone, companyName);
+        } catch (error) {
+            console.error("fetchExportReportSendMail error: ", error);
+            return null;
+        }
+    }
+
     return {fetchSearch, fetchSuggest, fetchListRecommend, fetchListRecommendMarketing, fetchClaimedList,
-        fetchClaimedPDFList, fetchApiListStatisticalTransaction, fetchApiListStatisticalDiscountCode};
+        fetchClaimedPDFList, fetchApiListStatisticalTransaction, fetchApiListStatisticalDiscountCode, fetchExportReportSendMail};
 }

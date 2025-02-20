@@ -21,6 +21,7 @@ import PopupChatGpt from "~/components/MetricGpt/PopupChatGpt.vue";
 import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService.js";
 import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
+import { setCookie } from '~/helpers/CookieHelper';
 
 const route = useRoute();
 const router = useRouter();
@@ -40,6 +41,7 @@ const {fetchCurrentUser} = useCurrentUser();
 const { getInfoTransaction } = usePayment()
 const showModalSuccess = ref(false);
 const open = ref(false);
+const openFormExportPdf = ref(false);
 let {userInfo} = storeToRefs(currentUserStore);
 
 const fetchSuggest = async (value = '', options = {}) => {
@@ -117,6 +119,12 @@ const fetchReportData = async () => {
         'Visitorid': visitorId ? visitorId.visitor_id : '',
       }
     });
+
+    if (!response || !response.data_analytic) {
+      await router.push('/search');
+      return {};
+    }
+
     if (response.report_type === "report_product_line") {
       trackEventCommon(EVENT_TYPE.VIEW_REPORT_KEYWORD, slug, response?.name);
     } else if (response.report_type === "report_category") {
@@ -192,7 +200,6 @@ const fetchReportData = async () => {
         value: null,
       }];
     }
-
     return {
       reportDetail: {...response, name},
       listRecommend,
@@ -280,6 +287,10 @@ onMounted(async () => {
       showModal.value = true;
     }
   }
+  const affiliateCode = route.query.affiliate_code;
+  if (typeof affiliateCode === 'string' && affiliateCode.trim() !== '') {
+    setCookie('affiliate_code', affiliateCode, 30); // Set cookie for 30 days
+  }
 });
 
 watch(
@@ -300,6 +311,10 @@ watch(showModal, (newVal) => {
   if (newVal) {
     trackEventCommon(EVENT_TYPE.PAYMENT_SUCCESS_REPORT, 'payment_success_report', '');
   }
+});
+
+const isStaff = computed(() => {
+  return userInfo.value?.email?.includes('@metric.vn');
 });
 
 const handleOk = () => {
@@ -399,6 +414,12 @@ onUnmounted(() => {
             <report-content :data="data?.reportDetail"/>
           </div>
           <div class="container_report_detail_right">
+            <div v-if="isStaff" style="display: flex; justify-content: flex-end">
+              <a-button class="hover-button" style="display: flex; gap: 8px" @click="openFormExportPdf = true">
+                <img class="download-icon" src="/icons/Download.svg" alt="pdf"/>
+                <span>Xuất báo cáo Tháng 1/2024</span>
+              </a-button>
+            </div>
             <indept-report-link :slug="route.params.slug"
                                 :data="data.reportDetail"
                                 :show-modal-download-pdf="showModalDownloadPdf"
@@ -512,6 +533,8 @@ onUnmounted(() => {
       </div>
     </a-modal>
     <modal-download-pdf v-model:open="open" :data="data.reportDetail"/>
+    <form-export-report-pdf v-model:visible="openFormExportPdf" :slug="data.reportDetail.slug"/>
+
   </div>
 </template>
 
@@ -685,6 +708,16 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+.hover-button {
+  display: flex;
+  gap: 8px;
+  transition: all 0.1s ease;
+}
+
+.hover-button:hover .download-icon {
+  filter: invert(39%) sepia(100%) saturate(1000%) hue-rotate(359deg) brightness(97%) contrast(104%);
 }
 
 @keyframes fadeIn {

@@ -240,6 +240,26 @@ export const fetchClaimedPDFListReport = async (page: number = 0, limit: number 
     }
 }
 
+export const exportReportSendMail = async (slug: string, email: string, name: string, phone: string, companyName: string) => {
+  try {
+    const response = await axios.post(useBEEndpoint(REPORT_ENDPOINTS.export_report_send_mail.endpoint), {
+      slug,
+      user_email: email,
+      phone: phone,
+      company_name: companyName,
+      name_client: name,
+    });
+
+    if (response.status !== 200) {
+      console.error("exportReportSendMail error: Unexpected response status");
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("exportReportSendMail error: ", error);
+    return null;
+  }
+};
 
 export interface SearchReportPayload {
   limit?: number;

@@ -185,18 +185,21 @@ const handleDiscount = () => {
 
 const fetchDiscount = async () => {
   try {
-    const response = await getVoucher(discountValue.value.toUpperCase(), plan.plan_code);
+    const response = await getVoucher(discountValue.value.toUpperCase());
 
     if (response) {
       const {discount} = response;
       discountInfo.value = response;
 
       const now = new Date();
-      const isExpired = now > new Date(discount.end_date);
+      const isExpired = now > new Date(discount?.end_date);
 
       if (isExpired) {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá đã hết hạn';
+      }else if (discountInfo.value.error == 'Discount code not applicable to your email'){
+        statusApplyCode.value = false;
+        errors.value.discount = 'Mã giảm giá không áp dụng cho email của bạn';
       } else if (discount.applicable_to != 'subscription_package' && discount.applicable_to != 'all') {
         statusApplyCode.value = false;
         errors.value.discount = 'Mã giảm giá không áp dụng cho sản phẩm này';

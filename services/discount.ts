@@ -1,9 +1,9 @@
 import { DISCOUNT_ENDPOINTS } from "~/constant/endpoints";
 import axios from "./axios-wrapper";
 
-export const getVoucherInfo = async (code: string, plan_code: string) => {
+export const getVoucherInfo = async (code: string) => {
     try {
-        const response = await axios.get(`${useBEEndpoint(DISCOUNT_ENDPOINTS.discountInfo.endpoint)}?code=${code}&plan_code=${plan_code}`, {
+        const response = await axios.get(`${useBEEndpoint(DISCOUNT_ENDPOINTS.discountInfo.endpoint)}?code=${code}`, {
             headers: {
                 'accept': 'application/json',
             }
