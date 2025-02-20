@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import {formatAndRoundSortTextCurrencyWithMinValue, formatCurrency, formatNumberIntoText} from "~/helpers/FormatHelper";
+import {
+  formatAndRoundSortTextCurrencyWithMinValue,
+  formatCurrency,
+  formatNumber,
+  formatNumberIntoText
+} from "~/helpers/FormatHelper";
 const route = useRoute();
 
 const columns = [
@@ -118,6 +123,9 @@ onMounted(() => {
                 </div>
               </div>
             </template>
+            <template v-if="column.dataIndex === 'shopee_searches'">
+              <p>{{formatNumber(record.shopee_searches)}}</p>
+            </template>
             <template v-if="column.dataIndex === 'growth'">
               <p :style="{ color: diffRevenueLatestQuarterPercent(record) >= 0 ? '#35A855' : '#EE3324' }">
                 {{ Math.abs(diffRevenueLatestQuarterPercent(record)) }}%
@@ -231,11 +239,6 @@ onMounted(() => {
                         td:not(:first-child) {
                           align-content: center;
                           text-align: center;
-                        }
-                        td:last-child {
-                          display: flex;
-                          justify-content: center;
-                          align-items: center;
                         }
                       }
                     }
