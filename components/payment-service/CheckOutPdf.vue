@@ -266,7 +266,6 @@ const fetchDiscount = async () => {
               style="display: flex"
               :error-message="errors.discount"
               label="Nhập mã giảm giá"
-              :is-required="true"
               :input-props="{ placeholder: 'Nhập mã giảm giá' }"
               @apply-discount="handleDiscount"
           />

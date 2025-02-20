@@ -394,6 +394,14 @@ const platformIdToNameMap: Record<number | string, PlatformName> = Object.fromEn
     Object.entries(PLATFORM_ID_OBJECT).map(([key, value]) => [value, key as PlatformName])
 );
 
+const formattedSelectedReport = computed(() => {
+  if (!selectedReport.value) return '';
+  const [start, end] = selectedReport.value.split('_');
+  const startDate = dayjs(start, 'YYYYMMDD').format('DD-MM-YYYY');
+  const endDate = dayjs(end, 'YYYYMMDD').format('DD-MM-YYYY');
+  return `Từ ${startDate} tới ${endDate}`;
+});
+
 const platform_id = props.data?.data_filter_report?.lst_shop_base_id?.[0]?.split('__')[0];
 const platformName = platformIdToNameMap[platform_id];
 const platformLogo = platformName ? ALL_PLATFORM_BASE_OBJECT[platformName]?.urlLogo : undefined;
@@ -445,6 +453,7 @@ const platformLogo = platformName ? ALL_PLATFORM_BASE_OBJECT[platformName]?.urlL
               <li>Số liệu sàn: {{ platforms.join(', ') }}</li>
               <li>Gồm 50 trang dữ liệu chính xác, trực quan</li>
               <li>Nhận báo cáo PDF qua email trong 3 phút</li>
+              <li>Phạm vi phân tích: <b style="color: #E85912; font-weight: bold">{{formattedSelectedReport}}</b> </li>
             </ul>
           </div>
         </div>
@@ -472,7 +481,7 @@ const platformLogo = platformName ? ALL_PLATFORM_BASE_OBJECT[platformName]?.urlL
                   v-for="opt in selectOptions"
                   :key="opt.value"
                   :value="opt.value"
-                  :style="{ color: props.data.lst_period_of_time_download.includes(opt.value) ? '#9D97BF' : '#000' }"
+                  style="color: #000"
               >
                <span style="display: inline-flex; justify-content: space-between; align-items: center; width: 100%;">
                   {{ opt.name }}
