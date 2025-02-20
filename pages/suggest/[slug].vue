@@ -108,6 +108,7 @@ onMounted(() => {
             :columns="columns"
             :row-key="record => record.key"
             :scroll="{ x: 1000 }"
+            :loading="tableData.length === 0"
         >
           <template #bodyCell="{ column, record }">
             <template v-if="column.dataIndex === 'report'">
