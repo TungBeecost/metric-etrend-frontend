@@ -407,7 +407,7 @@ const platformLogo = platformName ? ALL_PLATFORM_BASE_OBJECT[platformName]?.urlL
       <div class="title_report">
         {{ props.data.can_download ? 'Tải báo cáo PDF' : 'Mua báo cáo PDF chi tiết chuyên sâu' }}
       </div>
-      <div v-if="props.data.report_type" style="display: flex; justify-content: center; align-items: center; margin: 8px; gap: 8px">
+      <div v-if="props.data.report_type == 'report_top_shop'" style="display: flex; justify-content: center; align-items: center; margin: 8px; gap: 8px">
         <p style="color: #716B95">Gian hàng:</p>
         <div style="display: flex; gap: 4px">
           <img :src="platformLogo" alt="Platform Logo" v-if="platformLogo" style="width: 20px; height: 20px; border-radius: 8px;">
@@ -510,7 +510,7 @@ const platformLogo = platformName ? ALL_PLATFORM_BASE_OBJECT[platformName]?.urlL
             <a-button
                 v-if="!data.is_unsellable"
                 type="primary"
-                style="width: 100%;height: 40px; font-size: 14px; box-shadow: 0 2px 0 rgba(0,0,0,.045); filter: font-family: Montserrat,serif;font-weight: 500"
+                style="width: 100%;height: 40px; font-size: 14px; box-shadow: 0 2px 0 rgba(0,0,0,.045); font-weight: 500"
                 class="download_report_button" :loading="downloading"
                 @click="handleDownload">
               {{ buttonText }}

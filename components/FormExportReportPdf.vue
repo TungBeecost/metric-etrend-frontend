@@ -44,10 +44,6 @@ const validateForm = async () => {
     errorValues.email = ERRORS.WRONG_TYPE_INPUT("email");
   }
 
-  if (!PHONE_REGEX.test(formData.phone || '')) {
-    errorValues.phone = ERRORS.WRONG_TYPE_INPUT("số điện thoại");
-  }
-
   if (Object.keys(errorValues).length > 0) return;
   const response = await fetchExportReportSendMail(
       props.slug,
@@ -57,7 +53,10 @@ const validateForm = async () => {
       formValues.companyName || ''
   );
 
-  console.log(response);
+  if (response.message === "success") {
+    isVisible.value = false;
+    message.success("Gửi báo cáo thành công");
+  }
 }
 </script>
 
