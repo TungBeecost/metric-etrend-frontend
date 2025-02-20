@@ -81,6 +81,7 @@ export default defineNuxtConfig({
         public: {
             gtagId: 'G-1KSWMFJGH1',
             apiBase: process.env.API_ENDPOINT,
+            URL_BASE: process.env.BASE,
             API_ENDPOINT: process.env.API_ENDPOINT,
             URL_AUTH_SERVICE_API: process.env.URL_AUTH_SERVICE_API,
             URL_CRM_BACKEND_API: process.env.URL_CRM_BACKEND_API,
