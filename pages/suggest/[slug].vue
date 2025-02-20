@@ -12,26 +12,31 @@ const columns = [
     title: 'Báo cáo',
     dataIndex: 'report',
     key: 'report',
+    width: 300,
   },
   {
     title: 'Lượt tìm kiếm Shopee',
     dataIndex: 'shopee_searches',
     key: 'shopee_searches',
+    width: 200,
   },
   {
     title: 'Doanh số 2024',
     dataIndex: 'revenue',
     key: 'revenue',
+    width: 150,
   },
   {
     title: 'Tăng trưởng',
     dataIndex: 'growth',
     key: 'growth',
+    width: 150,
   },
   {
-      title: 'Xu hướng tăng trưởng',
+    title: 'Xu hướng tăng trưởng',
     dataIndex: 'growth_trend',
     key: 'growth_trend',
+    width: 300,
   },
 ];
 
@@ -41,7 +46,7 @@ const config = useRuntimeConfig();
 const fetchReportDetails = async () => {
   try {
     const slug = route.params.slug;
-    const url = `${config.public.API_ENDPOINT}/api/report/detail_pdf?slug=${slug}`;
+    const url = `${config.public.API_ENDPOINT}/api/report/detail_pdf?slug=${slug}&limit=10`;
     const response = await fetch(url);
     const data = await response.json();
     tableData.value = data.lst_report_related.map((item: any) => {
@@ -102,6 +107,7 @@ onMounted(() => {
             :data-source="tableData"
             :columns="columns"
             :row-key="record => record.key"
+            :scroll="{ x: 1000 }"
         >
           <template #bodyCell="{ column, record }">
             <template v-if="column.dataIndex === 'report'">
@@ -209,16 +215,37 @@ onMounted(() => {
       }
     }
   }
-
-
 }
 
+@media (max-width: 768px){
+  .report_container{
+    img{
+      width: 48px;
+      height: 48px;
+    }
+
+    .report_content{
+      .name_report{
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      .report_info{
+        img{
+          width: 12px;
+          height: 12px;
+        }
+      }
+    }
+  }
+}
 </style>
 
 <style lang="scss">
 #suggest_report_page{
   .suggest_report_container{
     .suggest_report_content{
+
       .ant-table-wrapper{
         .ant-spin-nested-loading{
           .ant-spin-container{
