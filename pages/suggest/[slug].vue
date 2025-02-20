@@ -81,7 +81,7 @@ const diffRevenueLatestQuarterPercent = (record: any) => {
 };
 
 const handleClick = (slug: any) => {
-  window.location.href = `${config.public.URL_BASE}/${slug}`;
+  window.location.href = `${config.public.BASE_URL}/${slug}`;
 };
 
 onMounted(() => {
