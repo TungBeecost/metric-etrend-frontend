@@ -6,6 +6,8 @@ import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper
 import moment from "moment";
 import {upperFirst} from "scule";
 import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 
 const props = defineProps({
   data: {
@@ -32,12 +34,18 @@ const getDisplayedCategories = (item: any) => {
     return item.lst_category?.map((item: any) => item.name).join(' > ') || '';
   }
 };
+
+const handleClick = () => {
+  trackEventCommon(EVENT_TYPE.CLICK_REPORT_SEARCH_RESULTS, 'click_checkout_report', '');
+
+};
 </script>
 
 <template>
   <div id="lst_report_id">
     <nuxt-link v-for="item in props.data" :key="item.id" class="lst_item"
-               :to="`${NAVIGATIONS.home}${item.source ==='marketing' ? 'insight/' + item.slug : item.slug}`">
+               :to="`${NAVIGATIONS.home}${item.source ==='marketing' ? 'insight/' + item.slug : item.slug}`"
+               @click="handleClick()">
       <div class="item">
         <div class="image-metric">
           <img loading="lazy" v-if="item.url_thumbnail" :src="getUrlImageThumbnail(item.url_square || item.url_thumbnail)" alt=""/>
