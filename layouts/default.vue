@@ -129,10 +129,12 @@ watchEffect(() => {
 
   const isHideRoute = ['index', 'slug'].includes(route.name);
 
-  if (isHideRoute && document.getElementsByClassName(chatElClass).length > 0) {
-    document.getElementsByClassName(chatElClass)[0].style.display = 'none';
-  } else if (!isHideRoute && document.getElementsByClassName(chatElClass).length > 0) {
-    document.getElementsByClassName(chatElClass)[0].style.display = 'block';
+  if (process.client) {
+    if (isHideRoute && document.getElementsByClassName(chatElClass).length > 0) {
+      document.getElementsByClassName(chatElClass)[0].style.display = 'none';
+    } else if (!isHideRoute && document.getElementsByClassName(chatElClass).length > 0) {
+      document.getElementsByClassName(chatElClass)[0].style.display = 'block';
+    }
   }
 });
 
