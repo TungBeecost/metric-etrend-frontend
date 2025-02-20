@@ -202,6 +202,10 @@ onMounted(() => {
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
       align-self: stretch;
+
+      &:hover {
+        color: #E85912;
+      }
     }
 
     .report_info{
