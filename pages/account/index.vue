@@ -23,7 +23,7 @@ const loadingStatisticalTransaction = ref(true);
 const loadingStatisticalDiscountCode = ref(true);
 const loadingUser = ref(true);
 const activeKey = ref('1');
-const { fetchClaimedList, fetchClaimedPDFList, fetchApiListStatisticalTransaction, fetchApiListStatisticalDiscountCode } = useSearchReport();
+const { fetchClaimedList, fetchClaimedPDFList, fetchClaimedPDFListReportSale, fetchApiListStatisticalTransaction, fetchApiListStatisticalDiscountCode } = useSearchReport();
 
 const fetchTableData = async (page: number = 0, limit: number = 4) => {
   try {
@@ -43,6 +43,21 @@ const fetchTableData = async (page: number = 0, limit: number = 4) => {
 const fetchTableDataPDF = async (page: number = 0, limit: number = 4) => {
   try {
     const response = await fetchClaimedPDFList(page, limit);
+    if (response) {
+      dataPdf.value = response;
+    } else {
+      console.error("No dataPdf received from fetchClaimedList");
+    }
+  } catch (error) {
+    console.error("Error fetching claimed list:", error);
+  } finally {
+    loadingpdf.value = false;
+  }
+};
+
+const fetchClaimedPDFListReportSentBySale = async (page: number = 0, limit: number = 4) => {
+  try {
+    const response = await fetchClaimedPDFListReportSale(page, limit);
     if (response) {
       dataPdf.value = response;
     } else {
@@ -101,6 +116,15 @@ const handlePagePDF = (page: number) => {
   fetchTableDataPDF(page - 1);
 };
 
+const handlePagePDFReportSale = (page: number) => {
+  loadingpdf.value = true;
+  fetchClaimedPDFListReportSentBySale(page - 1);
+};
+
+const isStaff = computed(() => {
+  return userInfo.value?.email?.includes('@metric.vn');
+});
+
 onMounted(async () => {
   if (!currentUserStore.authenticated) {
     currentUserStore.setShowPopupLogin(true);
@@ -117,6 +141,7 @@ onMounted(async () => {
 
   await fetchTableData();
   await fetchTableDataPDF();
+  await fetchClaimedPDFListReportSentBySale();
   await fetchListStatisticalTransaction();
   await fetchListStatisticalDiscountCode();
   loadingUser.value = false;
@@ -130,6 +155,15 @@ onMounted(async () => {
       <a-tabs v-model:activeKey="activeKey">
         <a-tab-pane key="1" tab="Lịch sử sử dụng">
           <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 24px">
+            <detailed-reports-viewed-pdf
+                v-if="isStaff"
+                :loading="loadingpdf"
+                title="Báo cáo đã gửi"
+                :data="dataPdf?.reports"
+                :total='dataPdf?.total'
+                class="detail-report"
+                @change="handlePagePDF"
+            />
             <detailed-reports-viewed
                 :loading="loading"
                 title="Báo cáo đã xem"

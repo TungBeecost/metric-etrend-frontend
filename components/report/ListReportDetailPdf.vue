@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import {NAVIGATIONS} from "~/constant/constains";
-import {formatDate} from "compatx";
-import {upperFirst} from "scule";
+import {NAVIGATIONS, REPORT_TYPE_MAP} from "~/constant/constains";
+import { LoadingOutlined } from '@ant-design/icons-vue';
 import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
 
 const props = defineProps({
@@ -10,81 +9,158 @@ const props = defineProps({
     default: () => [],
   },
 });
+
+const router = useRouter();
+
+const columns = [
+  {
+    title: 'Tên báo cáo',
+    dataIndex: 'name',
+    key: 'name',
+    width: 600,
+  },
+  {
+    title: 'Số liệu thống kê',
+    dataIndex: 'statistics',
+    key: 'statistics',
+  },
+  {
+    title: 'Thao tác',
+    dataIndex: 'operation',
+    key: 'operation',
+  },
+];
+
+function formatExpiredAt(dateString: string): string {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+  return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
+}
+
+function getPackageClass(packageName: string): string {
+  return packageName === 'eReport' ? 'package_ereport' : 'package_metric';
+}
+
+function handleRowClick(record: any) {
+  console.log('record', record);
+  const url = `${NAVIGATIONS.home}${record.source === 'marketing' ? 'insight/' + record.slug : record.slug}`;
+  router.push(url);
+}
+
+function formatDateString(dateString: string): string {
+  const year = dateString.substring(0, 4);
+  const month = dateString.substring(4, 6);
+  const day = dateString.substring(6, 8);
+  return `${day}/${month}/${year}`;
+}
+
+const indicator = h(LoadingOutlined, {
+  style: {
+    fontSize: '16px',
+    color: '#332D59',
+    opacity: '0.38',
+  },
+  spin: true,
+});
 </script>
 
 <template>
   <div id="lst_report_id">
-    <nuxt-link v-for="item in props.data" :key="item.id" class="lst_item"
-               :to="`${NAVIGATIONS.home}${item.source ==='marketing' ? 'insight/' + item.slug : item.slug}`">
-      <div class="item">
-        <div class="image-metric">
-          <img loading="lazy" v-if="item.url_thumbnail" :src="getUrlImageThumbnail(item.url_thumbnail)" alt=""/>
-          <img loading="lazy" v-else src="/images/default_thumbnail_report.png" class="default_thumbnail" />
-        </div>
-        <div class="info">
-          <div v-if="item.slug.startsWith('bao-cao')" class="name">
-            {{ item.name }}
+    <a-table :columns="columns" :data-source="props.data">
+      <template #bodyCell="{ column, text, record }">
+        <template v-if="column.dataIndex === 'name'">
+          <div style="display: flex; align-items: center; gap: 16px; cursor: pointer" @click="handleRowClick(record)">
+            <img
+                :src="record.url_thumbnail ? getUrlImageThumbnail(record.url_thumbnail) : '/images/default_thumbnail_report.png'"
+                alt="thumbnail"
+                style="width: 60px; height: 60px; border-radius: 8px"
+            />
+            <div class="info">
+              <div class="category">{{ REPORT_TYPE_MAP[record.report_type] || REPORT_TYPE_MAP.default }}</div>
+              <div class="title">Báo cáo {{ text }}</div>
+            </div>
           </div>
-          <div v-else-if="item.report_type === 'report_category'" class="name">
-            Báo cáo Ngành hàng
+        </template>
+        <template v-else-if="column.dataIndex === 'statistics'">
+          <div>
+
+            <div>{{ formatDateString(record.start_date) }} - {{ formatDateString(record.end_date) }}</div>
           </div>
-          <div v-else-if="item.report_type === 'report_brand'" class="name">
-            Báo cáo Thương hiệu
-          </div>
-          <div v-else class="name">
-            Báo cáo Nhóm hàng
-          </div>
-          <div class="title">{{item.name}}</div>
-        </div>
-      </div>
-    </nuxt-link>
+        </template>
+        <template v-else-if="column.dataIndex === 'operation'">
+          <a-button v-if="record.operation" class="icon-wrapper" style="display: flex; gap: 4px">
+            <img src="/icons/Download.svg" alt="download" />
+            <span>Tải báo cáo</span>
+          </a-button>
+          <a-button v-else disabled class="icon-wrapper" style="display: flex; gap: 4px; align-items: center">
+            <a-spin style="display: flex; align-items: center" :indicator="indicator" />
+            <span>Đang xử lý</span>
+          </a-button>
+        </template>
+      </template>
+    </a-table>
   </div>
 </template>
-
 <style scoped lang="scss">
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  color: #241E46;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.category {
+  color: #716B95;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.icon-wrapper img {
+  transition: filter 0.3s;
+}
+
+.icon-wrapper:hover img {
+  filter: invert(39%) sepia(100%) saturate(1000%) hue-rotate(359deg) brightness(97%) contrast(104%);
+}
+
+</style>
+
+<style>
 #lst_report_id {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  .ant-table-wrapper {
+    .ant-spin-container {
+      .ant-table {
+        .ant-table-container {
+          .ant-table-content {
+            table {
+              .ant-table-thead {
+                .ant-table-cell {
+                  background: #EEEBFF;
+                  border-bottom: 1px solid #EEEBFF;
 
-  .lst_item {
-    display: flex;
-    text-decoration: none;
-
-    .item {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      padding: 24px;
-      border: 1px solid #EEEBFF;
-      background-color: #FFF;
-      border-radius: 16px;
-      width: 100%;
-      cursor: pointer;
-
-      .image-metric {
-        img {
-          width: 100%;
-          height: auto;
-          object-fit: contain;
-          border-radius: 8px;
+                }
+              }
+              .ant-table-cell {
+                vertical-align: middle;
+              }
+            }
+          }
         }
       }
-
-      .info {
-        display: flex;
-        flex-direction: column;
-        color: var(--Dark-blue-dark-blue-5, #716B95);
-
-        .title{
-          color: var(--Dark-blue-dark-blue-8, #241E46);
-          font-size: 20px;
-          font-weight: bold;
-          line-height: 28px;
-        }
+      .ant-pagination{
+        display: none;
       }
     }
   }
 }
-
 </style>
