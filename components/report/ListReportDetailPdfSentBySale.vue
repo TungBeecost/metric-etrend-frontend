@@ -56,7 +56,11 @@ const indicator = h(LoadingOutlined, {
 
 <template>
   <div id="lst_report_id">
-    <a-table :columns="columns" :data-source="props.data">
+    <a-table
+        :columns="columns"
+        :data-source="props.data"
+        :scroll="{ x: 1000 }"
+    >
       <template #bodyCell="{ column, text, record }">
         <template v-if="column.dataIndex === 'name'">
           <div style="display: flex; align-items: center; gap: 16px; cursor: pointer" @click="handleRowClick(record)">
