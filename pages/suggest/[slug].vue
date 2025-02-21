@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {
   formatAndRoundSortTextCurrencyWithMinValue,
-  formatCurrency,
   formatNumber,
   formatNumberIntoText
 } from "~/helpers/FormatHelper";
@@ -86,7 +85,7 @@ const diffRevenueLatestQuarterPercent = (record: any) => {
 };
 
 const handleClick = (slug: any) => {
-  window.location.href = `${config.public.BASE_URL}/${slug}`;
+  window.open(`${config.public.BASE_URL}/${slug}`, '_blank');
 };
 
 onMounted(() => {

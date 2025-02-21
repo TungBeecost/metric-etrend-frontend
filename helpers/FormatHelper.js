@@ -47,14 +47,24 @@ const formatNumberIntoText = (value) => {
         return "< 100 triệu VNĐ";
     } else if (value < 1000000000) {
         return "< 1 tỷ VNĐ";
+    } else if (value < 5000000000) {
+        return "> 1 tỷ VNĐ";
     } else if (value < 10000000000) {
-        return "< 10 tỷ VNĐ";
+        return "> 5 tỷ VNĐ";
+    } else if (value < 50000000000) {
+        return "> 10 tỷ VNĐ";
     } else if (value < 100000000000) {
-        return "< 100 tỷ VNĐ";
+        return "> 50 tỷ VNĐ";
+    } else if (value < 500000000000) {
+        return "> 100 tỷ VNĐ";
     } else if (value < 1000000000000) {
-        return "< 1000 tỷ VNĐ";
-    } else {
+        return "> 500 tỷ VNĐ";
+    } else if (value < 5000000000000) {
         return "> 1000 tỷ VNĐ";
+    } else if (value < 10000000000000) {
+        return "> 5000 tỷ VNĐ";
+    } else {
+        return "> 10000 tỷ VNĐ";
     }
 };
 
