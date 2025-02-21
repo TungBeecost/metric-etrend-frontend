@@ -9,21 +9,24 @@ import GeneralTransaction from "~/components/account/GeneralTransaction.vue";
 import StatisticalTransaction from "~/components/account/StatisticalTransaction.vue";
 import StatisticalDiscountCode from "~/components/account/StatisticalDiscountCode.vue";
 import DetailedReportsViewedPdf from "~/components/account/DetailedReportsViewedPdf.vue";
+import DetailedReportSentBySale from "~/components/account/DetailedReportSentBySale.vue";
 
 const currentUserStore = useCurrentUser();
 const { userInfo } = storeToRefs(currentUserStore);
 const data = ref<{ total: number; reports: ListClaimed[] } | null>(null);
 const dataPdf = ref<{ total: number; reports: ListClaimed[] } | null>(null);
+const dataSentBySale = ref<{ total: number; reports: ListClaimed[] } | null>(null);
 const dataGeneral = ref<Record<string, any>>({});
 const dataGeneralTransactionStatistic = ref<Record<string, any>>({});
 const dataGeneralTransactionDiscountCode = ref<Record<string, any>>({});
 const loading = ref(true);
 const loadingpdf = ref(true);
+const loadingDataSentBySale = ref(true);
 const loadingStatisticalTransaction = ref(true);
 const loadingStatisticalDiscountCode = ref(true);
 const loadingUser = ref(true);
 const activeKey = ref('1');
-const { fetchClaimedList, fetchClaimedPDFList, fetchApiListStatisticalTransaction, fetchApiListStatisticalDiscountCode } = useSearchReport();
+const { fetchClaimedList, fetchClaimedPDFList, fetchClaimedPDFListReportSale, fetchApiListStatisticalTransaction, fetchApiListStatisticalDiscountCode } = useSearchReport();
 
 const fetchTableData = async (page: number = 0, limit: number = 4) => {
   try {
@@ -52,6 +55,21 @@ const fetchTableDataPDF = async (page: number = 0, limit: number = 4) => {
     console.error("Error fetching claimed list:", error);
   } finally {
     loadingpdf.value = false;
+  }
+};
+
+const fetchClaimedPDFListReportSentBySale = async (page: number = 0, limit: number = 4) => {
+  try {
+    const response = await fetchClaimedPDFListReportSale(page, limit);
+    if (response) {
+      dataSentBySale.value = response;
+    } else {
+      console.error("No dataSentBySale received from fetchClaimedList");
+    }
+  } catch (error) {
+    console.error("Error fetching claimed list:", error);
+  } finally {
+    loadingDataSentBySale.value = false;
   }
 };
 
@@ -97,9 +115,18 @@ const handlePage = (page: number) => {
 };
 
 const handlePagePDF = (page: number) => {
-  loading.value = true;
+  loadingpdf.value = true;
   fetchTableDataPDF(page - 1);
 };
+
+const handlePagePDFReportSale = (page: number) => {
+  loadingDataSentBySale.value = true;
+  fetchClaimedPDFListReportSentBySale(page - 1);
+};
+
+const isStaff = computed(() => {
+  return userInfo.value?.email?.includes('@metric.vn');
+});
 
 onMounted(async () => {
   if (!currentUserStore.authenticated) {
@@ -117,6 +144,7 @@ onMounted(async () => {
 
   await fetchTableData();
   await fetchTableDataPDF();
+  await fetchClaimedPDFListReportSentBySale();
   await fetchListStatisticalTransaction();
   await fetchListStatisticalDiscountCode();
   loadingUser.value = false;
@@ -130,6 +158,15 @@ onMounted(async () => {
       <a-tabs v-model:activeKey="activeKey">
         <a-tab-pane key="1" tab="Lịch sử sử dụng">
           <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 24px">
+            <detailed-report-sent-by-sale
+                v-if="isStaff"
+                :loading="loadingDataSentBySale"
+                title="Báo cáo đã gửi"
+                :data="dataSentBySale?.reports"
+                :total='dataSentBySale?.total'
+                class="detail-report"
+                @change="handlePagePDFReportSale"
+            />
             <detailed-reports-viewed
                 :loading="loading"
                 title="Báo cáo đã xem"

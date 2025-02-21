@@ -230,7 +230,8 @@ export const fetchClaimedPDFListReport = async (page: number = 0, limit: number 
         url_thumbnail: item.url_thumbnail,
         report_type: item.report_type,
         lst_brand: item.lst_brand,
-        lst_category: item.lst_category
+        lst_category: item.lst_category,
+        operation: item.operation,
         }));
 
         return { total: response.data.total, reports: data };
@@ -238,6 +239,48 @@ export const fetchClaimedPDFListReport = async (page: number = 0, limit: number 
         console.error("fetchClaimedPDFListReport error: ", error);
         return null;
     }
+}
+
+export const fetchClaimedPDFListReportSentBySale = async (page: number = 0, limit: number = 10) => {
+  try {
+    const response = await axios.get(useBEEndpoint(REPORT_ENDPOINTS.list_report_sent_by_sale.endpoint), {
+      params: {
+        page,
+        limit
+      }
+    });
+
+    if (!response.data || !Array.isArray(response.data.reports)) {
+      console.error("fetchClaimedPDFListReport error: Unexpected response format");
+      return null;
+    }
+
+    const data: ListClaimed[] = response.data.reports.map((item: any) => ({
+      id: item.id,
+      slug: item.slug,
+      name: item.name,
+      claimed_at: item.claimed_at,
+      expired_at: item.expired_at,
+      package: item.package,
+      created_at: item.created_at,
+      status: item.status,
+      search_volume_shopee: item.search_volume_shopee,
+      start_date: item.start_date,
+      end_date: item.end_date,
+      category_report_id: item.category_report_id,
+      category_report_name: item.category_report_name,
+      url_thumbnail: item.url_thumbnail,
+      report_type: item.report_type,
+      lst_brand: item.lst_brand,
+      lst_category: item.lst_category,
+      customer_email: item.customer_email,
+    }));
+
+    return { total: response.data.total, reports: data };
+  } catch (error) {
+    console.error("fetchClaimedPDFListReport error: ", error);
+    return null;
+  }
 }
 
 export const exportReportSendMail = async (slug: string, email: string, name: string, phone: string, companyName: string) => {
@@ -347,4 +390,6 @@ export interface ListClaimed {
   "report_type": string,
   "lst_brand": Array<string>
   "lst_category": Array<string>
+  "operation": boolean
+  "customer_email": string
 }

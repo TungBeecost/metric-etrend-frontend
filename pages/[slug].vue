@@ -319,7 +319,7 @@ const isStaff = computed(() => {
 
 const handleOk = () => {
   showModal.value = false;
-  navigateTo(`${NAVIGATIONS.home}${route.params.slug}`);
+  navigateTo(`${NAVIGATIONS.home}suggest/${route.params.slug}`);
 };
 
 const downloadSampleReport = () => {

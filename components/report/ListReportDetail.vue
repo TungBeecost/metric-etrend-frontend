@@ -21,10 +21,14 @@ const columns = [
     width: 600,
   },
   {
+    title: 'Trạng thái',
+    dataIndex: 'status',
+    key: 'status',
+  },
+  {
     title: 'Thời điểm xem báo cáo',
     dataIndex: 'time_used',
     key: 'time_used',
-
   },
   {
     title: 'Gói áp dụng',
@@ -49,6 +53,10 @@ function getPackageClass(packageName: string): string {
   return packageName === 'eReport' ? 'package_ereport' : 'package_metric';
 }
 
+function getStatusClass(claimedAt: string, expiredAt: string): string {
+  return new Date() >= new Date(claimedAt) && new Date() <= new Date(expiredAt) ? 'status_active' : 'status_inactive';
+}
+
 function handleRowClick(record: any) {
   console.log('record', record);
   const url = `${NAVIGATIONS.home}${record.source === 'marketing' ? 'insight/' + record.slug : record.slug}`;
@@ -58,7 +66,7 @@ function handleRowClick(record: any) {
 
 <template>
   <div id="lst_report_id">
-    <a-table :columns="columns" :data-source="props.data">
+    <a-table :columns="columns" :data-source="props.data" :scroll="{ x: 1000 }">
       <template #bodyCell="{ column, text, record }">
         <template v-if="column.dataIndex === 'name'">
           <div style="display: flex; align-items: center; gap: 16px; cursor: pointer" @click="handleRowClick(record)">
@@ -73,6 +81,11 @@ function handleRowClick(record: any) {
             </div>
           </div>
         </template>
+        <template v-else-if="column.dataIndex === 'status'">
+          <div style="display: flex; height: 100%; align-items: center; align-content: center; gap: 16px">
+            <span :class="getStatusClass(record.claimed_at, record.expired_at)">{{ new Date() >= new Date(record.claimed_at) && new Date() <= new Date(record.expired_at) ? 'Còn khả dụng' : 'Đã hết hạn' }}</span>
+          </div>
+        </template>
         <template v-else-if="column.dataIndex === 'time_used'">
           <div style="display: flex; height: 100%; align-items: center; gap: 16px">
             <span>{{ formatExpiredAt(record.created_at) }}</span>
@@ -80,7 +93,7 @@ function handleRowClick(record: any) {
           </div>
         </template>
         <template v-else-if="column.dataIndex === 'package'">
-          <div style="display: flex; height: 100%; align-items: center; gap: 16px">
+          <div style="display: flex; height: 100%; align-items: center; align-content: center; gap: 16px">
             <div :class="getPackageClass(record.package)">{{ record.package }}</div>
           </div>
         </template>
@@ -98,7 +111,7 @@ function handleRowClick(record: any) {
 .title {
   color: #241E46;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 24px;
 }
 
@@ -130,6 +143,32 @@ function handleRowClick(record: any) {
   border-radius: 4px;
   background: #FFF7E8;
   color: #FAAD14;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.status_active{
+  display: flex;
+  height: 24px;
+  padding: 2px 8px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: #EAF8EE;
+  color: #35A855;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.status_inactive{
+  display: flex;
+  height: 24px;
+  padding: 2px 8px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: #F5F5F5;
+  color: #667085;
   font-size: 12px;
   font-weight: 400;
 }

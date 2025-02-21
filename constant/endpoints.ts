@@ -9,6 +9,7 @@ export const REPORT_ENDPOINTS: { [key: string]: { endpoint: string; method: METH
     claim_pdf: {endpoint: `/api/report/claim_pdf`, method: "GET"},
     list_claimed: {endpoint: `/api/report/claimed-list`, method: "GET"},
     list_claimed_pdf: {endpoint: `/api/report/claimed-list-pdf`, method: "GET"},
+    list_report_sent_by_sale: {endpoint: `/api/report/claimed-list-sent_report_by_sale`, method: "GET"},
     export_report_send_mail: {endpoint: `/api/report/export_report_send_mail`, method: "POST"},
 };
 
