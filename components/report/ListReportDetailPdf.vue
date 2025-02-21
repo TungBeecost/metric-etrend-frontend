@@ -2,6 +2,15 @@
 import {NAVIGATIONS, REPORT_TYPE_MAP} from "~/constant/constains";
 import { LoadingOutlined } from '@ant-design/icons-vue';
 import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
+import {getIndexedDB} from "~/helpers/IndexedDBHelper";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
+import {message} from "ant-design-vue";
+import {ref} from "vue";
+import moment from "moment/moment";
+
+const config = useRuntimeConfig();
+const downloading = ref(false);
 
 const props = defineProps({
   data: {
@@ -31,21 +40,6 @@ const columns = [
   },
 ];
 
-function formatExpiredAt(dateString: string): string {
-  const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = date.getFullYear();
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  const seconds = String(date.getSeconds()).padStart(2, '0');
-  return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
-}
-
-function getPackageClass(packageName: string): string {
-  return packageName === 'eReport' ? 'package_ereport' : 'package_metric';
-}
-
 function handleRowClick(record: any) {
   console.log('record', record);
   const url = `${NAVIGATIONS.home}${record.source === 'marketing' ? 'insight/' + record.slug : record.slug}`;
@@ -58,6 +52,56 @@ function formatDateString(dateString: string): string {
   const day = dateString.substring(6, 8);
   return `${day}/${month}/${year}`;
 }
+
+const formatDate = (value: string | Date, format: string = 'DD/MM/YYYY', inputFormat: string = "YYYY-MM-DD[T]HH:mm:ss"): string => {
+  return moment(value, inputFormat).format(format);
+}
+
+const handleDownload = async (start_date: any, end_date: any, slug: any, name: any) => {
+    const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${slug}&type=download&start_date=${start_date}&end_date=${end_date}`;
+    const accessToken = await getIndexedDB("access_token");
+    const visitorId = await getIndexedDB("__visitor");
+    trackEventCommon(EVENT_TYPE.DOWNLOAD_REPORT, 'download_report', '');
+    try {
+      downloading.value = true;
+      const response: any = await $fetch(
+          url,
+          {
+            headers: {
+              'Authorization': `${accessToken}`,
+              'Visitorid': visitorId.visitor_id,
+            }
+          }
+      );
+      const { url_download } = response;
+      downloading.value = false;
+      if (url_download) {
+        message.success('Bắt đầu tải xuống báo cáo');
+        fetch(url_download, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/pdf',
+          },
+        })
+            .then((response) => response.blob())
+            .then((blob) => {
+              const url = window.URL.createObjectURL(new Blob([blob]));
+              const link = document.createElement('a');
+              link.href = url;
+              const fileName = `Báo cáo chi tiết nhóm hàng ${name} ${formatDate(start_date, "DDMMYYYY")}-${formatDate(end_date, "DDMMYYYY")}.pdf`;
+              link.setAttribute('download', fileName);
+
+              document.body.appendChild(link);
+              link.click();
+              link.parentNode.removeChild(link);
+            });
+      }
+    } catch (e) {
+      downloading.value = false;
+      console.log('error', e);
+    }
+};
+
 
 const indicator = h(LoadingOutlined, {
   style: {
@@ -93,7 +137,7 @@ const indicator = h(LoadingOutlined, {
           </div>
         </template>
         <template v-else-if="column.dataIndex === 'operation'">
-          <a-button v-if="record.operation" class="icon-wrapper" style="display: flex; gap: 4px">
+          <a-button v-if="record.operation" @click="handleDownload(record.start_date, record.end_date, record.slug, record.name)" class="icon-wrapper" style="display: flex; gap: 4px">
             <img src="/icons/Download.svg" alt="download" />
             <span>Tải báo cáo</span>
           </a-button>
