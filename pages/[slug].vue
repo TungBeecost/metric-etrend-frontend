@@ -291,6 +291,11 @@ onMounted(async () => {
   if (typeof affiliateCode === 'string' && affiliateCode.trim() !== '') {
     setCookie('affiliate_code', affiliateCode, 30); // Set cookie for 30 days
   }
+  const email_customer = route.query.email_customer;
+  console.log('email_customer', email_customer);
+  if ((!currentUserStore.authenticated && email_customer) || userInfo.value.email !== email_customer) {
+    currentUserStore.setShowPopupLogin(true);
+  }
 });
 
 watch(
