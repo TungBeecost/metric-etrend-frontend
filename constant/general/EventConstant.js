@@ -34,6 +34,7 @@ const EVENT_TYPE = {
     SUBMIT_FORM_ANY_REPORT: 'submit_form_any_report',
     CLICK_SEARCH_REPORTS: 'click_search_reports',
     CLICK_REPORT_SEARCH_RESULTS: 'click_report_search_results',
+    CLICK_SUGGESTED_REPORT: 'click_suggested_report',
 };
 
 export {
