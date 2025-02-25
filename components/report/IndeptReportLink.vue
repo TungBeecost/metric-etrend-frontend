@@ -37,12 +37,12 @@ onMounted(() => {
   if (route.query.period_of_time_download) {
     open.value = true;
 
-    router.replace({
-      query: {
-        ...route.query,
-        period_of_time_download: undefined,
-      },
-    });
+    // router.replace({
+    //   query: {
+    //     ...route.query,
+    //     period_of_time_download: undefined,
+    //   },
+    // });
   }
 });
 
