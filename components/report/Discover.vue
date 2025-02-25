@@ -82,6 +82,7 @@ const toggleSeeMore = () => {
 <template>
   <div class="discover default_section">
     <div class="title">Khám phá theo ngành hàng</div>
+    <SearchReport style="width: 100% !important;" class="searchBox"/>
     <item-discover :show-more="showMore" :reports="reports" class="lst_item"/>
     <div class="see_more">
       <button :class="showMore ? 'button_see_more_hide' : 'button_see_more'" @click="toggleSeeMore">{{ showMore ? 'Ẩn bớt' : 'Xem thêm' }}</button>

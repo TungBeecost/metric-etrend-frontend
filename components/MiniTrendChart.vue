@@ -15,6 +15,10 @@ const props = defineProps({
 });
 
 const chartOptions = computed(() => {
+  const revenueData = props.data.revenue_by_month
+      ? props.data.revenue_by_month.map(item => item.revenue)
+      : props.data.by_overview.map(item => item.revenue);
+
   return {
     chart: {
       type: 'areaspline',
@@ -31,7 +35,7 @@ const chartOptions = computed(() => {
     },
     series: [
       {
-        data: props.data.revenue_by_month.map(item => item.revenue),
+        data: revenueData,
         color: '#e85912',
         fillOpacity: 0.15,
         marker: { enabled: false },
