@@ -105,4 +105,24 @@ const handleClickCategory = () => {
     }
   }
 }
+
+@media (max-width: 768px) {
+  .top_report_category{
+    .title_container{
+      flex-direction: column;
+      align-items: start;
+      .title{
+        div{
+          font-size: 24px;
+          line-height: 32px;
+        }
+
+        p{
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+    }
+  }
+}
 </style>

@@ -117,6 +117,37 @@ const paginatedReports = computed(() => {
     }
   }
 }
+@media (max-width: 767px) {
+  .grid-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
 
+  .image{
+    img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+  }
+
+  .content {
+    padding: 4px;
+    gap: 4px;
+    .title {
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .report_info{
+      gap: 8px;
+      font-size: 12px;
+      .title {
+        font-size: 12px;
+        line-height: 16px;
+      }
+    }
+  }
+}
 
 </style>

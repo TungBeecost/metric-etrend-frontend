@@ -44,7 +44,7 @@ import ListReportType from "~/components/report/ListReportType.vue";
 
 @media (max-width: 768px) {
   .report_type {
-    padding-top: 100px;
+    padding-top: 60px;
     padding-bottom: 50px;
 
     .title_report_type {
@@ -63,7 +63,7 @@ import ListReportType from "~/components/report/ListReportType.vue";
 }
 @media (max-width: 1380px) {
   .report_type {
-    padding-top: 150px;
+    padding-top: 60px;
     padding-bottom: 75px;
 
     .title_report_type {

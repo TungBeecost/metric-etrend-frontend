@@ -317,6 +317,7 @@ const getCardStyle = (index: number) => {
   .report-slide {
     .carousel__slide {
       .slide-item {
+        width: 100%;
         flex-direction: column;
 
         .thumbnail {

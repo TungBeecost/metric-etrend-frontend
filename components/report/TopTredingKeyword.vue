@@ -8,6 +8,18 @@ const config = useRuntimeConfig();
 const isLoading = ref(true);
 const tableData = ref([]);
 
+const isMobile = ref(false);
+const windowWidth = ref(1024);
+
+onMounted(() => {
+  windowWidth.value = window.innerWidth;
+  isMobile.value = window.innerWidth < 768;
+  window.addEventListener('resize', () => {
+    windowWidth.value = window.innerWidth;
+    isMobile.value = window.innerWidth < 768;
+  });
+});
+
 const diffRevenueLatestQuarterPercent = (record: any) => {
   const dataAnalytic = record.by_overview;
   if (!dataAnalytic || dataAnalytic.length < 6) return NaN;
@@ -72,7 +84,7 @@ const columns = [
     title: 'Từ khoá',
     dataIndex: 'keyword',
     key: 'keyword',
-    width: 300,
+    width: isMobile ? 150 : 300,
   },
   {
     title: 'Lượt tìm kiếm',
@@ -194,4 +206,21 @@ const columns = [
   }
 }
 
+@media (max-width: 767px) {
+  #top_report_trending_keyword{
+    .title_container{
+      .title{
+        .lable{
+          font-size: 24px;
+          line-height: 32px;
+        }
+
+        p{
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+    }
+  }
+}
 </style>

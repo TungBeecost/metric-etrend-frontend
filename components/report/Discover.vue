@@ -148,7 +148,7 @@ const toggleSeeMore = () => {
 
 @media (max-width: 460px) {
   .discover{
-    padding-top: 200px;
+    padding-top: 40px;
   }
   .lst_item {
     width: calc(100% - 50px);

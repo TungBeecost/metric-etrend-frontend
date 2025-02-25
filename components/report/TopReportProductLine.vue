@@ -107,4 +107,24 @@ onMounted(() => {
     }
   }
 }
+
+@media (max-width: 767px) {
+  .top_report_product_line{
+    .title_container{
+      flex-direction: column;
+      align-items: start;
+      .title{
+        div{
+          font-size: 24px;
+          line-height: 32px;
+        }
+
+        p{
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+    }
+  }
+}
 </style>

@@ -173,4 +173,48 @@ onMounted(() => {
     }
   }
 }
+
+@media (max-width: 767px) {
+  .featured_collection {
+    .title_container {
+      flex-direction: column;
+      align-items: start;
+
+      .title {
+        div {
+          font-size: 24px;
+          line-height: 32px;
+        }
+
+        p {
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+    }
+
+    .content_container {
+      .card {
+        padding: 24px 16px 16px 16px;
+        gap: 16px;
+
+        .content {
+          flex-direction: column;
+          gap: 16px;
+
+          .content_label {
+            .label {
+              font-size: 20px;
+              line-height: 28px;
+            }
+          }
+
+          .list_report_container {
+            grid-template-columns: repeat(1, 1fr);
+          }
+        }
+      }
+    }
+  }
+}
 </style>

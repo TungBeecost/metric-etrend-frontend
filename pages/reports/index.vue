@@ -255,7 +255,8 @@ useSeoMeta({
 @media (max-width: 767px) {
   .title_report {
     .image-metric {
-      height: 565px;
+      height: 300px;
+      padding: 20px;
       .title {
         gap: 40px;
 
