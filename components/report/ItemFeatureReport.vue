@@ -36,7 +36,7 @@ const itemsToShow = computed(() => {
   } else if (windowWidth.value <= 1380) {
     return 2;
   } else {
-    return 4;
+    return 5;
   }
 });
 
