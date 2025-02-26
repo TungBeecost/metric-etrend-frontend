@@ -17,6 +17,29 @@ const props = defineProps({
   },
 });
 
+const platformId = ref(0)
+
+const promptPlatformById = (platformId) => {
+  switch (platformId) {
+    case 1:
+      return 'Shopee';
+    case 2:
+      return 'Lazada';
+    case 3:
+      return 'Tiki';
+    case 4: 
+      return 'Tiktok';
+    default:
+      return 'Khác';
+  }
+}
+
+onMounted(() => {
+  try {
+    platformId.value = props.data?.data_filter_report?.lst_platform_id[0];
+  } catch (e) {}
+});
+
 const formatPriceRange = (priceRange, prefix = ['trên', 'dưới']) => {
   if (!priceRange.begin) {
     return `${prefix[0]} ${formatCurrency(priceRange.end)}`;
@@ -239,7 +262,7 @@ const chartOptions = computed(() => {
           v-if="priceRangesSortBy('revenue') && priceRangesSortBy('revenue').length"
       >
         <li>
-          Trong {{ diffMonths }} qua, phân khúc khách hàng thị trường {{ props.data.name }} thường mua chủ yếu ở mức giá
+          Trong {{ diffMonths }} qua, phân khúc khách hàng {{ data?.report_type == 'report_top_shop' ? "gian hàng" : "thị trường" }} {{ props.data.name }} {{ data?.report_type == 'report_top_shop' ? "trên sàn " + promptPlatformById(platformId) : "" }} thường mua chủ yếu ở mức giá
           khoảng
           {{ formatCurrency(priceRangesSortBy("revenue")[0].begin) }} -
           {{ formatCurrency(priceRangesSortBy("revenue")[0].end) }}.
@@ -247,7 +270,7 @@ const chartOptions = computed(() => {
         <li
             v-if="priceRangesSortBy('revenue') &&priceRangesSortBy('revenue').length > 1"
         >
-          Phân khúc giá phổ biến của {{ props.data.name }} là
+          Phân khúc giá phổ biến của {{ data?.report_type == 'report_top_shop' ? "gian hàng" : "" }} {{ props.data.name }} {{ data?.report_type == 'report_top_shop' ? "trên sàn " + promptPlatformById(platformId) : "" }} là
           {{ priceRangesSortBy("sale")[0].begin ? formatCurrency(priceRangesSortBy("sale")[0].begin) + ' - ' : '< ' }}
           {{ formatCurrency(priceRangesSortBy("sale")[0].end) }}
           ,

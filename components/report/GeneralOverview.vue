@@ -368,11 +368,11 @@ const filteredPlatforms = computed(() => {
         </b>
       </li>
       <li>
-        Cập nhật tình hình thị trường {{ data?.name }} có hơn
+        Cập nhật tình hình {{ data?.report_type == 'report_top_shop' ? "gian hàng" : "thị trường" }} {{ data?.name }} có hơn
         <span>
             {{ formatNumber(data?.data_analytic?.by_overview?.shop) }}
           </span>
-        nhà bán trên sàn TMĐT với hơn
+        nhà bán trên sàn {{ data?.report_type == 'report_top_shop' ? promptPlatformById(platformId) : "TMĐT" }} với hơn
         <BlurContent :is-hide-content="props.isHideContent">
           <span>
             {{ formatNumber(data?.data_analytic?.by_overview?.product) }}
@@ -391,7 +391,7 @@ const filteredPlatforms = computed(() => {
         về sản lượng
       </li>
       <li>
-        Doanh số của sản phẩm {{ data?.name }} trong tháng
+        Doanh số của  {{ data?.report_type == 'report_top_shop' ? "gian hàng" : "sản phẩm" }} {{ data?.name }} {{ data?.report_type == 'report_top_shop' ? "trên sàn " + promptPlatformById(platformId) : "" }} trong tháng
         {{ formatDateFunc(hightestMonthRevenue.begin, "MM/YYYY") }}
         đạt mức cao nhất với
         <BlurContent :is-hide-content="isHideContent">
@@ -408,7 +408,7 @@ const filteredPlatforms = computed(() => {
         về sản lượng.
       </li>
       <li>
-        Quy mô thị trường {{ data?.name }} tháng
+        Quy mô thị trường {{ data?.report_type == 'report_top_shop' ? "của gian hàng" : "" }} {{ data?.name }} {{ data?.report_type == 'report_top_shop' ? "trên sàn " + promptPlatformById(platformId) : "" }} tháng
         {{ diffRevenueMonths?.diffPercent !== undefined && diffRevenueMonths.diffPercent > 0 ? "tốt" : "thấp" }} hơn so
         với tháng đạt
         <BlurContent :is-hide-content="isHideContent">
@@ -431,7 +431,7 @@ const filteredPlatforms = computed(() => {
       </li>
       <li>
         <b class="text-bold">Nhận xét trung hạn</b> trong 6 tháng gần
-        nhất, {{ data?.name }}
+        nhất, {{ data?.report_type == 'report_top_shop' ? "gian hàng" : "" }} {{ data?.name }} {{ data?.report_type == 'report_top_shop' ? "trên sàn " + promptPlatformById(platformId) : "" }}
         {{
           Number(diffHalfYear.diffPercent) > 0
               ? "tăng trưởng doanh thu"

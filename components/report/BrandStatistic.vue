@@ -18,6 +18,7 @@ const renderChartSales = ref(false);
 const renderChartOutput = ref(false);
 const windowWidth = ref(0);
 const isMobile = ref(false);
+const platformId = ref(0);
 
 onMounted(() => {
   if (typeof window !== 'undefined') {
@@ -30,8 +31,25 @@ onMounted(() => {
   }
   renderChartSales.value = true;
   renderChartOutput.value = true;
+  try {
+    platformId.value = props.data?.data_filter_report?.lst_platform_id[0];
+  } catch (e) {}
 });
 
+const promptPlatformById = (platformId) => {
+  switch (platformId) {
+    case 1:
+      return 'Shopee';
+    case 2:
+      return 'Lazada';
+    case 3:
+      return 'Tiki';
+    case 4: 
+      return 'Tiktok';
+    default:
+      return 'Khác';
+  }
+}
 
 const chartWidth = computed(() => {
   if (windowWidth.value < 1200) {
@@ -310,7 +328,7 @@ const formattedBrandCount = computed(() => {
     >
       <li>
 
-        Phân tích thị trường {{ data.name }} có hơn
+        Phân tích {{ data?.report_type == 'report_top_shop' ? "gian hàng" : "thị trường" }} {{ data.name }} {{ data?.report_type == 'report_top_shop' ? "trên sàn " + promptPlatformById(platformId) : "" }} có hơn
         <BlurContent :is-hide-content="isHideContent">
           <span>
             {{ formattedBrandCount }}
@@ -361,7 +379,7 @@ const formattedBrandCount = computed(() => {
           <b class="text-bold">{{
               data.data_analytic.by_brand.lst_top_brand_revenue[2].name
             }}</b>
-          tương ứng thị phần {{ data.name }} với doanh thu là
+          tương ứng thị phần {{ data?.report_type == 'report_top_shop' ? "gian hàng" : "" }} {{ data.name }} với doanh thu là
           <BlurContent :is-hide-content="isHideContent">
             <span>
               {{
