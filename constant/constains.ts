@@ -757,3 +757,65 @@ export const INFORMATION_PRICING = [
   },
 ]
 
+export const CARD_TOP = [
+  {
+    index: 1,
+    color: '#D59311',
+    background: 'linear-gradient(270deg, var(--orange-orange-1, #FFF4E8) 0.47%, var(--gold-gold-3, #FDDC9A) 99.53%)', // Gold
+    label: 'Top 1'
+  },
+  {
+    index: 2,
+    color: '#1890FF',
+    background: 'linear-gradient(270deg, var(--blue-blue-1, #E8F4FF) 0.47%, var(--blue-blue-2, #C8E4FF) 99.53%)', // Silver
+    label: 'Top 2'
+  },
+  {
+    index: 3,
+    color: '#B26310',
+    background: 'linear-gradient(270deg, var(--orange-orange-1, #FFF4E8) 0.47%, var(--orange-orange-3, #FDCE9B) 99.53%)', // Bronze
+    label: 'Top 3'
+  },
+  {
+    index: 4,
+    color: '#716B95',
+    background: 'var(--dark-blue-darkblue-2, #EEEBFF)', // Default
+    label: 'Top 4'
+  },
+  {
+    index: 5,
+    color: '#716B95',
+    background: 'var(--dark-blue-darkblue-2, #EEEBFF)', // Default
+    label: 'Top 5'
+  },
+  {
+    index: 6,
+    color: '#716B95',
+    background: 'var(--dark-blue-darkblue-2, #EEEBFF)', // Default
+    label: 'Top 6'
+  },
+  {
+    index: 7,
+    color: '#716B95',
+    background: 'var(--dark-blue-darkblue-2, #EEEBFF)', // Default
+    label: 'Top 7'
+  },
+  {
+    index: 8,
+    color: '#716B95',
+    background: 'var(--dark-blue-darkblue-2, #EEEBFF)', // Default
+    label: 'Top 8'
+  },
+  {
+    index: 9,
+    color: '#716B95',
+    background: 'var(--dark-blue-darkblue-2, #EEEBFF)', // Default
+    label: 'Top 9'
+  },
+  {
+    index: 10,
+    color: '#716B95',
+    background: 'var(--dark-blue-darkblue-2, #EEEBFF)', // Default
+    label: 'Top 10'
+  }
+];

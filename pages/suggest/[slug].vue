@@ -4,6 +4,8 @@ import {
   formatNumber,
   formatNumberIntoText
 } from "~/helpers/FormatHelper";
+import {trackEventCommon} from "~/services/tracking/TrackingEventService";
+import {EVENT_TYPE} from "~/constant/general/EventConstant";
 const route = useRoute();
 
 const columns = [
@@ -85,6 +87,7 @@ const diffRevenueLatestQuarterPercent = (record: any) => {
 };
 
 const handleClick = (slug: any) => {
+  trackEventCommon(EVENT_TYPE.CLICK_SUGGESTED_REPORT, 'click_suggested_report', '');
   window.open(`${config.public.BASE_URL}/${slug}`, '_blank');
 };
 

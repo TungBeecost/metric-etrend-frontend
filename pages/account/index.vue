@@ -156,7 +156,7 @@ onMounted(async () => {
     <account-infomation :loading=loadingUser :user-info="userInfo" class="info" />
     <div class="list_container default_section">
       <a-tabs v-model:activeKey="activeKey">
-        <a-tab-pane key="1" tab="Lịch sử sử dụng">
+        <a-tab-pane key="1" tab="Lịch sử báo cáo">
           <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 24px">
             <detailed-report-sent-by-sale
                 v-if="isStaff"

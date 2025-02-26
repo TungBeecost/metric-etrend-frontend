@@ -7,7 +7,7 @@ import ListReportType from "~/components/report/ListReportType.vue";
   <div class="report_type default_section">
     <div class="title_report_type">
       <div class="title">Khám phá nền tảng 1 triệu báo cáo thị trường bán lẻ TMĐT</div>
-      <div class="content">Tìm kiếm báo cáo theo nhu cầu của bạn để hiểu sâu hơn thị trường và hành vi mua hàng của người tiêu dùng.</div>
+      <div class="content">Cập nhật ngay những báo cáo xu hướng mới nhất giúp bạn nắm bắt kịp thời biến động thị trường và đưa ra quyết định đầu tư chính xác.</div>
     </div>
     <div class="lst_report_type">
       <list-report-type/>
@@ -18,8 +18,8 @@ import ListReportType from "~/components/report/ListReportType.vue";
 
 <style scoped lang="scss">
 .report_type {
-  padding-top: 200px;
-  padding-bottom: 100px;
+  padding-top: 60px;
+  padding-bottom: 60px;
 
   .title_report_type {
     display: flex;
@@ -44,7 +44,7 @@ import ListReportType from "~/components/report/ListReportType.vue";
 
 @media (max-width: 768px) {
   .report_type {
-    padding-top: 100px;
+    padding-top: 60px;
     padding-bottom: 50px;
 
     .title_report_type {
@@ -63,7 +63,7 @@ import ListReportType from "~/components/report/ListReportType.vue";
 }
 @media (max-width: 1380px) {
   .report_type {
-    padding-top: 150px;
+    padding-top: 60px;
     padding-bottom: 75px;
 
     .title_report_type {

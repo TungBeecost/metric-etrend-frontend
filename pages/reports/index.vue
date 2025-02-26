@@ -9,6 +9,10 @@ import ExploreByReportType from "~/components/report/ExploreByReportType.vue";
 import {onMounted} from "vue";
 import {trackEventCommon} from "~/services/tracking/TrackingEventService";
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
+import TopReportCategory from "~/components/report/TopReportCategory.vue";
+import TopReportProductLine from "~/components/report/TopReportProductLine.vue";
+import TopTredingKeyword from "~/components/report/TopTredingKeyword.vue";
+import FeaturedCollection from "~/components/report/FeaturedCollection.vue";
 
 const config = useRuntimeConfig();
 const isLoading = ref(true);
@@ -63,33 +67,30 @@ useSeoMeta({
       <div class="default_section">
         <div class="title">
           <div class="content">
-            <div class="report_title">Số liệu thị trường chính xác</div>
+            <div class="report_title">Khám phá xu hướng thị trường</div>
             <div class="description">
-              Báo cáo cung cấp thông tin tổng quan về các sàn TMĐT hàng đầu Việt Nam, từ doanh số,
-              sản lượng bán, số lượng sản phẩm, số lượng shop, top thương hiệu và nhà bán, tỷ trọng theo các tiêu
-              chí tới xu hướng tăng trưởng... theo ngành hàng, nhóm hàng. eReport giúp doanh nghiệp nắm bắt thị trường
-              và ra quyết định kinh doanh ngay lập tức với chi phí tối ưu nhất.
+              Theo dõi xu hướng tăng trưởng, nhóm hàng bán chạy, từ khóa hot và phân tích sâu theo ngành, shop, thương hiệu ngay với dữ liệu chính xác nhất
             </div>
           </div>
-          <div class="new_report">
-            <div class="title_new_report">
-              Báo cáo mới nhất
-            </div>
-            <div v-if="isLoading">
-              <a-skeleton />
-            </div>
-            <item-new-report v-else class="item_new_report_tran" :reports="lstReport" />
-          </div>
+<!--          <div class="new_report">-->
+<!--            <div class="title_new_report">-->
+<!--              Báo cáo mới nhất-->
+<!--            </div>-->
+<!--            <div v-if="isLoading">-->
+<!--              <a-skeleton />-->
+<!--            </div>-->
+<!--            <item-new-report v-else class="item_new_report_tran" :reports="lstReport" />-->
+<!--          </div>-->
         </div>
       </div>
     </div>
+    <top-report-category/>
+    <top-report-product-line/>
+    <top-treding-keyword/>
     <explore-by-report-type/>
-<!--    <report-free/>-->
-    <PracticalApplication/>
     <discover/>
-    <featured-report/>
+    <featured-collection/>
     <ContactUs/>
-<!--    <affiliate-component/>-->
   </div>
 </template>
 
@@ -100,12 +101,11 @@ useSeoMeta({
 
   .image-metric {
     display: flex;
-    padding-top: 60px;
+    padding: 60px;
     flex-direction: column;
     gap: 40px;
     background: url('/images/Hero_banner.png') no-repeat;
     background-size: cover;
-    height: 434px;
 
     .title {
       display: flex;
@@ -123,7 +123,6 @@ useSeoMeta({
           font-weight: bold;
           color: #FFF;
           line-height: 56px;
-          margin-bottom: 16px;
         }
 
         .description {
@@ -256,7 +255,8 @@ useSeoMeta({
 @media (max-width: 767px) {
   .title_report {
     .image-metric {
-      height: 565px;
+      height: 300px;
+      padding: 20px;
       .title {
         gap: 40px;
 

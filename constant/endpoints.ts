@@ -11,6 +11,7 @@ export const REPORT_ENDPOINTS: { [key: string]: { endpoint: string; method: METH
     list_claimed_pdf: {endpoint: `/api/report/claimed-list-pdf`, method: "GET"},
     list_report_sent_by_sale: {endpoint: `/api/report/claimed-list-sent_report_by_sale`, method: "GET"},
     export_report_send_mail: {endpoint: `/api/report/export_report_send_mail`, method: "POST"},
+    get_top_product_line_by_list_category: {endpoint: `/api/report/get_top_product_line_by_list_category`, method: "GET"},
 };
 
 export const AUTH_ENDPOINTS: { [key: string]: { endpoint: string; method: METHODS } } = {

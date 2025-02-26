@@ -2,7 +2,7 @@
 import {computed, onMounted, ref} from 'vue';
 import 'vue3-carousel/dist/carousel.css';
 import dayjs from "dayjs";
-import {NAVIGATIONS} from "~/constant/constains";
+import {CARD_TOP, NAVIGATIONS} from "~/constant/constains";
 import {formatAndRoundSortTextCurrencyWithMinValue} from "~/helpers/FormatHelper";
 import BlurContent from "~/components/BlurContent.vue";
 import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
@@ -39,6 +39,14 @@ const itemsToShow = computed(() => {
     return 5;
   }
 });
+
+const getReportLabel = (report: any) => {
+  return report.report_type === 'report_category' ? 'Ngành hàng' : 'Báo cáo';
+};
+
+const getCardStyle = (index: number) => {
+  return CARD_TOP[index] || CARD_TOP[CARD_TOP.length - 1];
+};
 </script>
 
 <template>
@@ -54,7 +62,7 @@ const itemsToShow = computed(() => {
     </Carousel>
     <Carousel v-else :items-to-show="itemsToShow" :items-to-scroll="itemsToShow" :wrap-around="true"
               style="width: 100%;" :snap-align="'start'">
-      <Slide v-for="report in reports" v-bind="report" :key="report.name">
+      <Slide v-for="(report, index) in reports" v-bind="report" :key="report.name">
         <div class="slide-item" @click="handleItemClick(report)">
           <div class="thumbnail">
             <img loading="lazy" :src="getUrlImageThumbnail(report.url_square || report.url_thumbnail)" :alt="report.name" style="width: 100%; object-fit: cover"/>
@@ -65,7 +73,7 @@ const itemsToShow = computed(() => {
               {{ dayjs(report.end_date).format('DD/MM/YYYY') }}
             </div>
             <div class="title" style="text-align: left;">
-              Báo cáo {{ report.name }}
+              {{ getReportLabel(report) }} {{ report.name }}
             </div>
             <div v-if="report.shop" class="summary-info">
               <div class="info_item">
@@ -133,6 +141,10 @@ const itemsToShow = computed(() => {
             </div>
           </div>
         </div>
+        <div v-if="report.report_type=='report_category'" class="card-top" :style="getCardStyle(index)">
+          {{getCardStyle(index).label}}
+        </div>
+
       </Slide>
       <template #addons>
         <navigation/>
@@ -153,6 +165,19 @@ const itemsToShow = computed(() => {
           text-overflow: ellipsis;
         }
       }
+    }
+
+    .card-top{
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      display: flex;
+      padding: 6px 16px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px 0px 12px 0px;
+
     }
   }
 }
@@ -176,6 +201,10 @@ const itemsToShow = computed(() => {
 
       .thumbnail {
         border-bottom: 1px solid #f0f0f0;
+        img{
+          height: 230px;
+          object-fit: contain;
+        }
       }
 
       .content {
@@ -288,6 +317,7 @@ const itemsToShow = computed(() => {
   .report-slide {
     .carousel__slide {
       .slide-item {
+        width: 100%;
         flex-direction: column;
 
         .thumbnail {

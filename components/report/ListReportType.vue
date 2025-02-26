@@ -37,6 +37,7 @@ function handleClick(report: any) {
     background: #FFF;
     gap: 40px;
     cursor: pointer;
+    box-shadow: 10px 10px 40px 0px rgba(0, 0, 0, 0.05);
 
     .title {
       font-size: 24px;

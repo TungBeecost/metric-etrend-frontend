@@ -2,6 +2,9 @@
 import { useCurrentUser } from '~/stores/current-user'
 
 const currentUserStore = useCurrentUser()
+const route = useRoute()
+
+const emailCustomer = computed(() => route.query.email_customer)
 
 onMounted(() => {
   google.accounts.id.initialize({
@@ -47,8 +50,11 @@ onMounted(() => {
         <div class="title">
           Đăng nhập
         </div>
-        <div class="description">
+        <div class="description" v-if="!emailCustomer">
           Đăng nhập nhanh bằng tài khoản Google của bạn
+        </div>
+        <div class="description" v-else>
+          Đăng nhập bằng email <b style="font-weight: bold; color: #E85912">{{ emailCustomer }}</b> để tải báo cáo miễn phí
         </div>
       </div>
       <div class="button_login">
