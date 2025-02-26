@@ -19,6 +19,28 @@ const props = defineProps({
 
 const config = useRuntimeConfig();
 const route = useRoute();
+const platformId = ref(0);
+
+const promptPlatformById = (platformId: number) => {
+  switch (platformId) {
+    case 1:
+      return 'Shopee';
+    case 2:
+      return 'Lazada';
+    case 3:
+      return 'Tiki';
+    case 4: 
+      return 'Tiktok';
+    default:
+      return 'Khác';
+  }
+}
+
+onMounted(() => {
+  try {
+    platformId.value = props.data?.data_filter_report?.lst_platform_id[0];
+  } catch (e) {}
+});
 
 const diffMonths = computed(() => {
   const filterCustom = props.data?.filter_custom;
@@ -150,7 +172,7 @@ useHead({
       <br>
       <div>
         <span class="text-bold">
-          Báo cáo doanh thu {{ props.data?.report_type === 'report_top_shop' ? 'gian hàng ' : '' }} {{ props.data?.name }} trên sàn TMĐT đạt
+          Báo cáo doanh thu {{ props.data?.report_type === 'report_top_shop' ? 'gian hàng ' : '' }} {{ props.data?.name }} trên sàn {{ data?.report_type == 'report_top_shop' ?  promptPlatformById(platformId) : "TMĐT" }} đạt
           <BlurContent :is-hide-content="isHideContent">
             <b style="font-weight: bold">{{
                 props.data?.data_analytic?.by_overview ? formatSortTextCurrency(props.data?.data_analytic.by_overview.revenue) : 'N/A'
