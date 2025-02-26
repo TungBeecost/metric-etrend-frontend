@@ -216,7 +216,7 @@ const dataSource = [
       <div></div>
       <div class="pdf_report">
         <div></div>
-        <p>Từ  <b>399,000đ</b>/báo cáo</p>
+        <p>Từ  <b>250,000đ</b>/báo cáo</p>
         <a-button size="large" @click="handleClickFindReport" style="width: 200px">Tìm báo cáo ngay</a-button>
       </div>
       <div class="quick_view">

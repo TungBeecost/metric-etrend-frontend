@@ -441,7 +441,7 @@ export const PLANS: Array<IPLAN> = [
     plan_code: "PDF_report",
     type_package: "pdf_report",
     description: "Dành cho nhu cầu tải báo cáo PDF phân tích chi tiết 1 nhóm hàng",
-    price: '399,000đ',
+    price: '250,000đ',
     priceValue: "",
     priceDiscount: "",
     // discountPercent: "-50%",
