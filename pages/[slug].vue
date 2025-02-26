@@ -539,7 +539,6 @@ onUnmounted(() => {
     </a-modal>
     <modal-download-pdf v-model:open="open" :data="data.reportDetail"/>
     <form-export-report-pdf v-model:visible="openFormExportPdf" :slug="data.reportDetail.slug"/>
-
   </div>
 </template>
 

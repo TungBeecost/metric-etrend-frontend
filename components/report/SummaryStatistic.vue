@@ -2,6 +2,8 @@
 import { formatNumberHuman } from "~/helpers/FormatHelper";
 import BlurContent from "~/components/BlurContent.vue";
 import {formatSortTextCurrency} from "~/helpers/utils.js";
+import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
+import {ref} from "vue";
 
 const {data, isHideContent} = defineProps({
   data: {
@@ -17,6 +19,12 @@ const {data, isHideContent} = defineProps({
     default: true,
   },
 });
+
+const open = ref(false);
+
+const handleClickOpenModal = () => {
+  open.value = true;
+};
 
 const $t = (text) => {
   return text;
@@ -41,7 +49,11 @@ const $t = (text) => {
         <div>
           <div class="summary-statistic-item__title">{{ $t('Doanh số') }} (VNĐ)</div>
           <div class="summary-statistic-item__value" style="margin-bottom: 16px;">
-              {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
+            {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
+            <div v-if="isHideContent" @click="handleClickOpenModal" style="display: flex; gap: 4px; cursor: pointer">
+              <img src="/icons/EyeIcon.svg" alt="EyeIcon" style="margin-left: 8px;"/>
+              <p style="color: #E85912; font-size: 14px; font-weight: 400">Xem số liệu đầy đủ</p>
+            </div>
           </div>
         </div>
       </div>
@@ -60,7 +72,11 @@ const $t = (text) => {
         <div>
           <div class="summary-statistic-item__title">{{ $t('Sản phẩm đã bán') }}</div>
           <div class="summary-statistic-item__value" style="margin-bottom: 16px;">
-              {{ formatSortTextCurrency(data.data_analytic.by_overview.sale) }}
+            {{ formatSortTextCurrency(data.data_analytic.by_overview.sale) }}
+            <div v-if="isHideContent" @click="handleClickOpenModal" style="display: flex; gap: 4px; cursor: pointer">
+              <img src="/icons/EyeIcon.svg" alt="EyeIcon" style="margin-left: 8px;"/>
+              <p style="color: #E85912; font-size: 14px; font-weight: 400">Xem số liệu đầy đủ</p>
+            </div>
           </div>
         </div>
       </div>
@@ -115,7 +131,7 @@ const $t = (text) => {
         </div>
       </div>
     </div>
-
+    <modal-download-pdf v-model:open="open" :data="data"/>
   </div>
 </template>
 
