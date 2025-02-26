@@ -548,7 +548,7 @@ onUnmounted(() => {
   padding-bottom: 40px;
 
   .scroll_bar{
-    top: 60px;
+    top: 80px;
     position: fixed;
     background-color: #FFFFFF;
     width: 100%;

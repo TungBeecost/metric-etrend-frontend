@@ -41,9 +41,7 @@ const $t = (text) => {
         <div>
           <div class="summary-statistic-item__title">{{ $t('Doanh số') }} (VNĐ)</div>
           <div class="summary-statistic-item__value" style="margin-bottom: 16px;">
-            <BlurContent :is-hide-content="isHideContent">
               {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
-            </BlurContent>
           </div>
         </div>
       </div>
@@ -62,9 +60,7 @@ const $t = (text) => {
         <div>
           <div class="summary-statistic-item__title">{{ $t('Sản phẩm đã bán') }}</div>
           <div class="summary-statistic-item__value" style="margin-bottom: 16px;">
-            <BlurContent :is-hide-content="isHideContent">
               {{ formatSortTextCurrency(data.data_analytic.by_overview.sale) }}
-            </BlurContent>
           </div>
         </div>
       </div>
