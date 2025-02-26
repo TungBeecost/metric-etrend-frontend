@@ -135,10 +135,10 @@ const getCardStyle = (index: number) => {
               </span> sản phẩm
               </div>
             </div>
-            <div class="description line-clamp__2" style="text-align: left;">
-              Thương hiệu bán chạy:
-              {{ report.lst_brand?.slice(0, 5)?.join(', ') }}.
-            </div>
+<!--            <div class="description line-clamp__2" style="text-align: left;">-->
+<!--              Thương hiệu bán chạy:-->
+<!--              {{ report.lst_brand?.slice(0, 5)?.join(', ') }}.-->
+<!--            </div>-->
           </div>
         </div>
         <div v-if="report.report_type=='report_category'" class="card-top" :style="getCardStyle(index)">

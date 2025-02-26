@@ -10,11 +10,11 @@ const fetchReport = async () => {
   try {
     const body: SearchReportPayload = {
       limit: 10,
-      lst_field: ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop", "created_at", "url_square"],
+      lst_field: ["name", "slug", "url_thumbnail", "revenue_monthly", "gr_quarter", "shop", "created_at", "url_square", "by_overview"],
       lst_query: [],
       lst_category_report_id: [],
       offset: 0,
-      sort: "created_at",
+      sort: "revenue",
       order: "desc",
       lst_report_type: ['report_category']
     };
