@@ -18,10 +18,29 @@ const props = defineProps({
 });
 
 const screenWidth = ref(window?.innerWidth);
+const platformId = ref(1);
 
 onMounted(() => {
   screenWidth.value = window.innerWidth;
+  try {
+    platformId.value = props.data?.data_filter_report?.lst_platform_id[0];
+  } catch (e) {}
 });
+
+const promptPlatformById = (platformId: number) => {
+  switch (platformId) {
+    case 1:
+      return 'Shopee';
+    case 2:
+      return 'Lazada';
+    case 3:
+      return 'Tiki';
+    case 4: 
+      return 'Tiktok';
+    default:
+      return 'Khác';
+  }
+}
 
 const hightestMonthRevenue = computed(() => {
   const byOverview = props.data?.data_analytic?.by_overview;
@@ -329,7 +348,7 @@ const filteredPlatforms = computed(() => {
     <InsightBlock>
       <li>
         <b>
-          Doanh số bán {{ data?.name }} trong {{ diffMonths }} đạt:
+          Doanh số bán {{ data?.report_type == 'report_top_shop' ? "của gian hàng" : "" }} {{ data?.name }} {{ data?.report_type == 'report_top_shop' ? "trên sàn " + promptPlatformById(platformId) : "" }} trong {{ diffMonths }} đạt:
           <BlurContent :is-hide-content="props.isHideContent">
         <span>
           <b>
