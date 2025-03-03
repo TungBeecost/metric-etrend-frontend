@@ -190,12 +190,12 @@ onBeforeRouteLeave(() => {
         >
         Tải báo cáo mẫu ngay
         </AButton>
-        <div style="font-size: 14px; color: #716B95">
-          Bạn cần hỗ trợ thêm?
-          <span style="color: #E85912; cursor: pointer" @click="handleOpenCta">
-            Liên hệ tư vấn
-          </span>
-        </div>
+<!--        <div style="font-size: 14px; color: #716B95">-->
+<!--          Bạn cần hỗ trợ thêm?-->
+<!--          <span style="color: #E85912; cursor: pointer" @click="handleOpenCta">-->
+<!--            Liên hệ tư vấn-->
+<!--          </span>-->
+<!--        </div>-->
       </div>
     </div>
     <img loading="lazy" src="/images/ImageOnBackgroundScroll.png" alt="ImageOnBackgroundScroll" style="position: absolute; bottom: 0; right: 0; width: 100%;"/>

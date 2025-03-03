@@ -144,15 +144,15 @@ const showMetricButton = computed(() => {
           </i>
           Mua báo cáo PDF chi tiết
         </a-button>
-        <a-button
-            style="width: 100%; height: 50px; font-family: Montserrat,sans-serif; font-weight: 500;"
-            class="btn"
-            @click="handleClickViewOnMetric"
-            size="large"
-            v-if="showMetricButton"
-        >
-          Xem trên phần mềm Metric
-        </a-button>
+<!--        <a-button-->
+<!--            style="width: 100%; height: 50px; font-family: Montserrat,sans-serif; font-weight: 500;"-->
+<!--            class="btn"-->
+<!--            @click="handleClickViewOnMetric"-->
+<!--            size="large"-->
+<!--            v-if="showMetricButton"-->
+<!--        >-->
+<!--          Xem trên phần mềm Metric-->
+<!--        </a-button>-->
       </div>
     </div>
   </div>
