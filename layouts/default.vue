@@ -118,7 +118,7 @@ watchEffect(() => {
   useHead({
     script: !['index', 'slug'].includes(route.name) ? [{
       hid: 'chat-plugin-script',
-      src: 'https://chat-plugin.pancake.vn/main/auto?page_id=web_metricplatform',
+      src: 'https://chat-plugin.pancake.vn/main/auto?page_id=web_Metric',
       type: 'text/javascript',
       async: true,
       defer: true,
