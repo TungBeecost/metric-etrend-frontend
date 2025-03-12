@@ -13,7 +13,7 @@ EXPOSE 3000
 FROM build-stage as ssr 
 ENV SSR=true
 COPY . /app
-RUN npm run build
+RUN export NODE_OPTIONS="--max-old-space-size=8192" && npm run build
 #ENV URL_CDN="https://ssr.metric.vn/_nuxt"
 #CMD pm2-runtime start pm2.config.js --env production --only nuxtjs --name nuxtjs
 
