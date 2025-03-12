@@ -5,19 +5,29 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="metric_ereport_pricing">
+  <div id="metric_ereport_pricing">
     <div class="default_section">
       <Plans />
     </div>
   </div>
 </template>
 
-<style scoped lang="scss">
-.metric_ereport_pricing {
-  background-color: #1a1a46;
+<style lang="scss">
+#metric_ereport_pricing {
+  background-color: #FFFFFF;
   padding: 40px 0;
   height: 100vh;
   overflow: auto;
+
+  .default_section{
+    .wrapper{
+      div{
+        p{
+          color: #1a1a46;
+        }
+      }
+    }
+  }
 }
 </style>
 
