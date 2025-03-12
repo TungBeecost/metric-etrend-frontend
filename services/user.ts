@@ -98,7 +98,7 @@ export const fetchUserMetricProfile = async (headers: object): Promise<ProfileMe
             ...headers,
             Token: `${accessToken}`
         };
-        const response = await axios.get('https://next-metric-api.muadee.vn/market/user/paid/me', {
+        const response = await axios.get('https://apiv4.metric.vn/market/user/paid/me', {
             headers: modifiedHeaders
         });
         const result = response.data as ProfileMetricRes;
@@ -128,7 +128,7 @@ export const fetchUserMetricProfileAuth = async (headers: object): Promise<Profi
             ...headers,
             Token: `${accessToken}`
         };
-        const response = await axios.get('https://next-metric-api.muadee.vn/market/me', {
+        const response = await axios.get('https://apiv4.metric.vn/market/me', {
             headers: modifiedHeaders
         });
         const result = response.data as ProfileMetricAuthRes;
