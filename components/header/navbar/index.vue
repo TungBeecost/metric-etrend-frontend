@@ -36,13 +36,16 @@ import {MENUS, NAVIGATIONS} from '~/constant/constains';
 import LoginButton from "~/components/google/LoginButton.vue";
 import UserProfile from "~/components/account/UserProfile.vue";
 import {useCurrentUser} from "~/stores/current-user"
+const route = useRoute();
+const menuDarkBlue = [NAVIGATIONS.home, NAVIGATIONS.pricing];
+const isDarkBlueHeader = ref(false);
+const recheckHeader = () => {
+  isDarkBlueHeader.value = menuDarkBlue.includes(route.path);
+};
 
-const {isDarkBlueHeader} = defineProps({
-  isDarkBlueHeader: {
-    type: Boolean,
-    default: false
-  }
-})
+onMounted(() => {
+  recheckHeader();
+});
 
 const currentUserStore = useCurrentUser();
 
