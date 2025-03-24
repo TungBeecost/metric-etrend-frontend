@@ -372,7 +372,6 @@ const handleClickBuyReport = () => {
 };
 
 const reportTitle = computed(() => {
-  debugger
   return data.value?.reportDetail?.report_type === 'report_product_line'
       ? `Báo cáo tổng quan thị trường từ khoá ${data?.value?.reportDetail.name}`
     : `Báo cáo tổng quan thị trường ${ data?.value?.reportDetail?.report_type == 'report_top_shop' ? "Shop " : "" } ${data?.value?.reportDetail.name}`;
