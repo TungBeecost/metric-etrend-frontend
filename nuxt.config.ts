@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-    ssr: true, // Bật chế độ SSR\
+    ssr: process.env.SSR === 'true', // Bật chế độ SSR\
     app: {
         buildAssetsDir: '/ereport_nuxt/',
         baseURL: process.env.BASE_PATH || '/',
