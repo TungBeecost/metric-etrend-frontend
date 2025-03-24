@@ -641,7 +641,6 @@ export const TERM_AND_POLICIES = [
 export const COMPANY_INFOS = {
   name: "CÔNG TY CỔ PHẦN KHOA HỌC DỮ LIỆU",
   address: "Địa điểm kinh doanh: Tầng 4 Tòa nhà HH2, Dương Đình Nghệ, phường Yên Hoà, quận Cầu Giấy, thành phố Hà Nội",
-  base: "Trụ sở ĐKKD: Tầng 6 Tòa nhà AZ Lâm Viên, 107A Nguyễn Phong Sắc, phường Dịch Vọng Hậu, quận Cầu Giấy, thành phố Hà Nội, Việt Nam",
   phoneNumber: "033.806.2221",
   email: "info@metric.vn"
 };
@@ -654,10 +653,6 @@ export const CONTACTS = [
   {
     label: COMPANY_INFOS.address,
     icon: "MapPin"
-  },
-  {
-    label: COMPANY_INFOS.base,
-    icon: "House"
   },
   {
     label: COMPANY_INFOS.phoneNumber,
