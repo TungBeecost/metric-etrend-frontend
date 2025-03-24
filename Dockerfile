@@ -28,7 +28,7 @@ COPY --from=ssr /app/package.json /app/
 FROM build-stage as spa
 ENV SSR=false
 COPY . /app
-RUN npm run build
+RUN export NODE_OPTIONS="--max-old-space-size=8192" && npm run build
 
 FROM runner as spa-release
 ENV SSR=false
