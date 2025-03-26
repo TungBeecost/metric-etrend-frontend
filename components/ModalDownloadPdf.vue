@@ -64,6 +64,9 @@ type HorizontalLoopConfig = {
   reversed?: boolean;
 };
 
+const accessToken = await getIndexedDB("access_token");
+const visitorId = await getIndexedDB("__visitor");
+
 onMounted(() => {
   if (Array.isArray(props.data.lst_period_of_time_download)) {
     const additionalOptions = props.data.lst_period_of_time_download.map(period => {
@@ -208,8 +211,6 @@ const handleDownload = async () => {
   if (props.data.lst_period_of_time_download.includes(selectedReport.value)) {
     const [start_date, end_date] = selectedReport.value.split('_');
     const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${props.data.slug}&type=download&start_date=${start_date}&end_date=${end_date}`;
-    const accessToken = await getIndexedDB("access_token");
-    const visitorId = await getIndexedDB("__visitor");
     trackEventCommon(EVENT_TYPE.DOWNLOAD_REPORT, 'download_report', '');
     try {
       downloading.value = true;
@@ -264,15 +265,35 @@ const handleView = async () => {
     currentUserStore.setShowPopupLogin(true);
     return;
   }
-  emits('update:open', false);
   if (props.data.is_report_pdf_valid && props.data.can_view) {
     navigateTo(`${NAVIGATIONS.home}view_pdf/${route.params.slug}`);
   } else {
-    showAlert.value = true;
-    console.log('showAlert', showAlert.value)
+    const [start_date, end_date] = selectedReport.value.split('_');
+    let url = `${config.public.API_ENDPOINT}/api/report/report_pdf_for_view?slug=${props.data.slug}&start_date=${start_date}&end_date=${end_date}`;
+    try {
+      const response: any = await $fetch(
+          url,
+          {
+            headers: {
+              'Authorization': `${accessToken}`,
+              'Visitorid': visitorId.visitor_id,
+            }
+          }
+      );
+      console.log('response', response);
+      if (!response) {
+        throw new Error('Network response was not ok');
+      }else{
+        emits('update:open', false);
+        message.success('Bắt đầu xử lý vui lòng chờ kiểm tra email sau 5 phút');
+      }
+
+      // Handle the response data as needed
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
   }
 };
-
 watch(open, (newVal) => {
   if (newVal) {
     trackEventCommon(EVENT_TYPE.SHOW_POPUP_BUY_REPORT, 'show_popup_buy_report', '');
@@ -524,25 +545,24 @@ const platformLogo = platformName ? ALL_PLATFORM_BASE_OBJECT[platformName]?.urlL
                 @click="handleDownload">
               {{ buttonText }}
             </a-button>
+            <div v-if="(userInfo.current_plan?.remain_claim_pdf ?? 0) > 0" style="color: #716B95">hoặc</div>
+            <a-button
+                v-if="(userInfo.current_plan?.remain_claim_pdf ?? 0) > 0"
+                :disabled="!canViewReport"
+                style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
+                class="download_report_button" @click="handleView">
+              Xem báo cáo
+              <div
+                  style="position: absolute; top: -12px; right: -12px; background: #241E46; color: #FFFFFF; padding: 2px 4px">
+                còn {{ userInfo.current_plan?.remain_claim_pdf ?? 0 }} lượt
+              </div>
+              <svg style="position: absolute; top: 15px; right: -12px;" xmlns="http://www.w3.org/2000/svg" width="13"
+                   height="8" viewBox="0 0 13 8" fill="none">
+                <path d="M0 8L13 0H0V8Z" fill="#120B37"/>
+              </svg>
+            </a-button>
             <div v-if="userInfo.current_plan?.remain_claim_pdf && !props.data.can_download" class="button_group_view">
-              <div style="color: #716B95">hoặc</div>
               <a-button
-                  v-if="(userInfo.current_plan?.remain_claim_pdf ?? 0) > 0"
-                  :disabled="!canViewReport"
-                  style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
-                  class="download_report_button" @click="handleView">
-                Xem báo cáo
-                <div
-                    style="position: absolute; top: -12px; right: -12px; background: #241E46; color: #FFFFFF; padding: 2px 4px">
-                  còn {{ userInfo.current_plan?.remain_claim_pdf ?? 0 }} lượt
-                </div>
-                <svg style="position: absolute; top: 15px; right: -12px;" xmlns="http://www.w3.org/2000/svg" width="13"
-                     height="8" viewBox="0 0 13 8" fill="none">
-                  <path d="M0 8L13 0H0V8Z" fill="#120B37"/>
-                </svg>
-              </a-button>
-              <a-button
-                  v-else
                   style="width: 100%; height: 40px; font-size: 14px; display: flex; justify-content: center; align-items: center; position: relative"
                   @click="handleBuyReport"
               >
@@ -550,7 +570,6 @@ const platformLogo = platformName ? ALL_PLATFORM_BASE_OBJECT[platformName]?.urlL
               </a-button>
             </div>
           </div>
-<!--          <a style="color: #1890FF;" @click="downloadSampleReport()">Tải báo cáo mẫu</a>-->
         </div>
       </div>
     </div>

@@ -50,7 +50,6 @@ const getReportPdfUrl = async (slug) => {
   const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${slug}&type=view`;
   const accessToken = await getIndexedDB("access_token");
   const visitorId = await getIndexedDB("__visitor");
-  // const accessToken = typeof window !== 'undefined' ? localStorage.getItem("access_token") : '';
   try {
     downloading.value = true;
     const response = await $fetch(url, {
