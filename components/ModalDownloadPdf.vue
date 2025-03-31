@@ -64,9 +64,6 @@ type HorizontalLoopConfig = {
   reversed?: boolean;
 };
 
-const accessToken = await getIndexedDB("access_token");
-const visitorId = await getIndexedDB("__visitor");
-
 onMounted(() => {
   if (Array.isArray(props.data.lst_period_of_time_download)) {
     const additionalOptions = props.data.lst_period_of_time_download.map(period => {
@@ -213,6 +210,8 @@ const handleDownload = async () => {
     const url = `${config.public.API_ENDPOINT}/api/report/get_download_pdf_url?slug=${props.data.slug}&type=download&start_date=${start_date}&end_date=${end_date}`;
     trackEventCommon(EVENT_TYPE.DOWNLOAD_REPORT, 'download_report', '');
     try {
+      const accessToken = await getIndexedDB("access_token");
+      const visitorId = await getIndexedDB("__visitor");
       downloading.value = true;
       const response: any = await $fetch(
           url,
@@ -271,6 +270,8 @@ const handleView = async () => {
     const [start_date, end_date] = selectedReport.value.split('_');
     let url = `${config.public.API_ENDPOINT}/api/report/report_pdf_for_view?slug=${props.data.slug}&start_date=${start_date}&end_date=${end_date}`;
     try {
+      const accessToken = await getIndexedDB("access_token");
+      const visitorId = await getIndexedDB("__visitor");
       const response: any = await $fetch(
           url,
           {
