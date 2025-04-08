@@ -38,7 +38,7 @@ const promptPlatformById = (platformId: number) => {
 
 onMounted(() => {
   try {
-    platformId.value = props.data?.data_filter_report?.lst_platform_id[0];
+    platformId.value = props.data?.data_filter_report?.lst_platform_id?.[0];
   } catch (e) {}
 });
 
@@ -187,13 +187,13 @@ useHead({
         <div v-if="props.data?.report_type !== 'report_top_shop'">
           Đánh giá thị trường {{ props.data?.name }}, phân khúc giá có doanh số cao nhất là từ
           {{
-            priceRangesSortBy("revenue")[0]
-                ? formatCurrency(priceRangesSortBy("revenue")[0].begin)
+            priceRangesSortBy("revenue")?.[0]
+                ? formatCurrency(priceRangesSortBy("revenue")?.[0].begin)
                 : 'N/A'
           }} -
           {{
-            priceRangesSortBy("revenue")[0]
-                ? formatCurrency(priceRangesSortBy("revenue")[0].end)
+            priceRangesSortBy("revenue")?.[0]
+                ? formatCurrency(priceRangesSortBy("revenue")?.[0].end)
                 : 'N/A'
           }}.
           <span v-if="props.data?.report_type !== 'report_brand'">
@@ -204,13 +204,13 @@ useHead({
           </span>
         </div>
         <div v-else>
-          {{ props.data?.name }} kinh doanh ngành hàng {{props.data?.lst_category[0]?.name}} với nhóm hàng phổ biến là {{ top5Shops().join(', ') }}... Phân khúc giá sản phẩm {{ props.data?.name }} được bán phổ biến từ {{
-            priceRangesSortBy("revenue")[0]
-                ? formatCurrency(priceRangesSortBy("revenue")[0].begin)
+          {{ props.data?.name }} kinh doanh ngành hàng {{props.data?.lst_category?.[0]?.name}} với nhóm hàng phổ biến là {{ top5Shops().join(', ') }}... Phân khúc giá sản phẩm {{ props.data?.name }} được bán phổ biến từ {{
+            priceRangesSortBy("revenue")?.[0]
+                ? formatCurrency(priceRangesSortBy("revenue")?.[0].begin)
                 : 'N/A'
           }} - {{
-            priceRangesSortBy("revenue")[0]
-                ? formatCurrency(priceRangesSortBy("revenue")[0].end)
+            priceRangesSortBy("revenue")?.[0]
+                ? formatCurrency(priceRangesSortBy("revenue")?.[0].end)
                 : 'N/A'
           }}.
         </div>
