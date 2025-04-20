@@ -640,7 +640,7 @@ export const TERM_AND_POLICIES = [
 
 export const COMPANY_INFOS = {
   name: "CÔNG TY CỔ PHẦN KHOA HỌC DỮ LIỆU",
-  address: "Địa điểm kinh doanh: Tầng 4 Tòa nhà HH2, Dương Đình Nghệ, phường Yên Hoà, quận Cầu Giấy, thành phố Hà Nội",
+  address: "Tầng 4 Tòa nhà HH2, Dương Đình Nghệ, phường Yên Hoà, quận Cầu Giấy, thành phố Hà Nội",
   phoneNumber: "033.806.2221",
   email: "info@metric.vn"
 };
