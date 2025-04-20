@@ -14,7 +14,7 @@
 
         <div v-if="recommendSearchLoading" class="recommendSearch">
           <div v-for="(item, index) in listTagSuggestions" :key="index" class="recommendItem">
-            <a-skeleton />
+            <a-skeleton/>
           </div>
         </div>
         <div v-else class="recommendSearch">
@@ -31,35 +31,35 @@
       <Parters/>
     </div>
 
-<!--    <Highlights/>-->
+    <!--    <Highlights/>-->
 
     <ReportFeaturedReport/>
 
-<!--    <ReportFree />-->
+    <!--    <ReportFree />-->
 
     <MetricRelease/>
 
-    <DataCollection />
+    <DataCollection/>
 
     <Testimonials/>
 
-    <PracticalApplication/>
+    <!--    <PracticalApplication/>-->
 
 
-    <div class="planSection">
-      <Plans :is-dark-title="true"/>
-    </div>
+    <!--    <div class="planSection">-->
+    <!--      <Plans :is-dark-title="true"/>-->
+    <!--    </div>-->
 
     <div class="">
       <ContactUs/>
-<!--    <affiliate-component/>-->
+      <!--    <affiliate-component/>-->
     </div>
-        <transition name="fade">
-          <div
-              class="chat_gpt">
-            <popup-chat-gpt/>
-          </div>
-        </transition>
+<!--    <transition name="fade">-->
+<!--      <div-->
+<!--          class="chat_gpt">-->
+<!--        <popup-chat-gpt/>-->
+<!--      </div>-->
+<!--    </transition>-->
     <a-modal v-if="showModal" v-model:open="showModal" width="600px" :footer="null" @ok="handleOk">
       <div class="modal_content">
         <div class="alert_success">
@@ -82,7 +82,10 @@
           </div>
           <div class="title_content_sucess">
             <div class="title_success">Thanh toán thành công</div>
-            <div style="text-align: center; padding-top: 12px; padding-bottom: 32px; font-size: 16px; font-weight: 400;">Cảm ơn bạn đã tin tưởng và sử dụng gói dịch vụ của eReport!</div>
+            <div
+                style="text-align: center; padding-top: 12px; padding-bottom: 32px; font-size: 16px; font-weight: 400;">
+              Cảm ơn bạn đã tin tưởng và sử dụng gói dịch vụ của eReport!
+            </div>
             <a-button type="primary" style="height: 40px" @click="handdleUpdate">Tôi đã hiểu</a-button>
           </div>
         </div>
@@ -113,7 +116,8 @@ import {searchReport, type SearchReportPayload} from "~/services/reports";
 import {ref} from "vue";
 import DataCollection from "~/components/DataCollection.vue";
 import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService";
-const { getInfoTransaction } = usePayment()
+
+const {getInfoTransaction} = usePayment()
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
 import PopupChatGpt from "~/components/MetricGpt/PopupChatGpt.vue";
 
@@ -371,7 +375,7 @@ const handleAdvertisement = () => {
   height: 40px;
 }
 
-.sectionDescription{
+.sectionDescription {
   width: 70%;
 }
 

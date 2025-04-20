@@ -300,8 +300,8 @@ onMounted(async () => {
 watch(
   () => userInfo.value?.metric_info_auth?.roles,
   async (newRoles, oldRoles) => {
-    const hasChanged = !oldRoles || 
-      oldRoles.length !== newRoles?.length || 
+    const hasChanged = !oldRoles ||
+      oldRoles.length !== newRoles?.length ||
       !newRoles?.every((role, index) => role === oldRoles[index]);
 
     if (newRoles && hasChanged) {
@@ -477,16 +477,16 @@ onUnmounted(() => {
           />
         </div>
       </transition>
-      <transition name="fade">
-        <div
-            v-if="(userInfo?.current_plan?.plan_code === 'eReport12' || userInfo?.current_plan?.plan_code === 'eReport12_partner') && !data?.reportDetail?.is_unsellable"
-            class="chat_gpt">
-          <popup-chat-gpt
-              :name="data?.reportDetail?.name"
-              :id="data?.reportDetail?.id"
-          />
-        </div>
-      </transition>
+<!--      <transition name="fade">-->
+<!--        <div-->
+<!--            v-if="(userInfo?.current_plan?.plan_code === 'eReport12' || userInfo?.current_plan?.plan_code === 'eReport12_partner') && !data?.reportDetail?.is_unsellable"-->
+<!--            class="chat_gpt">-->
+<!--          <popup-chat-gpt-->
+<!--              :name="data?.reportDetail?.name"-->
+<!--              :id="data?.reportDetail?.id"-->
+<!--          />-->
+<!--        </div>-->
+<!--      </transition>-->
     </div>
     <a-modal v-if="showModal" v-model:open="showModal" width="600px" :footer="null" @ok="handleOk">
       <div class="modal_content">

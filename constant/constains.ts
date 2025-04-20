@@ -25,16 +25,16 @@ export const MENUS = [
     icon: "Report",
     to: NAVIGATIONS.report
   },
-  {
-    label: "Bảng giá dịch vụ",
-    icon: "Store",
-    to: NAVIGATIONS.pricing
-  },
-  {
-    label: "Hướng dẫn sử dụng",
-    icon: "Store",
-    to: 'https://hotro.metric.vn/ereport'
-  },
+  // {
+  //   label: "Bảng giá dịch vụ",
+  //   icon: "Store",
+  //   to: NAVIGATIONS.pricing
+  // },
+  // {
+  //   label: "Hướng dẫn sử dụng",
+  //   icon: "Store",
+  //   to: 'https://hotro.metric.vn/ereport'
+  // },
 ];
 
 export const CATEGORIES: Array<CommonOptionItem> = [
