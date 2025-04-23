@@ -204,7 +204,8 @@ onBeforeRouteLeave(() => {
         <!--          </defs>-->
         <!--        </svg>-->
         <!--        <svg width="180" height="40" viewBox="0 0 236 100" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-        <img src="/images/metric_logo.svg" style="width: 100px; height: auto; display: block;"/>
+<!--        <img src="/images/metric_logo.svg" style="width: 100px; height: auto; display: block;"/>-->
+        <NuxtImg src="/images/metric_logo.svg" alt="Metric" style="width: 100px; height: auto; display: block;"/>
         <!--        </svg>-->
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"
              style="cursor: pointer;" @click="closeNotification">
