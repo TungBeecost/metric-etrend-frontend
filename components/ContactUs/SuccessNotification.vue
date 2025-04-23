@@ -10,7 +10,8 @@ const props = defineProps({
   },
   title: {
     type: String,
-    default: 'Đăng ký thành công'
+    // default: 'Đăng ký thành công'
+    default: 'Cảm ơn bạn đã quan tâm!'
   },
   description: {
     type: String,
@@ -59,7 +60,8 @@ const isVisible = computed({
       </svg>
       <h3>{{ props.title }}</h3>
       <p v-if="props.description">{{ props.description }}</p>
-      <p v-else>Cảm ơn bạn!<br>Chuyên viên sẽ liên hệ với bạn trong vòng ít phút tới. <br>Hãy lưu ý điện thoại nhé !</p>
+<!--      <p v-else>Cảm ơn bạn!<br>Chuyên viên sẽ liên hệ với bạn trong vòng ít phút tới. <br>Hãy lưu ý điện thoại nhé !</p>-->
+      <p v-else>Chúng tôi đã nhận được thông tin và chuyên viên sẽ sớm liên hệ với bạn!</p>
       <a-button type="primary" size="large" @click="isVisible = false">Tôi đã hiểu</a-button>
     </div>
   </a-modal>
