@@ -14,7 +14,8 @@ const openCta = ref(false);
 const route = useRoute();
 const router = useRouter();
 const handleClick = () => {
-  open.value = true;
+  // open.value = true;
+  openCta.value = true;
 };
 
 const handleClickViewOnMetric = () => {
