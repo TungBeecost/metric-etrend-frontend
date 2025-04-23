@@ -63,13 +63,6 @@ const toggleUnlock = () => {
       class="popup-lead-form-container">
     <lead-form-background :POPUP_STATES="POPUP_STATES" :current-state="popupState"/>
     <div class="popup-lead-form">
-      <div class="lead-form">
-        <div class="form-wrapper">
-          <div class="form-container">
-            <trial-register @submit-status="handleSubmitStatus"/>
-          </div>
-        </div>
-      </div>
       <div class="additional-information">
         <h2 class="title">Xem tất cả báo cáo Ecom  <br> bằng phần mềm Metric</h2>
         <p class="subtitle">
@@ -77,6 +70,14 @@ const toggleUnlock = () => {
         </p>
         <img loading="lazy" class="image" src="/icons/form-image.svg" alt="Unlock" />
       </div>
+      <div class="lead-form">
+        <div class="form-wrapper">
+          <div class="form-container">
+            <trial-register @submit-status="handleSubmitStatus"/>
+          </div>
+        </div>
+      </div>
+
     </div>
   </a-modal>
   <success-notification v-model:visible="openSuccess" class-name="submit-form-marketing-success"/>
@@ -86,7 +87,7 @@ const toggleUnlock = () => {
 .popup-lead-form-container {
   font-family: "Inter", sans-serif;
 
-  svg#background {
+  svg.background {
     position: absolute;
     bottom: 0;
     border-radius: 0 0 16px 16px;
@@ -391,7 +392,7 @@ const toggleUnlock = () => {
 
 @media screen and (max-width: 1200px) {
   .popup-lead-form-container {
-    svg#background {
+    svg.background {
       width: 100%;
       bottom: -94px;
     }
@@ -471,7 +472,7 @@ const toggleUnlock = () => {
 
 @media screen and (max-width: 600px) {
   .popup-lead-form-container {
-    svg#background {
+    svg.background {
       width: 100%;
       height: 100%;
       display: none;

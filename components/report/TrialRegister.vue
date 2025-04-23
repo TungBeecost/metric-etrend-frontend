@@ -99,7 +99,8 @@ const submitForm = async (values: any) => {
       organization_name: values.company,
       note,
       label_init: 'Nóng',
-      source_name: 'eReport - Mua gói',
+      // source_name: 'eReport - Mua gói',
+      source_name: 'Website eReport',
       campaign: 'Đăng ký dùng thử',
       mkLeadSource,
       mkUserDemand,
@@ -136,7 +137,7 @@ const submitForm = async (values: any) => {
       <a-input placeholder="Họ và tên"
                v-model:value="formData.fullName"/>
     </a-form-item>
-    <a-row gutter="16">
+    <a-row :gutter="16">
       <a-col span="12">
         <a-form-item label="Email" name="email">
           <a-input placeholder="Email" v-model:value="formData.email"/>

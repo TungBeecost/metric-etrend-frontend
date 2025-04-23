@@ -4,6 +4,7 @@ import BlurContent from "~/components/BlurContent.vue";
 import {formatSortTextCurrency} from "~/helpers/utils.js";
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
 import {ref} from "vue";
+import Cta from "~/components/report/Cta.vue";
 
 const {data, isHideContent} = defineProps({
   data: {
@@ -131,7 +132,8 @@ const $t = (text) => {
         </div>
       </div>
     </div>
-    <modal-download-pdf v-model:open="open" :data="data"/>
+<!--    <modal-download-pdf v-model:open="open" :data="data"/>-->
+    <cta v-model:open="open"/>
   </div>
 </template>
 

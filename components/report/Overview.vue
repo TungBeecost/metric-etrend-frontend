@@ -29,7 +29,7 @@ const promptPlatformById = (platformId: number) => {
       return 'Lazada';
     case 3:
       return 'Tiki';
-    case 4: 
+    case 4:
       return 'Tiktok';
     default:
       return 'Khác';
@@ -164,10 +164,8 @@ useHead({
               ? props.data?.end_date.slice(4, 6) + '/' + props.data?.end_date.slice(0, 4)
               : 'N/A'
         }}</b>,
-        được thực hiện bởi
-        <a style="color: #E85912; font-weight: 500" href="https://metric.vn/" target="_blank">Metric.vn - Nền tảng phân
-          tích số liệu thị
-          trường</a>.
+        dữ liệu được trích xuất từ
+        <a style="color: #E85912; font-weight: 500" href="https://metric.vn/" target="_blank">phần mềm Phân tích dữ liệu Metric.vn</a>.
       </div>
       <br>
       <div>

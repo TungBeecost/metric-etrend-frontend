@@ -62,8 +62,8 @@ const config = useRuntimeConfig();
         />
         <ChartMask
             v-if="isHideContent"
-            subtitle="Bạn cần mở khoá để xem số liệu đầy đủ"
-            ok-button="Mua báo cáo"
+            subtitle="Chỉ hiển thị trên phần mềm phân tích Metric"
+            ok-button="Trải nghiệm miễn phí"
             :report="data"
         />
       </div>
@@ -86,8 +86,8 @@ const config = useRuntimeConfig();
         />
         <ChartMask
             v-if="isHideContent"
-            subtitle="Bạn cần mở khoá để xem số liệu đầy đủ"
-            ok-button="Mua báo cáo"
+            subtitle="Chỉ hiển thị trên phần mềm phân tích Metric"
+            ok-button="Trải nghiệm miễn phí"
             :report="data"
         />
       </div>
@@ -134,8 +134,8 @@ const config = useRuntimeConfig();
         />
         <ChartMask
             v-if="isHideContent"
-            subtitle="Bạn cần mở khoá để xem số liệu đầy đủ"
-            ok-button="Mua báo cáo"
+            subtitle="Chỉ hiển thị trên phần mềm phân tích Metric"
+            ok-button="Trải nghiệm miễn phí"
             :report="data"
         />
       </div>

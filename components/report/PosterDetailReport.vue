@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import type SearchReport from "~/components/search/search-report.vue";
 import {NAVIGATIONS} from "~/constant/constains";
+import {onMounted, ref} from "vue";
+import Cta from "~/components/report/Cta.vue";
 
+const isDesktop = ref(true);
+const openCta = ref(false); // popup form lead
+onMounted(() => {
+  isDesktop.value = window?.innerWidth >= 768;
+});
 const onClickSuggestion = (suggestion: string) => {
   navigateTo(`${NAVIGATIONS.search}?search=${suggestion}`);
 }
@@ -17,34 +24,54 @@ const props = defineProps({
   },
 });
 
+const handleButtonClick = () => {
+  openCta.value = true;
+}
+
 </script>
 
 <template>
   <div class="poster_detail_report">
     <div class="title">
-      Truy cập kho dữ liệu với hàng triệu báo cáo TMĐT ngay bây giờ
+      Phần mềm phân tích dữ liệu sàn E-commerce
     </div>
-    <div class="searchContent">
-      <SearchReport class="searchBox"/>
-      <a-skeleton v-if="loading" :paragraph="{ rows: 1 }"/>
-      <div  v-else class="recommendSearch">
-        <div class="content_key">Từ khoá liên quan nổi bật: </div>
-        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-          <AButton v-for="(item, index) in props.listSuggest" :key="index" ghost class="recommendItem"
-                   @click="onClickSuggestion(item.name)">
-            {{ item.name }}
-          </AButton>
-        </div>
-      </div>
+    <div class="text-gray-50">
+      Tìm kiếm sản phẩm mới, thị trường ngách mới, đặt giá tối ưu và phân tích doanh số đối thủ. Khám phá tăng chuyển
+      đổi mua hàng từ nhà bán và thương hiệu thành công.
     </div>
-<!--    <div class="big_logo_metric">-->
-<!--      <NuxtImg src="/images/big_logo_metric.svg" alt=""/>-->
-<!--    </div>-->
+    <a-button class="register-btn" :size="isDesktop ? 'large' : 'middle'" type="primary" @click="handleButtonClick">
+      Trải nghiệm miễn phí
+    </a-button>
+    <!--    <div class="big_logo_metric">-->
+    <!--      <NuxtImg src="/images/big_logo_metric.svg" alt=""/>-->
+    <!--    </div>-->
   </div>
+  <cta v-model:open="openCta"/>
+  <!--  <div class="poster_detail_report">-->
+  <!--    <div class="title">-->
+  <!--      Truy cập kho dữ liệu với hàng triệu báo cáo TMĐT ngay bây giờ-->
+  <!--    </div>-->
+  <!--    <div class="searchContent">-->
+  <!--      <SearchReport class="searchBox"/>-->
+  <!--      <a-skeleton v-if="loading" :paragraph="{ rows: 1 }"/>-->
+  <!--      <div  v-else class="recommendSearch">-->
+  <!--        <div class="content_key">Từ khoá liên quan nổi bật: </div>-->
+  <!--        <div style="display: flex; gap: 16px; flex-wrap: wrap;">-->
+  <!--          <AButton v-for="(item, index) in props.listSuggest" :key="index" ghost class="recommendItem"-->
+  <!--                   @click="onClickSuggestion(item.name)">-->
+  <!--            {{ item.name }}-->
+  <!--          </AButton>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--&lt;!&ndash;    <div class="big_logo_metric">&ndash;&gt;-->
+  <!--&lt;!&ndash;      <NuxtImg src="/images/big_logo_metric.svg" alt=""/>&ndash;&gt;-->
+  <!--&lt;!&ndash;    </div>&ndash;&gt;-->
+  <!--  </div>-->
 </template>
 
 <style scoped lang="scss">
-.recommendItem{
+.recommendItem {
   animation: fadeIn 0.5s ease-out forwards;
 }
 

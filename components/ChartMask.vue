@@ -2,6 +2,7 @@
 import {onMounted, ref} from 'vue';
 import { NAVIGATIONS } from "~/constant/constains";
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
+import Cta from "~/components/report/Cta.vue";
 
 const isDesktop = ref(true);
 const currentUserStore = useCurrentUser();
@@ -18,11 +19,11 @@ const {report, title, subtitle, okButton, handleUnlockReport} = defineProps({
   },
   subtitle: {
     type: String,
-    default: 'Tải báo cáo chi tiết để xem số liệu đầy đủ'
+    default: 'Chỉ hiển thị trên phần mềm phân tích Metric'
   },
   okButton: {
     type: String,
-    default: 'Tải báo cáo'
+    default: 'Trải nghiệm miễn phí'
   },
   handleUnlockReport: {
     type: Function,
@@ -101,7 +102,8 @@ const toggleUnlock = () => {
       </div>
     </div>
   </div>
-  <modal-download-pdf v-model:open="showUnlock" :data="report"/>
+<!--  <modal-download-pdf v-model:open="showUnlock" :data="report"/>-->
+  <cta v-model:open="showUnlock"/>
 </template>
 
 <style lang="scss" scoped>

@@ -84,7 +84,7 @@ const showMetricButton = computed(() => {
               </clipPath>
             </defs>
           </svg>
-          <span>Số liệu chính xác, khách quan, cập nhật bằng công nghệ Big Data</span>
+          <span>Số liệu đầy đủ, chất lượng nhờ công nghệ Big Data</span>
         </div>
         <div class="content_item">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +98,7 @@ const showMetricButton = computed(() => {
               </clipPath>
             </defs>
           </svg>
-          <span>Thông tin trực quan, dễ theo dõi</span>
+          <span>Trình bày trực quan, khoa học, dễ sử dụng</span>
         </div>
         <div class="content_item">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -112,7 +112,7 @@ const showMetricButton = computed(() => {
               </clipPath>
             </defs>
           </svg>
-          <span>Dễ dàng lưu trữ</span>
+          <span>Miễn phí kho báo cáo TMĐT trong 3 năm gần nhất</span>
         </div>
         <div class="content_item">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -126,23 +126,23 @@ const showMetricButton = computed(() => {
               </clipPath>
             </defs>
           </svg>
-          <span>Số liệu cập nhật đến tháng mới nhất</span>
+          <span>Không giới hạn báo cáo nhóm hàng, thương hiệu khác</span>
         </div>
         <a-button
-            style="width: 100%; height: 50px; font-family: Montserrat,sans-serif; font-weight: 500;"
+            style="width: 100%; height: 50px; font-weight: 500;"
             type="primary" class="btn"
             @click="handleClick"
             size="large"
             v-if="!data.is_unsellable"
         >
-          <i aria-label="icon: download" class="anticon anticon-download">
-            <svg viewBox="64 64 896 896" data-icon="download" width="1em" height="1em" fill="currentColor"
-                 aria-hidden="true" focusable="false" class="">
-              <path
-                  d="M505.7 661a8 8 0 0 0 12.6 0l112-141.7c4.1-5.2.4-12.9-6.3-12.9h-74.1V168c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v338.3H400c-6.7 0-10.4 7.7-6.3 12.9l112 141.8zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
-            </svg>
-          </i>
-          Mua báo cáo PDF chi tiết
+<!--          <i aria-label="icon: download" class="anticon anticon-download">-->
+<!--            <svg viewBox="64 64 896 896" data-icon="download" width="1em" height="1em" fill="currentColor"-->
+<!--                 aria-hidden="true" focusable="false" class="">-->
+<!--              <path-->
+<!--                  d="M505.7 661a8 8 0 0 0 12.6 0l112-141.7c4.1-5.2.4-12.9-6.3-12.9h-74.1V168c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v338.3H400c-6.7 0-10.4 7.7-6.3 12.9l112 141.8zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>-->
+<!--            </svg>-->
+<!--          </i>-->
+          Xem báo cáo trên phần mềm Metric
         </a-button>
 <!--        <a-button-->
 <!--            style="width: 100%; height: 50px; font-family: Montserrat,sans-serif; font-weight: 500;"-->

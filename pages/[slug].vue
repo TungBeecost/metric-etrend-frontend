@@ -21,7 +21,8 @@ import PopupChatGpt from "~/components/MetricGpt/PopupChatGpt.vue";
 import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService.js";
 import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
-import { setCookie } from '~/helpers/CookieHelper';
+import {setCookie} from '~/helpers/CookieHelper';
+import Cta from "~/components/report/Cta.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -38,9 +39,10 @@ const loading = ref(true); // Add loading state
 const showModalDownloadPdf = ref(false);
 const currentUserStore = useCurrentUser();
 const {fetchCurrentUser} = useCurrentUser();
-const { getInfoTransaction } = usePayment()
+const {getInfoTransaction} = usePayment()
 const showModalSuccess = ref(false);
 const open = ref(false);
+const openCta = ref(false); // popup form lead
 const openFormExportPdf = ref(false);
 let {userInfo} = storeToRefs(currentUserStore);
 
@@ -168,10 +170,9 @@ const fetchReportData = async () => {
       }
     }
 
-    if(response.has_permission){
+    if (response.has_permission) {
       isHideContent = false;
-    }
-    else {
+    } else {
       isHideContent = true;
     }
 
@@ -262,7 +263,7 @@ onMounted(async () => {
   window.addEventListener('resize', updateWindowSize);
   window.addEventListener('scroll', handleScroll);
   const transactionId = route.query.transaction_id;
-  if(transactionId){
+  if (transactionId) {
     const response = await fetchInfoTransaction(transactionId);
     if (transactionId) {
       trackEventConversionPixel(
@@ -298,17 +299,17 @@ onMounted(async () => {
 });
 
 watch(
-  () => userInfo.value?.metric_info_auth?.roles,
-  async (newRoles, oldRoles) => {
-    const hasChanged = !oldRoles ||
-      oldRoles.length !== newRoles?.length ||
-      !newRoles?.every((role, index) => role === oldRoles[index]);
+    () => userInfo.value?.metric_info_auth?.roles,
+    async (newRoles, oldRoles) => {
+      const hasChanged = !oldRoles ||
+          oldRoles.length !== newRoles?.length ||
+          !newRoles?.every((role, index) => role === oldRoles[index]);
 
-    if (newRoles && hasChanged) {
-      await fetchReportData();
-    }
-  },
-  { immediate: false }
+      if (newRoles && hasChanged) {
+        await fetchReportData();
+      }
+    },
+    {immediate: false}
 );
 
 watch(showModal, (newVal) => {
@@ -368,13 +369,14 @@ const handleShowNotification = () => {
 }
 
 const handleClickBuyReport = () => {
-  open.value = true;
+  // open.value = true;
+  openCta.value = true;
 };
 
 const reportTitle = computed(() => {
   return data.value?.reportDetail?.report_type === 'report_product_line'
       ? `Báo cáo tổng quan thị trường từ khoá ${data?.value?.reportDetail.name}`
-    : `Báo cáo tổng quan thị trường ${ data?.value?.reportDetail?.report_type == 'report_top_shop' ? "Shop " : "" } ${data?.value?.reportDetail.name}`;
+      : `Báo cáo tổng quan thị trường ${data?.value?.reportDetail?.report_type == 'report_top_shop' ? "Shop " : ""} ${data?.value?.reportDetail.name}`;
 });
 
 onUnmounted(() => {
@@ -392,13 +394,14 @@ onUnmounted(() => {
           <p class="scroll_bar_title">Báo cáo {{ data.reportDetail.name }} - Nghiên cứu thị trường sàn TMĐT</p>
         </div>
         <div class="scroll_bar_button">
-          <a-button style="display: flex; align-items: center; gap: 8px" @click="downloadSampleReport">
-            <img loading="lazy" src="/icons/Download.svg" alt="pdf"/>
-            Tải báo cáo mẫu xem thử
-          </a-button>
-          <a-button v-if="!data.reportDetail.is_unsellable" type="primary" style="display: flex; align-items: center; gap: 8px" @click="handleClickBuyReport">
-            <img loading="lazy" src="/icons/CartIconWhite.svg" alt="pdf"/>
-            Mua báo cáo PDF chi tiết
+          <!--          <a-button style="display: flex; align-items: center; gap: 8px" @click="downloadSampleReport">-->
+          <!--            <img loading="lazy" src="/icons/Download.svg" alt="pdf"/>-->
+          <!--            Tải báo cáo mẫu xem thử-->
+          <!--          </a-button>-->
+          <a-button v-if="!data.reportDetail.is_unsellable" type="primary"
+                    style="display: flex; align-items: center; gap: 8px" @click="handleClickBuyReport">
+            <!--            <img loading="lazy" src="/icons/CartIconWhite.svg" alt="pdf"/>-->
+            Xem báo cáo trên phần mềm Metric
           </a-button>
         </div>
       </div>
@@ -477,16 +480,16 @@ onUnmounted(() => {
           />
         </div>
       </transition>
-<!--      <transition name="fade">-->
-<!--        <div-->
-<!--            v-if="(userInfo?.current_plan?.plan_code === 'eReport12' || userInfo?.current_plan?.plan_code === 'eReport12_partner') && !data?.reportDetail?.is_unsellable"-->
-<!--            class="chat_gpt">-->
-<!--          <popup-chat-gpt-->
-<!--              :name="data?.reportDetail?.name"-->
-<!--              :id="data?.reportDetail?.id"-->
-<!--          />-->
-<!--        </div>-->
-<!--      </transition>-->
+      <!--      <transition name="fade">-->
+      <!--        <div-->
+      <!--            v-if="(userInfo?.current_plan?.plan_code === 'eReport12' || userInfo?.current_plan?.plan_code === 'eReport12_partner') && !data?.reportDetail?.is_unsellable"-->
+      <!--            class="chat_gpt">-->
+      <!--          <popup-chat-gpt-->
+      <!--              :name="data?.reportDetail?.name"-->
+      <!--              :id="data?.reportDetail?.id"-->
+      <!--          />-->
+      <!--        </div>-->
+      <!--      </transition>-->
     </div>
     <a-modal v-if="showModal" v-model:open="showModal" width="600px" :footer="null" @ok="handleOk">
       <div class="modal_content">
@@ -521,7 +524,8 @@ onUnmounted(() => {
     <a-modal v-model:visible="showModalSuccess" :footer="null" width="550px">
       <div class="success_modal">
         <div class="success_modal_container">
-          <img loading="lazy" src="/images/SuccessImage.png" alt="SuccessImage" style="width: 100px; height: 100px; margin: 0 auto; display: block;"/>
+          <img loading="lazy" src="/images/SuccessImage.png" alt="SuccessImage"
+               style="width: 100px; height: 100px; margin: 0 auto; display: block;"/>
           <div class="success_modal_content">
             <p class="success_modal_content_title">Cảm ơn bạn đã quan tâm!</p>
             <p>Báo cáo mẫu sẽ tự động được tải xuống trong giây lát.</p>
@@ -538,6 +542,7 @@ onUnmounted(() => {
     </a-modal>
     <modal-download-pdf v-model:open="open" :data="data.reportDetail"/>
     <form-export-report-pdf v-model:visible="openFormExportPdf" :slug="data.reportDetail.slug"/>
+    <cta v-model:open="openCta"/>
   </div>
 </template>
 
@@ -545,7 +550,7 @@ onUnmounted(() => {
 .container_content {
   padding-bottom: 40px;
 
-  .scroll_bar{
+  .scroll_bar {
     top: 80px;
     position: fixed;
     background-color: #FFFFFF;
@@ -554,15 +559,17 @@ onUnmounted(() => {
     animation: fadeIn 0.5s ease-out forwards;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-    .scroll_bar_container{
+    .scroll_bar_container {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       padding: 12px 0;
-      .scroll_bar_content{
+
+      .scroll_bar_content {
         display: flex;
         flex-direction: column;
         gap: 8px;
+
         .scroll_bar_title {
           font-size: 20px;
           font-weight: 700;
@@ -571,7 +578,7 @@ onUnmounted(() => {
         }
       }
 
-      .scroll_bar_button{
+      .scroll_bar_button {
         display: flex;
         gap: 16px;
       }
@@ -686,7 +693,7 @@ onUnmounted(() => {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
-.success_modal{
+.success_modal {
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -694,20 +701,20 @@ onUnmounted(() => {
   gap: 32px;
 }
 
-.success_modal_content{
+.success_modal_content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px ;
+  gap: 12px;
 }
 
-.success_modal_content_title{
+.success_modal_content_title {
   font-size: 24px;
   font-weight: 700;
   line-height: 38px;
 }
 
-.success_modal_container{
+.success_modal_container {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -733,7 +740,7 @@ onUnmounted(() => {
 }
 
 @media (max-width: 13800px) {
-  .scroll_bar{
+  .scroll_bar {
     top: 60px
   }
 }
@@ -761,7 +768,7 @@ onUnmounted(() => {
     padding-bottom: 16px !important;
   }
 
-  .scroll_bar{
+  .scroll_bar {
     display: none;
   }
 }

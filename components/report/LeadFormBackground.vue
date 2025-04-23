@@ -13,7 +13,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <svg id="background"
+  <svg class="background"
        v-if="currentState !== POPUP_STATES.SUCCESSFULLY && currentState !== POPUP_STATES.VERIFICATION_SUCCESS && currentState !== POPUP_STATES.CONFIRMATION_FAILURE"
        :width="currentState !== POPUP_STATES.FORM ? '528' : '950'"
        :height="currentState !== POPUP_STATES.FORM ? '230' : '414'"

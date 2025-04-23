@@ -54,12 +54,12 @@ import TinTuongBoiHangNganDoanhNghiep from '/components/PreviewSlide/TinTuongBoi
 
 const slideComponents = [
   TrangBia,
-  NoiDungChinh,
-  ThiPhanCacSanTMDT,
-  ThongKeThuongHieu,
-  ThongKeVungMien,
-  PhanTichShopBanChay,
-  TinTuongBoiHangNganDoanhNghiep,
+  // NoiDungChinh,
+  // ThiPhanCacSanTMDT,
+  // ThongKeThuongHieu,
+  // ThongKeVungMien,
+  // PhanTichShopBanChay,
+  // TinTuongBoiHangNganDoanhNghiep,
 ];
 
 const props = defineProps({
