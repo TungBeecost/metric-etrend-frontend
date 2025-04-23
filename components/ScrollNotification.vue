@@ -250,13 +250,13 @@ onBeforeRouteLeave(() => {
     <img loading="lazy" src="/images/BackgroundScroll.png" alt="BackgroundScrollIcon" style="width: 100%"/>
   </div>
   <div v-else class="button-notification">
-    <button
-        style="display: flex; height: 40px; padding: 9px 16px; justify-content: center; align-items: center; border-radius: 8px; background: #FAF9FF; color: #241E46; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"
-        v-if="isMobile"
-        @click="downloadReport">
-      <img src="/icons/Download.svg" alt="DownloadIcon" style="width: 24px; height: 24px; margin-right: 8px;"/>
-      Tải báo cáo mẫu
-    </button>
+<!--    <button-->
+<!--        style="display: flex; height: 40px; padding: 9px 16px; justify-content: center; align-items: center; border-radius: 8px; background: #FAF9FF; color: #241E46; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"-->
+<!--        v-if="isMobile"-->
+<!--        @click="downloadReport">-->
+<!--      <img src="/icons/Download.svg" alt="DownloadIcon" style="width: 24px; height: 24px; margin-right: 8px;"/>-->
+<!--      Tải báo cáo mẫu-->
+<!--    </button>-->
     <button
         :class="{ 'full-width': !isMobile }"
         style="display: flex; height: 40px; padding: 9px 16px; justify-content: center; align-items: center; border-radius: 8px; background: linear-gradient(90deg, #FF6931 1.09%, #FF9839 99.23%); color: #fff; border: none; cursor: pointer; font-size: 14px; font-weight: 400; text-align: center;"
@@ -265,7 +265,7 @@ onBeforeRouteLeave(() => {
       Trải nghiệm miễn phí
     </button>
   </div>
-  <modal-download-pdf v-model:open="open" :data="props.data"/>
+<!--  <modal-download-pdf v-model:open="open" :data="props.data"/>-->
   <cta v-model:open="openCta"/>
   <a-modal v-model:visible="showModalSuccess" :footer="null" width="550px">
     <div class="success_modal">

@@ -50,7 +50,8 @@ onMounted(() => {
 
 watch(() => props.showModalDownloadPdf, (newVal) => {
   if (newVal) {
-    open.value = true;
+    // open.value = true;
+    openCta.value = true;
   }
 });
 
@@ -157,7 +158,7 @@ const showMetricButton = computed(() => {
       </div>
     </div>
   </div>
-  <modal-download-pdf v-model:open="open" :data="props.data" :period-of-time-download="route.query.period_of_time_download"/>
+<!--  <modal-download-pdf v-model:open="open" :data="props.data" :period-of-time-download="route.query.period_of_time_download"/>-->
   <cta v-model:open="openCta"/>
 </template>
 

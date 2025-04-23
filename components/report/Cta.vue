@@ -63,13 +63,6 @@ const toggleUnlock = () => {
       class="popup-lead-form-container">
     <lead-form-background :POPUP_STATES="POPUP_STATES" :current-state="popupState"/>
     <div class="popup-lead-form">
-      <div class="additional-information">
-        <h2 class="title">Xem tất cả báo cáo Ecom  <br> bằng phần mềm Metric</h2>
-        <p class="subtitle">
-          Đăng ký để được tư vấn sử dụng phần mềm
-        </p>
-        <img loading="lazy" class="image" src="/icons/form-image.svg" alt="Unlock" />
-      </div>
       <div class="lead-form">
         <div class="form-wrapper">
           <div class="form-container">
@@ -77,6 +70,14 @@ const toggleUnlock = () => {
           </div>
         </div>
       </div>
+      <div class="additional-information">
+        <h2 class="title">Xem tất cả báo cáo Ecom  <br> bằng phần mềm Metric</h2>
+        <p class="subtitle">
+          Đăng ký để được tư vấn sử dụng phần mềm
+        </p>
+        <img loading="lazy" class="image" src="/icons/form-image.svg" alt="Unlock" />
+      </div>
+
 
     </div>
   </a-modal>
