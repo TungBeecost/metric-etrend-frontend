@@ -184,7 +184,7 @@ const openModalHandle = () => {
       </div>
     </div>
   </a-modal>
-  <modal-download-pdf v-model:open="open" slug="" :data="data"/>
+<!--  <modal-download-pdf v-model:open="open" slug="" :data="data"/>-->
   <ModalUnlock v-model:showUnlock="showUnlock"/>
 </template>
 

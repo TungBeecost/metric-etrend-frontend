@@ -116,10 +116,10 @@ const handdleCoppy = () => {
             </div>
             <div class="detail_info_value">{{ remainClaimText }}</div>
           </div>
-          <div v-if="props.userInfo.current_plan.remain_claim_pdf != 0" class="account_detail_item">
-            <div class="detail_info_title">Số lượt xem báo cáo chi tiết</div>
-            <div class="detail_info_value">{{ props.userInfo.current_plan.remain_claim_pdf || 0 }} lượt</div>
-          </div>
+<!--          <div v-if="props.userInfo.current_plan.remain_claim_pdf != 0" class="account_detail_item">-->
+<!--            <div class="detail_info_title">Số lượt xem báo cáo chi tiết</div>-->
+<!--            <div class="detail_info_value">{{ props.userInfo.current_plan.remain_claim_pdf || 0 }} lượt</div>-->
+<!--          </div>-->
           <div v-if="showPersonalDiscount" class="account_detail_item">
             <div class="detail_info_title">
               Mã giới thiệu

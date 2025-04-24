@@ -55,7 +55,8 @@ const toggleUnlock = () => {
   emits('update:showAlert', false);
 };
 
-const isViewReportDisabled = computed(() => userInfo.value.current_plan.remain_claim_pdf === 0);
+// const isViewReportDisabled = computed(() => userInfo.value.current_plan.remain_claim_pdf === 0);
+const isViewReportDisabled = false;
 
 </script>
 
