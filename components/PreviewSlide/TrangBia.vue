@@ -5,8 +5,8 @@
       <div class="main-info">
         <div class="report-info">
           <div class="subtitle">
-            Báo cáo thị trường<br/>
-            Thương mại điện tử
+            Báo cáo từ phần mềm Metric<br/>
+<!--            Thương mại điện tử-->
           </div>
           <div class="title" style="max-width: 400px; text-transform: uppercase">
             {{ props.data.name }}
@@ -92,11 +92,11 @@ const formatDate = (value, format, inputFormat = 'YYYYMMDD') => {
 
         .subtitle {
           font-family: "Montserrat", sans-serif;
-          font-weight: 700;
-          font-size: 32px;
-          line-height: 32px;
+          font-weight: 600;
+          font-size: 25px;
+          line-height: 25px;
 
-          letter-spacing: -0.02em;
+          //letter-spacing: -0.02em;
 
           color: #241E46;
         }
@@ -104,7 +104,7 @@ const formatDate = (value, format, inputFormat = 'YYYYMMDD') => {
         .title {
           font-family: "Montserrat", sans-serif;
           font-weight: 800;
-          font-size: 40px;
+          font-size: 30px;
           line-height: 48px;
 
           letter-spacing: -0.02em;

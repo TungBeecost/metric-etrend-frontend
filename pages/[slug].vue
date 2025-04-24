@@ -421,12 +421,12 @@ onUnmounted(() => {
             <report-content :data="data?.reportDetail"/>
           </div>
           <div class="container_report_detail_right">
-            <div v-if="isStaff" style="display: flex; justify-content: flex-end">
-              <a-button class="hover-button" style="display: flex; gap: 8px" @click="openFormExportPdf = true">
-                <img class="download-icon" src="/icons/Download.svg" alt="pdf"/>
-                <span>Xuất báo cáo Tháng 1/2024</span>
-              </a-button>
-            </div>
+<!--            <div v-if="isStaff" style="display: flex; justify-content: flex-end">-->
+<!--              <a-button class="hover-button" style="display: flex; gap: 8px" @click="openFormExportPdf = true">-->
+<!--                <img class="download-icon" src="/icons/Download.svg" alt="pdf"/>-->
+<!--                <span>Xuất báo cáo Tháng 1/2024</span>-->
+<!--              </a-button>-->
+<!--            </div>-->
             <indept-report-link :slug="route.params.slug"
                                 :data="data.reportDetail"
                                 :show-modal-download-pdf="showModalDownloadPdf"
