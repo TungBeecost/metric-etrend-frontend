@@ -29,19 +29,31 @@ const mktLeadSourceOptions = [
 
 const mktUserDemandOptions = [
   {label: 'Nền tảng Phân tích Số liệu Ecommerce', value: 'Nền tảng Phân tích Số liệu Ecommerce'},
-  {label: 'Báo cáo thị trường ngành hàng', value: 'Báo cáo thị trường ngành hàng'},
-  {label: 'Dữ liệu thị trường theo yêu cầu', value: 'Dữ liệu thị trường theo yêu cầu'},
+  {label: 'Dịch vụ Dữ liệu thị trường chuyên sâu', value: 'Dịch vụ Dữ liệu thị trường chuyên sâu'},
+  {label: 'Kho báo cáo TMĐT sẵn sàng tải ngay', value: 'Kho báo cáo TMĐT sẵn sàng tải ngay'},
+  {label: 'Chỉ tham khảo số liệu và báo cáo miễn phí', value: 'Chỉ tham khảo số liệu và báo cáo miễn phí'},
   {label: 'Hợp tác khác', value: 'Hợp tác khác'},
 ]
 
 const mktCompanyTypeOptions = [
-  {label: 'Doanh nghiệp', value: 'Doanh nghiệp'},
-  {label: 'Cá nhân', value: 'Cá nhân'},
-  {label: 'Không kinh doanh, chỉ tham khảo thông tin thị trường', value: 'Không kinh doanh, chỉ tham khảo thông tin thị trường'},
+  {label: 'Đang kinh doanh trên sàn eCom', value: 'Đang kinh doanh trên sàn eCom'},
+  {label: 'Có kế hoạch kinh doanh trên sàn eCom', value: 'Có kế hoạch kinh doanh trên sàn eCom'},
+  {
+    label: 'Là đơn vị cung cấp giải pháp cho seller kinh doanh online',
+    value: 'Là đơn vị cung cấp giải pháp cho seller kinh doanh online'
+  },
+  {label: 'Không kinh doanh eCom', value: 'Không kinh doanh eCom'},
+  {label: 'Là sinh viên nghiên cứu số liệu', value: 'Là sinh viên nghiên cứu số liệu'},
+  {
+    label: 'Giảng viên, nhà nghiên cứu không kinh doanh eCom',
+    value: 'Giảng viên, nhà nghiên cứu không kinh doanh eCom'
+  }
 ]
 
 const rules = {
-  fullName: [{required: true, message: 'Vui lòng nhập họ và tên', trigger: ['blur', 'change']}],
+  fullName: [
+    {required: true, message: 'Vui lòng nhập họ và tên', trigger: ['blur', 'change']}
+  ],
   email: [
     {required: true, message: 'Vui lòng nhập email', trigger: 'blur'},
     {type: 'email', message: 'Email không hợp lệ', trigger: ['blur', 'change']},
@@ -50,7 +62,18 @@ const rules = {
     {required: true, message: 'Vui lòng nhập số điện thoại', trigger: 'blur'},
     {pattern: /^0[0-9]{9}$/, message: 'Số điện thoại không hợp lệ', trigger: ['blur', 'change']},
   ],
-  mktLeadSource: [{required: true, message: 'Vui lòng chọn nguồn tìm kiếm', trigger: 'blur'}],
+  company: [
+    {required: true, message: 'Vui lòng nhập tên tổ chức', trigger: 'blur'}
+  ],
+  mktUserDemand: [
+    {required: true, message: 'Vui lòng chọn nhu cầu quan tâm', trigger: 'blur'}
+  ],
+  mktLeadSource: [
+    {required: true, message: 'Vui lòng chọn kênh', trigger: 'blur'}
+  ],
+  mktCompanyType: [
+    {required: true, message: 'Vui lòng chọn loại hình doanh nghiệp', trigger: 'blur'}
+  ],
 }
 
 const loading = ref(false)
@@ -177,6 +200,85 @@ const submitForm = async (values: any) => {
   </a-form>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
+.FormTrialRegister {
+  .ant-form-item {
+    margin-bottom: 16px;
 
+    .ant-col.ant-form-item-label {
+      label[title] {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 22px;
+        display: flex;
+        align-items: center;
+        color: #241E46;
+      }
+    }
+
+    .ant-select-selection-placeholder {
+      line-height: 38px;
+      color: #9D97BF;
+    }
+
+    .ant-form-item-control-input-content {
+      input {
+        height: 40px;
+        border-radius: 8px;
+        //border: none;
+
+        &::placeholder {
+          color: #9D97BF;
+        }
+      }
+    }
+  }
+
+  .ant-select.ant-select-single {
+    height: 40px;
+
+    .ant-select-selector {
+      height: 40px;
+      //border: none;
+
+      span.ant-select-selection-search {
+        input {
+          height: 38px;
+        }
+      }
+
+      span.ant-select-selection-item {
+        line-height: 38px;
+      }
+
+      .ant-select-selection-placeholder {
+        line-height: 38px;
+        color: #9D97BF;
+      }
+    }
+  }
+
+  .ant-select.ant-select-multiple {
+    .ant-select-selector {
+      height: 40px;
+      //border: none;
+
+      .ant-select-selection-item {
+        height: 30px;
+        line-height: 28px;
+        background-color: #eeebff;
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .ant-btn.ant-btn-primary.ant-btn-block {
+    margin: 16px 0 0 0;
+    height: 40px;
+  }
+}
+.additional-link {
+  text-align: center;
+}
 </style>

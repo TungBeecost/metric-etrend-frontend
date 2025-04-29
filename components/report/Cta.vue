@@ -543,4 +543,33 @@ const toggleUnlock = () => {
     }
   }
 }
+
+.popup-lead-form-container {
+  .ant-modal-content {
+    border-radius: 16px;
+  }
+
+  .ant-modal-content {
+    .ant-modal-body {
+      overflow: hidden;
+    }
+  }
+
+  .ant-modal-close {
+    z-index: 21;
+  }
+
+  .form-container {
+    input.ant-input {
+      border: 1px solid #9D97BF !important;
+      background: none !important;
+    }
+
+    .ant-select-selector {
+      border: 1px solid #9D97BF !important;
+      background: none !important;
+    }
+  }
+
+}
 </style>
