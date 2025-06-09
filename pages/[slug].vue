@@ -217,11 +217,12 @@ const fetchReportData = async () => {
         value: null,
       }];
     }
+    console.log(">>>>>>>>>>>>>>>",response)
     return {
-      reportDetail: {...response, name},
+      reportDetail: {...response, name, activeTemplate},
       listRecommend,
       // isHideContent,
-      breadcrumbs
+      breadcrumbs,
     };
   } catch (error) {
     await router.push('/search');
@@ -629,7 +630,101 @@ onUnmounted(() => {
   font-weight: 700;
   line-height: 48px;
   color: #101828;
+  margin-bottom: -8px;
+  &.margin-top {
+    margin-top: 16px;
+  }
 }
+.statistic-block {
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #EEEBFF;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #fff;
+}
+.statistic-block-content {
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+  &.horizontal {
+    flex-direction: row;
+  }
+  &-column {
+    flex: 1;
+  }
+}
+.statistic-block__title {
+  display: flex;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  color: #241E46;
+  gap: 16px;
+  &:before {
+    content: '';
+    width: 16px;
+    height: 32px;
+    border-radius: 4px;
+    background-color: #F9D7C6;
+  }
+  span:only-child {
+    line-height: 32px;
+  }
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+.statistic-block__subtitle {
+  color: #716b95;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.product-mini-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.product-mini-thumbnail {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.product-mini-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.product-mini-name {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #241E46;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.product-mini-description {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #716b95;
+}
+
 .container_report_detail {
   display: flex;
   gap: 24px;
@@ -730,6 +825,21 @@ onUnmounted(() => {
   to {
     opacity: 1;
   }
+}
+
+table.statistic-table {
+    width: 100%;
+}
+
+table.statistic-table td {
+    border-top: 1px solid #ddd;
+    padding: 12px;
+}
+
+table.statistic-table thead td {
+    background-color: #EDEBFF;
+    border-top: none;
+    font-weight: bold;
 }
 
 @media (max-width: 13800px) {

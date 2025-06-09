@@ -13,6 +13,18 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  customTitle: {
+    type: String,
+    default: 'Sản phẩm bán chạy',
+  },
+  customSubtitle: {
+    type: String,
+    default: 'Top sản phẩm doanh số cao nhất 30 ngày qua',
+  },
+  customLimit: {
+    type: Number,
+    default: 20,
+  },
 });
 
 const config = useRuntimeConfig();
@@ -38,22 +50,21 @@ const config = useRuntimeConfig();
           <rect width="16" height="32" rx="4" fill="#F9D7C6"/>
         </svg>
         <div>
-          <h3 class="statistic-item__title">Sản phẩm bán chạy</h3>
-          <div
+          <h3 class="statistic-item__title">{{ customTitle }}</h3>
+          <div v-if="customSubtitle" class="statistic-item__subtitle">
+            <div
               v-if="
-            props.data.data_analytic &&
-            props.data.data_analytic.by_product &&
-            props.data.data_analytic.by_product.lst_product_revenue_30d &&
-            props.data.data_analytic.by_product.lst_product_revenue_30d.length > 0
-          "
-              class="statistic-item__subtitle"
-          >Top sản phẩm doanh số cao nhất 30 ngày qua
+                props.data.data_analytic &&
+                props.data.data_analytic.by_product &&
+                props.data.data_analytic.by_product.lst_product_revenue_30d &&
+                props.data.data_analytic.by_product.lst_product_revenue_30d.length > 0
+              " class="statistic-item__subtitle">{{ customSubtitle }}</div>
           </div>
         </div>
       </div>
       <div class="products-grid">
         <ProductItem
-            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, 5)"
+            v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(0, customLimit)"
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
@@ -66,7 +77,7 @@ const config = useRuntimeConfig();
             :report="data"
         />
       </div>
-      <div class="products-grid">
+      <!-- <div class="products-grid">
         <ProductItem
             v-for="product in props.data.data_analytic.by_product.lst_product_revenue_30d.slice(5, 10)"
             :key="product.product_base_id"
@@ -89,7 +100,7 @@ const config = useRuntimeConfig();
             ok-button="Trải nghiệm miễn phí"
             :report="data"
         />
-      </div>
+      </div> -->
 <!--      <a-skeleton v-if="loading" :paragraph="{ rows: 17 }"/>-->
     </div>
     <div

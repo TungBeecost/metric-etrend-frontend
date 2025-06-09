@@ -150,10 +150,10 @@ export default defineNuxtConfig({
     //     }
     //   },
     //   domains: [
-    //     'cf.shopee.vn', 
-    //     'vn-live-01.slatic.net', 
-    //     'storage.googleapis.com', 
-    //     'filebroker-cdn.lazada.vn', 
+    //     'cf.shopee.vn',
+    //     'vn-live-01.slatic.net',
+    //     'storage.googleapis.com',
+    //     'filebroker-cdn.lazada.vn',
     //     'lh3.googleusercontent.com',
     //     'p16-oec-va.ibyteimg.com',
     //   ]

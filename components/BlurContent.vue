@@ -19,26 +19,26 @@ const props = defineProps({
 });
 
 // Add debug logs
-onMounted(() => {
-  console.log('BlurContent mounted with props:', {
-    isBlurred: props.isBlurred,
-    isHideContent: props.isHideContent,
-    useGlobalHide: props.useGlobalHide,
-    globalHideContent: globalHideContent.value
-  });
-});
+// onMounted(() => {
+//   console.log('BlurContent mounted with props:', {
+//     isBlurred: props.isBlurred,
+//     isHideContent: props.isHideContent,
+//     useGlobalHide: props.useGlobalHide,
+//     globalHideContent: globalHideContent.value
+//   });
+// });
 
 const shouldHide = computed(() => {
   const hide = typeof props.isHideContent !== 'undefined'
     ? props.isHideContent
     : (props.useGlobalHide ? globalHideContent.value : false);
 
-  console.log('shouldHide calculated:', {
-    isHideContent: props.isHideContent,
-    useGlobalHide: props.useGlobalHide,
-    globalHideContent: globalHideContent.value,
-    result: hide
-  });
+  // console.log('shouldHide calculated:', {
+  //   isHideContent: props.isHideContent,
+  //   useGlobalHide: props.useGlobalHide,
+  //   globalHideContent: globalHideContent.value,
+  //   result: hide
+  // });
 
   return hide;
 });

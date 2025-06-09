@@ -16,6 +16,62 @@ const displayTableOfContent = computed(() => {
     return []
   }
 
+  // For report_type = report_trending
+  // I. Tổng quan thị trường
+  // - Quy mô thị trường
+  // - Thống kê theo sàn
+  // - Thống kê theo tháng
+  // II. Phân khúc giá
+  // - Thống kê phân khúc giá
+  // - Sản phẩm nổi bật trong phân khúc giá
+  // III. Top sản phẩm trending
+  // - Danh sách sản phẩm trending (theo sàn)
+  // - Xu hướng tăng trưởng của sản phẩm nổi bật
+  // IV. Top thương hiệu & Shop nổi bật
+  // - Danh sách thương hiệu & shop nổi bật
+  // - Danh sách mặt hàng trending từ các thương hiệu & shop nổi bật
+  // V. Xu hướng tìm kiếm sản phẩm
+  // - Xu hướng tìm kiếm sản phẩm
+  if (data?.activeTemplate === 'xu_huong') {
+    return [
+      {
+        title: `I. Tổng quan thị trường`,
+        children: [
+          {title: `Quy mô thị trường`},
+          {title: 'Thống kê theo sàn'},
+          {title: 'Thống kê theo tháng'},
+        ],
+      },
+      {
+        title: 'II. Phân khúc giá',
+        children: [
+          {title: 'Thống kê phân khúc giá'},
+          {title: 'Sản phẩm nổi bật trong phân khúc giá'},
+        ],
+      },
+      {
+        title: 'III. Top sản phẩm trending',
+        children: [
+          {title: 'Danh sách sản phẩm trending (theo sàn)'},
+          {title: 'Xu hướng tăng trưởng của sản phẩm nổi bật'},
+        ],
+      },
+      {
+        title: 'IV. Top thương hiệu & Shop nổi bật',
+        children: [
+          {title: 'Danh sách thương hiệu & shop nổi bật'},
+          {title: 'Danh sách mặt hàng trending từ các thương hiệu & shop nổi bật'},
+        ],
+      },
+      {
+        title: 'V. Xu hướng tìm kiếm sản phẩm',
+        children: [
+          {title: 'Xu hướng tìm kiếm sản phẩm'},
+        ],
+      },
+    ]
+  }
+
   if (data?.report_type === 'report_category') {
     return [
       {
@@ -138,6 +194,7 @@ const displayTableOfContent = computed(() => {
       },
     ]
   }
+
 
   // Default return value
   return [
