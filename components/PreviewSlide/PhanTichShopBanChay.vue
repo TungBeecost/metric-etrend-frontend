@@ -112,6 +112,9 @@ import moment from 'moment';
 import Highcharts from 'highcharts';
 import CoverSlidePopup from '/components/PreviewSlide/CoverSlidePopup.vue';
 import ProductItemPrint from "~/components/PreviewSlide/ProductItemPrint.vue";
+import { useReportAccess } from '~/composables/useReportAccess';
+
+const { isHideContent } = useReportAccess();
 
 const platformNames = {
   1: "Shopee",
@@ -146,10 +149,6 @@ const props = defineProps({
   data: {
     type: Object,
     default: () => ({})
-  },
-  isHideContent: {
-    type: Boolean,
-    default: false
   },
   slide: {
     type: String,

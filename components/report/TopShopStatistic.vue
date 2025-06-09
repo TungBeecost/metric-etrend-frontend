@@ -2,6 +2,9 @@
 import {computed, ref, onMounted, watchEffect} from 'vue';
 import {formatSortTextCurrency, getUrlImageOption} from '~/helpers/utils.js';
 import Highcharts from "highcharts";
+import { useReportAccess } from '~/composables/useReportAccess';
+
+const { isHideContent } = useReportAccess();
 
 const config = useRuntimeConfig();
 const renderChartSales = ref(false);
@@ -10,10 +13,6 @@ const props = defineProps({
   data: {
     type: Object,
     default: () => ({}),
-  },
-  isHideContent: {
-    type: Boolean,
-    default: false,
   },
   isHide: {
     type: Boolean,
@@ -85,7 +84,8 @@ const tooltipOutput = ref({});
 const dataLabels = ref({});
 
 watchEffect(() => {
-  tooltipSales.value = props.isHideContent
+  const nowHidden = isHideContent.value;
+  tooltipSales.value = nowHidden
       ? {
         enabled: true,
         formatter: function () {
@@ -105,7 +105,7 @@ watchEffect(() => {
         },
       };
 
-  tooltipOutput.value = props.isHideContent
+  tooltipOutput.value = nowHidden
       ? {
         enabled: true,
         formatter: function () {
@@ -125,7 +125,7 @@ watchEffect(() => {
         },
       };
 
-  dataLabels.value = props.isHideContent
+  dataLabels.value = nowHidden
       ? {
         enabled: true,
         formatter: function () {
@@ -403,7 +403,7 @@ const chartOptionsOutput = computed(() => ({
           ]"
           >
             <template #shop_count="{text}">
-              <BlurContent :is-hide-content="isHideContent">
+              <BlurContent>
                 {{ text }}
               </BlurContent>
             </template>
@@ -461,26 +461,26 @@ const chartOptionsOutput = computed(() => ({
     >
       <li>
         Doanh thu của {{ data.name }} đến từ
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent>
           <span>
             {{ formatNumber(data.data_analytic.by_shop.ratio.mall.shop) }}
           </span>
         </BlurContent>
         shop mall chiếm
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent>
         {{
             formatSortTextCurrency(Number(
               data.data_analytic.by_shop.ratio.mall.ratio_revenue * 100
           ).toFixed(1))
         }}% và hơn
         </BlurContent>
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent>
           <span>
             {{ formatNumber(data.data_analytic.by_shop.ratio.normal.shop) }}
           </span>
         </BlurContent>
         shop thường chiếm
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent>
         {{
             formatSortTextCurrency(Number(
               data.data_analytic.by_shop.ratio.normal.ratio_revenue * 100
@@ -494,7 +494,7 @@ const chartOptionsOutput = computed(() => ({
           }}</span>
         có tỉ trọng doanh thu cao nhất chiếm
 
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent>
           <span>
             {{
               formatSortTextCurrency(Number(
@@ -527,7 +527,7 @@ const chartOptionsOutput = computed(() => ({
               data.data_analytic.by_shop.lst_top_shop[2].name
             }}</span>
           tương ứng thị phần doanh thu là
-          <BlurContent :is-hide-content="isHideContent">
+          <BlurContent>
             <span>
               {{
                 formatSortTextCurrency(Number(
@@ -546,7 +546,7 @@ const chartOptionsOutput = computed(() => ({
             data.data_analytic.by_shop.lst_top_shop.length >= 3
           "
         >
-          <BlurContent :is-hide-content="isHideContent">
+          <BlurContent>
             <span>
               {{
                 formatSortTextCurrency(Number(

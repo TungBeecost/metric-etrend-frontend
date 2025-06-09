@@ -23,6 +23,12 @@ import {EVENT_TYPE} from "~/constant/general/EventConstant.js";
 import ModalDownloadPdf from "~/components/ModalDownloadPdf.vue";
 import {setCookie} from '~/helpers/CookieHelper';
 import Cta from "~/components/report/Cta.vue";
+import {useReportAccess} from '~/composables/useReportAccess';
+// Import report templates
+import RegularTemplate from "~/components/ReportTemplates/Regular.vue";
+import TrendingTemplate from "~/components/ReportTemplates/Trending.vue";
+import PricesTemplate from "~/components/ReportTemplates/Prices.vue";
+import BusinessesTemplate from "~/components/ReportTemplates/Businesses.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -44,7 +50,17 @@ const showModalSuccess = ref(false);
 const open = ref(false);
 const openCta = ref(false); // popup form lead
 const openFormExportPdf = ref(false);
+// const isHideContent = ref(true);
+const {isHideContent, setHideContent} = useReportAccess();
 let {userInfo} = storeToRefs(currentUserStore);
+
+// Template selection state
+const activeTemplate = ref('overview'); // Default to overview template
+
+// Function to change active template
+const setActiveTemplate = (template) => {
+  activeTemplate.value = template;
+};
 
 const fetchSuggest = async (value = '', options = {}) => {
   try {
@@ -106,7 +122,7 @@ const fetchReportData = async () => {
     return {};
   }
   try {
-    let isHideContent = true;
+    // let isHideContent = true;
     const accessToken = await getIndexedDB("access_token").catch(() => null);
     const visitorId = await getIndexedDB("__visitor").catch(() => null);
     const remaining_quota_metric = userInfo?.value?.metric_info?.metadata?.remaining_quota || 0;
@@ -171,9 +187,9 @@ const fetchReportData = async () => {
     }
 
     if (response.has_permission) {
-      isHideContent = false;
+      setHideContent(false);
     } else {
-      isHideContent = true;
+      setHideContent(true);
     }
 
     let name = response.name;
@@ -204,7 +220,7 @@ const fetchReportData = async () => {
     return {
       reportDetail: {...response, name},
       listRecommend,
-      isHideContent,
+      // isHideContent,
       breadcrumbs
     };
   } catch (error) {
@@ -215,8 +231,8 @@ const fetchReportData = async () => {
   }
 };
 
-const {data} = await useAsyncData(() => {
-  return fetchReportData();
+const {data} = await useAsyncData(async () => {
+  return await fetchReportData();
 });
 
 const {data: tagSuggestions} = await useAsyncData(
@@ -225,6 +241,15 @@ const {data: tagSuggestions} = await useAsyncData(
       return await fetchSuggest(data?.reportDetail?.name, {limit: 5});
     }
 );
+
+import { useReportType } from '~/composables/useReportType';
+
+const { isXuHuongReport } = useReportType();
+
+// const isXuHuongReport = computed(() => {
+//   // return data.value?.reportDetail?.report_type === 'report_xu_huong';
+//   return route.params.slug?.includes('xu-huong');
+// });
 
 const isMobile = ref(window?.innerWidth <= 768);
 
@@ -319,7 +344,7 @@ watch(showModal, (newVal) => {
 });
 
 const isStaff = computed(() => {
-  return userInfo.value?.email?.includes('@metric.vn');
+  return userInfo.value?.email?.includes('@metric.vn') || userInfo.value?.email?.includes('juskteez@gmail.com');
 });
 
 const handleOk = () => {
@@ -375,7 +400,7 @@ const handleClickBuyReport = () => {
 
 const reportTitle = computed(() => {
   return data.value?.reportDetail?.report_type === 'report_product_line'
-      ? `Báo cáo tổng quan thị trường từ khoá ${data?.value?.reportDetail.name}`
+      ? `Báo cáo tổng quan thị trường từ khoà ${data?.value?.reportDetail.name}`
       : `Báo cáo tổng quan thị trường ${data?.value?.reportDetail?.report_type == 'report_top_shop' ? "Shop " : ""} ${data?.value?.reportDetail.name}`;
 });
 
@@ -411,22 +436,68 @@ onUnmounted(() => {
         <div class="breadcrumbs">
           <Breadcrumb :breadcrumbs="data?.breadcrumbs"/>
         </div>
-        <h1 class="title_main">
+        <h1 v-if="activeTemplate === 'overview'" class="title_main">
           Báo cáo {{ data.reportDetail.name }} - Nghiên cứu thị trường sàn TMĐT
         </h1>
-        <div class="container_report_detail">
+        <h1 v-else-if="activeTemplate === 'xu_huong'" class="title_main">
+          Báo cáo xu hướng {{ data.reportDetail.name }} - Nghiên cứu xu hướng TMĐT
+        </h1>
+        <h1 v-else-if="activeTemplate === 'phan_tich_gia'" class="title_main">
+          Báo cáo phân tích giá {{ data.reportDetail.name }} - Nghiên cứu giá trên thị trường sàn TMĐT
+        </h1>
+        <h1 v-else-if="activeTemplate === 'phan_tich_doanh_nghiep'" class="title_main">
+          Báo cáo phân tích doanh nghiệp {{ data.reportDetail.name }} - Nghiên cứu doanh nghiệp trên thị trường sàn TMĐT
+        </h1>
+        <ul class="report_type_menu">
+          <li><a href="javascript:;" :class="{active: activeTemplate === 'overview'}" @click="setActiveTemplate('overview')">Tổng quan</a></li>
+          <li><a href="javascript:;" :class="{active: activeTemplate === 'xu_huong'}" @click="setActiveTemplate('xu_huong')">Xu hướng</a></li>
+          <li><a href="javascript:;" :class="{active: activeTemplate === 'phan_tich_gia'}" @click="setActiveTemplate('phan_tich_gia')">Phân tích giá</a></li>
+          <li><a href="javascript:;" :class="{active: activeTemplate === 'phan_tich_doanh_nghiep'}" @click="setActiveTemplate('phan_tich_doanh_nghiep')">Phân tích doanh nghiệp</a></li>
+        </ul>
+        <!-- Template components based on activeTemplate value -->
+        <div v-if="activeTemplate === 'overview'" class="template-container regular-report-template">
+          <RegularTemplate
+            :data="data"
+            :recomends="data?.listRecommend"
+            :show-modal-download-pdf="showModalDownloadPdf"
+            :is-staff="isStaff"
+            v-model:open-form-export-pdf="openFormExportPdf"
+          />
+        </div>
+        <div v-else-if="activeTemplate === 'xu_huong'" class="template-container trending-report-template">
+          <TrendingTemplate
+            :data="data"
+            :recomends="data?.listRecommend"
+            :show-modal-download-pdf="showModalDownloadPdf"
+            :is-staff="isStaff"
+            v-model:open-form-export-pdf="openFormExportPdf"
+          />
+        </div>
+        <div v-else-if="activeTemplate === 'phan_tich_gia'" class="template-container prices-report-template">
+          <PricesTemplate
+            :data="data"
+            :recomends="data?.listRecommend"
+            :show-modal-download-pdf="showModalDownloadPdf"
+            :is-staff="isStaff"
+            v-model:open-form-export-pdf="openFormExportPdf"
+          />
+        </div>
+        <div v-else-if="activeTemplate === 'phan_tich_doanh_nghiep'" class="template-container businesses-report-template">
+          <BusinessesTemplate
+            :data="data"
+            :recomends="data?.listRecommend"
+            :show-modal-download-pdf="showModalDownloadPdf"
+            :is-staff="isStaff"
+            v-model:open-form-export-pdf="openFormExportPdf"
+          />
+        </div>
+        <!-- <div class="container_report_detail">
           <div class="container_report_detail_left">
-            <overview :is-hide-content="data.isHideContent" :data="data?.reportDetail"/>
+            <overview :data="data?.reportDetail"/>
             <top-shop-info v-if="data?.reportDetail.report_type === 'report_top_shop'" :data="data?.reportDetail"/>
             <report-content :data="data?.reportDetail"/>
           </div>
           <div class="container_report_detail_right">
-<!--            <div v-if="isStaff" style="display: flex; justify-content: flex-end">-->
-<!--              <a-button class="hover-button" style="display: flex; gap: 8px" @click="openFormExportPdf = true">-->
-<!--                <img class="download-icon" src="/icons/Download.svg" alt="pdf"/>-->
-<!--                <span>Xuất báo cáo Tháng 1/2024</span>-->
-<!--              </a-button>-->
-<!--            </div>-->
             <indept-report-link :slug="route.params.slug"
                                 :data="data.reportDetail"
                                 :show-modal-download-pdf="showModalDownloadPdf"
@@ -434,9 +505,9 @@ onUnmounted(() => {
             <report-filter-detail :data="data?.reportDetail" :filter="data.filter_custom"
                                   :breadcrumbs="data?.breadcrumbs" class="report-filter-detail"/>
           </div>
-        </div>
+        </div> -->
       </div>
-      <div class="container-metric default_section">
+      <!-- <div class="container-metric default_section">
         <div class="general_overview_container">
           <relate-report class="relate_report" :recomends="data?.listRecommend"/>
           <h2 class="title_main ">
@@ -455,16 +526,14 @@ onUnmounted(() => {
                   : 'N/A'
             }}</b>
           </div>
-          <general-overview :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail"
-                             :is-hide-content="data.isHideContent"/>
-          <price-range-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <brand-statistic v-if="data?.reportDetail?.report_type !== 'report_brand'" :data="data?.reportDetail"
-                           :is-hide-content="data.isHideContent"/>
-          <top-shop-statistic :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
-          <list-products :data="data?.reportDetail" :is-hide-content="data.isHideContent"/>
+          <general-overview :data="data?.reportDetail"/>
+          <keyword-statistic v-if="data?.reportDetail?.report_type === 'report_category'" :data="data?.reportDetail"/>
+          <price-range-statistic :data="data?.reportDetail"/>
+          <brand-statistic v-if="data?.reportDetail?.report_type !== 'report_brand'" :data="data?.reportDetail"/>
+          <top-shop-statistic :data="data?.reportDetail"/>
+          <list-products :data="data?.reportDetail"/>
         </div>
-      </div>
+      </div> -->
       <poster-detail-report :list-suggest="tagSuggestions" :loading="loadingSuggest"/>
       <transition name="fade">
         <div
@@ -546,47 +615,199 @@ onUnmounted(() => {
   </div>
 </template>
 
+<style lang="scss">
+.template-container {
+  // background-color: rgba(255,0,0,0.2);
+  // box-shadow: 96px 0 rgba(255, 0, 0, 0.2), -96px 0 rgba(255, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 16px;
+  padding-top: 40px;
+}
+.title_main {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 48px;
+  color: #101828;
+}
+.container_report_detail {
+  display: flex;
+  gap: 24px;
+
+  .container_report_detail_left {
+    flex: 0.7;
+    display: flex;
+    flex-direction: column;
+    gap: 16px
+  }
+
+  .container_report_detail_right {
+    flex: 0.3;
+    display: flex;
+    flex-direction: column;
+    gap: 16px
+  }
+
+}
+.container-metric {
+  display: flex;
+  gap: 20px;
+
+  .general_overview_container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .report-title {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 48px;
+      color: #101828;
+    }
+  }
+
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+.relate_report {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+.scroll_bar {
+  top: 80px;
+  position: fixed;
+  background-color: #FFFFFF;
+  width: 100%;
+  z-index: 1000;
+  animation: fadeIn 0.5s ease-out forwards;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  .scroll_bar_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 12px 0;
+
+    .scroll_bar_content {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .scroll_bar_title {
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 28px;
+        color: #241E46;
+      }
+    }
+
+    .scroll_bar_button {
+      display: flex;
+      gap: 16px;
+    }
+
+  }
+
+
+}
+.hover-button {
+  display: flex;
+  gap: 8px;
+  transition: all 0.1s ease;
+}
+
+.hover-button:hover .download-icon {
+  filter: invert(39%) sepia(100%) saturate(1000%) hue-rotate(359deg) brightness(97%) contrast(104%);
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 13800px) {
+  .scroll_bar {
+    top: 60px
+  }
+}
+@media (max-width: 768px) {
+  .container_report_detail {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .different_info {
+    order: -1;
+  }
+
+  .different_info .maybe-interested-component {
+    order: 2;
+  }
+
+  .title_main {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  // .title {
+  //   padding-bottom: 16px !important;
+  // }
+
+  .scroll_bar {
+    display: none;
+  }
+}
+</style>
+
 <style scoped lang="scss">
+
 .container_content {
   padding-bottom: 40px;
 
-  .scroll_bar {
-    top: 80px;
-    position: fixed;
-    background-color: #FFFFFF;
-    width: 100%;
-    z-index: 1000;
-    animation: fadeIn 0.5s ease-out forwards;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  // .scroll_bar {
+  //   top: 80px;
+  //   position: fixed;
+  //   background-color: #FFFFFF;
+  //   width: 100%;
+  //   z-index: 1000;
+  //   animation: fadeIn 0.5s ease-out forwards;
+  //   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-    .scroll_bar_container {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      padding: 12px 0;
+  //   .scroll_bar_container {
+  //     display: flex;
+  //     justify-content: space-between;
+  //     align-items: flex-end;
+  //     padding: 12px 0;
 
-      .scroll_bar_content {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
+  //     .scroll_bar_content {
+  //       display: flex;
+  //       flex-direction: column;
+  //       gap: 8px;
 
-        .scroll_bar_title {
-          font-size: 20px;
-          font-weight: 700;
-          line-height: 28px;
-          color: #241E46;
-        }
-      }
+  //       .scroll_bar_title {
+  //         font-size: 20px;
+  //         font-weight: 700;
+  //         line-height: 28px;
+  //         color: #241E46;
+  //       }
+  //     }
 
-      .scroll_bar_button {
-        display: flex;
-        gap: 16px;
-      }
+  //     .scroll_bar_button {
+  //       display: flex;
+  //       gap: 16px;
+  //     }
 
-    }
+  //   }
 
 
-  }
+  // }
 
   .title {
     display: flex;
@@ -599,45 +820,45 @@ onUnmounted(() => {
       gap: 10px;
     }
 
-    .container_report_detail {
-      display: flex;
-      gap: 24px;
+    // .container_report_detail {
+    //   display: flex;
+    //   gap: 24px;
 
-      .container_report_detail_left {
-        flex: 0.7;
-        display: flex;
-        flex-direction: column;
-        gap: 16px
-      }
+    //   .container_report_detail_left {
+    //     flex: 0.7;
+    //     display: flex;
+    //     flex-direction: column;
+    //     gap: 16px
+    //   }
 
-      .container_report_detail_right {
-        flex: 0.3;
-        display: flex;
-        flex-direction: column;
-        gap: 16px
-      }
+    //   .container_report_detail_right {
+    //     flex: 0.3;
+    //     display: flex;
+    //     flex-direction: column;
+    //     gap: 16px
+    //   }
 
-    }
+    // }
   }
 
-  .container-metric {
-    display: flex;
-    gap: 20px;
+  // .container-metric {
+  //   display: flex;
+  //   gap: 20px;
 
-    .general_overview_container {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+  //   .general_overview_container {
+  //     display: flex;
+  //     flex-direction: column;
+  //     gap: 16px;
 
-      .report-title {
-        font-size: 36px;
-        font-weight: 700;
-        line-height: 48px;
-        color: #101828;
-      }
-    }
+  //     .report-title {
+  //       font-size: 36px;
+  //       font-weight: 700;
+  //       line-height: 48px;
+  //       color: #101828;
+  //     }
+  //   }
 
-  }
+  // }
 }
 
 .modal_content {
@@ -674,24 +895,24 @@ onUnmounted(() => {
   }
 }
 
-.title_main {
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 48px;
-  color: #101828;
-}
+// .title_main {
+//   font-size: 36px;
+//   font-weight: 700;
+//   line-height: 48px;
+//   color: #101828;
+// }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s;
-}
+// .fade-enter-active, .fade-leave-active {
+//   transition: opacity 0.5s;
+// }
 
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
+// .fade-enter, .fade-leave-to {
+//   opacity: 0;
+// }
 
-.relate_report {
-  animation: fadeIn 0.5s ease-out forwards;
-}
+// .relate_report {
+//   animation: fadeIn 0.5s ease-out forwards;
+// }
 
 .success_modal {
   padding: 24px;
@@ -720,56 +941,80 @@ onUnmounted(() => {
   gap: 24px;
 }
 
-.hover-button {
-  display: flex;
-  gap: 8px;
-  transition: all 0.1s ease;
+// .hover-button {
+//   display: flex;
+//   gap: 8px;
+//   transition: all 0.1s ease;
+// }
+
+// .hover-button:hover .download-icon {
+//   filter: invert(39%) sepia(100%) saturate(1000%) hue-rotate(359deg) brightness(97%) contrast(104%);
+// }
+
+ul.report_type_menu {
+    display: flex;
+    gap: 24px;
+    font-size: 1.25em;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 1em;
 }
 
-.hover-button:hover .download-icon {
-  filter: invert(39%) sepia(100%) saturate(1000%) hue-rotate(359deg) brightness(97%) contrast(104%);
+ul.report_type_menu a {
+    display: block;
+    padding: 16px 0;
+    opacity: 0.8;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
+ul.report_type_menu a:hover {
     opacity: 1;
-  }
 }
 
-@media (max-width: 13800px) {
-  .scroll_bar {
-    top: 60px
-  }
+ul.report_type_menu a.active {
+    color: #e85812;
+    opacity: 1;
 }
+
+// @keyframes fadeIn {
+//   from {
+//     opacity: 0;
+//   }
+//   to {
+//     opacity: 1;
+//   }
+// }
+
+// @media (max-width: 13800px) {
+//   .scroll_bar {
+//     top: 60px
+//   }
+// }
 
 @media (max-width: 768px) {
-  .container_report_detail {
-    flex-direction: column;
-    gap: 16px;
-  }
+  // .container_report_detail {
+  //   flex-direction: column;
+  //   gap: 16px;
+  // }
 
-  .different_info {
-    order: -1;
-  }
+  // .different_info {
+  //   order: -1;
+  // }
 
-  .different_info .maybe-interested-component {
-    order: 2;
-  }
+  // .different_info .maybe-interested-component {
+  //   order: 2;
+  // }
 
-  .title_main {
-    font-size: 24px;
-    line-height: 32px;
-  }
+  // .title_main {
+  //   font-size: 24px;
+  //   line-height: 32px;
+  // }
 
   .title {
     padding-bottom: 16px !important;
   }
 
-  .scroll_bar {
-    display: none;
-  }
+  // .scroll_bar {
+  //   display: none;
+  // }
 }
 </style>

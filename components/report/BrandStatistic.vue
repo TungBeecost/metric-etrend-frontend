@@ -2,15 +2,14 @@
 import {computed, ref, onMounted, watchEffect} from 'vue';
 import Highcharts from 'highcharts';
 import {formatNumber} from "~/helpers/FormatHelper.js";
+import { useReportAccess } from '~/composables/useReportAccess';
+
+const { isHideContent } = useReportAccess();
 
 const props = defineProps({
   data: {
     type: Object,
     default: () => ({}),
-  },
-  isHideContent: {
-    type: Boolean,
-    default: true,
   },
 });
 
@@ -44,7 +43,7 @@ const promptPlatformById = (platformId) => {
       return 'Lazada';
     case 3:
       return 'Tiki';
-    case 4: 
+    case 4:
       return 'Tiktok';
     default:
       return 'Khác';
@@ -87,7 +86,8 @@ const tooltipOutput = ref({});
 const dataLabels = ref({});
 
 watchEffect(() => {
-  tooltipSales.value = props.isHideContent
+  const nowHidden = isHideContent.value;
+  tooltipSales.value = nowHidden
       ? {
         enabled: true,
         formatter: function () {
@@ -107,7 +107,7 @@ watchEffect(() => {
         },
       };
 
-  tooltipOutput.value = props.isHideContent
+  tooltipOutput.value = nowHidden
       ? {
         enabled: true,
         formatter: function () {
@@ -127,7 +127,7 @@ watchEffect(() => {
         },
       };
 
-  dataLabels.value = props.isHideContent
+  dataLabels.value = nowHidden
       ? {
         enabled: true,
         formatter: function () {
@@ -329,7 +329,7 @@ const formattedBrandCount = computed(() => {
       <li>
 
         Phân tích {{ data?.report_type == 'report_top_shop' ? "gian hàng" : "thị trường" }} {{ data.name }} {{ data?.report_type == 'report_top_shop' ? "trên sàn " + promptPlatformById(platformId) : "" }} có hơn
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent >
           <span>
             {{ formattedBrandCount }}
           </span>
@@ -346,7 +346,7 @@ const formattedBrandCount = computed(() => {
             data.data_analytic.by_brand.lst_top_brand_revenue[0].name
           }}</b>
         đang chiếm
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent >
           <span>
             {{
               formatNumber(Number(
@@ -380,7 +380,7 @@ const formattedBrandCount = computed(() => {
               data.data_analytic.by_brand.lst_top_brand_revenue[2].name
             }}</b>
           tương ứng thị phần {{ data?.report_type == 'report_top_shop' ? "gian hàng" : "" }} {{ data.name }} với doanh thu là
-          <BlurContent :is-hide-content="isHideContent">
+          <BlurContent >
             <span>
               {{
                 formatNumber(Number(
@@ -391,7 +391,7 @@ const formattedBrandCount = computed(() => {
             </span>
           </BlurContent>
           % và
-          <BlurContent :is-hide-content="isHideContent">
+          <BlurContent >
             <span>
               {{
                 formatNumber(Number(

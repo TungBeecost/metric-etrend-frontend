@@ -4,16 +4,15 @@ import SummaryStatistic from "~/components/report/SummaryStatistic.vue";
 import {formatSortTextCurrency} from "~/helpers/utils";
 import dayjs from "dayjs";
 import {formatNumber} from "~/helpers/FormatHelper";
+import {useReportAccess} from "~/composables/useReportAccess";
+
+const { isHideContent } = useReportAccess();
 
 const props = defineProps({
   data: {
     type: Object,
     default: () => {
     },
-  },
-  isHideContent: {
-    type: Boolean,
-    default: true
   },
 });
 
@@ -35,7 +34,7 @@ const promptPlatformById = (platformId: number) => {
       return 'Lazada';
     case 3:
       return 'Tiki';
-    case 4: 
+    case 4:
       return 'Tiktok';
     default:
       return 'Khác';
@@ -329,19 +328,19 @@ const filteredPlatforms = computed(() => {
         <h3 class="statistic-item__title">Tổng quan</h3>
       </div>
     </div>
-    <summary-statistic :data="props.data" :is-hide-content="props.isHideContent"/>
+    <summary-statistic :data="props.data" />
     <div
         id="monthly-growth-chart"
         ref="monthlyGrowthChart"
         style="margin-bottom: 24px; position: relative;"
     >
       <highchart :options="charts[0]"/>
-      <ChartMask v-if="props.isHideContent" :report="props.data"/>
+      <ChartMask v-if="isHideContent" :report="props.data"/>
     </div>
     <div id="thi-phan-cac-san-thuong-mai-dien-tu" class="items-center">
       <platform-chart
           v-if="props.data"
-          :is-hide-content="props.isHideContent"
+
           :data="props.data"
       />
     </div>
@@ -349,7 +348,7 @@ const filteredPlatforms = computed(() => {
       <li>
         <b>
           Doanh số bán {{ data?.report_type == 'report_top_shop' ? "của gian hàng" : "" }} {{ data?.name }} {{ data?.report_type == 'report_top_shop' ? "trên sàn " + promptPlatformById(platformId) : "" }} trong {{ diffMonths }} đạt:
-          <BlurContent :is-hide-content="props.isHideContent">
+          <BlurContent >
         <span>
           <b>
             {{ formatSortTextCurrency(data.data_analytic.by_overview.revenue) }}
@@ -357,7 +356,7 @@ const filteredPlatforms = computed(() => {
         </span>
           </BlurContent>
           đồng, với
-          <BlurContent :is-hide-content="props.isHideContent">
+          <BlurContent >
         <span>
           <b>
             {{ formatSortTextCurrency(data.data_analytic.by_overview.sale) }}
@@ -373,7 +372,7 @@ const filteredPlatforms = computed(() => {
             {{ formatNumber(data?.data_analytic?.by_overview?.shop) }}
           </span>
         nhà bán trên sàn {{ data?.report_type == 'report_top_shop' ? promptPlatformById(platformId) : "TMĐT" }} với hơn
-        <BlurContent :is-hide-content="props.isHideContent">
+        <BlurContent >
           <span>
             {{ formatNumber(data?.data_analytic?.by_overview?.product) }}
           </span>
@@ -394,13 +393,13 @@ const filteredPlatforms = computed(() => {
         Doanh số của  {{ data?.report_type == 'report_top_shop' ? "gian hàng" : "sản phẩm" }} {{ data?.name }} {{ data?.report_type == 'report_top_shop' ? "trên sàn " + promptPlatformById(platformId) : "" }} trong tháng
         {{ formatDateFunc(hightestMonthRevenue.begin, "MM/YYYY") }}
         đạt mức cao nhất với
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent >
           <span>
             {{ formattedHighestMonthRevenue }}
           </span>
         </BlurContent>
         đồng và
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent >
           <span>
             {{ formattedHighestMonthSale }}
           </span>
@@ -411,7 +410,7 @@ const filteredPlatforms = computed(() => {
         Quy mô thị trường {{ data?.report_type == 'report_top_shop' ? "của gian hàng" : "" }} {{ data?.name }} {{ data?.report_type == 'report_top_shop' ? "trên sàn " + promptPlatformById(platformId) : "" }} tháng
         {{ diffRevenueMonths?.diffPercent !== undefined && diffRevenueMonths.diffPercent > 0 ? "tốt" : "thấp" }} hơn so
         với tháng đạt
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent >
     <span>
       {{
         diffRevenueMonths.latestMonth?.[0]?.revenue
@@ -437,7 +436,7 @@ const filteredPlatforms = computed(() => {
               ? "tăng trưởng doanh thu"
               : "doanh thu giảm"
         }}
-        <BlurContent :is-hide-content="isHideContent">
+        <BlurContent >
         <span>
           {{ formatNumber(diffHalfYear.diffPercent) }}
         </span>%

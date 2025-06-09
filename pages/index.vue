@@ -116,6 +116,9 @@ import {searchReport, type SearchReportPayload} from "~/services/reports";
 import {ref} from "vue";
 import DataCollection from "~/components/DataCollection.vue";
 import {trackEventCommon, trackEventConversionPixel} from "~/services/tracking/TrackingEventService";
+import { useReportAccess } from '~/composables/useReportAccess';
+
+const { isHideContent } = useReportAccess();
 
 const {getInfoTransaction} = usePayment()
 import {EVENT_TYPE} from "~/constant/general/EventConstant";
@@ -127,7 +130,7 @@ const openContactForm = ref(false)
 const listTagSuggestions = ref<string[]>([]);
 const showModal = ref(false);
 const isMobile = ref(false);
-const isHideContent = ref(true)
+// const isHideContent = ref(true)
 const recommendSearchLoading = ref(true);
 
 const fetchTagSuggest = async (value: string) => {

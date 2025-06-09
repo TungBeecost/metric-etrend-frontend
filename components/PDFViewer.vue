@@ -2,14 +2,13 @@
 import {createLoadingTask, VuePdf} from 'vue3-pdfjs';
 import axios from "axios";
 import ChartMask from '~/components/ChartMask.vue';
+import { useReportAccess } from '~/composables/useReportAccess';
 
-const {data, isHideContent} = defineProps({
+const { isHideContent } = useReportAccess();
+
+const {data} = defineProps({
   data: {
     type: Object,
-    required: true,
-  },
-  isHideContent: {
-    type: Boolean,
     required: true,
   },
   openContactForm: {

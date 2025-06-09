@@ -5,6 +5,9 @@ import axios from 'axios';
 import HeaderDeptReport from '~/components/report/HeaderDeptReport.vue';
 import { useCurrentUser } from '~/stores/current-user.js';
 import {getIndexedDB} from "~/helpers/IndexedDBHelper.js";
+import { useReportAccess } from '~/composables/useReportAccess';
+
+const { isHideContent } = useReportAccess();
 
 const config = useRuntimeConfig();
 const url_download = ref({});

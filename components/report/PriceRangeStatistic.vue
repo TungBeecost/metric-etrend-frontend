@@ -5,16 +5,15 @@ import {formatSortTextCurrency, formatSortTextCurrencyWithMinValue} from "~/help
 import {formatCurrency} from "~/helpers/FormatHelper.js";
 import moment from 'moment';
 import {ALL_PLATFORM_BASE_OBJECT} from "~/constant/general/GeneralConstant.js";
+import { useReportAccess } from '~/composables/useReportAccess';
+
+const { isHideContent } = useReportAccess();
 
 const props = defineProps({
   data: {
     type: Object,
     default: () => ({}),
-  },
-  isHideContent: {
-    type: Boolean,
-    default: () => true,
-  },
+  }
 });
 
 const platformId = ref(0)
@@ -27,7 +26,7 @@ const promptPlatformById = (platformId) => {
       return 'Lazada';
     case 3:
       return 'Tiki';
-    case 4: 
+    case 4:
       return 'Tiktok';
     default:
       return 'Khác';
@@ -255,7 +254,7 @@ const chartOptions = computed(() => {
     </div>
     <div class="my-4 w-full text-center relative" style="position: relative">
       <highchart :options="chartOptions"/>
-      <ChartMask v-if="props.isHideContent" :report="props.data"/>
+      <ChartMask v-if="isHideContent" :report="props.data"/>
     </div>
     <div>
       <InsightBlock

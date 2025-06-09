@@ -12,6 +12,10 @@ const props = defineProps({
   },
 });
 
+import { useReportType } from '~/composables/useReportType';
+
+const { isXuHuongReport } = useReportType();
+
 const handleItemClick = (item: LstRecommed) => {
   trackEventCommon(EVENT_TYPE.CLICK_RELATED_REPORT, 'related_report', '');
   if (item.source === 'marketing') {
@@ -30,8 +34,11 @@ const getRandomReplacement = () => {
 <template>
   <div class="raleted_report">
     <div class="title">
-      <h2 class="title_content">
+      <h2 v-if="!isXuHuongReport" class="title_content">
         Báo cáo liên quan
+      </h2>
+      <h2 v-else class="title_content">
+        Xu hướng liên quan
       </h2>
     </div>
     <div class="grid">

@@ -3,21 +3,23 @@ import {computed, ref} from 'vue';
 import {getPlatformById} from "~/helpers/PermissionPlatformHelper";
 import {formatSortTextCurrency} from "~/helpers/utils.js";
 import Highcharts from "highcharts";
+import {useReportAccess} from "~/composables/useReportAccess";
+const { isHideContent } = useReportAccess();
 
 
-const {data, isHideContent} = defineProps({
+const {data} = defineProps({
   data: {
     type: Object,
     default: () => ({})
   },
-  isHideContent: {
-    type: Boolean,
-    default: () => true
-  }
+  // isHideContent: {
+  //   type: Boolean,
+  //   default: () => true
+  // }
 });
 
 const renderChart = ref(false)
-
+const chartRef = ref(null);
 const windowWidth = ref(1024);
 
 onMounted(() => {
@@ -66,102 +68,114 @@ const chartWidth = computed(() => {
   }
 });
 
-const chartOptions = computed(() => ({
-  chart: {
-    type: "pie",
-    width: chartWidth.value || 500,
-    style: {
-      fontFamily: "Inter",
+const chartOptions = computed(() => {
+  const isHidden = isHideContent.value;
+  return {
+    chart: {
+      type: "pie",
+      width: chartWidth.value || 500,
+      style: {
+        fontFamily: "Inter",
+      },
     },
-  },
-  title: {
-    text: `<div style="text-align: center;"><h4>Tỷ trọng doanh số ${data.name} theo sàn</h4></div>`,    useHTML: true,
-    style: {
-      fontSize: '16px',
-      color: '#241E46',
-      fontWeight: 700,
-      fontFamily: "Inter",
-    }
-  },
-  legend: {
-    enabled: true,
-    symbolHeight: 10,
-    symbolWidth: 10,
-    itemStyle: {
-      fontSize: '12px',
-      color: '#241E46',
-      fontWeight: 400,
-      fontFamily: 'Inter'
-    }
-  },
-  tooltip: {
-    enabled: true,
-    formatter: function () {
-      if (isHideContent) {
-        const name = ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0
-            ? `${this.point.categoryName} ${this.point.index + 1}`
-            : this.point.name;
-        return `${name}<br/>
-          <svg width="10" height="10">
-            <rect width="10" height="10" style="fill:${this.point.color};stroke-width:3;stroke:rgb(0,0,0)" />
-          </svg> ${this.series.name}: <strong>Đã bị ẩn</strong>`;
-      } else {
-        return `<b>${this.point.name}</b><br/>Doanh số: ${Highcharts.numberFormat(this.point.y, 0, ',', '.')} đ`;
-      }
-    }
-  },
-  plotOptions: {
-    pie: {
-      cursor: "pointer",
-      showInLegend: true,
-      innerSize: '60%',
-      dataLabels: {
-        enabled: true,
-        connectorShape: 'crookedLine',
-        style: {
-          fontSize: '12px',
-          color: '#241E46',
-          fontWeight: 400,
-          fontFamily: "Inter",
-        },
-        formatter: function () {
-          if (isHideContent && this.point.name !== 'Shopee') {
-            return '<b style="font-weight: 500">' + this.point.name + '</b>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn</span>';
-          }
-
-          return '<b style="font-weight: 500">' + this.point.name + '</b>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
-        },
+    title: {
+      text: `<div style="text-align: center;"><h4>Tỷ trọng doanh số ${data.name} theo sàn</h4></div>`,
+      useHTML: true,
+      style: {
+        fontSize: '16px',
+        color: '#241E46',
+        fontWeight: 700,
+        fontFamily: "Inter",
       }
     },
-    series: {
-      enableMouseTracking: true
-    }
-  },
-  series: [
-    {
-      name: 'Doanh số (Đồng)',
-      data: data.data_analytic.by_marketplace.lst_marketplace.map(({platform_id, revenue, ratio_revenue}) => ({
-        name: getPlatformById(platform_id).name,
-        y: revenue || ratio_revenue,
-        color: {
-          linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
-          stops: [
-            [0, platformColors[getPlatformById(platform_id).name][0]],
-            [1, platformColors[getPlatformById(platform_id).name][1]]
-          ]
+    legend: {
+      enabled: true,
+      symbolHeight: 10,
+      symbolWidth: 10,
+      itemStyle: {
+        fontSize: '12px',
+        color: '#241E46',
+        fontWeight: 400,
+        fontFamily: 'Inter'
+      }
+    },
+    tooltip: {
+      enabled: true,
+      formatter: function () {
+        if (isHidden) {
+          const name = ![4, 6, 8].includes(this.point.index) && this.point.categoryName?.length > 0
+              ? `${this.point.categoryName} ${this.point.index + 1}`
+              : this.point.name;
+          return `${name}<br/>
+            <svg width="10" height="10">
+              <rect width="10" height="10" style="fill:${this.point.color};stroke-width:3;stroke:rgb(0,0,0)" />
+            </svg> ${this.series.name}: <strong>Đã bị ẩn</strong>`;
+        } else {
+          return `<b>${this.point.name}</b><br/>Doanh số: ${Highcharts.numberFormat(this.point.y, 0, ',', '.')} đ`;
         }
-      })).sort((a, b) => b.y - a.y),
-    }
-  ]
-}));
+      }
+    },
+    plotOptions: {
+      pie: {
+        cursor: "pointer",
+        showInLegend: true,
+        innerSize: '60%',
+        dataLabels: {
+          enabled: true,
+          connectorShape: 'crookedLine',
+          style: {
+            fontSize: '12px',
+            color: '#241E46',
+            fontWeight: 400,
+            fontFamily: "Inter",
+          },
+          formatter: function () {
+            if (isHidden && this.point.name !== 'Shopee') {
+              return '<b style="font-weight: 500">' + this.point.name + '</b>: ' + '<span style="color: #9D97BF; filter: blur(4px)">' + 'đã ẩn AAAAAA</span>';
+            }
+
+            return '<b style="font-weight: 500">' + this.point.name + '</b>: ' + '<span style="color: #E85912">' + Highcharts.numberFormat(this.percentage, 1, ',') + '%</span>';
+          },
+        }
+      },
+      series: {
+        enableMouseTracking: true
+      }
+    },
+    series: [
+      {
+        name: 'Doanh số (Đồng)',
+        data: data.data_analytic.by_marketplace.lst_marketplace.map(({platform_id, revenue, ratio_revenue}) => ({
+          name: getPlatformById(platform_id).name,
+          y: revenue || ratio_revenue,
+          color: {
+            linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
+            stops: [
+              [0, platformColors[getPlatformById(platform_id).name][0]],
+              [1, platformColors[getPlatformById(platform_id).name][1]]
+            ]
+          }
+        })).sort((a, b) => b.y - a.y),
+      }
+    ]
+  };
+});
 
 const dataSource = computed(() => {
+  const isHidden = isHideContent.value;
   return data.data_analytic.by_marketplace.lst_marketplace.map(({platform_id, revenue, ratio_revenue} = {}) => ({
     platform: getPlatformById(platform_id).name,
     platformIcon: getPlatformById(platform_id).urlLogo,
-    revenue: isHideContent ? ratio_revenue.toFixed(2) : formatSortTextCurrency(revenue),
+    revenue: isHidden ? ratio_revenue.toFixed(2) : formatSortTextCurrency(revenue),
   })).sort((a, b) => b.revenue - a.revenue);
 });
+
+// watch(chartOptions, () => {
+//   if (chartRef.value && chartRef.value.chart) {
+//     // Update the chart with new options
+//     chartRef.value.chart.update(chartOptions.value);
+//   }
+// }, { deep: true });
 
 </script>
 
@@ -189,7 +203,7 @@ const dataSource = computed(() => {
             </div>
           </template>
           <template v-if="column.key === 'revenue'">
-            <BlurContent :is-hide-content="isHideContent">
+            <BlurContent>
               {{ record.revenue }}
             </BlurContent>
           </template>

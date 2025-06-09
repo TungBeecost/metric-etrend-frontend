@@ -4,16 +4,15 @@ import moment from "moment/moment";
 import {openProductUrl, openShopProductUrl} from "~/helpers/DataNormalize";
 import {getPlatformById} from "~/helpers/PermissionPlatformHelper";
 import {getUrlImageThumbnail} from "~/services/ecommerce/EcomUtils";
+import { useReportAccess } from '~/composables/useReportAccess';
+
+const { isHideContent } = useReportAccess();
 
 
 const props = defineProps({
   product: {
     type: Object,
     default: () => ({}),
-  },
-  isHideContent: {
-    type: Boolean,
-    default: () => true
   },
   loading: {
     type: Boolean,

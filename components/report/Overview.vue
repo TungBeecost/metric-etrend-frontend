@@ -5,16 +5,20 @@ import dayjs from "dayjs";
 import {formatCurrency} from "~/helpers/FormatHelper";
 import {useHead} from "unhead";
 import moment from "moment";
+import {useReportAccess} from "~/composables/useReportAccess";
+
+const { isHideContent, setHideContent } = useReportAccess();
+
+// Add a watcher to debug
+watch(isHideContent, (newVal) => {
+  console.log('isHideContent changed in Overview.vue:', newVal);
+}, { immediate: true });
 
 const props = defineProps({
   data: {
     type: Object,
     default: () => ({}),
-  },
-  isHideContent: {
-    type: Boolean,
-    default: false
-  },
+  }
 });
 
 const config = useRuntimeConfig();
@@ -171,7 +175,7 @@ useHead({
       <div>
         <span class="text-bold">
           Báo cáo doanh thu {{ props.data?.report_type === 'report_top_shop' ? 'gian hàng ' : '' }} {{ props.data?.name }} trên sàn {{ data?.report_type == 'report_top_shop' ?  promptPlatformById(platformId) : "TMĐT" }} đạt
-          <BlurContent :is-hide-content="isHideContent">
+          <BlurContent>
             <b style="font-weight: bold">{{
                 props.data?.data_analytic?.by_overview ? formatSortTextCurrency(props.data?.data_analytic.by_overview.revenue) : 'N/A'
               }} đồng</b>

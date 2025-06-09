@@ -6,6 +6,9 @@ import { storeToRefs } from 'pinia';
 import { useSearchReport } from '#imports';
 import { trackEventCommon, trackEventConversionPixel } from '~/services/tracking/TrackingEventService.js';
 import { EVENT_TYPE } from '~/constant/general/EventConstant.js';
+import { useReportAccess } from '~/composables/useReportAccess';
+
+const { isHideContent } = useReportAccess();
 
 const route = useRoute();
 const { fetchListRecommendMarketing } = useSearchReport();
@@ -15,7 +18,7 @@ const data = ref({});
 const slug = route.params.slug;
 const openContactForm = ref(false);
 const loading = ref(true);
-const isHideContent = ref(true);
+// const isHideContent = ref(true);
 const listRecommend = ref([]);
 const isShowSuccessNotification = useState('LandingPage.isShowSuccessNotification', () => false);
 
@@ -161,7 +164,7 @@ watch(userInfo, (newUserInfo) => {
     <div class="container-metric default_section" style="padding-bottom: 120px;">
       <div class="general_overview_container">
         <client-only v-if="data">
-          <PDFViewer v-model:openContactForm="openContactForm" :data="data" :is-hide-content="isHideContent"/>
+          <PDFViewer v-model:openContactForm="openContactForm" :data="data"/>
         </client-only>
         <div v-if="data.introduction && data.introduction !== 'Không có'" class="introduction">
           <div class="statistic-item__title">

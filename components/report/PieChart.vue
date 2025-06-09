@@ -1,6 +1,9 @@
 <script setup>
 import Highcharts from 'highcharts';
 import {ref, watchEffect} from 'vue';
+import { useReportAccess } from '~/composables/useReportAccess';
+
+const { isHideContent } = useReportAccess();
 
 const props = defineProps({
   series: {
@@ -14,8 +17,7 @@ const props = defineProps({
   subtitle: {
     type: String,
     default: "",
-  },
-  isHideContent: {default: false}
+  }
 });
 
 const colors = [
@@ -39,7 +41,8 @@ const tooltip = ref({});
 const dataLabels = ref({});
 
 watchEffect(() => {
-  tooltip.value = props.isHideContent
+  const nowHidden = isHideContent.value;
+  tooltip.value = nowHidden
       ? {
         enabled: true,
         formatter: function () {
@@ -54,7 +57,7 @@ watchEffect(() => {
         enabled: true,
       };
 
-  dataLabels.value = props.isHideContent
+  dataLabels.value = nowHidden
       ? {
         enabled: true,
         formatter: function () {

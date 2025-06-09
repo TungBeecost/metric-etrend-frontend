@@ -1,11 +1,10 @@
 <script setup>
 import {computed} from 'vue';
+import { useReportAccess } from '~/composables/useReportAccess';
+
+const { isHideContent } = useReportAccess();
 
 const props = defineProps({
-  isHideContent: {
-    type: Boolean,
-    default: true,
-  },
   isHide: {
     type: Boolean,
     default: true,
@@ -58,7 +57,7 @@ const config = useRuntimeConfig();
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
-            :is-hide-content="isHideContent"
+
         />
         <ChartMask
             v-if="isHideContent"
@@ -82,7 +81,7 @@ const config = useRuntimeConfig();
             :key="product.product_base_id"
             :product-item="product"
             :product="product"
-            :is-hide-content="isHideContent"
+
         />
         <ChartMask
             v-if="isHideContent"
@@ -130,7 +129,7 @@ const config = useRuntimeConfig();
             :product-item="product"
             :product="product"
 
-            :is-hide-content="isHideContent"
+
         />
         <ChartMask
             v-if="isHideContent"

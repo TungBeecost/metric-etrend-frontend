@@ -88,6 +88,9 @@ import moment from 'moment';
 import Highcharts from 'highcharts';
 import { formatSortTextCurrencyWithMinValue } from '@/services/utils';
 import { formatNumber } from '~/helpers/FormatHelper.js';
+import { useReportAccess } from '~/composables/useReportAccess';
+
+const { isHideContent } = useReportAccess();
 
 const platformNames = {
   1: "Shopee",
@@ -117,10 +120,6 @@ const props = defineProps({
   data: {
     type: Object,
     default: () => ({})
-  },
-  isHideContent: {
-    type: Boolean,
-    default: false
   },
   slide: {
     type: String,
@@ -170,7 +169,7 @@ const isCovered = computed(() => true);
 const tableData = computed(() => {
   const marketplaceData = props.data.data_analytic?.by_marketplace?.lst_marketplace || [];
   return marketplaceData.map(p => {
-    const y = props.isHideContent ? p.ratio_revenue * 100 : p.revenue;
+    const y = isHideContent.value ? p.ratio_revenue * 100 : p.revenue;
     return {
       key: p.name,
       platform: p.platform_id,
@@ -226,7 +225,7 @@ const charts = computed(() => {
           innerSize: "65%",
           colorByPoint: true,
           data: marketplaceData.map(p => {
-            const y = props.isHideContent ? p.ratio_revenue * 100 : p.ratio_revenue * 100;
+            const y = isHideContent.value ? p.ratio_revenue * 100 : p.ratio_revenue * 100;
             return {
               name: platformNames[p.platform_id] || p.name,  // Ensure name mapping
               y,

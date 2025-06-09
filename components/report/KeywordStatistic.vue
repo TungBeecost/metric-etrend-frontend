@@ -81,7 +81,7 @@ const totalSale = computed(() => {
       <div class="pie_chart_item">
         <PieChart
             title="Tỷ trọng doanh số theo top 5 nhóm hàng"
-            :is-hide-content="isHideContent"
+
             :series="[
             {
               name: 'Doanh số',
@@ -93,7 +93,7 @@ const totalSale = computed(() => {
       <div class="pie_chart_item">
         <PieChart
             title="Tỷ trọng sản lượng theo top 5 nhóm hàng"
-            :is-hide-content="isHideContent"
+
             :series="[
             {
               name: 'Sản lượng',
